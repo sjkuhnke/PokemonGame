@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import pokemon.*;
 import puzzle.Puzzle;
 import util.Pair;
+import util.ToolTip;
 
 public class SimBattleUI extends BattleUI {
 	
@@ -738,7 +739,9 @@ public class SimBattleUI extends BattleUI {
 		
 		x += gp.tileSize;
 		y += gp.tileSize * 0.75;
-		g2.drawString("[S]", x, y);
+		
+		ToolTip autoplayKey = new ToolTip(gp, "", "", gp.config.sKey);
+		g2.drawString(autoplayKey.toString(), x, y);
 		
 		if (gp.keyH.sPressed) {
 			gp.keyH.sPressed = false;

@@ -22,6 +22,7 @@ public class KeyHandler implements KeyListener {
 	public boolean upPressed, downPressed, leftPressed, rightPressed, sPressed, wPressed, dPressed, aPressed, tabPressed, shiftPressed, ctrlPressed, kUpPressed, kDownPressed, kLeftPressed, kRightPressed, kSPressed, kWPressed, kDPressed, kAPressed;
 	
 	GamePanel gp;
+	Config config;
 	
 	public KeyHandler(GamePanel gp) {
 		this.gp = gp;
@@ -34,6 +35,12 @@ public class KeyHandler implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int code = e.getKeyCode();
+		if (config == null) config = gp.config;
+		
+		if (gp.ui.waitingForKey && gp.ui.settingsState == 1) {
+			handleRebind(code);
+			return;
+		}
 		
 		handleKeyStrokes(code);
 		
@@ -78,21 +85,21 @@ public class KeyHandler implements KeyListener {
 		}
 		
 		if (!gp.ui.showMessage) {
-			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
+			if (code == config.keys[config.upKey]) {
 				upPressed = true;
 			}
-			if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
+			if (code == config.keys[config.downKey]) {
 				downPressed = true;
 			}
-			if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_J) {
+			if (code == config.keys[config.leftKey]) {
 				leftPressed = true;
 			}
-			if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_L) {
+			if (code == config.keys[config.rightKey]) {
 				rightPressed = true;
 			}
 			
 			if (gp.battleUI.nicknaming == 1) {
-				if (code == KeyEvent.VK_BACK_SPACE) {
+				if (code == config.keys[config.backspaceKey]) {
 					gp.battleUI.handleBackspace();
 				} else {
 					char c = e.getKeyChar();
@@ -102,7 +109,7 @@ public class KeyHandler implements KeyListener {
 					}
 				}
 			} else if (gp.ui.nicknaming == 1) {
-				if (code == KeyEvent.VK_BACK_SPACE) {
+				if (code == config.keys[config.backspaceKey]) {
 					gp.ui.handleBackspace();
 				} else {
 					char c = e.getKeyChar();
@@ -114,121 +121,130 @@ public class KeyHandler implements KeyListener {
 			}
 		}
 		
-		if (code == KeyEvent.VK_TAB) {
+		if (code == config.keys[config.speedupKey]) {
 			tabPressed = true;
 		}
 		
-		if (code == KeyEvent.VK_SHIFT) {
+		if (code == config.keys[config.tooltipsKey]) {
 			shiftPressed = true;
 		}
 		
-		if (code == KeyEvent.VK_CONTROL) {
+		if (code == config.keys[config.ctrlKey]) {
 			ctrlPressed = true;
 		}
 		
-		if (code == KeyEvent.VK_ENTER) {
+		if (code == config.keys[config.screenshotKey]) {
             takeScreenshot();
+            resetKeys(true);
         }
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		int code = e.getKeyCode();
+		if (config == null) config = gp.config;
 		
-		if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
+		if (code == config.keys[config.upKey]) {
 			upPressed = false;
 			kUpPressed = false;
 		}
-		if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
+		if (code == config.keys[config.downKey]) {
 			downPressed = false;
 			kDownPressed = false;
 		}
-		if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_J) {
+		if (code == config.keys[config.leftKey]) {
 			leftPressed = false;
 			kLeftPressed = false;
 		}
-		if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_L) {
+		if (code == config.keys[config.rightKey]) {
 			rightPressed = false;
 			kRightPressed = false;
 		}
-		if (code == KeyEvent.VK_D) {
+		if (code == config.keys[config.dKey]) {
 			dPressed = false;
 			kDPressed = false;
 		}
-		if (code == KeyEvent.VK_S) {
+		if (code == config.keys[config.sKey]) {
 			sPressed = false;
 			kSPressed = false;
 		}
-		if (code == KeyEvent.VK_W) {
+		if (code == config.keys[config.wKey]) {
 			wPressed = false;
 			kWPressed = false;
 		}
-		if (code == KeyEvent.VK_A) {
+		if (code == config.keys[config.aKey]) {
 			aPressed = false;
 			kAPressed = false;
 		}
-		if (code == KeyEvent.VK_TAB) {
+		if (code == config.keys[config.speedupKey]) {
 			tabPressed = false;
 		}
-		if (code == KeyEvent.VK_SHIFT) {
+		if (code == config.keys[config.tooltipsKey]) {
 			shiftPressed = false;
 		}
-		if (code == KeyEvent.VK_CONTROL) {
+		if (code == config.keys[config.ctrlKey]) {
 			ctrlPressed = false;
 		}
 	}
 	
+	private void handleRebind(int newKey) {
+		gp.config.setKeybind(gp.ui.rebindingControl, newKey);
+		
+		gp.ui.waitingForKey = false;
+		gp.ui.rebindingControl = -1;
+	}
+	
 	private void playState(int code) {
-		if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
+		if (code == config.keys[config.upKey]) {
 			upPressed = true;
 		}
-		if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
+		if (code == config.keys[config.downKey]) {
 			downPressed = true;
 		}
-		if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_J) {
+		if (code == config.keys[config.leftKey]) {
 			leftPressed = true;
 		}
-		if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_L) {
+		if (code == config.keys[config.rightKey]) {
 			rightPressed = true;
 		}
-		if (code == KeyEvent.VK_D) {
+		if (code == config.keys[config.dKey]) {
 			dPressed = true;
 		}
-		if (code == KeyEvent.VK_S) {
+		if (code == config.keys[config.sKey]) {
 			sPressed = true;
 		}
-		if (code == KeyEvent.VK_W) {
+		if (code == config.keys[config.wKey]) {
 			wPressed = true;
 		}
-		if (code == KeyEvent.VK_A) {
+		if (code == config.keys[config.aKey]) {
 			aPressed = true;
 		}
 	}
 	
 	private void battleState(int code) {
-		if (code == KeyEvent.VK_W) {
+		if (code == config.keys[config.wKey]) {
 			wPressed = true;
 		}
 		
-		if (code == KeyEvent.VK_A) {
+		if (code == config.keys[config.aKey]) {
 			aPressed = true;
 		}
 		
-		if (code == KeyEvent.VK_D) {
+		if (code == config.keys[config.dKey]) {
 			dPressed = true;
 		}
 		if (gp.battleUI.subState == BattleUI.IDLE_STATE) {
-			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
+			if (code == config.keys[config.upKey]) {
 				if (gp.battleUI.commandNum > 1 || (gp.battleUI.shouldDrawCatchWindow() && !gp.battleUI.showFoeSummary)) {
 					gp.battleUI.commandNum -= 2;
 				}
 			}
-			if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
+			if (code == config.keys[config.downKey]) {
 				if (gp.battleUI.commandNum < 2 && !gp.battleUI.showFoeSummary) {
 					gp.battleUI.commandNum += 2;
 				}
 			}
-			if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_J) {
+			if (code == config.keys[config.leftKey]) {
 				if (gp.battleUI.commandNum >= 0) {
 					if (!gp.battleUI.showFoeSummary) {
 						if (gp.battleUI.commandNum % 2 == 1) {
@@ -245,7 +261,7 @@ public class KeyHandler implements KeyListener {
 					}
 				}
 			}
-			if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_L) {
+			if (code == config.keys[config.rightKey]) {
 				if (gp.battleUI.commandNum >= 0) {
 					if (!gp.battleUI.showFoeSummary) {
 						if (gp.battleUI.commandNum % 2 == 0) {
@@ -262,44 +278,44 @@ public class KeyHandler implements KeyListener {
 					}
 				}
 			}
-			if (code == KeyEvent.VK_S) {
+			if (code == config.keys[config.sKey]) {
 				sPressed = true;
 			}
 		} else if (gp.battleUI.subState == BattleUI.MOVE_SELECTION_STATE) {
-			if (code == KeyEvent.VK_S) {
+			if (code == config.keys[config.sKey]) {
 				gp.battleUI.subState = BattleUI.IDLE_STATE;
 				gp.battleUI.showMoveSummary = false;
 			}
-			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
+			if (code == config.keys[config.upKey]) {
 				if (gp.battleUI.moveNum > 1) {
 					gp.battleUI.moveNum -= 2;
 				}
 			}
-			if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
+			if (code == config.keys[config.downKey]) {
 				if (gp.battleUI.moveNum < 2 && gp.battleUI.user.moveset[gp.battleUI.moveNum + 2] != null) {
 					gp.battleUI.moveNum += 2;
 				}
 			}
-			if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_J) {
+			if (code == config.keys[config.leftKey]) {
 				if (gp.battleUI.moveNum % 2 == 1) {
 					gp.battleUI.moveNum--;
 				}
 			}
-			if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_L) {
+			if (code == config.keys[config.rightKey]) {
 				if (gp.battleUI.moveNum % 2 == 0 && gp.battleUI.user.moveset[gp.battleUI.moveNum + 1] != null) {
 					gp.battleUI.moveNum++;
 				}
 			}
 		} else if (gp.battleUI.subState == BattleUI.PARTY_SELECTION_STATE) {
-			if (code == KeyEvent.VK_S && gp.battleUI.cancellableParty) {
+			if (code == config.keys[config.sKey] && gp.battleUI.cancellableParty) {
 				gp.battleUI.subState = BattleUI.IDLE_STATE;
 			}
 		} else if (gp.battleUI.subState == BattleUI.INFO_STATE) {
-			if (code == KeyEvent.VK_S) {
+			if (code == config.keys[config.sKey]) {
 				gp.battleUI.subState = BattleUI.IDLE_STATE;
 			}
 		} else if (gp.battleUI.subState == BattleUI.SUMMARY_STATE) {
-			if (code == KeyEvent.VK_S) {
+			if (code == config.keys[config.sKey]) {
 				if (gp.battleUI.moveSummaryNum == -1) {
 					gp.battleUI.subState = BattleUI.PARTY_SELECTION_STATE;
 				} else {
@@ -312,41 +328,41 @@ public class KeyHandler implements KeyListener {
 	}
 	
 	private void simBattleState(int code) {
-		if (code == KeyEvent.VK_W) {
+		if (code == config.keys[config.wKey]) {
 			wPressed = true;
 		}
 		
-		if (code == KeyEvent.VK_A) {
+		if (code == config.keys[config.aKey]) {
 			aPressed = true;
 		}
 		
-		if (code == KeyEvent.VK_D) {
+		if (code == config.keys[config.dKey]) {
 			dPressed = true;
 		}
 		
-		if (code == KeyEvent.VK_S) {
+		if (code == config.keys[config.sKey]) {
 			sPressed = true;
 		}
 		
 		if (gp.simBattleUI.subState == SimBattleUI.IDLE_STATE) {
-			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
+			if (code == config.keys[config.upKey]) {
 				if (gp.simBattleUI.commandNum > 1 && !gp.simBattleUI.showFoeSummary && !gp.simBattleUI.showParlays) {
 					gp.simBattleUI.commandNum -= 2;
 				}
 			}
-			if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
+			if (code == config.keys[config.downKey]) {
 				if (gp.simBattleUI.commandNum < 2 && !gp.simBattleUI.showFoeSummary && !gp.simBattleUI.showParlays) {
 					gp.simBattleUI.commandNum += 2;
 				}
 			}
-			if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_J) {
+			if (code == config.keys[config.leftKey]) {
 				if (!gp.simBattleUI.showFoeSummary && !gp.simBattleUI.showParlays && gp.simBattleUI.commandNum >= 0 && gp.simBattleUI.commandNum % 2 == 1) {
 					gp.simBattleUI.commandNum--;
 				} else {
 					leftPressed = true;
 				}
 			}
-			if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_L) {
+			if (code == config.keys[config.rightKey]) {
 				if (!gp.simBattleUI.showFoeSummary && !gp.simBattleUI.showParlays && gp.simBattleUI.commandNum >= 0 && gp.simBattleUI.commandNum % 2 == 0) {
 					gp.simBattleUI.commandNum++;
 				} else {
@@ -354,41 +370,41 @@ public class KeyHandler implements KeyListener {
 				}
 			}
 		} else if (gp.simBattleUI.subState == BattleUI.MOVE_SELECTION_STATE) {
-			if (code == KeyEvent.VK_S) {
+			if (code == config.keys[config.sKey]) {
 				gp.simBattleUI.subState = BattleUI.IDLE_STATE;
 				gp.simBattleUI.showMoveSummary = false;
 			}
-			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
+			if (code == config.keys[config.upKey]) {
 				if (gp.simBattleUI.moveNum > 1) {
 					gp.simBattleUI.moveNum -= 2;
 				}
 			}
-			if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
+			if (code == config.keys[config.downKey]) {
 				if (gp.simBattleUI.moveNum < 2 && gp.simBattleUI.user.moveset[gp.simBattleUI.moveNum + 2] != null) {
 					gp.simBattleUI.moveNum += 2;
 				}
 			}
-			if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_J) {
+			if (code == config.keys[config.leftKey]) {
 				if (gp.simBattleUI.moveNum % 2 == 1) {
 					gp.simBattleUI.moveNum--;
 				}
 			}
-			if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_L) {
+			if (code == config.keys[config.rightKey]) {
 				if (gp.simBattleUI.moveNum % 2 == 0 && gp.simBattleUI.user.moveset[gp.simBattleUI.moveNum + 1] != null) {
 					gp.simBattleUI.moveNum++;
 				}
 			}
 		} else if (gp.simBattleUI.subState == BattleUI.PARTY_SELECTION_STATE) {
-			if (code == KeyEvent.VK_S && gp.simBattleUI.cancellableParty) {
+			if (code == config.keys[config.sKey] && gp.simBattleUI.cancellableParty) {
 				gp.simBattleUI.subState = BattleUI.IDLE_STATE;
 			}
 		} else if (gp.simBattleUI.subState == BattleUI.INFO_STATE) {
-			if (code == KeyEvent.VK_S) {
+			if (code == config.keys[config.sKey]) {
 				gp.simBattleUI.subState = BattleUI.IDLE_STATE;
 				sPressed = false;
 			}
 		} else if (gp.simBattleUI.subState == BattleUI.SUMMARY_STATE) {
-			if (code == KeyEvent.VK_S) {
+			if (code == config.keys[config.sKey]) {
 				if (gp.simBattleUI.moveSummaryNum == -1) {
 					gp.simBattleUI.subState = BattleUI.PARTY_SELECTION_STATE;
 				} else {
@@ -401,13 +417,13 @@ public class KeyHandler implements KeyListener {
 	}
 	
 	private void dialogueState(int code) {
-		if (code == KeyEvent.VK_W || code == KeyEvent.VK_S) {
+		if (code == config.keys[config.wKey] || code == config.keys[config.sKey]) {
 			gp.gameState = GamePanel.PLAY_STATE;
 		}
 	}
 	
 	private void messageState(int code) {
-		if (gp.ui.messageSkippable() && (code == KeyEvent.VK_W || code == KeyEvent.VK_S)) {
+		if (gp.ui.messageSkippable() && (code == config.keys[config.wKey] || code == config.keys[config.sKey])) {
 			gp.ui.showMessage = false;
 			if (gp.gameState == GamePanel.USE_ITEM_STATE) {
 				gp.ui.goBackInBag();
@@ -418,20 +434,24 @@ public class KeyHandler implements KeyListener {
 			}
 		}
 		if ((gp.gameState == GamePanel.BOX_STATE || (gp.gameState == GamePanel.MENU_STATE && gp.ui.subState == 2))
-				&& code == KeyEvent.VK_D) {
+				&& code == config.keys[config.dKey]) {
 			gp.ui.showMessage = false;
 		}
 	}
 	
 	private void menuState(int code) {
-		if (code == KeyEvent.VK_D || code == KeyEvent.VK_S) {
+		if (code == config.keys[config.dKey] || code == config.keys[config.sKey]) {
 			if (gp.ui.subState == 0) {
 				gp.gameState = GamePanel.PLAY_STATE;
 			}
-			if (gp.ui.subState > 1 && gp.ui.subState < 7 && gp.ui.bagState == 0) { // Menus for handling the 7 top menu options
-				if ((gp.ui.subState == 2 || gp.ui.subState == 3) && code == KeyEvent.VK_D) {
+			if (gp.ui.subState > 1 && gp.ui.subState < 8 && gp.ui.bagState == 0) { // Menus for handling the 7 top menu options
+				if ((gp.ui.subState == 2 || gp.ui.subState == 3) && code == config.keys[config.dKey]) {
 					dPressed = true;
 				} else {
+					if (gp.ui.subState == 7) { // settings
+						gp.config.saveConfig();
+					}
+					gp.ui.settingsState = 0;
 					gp.ui.subState = 0;
 					gp.ui.partySelectedNum = -1;
 					gp.ui.selectedBagNum = -1;
@@ -439,15 +459,15 @@ public class KeyHandler implements KeyListener {
 					gp.ui.commandNum = 0;
 					gp.ui.partySelectedItem = -1;
 				}
-			} else if (gp.ui.subState == 7) { // Pokemon summary move info screen
-				if (code == KeyEvent.VK_S && gp.ui.nicknaming < 0) {
+			} else if (gp.ui.subState == 8) { // Pokemon summary move info screen
+				if (code == config.keys[config.sKey] && gp.ui.nicknaming < 0) {
 					if (gp.ui.moveSummaryNum == -1) {
 						gp.ui.subState = 2;
 					} else {
 						gp.ui.moveSwapNum = -1;
 						gp.ui.moveSummaryNum = -1;
 					}
-				} else if (code == KeyEvent.VK_D) {
+				} else if (code == config.keys[config.dKey]) {
 					dPressed = true;
 				}
 			} else if (gp.ui.subState == 1) { // Pokedex
@@ -459,24 +479,18 @@ public class KeyHandler implements KeyListener {
 			}
 			
 		}
-		if (code == KeyEvent.VK_W) {
+		if (code == config.keys[config.wKey]) {
 			wPressed = true;
 		}
-		if (code == KeyEvent.VK_A) {
+		if (code == config.keys[config.aKey]) {
 			aPressed = true;
 		}
 		
-		int maxCommandNum = 0;
-		switch(gp.ui.subState) {
-		case 0:
-			maxCommandNum = 6;
-		}
-		
-		if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
+		if (code == config.keys[config.upKey]) {
 			if (gp.ui.subState == 0) { // options top
 				gp.ui.menuNum--;
 				if (gp.ui.menuNum < 0) {
-					gp.ui.menuNum = maxCommandNum;
+					gp.ui.menuNum = gp.ui.maxMenuNum-1;
 				}
 			} else if (gp.ui.subState == 3) { // bag
 				if (gp.ui.bagState == 1) { // item options
@@ -499,12 +513,17 @@ public class KeyHandler implements KeyListener {
 				}
 			} else if (gp.ui.subState == 4) { // save
 				gp.ui.commandNum = 1 - gp.ui.commandNum;
+			} else if (gp.ui.subState == 7 && gp.ui.settingsState == 0) { // settings
+				gp.ui.commandNum--;
+				if (gp.ui.commandNum < 0) {
+					gp.ui.commandNum = gp.ui.maxSettingsNum;
+				}
 			}
 		}
-		if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
+		if (code == config.keys[config.downKey]) {
 			if (gp.ui.subState == 0) { // options top
 				gp.ui.menuNum++;
-				if (gp.ui.menuNum > maxCommandNum) {
+				if (gp.ui.menuNum > gp.ui.maxMenuNum-1) {
 					gp.ui.menuNum = 0;
 				}
 			} else if (gp.ui.subState == 3) { // bag
@@ -530,9 +549,14 @@ public class KeyHandler implements KeyListener {
 				}
 			} else if (gp.ui.subState == 4) { // save
 				gp.ui.commandNum = 1 - gp.ui.commandNum;
+			} else if (gp.ui.subState == 7 && gp.ui.settingsState == 0) { // settings
+				gp.ui.commandNum++;
+				if (gp.ui.commandNum > gp.ui.maxSettingsNum) {
+					gp.ui.commandNum = 0;
+				}
 			}
 		}
-		if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_J) {
+		if (code == config.keys[config.leftKey]) {
 			if (gp.ui.subState == 3) { // bag
 				if (gp.ui.bagState == 2) { // sell
 					int max = gp.ui.currentItems.get(gp.ui.bagNum[gp.ui.currentPocket - 1]).getMaxSell();
@@ -546,9 +570,17 @@ public class KeyHandler implements KeyListener {
 					gp.ui.selectedBagNum = -1;
 					gp.ui.currentItems = gp.player.p.getItems(gp.ui.currentPocket);
 				}
+			} else if (gp.ui.subState == 7 && gp.ui.settingsState == 0) { // settings
+				if (gp.ui.commandNum == 0 && gp.music.volumeScale > 0) {
+					gp.music.volumeScale--;
+					gp.music.checkVolume();
+				} else if (gp.ui.commandNum == 1 && gp.sfx.volumeScale > 0) {
+					gp.sfx.volumeScale--;
+					gp.sfx.checkVolume();
+				}
 			}
 		}
-		if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_L) {
+		if (code == config.keys[config.rightKey]) {
 			if (gp.ui.subState == 3) { // bag
 				if (gp.ui.bagState == 2) { // sell
 					int max = gp.ui.currentItems.get(gp.ui.bagNum[gp.ui.currentPocket - 1]).getMaxSell();
@@ -562,27 +594,35 @@ public class KeyHandler implements KeyListener {
 					gp.ui.selectedBagNum = -1;
 					gp.ui.currentItems = gp.player.p.getItems(gp.ui.currentPocket);
 				}
+			} else if (gp.ui.subState == 7 && gp.ui.settingsState == 0) { // settings
+				if (gp.ui.commandNum == 0 && gp.music.volumeScale < 5) {
+					gp.music.volumeScale++;
+					gp.music.checkVolume();
+				} else if (gp.ui.commandNum == 1 && gp.sfx.volumeScale < 5) {
+					gp.sfx.volumeScale++;
+					gp.sfx.checkVolume();
+				}
 			}
 		}
 	}
 	
 	private void shopState(int code) {
-		if (code == KeyEvent.VK_W) {
+		if (code == config.keys[config.wKey]) {
 			wPressed = true;
 		}
 		
 		if (gp.ui.subState == 0) {
-			if (code == KeyEvent.VK_D || code == KeyEvent.VK_S) {
+			if (code == config.keys[config.dKey] || code == config.keys[config.sKey]) {
 				gp.gameState = GamePanel.PLAY_STATE;
 				gp.ui.subState = 0;
 				gp.ui.commandNum = 0;
 			}
-			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I || code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
+			if (code == config.keys[config.upKey] || code == config.keys[config.downKey]) {
 				gp.ui.commandNum = 1 - gp.ui.commandNum;
 			}
 		}
 		if (gp.ui.subState > 0) {
-			if (code == KeyEvent.VK_D || code == KeyEvent.VK_S) {
+			if (code == config.keys[config.dKey] || code == config.keys[config.sKey]) {
 				if (gp.ui.premier > 0) {
 					gp.setTaskState();
 					Task.addTask(Task.TEXT, "Thanks for being a loyal customer! Here, this is on us!");
@@ -594,22 +634,22 @@ public class KeyHandler implements KeyListener {
 				gp.ui.subState = 0;
 				gp.ui.currentDialogue = gp.ui.npc.dialogues[0];
 			}
-			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
+			if (code == config.keys[config.upKey]) {
 				if (gp.ui.slotRow > 0) {
 					gp.ui.slotRow--;
 				}
 			}
-			if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
+			if (code == config.keys[config.downKey]) {
 				if (gp.ui.slotRow < UI.MAX_SHOP_ROW) {
 					gp.ui.slotRow++;
 				}
 			}
-			if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_J) {
+			if (code == config.keys[config.leftKey]) {
 				if (gp.ui.slotCol > 0) {
 					gp.ui.slotCol--;
 				}
 			}
-			if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_L) {
+			if (code == config.keys[config.rightKey]) {
 				if (gp.ui.slotCol < UI.MAX_SHOP_COL - 1) {
 					gp.ui.slotCol++;
 				}
@@ -618,23 +658,23 @@ public class KeyHandler implements KeyListener {
 	}
 	
 	private void starShopState(int code) {
-		if (code == KeyEvent.VK_W) {
+		if (code == config.keys[config.wKey]) {
 			wPressed = true;
 		}
 		
 		if (gp.ui.subState == 0) {
-			if (code == KeyEvent.VK_D || code == KeyEvent.VK_S) {
+			if (code == config.keys[config.dKey] || code == config.keys[config.sKey]) {
 				gp.gameState = GamePanel.PLAY_STATE;
 				gp.ui.subState = 0;
 				gp.ui.commandNum = 0;
 			}
-			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
+			if (code == config.keys[config.upKey]) {
 				gp.ui.commandNum--;
 				if (gp.ui.commandNum < 0) {
 					gp.ui.commandNum = 2;
 				}
 			}
-			if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
+			if (code == config.keys[config.downKey]) {
 				gp.ui.commandNum++;
 				if (gp.ui.commandNum > 2) {
 					gp.ui.commandNum = 0;
@@ -642,20 +682,20 @@ public class KeyHandler implements KeyListener {
 			}
 		}
 		if (gp.ui.subState > 0) {
-			if (code == KeyEvent.VK_D || code == KeyEvent.VK_S) {
+			if (code == config.keys[config.dKey] || code == config.keys[config.sKey]) {
 				gp.ui.subState = 0;
 				gp.ui.currentDialogue = gp.ui.npc.dialogues[0];
 			}
-			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
+			if (code == config.keys[config.upKey]) {
 				upPressed = true;
 			}
-			if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
+			if (code == config.keys[config.downKey]) {
 				downPressed = true;
 			}
-			if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_J) {
+			if (code == config.keys[config.leftKey]) {
 				leftPressed = true;
 			}
-			if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_L) {
+			if (code == config.keys[config.rightKey]) {
 				rightPressed = true;
 			}
 		}
@@ -663,55 +703,55 @@ public class KeyHandler implements KeyListener {
 	
 
 	private void prizeState(int code) {
-		if (code == KeyEvent.VK_W) {
+		if (code == config.keys[config.wKey]) {
 			wPressed = true;
 		}
 		
 		if (gp.ui.subState == 0) {
-			if (code == KeyEvent.VK_D || code == KeyEvent.VK_S) {
+			if (code == config.keys[config.dKey] || code == config.keys[config.sKey]) {
 				gp.gameState = GamePanel.PLAY_STATE;
 				gp.ui.subState = 0;
 				gp.ui.commandNum = 0;
 				gp.ui.slotRow = 0;
 				gp.ui.slotCol = 0;
 			}
-			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I || code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
+			if (code == config.keys[config.upKey] || code == config.keys[config.downKey]) {
 				gp.ui.commandNum = 1 - gp.ui.commandNum;
 			}
 		} else {
-			if (code == KeyEvent.VK_S) {
+			if (code == config.keys[config.sKey]) {
 				gp.ui.subState = 0;
 				gp.ui.currentDialogue = gp.ui.npc.dialogues[0];
 			}
-			if (code == KeyEvent.VK_D) {
+			if (code == config.keys[config.dKey]) {
 				gp.ui.subState++;
 				if (gp.ui.subState > 3) gp.ui.subState = 1;
 				gp.ui.slotRow = 0;
 				gp.ui.slotCol = 0;
 			}
-			if (code == KeyEvent.VK_A) {
+			if (code == config.keys[config.aKey]) {
 				gp.ui.subState--;
 				if (gp.ui.subState < 1) gp.ui.subState = 3;
 				gp.ui.slotRow = 0;
 				gp.ui.slotCol = 0;
 			}
-			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
+			if (code == config.keys[config.upKey]) {
 				if (gp.ui.slotRow > 0) {
 					gp.ui.slotRow--;
 				}
 			}
-			if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
+			if (code == config.keys[config.downKey]) {
 				int row = gp.ui.subState == 3 ? 2 : UI.MAX_SHOP_ROW;
 				if (gp.ui.slotRow < row) {
 					gp.ui.slotRow++;
 				}
 			}
-			if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_J) {
+			if (code == config.keys[config.leftKey]) {
 				if (gp.ui.slotCol > 0) {
 					gp.ui.slotCol--;
 				}
 			}
-			if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_L) {
+			if (code == config.keys[config.rightKey]) {
 				int col = gp.ui.subState == 3 ? 5 : UI.MAX_SHOP_COL - 1;
 				if (gp.ui.slotCol < col) {
 					gp.ui.slotCol++;
@@ -721,11 +761,11 @@ public class KeyHandler implements KeyListener {
 	}
 	
 	private void boxState(int code) {
-		if (code == KeyEvent.VK_W) {
+		if (code == config.keys[config.wKey]) {
 			wPressed = true;
 		}
 		
-		if (code == KeyEvent.VK_S) {
+		if (code == config.keys[config.sKey]) {
 			if (gp.ui.nicknaming < 0) {
 				if (gp.ui.release) {
 					gp.ui.release = false;
@@ -760,7 +800,7 @@ public class KeyHandler implements KeyListener {
 			}
 		}
 		
-		if (code == KeyEvent.VK_A) {
+		if (code == config.keys[config.aKey]) {
 			if (ctrlPressed) {
 				ctrlPressed = false;
 				Pokemon[] cBox = gp.ui.gauntlet ? gp.player.p.gauntletBox : gp.player.p.boxes[gp.player.p.currentBox];
@@ -770,34 +810,34 @@ public class KeyHandler implements KeyListener {
 			}
 		}
 		
-		if (code == KeyEvent.VK_D) {
+		if (code == config.keys[config.dKey]) {
 			dPressed = true;
 		}
 	}
 	
 	private void nurseState(int code) {
-		if (code == KeyEvent.VK_D || code == KeyEvent.VK_S) {
+		if (code == config.keys[config.dKey] || code == config.keys[config.sKey]) {
 			gp.gameState = GamePanel.PLAY_STATE;
 			gp.ui.subState = 0;
 			gp.ui.commandNum = 0;
 		}
-		if (code == KeyEvent.VK_W) {
+		if (code == config.keys[config.wKey]) {
 			wPressed = true;
 		}
 		
 		if (gp.ui.subState == 0) {
-			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I || code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
+			if (code == config.keys[config.upKey] || code == config.keys[config.downKey]) {
 				gp.ui.commandNum = 1 - gp.ui.commandNum;
 			}
 		}
 	}
 	
 	private void useItemState(int code) {
-		if (code == KeyEvent.VK_W) {
+		if (code == config.keys[config.wKey]) {
 			wPressed = true;
 		}
 		
-		if (code == KeyEvent.VK_D || code == KeyEvent.VK_S) {
+		if (code == config.keys[config.dKey] || code == config.keys[config.sKey]) {
 			if (gp.ui.showMoveOptions || gp.ui.showIVOptions || gp.ui.showStatusOptions) {
 				gp.ui.moveOption = -1;
 				gp.ui.showIVOptions = false;
@@ -810,34 +850,34 @@ public class KeyHandler implements KeyListener {
 	}
 	
 	private void useRepelState(int code) {
-		if (code == KeyEvent.VK_D || code == KeyEvent.VK_S) {
+		if (code == config.keys[config.dKey] || code == config.keys[config.sKey]) {
 			gp.gameState = GamePanel.PLAY_STATE;
 			gp.ui.commandNum = 0;
 		}
-		if (code == KeyEvent.VK_W) {
+		if (code == config.keys[config.wKey]) {
 			wPressed = true;
 		}
 		
-		if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I || code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
+		if (code == config.keys[config.upKey] || code == config.keys[config.downKey]) {
 			gp.ui.commandNum = 1 - gp.ui.commandNum;
 		}
 	}
 	
 	private void useRareCandyState(int code) {
-		if (code == KeyEvent.VK_D || code == KeyEvent.VK_S) {
+		if (code == config.keys[config.dKey] || code == config.keys[config.sKey]) {
 			if (gp.ui.currentTask == null) {
 				gp.ui.goBackInBag();
 			}
 		}
 		
-		if (code == KeyEvent.VK_W) {
+		if (code == config.keys[config.wKey]) {
 			wPressed = true;
 		}
 		
 	}
 	
 	private void taskState(int code) {
-		if (code == KeyEvent.VK_D) {
+		if (code == config.keys[config.dKey]) {
 			if (gp.ui.currentTask == null && gp.ui.tasks.isEmpty() && gp.ui.checkTasks) {
 				gp.gameState = GamePanel.PLAY_STATE;
 			} else {
@@ -845,7 +885,7 @@ public class KeyHandler implements KeyListener {
 			}
 		}
 		
-		if (code == KeyEvent.VK_S) {
+		if (code == config.keys[config.sKey]) {
 			if (gp.ui.currentTask == null && gp.ui.tasks.isEmpty() && gp.ui.checkTasks) {
 				gp.gameState = GamePanel.PLAY_STATE;
 			} else {
@@ -853,35 +893,35 @@ public class KeyHandler implements KeyListener {
 			}
 		}
 		
-		if (code == KeyEvent.VK_A) {
+		if (code == config.keys[config.aKey]) {
 			aPressed = true;
 		}
 		
-		if (code == KeyEvent.VK_W) {
+		if (code == config.keys[config.wKey]) {
 			wPressed = true;
 		}
 	}
 	
 	private void dexNavState(int code) {
-		if (code == KeyEvent.VK_S) {
+		if (code == config.keys[config.sKey]) {
 			gp.ui.goBackInBag();
 		}
 	}
 	
 	private void letterState(int code) {
-		if (code == KeyEvent.VK_W) {
+		if (code == config.keys[config.wKey]) {
 			wPressed = true;
 		}
-		if (code == KeyEvent.VK_S) {
+		if (code == config.keys[config.sKey]) {
 			gp.ui.goBackInBag();
 		}
 	}
 	
 	private void starterMachineState(int code) {
-		if (code == KeyEvent.VK_W) {
+		if (code == config.keys[config.wKey]) {
 			wPressed = true;
 		}
-		if (code == KeyEvent.VK_S) {
+		if (code == config.keys[config.sKey]) {
 			if (gp.ui.starterConfirm) {
 				gp.ui.starterConfirm = false;
 				gp.ui.commandNum = 0;
@@ -893,10 +933,10 @@ public class KeyHandler implements KeyListener {
 	}
 	
 	private void coinState(int code) {
-		if (code == KeyEvent.VK_W) {
+		if (code == config.keys[config.wKey]) {
 			wPressed = true;
 		}
-		if (code == KeyEvent.VK_S) {
+		if (code == config.keys[config.sKey]) {
 			gp.gameState = GamePanel.PLAY_STATE;
 			gp.ui.sellAmt = 1;
 		}
@@ -975,28 +1015,28 @@ public class KeyHandler implements KeyListener {
     }
     
     private void handleKeyStrokes(int code) {
-    	if (code == KeyEvent.VK_UP || code == KeyEvent.VK_I) {
+    	if (code == config.keys[config.upKey]) {
 			kUpPressed = true;
 		}
-		if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_K) {
+		if (code == config.keys[config.downKey]) {
 			kDownPressed = true;
 		}
-		if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_J) {
+		if (code == config.keys[config.leftKey]) {
 			kLeftPressed = true;
 		}
-		if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_L) {
+		if (code == config.keys[config.rightKey]) {
 			kRightPressed = true;
 		}
-		if (code == KeyEvent.VK_D) {
+		if (code == config.keys[config.dKey]) {
 			kDPressed = true;
 		}
-		if (code == KeyEvent.VK_S) {
+		if (code == config.keys[config.sKey]) {
 			kSPressed = true;
 		}
-		if (code == KeyEvent.VK_W) {
+		if (code == config.keys[config.wKey]) {
 			kWPressed = true;
 		}
-		if (code == KeyEvent.VK_A) {
+		if (code == config.keys[config.aKey]) {
 			kAPressed = true;
 		}
     }

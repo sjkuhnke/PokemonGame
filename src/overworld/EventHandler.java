@@ -16,6 +16,7 @@ public class EventHandler {
 	
 	int tempMap, tempCol, tempRow;
 	boolean tempCooldown;
+	int tempDirection = -1;
 	
 	public EventHandler(GamePanel gp) {
 		this.gp = gp;
@@ -125,10 +126,10 @@ public class EventHandler {
 			if (hit(13,48,57)) teleport(17, 53, 56,false);
 			if (hit(17,53,57)) teleport(13, 48, 58,false);
 			
-			if (hit(17,48,53)) teleport(18, 54, 51,false);
-			if (hit(18,55,51)) teleport(17, 49, 53,false);
-			if (hit(17,58,53)) teleport(18, 42, 51,false);
-			if (hit(18,41,51)) teleport(17, 57, 53,false);
+			if (hit(17,48,53)) teleport(18, 42, 51,false,Task.RIGHT);
+			if (hit(18,41,51)) teleport(17, 49, 53,false,Task.RIGHT);
+			if (hit(17,58,53)) teleport(18, 54, 51,false,Task.LEFT);
+			if (hit(18,55,51)) teleport(17, 57, 53,false,Task.LEFT);
 			
 			// Sicab PC
 			if (hit(13,38,85)) teleport(19, 31, 45,false);
@@ -1140,22 +1141,16 @@ public class EventHandler {
 	}
 	
 	public void teleport(int map, int col, int row, boolean cooldown) {
+		teleport(map,col,row,cooldown,-1);
+	}
+	
+	public void teleport(int map, int col, int row, boolean cooldown, int direction) {
 		gp.gameState = GamePanel.TRANSITION_STATE;
 		tempMap = map;
 		tempCol = col;
 		tempRow = row;
 		tempCooldown = cooldown;
-		
-//		gp.currentMap = map;
-//		gp.player.worldX = gp.tileSize * col;
-//		gp.player.worldY = gp.tileSize * row;
-//		gp.player.worldY -= gp.tileSize / 4;
-//		p.currentMap = map;
-//		
-//		canTouchEvent = !cooldown;
-//		
-//		previousEventX = gp.player.worldX;
-//		previousEventY = gp.player.worldY;
+		tempDirection = direction;
 	}
 	
 	public void shake(int flagX, int flagY, int intensity) {

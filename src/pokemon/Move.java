@@ -243,7 +243,7 @@ public enum Move {
 	HEALING_CIRCLE(0,1000,0,0,2,0,PType.MAGIC,"Creates a circle on the user's side that heals incoming Pokemon for 50% of their missing HP, lasts 10 turns",false,10),
 	HEALING_WISH(0,1000,0,0,2,0,PType.PSYCHIC,"User faints. The next Pokemon sent in will be fully healed",false,5),
 	HEAT_CRASH(-1,100,0,0,0,0,PType.FIRE,"Damage is based on how heavy the user is compared to the foe",true,10),
-	HEAT_WAVE(95,90,10,0,1,0,PType.FIRE,"% to Burn foe",false,10),
+	HEAT_WAVE(100,90,10,0,1,0,PType.FIRE,"% to Burn foe",false,10),
 	HEAVY_SLAM(-1,100,0,0,0,0,PType.STEEL,"Damage is based on how heavy the user is compared to the foe",true,10),
 	HEX(-1,100,0,0,1,0,PType.GHOST,"Damage is doubled if the foe has a status condition",false,10),
 	HEX_CLAW(75,100,100,0,0,0,PType.MAGIC,"% chance to disable the target's last used move for 3 turns",true,10),
