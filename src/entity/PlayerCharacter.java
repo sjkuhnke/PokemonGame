@@ -331,14 +331,10 @@ public class PlayerCharacter extends Entity {
 			if (keyH.ctrlPressed) {
 				resetSpriteNum();
 				Item.useCalc(p.getCurrent(), null, null, true);
-			} else {
-				if (p.registeredItem == null) {
-					gp.ui.showMessage(Item.breakString("A Key Item can be registered when you press [A], go to your bag!", UI.MAX_TEXTBOX));
-				} else {
-					gp.ui.useItem(p.registeredItem, true);
-				}
 			}
 		}
+		
+		checkHotkeys();
 	}
 	
 	public void useRepel() {
@@ -1450,5 +1446,33 @@ public class PlayerCharacter extends Entity {
 		Pokemon[] resultArray = result.toArray(new Pokemon[1]);
 		newDex = resultArray;
 		return resultArray;
+	}
+	
+	private void checkHotkeys() {
+		if (gp.keyH.hotkey1Pressed) {
+			gp.keyH.hotkey1Pressed = false;
+			useHotkey(0);
+		} else if (gp.keyH.hotkey2Pressed) {
+			gp.keyH.hotkey2Pressed = false;
+			useHotkey(1);
+		} else if (gp.keyH.hotkey3Pressed) {
+			gp.keyH.hotkey3Pressed = false;
+			useHotkey(2);
+		} else if (gp.keyH.hotkey4Pressed) {
+			gp.keyH.hotkey4Pressed = false;
+			useHotkey(3);
+		} else if (gp.keyH.hotkey5Pressed) {
+			gp.keyH.hotkey5Pressed = false;
+			useHotkey(4);
+		}
+	}
+
+	private void useHotkey(int slot) {
+		Item item = p.getRegisteredItem(slot);
+		if (item == null) {
+			gp.ui.showMessage("No item registered to this hotkey!");
+		} else {
+			gp.ui.useItem(item, true);
+		}
 	}
 }

@@ -633,27 +633,29 @@ public class GamePanel extends JPanel implements Runnable {
 	private void drawOverworldToolTips(Graphics2D g2) {
 		if (!keyH.shiftPressed || gameState != PLAY_STATE) return;
 		
-		boolean canCalc = player.p.getCurrent() != null;
-		
-		if (canCalc) {
-			ArrayList<ToolTip> calcTips = new ArrayList<>();
-			calcTips.add(new ToolTip(this, "Calc", "+", config.ctrlKey, config.aKey));
-			
-			int x = 0;
-			int y = (int) (tileSize * 7.5);
-			ui.drawToolTipBar(x, y, calcTips);
+		int x = 0;
+		int y = (int) (tileSize * 7.5);
+		ArrayList<ToolTip> hotkeyTips = new ArrayList<>();
+		for (int i = 0; i < player.p.registeredItems.length; i++) {
+			Item item = player.p.registeredItems[i];
+			if (item != null) {
+				hotkeyTips.add(new ToolTip(this, item.toString(), "", i + config.hotkey1));
+			}
 		}
+		ui.drawToolTipBar(x, y, hotkeyTips);
+		
+		boolean canCalc = player.p.getCurrent() != null;
 		
 		ArrayList<ToolTip> moveTips = new ArrayList<>();
 		moveTips.add(new ToolTip(this, "Move", "", config.upKey, config.leftKey, config.downKey, config.rightKey));
 		moveTips.add(new ToolTip(this, "Speedup", "", config.speedupKey));
 		moveTips.add(new ToolTip(this, "Screenshot", "", config.screenshotKey));
+		if (canCalc) moveTips.add(new ToolTip(this, "Calc", "+", config.ctrlKey, config.aKey));
 		
-		int x = 0;
-		int y = (int) (tileSize * 9);
+		y = tileSize * 9;
 		ui.drawToolTipBar(x, y, moveTips);
 		
-		ui.drawToolTips("Talk", "Use", "Run", "Menu");
+		ui.drawToolTips("Talk", null, "Run", "Menu");
 		
 		x = (int) (screenWidth - tileSize * 4.25);
 		y = 0;

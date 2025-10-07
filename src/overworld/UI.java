@@ -2998,9 +2998,9 @@ public class UI extends AbstractUI {
 				if (boxNum < 0) {
 					if (!gauntlet) {
 						gp.player.p.currentBox--;
-				        if (gp.player.p.currentBox < 0) {
-				        	gp.player.p.currentBox = Player.MAX_BOXES - 1;
-				        }
+						if (gp.player.p.currentBox < 0) {
+							gp.player.p.currentBox = Player.MAX_BOXES - 1;
+						}
 					}
 				} else {
 					if (boxNum % 6 != 0) {
@@ -3014,9 +3014,9 @@ public class UI extends AbstractUI {
 				if (boxNum < 0) {
 					if (!gauntlet) {
 						gp.player.p.currentBox++;
-				        if (gp.player.p.currentBox >= Player.MAX_BOXES) {
-				        	gp.player.p.currentBox = 0;
-				        }
+						if (gp.player.p.currentBox >= Player.MAX_BOXES) {
+							gp.player.p.currentBox = 0;
+						}
 					}
 				} else {
 					if (gauntlet) {
@@ -3316,9 +3316,9 @@ public class UI extends AbstractUI {
 						Moveslot m = currentPokemon.moveset[moveOption - 1];
 						if (m.currentPP != m.maxPP) {
 			        		m.currentPP = m.maxPP;
-				        	showMessage(m.move.toString() + "'s PP was restored!");
-				        	gp.player.p.bag.remove(currentItem);
-				        	moveOption = -1;
+    	showMessage(m.move.toString() + "'s PP was restored!");
+    	gp.player.p.bag.remove(currentItem);
+    	moveOption = -1;
 			        		currentItems = gp.player.p.getItems(currentPocket);
 			        	} else {
 			        		showMessage("It won't have any effect.");
@@ -3333,8 +3333,8 @@ public class UI extends AbstractUI {
 			    				m.maxPP();
 			    				showMessage(m.move.toString() + "'s PP was maxed!");
 			    			}
-				        	gp.player.p.bag.remove(currentItem);
-				        	moveOption = -1;
+			    			gp.player.p.bag.remove(currentItem);
+			    			moveOption = -1;
 			        		currentItems = gp.player.p.getItems(currentPocket);
 			    		} else {
 			    			showMessage("It won't have any effect.");
@@ -4042,18 +4042,28 @@ public class UI extends AbstractUI {
 				String itemString = current.getItem().toString();
 				if (currentPocket != Item.TMS && currentPocket != Item.KEY_ITEM) itemString += " x " + current.getCount();
 				
-				if (currentPocket == Item.KEY_ITEM && current.getItem() == gp.player.p.registeredItem) {
-					int starX = x + gp.tileSize * 6;
+				int keySlot = gp.player.p.getItemHotkey(current.getItem(), gp.config.hotkey1);
+				if (currentPocket == Item.KEY_ITEM && keySlot >= 0) {
+					int starX = (int) (x + gp.tileSize * 5.5);
 					int starY = y;
-					int starWidth = (gp.tileSize * 2 / 3) - 4;
-					g2.setFont(g2.getFont().deriveFont(40F));
-				    GradientPaint starPaint = new GradientPaint(
-				        starX + 6, starY - 6, new Color(255, 215, 0), // Start point and color
-				        starX +  - 10, starY - starWidth + 10, new Color(245, 225, 210) // End point and color
-				    );
-				    g2.setPaint(starPaint);
-				    g2.drawString('\u2605' + "", starX, starY + 2);
-				    g2.setFont(g2.getFont().deriveFont(32F));
+					g2.setFont(g2.getFont().deriveFont(24F));
+					
+					Color hotkeyColor = gp.player.p.getHotkeyColor(keySlot - gp.config.hotkey1);
+					String keyText = "[" + gp.config.getKeyName(gp.config.keys[keySlot]) + "]";
+					
+					// Draw shadow/glow effect
+					g2.setColor(new Color(hotkeyColor.getRed(), hotkeyColor.getGreen(), hotkeyColor.getBlue(), 100));
+					g2.drawString(keyText, starX + 2, starY);
+					g2.drawString(keyText, starX - 2, starY);
+					g2.drawString(keyText, starX, starY + 2);
+					g2.drawString(keyText, starX, starY - 2);
+					
+					// Draw main text
+					g2.setColor(hotkeyColor);
+					g2.drawString(keyText, starX, starY - 2);
+					
+					g2.setFont(g2.getFont().deriveFont(32F));
+					g2.setColor(Color.WHITE);
 				}
 				
 				if (i == selectedBagNum) {
@@ -4135,6 +4145,11 @@ public class UI extends AbstractUI {
 			drawMoveSummary(gp.tileSize / 2, (int) (gp.tileSize * 6), null, null, null, currentItems.get(bagNum[currentPocket - 1]).getItem().getMove());
 		} else if (bagState == 4) {
 			drawSortOptions();
+		} else if (bagState == 5) {
+			int regX = gp.tileSize * 12;
+			int regY = (int) (gp.tileSize * 2.5);
+			int regWidth = gp.tileSize * 3;
+			drawRegisterMenu(regX - gp.tileSize, regY, (int) (regWidth + gp.tileSize*1.25));
 		}
 		
 		if (gp.keyH.shiftPressed && bagState == 0) {
@@ -4210,6 +4225,20 @@ public class UI extends AbstractUI {
 			}
 		}
 		
+		// UNUSED
+		textY += gp.tileSize;
+		g2.drawString("Unused", textX, textY);
+		if (commandNum == 3) {
+			g2.drawString(">", textX-gp.tileSize/2, textY);
+		}
+		
+		// UNUSED
+		textY += gp.tileSize;
+		g2.drawString("Unused", textX, textY);
+		if (commandNum == 4) {
+			g2.drawString(">", textX-gp.tileSize/2, textY);
+		}
+		
 		// MUSIC VOLUME
 		textX = frameX + (int)(gp.tileSize*4.5);
 		textY = frameY + (int)(gp.tileSize*2.5);
@@ -4223,10 +4252,22 @@ public class UI extends AbstractUI {
 		volumeWidth = 24 * gp.sfx.volumeScale;
 		g2.fillRect(textX, textY, volumeWidth, 24);
 		
+		if (gp.keyH.sPressed || gp.keyH.dPressed) {
+			gp.keyH.sPressed = false;
+			gp.keyH.dPressed = false;
+			gp.ui.commandNum = 0;
+			gp.ui.settingsState = 0;
+			gp.ui.subState = 0;
+		}
+		
 		drawToolTips("OK", null, "Back", "Back");
 	}
 	
 	private void drawControlsScreen(int frameX, int frameY, int frameWidth, int frameHeight) {
+		if (gp.config.pendingKeys == null) {
+			gp.config.pendingKeys = Arrays.copyOf(gp.config.keys, gp.config.keys.length);
+		}
+		
 		drawSubWindow(frameX, frameY, frameWidth, frameHeight);
 		
 		String text = "Controls";
@@ -4240,7 +4281,9 @@ public class UI extends AbstractUI {
 		
 		ArrayList<ToolTip> keys = new ArrayList<>();
 		for (int i = 0; i < gp.config.keyNames.length; i++) {
-			keys.add(new ToolTip(gp, gp.config.keyNames[i], "", i));
+			ToolTip key = new ToolTip(gp, gp.config.keyNames[i], "", i);
+			key.buildKey("", gp.config.pendingKeys[i]);
+			keys.add(key);
 		}
 		
 		int controlsPerColumn = 11;
@@ -4342,10 +4385,14 @@ public class UI extends AbstractUI {
 					rebindingControl = commandNum;
 				}
 			}
-			if (gp.keyH.sPressed) {
+			if (gp.keyH.sPressed || gp.keyH.dPressed) {
 				gp.keyH.sPressed = false;
+				gp.keyH.dPressed = false;
+				boolean changed = gp.config.setKeys();
+				gp.config.saveConfig();
 				settingsState = 0;
 				commandNum = 0;
+				if (changed) showMessage("Keybinds successfully updated!");
 			}
 			
 			String wText = (commandNum == resetIndex) ? "Reset" : "Rebind";
@@ -4358,7 +4405,8 @@ public class UI extends AbstractUI {
 		int y = (int) (gp.tileSize * 2.5);
 		int width = gp.tileSize * 3;
 		int height = (int) (gp.tileSize * 3.5);
-		drawSubWindow(x, y, width, height);
+		
+		drawSubWindow(x, y, width, height, 255);
 		
 		x += gp.tileSize;
 		y += gp.tileSize;
@@ -4391,15 +4439,8 @@ public class UI extends AbstractUI {
 					// do nothing
 				} else {
 					if (currentPocket == Item.KEY_ITEM) {
-						if (gp.player.p.registeredItem == entryItem.getItem()) {
-							gp.player.p.registeredItem = null;
-							showMessage(entryItem.getItem().toString() + " was unregistered for [A].");
-						} else {
-							gp.player.p.registeredItem = entryItem.getItem();
-							showMessage(entryItem.getItem().toString() + " was registered for [A]!");
-						}
+						bagState = 5;
 						commandNum = 0;
-						bagState = 0;
 					} else {
 						bagState = currentPocket == Item.TMS ? 3 : currentPocket == Item.KEY_ITEM ? 1 : 2;
 					}
@@ -4494,6 +4535,73 @@ public class UI extends AbstractUI {
 			}
 			commandNum = 0;
 			bagState = 0;
+		}
+	}
+	
+	private void drawRegisterMenu(int x, int y, int width) {
+		int height = (int) (gp.tileSize * 7.5);
+		drawSubWindow(x, y, width, height, 255);
+		
+		x += gp.tileSize / 2;
+		y += gp.tileSize * 0.75;
+		
+		g2.setFont(g2.getFont().deriveFont(28F));
+		g2.drawString("Register to:", x, y);
+		
+		y += gp.tileSize;
+		g2.setFont(g2.getFont().deriveFont(24F));
+		
+		Item item = currentItems.get(bagNum[currentPocket - 1]).getItem();
+		ArrayList<ToolTip> keys = new ArrayList<>();
+		
+		for (int i = 0; i < Player.MAX_HOTKEYS; i++) {
+			g2.setColor(Color.WHITE);
+			
+			Item registered = gp.player.p.getRegisteredItem(i);
+			ToolTip toolTip = new ToolTip(gp, registered == null ? "(Empty)" : registered.toString(), "", gp.config.hotkey1 + i);
+			keys.add(toolTip);
+			
+			if (commandNum == i) {
+				g2.setColor(gp.player.p.getHotkeyColor(i));
+			}
+			
+			g2.drawString(toolTip.toString(), x, y);
+			
+			y += gp.tileSize;
+		}
+		
+		y += gp.tileSize / 4;
+		g2.setColor(Color.WHITE);
+		if (commandNum == Player.MAX_HOTKEYS) {
+			g2.setColor(gp.player.p.getHotkeyColor(commandNum));
+		}
+		g2.drawString("Cancel", x, y);
+		
+		if (gp.keyH.wPressed) {
+			gp.keyH.wPressed = false;
+			if (commandNum < Player.MAX_HOTKEYS) {
+				if (gp.player.p.getRegisteredItem(commandNum) == item) {
+					gp.player.p.unregisterItem(commandNum);
+					showMessage(item.toString() + " was unregistered from " + keys.get(commandNum).key + ".");
+				} else {
+					gp.player.p.registerItem(item, commandNum);
+					showMessage(item.toString() + " was registered to " + keys.get(commandNum).key + "!");
+				}
+			}
+			commandNum = 0;
+			bagState = 0;
+		}
+		
+		if (gp.keyH.upPressed) {
+			gp.keyH.upPressed = false;
+			commandNum--;
+			if (commandNum < 0) commandNum = Player.MAX_HOTKEYS;
+		}
+		
+		if (gp.keyH.downPressed) {
+			gp.keyH.downPressed = false;
+			commandNum++;
+			if (commandNum > Player.MAX_HOTKEYS) commandNum = 0;
 		}
 	}
 	
