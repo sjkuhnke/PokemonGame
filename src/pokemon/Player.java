@@ -1,5 +1,6 @@
 package pokemon;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -86,7 +87,7 @@ public class Player extends Trainer implements Serializable {
 	public int grustCount;
 	public int scottItem;
 	public int ballPurchase;
-	public Item registeredItem;
+	public Item[] registeredItems;
 	public Item[] resistBerries;
 	public Item[] statBerries;
 	public Item[] crystals;
@@ -114,10 +115,11 @@ public class Player extends Trainer implements Serializable {
 	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 76;
+	public static final int VERSION = 77;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	public static final int BET_INC = 10;
+	public static final int MAX_HOTKEYS = 5;
 	
 	public static Pokemon[] pokedex1 = new Pokemon[Pokemon.POKEDEX_1_SIZE]; // regular
 	public static Pokemon[] pokedex2 = new Pokemon[Pokemon.POKEDEX_METEOR_SIZE]; // shadow
@@ -157,6 +159,7 @@ public class Player extends Trainer implements Serializable {
 		blackjackStats = new int[20];
 		coinBadges = new boolean[12];
 		puzzlesLocked = new HashMap<>();
+		registeredItems = new Item[MAX_HOTKEYS];
 		
 		setupStatBerries();
         setupResistBerries();
@@ -1446,6 +1449,8 @@ public class Player extends Trainer implements Serializable {
 		if (blackjackStats == null) blackjackStats = new int[20];
 		if (coinBadges == null) coinBadges = new boolean[12];
 		if (puzzlesLocked == null) puzzlesLocked = new HashMap<>();
+		if (registeredItems == null) registeredItems = new Item[MAX_HOTKEYS];
+		updateRegisteredItems();
 		if (!flag[4][6]) updateCoins();
 		version = VERSION;
 	}
@@ -1479,6 +1484,16 @@ public class Player extends Trainer implements Serializable {
 		flag[4][6] = true;
 		coins *= 10;
 		bag.count[Item.TEMPLE_ORB.getID()] *= 10;
+	}
+	
+	private void updateRegisteredItems() {
+		if (registeredItems.length != MAX_HOTKEYS) {
+			Item[] temp = registeredItems.clone();
+			registeredItems = new Item[MAX_HOTKEYS];
+			for (int i = 0; i < Math.min(temp.length, MAX_HOTKEYS); i++) {
+				registeredItems[i] = temp[i];
+			}
+		}
 	}
 
 	public void setSprites() {
@@ -2048,5 +2063,44 @@ public class Player extends Trainer implements Serializable {
 		}
 		String result = sb.toString();
 		return result.substring(0, result.length() - 2);
+	}
+	
+	public void registerItem(Item item, int slot) {
+		if (slot >= 0 && slot < MAX_HOTKEYS) {
+			registeredItems[slot] = item;
+		}
+	}
+	
+	public void unregisterItem(int slot) {
+		if (slot >= 0 && slot < MAX_HOTKEYS) {
+			registeredItems[slot] = null;
+		}
+	}
+	
+	public Item getRegisteredItem(int slot) {
+		if (slot >= 0 && slot < MAX_HOTKEYS) {
+			return registeredItems[slot];
+		}
+		return null;
+	}
+
+	public int getItemHotkey(Item item, int hotkey1) {
+		if (item == null || item.getPocket() != Item.KEY_ITEM) return -1;
+		for (int i = 0; i < registeredItems.length; i++) {
+			if (registeredItems[i] == item) return hotkey1 + i;
+		}
+		return -1;
+	}
+
+	public Color getHotkeyColor(int i) {
+		Color[] colors = new Color[] {
+			new Color(255, 89, 94),    // Coral Red
+			new Color(255, 202, 58),   // Golden Yellow
+			new Color(138, 201, 38),   // Lime Green
+			new Color(25, 130, 196),   // Ocean Blue
+			new Color(106, 76, 147),   // Royal Purple
+			new Color(150, 150, 150)   // Neutral Gray (for Cancel)
+		};
+		return colors[i];
 	}
 }

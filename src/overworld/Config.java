@@ -25,25 +25,33 @@ public class Config {
 	public int sKey = 5;
 	public int dKey = 6;
 	public int aKey = 7;
-	public int screenshotKey = 8;
-	public int speedupKey = 9;
-	public int ctrlKey = 10;
-	public int tooltipsKey = 11;
-	public int backspaceKey = 12;
-	// TODO: add extra key controls for extra overworld key items
-	// TODO: make the controls screen not update your keybinds until you close the window!
+	public int hotkey1 = 8;
+	public int hotkey2 = 9;
+	public int hotkey3 = 10;
+	public int hotkey4 = 11;
+	public int hotkey5 = 12;
+	public int screenshotKey = 13;
+	public int speedupKey = 14;
+	public int ctrlKey = 15;
+	public int tooltipsKey = 16;
+	public int backspaceKey = 17;
 	
 	public final String[] keyNames;
 	public int[] keys;
 	public final int[] defaultKeys;
+	public int[] pendingKeys;
 	
 	public Config(GamePanel gp) {
 		this.gp = gp;
-		keyNames = new String[] {"Up", "Down", "Left", "Right", "Confirm", "Cancel", "Menu", "Extra",
-				"Screenshot", "Speedup", "Control", "Tooltips", "Backspace"};
+		keyNames = new String[] {"Up", "Down", "Left", "Right", "Confirm", "Cancel", "Menu", "Swap",
+				"Hotkey 1", "Hotkey 2", "Hotkey 3", "Hotkey 4", "Hotkey 5",
+				"Screenshot", "Speedup", "Control", "Tooltips", "Backspace",
+				};
 		keys = new int[] {KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_W,
-				KeyEvent.VK_S, KeyEvent.VK_D, KeyEvent.VK_A, KeyEvent.VK_ENTER, KeyEvent.VK_TAB, KeyEvent.VK_CONTROL,
-				KeyEvent.VK_SHIFT, KeyEvent.VK_BACK_SPACE};
+				KeyEvent.VK_S, KeyEvent.VK_D, KeyEvent.VK_A,
+				KeyEvent.VK_1, KeyEvent.VK_2, KeyEvent.VK_3, KeyEvent.VK_4, KeyEvent.VK_5,
+				KeyEvent.VK_ENTER, KeyEvent.VK_TAB, KeyEvent.VK_CONTROL, KeyEvent.VK_SHIFT, KeyEvent.VK_BACK_SPACE,
+				};
 		defaultKeys = Arrays.copyOf(keys, keys.length);
 	}
 	
@@ -51,21 +59,27 @@ public class Config {
 		int conflictingControl = getControlForKey(newKey);
 		
 		if (conflictingControl != -1 && conflictingControl != controlIndex) {
-			keys[conflictingControl] = keys[controlIndex];
+			pendingKeys[conflictingControl] = pendingKeys[controlIndex];
 		}
 		
-		keys[controlIndex] = newKey;
+		pendingKeys[controlIndex] = newKey;
 	}
 	
 	private int getControlForKey(int key) {
-		for (int i = 0; i < keys.length; i++) {
-			if (keys[i] == key) return i;
+		for (int i = 0; i < pendingKeys.length; i++) {
+			if (pendingKeys[i] == key) return i;
 		}
 		return -1;
 	}
 	
 	public void resetControls() {
-		keys = Arrays.copyOf(defaultKeys, defaultKeys.length);
+		pendingKeys = Arrays.copyOf(defaultKeys, defaultKeys.length);
+	}
+	
+	public boolean setKeys() {
+		boolean changed = !Arrays.equals(keys, pendingKeys);
+		keys = Arrays.copyOf(pendingKeys, pendingKeys.length);
+		return changed;
 	}
 	
 	public void saveConfig() {
@@ -81,7 +95,7 @@ public class Config {
 			
 			// Keybinds
 			for (int i = 0; i < keys.length; i++) {
-				String keyString = keyNames[i].toLowerCase() + "Key=";
+				String keyString = keyNames[i].toLowerCase().replace(" ", "_") + "Key=";
 				bw.write(keyString + keys[i]);
 				bw.newLine();
 			}
@@ -130,21 +144,29 @@ public class Config {
 					case "confirmKey": keyNum = wKey; break;
 					case "cancelKey": keyNum = sKey; break;
 					case "menuKey": keyNum = dKey; break;
-					case "extraKey": keyNum = aKey; break;
+					case "swapKey": keyNum = aKey; break;
 					case "screenshotKey": keyNum = screenshotKey; break;
 					case "speedupKey": keyNum = speedupKey; break;
 					case "ctrlKey": keyNum = ctrlKey; break;
 					case "tooltipsKey": keyNum = tooltipsKey; break;
 					case "backspaceKey": keyNum = backspaceKey; break;
+					case "hotkey_1Key": keyNum = hotkey1; break;
+					case "hotkey_2Key": keyNum = hotkey2; break;
+					case "hotkey_3Key": keyNum = hotkey3; break;
+					case "hotkey_4Key": keyNum = hotkey4; break;
+					case "hotkey_5Key": keyNum = hotkey5; break;
 					}
 					if (keyNum >= 0) {
+						if (pendingKeys == null) {
+							pendingKeys = Arrays.copyOf(keys, keys.length);
+						}
 						setKeybind(keyNum, intValue);
 					}
 				} catch (NumberFormatException e) {
 					System.err.println("Invalid config value: " + line);
 				}
-				
 			}
+			setKeys();
 			
 			br.close();
 		} catch (IOException e) {

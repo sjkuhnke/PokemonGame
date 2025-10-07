@@ -20,6 +20,7 @@ import util.SaveManager;
 public class KeyHandler implements KeyListener {
 
 	public boolean upPressed, downPressed, leftPressed, rightPressed, sPressed, wPressed, dPressed, aPressed, tabPressed, shiftPressed, ctrlPressed, kUpPressed, kDownPressed, kLeftPressed, kRightPressed, kSPressed, kWPressed, kDPressed, kAPressed;
+	public boolean hotkey1Pressed, hotkey2Pressed, hotkey3Pressed, hotkey4Pressed, hotkey5Pressed;
 	
 	GamePanel gp;
 	Config config;
@@ -137,6 +138,12 @@ public class KeyHandler implements KeyListener {
             takeScreenshot();
             resetKeys(true);
         }
+		
+		if (code == gp.config.keys[gp.config.hotkey1]) hotkey1Pressed = true;
+		if (code == gp.config.keys[gp.config.hotkey2]) hotkey2Pressed = true;
+		if (code == gp.config.keys[gp.config.hotkey3]) hotkey3Pressed = true;
+		if (code == gp.config.keys[gp.config.hotkey4]) hotkey4Pressed = true;
+		if (code == gp.config.keys[gp.config.hotkey5]) hotkey5Pressed = true;
 	}
 
 	@Override
@@ -185,6 +192,12 @@ public class KeyHandler implements KeyListener {
 		if (code == config.keys[config.ctrlKey]) {
 			ctrlPressed = false;
 		}
+		
+		if (code == gp.config.keys[gp.config.hotkey1]) hotkey1Pressed = false;
+		if (code == gp.config.keys[gp.config.hotkey2]) hotkey2Pressed = false;
+		if (code == gp.config.keys[gp.config.hotkey3]) hotkey3Pressed = false;
+		if (code == gp.config.keys[gp.config.hotkey4]) hotkey4Pressed = false;
+		if (code == gp.config.keys[gp.config.hotkey5]) hotkey5Pressed = false;
 	}
 	
 	private void handleRebind(int newKey) {
@@ -448,16 +461,18 @@ public class KeyHandler implements KeyListener {
 				if ((gp.ui.subState == 2 || gp.ui.subState == 3) && code == config.keys[config.dKey]) {
 					dPressed = true;
 				} else {
-					if (gp.ui.subState == 7) { // settings
-						gp.config.saveConfig();
+					if (gp.ui.subState != 7) { // settings
+						gp.ui.settingsState = 0;
+						gp.ui.subState = 0;
+						gp.ui.partySelectedNum = -1;
+						gp.ui.selectedBagNum = -1;
+						gp.ui.partyNum = 0;
+						gp.ui.commandNum = 0;
+						gp.ui.partySelectedItem = -1;
+					} else {
+						if (code == config.keys[config.dKey]) dPressed = true;
+						if (code == config.keys[config.sKey]) sPressed = true;
 					}
-					gp.ui.settingsState = 0;
-					gp.ui.subState = 0;
-					gp.ui.partySelectedNum = -1;
-					gp.ui.selectedBagNum = -1;
-					gp.ui.partyNum = 0;
-					gp.ui.commandNum = 0;
-					gp.ui.partySelectedItem = -1;
 				}
 			} else if (gp.ui.subState == 8) { // Pokemon summary move info screen
 				if (code == config.keys[config.sKey] && gp.ui.nicknaming < 0) {
@@ -504,7 +519,7 @@ public class KeyHandler implements KeyListener {
 					if (gp.ui.commandNum > 0) {
 						gp.ui.commandNum--;
 					}
-				} else {
+				} else if (gp.ui.bagState == 0 || gp.ui.bagState == 1 || gp.ui.bagState == 3) {
 					int amt = ctrlPressed ? 5 : 1;
 					gp.ui.bagNum[gp.ui.currentPocket - 1] -= amt;
 					if (gp.ui.bagNum[gp.ui.currentPocket - 1] <= 0) {
@@ -538,7 +553,7 @@ public class KeyHandler implements KeyListener {
 					if (gp.ui.commandNum < SortType.getMaxSortOptions(gp.ui.currentPocket) - 1) {
 						gp.ui.commandNum++;
 					}
-				} else {
+				} else if (gp.ui.bagState == 0 || gp.ui.bagState == 1 || gp.ui.bagState == 3) {
 					int amt = ctrlPressed ? 5 : 1;
 					if (gp.ui.currentItems.size() > 0) {
 						gp.ui.bagNum[gp.ui.currentPocket - 1] += amt;
@@ -962,6 +977,11 @@ public class KeyHandler implements KeyListener {
 		kWPressed = false;
 		kDPressed = false;
 		kAPressed = false;
+		hotkey1Pressed = false;
+		hotkey2Pressed = false;
+		hotkey3Pressed = false;
+		hotkey4Pressed = false;
+		hotkey5Pressed = false;
 	}
 	
 	 private void takeScreenshot() {
