@@ -25,16 +25,17 @@ public class Config {
 	public int sKey = 5;
 	public int dKey = 6;
 	public int aKey = 7;
-	public int hotkey1 = 8;
-	public int hotkey2 = 9;
-	public int hotkey3 = 10;
-	public int hotkey4 = 11;
-	public int hotkey5 = 12;
-	public int screenshotKey = 13;
-	public int speedupKey = 14;
-	public int ctrlKey = 15;
-	public int tooltipsKey = 16;
-	public int backspaceKey = 17;
+	public int calcKey = 8;
+	public int hotkey1 = 9;
+	public int hotkey2 = 10;
+	public int hotkey3 = 11;
+	public int hotkey4 = 12;
+	public int hotkey5 = 13;
+	public int screenshotKey = 14;
+	public int speedupKey = 15;
+	public int ctrlKey = 16;
+	public int tooltipsKey = 17;
+	public int backspaceKey = 18;
 	
 	public final String[] keyNames;
 	public int[] keys;
@@ -43,12 +44,12 @@ public class Config {
 	
 	public Config(GamePanel gp) {
 		this.gp = gp;
-		keyNames = new String[] {"Up", "Down", "Left", "Right", "Confirm", "Cancel", "Menu", "Swap",
+		keyNames = new String[] {"Up", "Down", "Left", "Right", "Confirm", "Cancel", "Menu", "Swap", "Calc",
 				"Hotkey 1", "Hotkey 2", "Hotkey 3", "Hotkey 4", "Hotkey 5",
 				"Screenshot", "Speedup", "Control", "Tooltips", "Backspace",
 				};
 		keys = new int[] {KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_W,
-				KeyEvent.VK_S, KeyEvent.VK_D, KeyEvent.VK_A,
+				KeyEvent.VK_S, KeyEvent.VK_D, KeyEvent.VK_A, KeyEvent.VK_C,
 				KeyEvent.VK_1, KeyEvent.VK_2, KeyEvent.VK_3, KeyEvent.VK_4, KeyEvent.VK_5,
 				KeyEvent.VK_ENTER, KeyEvent.VK_TAB, KeyEvent.VK_CONTROL, KeyEvent.VK_SHIFT, KeyEvent.VK_BACK_SPACE,
 				};
@@ -155,6 +156,7 @@ public class Config {
 					case "hotkey_3Key": keyNum = hotkey3; break;
 					case "hotkey_4Key": keyNum = hotkey4; break;
 					case "hotkey_5Key": keyNum = hotkey5; break;
+					case "calcKey": keyNum = calcKey; break;
 					}
 					if (keyNum >= 0) {
 						if (pendingKeys == null) {

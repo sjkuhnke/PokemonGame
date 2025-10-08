@@ -11,15 +11,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 
-import pokemon.Bag.SortType;
 import pokemon.Item;
 import pokemon.Pokemon;
-import pokemon.Task;
 import util.SaveManager;
 
 public class KeyHandler implements KeyListener {
 
-	public boolean upPressed, downPressed, leftPressed, rightPressed, sPressed, wPressed, dPressed, aPressed, tabPressed, shiftPressed, ctrlPressed, kUpPressed, kDownPressed, kLeftPressed, kRightPressed, kSPressed, kWPressed, kDPressed, kAPressed;
+	public boolean upPressed, downPressed, leftPressed, rightPressed, sPressed, wPressed, dPressed, aPressed, tabPressed, shiftPressed, ctrlPressed, calcPressed;
 	public boolean hotkey1Pressed, hotkey2Pressed, hotkey3Pressed, hotkey4Pressed, hotkey5Pressed;
 	
 	GamePanel gp;
@@ -43,46 +41,14 @@ public class KeyHandler implements KeyListener {
 			return;
 		}
 		
-		handleKeyStrokes(code);
-		
-		if (gp.ui.showMessage) {
-			messageState(code);
-		} else if (gp.gameState == GamePanel.PLAY_STATE) {
-			playState(code);
-		} else if (gp.gameState == GamePanel.DIALOGUE_STATE) {
-			dialogueState(code);
-		} else if (gp.gameState == GamePanel.MENU_STATE) {
-			menuState(code);
-		} else if (gp.gameState == GamePanel.SHOP_STATE) {
-			shopState(code);
-		} else if (gp.gameState == GamePanel.STAR_SHOP_STATE) {
-			starShopState(code);
-		} else if (gp.gameState == GamePanel.PRIZE_STATE) {
+		if (gp.gameState == GamePanel.PRIZE_STATE) {
 			prizeState(code);
-		} else if (gp.gameState == GamePanel.NURSE_STATE) {
-			nurseState(code);
 		} else if (gp.gameState == GamePanel.BATTLE_STATE) {
 			battleState(code);
 		} else if (gp.gameState == GamePanel.SIM_BATTLE_STATE) {
 			simBattleState(code);
-		} else if (gp.gameState == GamePanel.USE_ITEM_STATE) {
-			useItemState(code);
-		} else if (gp.gameState == GamePanel.USE_REPEL_STATE) {
-			useRepelState(code);
-		} else if (gp.gameState == GamePanel.RARE_CANDY_STATE) {
-			useRareCandyState(code);
-		} else if (gp.gameState == GamePanel.TASK_STATE) {
-			taskState(code);
 		} else if (gp.gameState == GamePanel.BOX_STATE) {
 			boxState(code);
-		} else if (gp.gameState == GamePanel.DEX_NAV_STATE) {
-			dexNavState(code);
-		} else if (gp.gameState == GamePanel.LETTER_STATE) {
-			letterState(code);
-		} else if (gp.gameState == GamePanel.STARTER_STATE) {
-			starterMachineState(code);
-		} else if (gp.gameState == GamePanel.COIN_STATE) {
-			coinState(code);
 		}
 		
 		if (!gp.ui.showMessage) {
@@ -98,7 +64,9 @@ public class KeyHandler implements KeyListener {
 			if (code == config.keys[config.rightKey]) {
 				rightPressed = true;
 			}
-			
+			if (code == config.keys[config.aKey]) {
+				aPressed = true;
+			}
 			if (gp.battleUI.nicknaming == 1) {
 				if (code == config.keys[config.backspaceKey]) {
 					gp.battleUI.handleBackspace();
@@ -122,6 +90,18 @@ public class KeyHandler implements KeyListener {
 			}
 		}
 		
+		if (code == config.keys[config.dKey]) {
+			dPressed = true;
+		}
+		
+		if (code == config.keys[config.sKey]) {
+			sPressed = true;
+		}
+		
+		if (code == config.keys[config.wKey]) {
+			wPressed = true;
+		}
+		
 		if (code == config.keys[config.speedupKey]) {
 			tabPressed = true;
 		}
@@ -132,6 +112,10 @@ public class KeyHandler implements KeyListener {
 		
 		if (code == config.keys[config.ctrlKey]) {
 			ctrlPressed = true;
+		}
+		
+		if (code == config.keys[config.calcKey]) {
+			calcPressed = true;
 		}
 		
 		if (code == config.keys[config.screenshotKey]) {
@@ -153,35 +137,27 @@ public class KeyHandler implements KeyListener {
 		
 		if (code == config.keys[config.upKey]) {
 			upPressed = false;
-			kUpPressed = false;
 		}
 		if (code == config.keys[config.downKey]) {
 			downPressed = false;
-			kDownPressed = false;
 		}
 		if (code == config.keys[config.leftKey]) {
 			leftPressed = false;
-			kLeftPressed = false;
 		}
 		if (code == config.keys[config.rightKey]) {
 			rightPressed = false;
-			kRightPressed = false;
 		}
 		if (code == config.keys[config.dKey]) {
 			dPressed = false;
-			kDPressed = false;
 		}
 		if (code == config.keys[config.sKey]) {
 			sPressed = false;
-			kSPressed = false;
 		}
 		if (code == config.keys[config.wKey]) {
 			wPressed = false;
-			kWPressed = false;
 		}
 		if (code == config.keys[config.aKey]) {
 			aPressed = false;
-			kAPressed = false;
 		}
 		if (code == config.keys[config.speedupKey]) {
 			tabPressed = false;
@@ -191,6 +167,9 @@ public class KeyHandler implements KeyListener {
 		}
 		if (code == config.keys[config.ctrlKey]) {
 			ctrlPressed = false;
+		}
+		if (code == config.keys[config.calcKey]) {
+			calcPressed = false;
 		}
 		
 		if (code == gp.config.keys[gp.config.hotkey1]) hotkey1Pressed = false;
@@ -205,33 +184,6 @@ public class KeyHandler implements KeyListener {
 		
 		gp.ui.waitingForKey = false;
 		gp.ui.rebindingControl = -1;
-	}
-	
-	private void playState(int code) {
-		if (code == config.keys[config.upKey]) {
-			upPressed = true;
-		}
-		if (code == config.keys[config.downKey]) {
-			downPressed = true;
-		}
-		if (code == config.keys[config.leftKey]) {
-			leftPressed = true;
-		}
-		if (code == config.keys[config.rightKey]) {
-			rightPressed = true;
-		}
-		if (code == config.keys[config.dKey]) {
-			dPressed = true;
-		}
-		if (code == config.keys[config.sKey]) {
-			sPressed = true;
-		}
-		if (code == config.keys[config.wKey]) {
-			wPressed = true;
-		}
-		if (code == config.keys[config.aKey]) {
-			aPressed = true;
-		}
 	}
 	
 	private void battleState(int code) {
@@ -427,295 +379,7 @@ public class KeyHandler implements KeyListener {
 				
 			}
 		}
-	}
-	
-	private void dialogueState(int code) {
-		if (code == config.keys[config.wKey] || code == config.keys[config.sKey]) {
-			gp.gameState = GamePanel.PLAY_STATE;
-		}
-	}
-	
-	private void messageState(int code) {
-		if (gp.ui.messageSkippable() && (code == config.keys[config.wKey] || code == config.keys[config.sKey])) {
-			gp.ui.showMessage = false;
-			if (gp.gameState == GamePanel.USE_ITEM_STATE) {
-				gp.ui.goBackInBag();
-			} else if (gp.gameState == GamePanel.RARE_CANDY_STATE || gp.gameState == GamePanel.TASK_STATE) {
-				if (gp.ui.currentTask != null && gp.ui.currentTask.type != Task.SHAKE) {
-					gp.ui.currentTask = null;
-				}
-			}
-		}
-		if ((gp.gameState == GamePanel.BOX_STATE || (gp.gameState == GamePanel.MENU_STATE && gp.ui.subState == 2))
-				&& code == config.keys[config.dKey]) {
-			gp.ui.showMessage = false;
-		}
-	}
-	
-	private void menuState(int code) {
-		if (code == config.keys[config.dKey] || code == config.keys[config.sKey]) {
-			if (gp.ui.subState == 0) {
-				gp.gameState = GamePanel.PLAY_STATE;
-			}
-			if (gp.ui.subState > 1 && gp.ui.subState < 8 && gp.ui.bagState == 0) { // Menus for handling the 7 top menu options
-				if ((gp.ui.subState == 2 || gp.ui.subState == 3) && code == config.keys[config.dKey]) {
-					dPressed = true;
-				} else {
-					if (gp.ui.subState != 7) { // settings
-						gp.ui.settingsState = 0;
-						gp.ui.subState = 0;
-						gp.ui.partySelectedNum = -1;
-						gp.ui.selectedBagNum = -1;
-						gp.ui.partyNum = 0;
-						gp.ui.commandNum = 0;
-						gp.ui.partySelectedItem = -1;
-					} else {
-						if (code == config.keys[config.dKey]) dPressed = true;
-						if (code == config.keys[config.sKey]) sPressed = true;
-					}
-				}
-			} else if (gp.ui.subState == 8) { // Pokemon summary move info screen
-				if (code == config.keys[config.sKey] && gp.ui.nicknaming < 0) {
-					if (gp.ui.moveSummaryNum == -1) {
-						gp.ui.subState = 2;
-					} else {
-						gp.ui.moveSwapNum = -1;
-						gp.ui.moveSummaryNum = -1;
-					}
-				} else if (code == config.keys[config.dKey]) {
-					dPressed = true;
-				}
-			} else if (gp.ui.subState == 1) { // Pokedex
-				sPressed = true;
-			} else if (gp.ui.bagState > 0) { // Bag option menu screen
-				gp.ui.bagState = 0;
-				gp.ui.commandNum = 0;
-				gp.ui.sellAmt = 1;
-			}
-			
-		}
-		if (code == config.keys[config.wKey]) {
-			wPressed = true;
-		}
-		if (code == config.keys[config.aKey]) {
-			aPressed = true;
-		}
-		
-		if (code == config.keys[config.upKey]) {
-			if (gp.ui.subState == 0) { // options top
-				gp.ui.menuNum--;
-				if (gp.ui.menuNum < 0) {
-					gp.ui.menuNum = gp.ui.maxMenuNum-1;
-				}
-			} else if (gp.ui.subState == 3) { // bag
-				if (gp.ui.bagState == 1) { // item options
-					if (gp.ui.commandNum > 0) {
-						gp.ui.commandNum--;
-					}
-				} else if (gp.ui.bagState == 2) { // sell
-					gp.ui.sellAmt++;
-					if (gp.ui.sellAmt > gp.ui.currentItems.get(gp.ui.bagNum[gp.ui.currentPocket - 1]).getMaxSell()) gp.ui.sellAmt = 1;
-				} else if (gp.ui.bagState == 4) { // sort
-					if (gp.ui.commandNum > 0) {
-						gp.ui.commandNum--;
-					}
-				} else if (gp.ui.bagState == 0 || gp.ui.bagState == 1 || gp.ui.bagState == 3) {
-					int amt = ctrlPressed ? 5 : 1;
-					gp.ui.bagNum[gp.ui.currentPocket - 1] -= amt;
-					if (gp.ui.bagNum[gp.ui.currentPocket - 1] <= 0) {
-						gp.ui.bagNum[gp.ui.currentPocket - 1] = 0;
-					}
-				}
-			} else if (gp.ui.subState == 4) { // save
-				gp.ui.commandNum = 1 - gp.ui.commandNum;
-			} else if (gp.ui.subState == 7 && gp.ui.settingsState == 0) { // settings
-				gp.ui.commandNum--;
-				if (gp.ui.commandNum < 0) {
-					gp.ui.commandNum = gp.ui.maxSettingsNum;
-				}
-			}
-		}
-		if (code == config.keys[config.downKey]) {
-			if (gp.ui.subState == 0) { // options top
-				gp.ui.menuNum++;
-				if (gp.ui.menuNum > gp.ui.maxMenuNum-1) {
-					gp.ui.menuNum = 0;
-				}
-			} else if (gp.ui.subState == 3) { // bag
-				if (gp.ui.bagState == 1) { // item options
-					if (gp.ui.commandNum < 2) {
-						gp.ui.commandNum++;
-					}
-				} else if (gp.ui.bagState == 2) { // sell
-					gp.ui.sellAmt--;
-					if (gp.ui.sellAmt < 1) gp.ui.sellAmt = gp.ui.currentItems.get(gp.ui.bagNum[gp.ui.currentPocket - 1]).getMaxSell();
-				} else if (gp.ui.bagState == 4) { // sort
-					if (gp.ui.commandNum < SortType.getMaxSortOptions(gp.ui.currentPocket) - 1) {
-						gp.ui.commandNum++;
-					}
-				} else if (gp.ui.bagState == 0 || gp.ui.bagState == 1 || gp.ui.bagState == 3) {
-					int amt = ctrlPressed ? 5 : 1;
-					if (gp.ui.currentItems.size() > 0) {
-						gp.ui.bagNum[gp.ui.currentPocket - 1] += amt;
-						if (gp.ui.bagNum[gp.ui.currentPocket - 1] >= gp.ui.currentItems.size() - 1) {
-							gp.ui.bagNum[gp.ui.currentPocket - 1] = gp.ui.currentItems.size() - 1;
-						}
-					}
-				}
-			} else if (gp.ui.subState == 4) { // save
-				gp.ui.commandNum = 1 - gp.ui.commandNum;
-			} else if (gp.ui.subState == 7 && gp.ui.settingsState == 0) { // settings
-				gp.ui.commandNum++;
-				if (gp.ui.commandNum > gp.ui.maxSettingsNum) {
-					gp.ui.commandNum = 0;
-				}
-			}
-		}
-		if (code == config.keys[config.leftKey]) {
-			if (gp.ui.subState == 3) { // bag
-				if (gp.ui.bagState == 2) { // sell
-					int max = gp.ui.currentItems.get(gp.ui.bagNum[gp.ui.currentPocket - 1]).getMaxSell();
-					gp.ui.sellAmt -= max > 10 ? 10 : 1;
-					if (gp.ui.sellAmt < 1) gp.ui.sellAmt += max;
-				} else if (gp.ui.bagState == 0) {
-					gp.ui.currentPocket--;
-					if (gp.ui.currentPocket < Item.MEDICINE) {
-						gp.ui.currentPocket = Item.KEY_ITEM;
-					}
-					gp.ui.selectedBagNum = -1;
-					gp.ui.currentItems = gp.player.p.getItems(gp.ui.currentPocket);
-				}
-			} else if (gp.ui.subState == 7 && gp.ui.settingsState == 0) { // settings
-				if (gp.ui.commandNum == 0 && gp.music.volumeScale > 0) {
-					gp.music.volumeScale--;
-					gp.music.checkVolume();
-				} else if (gp.ui.commandNum == 1 && gp.sfx.volumeScale > 0) {
-					gp.sfx.volumeScale--;
-					gp.sfx.checkVolume();
-				}
-			}
-		}
-		if (code == config.keys[config.rightKey]) {
-			if (gp.ui.subState == 3) { // bag
-				if (gp.ui.bagState == 2) { // sell
-					int max = gp.ui.currentItems.get(gp.ui.bagNum[gp.ui.currentPocket - 1]).getMaxSell();
-					gp.ui.sellAmt += max > 10 ? 10 : 1;
-					if (gp.ui.sellAmt > max) gp.ui.sellAmt -= max;
-				} else if (gp.ui.bagState == 0) {
-					gp.ui.currentPocket++;
-					if (gp.ui.currentPocket > Item.KEY_ITEM) {
-						gp.ui.currentPocket = Item.MEDICINE;
-					}
-					gp.ui.selectedBagNum = -1;
-					gp.ui.currentItems = gp.player.p.getItems(gp.ui.currentPocket);
-				}
-			} else if (gp.ui.subState == 7 && gp.ui.settingsState == 0) { // settings
-				if (gp.ui.commandNum == 0 && gp.music.volumeScale < 5) {
-					gp.music.volumeScale++;
-					gp.music.checkVolume();
-				} else if (gp.ui.commandNum == 1 && gp.sfx.volumeScale < 5) {
-					gp.sfx.volumeScale++;
-					gp.sfx.checkVolume();
-				}
-			}
-		}
-	}
-	
-	private void shopState(int code) {
-		if (code == config.keys[config.wKey]) {
-			wPressed = true;
-		}
-		
-		if (gp.ui.subState == 0) {
-			if (code == config.keys[config.dKey] || code == config.keys[config.sKey]) {
-				gp.gameState = GamePanel.PLAY_STATE;
-				gp.ui.subState = 0;
-				gp.ui.commandNum = 0;
-			}
-			if (code == config.keys[config.upKey] || code == config.keys[config.downKey]) {
-				gp.ui.commandNum = 1 - gp.ui.commandNum;
-			}
-		}
-		if (gp.ui.subState > 0) {
-			if (code == config.keys[config.dKey] || code == config.keys[config.sKey]) {
-				if (gp.ui.premier > 0) {
-					gp.setTaskState();
-					Task.addTask(Task.TEXT, "Thanks for being a loyal customer! Here, this is on us!");
-					String itemName = gp.ui.premier > 1 ? "s" : "";
-					Task t = Task.addTask(Task.ITEM, "You got " + gp.ui.premier + " " + Item.PREMIER_BALL.toString() + itemName + "!", gp.ui.premier);
-					t.item = Item.PREMIER_BALL;
-					gp.ui.premier = 0;
-				}
-				gp.ui.subState = 0;
-				gp.ui.currentDialogue = gp.ui.npc.dialogues[0];
-			}
-			if (code == config.keys[config.upKey]) {
-				if (gp.ui.slotRow > 0) {
-					gp.ui.slotRow--;
-				}
-			}
-			if (code == config.keys[config.downKey]) {
-				if (gp.ui.slotRow < UI.MAX_SHOP_ROW) {
-					gp.ui.slotRow++;
-				}
-			}
-			if (code == config.keys[config.leftKey]) {
-				if (gp.ui.slotCol > 0) {
-					gp.ui.slotCol--;
-				}
-			}
-			if (code == config.keys[config.rightKey]) {
-				if (gp.ui.slotCol < UI.MAX_SHOP_COL - 1) {
-					gp.ui.slotCol++;
-				}
-			}
-		}
-	}
-	
-	private void starShopState(int code) {
-		if (code == config.keys[config.wKey]) {
-			wPressed = true;
-		}
-		
-		if (gp.ui.subState == 0) {
-			if (code == config.keys[config.dKey] || code == config.keys[config.sKey]) {
-				gp.gameState = GamePanel.PLAY_STATE;
-				gp.ui.subState = 0;
-				gp.ui.commandNum = 0;
-			}
-			if (code == config.keys[config.upKey]) {
-				gp.ui.commandNum--;
-				if (gp.ui.commandNum < 0) {
-					gp.ui.commandNum = 2;
-				}
-			}
-			if (code == config.keys[config.downKey]) {
-				gp.ui.commandNum++;
-				if (gp.ui.commandNum > 2) {
-					gp.ui.commandNum = 0;
-				}
-			}
-		}
-		if (gp.ui.subState > 0) {
-			if (code == config.keys[config.dKey] || code == config.keys[config.sKey]) {
-				gp.ui.subState = 0;
-				gp.ui.currentDialogue = gp.ui.npc.dialogues[0];
-			}
-			if (code == config.keys[config.upKey]) {
-				upPressed = true;
-			}
-			if (code == config.keys[config.downKey]) {
-				downPressed = true;
-			}
-			if (code == config.keys[config.leftKey]) {
-				leftPressed = true;
-			}
-			if (code == config.keys[config.rightKey]) {
-				rightPressed = true;
-			}
-		}
-	}
-	
+	}	
 
 	private void prizeState(int code) {
 		if (code == config.keys[config.wKey]) {
@@ -816,144 +480,17 @@ public class KeyHandler implements KeyListener {
 		}
 		
 		if (code == config.keys[config.aKey]) {
-			if (ctrlPressed) {
-				ctrlPressed = false;
-				Pokemon[] cBox = gp.ui.gauntlet ? gp.player.p.gauntletBox : gp.player.p.boxes[gp.player.p.currentBox];
-				Item.useCalc(gp.player.p.getCurrent(), cBox, null, true);
-			} else {
-				aPressed = true;
-			}
+			aPressed = true;
 		}
 		
 		if (code == config.keys[config.dKey]) {
 			dPressed = true;
 		}
-	}
-	
-	private void nurseState(int code) {
-		if (code == config.keys[config.dKey] || code == config.keys[config.sKey]) {
-			gp.gameState = GamePanel.PLAY_STATE;
-			gp.ui.subState = 0;
-			gp.ui.commandNum = 0;
-		}
-		if (code == config.keys[config.wKey]) {
-			wPressed = true;
-		}
 		
-		if (gp.ui.subState == 0) {
-			if (code == config.keys[config.upKey] || code == config.keys[config.downKey]) {
-				gp.ui.commandNum = 1 - gp.ui.commandNum;
-			}
-		}
-	}
-	
-	private void useItemState(int code) {
-		if (code == config.keys[config.wKey]) {
-			wPressed = true;
-		}
-		
-		if (code == config.keys[config.dKey] || code == config.keys[config.sKey]) {
-			if (gp.ui.showMoveOptions || gp.ui.showIVOptions || gp.ui.showStatusOptions) {
-				gp.ui.moveOption = -1;
-				gp.ui.showIVOptions = false;
-				gp.ui.showMoveOptions = false;
-				gp.ui.showStatusOptions = false;
-			} else {
-				gp.ui.goBackInBag();
-			}
-		}
-	}
-	
-	private void useRepelState(int code) {
-		if (code == config.keys[config.dKey] || code == config.keys[config.sKey]) {
-			gp.gameState = GamePanel.PLAY_STATE;
-			gp.ui.commandNum = 0;
-		}
-		if (code == config.keys[config.wKey]) {
-			wPressed = true;
-		}
-		
-		if (code == config.keys[config.upKey] || code == config.keys[config.downKey]) {
-			gp.ui.commandNum = 1 - gp.ui.commandNum;
-		}
-	}
-	
-	private void useRareCandyState(int code) {
-		if (code == config.keys[config.dKey] || code == config.keys[config.sKey]) {
-			if (gp.ui.currentTask == null) {
-				gp.ui.goBackInBag();
-			}
-		}
-		
-		if (code == config.keys[config.wKey]) {
-			wPressed = true;
-		}
-		
-	}
-	
-	private void taskState(int code) {
-		if (code == config.keys[config.dKey]) {
-			if (gp.ui.currentTask == null && gp.ui.tasks.isEmpty() && gp.ui.checkTasks) {
-				gp.gameState = GamePanel.PLAY_STATE;
-			} else {
-				dPressed = true;
-			}
-		}
-		
-		if (code == config.keys[config.sKey]) {
-			if (gp.ui.currentTask == null && gp.ui.tasks.isEmpty() && gp.ui.checkTasks) {
-				gp.gameState = GamePanel.PLAY_STATE;
-			} else {
-				sPressed = true;
-			}
-		}
-		
-		if (code == config.keys[config.aKey]) {
-			aPressed = true;
-		}
-		
-		if (code == config.keys[config.wKey]) {
-			wPressed = true;
-		}
-	}
-	
-	private void dexNavState(int code) {
-		if (code == config.keys[config.sKey]) {
-			gp.ui.goBackInBag();
-		}
-	}
-	
-	private void letterState(int code) {
-		if (code == config.keys[config.wKey]) {
-			wPressed = true;
-		}
-		if (code == config.keys[config.sKey]) {
-			gp.ui.goBackInBag();
-		}
-	}
-	
-	private void starterMachineState(int code) {
-		if (code == config.keys[config.wKey]) {
-			wPressed = true;
-		}
-		if (code == config.keys[config.sKey]) {
-			if (gp.ui.starterConfirm) {
-				gp.ui.starterConfirm = false;
-				gp.ui.commandNum = 0;
-			} else {
-				gp.gameState = GamePanel.PLAY_STATE;
-				gp.ui.starter = 0;
-			}
-		}
-	}
-	
-	private void coinState(int code) {
-		if (code == config.keys[config.wKey]) {
-			wPressed = true;
-		}
-		if (code == config.keys[config.sKey]) {
-			gp.gameState = GamePanel.PLAY_STATE;
-			gp.ui.sellAmt = 1;
+		if (calcPressed) {
+			calcPressed = false;
+			Pokemon[] cBox = gp.ui.gauntlet ? gp.player.p.gauntletBox : gp.player.p.boxes[gp.player.p.currentBox];
+			Item.useCalc(gp.player.p.getCurrent(), cBox, null, true);
 		}
 	}
 	
@@ -973,10 +510,7 @@ public class KeyHandler implements KeyListener {
 		aPressed = false;
 		ctrlPressed = false;
 		if (resetShift) shiftPressed = false;
-		kSPressed = false;
-		kWPressed = false;
-		kDPressed = false;
-		kAPressed = false;
+		calcPressed = false;
 		hotkey1Pressed = false;
 		hotkey2Pressed = false;
 		hotkey3Pressed = false;
@@ -1032,32 +566,5 @@ public class KeyHandler implements KeyListener {
             }
             return image;
         }
-    }
-    
-    private void handleKeyStrokes(int code) {
-    	if (code == config.keys[config.upKey]) {
-			kUpPressed = true;
-		}
-		if (code == config.keys[config.downKey]) {
-			kDownPressed = true;
-		}
-		if (code == config.keys[config.leftKey]) {
-			kLeftPressed = true;
-		}
-		if (code == config.keys[config.rightKey]) {
-			kRightPressed = true;
-		}
-		if (code == config.keys[config.dKey]) {
-			kDPressed = true;
-		}
-		if (code == config.keys[config.sKey]) {
-			kSPressed = true;
-		}
-		if (code == config.keys[config.wKey]) {
-			kWPressed = true;
-		}
-		if (code == config.keys[config.aKey]) {
-			kAPressed = true;
-		}
     }
 }

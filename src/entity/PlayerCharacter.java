@@ -118,6 +118,8 @@ public class PlayerCharacter extends Entity {
 					worldX += speed;
 					break;
 				}
+				
+				gp.cChecker.checkTallGrass(this);
 			} else if (speed == SPEED_2) {
 				speed = SPEED_1;
 				return;
@@ -223,6 +225,7 @@ public class PlayerCharacter extends Entity {
 					snapToTile();
 				}
 			}
+			
 			if (gp.ticks % 4 == 0 && (inTallGrass || p.surf || p.lavasurf) && !p.repel && cooldown > 2) {
 				Random r = new Random();
 				int random = r.nextInt(p.current != null && p.current.item == Item.CLEANSE_TAG ? 300 : 150);
@@ -259,6 +262,7 @@ public class PlayerCharacter extends Entity {
 		}
 		
 		if (keyH.dPressed && !ice) {
+			keyH.dPressed = false;
 			resetSpriteNum();
 			gp.gameState = GamePanel.MENU_STATE;
 		}
@@ -327,11 +331,9 @@ public class PlayerCharacter extends Entity {
 				interactWith(target, iTileIndex, p.ghost);
 			}
 		}
-		if (keyH.aPressed) {
-			if (keyH.ctrlPressed) {
-				resetSpriteNum();
-				Item.useCalc(p.getCurrent(), null, null, true);
-			}
+		if (keyH.calcPressed) {
+			keyH.calcPressed = false;
+			Item.useCalc(p.getCurrent(), null, null, true);
 		}
 		
 		checkHotkeys();

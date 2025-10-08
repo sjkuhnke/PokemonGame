@@ -504,14 +504,14 @@ public class BattleUI extends AbstractUI {
 		currentDialogue = "What will\n" + user.nickname + " do?";
 		drawDialogueScreen(false);
 		drawCalcWindow();
-		if (gp.keyH.aPressed) {
-			gp.keyH.aPressed = false;
+		if (gp.keyH.calcPressed) {
+			gp.keyH.calcPressed = false;
 			Item.useCalc(user, null, foe, true);
 		}
 		drawCatchWindow();
 		drawActionScreen(user);
 		String dText = foe.trainerOwned() ? "Foe" : commandNum < 0 && ballIndex >= 0 ? "Info" : null;
-		if (!showFoeSummary) drawToolTips("OK", "Calc", null, dText);
+		if (!showFoeSummary) drawToolTips("OK", null, null, dText, "Calc");
 	}
 
 	protected void drawUser() {
@@ -1049,8 +1049,8 @@ public class BattleUI extends AbstractUI {
 		currentDialogue = "What will\n" + user.nickname + " do?";
 		drawDialogueScreen(false);
 		drawMoves();
-		if (gp.keyH.aPressed) {
-			gp.keyH.aPressed = false;
+		if (gp.keyH.calcPressed) {
+			gp.keyH.calcPressed = false;
 			Item.useCalc(user, null, foe, true);
 		}
 		if (gp.keyH.dPressed) {
@@ -1076,7 +1076,7 @@ public class BattleUI extends AbstractUI {
 		x += gp.tileSize;
 		y += gp.tileSize * 0.75;
 		
-		ToolTip calcKey = new ToolTip(gp, "", "", gp.config.aKey);
+		ToolTip calcKey = new ToolTip(gp, "", "", gp.config.calcKey);
 		g2.drawString(calcKey.toString(), x, y);
 		
 	}
@@ -1630,7 +1630,8 @@ public class BattleUI extends AbstractUI {
 	    
 	    for (FieldEffect fe : user.getFieldEffects()) {
 	    	String effect = fe.toString();
-	    	String turns = fe.turns + "/" + fe.effect.turns;
+	    	boolean showTurns = !(fe.turns < 0 || fe.effect.turns < 0);
+	    	String turns = showTurns ? fe.turns + "/" + fe.effect.turns : "";
 	    	if (field.getHazards(user.getFieldEffects()).contains(fe)) {
 	    		int layers = field.getLayers(user.getFieldEffects(), fe.effect);
 	    		int maxLayers = 1;
@@ -1650,7 +1651,8 @@ public class BattleUI extends AbstractUI {
 
 	    for (FieldEffect fe : foe.getFieldEffects()) {
 	    	String effect = fe.toString();
-	    	String turns = fe.turns + "/" + fe.effect.turns;
+	    	boolean showTurns = !(fe.turns < 0 || fe.effect.turns < 0);
+	    	String turns = showTurns ? fe.turns + "/" + fe.effect.turns : "";
 	    	if (field.getHazards(foe.getFieldEffects()).contains(fe)) {
 	    		int layers = field.getLayers(foe.getFieldEffects(), fe.effect);
 	    		int maxLayers = 1;

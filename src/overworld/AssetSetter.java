@@ -1597,7 +1597,7 @@ public class AssetSetter {
 		
 		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 60, 44, "The Pokemon here are going feral over these berry trees. Come back later!");
 		
-		gp.npc[mapNum][index] = NPCSetup(ACTRESS_UP, 68, 63, "Woah, don't interrupt my improv sesh back here!", "Maybe my Bluebunn isn't as good of an actress as me.", 266);
+		gp.npc[mapNum][index] = NPCSetup(ACTRESS_UP, 68, 63, "Woah, don't interrupt my improv sesh back here!", "Maybe my Willolagos isn't as good of an actress as me.", 266);
 		gp.npc[mapNum][index] = NPCSetup(ATHLETE_LEFT, 34, 35, "I'm always in top shape. Can you say the same?", "Not bad... but this athlete never stays down for long.", 390);
 		gp.npc[mapNum][index] = NPCSetup(EXPLORER_DOWN, 42, 30, "Hope you're not afraid of the cold - this battle's about to freeze you out!", "You're tougher than the frostbite I've faced... I respect that.", 389);
 		
@@ -1780,8 +1780,8 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(MANIAC_UP, null, 51, 35, "", 18.3);
 		
 		mapNum = 21;
-		gp.npc[mapNum][index] = NPCSetup(GENTLEMAN_DOWN, 55, 60, "A fine battle calls for refinement and skill. Let's proceed with grace.", "Well played, my friend. A loss is but a lesson in disguise.", 56);
-		gp.npc[mapNum][index] = NPCSetup(LADY_UP, 55, 62, "Let's keep this battle civilized, but make no mistake - we plan to win.", "A surprising result... but I won't dwell on it for long.", 57);
+		gp.npc[mapNum][index] = NPCSetup(LADY_DOWN, 55, 60, "Let's keep this battle civilized, but make no mistake - we plan to win.", "A surprising result... but I won't dwell on it for long.", 56);
+		gp.npc[mapNum][index] = NPCSetup(GENTLEMAN_UP, 55, 62, "A fine battle calls for refinement and skill. Let's proceed with grace.", "Well played, my friend. A loss is but a lesson in disguise.", 57);
 		gp.npc[mapNum][index] = NPCSetup(YOUNGSTER_DOWN, 72, 52, "Ready for a lesson from someone younger than you?", "Next time, I'll wipe that smirk off your face!", 58);
 		gp.npc[mapNum][index] = NPCSetup(YOUNGSTER_UP, 72, 54, "We might be small, but our Pokemon pack a punch!", "I'll get stronger, just you wait!", 59);
 		gp.npc[mapNum][index] = NPCSetup(MAGICIAN_F_RIGHT, 73, 57, "Let's make your chances disappear in a puff of smoke!", "You may have bested us, but magic is full of surprises.", 60);
@@ -2376,12 +2376,12 @@ public class AssetSetter {
 		mapNum = 128;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(INVIS_DOWN, 55, 66, "You can't see me... but you'll feel this battle.", "So... you saw through my illusion. Impressive.", 291);
-		gp.npc[mapNum][index] = NPCSetup(INVIS_RIGHT, 49, 65, "Now you see me... oh wait - you don't!", "You may not have seen me... but you definitely beat me.", 292);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_LEFT, 49, 65, "Now you see me... oh wait - you don't!", "You may not have seen me... but you definitely beat me.", 292);
 		gp.npc[mapNum][index] = NPCSetup(INVIS_LEFT, 56, 68, "The real magic is hiding in plain sight. Ready to be amazed?", "My tricks didn't land this time... guess I need to practice the invisible encore.", 293);
 		gp.npc[mapNum][index] = NPCSetup(INVIS_RIGHT, 47, 68, "The unseen hand plays the strongest card.", "You've got good instincts. Most can't hit what they can't see.", 294);
 		gp.npc[mapNum][index] = NPCSetup(INVIS_LEFT, 52, 62, "Even shadows have power... let me show you mine.", "I fade... but I'll return with a better trick up my cloak.", 295);
 		gp.npc[mapNum][index] = NPCSetup(INVIS_DOWN, 58, 63, "Who needs a stage when the whole world's an illusion?", "Even an invisible magician has off days. You earned this one.", 296);
-		gp.npc[mapNum][index] = NPCSetup(INVIS_UP, 55, 63, "Try to follow my movements... if you can find them!", "Looks like the real trick was your skill all along.", 297);
+		gp.npc[mapNum][index] = NPCSetup(INVIS_UP, 57, 60, "Try to follow my movements... if you can find them!", "Looks like the real trick was your skill all along.", 297);
 		gp.npc[mapNum][index] = NPCSetup(INVIS_UP, 58, 60, "Silence... stillness... and then - bam! Magic!", "Foiled! I was so close to the perfect illusion...", 298);
 		gp.npc[mapNum][index] = NPCSetup(INVIS_RIGHT, 52, 60, "My magic lives between the moments you notice...", "I blinked... metaphorically, of course.", 299);
 		gp.npc[mapNum][index] = NPCSetup(INVIS_LEFT, 59, 57, "You'll never see the move that finishes you!", "And I didn't see that coming either...", 300);

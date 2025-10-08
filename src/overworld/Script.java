@@ -64,7 +64,7 @@ public class Script {
 				Task.addTask(Task.DIALOGUE, npc, "If you want to toggle which section you're in, just press the 'A' key and it will cycle through all of your sections you have installed!");
 				Task.addTask(Task.DIALOGUE, npc, "Oh and one more thing! Oh my Arceus, I can't believe I almost forgot to tell you about my favorite creation yet!");
 				Task.addTask(Task.DIALOGUE, npc, "You've always loved battling, so I made this just for you. A state of the line BATTLECALC 3000! Or you could just call it your calculator.");
-				Task.addTask(Task.DIALOGUE, npc, "It provides accurate data during a battle, just press 'A' in a battle, or 'Ctrl + A' outside, and you can check how much damage a move can do!");
+				Task.addTask(Task.DIALOGUE, npc, "It provides accurate data during or outside of a battle, just press 'C', and you can check how much damage a move can do!");
 				t = Task.addTask(Task.ITEM, "");
 				t.item = Item.CALCULATOR;
 				Task.addTask(Task.DIALOGUE, npc, "Now go out there and make me proud - and most importantly...");
