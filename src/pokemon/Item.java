@@ -107,7 +107,7 @@ public enum Item {
 	FABLE_CHARGE(396,0,0,Color.BLACK,Item.OTHER,true,"A shattered piece of the Fable Stone, which glows with ethereal hue. Wizards used them as cores for their wands, but these rare minerals have receded deep into the earth."),
 	RUSTY_BOTTLE_CAP(282,300,150,Color.BLACK,Item.OTHER,null,"Lowers an IV of choosing to 0."),
 	BOTTLE_CAP(27,1000,500,new Color(192, 192, 192),Item.OTHER,null,"Maxes out an IV of choosing."),
-	GOLD_BOTTLE_CAP(28,0,1000,new Color(255, 215, 0),Item.OTHER,null,"Maxes out all IVs of a Pokemon."),
+	GOLD_BOTTLE_CAP(28,0,2000,new Color(255, 215, 0),Item.OTHER,null,"Maxes out all IVs of a Pokemon."),
 	EUPHORIAN_GEM(19,500,250,new Color(138, 237, 255),Item.OTHER,null,"Grants a Pokemon 100 friendship points."),
 	LEAF_STONE(20,1000,500,new Color(0, 120, 20),Item.OTHER,null,"Evolves a certain species of Pokemon."),
 	FIRE_STONE(264,1000,500,new Color(176, 244, 245),Item.OTHER,null,"Evolves a certain species of Pokemon."),

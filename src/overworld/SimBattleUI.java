@@ -315,13 +315,13 @@ public class SimBattleUI extends BattleUI {
 		currentDialogue = "What will\n" + user.nickname + " do?";
 		drawDialogueScreen(false);
 		drawCalcWindow();
-		if (gp.keyH.aPressed) {
-			gp.keyH.aPressed = false;
+		if (gp.keyH.calcPressed) {
+			gp.keyH.calcPressed = false;
 			Item.useCalc(user, null, foe, true);
 		}
 		drawActionScreen(user);
 		String dText = foe.trainerOwned() ? "Foe" : null;
-		if (!showFoeSummary) drawToolTips("OK", "Calc", "Auto", dText);
+		if (!showFoeSummary) drawToolTips("OK", null, "Auto", dText, "Calc");
 	}
 	
 	@Override

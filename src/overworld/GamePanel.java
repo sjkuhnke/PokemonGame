@@ -650,7 +650,7 @@ public class GamePanel extends JPanel implements Runnable {
 		moveTips.add(new ToolTip(this, "Move", "", config.upKey, config.leftKey, config.downKey, config.rightKey));
 		moveTips.add(new ToolTip(this, "Speedup", "", config.speedupKey));
 		moveTips.add(new ToolTip(this, "Screenshot", "", config.screenshotKey));
-		if (canCalc) moveTips.add(new ToolTip(this, "Calc", "+", config.ctrlKey, config.aKey));
+		if (canCalc) moveTips.add(new ToolTip(this, "Calc", "", config.calcKey));
 		
 		y = tileSize * 9;
 		ui.drawToolTipBar(x, y, moveTips);

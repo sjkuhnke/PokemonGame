@@ -223,7 +223,14 @@ public class UI extends AbstractUI {
 		
 		if (gp.gameState == GamePanel.DIALOGUE_STATE) {
 			drawDialogueScreen(true);
-			drawToolTips("OK", null, null, null);
+			
+			if (gp.keyH.wPressed || gp.keyH.sPressed) {
+				gp.keyH.wPressed = false;
+				gp.keyH.sPressed = false;
+				gp.gameState = GamePanel.PLAY_STATE;
+			}
+			
+			drawToolTips("OK", null, "OK", null);
 		}
 		
 		if (gp.gameState == GamePanel.DEX_NAV_STATE) {
@@ -319,8 +326,23 @@ public class UI extends AbstractUI {
 		
 		if (showMessage) {
 			drawDialogueScreen(above);
+			
 			if (messageSkippable()) {
-				drawToolTips("OK", null, null, null);
+				if (gp.keyH.wPressed || gp.keyH.sPressed || gp.keyH.dPressed) {
+					gp.keyH.wPressed = false;
+					gp.keyH.sPressed = false;
+					gp.keyH.dPressed = false;
+					showMessage = false;
+					if (gp.gameState == GamePanel.USE_ITEM_STATE) {
+						goBackInBag();
+					} else if (gp.gameState == GamePanel.RARE_CANDY_STATE || gp.gameState == GamePanel.TASK_STATE) {
+						if (currentTask != null && currentTask.type != Task.SHAKE) {
+							currentTask = null;
+						}
+					}
+				}
+				
+				drawToolTips("OK", null, "OK", "OK");
 			}
 		}
 		
@@ -1767,7 +1789,7 @@ public class UI extends AbstractUI {
 							Pokemon.loadCompetitiveSets();
 						});
 					}
-					Task.addTask(Task.ODDS, "Calculating odds...");
+					Task.addTask(Task.ODDS, "ulating odds...");
 					currentTask = null;
 					break;
 				case 5: // guy eddie
@@ -3157,8 +3179,8 @@ public class UI extends AbstractUI {
 		}
 		
 		if (gp.keyH.dPressed) {
+			gp.keyH.dPressed = false;
 			if (!showBoxSummary && !release && nicknaming < 0) { // in idle box/party
-				gp.keyH.dPressed = false;
 				if (gp.keyH.ctrlPressed) {
 					if (!showBoxParty) { // party is closed
 						if (itemSwapP == null) { // no pokemon has been selected to swap items yet
@@ -3263,6 +3285,14 @@ public class UI extends AbstractUI {
 		}
 		
 		drawTask();
+		
+		if (gp.keyH.sPressed || gp.keyH.dPressed) {
+			gp.keyH.sPressed = false;
+			gp.keyH.dPressed = false;
+			if (currentTask == null && tasks.isEmpty() && checkTasks) {
+				gp.gameState = GamePanel.PLAY_STATE;
+			}
+		}
 	}
 
 	private void rareCandyState() {
@@ -3290,6 +3320,12 @@ public class UI extends AbstractUI {
 			}
 		} else {
 			drawTask();
+		}
+		
+		if (gp.keyH.sPressed || gp.keyH.dPressed) {
+			gp.keyH.sPressed = false;
+			gp.keyH.dPressed = false;
+			goBackInBag();
 		}
 	}
 	
@@ -3585,6 +3621,18 @@ public class UI extends AbstractUI {
 				gp.player.p.useItem(gp.player.p.team[partyNum], currentItem, gp);	
 			}
 		}
+		if (gp.keyH.sPressed || gp.keyH.dPressed) {
+			gp.keyH.sPressed = false;
+			gp.keyH.dPressed = false;
+			if (showMoveOptions || showIVOptions || showStatusOptions) {
+				moveOption = -1;
+				showIVOptions = false;
+				showMoveOptions = false;
+				showStatusOptions = false;
+			} else {
+				goBackInBag();
+			}
+		}
 		
 		drawToolTips("Use", null, "Back", "Back");
 	}
@@ -3792,9 +3840,34 @@ public class UI extends AbstractUI {
 			}
 		}
 		
-		gp.keyH.wPressed = false;
+		if (gp.keyH.sPressed || gp.keyH.dPressed) {
+			gp.keyH.sPressed = false;
+			gp.keyH.dPressed = false;
+			subState = 0;
+			commandNum = 0;
+		}
+		
+		if (gp.keyH.upPressed || gp.keyH.downPressed) {
+			gp.keyH.upPressed = false;
+			gp.keyH.downPressed = false;
+			commandNum = 1 - commandNum;
+		}
 		
 		drawToolTips("OK", null, "Back", "Back");
+	}
+	
+	public void drawSummary(Pokemon foe) {
+		super.drawSummary(null);
+		
+		if (gp.keyH.sPressed) {
+			gp.keyH.sPressed = false;
+			if (moveSummaryNum == -1) {
+				subState = 2;
+			} else {
+				moveSwapNum = -1;
+				moveSummaryNum = -1;
+			}
+		}
 	}
 
 	public void optionsTop(int x, int y) {
@@ -3939,6 +4012,26 @@ public class UI extends AbstractUI {
 			}
 		}
 		
+		if (gp.keyH.sPressed || gp.keyH.dPressed) {
+			gp.keyH.sPressed = false;
+			gp.keyH.dPressed = false;
+			gp.gameState = GamePanel.PLAY_STATE;
+		}
+		if (gp.keyH.upPressed) {
+			gp.keyH.upPressed = false;
+			menuNum--;
+			if (menuNum < 0) {
+				menuNum = maxMenuNum-1;
+			}
+		}
+		if (gp.keyH.downPressed) {
+			gp.keyH.downPressed = false;
+			menuNum++;
+			if (menuNum > maxMenuNum-1) {
+				menuNum = 0;
+			}
+		}
+		
 		drawToolTips("OK", null, "Back", "Back");
 	}
 	
@@ -3971,6 +4064,14 @@ public class UI extends AbstractUI {
 		if (gp.keyH.wPressed) {
 			gp.keyH.wPressed = false;
 			subState = 8;
+		}
+		if (gp.keyH.sPressed) {
+			gp.keyH.sPressed = false;
+			subState = 0;
+			partySelectedNum = -1;
+			partyNum = 0;
+			commandNum = 0;
+			partySelectedItem = -1;
 		}
 		
 		drawToolTips("Info", "Swap", "Back", "Item");
@@ -4150,19 +4251,74 @@ public class UI extends AbstractUI {
 			int regY = (int) (gp.tileSize * 2.5);
 			int regWidth = gp.tileSize * 3;
 			drawRegisterMenu(regX - gp.tileSize, regY, (int) (regWidth + gp.tileSize*1.25));
+		} else {
+			if (gp.keyH.sPressed) {
+				gp.keyH.sPressed = false;
+				subState = 0;
+				selectedBagNum = -1;
+				partyNum = 0;
+				commandNum = 0;
+			}
+			if (gp.keyH.leftPressed) {
+				gp.keyH.leftPressed = false;
+				currentPocket--;
+				if (currentPocket < Item.MEDICINE) {
+					currentPocket = Item.KEY_ITEM;
+				}
+				selectedBagNum = -1;
+				currentItems = gp.player.p.getItems(currentPocket);
+			}
+			if (gp.keyH.rightPressed) {
+				gp.keyH.rightPressed = false;
+				currentPocket++;
+				if (currentPocket > Item.KEY_ITEM) {
+					currentPocket = Item.MEDICINE;
+				}
+				selectedBagNum = -1;
+				currentItems = gp.player.p.getItems(currentPocket);
+			}
+			if (gp.keyH.shiftPressed && bagState == 0) {
+				int toolX = 0;
+				int toolY = gp.tileSize * 9;
+				
+				ArrayList<ToolTip> bagTips = new ArrayList<>();
+				bagTips.add(new ToolTip(gp, "Sort", "+", gp.config.ctrlKey, gp.config.aKey));
+
+				drawToolTipBar(toolX, toolY, bagTips);
+			}
 		}
 		
-		if (gp.keyH.shiftPressed && bagState == 0) {
-			int toolX = 0;
-			int toolY = gp.tileSize * 9;
-			
-			ArrayList<ToolTip> bagTips = new ArrayList<>();
-			bagTips.add(new ToolTip(gp, "Sort", "+", gp.config.ctrlKey, gp.config.aKey));
-
-			drawToolTipBar(toolX, toolY, bagTips);
-		}		
+		if (gp.keyH.sPressed || gp.keyH.dPressed) {
+			gp.keyH.sPressed = false;
+			gp.keyH.dPressed = false;
+			bagState = 0;
+			commandNum = 0;
+			sellAmt = 1;
+		}
+		if (gp.keyH.upPressed) {
+			gp.keyH.upPressed = false;
+			if (bagState == 0 || bagState == 1 || bagState == 3) {
+				int amt = gp.keyH.ctrlPressed ? 5 : 1;
+				bagNum[currentPocket - 1] -= amt;
+				if (bagNum[currentPocket - 1] <= 0) {
+					bagNum[currentPocket - 1] = 0;
+				}
+			}
+		}
+		if (gp.keyH.downPressed) {
+			gp.keyH.downPressed = false;
+			if (bagState == 0 || bagState == 1 || bagState == 3) {
+				int amt = gp.keyH.ctrlPressed ? 5 : 1;
+				if (currentItems.size() > 0) {
+					bagNum[currentPocket - 1] += amt;
+					if (bagNum[currentPocket - 1] >= currentItems.size() - 1) {
+						bagNum[currentPocket - 1] = currentItems.size() - 1;
+					}
+				}
+			}
+		}
 		
-		String dText = (bagState == 0 && currentPocket == Item.TMS) ? "Check" : "Back";
+		String dText = (bagState == 0 && currentPocket == Item.TMS) ? "Check" : null;
 		drawToolTips("OK", "Swap", "Back", dText);
 	}
 	
@@ -4204,6 +4360,20 @@ public class UI extends AbstractUI {
 		g2.drawString("Music", textX, textY);
 		if (commandNum == 0) {
 			g2.drawString(">", textX-gp.tileSize/2, textY);
+			if (gp.keyH.leftPressed) {
+				gp.keyH.leftPressed = false;
+				if (gp.music.volumeScale > 0) {
+					gp.music.volumeScale--;
+					gp.music.checkVolume();
+				}
+			}
+			if (gp.keyH.rightPressed) {
+				gp.keyH.rightPressed = false;
+				if (gp.music.volumeScale < 5) {
+					gp.music.volumeScale++;
+					gp.music.checkVolume();
+				}
+			}
 		}
 		
 		// SFX
@@ -4211,6 +4381,20 @@ public class UI extends AbstractUI {
 		g2.drawString("SFX", textX, textY);
 		if (commandNum == 1) {
 			g2.drawString(">", textX-gp.tileSize/2, textY);
+			if (gp.keyH.leftPressed) {
+				gp.keyH.leftPressed = false;
+				if (gp.sfx.volumeScale > 0) {
+					gp.sfx.volumeScale--;
+					gp.sfx.checkVolume();
+				}
+			}
+			if (gp.keyH.rightPressed) {
+				gp.keyH.rightPressed = false;
+				if (gp.sfx.volumeScale < 5) {
+					gp.sfx.volumeScale++;
+					gp.sfx.checkVolume();
+				}
+			}
 		}
 		
 		// CONTROLS
@@ -4255,9 +4439,23 @@ public class UI extends AbstractUI {
 		if (gp.keyH.sPressed || gp.keyH.dPressed) {
 			gp.keyH.sPressed = false;
 			gp.keyH.dPressed = false;
-			gp.ui.commandNum = 0;
-			gp.ui.settingsState = 0;
-			gp.ui.subState = 0;
+			commandNum = 0;
+			settingsState = 0;
+			subState = 0;
+		}
+		if (gp.keyH.upPressed) {
+			gp.keyH.upPressed = false;
+			commandNum--;
+			if (commandNum < 0) {
+				commandNum = maxSettingsNum;
+			}
+		}
+		if (gp.keyH.downPressed) {
+			gp.keyH.downPressed = false;
+			commandNum++;
+			if (commandNum > maxSettingsNum) {
+				commandNum = 0;
+			}
 		}
 		
 		drawToolTips("OK", null, "Back", "Back");
@@ -4457,6 +4655,19 @@ public class UI extends AbstractUI {
 				commandNum = 0;
 			}
 		}
+		
+		if (gp.keyH.upPressed) {
+			gp.keyH.upPressed = false;
+			if (commandNum > 0) {
+				commandNum--;
+			}
+		}
+		if (gp.keyH.downPressed) {
+			gp.keyH.downPressed = false;
+			if (commandNum < 2) {
+				commandNum++;
+			}
+		}
 	}
 	
 	private void drawSellOptions() {
@@ -4491,6 +4702,29 @@ public class UI extends AbstractUI {
 			bagState = 0;
 			commandNum = 0;
 			sellAmt = 1;
+		}
+		
+		if (gp.keyH.upPressed) {
+			gp.keyH.upPressed = false;
+			sellAmt++;
+			if (sellAmt > currentItems.get(bagNum[currentPocket - 1]).getMaxSell()) sellAmt = 1;
+		}
+		if (gp.keyH.downPressed) {
+			gp.keyH.downPressed = false;
+			sellAmt--;
+			if (sellAmt < 1) sellAmt = currentItems.get(bagNum[currentPocket - 1]).getMaxSell();
+		}
+		if (gp.keyH.leftPressed) {
+			gp.keyH.leftPressed = false;
+			int max = currentItems.get(bagNum[currentPocket - 1]).getMaxSell();
+			sellAmt -= max > 10 ? 10 : 1;
+			if (sellAmt < 1) sellAmt += max;
+		}
+		if (gp.keyH.rightPressed) {
+			gp.keyH.rightPressed = false;
+			int max = currentItems.get(bagNum[currentPocket - 1]).getMaxSell();
+			sellAmt += max > 10 ? 10 : 1;
+			if (sellAmt > max) sellAmt -= max;
 		}
 	}
 	
@@ -4536,6 +4770,18 @@ public class UI extends AbstractUI {
 			commandNum = 0;
 			bagState = 0;
 		}
+		if (gp.keyH.upPressed) {
+			gp.keyH.upPressed = false;
+			if (commandNum > 0) {
+				commandNum--;
+			}
+		}
+		if (gp.keyH.downPressed) {
+			gp.keyH.downPressed = false;
+			if (commandNum < SortType.getMaxSortOptions(currentPocket) - 1) {
+				commandNum++;
+			}
+		}
 	}
 	
 	private void drawRegisterMenu(int x, int y, int width) {
@@ -4558,7 +4804,9 @@ public class UI extends AbstractUI {
 			g2.setColor(Color.WHITE);
 			
 			Item registered = gp.player.p.getRegisteredItem(i);
-			ToolTip toolTip = new ToolTip(gp, registered == null ? "(Empty)" : registered.toString(), "", gp.config.hotkey1 + i);
+			FontMetrics fontMetrics = g2.getFontMetrics();
+			String registeredText = registered == null ? "(Empty)" : truncateText(registered.toString(), gp.tileSize * 2, fontMetrics);
+			ToolTip toolTip = new ToolTip(gp, registered == null ? "(Empty)" : registeredText, "", gp.config.hotkey1 + i);
 			keys.add(toolTip);
 			
 			if (commandNum == i) {
@@ -4651,6 +4899,11 @@ public class UI extends AbstractUI {
 			} else {
 				showMessage("Come back soon!");
 			}
+		}
+		if (gp.keyH.sPressed) {
+			gp.keyH.sPressed = false;
+			gp.gameState = GamePanel.PLAY_STATE;
+			sellAmt = 1;
 		}
 		
 		if (gp.keyH.upPressed) {
@@ -4822,6 +5075,19 @@ public class UI extends AbstractUI {
 		drawToolTips("OK", null, "Back", "Back");
 		
 		gp.keyH.wPressed = false;
+		
+		if (gp.keyH.sPressed || gp.keyH.dPressed) {
+			gp.keyH.sPressed = false;
+			gp.keyH.dPressed = false;
+			gp.gameState = GamePanel.PLAY_STATE;
+			subState = 0;
+			commandNum = 0;
+		}
+		if (gp.keyH.upPressed || gp.keyH.downPressed) {
+			gp.keyH.upPressed = false;
+			gp.keyH.downPressed = false;
+			commandNum = 1 - commandNum;
+		}
 	}
 	
 	public void drawShopScreen() {
@@ -4864,11 +5130,63 @@ public class UI extends AbstractUI {
 			}
 		}
 		
+		if (gp.keyH.sPressed || gp.keyH.dPressed) {
+			gp.keyH.sPressed = false;
+			gp.keyH.dPressed = false;
+			gp.gameState = GamePanel.PLAY_STATE;
+			subState = 0;
+			commandNum = 0;
+		}
+		if (gp.keyH.upPressed || gp.keyH.downPressed) {
+			gp.keyH.upPressed = false;
+			gp.keyH.downPressed = false;
+			commandNum = 1 - commandNum;
+		}
+		
 		drawToolTips("OK", null, "Back", "Back");
 	}
 	
 	public void shopBuy() {
 		drawInventory(npc.inventory, ITEMS);
+		
+		if (gp.keyH.sPressed || gp.keyH.dPressed) {
+			gp.keyH.sPressed = false;
+			gp.keyH.dPressed = false;
+			if (premier > 0) {
+				gp.setTaskState();
+				Task.addTask(Task.TEXT, "Thanks for being a loyal customer! Here, this is on us!");
+				String itemName = premier > 1 ? "s" : "";
+				Task t = Task.addTask(Task.ITEM, "You got " + premier + " " + Item.PREMIER_BALL.toString() + itemName + "!", premier);
+				t.item = Item.PREMIER_BALL;
+				premier = 0;
+			}
+			subState = 0;
+			currentDialogue = npc.dialogues[0];
+		}
+		if (gp.keyH.upPressed) {
+			gp.keyH.upPressed = false;
+			if (slotRow > 0) {
+				slotRow--;
+			}
+		}
+		if (gp.keyH.downPressed) {
+			gp.keyH.downPressed = false;
+			if (slotRow < MAX_SHOP_ROW) {
+				slotRow++;
+			}
+		}
+		if (gp.keyH.leftPressed) {
+			gp.keyH.leftPressed = false;
+			if (slotCol > 0) {
+				slotCol--;
+			}
+		}
+		if (gp.keyH.rightPressed) {
+			gp.keyH.rightPressed = false;
+			if (slotCol < MAX_SHOP_COL - 1) {
+				slotCol++;
+			}
+		}
 	}
 	
 	private void drawInventory(ArrayList<?> inventory, int type) {
@@ -5280,6 +5598,15 @@ public class UI extends AbstractUI {
 		case 2: drawStarRepair(new Item[] {Item.ABSORB_BULB, Item.CELL_BATTERY, Item.LUMINOUS_MOSS, Item.SNOWBALL}); break;
 		}
 		gp.keyH.wPressed = false;
+		
+		if (subState > 0) {
+			if (gp.keyH.sPressed || gp.keyH.dPressed) {
+				gp.keyH.sPressed = false;
+				gp.keyH.dPressed = false;
+				subState = 0;
+				currentDialogue = npc.dialogues[0];
+			}
+		}
 	}
 	
 	public void starShopSelect() {
@@ -5323,6 +5650,28 @@ public class UI extends AbstractUI {
 				subState = 0;
 				commandNum = 0;
 				remindNum = 0;
+			}
+		}
+		
+		if (gp.keyH.sPressed || gp.keyH.dPressed) {
+			gp.keyH.sPressed = false;
+			gp.keyH.dPressed = false;
+			gp.gameState = GamePanel.PLAY_STATE;
+			subState = 0;
+			commandNum = 0;
+		}
+		if (gp.keyH.upPressed) {
+			gp.keyH.upPressed = false;
+			commandNum--;
+			if (commandNum < 0) {
+				commandNum = 2;
+			}
+		}
+		if (gp.keyH.downPressed) {
+			gp.keyH.downPressed = false;
+			commandNum++;
+			if (commandNum > 2) {
+				commandNum = 0;
 			}
 		}
 		
@@ -5672,6 +6021,18 @@ public class UI extends AbstractUI {
 			}
 		}
 		
+		if (gp.keyH.sPressed || gp.keyH.dPressed) {
+			gp.keyH.sPressed = false;
+			gp.keyH.dPressed = false;
+			gp.gameState = GamePanel.PLAY_STATE;
+			commandNum = 0;
+		}
+		if (gp.keyH.upPressed || gp.keyH.downPressed) {
+			gp.keyH.upPressed = false;
+			gp.keyH.downPressed = false;
+			commandNum = 1 - commandNum;
+		}
+		
 		drawToolTips("OK", null, "Back", "Back");
 	}
 
@@ -5799,6 +6160,11 @@ public class UI extends AbstractUI {
 			index++;
 		}
 		
+		if (gp.keyH.sPressed) {
+			gp.keyH.sPressed = false;
+			goBackInBag();
+		}
+		
 		drawToolTips(null, null, "Back", null);
 	}
 	
@@ -5881,6 +6247,10 @@ public class UI extends AbstractUI {
 				pageNum = 0;
 				gp.gameState = GamePanel.MENU_STATE;
 			}
+		}
+		if (gp.keyH.sPressed) {
+			gp.keyH.sPressed = false;
+			goBackInBag();
 		}
 		
 		drawToolTips("Next", null, "Back", null);
@@ -6021,6 +6391,16 @@ public class UI extends AbstractUI {
 				starterConfirm = true;
 			}
 		}
+		if (gp.keyH.sPressed) {
+			gp.keyH.sPressed = false;
+			if (starterConfirm) {
+				starterConfirm = false;
+				commandNum = 0;
+			} else {
+				gp.gameState = GamePanel.PLAY_STATE;
+				starter = 0;
+			}
+		}
 		
 		if (gp.keyH.upPressed) {
 			gp.keyH.upPressed = false;
@@ -6075,7 +6455,7 @@ public class UI extends AbstractUI {
 		ArrayList<ToolTip> boxTips = new ArrayList<>();
 		if (!party) {
 			boxTips.add(new ToolTip(gp, "Release", "+", gp.config.ctrlKey, gp.config.wKey));
-			boxTips.add(new ToolTip(gp, "Calc", "+", gp.config.ctrlKey, gp.config.aKey));
+			boxTips.add(new ToolTip(gp, "Calc", "", gp.config.calcKey));
 		}
 		boxTips.add(new ToolTip(gp, "Item", "+", gp.config.ctrlKey, gp.config.dKey));
 		

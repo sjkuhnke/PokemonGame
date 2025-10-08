@@ -10,6 +10,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -156,18 +158,16 @@ public abstract class AbstractUI {
 	}
 		
 	public void drawKeyStrokes() {
-		if (!gp.keyH.shiftPressed) {
-			return;
-		}
-		drawButton(gp.tileSize, 0, 'W', gp.keyH.kWPressed);
-		drawButton(0, gp.tileSize, 'A', gp.keyH.kAPressed);
-		drawButton(gp.tileSize, gp.tileSize,'S', gp.keyH.kSPressed);
-		drawButton(gp.tileSize * 2, gp.tileSize,'D', gp.keyH.kDPressed);
+		if (!gp.keyH.shiftPressed) return;
+		drawButton(gp.tileSize, 0, 'W', gp.keyH.wPressed);
+		drawButton(0, gp.tileSize, 'A', gp.keyH.aPressed);
+		drawButton(gp.tileSize, gp.tileSize,'S', gp.keyH.sPressed);
+		drawButton(gp.tileSize * 2, gp.tileSize,'D', gp.keyH.dPressed);
 		
-		drawButton(gp.tileSize, gp.tileSize * 2, '\u2191', gp.keyH.kUpPressed);
-		drawButton(0, gp.tileSize * 3, '\u2190', gp.keyH.kLeftPressed);
-		drawButton(gp.tileSize, gp.tileSize * 3,'\u2193', gp.keyH.kDownPressed);
-		drawButton(gp.tileSize * 2, gp.tileSize * 3 ,'\u2192', gp.keyH.kRightPressed);		
+		drawButton(gp.tileSize, gp.tileSize * 2, '\u2191', gp.keyH.upPressed);
+		drawButton(0, gp.tileSize * 3, '\u2190', gp.keyH.leftPressed);
+		drawButton(gp.tileSize, gp.tileSize * 3,'\u2193', gp.keyH.downPressed);
+		drawButton(gp.tileSize * 2, gp.tileSize * 3 ,'\u2192', gp.keyH.rightPressed);		
 	}
 	
 	public int getTextX(String text) {
@@ -1245,7 +1245,11 @@ public abstract class AbstractUI {
 	}
 	
 	public void drawToolTips(String w, String a, String s, String d) {
-		drawToolTips(0, (int) (gp.tileSize * 10.5), w, a, s, d);
+		drawToolTips(w, a, s, d, null);
+	}
+	
+	public void drawToolTips(String w, String a, String s, String d, String c) {
+		drawToolTips(0, (int) (gp.tileSize * 10.5), w, a, s, d, c);
 	}
 	
 	public void drawToolTipBar(int x, int y, ArrayList<ToolTip> tips) {
@@ -1257,8 +1261,9 @@ public abstract class AbstractUI {
 		int totalWidth = gp.tileSize;
 		for (int i = 0; i < tips.size(); i++) {
 			ToolTip tip = tips.get(i);
+			String displayLabel = truncateText(tip.label, (int) (gp.tileSize * 1.5), labelMetrics);
 			int keyWidth = keyMetrics.stringWidth(tip.key);
-			int labelWidth = labelMetrics.stringWidth(tip.label);
+			int labelWidth = labelMetrics.stringWidth(displayLabel);
 			totalWidth += keyWidth + gp.tileSize/4 + labelWidth + gp.tileSize/2;
 		}
 		
@@ -1276,32 +1281,69 @@ public abstract class AbstractUI {
 			x += keyMetrics.stringWidth(tip.key) + gp.tileSize / 4;
 			
 			g2.setFont(g2.getFont().deriveFont(20F));
-			g2.drawString(tip.label, x, y);
-			x += labelMetrics.stringWidth(tip.label) + gp.tileSize / 2;
+			String displayLabel = truncateText(tip.label, (int) (gp.tileSize * 1.5), labelMetrics);
+			g2.drawString(displayLabel, x, y);
+			x += labelMetrics.stringWidth(displayLabel) + gp.tileSize / 2;
 		}
 	}
 	
-	public void drawToolTips(int x, int y, String w, String a, String s, String d) {
+	public String truncateText(String text, int maxWidth, FontMetrics metrics) {
+		if (metrics.stringWidth(text) <= maxWidth) {
+	    	return text;
+	    }
+	    
+	    String ellipsis = "...";
+	    
+	    for (int i = text.length() - 1; i > 0; i--) {
+	    	String truncated = text.substring(0, i) + ellipsis;
+	        if (metrics.stringWidth(truncated) <= maxWidth) {
+	        	return truncated;
+	        }
+	    }
+	    
+	    return ellipsis;
+	}
+	
+	public void drawToolTips(int x, int y, String w, String a, String s, String d, String c) {
 		if (!gp.keyH.shiftPressed) return;
 		
 		ArrayList<ToolTip> tips = new ArrayList<>();
-		boolean sdSame = false;
 		
-		if (s != null && s.equals(d)) {
-			sdSame = true;
-			d = null;
+		HashMap<String, ArrayList<Integer>> actionToKeys = new HashMap<>();
+		
+		if (w != null) {
+			actionToKeys.computeIfAbsent(w, k -> new ArrayList<>()).add(gp.config.wKey);
+		}
+		if (a != null) {
+			actionToKeys.computeIfAbsent(a, k -> new ArrayList<>()).add(gp.config.aKey);
+		}
+		if (s != null) {
+			actionToKeys.computeIfAbsent(s, k -> new ArrayList<>()).add(gp.config.sKey);
+		}
+		if (d != null) {
+			actionToKeys.computeIfAbsent(d, k -> new ArrayList<>()).add(gp.config.dKey);
+		}
+		if (c != null) {
+			actionToKeys.computeIfAbsent(c, k -> new ArrayList<>()).add(gp.config.calcKey);
 		}
 		
-		if (w != null) tips.add(new ToolTip(gp, w, "", gp.config.wKey));
-		if (a != null) tips.add(new ToolTip(gp, a, "", gp.config.aKey));
-		if (s != null) {
-			if (sdSame) {
-				tips.add(new ToolTip(gp, s, "/", gp.config.sKey, gp.config.dKey));
-			} else {
-				tips.add(new ToolTip(gp, s, "", gp.config.sKey));
+		String[] orderedActions = {w, a, s, d, c};
+		HashSet<String> processedActions = new HashSet<>();
+		
+		for (String action : orderedActions) {
+			if (action != null && !processedActions.contains(action)) {
+				ArrayList<Integer> keys = actionToKeys.get(action);
+				
+				if (keys.size() == 1) {
+					tips.add(new ToolTip(gp, action, "", keys.get(0)));
+				} else {
+					int[] keyArray = keys.stream().mapToInt(Integer::intValue).toArray();
+					tips.add(new ToolTip(gp, action, "/", keyArray));
+				}
+				
+				processedActions.add(action);
 			}
 		}
-		if (d != null) tips.add(new ToolTip(gp, d, "", gp.config.dKey));
 		
 		drawToolTipBar(x, y, tips);
 	}

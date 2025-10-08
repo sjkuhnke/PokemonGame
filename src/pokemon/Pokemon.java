@@ -1450,6 +1450,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			    		} else if (move == Move.SEA_DRAGON && id == 150) {
 			    			score += 30;
 			    		}
+						// TODO: add heuristics for Spiky Shield/Lava Lair/Obstruct (if strongest move is contact), Aqua Veil (if foe is special attacker)
 					}
 				}
 			} else if (move.cat == 2) {
@@ -1458,7 +1459,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		}
 		
 		// --- Custom Heuristics ---
-		if (!willKill && !foeCanKO && foeStrongestMove != null && foeMaxDamage.getFirst() >= 0) {
+		if (!willKill && (!foeCanKO || this.getItem(field) == Item.FOCUS_BAND) && foeStrongestMove != null && foeMaxDamage.getFirst() >= 0) {
     		if (move == Move.COUNTER && foeStrongestMove.isPhysical() || move == Move.MIRROR_COAT && foeStrongestMove.isSpecial()) {
     			score += foeMaxDamage.getSecond() * 2;
     		}
@@ -2809,7 +2810,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			return;
 		}
 		
-		if (foeAbility == Ability.WONDER_SKIN && move.cat == 2 && acc <= 100) {
+		if (foeAbility == Ability.WONDER_SKIN && move.cat == 2 && (acc <= 100 || move == Move.PERISH_SONG || move == Move.DEFOG)) {
 			useMove(move, foe);
 			Task.addAbilityTask(foe);
 			Task.addTask(Task.TEXT, "It doesn't effect " + foe.nickname + "...");
@@ -7053,7 +7054,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (move == Move.THUNDER_WAVE && this.isType(PType.ELECTRIC)) acc = 100;
 		if (move == Move.TOXIC && this.isType(PType.POISON)) acc = 1000;
 		
-		if (foeAbility == Ability.WONDER_SKIN && move.cat == 2 && acc <= 100) return new Pair<>(-1, 0.0);
+		if (foeAbility == Ability.WONDER_SKIN && move.cat == 2 && (acc <= 100 || move == Move.PERISH_SONG || move == Move.DEFOG)) return new Pair<>(-1, 0.0);
 		
 		if (checkAcc && mode == 0 && this.ability != Ability.NO_GUARD && foeAbility != Ability.NO_GUARD && acc < 100) {
 			int accEv = this.statStages[5] - foe.statStages[6];

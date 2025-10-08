@@ -28,13 +28,6 @@ public class CollisionChecker {
 
 	    tileNum1 = gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityTopRow];
 	    tileNum2 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityTopRow];
-
-	    if (gp.tileM.tile[tileNum1] instanceof GrassTile || gp.tileM.tile[tileNum2] instanceof GrassTile
-	        || gp.tileM.tile[tileNum1] instanceof CaveTile || gp.tileM.tile[tileNum2] instanceof CaveTile) {
-	        entity.inTallGrass = true;
-	    } else {
-	        entity.inTallGrass = false;
-	    }
 	    
 	    if (gp.tileM.tile[tileNum1] instanceof IceTile || gp.tileM.tile[tileNum2] instanceof IceTile) {
 	    	entity.ice = true;
@@ -73,6 +66,22 @@ public class CollisionChecker {
 	            checkCollision(tileNum1, entityRightCol, entityTopRow, entity, "right", delta);
 	            checkCollision(tileNum2, entityRightCol, entityBottomRow, entity, "right", delta);
 	            break;
+	    }
+	}
+	
+	public void checkTallGrass(Entity entity) {
+		int entityCenterWorldX = entity.worldX + entity.solidArea.x + (entity.solidArea.width / 2);
+	    int entityCenterWorldY = entity.worldY + entity.solidArea.y + (entity.solidArea.height / 2);
+	    int entityCenterCol = entityCenterWorldX / gp.tileSize;
+	    int entityCenterRow = entityCenterWorldY / gp.tileSize;
+	    
+	    int centerTileNum = gp.tileM.mapTileNum[gp.currentMap][entityCenterCol][entityCenterRow];
+	    
+	    if (gp.tileM.tile[centerTileNum] instanceof GrassTile ||
+	    	gp.tileM.tile[centerTileNum] instanceof CaveTile) {
+	    	entity.inTallGrass = true;
+	    } else {
+	    	entity.inTallGrass = false;
 	    }
 	}
 
