@@ -412,7 +412,7 @@ public class TrainerDoc {
 	    return startRow;
 	}
 	
-	private static BufferedImage getCachedSprite(Pokemon p) {
+	public static BufferedImage getCachedSprite(Pokemon p) {
 	    if (sprites[p.id - 1] == null) {
 	        sprites[p.id - 1] = p.setSprite();
 	    }

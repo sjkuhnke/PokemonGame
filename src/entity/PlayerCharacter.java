@@ -249,7 +249,7 @@ public class PlayerCharacter extends Entity {
 			String currentMap = currentMapName;
 			PMap.getLoc(gp.currentMap, (int) Math.round(worldX * 1.0 / gp.tileSize), (int) Math.round(worldY * 1.0 / gp.tileSize));
 			if (!currentMap.equals(currentMapName)) gp.ui.showAreaName();
-			Main.window.setTitle(gp.gameTitle + " - " + currentMapName);
+			Main.window.setTitle(Main.gameTitle + " - " + currentMapName);
 		} else {
 			resetSpriteNum();
 		}
