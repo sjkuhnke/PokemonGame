@@ -33,7 +33,6 @@ public abstract class AbstractUI {
 	public int partySelectedNum = -1;
 	public int partySelectedItem = -1;
 	public int moveOption = -1;
-	public Font marumonica;
 	public Font creattion;
 	public Font monsier;
 	public Font cryptik;
@@ -159,6 +158,9 @@ public abstract class AbstractUI {
 		
 	public void drawKeyStrokes() {
 		if (!gp.keyH.shiftPressed) return;
+		
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 24F));
+		
 		drawButton(gp.tileSize, 0, 'W', gp.keyH.kWPressed);
 		drawButton(0, gp.tileSize, 'A', gp.keyH.kAPressed);
 		drawButton(gp.tileSize, gp.tileSize,'S', gp.keyH.kSPressed);
@@ -1255,7 +1257,7 @@ public abstract class AbstractUI {
 	public void drawToolTipBar(int x, int y, ArrayList<ToolTip> tips) {
 		if (tips.isEmpty()) return;
 		
-		g2.setFont(g2.getFont().deriveFont(24F));
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 24F));
 		FontMetrics keyMetrics = g2.getFontMetrics();
 		FontMetrics labelMetrics = g2.getFontMetrics(g2.getFont().deriveFont(20F));
 		int totalWidth = gp.tileSize;

@@ -193,7 +193,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 	protected transient BufferedImage sprite;
 	protected transient Image frontSprite;
 	private transient Image backSprite;
-	protected transient BufferedImage miniSprite;
 	
 	public String metAt;
 	
@@ -327,15 +326,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 	
 	public Image getBackSprite() {
 		return backSprite;
-	}
-	
-	public BufferedImage getMiniSprite() {
-		return miniSprite;
-	}
-	
-	public BufferedImage getMiniSprite(int id) {
-		sprite = setSprite();
-		return setMiniSprite();
 	}
 	
 	public BufferedImage setSprite() {
@@ -9737,7 +9727,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 	    clonedPokemon.sprite = this.sprite;
 	    clonedPokemon.frontSprite = this.frontSprite;
 	    clonedPokemon.backSprite = this.backSprite;
-	    clonedPokemon.miniSprite = this.miniSprite;
 	    
 	    clonedPokemon.role = this.role;
 	    
@@ -10076,30 +10065,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 		return false;
 	}
 	
-	public ImageIcon getFaintedIcon() {
-        ImageFilter grayFilter = new GrayFilter(true, 25);
-        ImageFilter opacityFilter = new RGBImageFilter() {
-            // Modify the alpha value to achieve opacity
-            public int filterRGB(int x, int y, int rgb) {
-                int alpha = (rgb >> 24) & 0xFF; // Extract alpha value
-                if (alpha == 0) {
-                    return rgb; // Leave transparent pixels unchanged
-                } else {
-                    return (rgb & 0x00FFFFFF) | (128 << 24); // Apply opacity to visible pixels
-                }
-            }
-        };
-
-        ImageProducer producer = new FilteredImageSource(getMiniSprite().getSource(), grayFilter);
-        Image grayImage = Toolkit.getDefaultToolkit().createImage(producer);
-
-        // Apply the opacity filter
-        ImageProducer opacityProducer = new FilteredImageSource(grayImage.getSource(), opacityFilter);
-        Image finalImage = Toolkit.getDefaultToolkit().createImage(opacityProducer);
-
-        return new ImageIcon(finalImage);
-    }
-	
 	public Image getFaintedSprite() {
 		ImageFilter grayFilter = new GrayFilter(true, 25);
         ImageFilter opacityFilter = new RGBImageFilter() {
@@ -10422,7 +10387,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 		sprite = setSprite();
 		frontSprite = setFrontSprite();
 		backSprite = setBackSprite();
-		miniSprite = setMiniSprite();
 	}
 	public static void writeInfoToCSV(String filePath) {
 	    try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
@@ -10894,7 +10858,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		}
 	}
 	
-	public static void readEntiresFromCSV() {
+	public static void readEntriesFromCSV() {
         try (Scanner scanner = new Scanner(Pokemon.class.getResourceAsStream("/info/entries.csv"))) {
 			for (int i = 0; i < MAX_POKEMON; i++) {
 				try {

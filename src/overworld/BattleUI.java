@@ -2,13 +2,9 @@ package overworld;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontFormatException;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -105,13 +101,6 @@ public class BattleUI extends AbstractUI {
 		commandNum = 0;
 		tasks = new ArrayList<>();
 		
-		try {
-			InputStream is = getClass().getResourceAsStream("/font/marumonica.ttf");
-			marumonica = Font.createFont(Font.TRUETYPE_FONT, is);
-		} catch (FontFormatException | IOException e) {
-			e.printStackTrace();
-		}
-		
 		battle = setup("/battle/background", 1);
 		userHPBar = setup("/battle/user_hp", 1);
 		foeHPBar = setup("/battle/foe_hp", 1);
@@ -142,7 +131,7 @@ public class BattleUI extends AbstractUI {
 	public void draw(Graphics2D g2) {
 		this.g2 = g2;
 		
-		g2.setFont(marumonica);
+		g2.setFont(gp.marumonica);
 		g2.setColor(Color.WHITE);
 		
 		g2.drawImage(battle, 0, 0, gp.screenWidth, gp.screenHeight, null);

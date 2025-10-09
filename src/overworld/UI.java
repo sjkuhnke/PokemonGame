@@ -151,7 +151,6 @@ public class UI extends AbstractUI {
 		
 		try {
 			InputStream is = getClass().getResourceAsStream("/font/marumonica.ttf");
-			marumonica = Font.createFont(Font.TRUETYPE_FONT, is);
 			is = getClass().getResourceAsStream("/font/creattion.ttf");
 			creattion = Font.createFont(Font.TRUETYPE_FONT, is);
 			is = getClass().getResourceAsStream("/font/monsier-la-doulaise.ttf");
@@ -197,7 +196,7 @@ public class UI extends AbstractUI {
 	public void draw(Graphics2D g2) {
 		this.g2 = g2;
 		
-		g2.setFont(marumonica);
+		g2.setFont(gp.marumonica);
 		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		g2.setColor(Color.WHITE);
 		
@@ -712,7 +711,7 @@ public class UI extends AbstractUI {
 			font = consolas;
 			break;
 		default:
-			font = marumonica;
+			font = gp.marumonica;
 			break;
 		}
 		return font;
@@ -4356,7 +4355,7 @@ public class UI extends AbstractUI {
 		return -1;
 	}
 	
-	private void drawSettings() {
+	public void drawSettings() {
 		g2.setColor(Color.WHITE);
 		g2.setFont(g2.getFont().deriveFont(32F));
 		
@@ -5014,7 +5013,7 @@ public class UI extends AbstractUI {
 		
 		String currentMap = PlayerCharacter.currentMapName;
 		PMap.getLoc(newMap, (int) Math.round(gp.player.worldX * 1.0 / 48), (int) Math.round(gp.player.worldY * 1.0 / 48));
-		Main.window.setTitle(gp.gameTitle + " - " + PlayerCharacter.currentMapName);
+		Main.window.setTitle(Main.gameTitle + " - " + PlayerCharacter.currentMapName);
 		if (!currentMap.equals(PlayerCharacter.currentMapName)) {
 			showAreaName();
 			gp.player.p.checkSummon(gp, newMap);
@@ -6312,7 +6311,7 @@ public class UI extends AbstractUI {
 			g2.drawString(s, textX, textY);
 			textY += lineHeight;
 		}
-		g2.setFont(marumonica);
+		g2.setFont(gp.marumonica);
 		
 		if (gp.keyH.wPressed) {
 			gp.keyH.wPressed = false;

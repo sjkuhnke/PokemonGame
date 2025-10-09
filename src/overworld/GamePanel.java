@@ -2,9 +2,12 @@ package overworld;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -57,25 +60,27 @@ public class GamePanel extends JPanel implements Runnable {
 	public int offsetY;
 	
 	// CONSTANTS
-	public final String gameTitle = "Pokemon Xhenos";
 	public static final int MAX_MAP = 220;
 	public static final int MAX_FLAG = 25; // should not be >31
 	
 	// SYSTEM
-	public KeyHandler keyH = new KeyHandler(this);
-	public Config config = new Config(this);
+	public LoadingScreen loadingScreen;
+	public TitleScreen titleScreen;
+	public KeyHandler keyH;
+	public Config config;
 	Sound music = new Sound();
 	Sound sfx = new Sound();
 	public int FPS = 60;
 	public int ticks;
+	Font marumonica;
 	
 	Thread gameThread;
 	
 	// ENTITY AND OBJECT
-	public AssetSetter aSetter = new AssetSetter(this);
-	public EventHandler eHandler = new EventHandler(this);
-	public CollisionChecker cChecker = new CollisionChecker(this);
-	public PlayerCharacter player = new PlayerCharacter(this, keyH);
+	public AssetSetter aSetter;
+	public EventHandler eHandler;
+	public CollisionChecker cChecker;
+	public PlayerCharacter player;
 	public Script script;
 	public Entity npc[][] = new Entity[MAX_MAP][40];
 	public ItemObj obj[][] = new ItemObj[MAX_MAP][50];
@@ -87,14 +92,14 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	public NPC_Pokemon[] grusts = new NPC_Pokemon[10];
 	public boolean checkSpin = false;
-	public PuzzleManager puzzleM = new PuzzleManager(this);
+	public PuzzleManager puzzleM;
 	
-	public TileManager tileM = new TileManager(this);
+	public TileManager tileM;
 	
 	// UIS
-	public UI ui = new UI(this);
-	public BattleUI battleUI = new BattleUI(this);
-	public SimBattleUI simBattleUI = new SimBattleUI(this);
+	public UI ui;
+	public BattleUI battleUI;
+	public SimBattleUI simBattleUI;
 	
 	public int gameState;
 	
@@ -126,19 +131,57 @@ public class GamePanel extends JPanel implements Runnable {
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
 		this.setBackground(Color.black);
 		this.setDoubleBuffered(true);
+		
+		keyH = new KeyHandler(this);
+		
+		try {
+			InputStream is = getClass().getResourceAsStream("/font/marumonica.ttf");
+			marumonica = Font.createFont(Font.TRUETYPE_FONT, is);
+		} catch (FontFormatException | IOException e) {
+			e.printStackTrace();
+		}
+		
 		this.addKeyListener(keyH);
 		this.setFocusable(true);
 		this.setFocusTraversalKeysEnabled(false);
 		
 		this.window = window;
 		
-		Pokemon.readInfoFromCSV();
-		Pokemon.readMovebanksFromCSV();
-		Pokemon.readEntiresFromCSV();
-		Pokemon.readEncountersFromCSV();
-		Pokemon.readTMsFromCSV();
+		loadingScreen = new LoadingScreen(this);
+	}
+	
+	public void setupGamePanel() {
+		loadingScreen.setProgress(0, "Loading config...");
+		config = new Config(this);
+		config.loadConfig();
 		
-		Player.setupPokedex();
+		loadingScreen.setProgress(3, "Loading Asset Setter...");
+		aSetter = new AssetSetter(this);
+		
+		loadingScreen.setProgress(6, "Loading Event Handler...");
+		eHandler = new EventHandler(this);
+		
+		loadingScreen.setProgress(8, "Loading Collision Checker...");
+		cChecker = new CollisionChecker(this);
+		
+		loadingScreen.setProgress(10, "Loading PlayerCharacter entity...");
+		player = new PlayerCharacter(this, keyH);
+		
+		loadingScreen.setProgress(12, "Loading Puzzle Manager...");
+		puzzleM = new PuzzleManager(this);
+		
+		loadingScreen.setProgress(15, "Loading UIs...");
+		ui = new UI(this);
+		battleUI = new BattleUI(this);
+		simBattleUI = new SimBattleUI(this);
+	}
+	
+	public void setGameState(int state) {
+		this.gameState = state;
+		
+		if (state == TITLE_STATE && titleScreen == null) {
+			titleScreen = new TitleScreen(this);
+		}
 	}
 	
 	public void startGameThread() {
@@ -183,6 +226,10 @@ public class GamePanel extends JPanel implements Runnable {
 			if (ticks % 5 == 0) {
 				updateEntity();
 				//updateTempBag();
+			}
+		} else if (gameState == TITLE_STATE) {
+			if (titleScreen != null) {
+				titleScreen.update();
 			}
 		}
 		if (keyH.tabPressed) {
@@ -252,8 +299,19 @@ public class GamePanel extends JPanel implements Runnable {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D)g;
 		
-		if (gameState != BATTLE_STATE && gameState != SIM_BATTLE_STATE) {
-			
+		if (gameState == LOADING_STATE) {
+			loadingScreen.draw(g2);
+		} else if (gameState == TITLE_STATE) {
+			if (titleScreen != null) {
+				titleScreen.draw(g2);
+			}
+		} else if (gameState == SIM_BATTLE_STATE) {
+			// Draw Sim Battle Screen
+			simBattleUI.draw(g2);
+		} else if (gameState == BATTLE_STATE) {
+			// Draw Battle Screen
+			battleUI.draw(g2);
+		} else {
 			// Draw Tiles
 			tileM.draw(g2, false);
 			
@@ -295,13 +353,6 @@ public class GamePanel extends JPanel implements Runnable {
 			
 			// Draw Tooltips
 			drawOverworldToolTips(g2);
-		
-		} else if (gameState == SIM_BATTLE_STATE) {
-			// Draw Sim Battle Screen
-			simBattleUI.draw(g2);
-		} else {
-			// Draw Battle Screen
-			battleUI.draw(g2);
 		}
 		
 		g2.dispose();
@@ -582,23 +633,29 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 
 	public void setupGame() {
+		loadingScreen.setProgress(10, "Loading tiles and maps...");
+		tileM = new TileManager(this);
+		loadingScreen.setProgress(19, "Setting up static legendaries...");
 		aSetter.setLegendarySkeletons();
+		loadingScreen.setProgress(20, "Setting NPCs...");
 		aSetter.setNPC();
+		loadingScreen.setProgress(32, "Setting up item objects...");
 		aSetter.setObject();
+		loadingScreen.setProgress(40, "Setting up interactive objects...");
 		aSetter.setInteractiveTile(currentMap);
-		config.loadConfig();
 		playMusic(0);
+		loadingScreen.setProgress(50, "Initializing scripts...");
 		script = new Script(this);
-		
-		gameState = PLAY_STATE;
 		
 		Pokemon.field = new Field();
 		Pokemon.gp = this;
 		Task.gp = this;
 		checkSpin = true;
 		
+		loadingScreen.setProgress(55, "Reading trainer data and setting up trainers...");
 		Pokemon.readTrainersFromCSV();
 		
+		loadingScreen.setProgress(62, "Setting up calc...");
 		Pokemon test = new Pokemon(1, 1, true, false);
 		test.trainer = player.p.clone(this);
 		test.trainer.team[0] = test;

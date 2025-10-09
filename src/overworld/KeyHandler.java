@@ -35,7 +35,7 @@ public class KeyHandler implements KeyListener {
 		int code = e.getKeyCode();
 		if (config == null) config = gp.config;
 		
-		if (gp.ui.waitingForKey && gp.ui.settingsState == 1) {
+		if (gp.ui != null && gp.ui.waitingForKey && gp.ui.settingsState == 1) {
 			handleRebind(code);
 			return;
 		}
@@ -81,7 +81,7 @@ public class KeyHandler implements KeyListener {
 		if (code == gp.config.keys[gp.config.hotkey4]) hotkey4Pressed = true;
 		if (code == gp.config.keys[gp.config.hotkey5]) hotkey5Pressed = true;
 		
-		if (gp.ui.showMessage) {
+		if (gp.ui != null && gp.ui.showMessage) {
 			showMessageState();
 		} else {
 			if (code == config.keys[config.upKey]) {
@@ -99,7 +99,7 @@ public class KeyHandler implements KeyListener {
 			if (code == config.keys[config.aKey]) {
 				aPressed = true;
 			}
-			if (gp.battleUI.nicknaming == 1) {
+			if (gp.battleUI != null && gp.battleUI.nicknaming == 1) {
 				if (code == config.keys[config.backspaceKey]) {
 					gp.battleUI.handleBackspace();
 				} else {
@@ -109,7 +109,7 @@ public class KeyHandler implements KeyListener {
 						downPressed = false;
 					}
 				}
-			} else if (gp.ui.nicknaming == 1) {
+			} else if (gp.ui != null && gp.ui.nicknaming == 1) {
 				if (code == config.keys[config.backspaceKey]) {
 					gp.ui.handleBackspace();
 				} else {

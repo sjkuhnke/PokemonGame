@@ -42,7 +42,6 @@ public class Egg extends Pokemon {
 	public void setSprites() {
 		sprite = setSprite();
 		frontSprite = setFrontSprite();
-		miniSprite = setMiniSprite();
 	}
 	
 	@Override
