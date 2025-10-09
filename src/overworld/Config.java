@@ -183,6 +183,17 @@ public class Config {
 		case "Down": return "\u2193";
 		case "Left": return "\u2190";
 		case "Right": return "\u2192";
+		case "Period": return ".";
+		case "Comma": return ",";
+		case "Equals": return "=";
+		case "Minus": return "-";
+		case "Back Slash": return "\\";
+		case "Back Quote": return "`";
+		case "Open Bracket": return "[";
+		case "Close Bracket": return "]";
+		case "Quote": return "'";
+		case "Semicolon": return ";";
+		case "Slash": return "/";
 		default: return keyText;
 		}
 	}

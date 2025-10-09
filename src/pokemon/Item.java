@@ -2148,6 +2148,7 @@ public enum Item {
 				test.setAbility(i);
 				abilityInput.addItem(test.ability);
 			}
+			if (p != null) abilityInput.setSelectedIndex(p.abilitySlot);
 		});
 		
 		levelInput.addActionListener(f -> {

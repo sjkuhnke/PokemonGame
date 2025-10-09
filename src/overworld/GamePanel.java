@@ -97,7 +97,9 @@ public class GamePanel extends JPanel implements Runnable {
 	public SimBattleUI simBattleUI = new SimBattleUI(this);
 	
 	public int gameState;
-
+	
+	public static final int LOADING_STATE = -1;
+	public static final int TITLE_STATE = 0;
 	public static final int PLAY_STATE = 1;
 	public static final int DIALOGUE_STATE = 2;
 	public static final int BATTLE_STATE = 3;
@@ -639,7 +641,7 @@ public class GamePanel extends JPanel implements Runnable {
 		for (int i = 0; i < player.p.registeredItems.length; i++) {
 			Item item = player.p.registeredItems[i];
 			if (item != null) {
-				hotkeyTips.add(new ToolTip(this, item.toString(), "", i + config.hotkey1));
+				hotkeyTips.add(new ToolTip(this, item.toString(), "", true, i + config.hotkey1));
 			}
 		}
 		ui.drawToolTipBar(x, y, hotkeyTips);
@@ -647,10 +649,10 @@ public class GamePanel extends JPanel implements Runnable {
 		boolean canCalc = player.p.getCurrent() != null;
 		
 		ArrayList<ToolTip> moveTips = new ArrayList<>();
-		moveTips.add(new ToolTip(this, "Move", "", config.upKey, config.leftKey, config.downKey, config.rightKey));
-		moveTips.add(new ToolTip(this, "Speedup", "", config.speedupKey));
-		moveTips.add(new ToolTip(this, "Screenshot", "", config.screenshotKey));
-		if (canCalc) moveTips.add(new ToolTip(this, "Calc", "", config.calcKey));
+		moveTips.add(new ToolTip(this, "Move", "", true, config.upKey, config.leftKey, config.downKey, config.rightKey));
+		moveTips.add(new ToolTip(this, "Speedup", "", false, config.speedupKey));
+		moveTips.add(new ToolTip(this, "Screenshot", "", false, config.screenshotKey));
+		if (canCalc) moveTips.add(new ToolTip(this, "Calc", "", false, config.calcKey));
 		
 		y = tileSize * 9;
 		ui.drawToolTipBar(x, y, moveTips);
@@ -732,6 +734,7 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	public void saveGame(Player p, boolean saveCoords) {
     	try {
+    		config.saveConfig();
     		if (saveCoords) {
     			p.setPosX(player.worldX);
             	p.setPosY(player.worldY);
