@@ -500,6 +500,20 @@ public class BattleUI extends AbstractUI {
 		}
 	}
 	
+	public void drawSummary(Pokemon foe) {
+		super.drawSummary(foe);
+		
+		if (gp.keyH.sPressed) {
+			gp.keyH.sPressed = false;
+			if (moveSummaryNum == -1) {
+				subState = BattleUI.PARTY_SELECTION_STATE;
+			} else {
+				moveSummaryNum = -1;
+				moveSwapNum = -1;
+			}
+		}
+	}
+	
 	protected void drawIdleScreen() {
 		currentDialogue = "What will\n" + user.nickname + " do?";
 		drawDialogueScreen(false);
@@ -921,6 +935,62 @@ public class BattleUI extends AbstractUI {
 				showFoeSummary = !showFoeSummary;
 			}
 		}
+		if (gp.keyH.upPressed) {
+			if (commandNum > 1 || (shouldDrawCatchWindow() && !showFoeSummary)) {
+				gp.keyH.upPressed = false;
+				commandNum -= 2;
+			}
+		}
+		if (gp.keyH.downPressed) {
+			if (commandNum < 2 && !showFoeSummary) {
+				gp.keyH.downPressed = false;
+				commandNum += 2;
+			}
+		}
+		if (gp.keyH.leftPressed) {
+			gp.keyH.leftPressed = false;
+			if (commandNum >= 0) {
+				if (!showFoeSummary) {
+					if (commandNum % 2 == 1) {
+						commandNum--;
+					}
+				} else if (foe.trainerOwned()) {
+					if (foeSummary != null && foeSummary.trainer != null && moveSummaryNum < 0) {
+						int currentIndex = foeSummary.trainer.indexOf(foeSummary);
+						currentIndex = (currentIndex - 1 + foeSummary.trainer.team.length) % foeSummary.trainer.team.length;
+						foeSummary = foeSummary.trainer.team[currentIndex];
+					}
+				}
+			} else {
+				if ((!foe.trainerOwned() || staticID >= 0) && balls.size() > 1) {
+					if (--ballIndex < 0) {
+						ballIndex = balls.size() - 1;
+					}
+				}
+			}
+		}
+		if (gp.keyH.rightPressed) {
+			gp.keyH.rightPressed = false;
+			if (commandNum >= 0) {
+				if (!showFoeSummary) {
+					if (commandNum % 2 == 0) {
+						commandNum++;
+					}
+				} else if (foe.trainerOwned()) {
+					if (foeSummary != null && foeSummary.trainer != null && moveSummaryNum < 0) {
+						int currentIndex = foeSummary.trainer.indexOf(foeSummary);
+						currentIndex = (currentIndex + 1) % foeSummary.trainer.team.length;
+						foeSummary = foeSummary.trainer.team[currentIndex];
+					}
+				}
+			} else {
+				if ((!foe.trainerOwned() || staticID >= 0) && balls.size() > 1) {
+					if (++ballIndex >= balls.size()) {
+						ballIndex = 0;
+					}
+				}
+			}
+		}
 		
 		if (showFoeSummary) {
 			if (commandNum < 0) {
@@ -936,24 +1006,6 @@ public class BattleUI extends AbstractUI {
 					showFoeSummary = false;
 				} else {
 					moveSummaryNum = -1;
-				}
-			}
-			if (foe.trainerOwned()) {
-				if (gp.keyH.leftPressed) {
-					gp.keyH.leftPressed = false;
-					if (foeSummary != null && foeSummary.trainer != null && moveSummaryNum < 0) {
-						int currentIndex = foeSummary.trainer.indexOf(foeSummary);
-						currentIndex = (currentIndex - 1 + foeSummary.trainer.team.length) % foeSummary.trainer.team.length;
-						foeSummary = foeSummary.trainer.team[currentIndex];
-					}
-				}
-				if (gp.keyH.rightPressed) {
-					gp.keyH.rightPressed = false;
-					if (foeSummary != null && foeSummary.trainer != null && moveSummaryNum < 0) {
-						int currentIndex = foeSummary.trainer.indexOf(foeSummary);
-						currentIndex = (currentIndex + 1) % foeSummary.trainer.team.length;
-						foeSummary = foeSummary.trainer.team[currentIndex];
-					}
 				}
 			}
 		}
@@ -1076,7 +1128,7 @@ public class BattleUI extends AbstractUI {
 		x += gp.tileSize;
 		y += gp.tileSize * 0.75;
 		
-		ToolTip calcKey = new ToolTip(gp, "", "", gp.config.calcKey);
+		ToolTip calcKey = new ToolTip(gp, "", "", true, gp.config.calcKey);
 		g2.drawString(calcKey.toString(), x, y);
 		
 	}
@@ -1229,6 +1281,35 @@ public class BattleUI extends AbstractUI {
         	showMoveSummary = false;
         	turn(move, foeMove);
         }
+		if (gp.keyH.sPressed) {
+			gp.keyH.sPressed = false;
+			subState = IDLE_STATE;
+			showMoveSummary = false;
+		}
+		if (gp.keyH.upPressed) {
+			gp.keyH.upPressed = false;
+			if (moveNum > 1) {
+				moveNum -= 2;
+			}
+		}
+		if (gp.keyH.downPressed) {
+			gp.keyH.downPressed = false;
+			if (moveNum < 2 && user.moveset[moveNum + 2] != null) {
+				moveNum += 2;
+			}
+		}
+		if (gp.keyH.leftPressed) {
+			gp.keyH.leftPressed = false;
+			if (moveNum % 2 == 1) {
+				moveNum--;
+			}
+		}
+		if (gp.keyH.rightPressed) {
+			gp.keyH.rightPressed = false;
+			if (moveNum % 2 == 0 && user.moveset[moveNum + 1] != null) {
+				moveNum++;
+			}
+		}
 		if (showMoveSummary) {
         	drawMoveSummary(gp.tileSize * 3, gp.tileSize * 2, user, foe, moves[moveNum], null);
         }
@@ -1482,6 +1563,12 @@ public class BattleUI extends AbstractUI {
 			gp.keyH.wPressed = false;
 			subState = SUMMARY_STATE;
 		}
+		if (gp.keyH.sPressed) {
+			gp.keyH.sPressed = false;
+			if (cancellableParty) {
+				subState = IDLE_STATE;
+			}
+		}
 		if (!currentDialogue.equals("")) {
 			drawDialogueScreen(false);
 			dialogueCounter++;
@@ -1666,6 +1753,11 @@ public class BattleUI extends AbstractUI {
 	    	g2.drawString(turns, x + gp.tileSize * 3, y);
 	    	y += gp.tileSize / 2;
 	    }
+	    
+	    if (gp.keyH.sPressed) {
+			gp.keyH.sPressed = false;
+			subState = IDLE_STATE;
+		}
 	    
 	    drawToolTips(null, null, "Back", null);
 	}

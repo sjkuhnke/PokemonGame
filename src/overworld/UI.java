@@ -327,23 +327,7 @@ public class UI extends AbstractUI {
 		if (showMessage) {
 			drawDialogueScreen(above);
 			
-			if (messageSkippable()) {
-				if (gp.keyH.wPressed || gp.keyH.sPressed || gp.keyH.dPressed) {
-					gp.keyH.wPressed = false;
-					gp.keyH.sPressed = false;
-					gp.keyH.dPressed = false;
-					showMessage = false;
-					if (gp.gameState == GamePanel.USE_ITEM_STATE) {
-						goBackInBag();
-					} else if (gp.gameState == GamePanel.RARE_CANDY_STATE || gp.gameState == GamePanel.TASK_STATE) {
-						if (currentTask != null && currentTask.type != Task.SHAKE) {
-							currentTask = null;
-						}
-					}
-				}
-				
-				drawToolTips("OK", null, "OK", "OK");
-			}
+			if (messageSkippable()) gp.ui.drawToolTips("OK", null, "OK", "OK");
 		}
 		
 		if (currentTask != null) {
@@ -931,7 +915,7 @@ public class UI extends AbstractUI {
 		g2.setFont(g2.getFont().deriveFont(28F));
 		g2.setColor(sheetFilled ? Color.GREEN : Color.GRAY);
 		
-		ToolTip parlayKey = new ToolTip(gp, "Parlay Sheet", "", gp.config.aKey);
+		ToolTip parlayKey = new ToolTip(gp, "Parlay Sheet", "", true, gp.config.aKey);
 		String sheetText = parlayKey.toString();
 		g2.drawString(sheetText, x, y);
 	}
@@ -1789,7 +1773,7 @@ public class UI extends AbstractUI {
 							Pokemon.loadCompetitiveSets();
 						});
 					}
-					Task.addTask(Task.ODDS, "ulating odds...");
+					Task.addTask(Task.ODDS, "Calculating odds...");
 					currentTask = null;
 					break;
 				case 5: // guy eddie
@@ -3179,8 +3163,8 @@ public class UI extends AbstractUI {
 		}
 		
 		if (gp.keyH.dPressed) {
-			gp.keyH.dPressed = false;
 			if (!showBoxSummary && !release && nicknaming < 0) { // in idle box/party
+				gp.keyH.dPressed = false;
 				if (gp.keyH.ctrlPressed) {
 					if (!showBoxParty) { // party is closed
 						if (itemSwapP == null) { // no pokemon has been selected to swap items yet
@@ -3218,6 +3202,42 @@ public class UI extends AbstractUI {
 			}
 		}
 		
+		if (gp.keyH.sPressed) {
+			gp.keyH.sPressed = false;
+			if (nicknaming < 0) {
+				if (release) {
+					release = false;
+				} else if (showBoxSummary) {
+					if (moveSummaryNum >= 0) {
+						moveSummaryNum = -1;
+						moveSwapNum = -1;
+					} else {
+						showBoxSummary = false;
+					}
+				} else if (showBoxParty) {
+					if (partySelectedNum >= 0) {
+						partySelectedNum = -1;
+					} else if (itemSwapP != null) {
+						itemSwapP = null;
+					} else {
+						partySelectedItem = -1;
+						partyNum = 0;
+						showBoxParty = false;
+					}
+				} else if (boxSwapNum >= 0) {
+					boxSwapNum = -1;
+				} else if (itemSwapP != null) {
+					itemSwapP = null;
+				} else {
+					gp.gameState = GamePanel.PLAY_STATE;
+					npc.direction = "down";
+					boxNum = 0;
+					partySelectedNum = -1;
+					boxSwapNum = -1;
+				}
+			}
+		}
+		
 		if (nicknaming >= 0 && !showBoxSummary && !gauntlet) {
 			currentDialogue = "Change Box " + (cBoxIndex + 1) + "'s name?";
 			drawDialogueScreen(true);
@@ -3233,6 +3253,11 @@ public class UI extends AbstractUI {
 				}
 				drawToolTips("OK", null, null, null);
 			}
+		}
+		
+		if (gp.keyH.calcPressed) {
+			gp.keyH.calcPressed = false;
+			Item.useCalc(gp.player.p.getCurrent(), cBox, null, true);
 		}
 		
 		drawBoxToolTips(false);
@@ -3859,7 +3884,7 @@ public class UI extends AbstractUI {
 	public void drawSummary(Pokemon foe) {
 		super.drawSummary(null);
 		
-		if (gp.keyH.sPressed) {
+		if (gp.keyH.sPressed && nicknaming < 0) {
 			gp.keyH.sPressed = false;
 			if (moveSummaryNum == -1) {
 				subState = 2;
@@ -4282,7 +4307,7 @@ public class UI extends AbstractUI {
 				int toolY = gp.tileSize * 9;
 				
 				ArrayList<ToolTip> bagTips = new ArrayList<>();
-				bagTips.add(new ToolTip(gp, "Sort", "+", gp.config.ctrlKey, gp.config.aKey));
+				bagTips.add(new ToolTip(gp, "Sort", "+", false, gp.config.ctrlKey, gp.config.aKey));
 
 				drawToolTipBar(toolX, toolY, bagTips);
 			}
@@ -4479,8 +4504,8 @@ public class UI extends AbstractUI {
 		
 		ArrayList<ToolTip> keys = new ArrayList<>();
 		for (int i = 0; i < gp.config.keyNames.length; i++) {
-			ToolTip key = new ToolTip(gp, gp.config.keyNames[i], "", i);
-			key.buildKey("", gp.config.pendingKeys[i]);
+			ToolTip key = new ToolTip(gp, gp.config.keyNames[i], "", false, i);
+			key.buildKey("", false, gp.config.pendingKeys[i]);
 			keys.add(key);
 		}
 		
@@ -4587,7 +4612,6 @@ public class UI extends AbstractUI {
 				gp.keyH.sPressed = false;
 				gp.keyH.dPressed = false;
 				boolean changed = gp.config.setKeys();
-				gp.config.saveConfig();
 				settingsState = 0;
 				commandNum = 0;
 				if (changed) showMessage("Keybinds successfully updated!");
@@ -4806,7 +4830,7 @@ public class UI extends AbstractUI {
 			Item registered = gp.player.p.getRegisteredItem(i);
 			FontMetrics fontMetrics = g2.getFontMetrics();
 			String registeredText = registered == null ? "(Empty)" : truncateText(registered.toString(), gp.tileSize * 2, fontMetrics);
-			ToolTip toolTip = new ToolTip(gp, registered == null ? "(Empty)" : registeredText, "", gp.config.hotkey1 + i);
+			ToolTip toolTip = new ToolTip(gp, registered == null ? "(Empty)" : registeredText, "", true, gp.config.hotkey1 + i);
 			keys.add(toolTip);
 			
 			if (commandNum == i) {
@@ -5136,6 +5160,8 @@ public class UI extends AbstractUI {
 			gp.gameState = GamePanel.PLAY_STATE;
 			subState = 0;
 			commandNum = 0;
+			slotRow = 0;
+			slotCol = 0;
 		}
 		if (gp.keyH.upPressed || gp.keyH.downPressed) {
 			gp.keyH.upPressed = false;
@@ -5330,6 +5356,54 @@ public class UI extends AbstractUI {
 			drawPrizeHeader(gp.player.p);
 		}
 		gp.keyH.wPressed = false;
+		
+		if (subState > 0) {
+			if (gp.keyH.sPressed) {
+				gp.keyH.sPressed = false;
+				subState = 0;
+				currentDialogue = npc.dialogues[0];
+			}
+			if (gp.keyH.dPressed) {
+				gp.keyH.dPressed = false;
+				subState++;
+				if (subState > 3) subState = 1;
+				slotRow = 0;
+				slotCol = 0;
+			}
+			if (gp.keyH.aPressed) {
+				gp.keyH.aPressed = false;
+				subState--;
+				if (subState < 1) subState = 3;
+				slotRow = 0;
+				slotCol = 0;
+			}
+			if (gp.keyH.upPressed) {
+				gp.keyH.upPressed = false;
+				if (slotRow > 0) {
+					slotRow--;
+				}
+			}
+			if (gp.keyH.downPressed) {
+				gp.keyH.downPressed = false;
+				int row = subState == 3 ? 2 : MAX_SHOP_ROW;
+				if (slotRow < row) {
+					slotRow++;
+				}
+			}
+			if (gp.keyH.leftPressed) {
+				gp.keyH.leftPressed = false;
+				if (slotCol > 0) {
+					slotCol--;
+				}
+			}
+			if (gp.keyH.rightPressed) {
+				gp.keyH.rightPressed = false;
+				int col = subState == 3 ? 5 : MAX_SHOP_COL - 1;
+				if (slotCol < col) {
+					slotCol++;
+				}
+			}
+		}
 	}
 	
 	private void drawPokemonPrize(ArrayList<Pair<Pokemon, Integer>> inventory) {
@@ -6454,10 +6528,10 @@ public class UI extends AbstractUI {
 		
 		ArrayList<ToolTip> boxTips = new ArrayList<>();
 		if (!party) {
-			boxTips.add(new ToolTip(gp, "Release", "+", gp.config.ctrlKey, gp.config.wKey));
-			boxTips.add(new ToolTip(gp, "Calc", "", gp.config.calcKey));
+			boxTips.add(new ToolTip(gp, "Release", "+", false, gp.config.ctrlKey, gp.config.wKey));
+			boxTips.add(new ToolTip(gp, "Calc", "", false, gp.config.calcKey));
 		}
-		boxTips.add(new ToolTip(gp, "Item", "+", gp.config.ctrlKey, gp.config.dKey));
+		boxTips.add(new ToolTip(gp, "Item", "+", false, gp.config.ctrlKey, gp.config.dKey));
 		
 		int x = 0;
 		int y = gp.tileSize * 9;

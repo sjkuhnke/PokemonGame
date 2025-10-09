@@ -1363,10 +1363,12 @@ public class Pokemon implements RoleAssignable, Serializable {
 				if (recoil >= this.currentHP) score -= 45; // user will die from this move
 			}
 		}
+		
+		int howUseful = -1;
         
 		// --- Secondary Effects/Status Moves ---
 		if (move.cat == 2 || move.secondary != 0) {
-			int howUseful = this.isUsefulEffect(foe, move, isFaster, field, damage);
+			howUseful = this.isUsefulEffect(foe, move, isFaster, field, damage);
 			if (howUseful > 0) {
 				int secChance;
 				if (move.secondary == 0) {
@@ -1469,7 +1471,7 @@ public class Pokemon implements RoleAssignable, Serializable {
     	}
     	if (foeCanKO) {
     		// pick a last-ditch move
-    		if (move.hasPriority(foe) && this.getFaster(foe, 0, 0, field) == foe && (move.cat == 2 || damagePercent > 0)) {
+    		if (move.hasPriority(foe) && this.getFaster(foe, 0, 0, field) == foe && ((move.cat == 2 && howUseful == 1) || damagePercent > 0)) {
     			score += 55;
     		}
     	} else {
@@ -2339,11 +2341,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 				!Move.getNoComboMoves().contains(move) && move != Move.STRUGGLE
 				&& move != Move.FUSION_BOLT && move != Move.FUSION_FLARE) this.lastMoveUsed = move;
 		
-		if (this.choiceMove == null && this.item != null && this.item.isChoiceItem()) {
-			this.choiceMove = move;
-			if (move == Move.FAILED_SUCKER) this.choiceMove = Move.SUCKER_PUNCH;
-		}
-		
 		if (move == Move.SUCKER_PUNCH && !first) move = Move.FAILED_SUCKER;
 		
 		if (move == Move.FAILED_SUCKER) this.lastMoveUsed = Move.SUCKER_PUNCH;
@@ -2368,7 +2365,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 					for (Moveslot moveslot : this.moveset) {
 						if (moveslot != null) {
 							Move m = moveslot.move;
-							if (m != null && m != Move.SLEEP_TALK && m != Move.REST) moves.add(m);
+							if (m != null && m != Move.SLEEP_TALK) moves.add(m);
 						}
 					}
 					move = moves.get(new Random().nextInt(moves.size()));
@@ -2469,6 +2466,13 @@ public class Pokemon implements RoleAssignable, Serializable {
 				return;
 			}
 		}
+		
+		// choice lock - AFTER full para/flinch/self hit confusion/asleep checks
+		if (this.choiceMove == null && this.item != null && this.item.isChoiceItem()) {
+			this.choiceMove = move;
+			if (move == Move.FAILED_SUCKER) this.choiceMove = Move.SUCKER_PUNCH;
+		}
+		
 		if (this.hasStatus(Status.RECHARGE)) {
 			Task.addTask(Task.TEXT, this.nickname + " must recharge!");
 			this.moveMultiplier = 1;
@@ -11598,9 +11602,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			}
 		}
 		Effect remove = restorePP ? Effect.LUNAR_DANCE : Effect.HEALING_WISH;
-		for (FieldEffect fe : this.getFieldEffects()) {
-			if (fe.effect == remove) this.getFieldEffects().remove(fe);
-		}
+		this.getFieldEffects().removeIf(fe -> fe.effect == remove);
 	}
 
 	public String getIllusionText() {

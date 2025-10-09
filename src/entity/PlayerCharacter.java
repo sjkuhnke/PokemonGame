@@ -262,7 +262,7 @@ public class PlayerCharacter extends Entity {
 		}
 		
 		if (keyH.dPressed && !ice) {
-			keyH.dPressed = false;
+			gp.keyH.resetKeys(false);
 			resetSpriteNum();
 			gp.gameState = GamePanel.MENU_STATE;
 		}
@@ -286,6 +286,7 @@ public class PlayerCharacter extends Entity {
 			if (npcIndex != 999) {
 				Entity target = gp.npc[gp.currentMap][npcIndex];
 				resetSpriteNum();
+				gp.keyH.resetKeys(false);
 				if (target instanceof NPC_Nurse) {
 					interactNurse(target);
 				} else if (target instanceof NPC_Clerk || target instanceof NPC_Market
@@ -314,6 +315,7 @@ public class PlayerCharacter extends Entity {
 			int objIndex = gp.cChecker.checkObject(this);
 			if (objIndex != -1) {
 				resetSpriteNum();
+				gp.keyH.resetMainKeys();
 				ItemObj item = (ItemObj) gp.obj[gp.currentMap][objIndex];
 				if (item instanceof TreasureChest) {
 					openChest((TreasureChest) item, objIndex);
@@ -327,6 +329,8 @@ public class PlayerCharacter extends Entity {
 			// Check iTiles
 			int iTileIndex = gp.cChecker.checkEntity(this, gp.iTile);
 			if (iTileIndex != 999) {
+				resetSpriteNum();
+				gp.keyH.resetMainKeys();
 				InteractiveTile target = gp.iTile[gp.currentMap][iTileIndex];
 				interactWith(target, iTileIndex, p.ghost);
 			}
@@ -411,7 +415,6 @@ public class PlayerCharacter extends Entity {
 	}
 
 	public void interactWith(Entity target, int index, boolean override) {
-		resetSpriteNum();
 		if (target instanceof Cut_Tree) {
 			interactCutTree(index, override);
 		} else if (target instanceof Rock_Smash) {
@@ -453,8 +456,6 @@ public class PlayerCharacter extends Entity {
 	}
 
 	public void interactTrainer(Entity entity, int id, boolean turn) {
-		gp.keyH.wPressed = false;
-		
 		int trainer = entity.trainer;
 		if (trainer == -1) return;
 		if (p.wiped()) return;
@@ -611,19 +612,16 @@ public class PlayerCharacter extends Entity {
     	if (gp.currentMap == 125) p.locations[9] = true;
     	if (gp.currentMap == 153) p.locations[10] = true;
     	
-		gp.keyH.wPressed = false;
 		gp.gameState = GamePanel.NURSE_STATE;
 		npc.speak(-1);
 	}
 	
 	private void interactClerk(Entity npc) {
-		gp.keyH.wPressed = false;
 		npc.facePlayer(direction);
 		npc.speak(-1);
 	}
 	
 	public void interactNPC(Entity npc, boolean face) {
-		gp.keyH.wPressed = false;
 		resetSpriteNum();
 		if (face) npc.facePlayer(direction);
 		if (npc.flag == -1 || !p.flag[npc.getFlagX()][npc.getFlagY()]) {
@@ -632,7 +630,6 @@ public class PlayerCharacter extends Entity {
 			npc.speak(0);
 			if (npc.scriptIndex >= 0) {
 				SwingUtilities.invokeLater(() -> {
-					gp.keyH.resetKeys(false);
 					gp.setTaskState();
 					gp.script.runScript(npc);
 				});
@@ -645,14 +642,12 @@ public class PlayerCharacter extends Entity {
 	}
 	
 	public void interactDealer(NPC_Dealer npc) {
-		gp.keyH.wPressed = false;
 		resetSpriteNum();
 		npc.facePlayer(direction);
 		
 		gp.ui.npc = npc;
 		
 		gp.setTaskState();
-		gp.keyH.resetKeys(false);
 		npc.speak(0);
 	}
 	
@@ -662,7 +657,6 @@ public class PlayerCharacter extends Entity {
 	}
 	
 	private void interactMine(NPC_Mine mine) {
-		gp.keyH.wPressed = false;
 		resetSpriteNum();
 		mine.facePlayer(direction);
 		
@@ -855,7 +849,6 @@ public class PlayerCharacter extends Entity {
 		if (!p.flag[0][0]) { // Before talking to Dad first
 			gp.ui.showMessage("It's a machine housing three rare Pokemon!");
 		} else if (p.flag[0][0] && !p.flag[0][1]) { // After talking to Dad and before picking a starter
-			gp.keyH.resetKeys(false);
 			gp.gameState = GamePanel.STARTER_STATE;
 		} else if (p.flag[0][1] && !p.flag[0][4]) { // After picking a starter and before the first gate
 			gp.ui.showMessage(Item.breakString("There are two Pokemon still inside the machine. Wonder what Dad will do with them?", UI.MAX_TEXTBOX));
@@ -1452,19 +1445,19 @@ public class PlayerCharacter extends Entity {
 	
 	private void checkHotkeys() {
 		if (gp.keyH.hotkey1Pressed) {
-			gp.keyH.hotkey1Pressed = false;
+			gp.keyH.resetKeys(false);
 			useHotkey(0);
 		} else if (gp.keyH.hotkey2Pressed) {
-			gp.keyH.hotkey2Pressed = false;
+			gp.keyH.resetKeys(false);
 			useHotkey(1);
 		} else if (gp.keyH.hotkey3Pressed) {
-			gp.keyH.hotkey3Pressed = false;
+			gp.keyH.resetKeys(false);
 			useHotkey(2);
 		} else if (gp.keyH.hotkey4Pressed) {
-			gp.keyH.hotkey4Pressed = false;
+			gp.keyH.resetKeys(false);
 			useHotkey(3);
 		} else if (gp.keyH.hotkey5Pressed) {
-			gp.keyH.hotkey5Pressed = false;
+			gp.keyH.resetKeys(false);
 			useHotkey(4);
 		}
 	}

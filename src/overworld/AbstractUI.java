@@ -159,15 +159,15 @@ public abstract class AbstractUI {
 		
 	public void drawKeyStrokes() {
 		if (!gp.keyH.shiftPressed) return;
-		drawButton(gp.tileSize, 0, 'W', gp.keyH.wPressed);
-		drawButton(0, gp.tileSize, 'A', gp.keyH.aPressed);
-		drawButton(gp.tileSize, gp.tileSize,'S', gp.keyH.sPressed);
-		drawButton(gp.tileSize * 2, gp.tileSize,'D', gp.keyH.dPressed);
+		drawButton(gp.tileSize, 0, 'W', gp.keyH.kWPressed);
+		drawButton(0, gp.tileSize, 'A', gp.keyH.kAPressed);
+		drawButton(gp.tileSize, gp.tileSize,'S', gp.keyH.kSPressed);
+		drawButton(gp.tileSize * 2, gp.tileSize,'D', gp.keyH.kDPressed);
 		
-		drawButton(gp.tileSize, gp.tileSize * 2, '\u2191', gp.keyH.upPressed);
-		drawButton(0, gp.tileSize * 3, '\u2190', gp.keyH.leftPressed);
-		drawButton(gp.tileSize, gp.tileSize * 3,'\u2193', gp.keyH.downPressed);
-		drawButton(gp.tileSize * 2, gp.tileSize * 3 ,'\u2192', gp.keyH.rightPressed);		
+		drawButton(gp.tileSize, gp.tileSize * 2, '\u2191', gp.keyH.kUpPressed);
+		drawButton(0, gp.tileSize * 3, '\u2190', gp.keyH.kLeftPressed);
+		drawButton(gp.tileSize, gp.tileSize * 3,'\u2193', gp.keyH.kDownPressed);
+		drawButton(gp.tileSize * 2, gp.tileSize * 3 ,'\u2192', gp.keyH.kRightPressed);		
 	}
 	
 	public int getTextX(String text) {
@@ -1264,7 +1264,7 @@ public abstract class AbstractUI {
 			String displayLabel = truncateText(tip.label, (int) (gp.tileSize * 1.5), labelMetrics);
 			int keyWidth = keyMetrics.stringWidth(tip.key);
 			int labelWidth = labelMetrics.stringWidth(displayLabel);
-			totalWidth += keyWidth + gp.tileSize/4 + labelWidth + gp.tileSize/2;
+			totalWidth += keyWidth + gp.tileSize/4 + labelWidth + gp.tileSize/4;
 		}
 		
 		int height = (int) (gp.tileSize * 1.5);
@@ -1283,7 +1283,7 @@ public abstract class AbstractUI {
 			g2.setFont(g2.getFont().deriveFont(20F));
 			String displayLabel = truncateText(tip.label, (int) (gp.tileSize * 1.5), labelMetrics);
 			g2.drawString(displayLabel, x, y);
-			x += labelMetrics.stringWidth(displayLabel) + gp.tileSize / 2;
+			x += labelMetrics.stringWidth(displayLabel) + gp.tileSize / 4;
 		}
 	}
 	
@@ -1335,10 +1335,10 @@ public abstract class AbstractUI {
 				ArrayList<Integer> keys = actionToKeys.get(action);
 				
 				if (keys.size() == 1) {
-					tips.add(new ToolTip(gp, action, "", keys.get(0)));
+					tips.add(new ToolTip(gp, action, "", false, keys.get(0)));
 				} else {
 					int[] keyArray = keys.stream().mapToInt(Integer::intValue).toArray();
-					tips.add(new ToolTip(gp, action, "/", keyArray));
+					tips.add(new ToolTip(gp, action, "/", false, keyArray));
 				}
 				
 				processedActions.add(action);

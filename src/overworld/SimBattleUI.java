@@ -56,6 +56,8 @@ public class SimBattleUI extends BattleUI {
 			}
 			drawBetInfo();
 		}
+		
+		drawKeyStrokes();
 	}
 	
 	private void drawBetInfo() {
@@ -620,6 +622,30 @@ public class SimBattleUI extends BattleUI {
 				showFoeSummary = !showFoeSummary;
 			}
 		}
+		if (gp.keyH.upPressed) {
+			if (commandNum > 1 && !showFoeSummary && !showParlays) {
+				gp.keyH.upPressed = false;
+				commandNum -= 2;
+			}
+		}
+		if (gp.keyH.downPressed) {
+			if (commandNum < 2 && !showFoeSummary && !showParlays) {
+				gp.keyH.downPressed = false;
+				commandNum += 2;
+			}
+		}
+		if (gp.keyH.leftPressed) {
+			if (!gp.simBattleUI.showFoeSummary && !gp.simBattleUI.showParlays && gp.simBattleUI.commandNum >= 0 && gp.simBattleUI.commandNum % 2 == 1) {
+				gp.keyH.leftPressed = false;
+				commandNum--;
+			}
+		}
+		if (gp.keyH.rightPressed) {
+			if (!gp.simBattleUI.showFoeSummary && !gp.simBattleUI.showParlays && gp.simBattleUI.commandNum >= 0 && gp.simBattleUI.commandNum % 2 == 0) {
+				gp.keyH.rightPressed = false;
+				commandNum++;
+			}
+		}
 		
 		if (showFoeSummary) {
 			drawFoeSummaryParty();
@@ -740,7 +766,7 @@ public class SimBattleUI extends BattleUI {
 		x += gp.tileSize;
 		y += gp.tileSize * 0.75;
 		
-		ToolTip autoplayKey = new ToolTip(gp, "", "", gp.config.sKey);
+		ToolTip autoplayKey = new ToolTip(gp, "", "", true, gp.config.sKey);
 		g2.drawString(autoplayKey.toString(), x, y);
 		
 		if (gp.keyH.sPressed) {
