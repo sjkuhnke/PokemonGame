@@ -288,7 +288,7 @@ public class TrainerDoc {
 	        // Level
 	        Cell pLevelCell = nameRow2.createCell(col + 1);
 	        pLevelCell.setCellValue(p.getLevel());
-	        pLevelCell.setCellStyle(makeStyle(sheet.getWorkbook(), true, false, 11, IndexedColors.BLACK.getIndex()));
+	        pLevelCell.setCellStyle(makeStyle(sheet.getWorkbook(), true, false, p.level >= 100 ? 9 : 11, IndexedColors.BLACK.getIndex()));
 
 	        // Sprite image
 	        try {

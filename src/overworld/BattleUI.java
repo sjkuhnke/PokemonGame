@@ -699,7 +699,34 @@ public class BattleUI extends AbstractUI {
 	    Pokemon fasterInit = user.getFaster(foe, 0, 0, field);
 		Pokemon slowerInit = fasterInit == user ? foe : user;
 		fasterInit.swapIn(slowerInit, true);
+		if (fasterInit.playerOwned()) {
+			if (fasterInit.trainer.hasValidMembers() && hasAlive() && fasterInit.hasStatus(Status.SWITCHING)) {
+				Task.addTask(Task.PARTY, "");
+				subState = TASK_STATE;
+	        	return;
+			}
+		} else {
+			if (fasterInit.trainer != null && fasterInit.trainer.hasValidMembers() && fasterInit.hasStatus(Status.SWITCHING)) {
+				fasterInit = foe.trainer.swapOut2(slowerInit, FREE_SWITCH, false, false);
+				if (fasterInit == user) { user = fasterInit; }
+				else { foe = fasterInit; }
+			}
+		}
+		
 		slowerInit.swapIn(fasterInit, true);
+		if (slowerInit.playerOwned()) {
+			if (slowerInit.trainer.hasValidMembers() && hasAlive() && slowerInit.hasStatus(Status.SWITCHING)) {
+				Task.addTask(Task.PARTY, "");
+				subState = TASK_STATE;
+	        	return;
+			}
+		} else {
+			if (slowerInit.trainer != null && slowerInit.trainer.hasValidMembers() && slowerInit.hasStatus(Status.SWITCHING)) {
+				slowerInit = foe.trainer.swapOut2(fasterInit, FREE_SWITCH, false, false);
+				if (slowerInit == user) { user = slowerInit; }
+				else { foe = slowerInit; }
+			}
+		}
 	}
 
 	protected void drawFoePokeball(boolean arriving, Item ballType) {
