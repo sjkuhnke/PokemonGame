@@ -6,6 +6,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.io.IOException;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.SwingUtilities;
@@ -15,16 +16,26 @@ public class LoadingScreen {
 	private int progress; // 0-100
 	private String currentTask;
 	private Image icon;
+	private Image backgroundImage;
 	
 	public LoadingScreen(GamePanel gp) {
 		this.gp = gp;
 		reset();
+		loadBackground();
 		loadIcon();
 	}
 	
 	private void loadIcon() {
 		try {
 			icon = ImageIO.read(getClass().getResourceAsStream("/gen/icon4.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void loadBackground() {
+		try {
+			backgroundImage = ImageIO.read(getClass().getResourceAsStream("/gen/background0.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -53,27 +64,32 @@ public class LoadingScreen {
 	public void draw(Graphics2D g2) {
 		g2.setColor(Color.BLACK);
 		g2.setFont(gp.marumonica);
-		g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
-		
-		if (icon != null) {
-			int iconSize = gp.tileSize * 3;
-			int iconX = (gp.screenWidth - iconSize) / 2;
-			int iconY = gp.tileSize * 2;
-			g2.drawImage(icon, iconX, iconY, iconSize, iconSize, null);
+		if (backgroundImage != null) {
+			g2.drawImage(backgroundImage, 0, 0, gp.screenWidth, gp.screenHeight, null);
+		} else {
+			g2.setColor(Color.BLACK);
+			g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
 		}
 		
-		g2.setColor(Color.WHITE);
-		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
-		String title = Main.gameTitle;
-		FontMetrics fm = g2.getFontMetrics();
-		int titleX = (gp.screenWidth - fm.stringWidth(title)) / 2;
-		int titleY = gp.tileSize * 6;
-		g2.drawString(title, titleX, titleY);
+//		if (icon != null) {
+//			int iconSize = gp.tileSize * 3;
+//			int iconX = (gp.screenWidth - iconSize) / 2;
+//			int iconY = gp.tileSize * 2;
+//			g2.drawImage(icon, iconX, iconY, iconSize, iconSize, null);
+//		}
+		
+//		g2.setColor(Color.WHITE);
+//		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
+//		String title = Main.gameTitle;
+//		FontMetrics fm = g2.getFontMetrics();
+//		int titleX = (gp.screenWidth - fm.stringWidth(title)) / 2;
+//		int titleY = gp.tileSize * 6;
+//		g2.drawString(title, titleX, titleY);
 		
 		int barWidth = gp.tileSize * 10;
 		int barHeight = gp.tileSize / 2;
 		int barX = (gp.screenWidth - barWidth) / 2;
-		int barY = gp.tileSize * 8;
+		int barY = gp.tileSize * 9;
 		
 		g2.setColor(Color.DARK_GRAY);
 		g2.fillRect(barX, barY, barWidth, barHeight);
@@ -84,17 +100,17 @@ public class LoadingScreen {
 		
 		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 24F));
 		String progressText = progress + "%";
-		fm = g2.getFontMetrics();
+		FontMetrics fm = g2.getFontMetrics();
 		int progressX = (gp.screenWidth - fm.stringWidth(progressText)) / 2;
 		int progressY = barY + barHeight + gp.tileSize;
-		g2.setColor(Color.WHITE);
+		g2.setColor(Color.BLACK);
 		g2.drawString(progressText, progressX, progressY);
 		
 		g2.setFont(g2.getFont().deriveFont(Font.ITALIC, 20F));
 		fm = g2.getFontMetrics();
 		
-		int taskY = progressY + gp.tileSize;
-		g2.setColor(Color.LIGHT_GRAY);
+		int taskY = progressY + gp.tileSize / 2;
+		g2.setColor(Color.DARK_GRAY);
 		for (String task : currentTask.split("\n")) {
 			int taskX = (gp.screenWidth - fm.stringWidth(task)) / 2;
 			g2.drawString(task, taskX, taskY);

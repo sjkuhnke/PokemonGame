@@ -64,7 +64,7 @@ public class TitleScreen {
 		try {
 			Random rand = new Random();
 			int random = rand.nextInt(4) + 1;
-			backgroundImage = ImageIO.read(getClass().getResourceAsStream("/gen/background" + random + ".png"));
+			backgroundImage = ImageIO.read(getClass().getResourceAsStream("/gen/background5.png"));
 			Color[] textColors = {
 				new Color(221, 184, 188),
 				new Color(247, 229, 123),
@@ -310,19 +310,19 @@ public class TitleScreen {
 	}
 
 	private void drawMainMenu(Graphics2D g2) {
-		if (icon != null) {
-			int iconSize = gp.tileSize * 2;
-			int iconX = gp.tileSize;
-			int iconY = gp.tileSize / 2;
-			g2.drawImage(icon, iconX, iconY, iconSize, iconSize, null);
-		}
+//		if (icon != null) {
+//			int iconSize = gp.tileSize * 2;
+//			int iconX = gp.tileSize;
+//			int iconY = gp.tileSize / 2;
+//			g2.drawImage(icon, iconX, iconY, iconSize, iconSize, null);
+//		}
 		
 		g2.setColor(textColor);
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 36F));
-		String title = Main.gameTitle;
-		int titleX = gp.tileSize * 4;
-		int titleY = gp.tileSize * 2;
-		drawOutlinedText(g2, title, titleX, titleY, textColor, Color.BLACK);
+//		String title = Main.gameTitle;
+//		int titleX = gp.tileSize * 4;
+//		int titleY = gp.tileSize * 2;
+//		drawOutlinedText(g2, title, titleX, titleY, textColor, Color.BLACK);
 		
 		int previewX = gp.screenWidth - gp.tileSize * 7;
 		int previewY = gp.tileSize * 3;

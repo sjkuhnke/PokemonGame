@@ -1808,6 +1808,7 @@ public class UI extends AbstractUI {
 						Task ta = Task.addTask(Task.ITEM, "");
 						ta.item = Item.SHELL_BELL;
 						gp.player.p.bag.remove(Item.EUPHORIAN_GEM, 2);
+						gp.player.p.flag[0][22] = true;
 					} else {
 						Task.addTask(Task.DIALOGUE, npc, "Hey! You don't have enough Euphorian Gems!");
 						Task.addTask(Task.DIALOGUE, npc, "Sorry man, not this time. Let me know if we have a deal!");
