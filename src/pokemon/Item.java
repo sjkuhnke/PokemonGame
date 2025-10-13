@@ -315,7 +315,7 @@ public enum Item {
 	TM61(161,0,0,Color.BLACK,Item.TMS,Move.SCORCHING_SANDS,"Teaches a Pokemon this move."),
 	TM62(162,0,0,Color.BLACK,Item.TMS,Move.BUG_BUZZ,"Teaches a Pokemon this move."),
 	TM63(163,4000,0,Color.BLACK,Item.TMS,Move.THUNDER,"Teaches a Pokemon this move."),
-	TM64(164,1500,0,Color.BLACK,Item.TMS,Move.CLOSE_COMBAT,"Teaches a Pokemon this move."),
+	TM64(164,0,0,Color.BLACK,Item.TMS,Move.CLOSE_COMBAT,"Teaches a Pokemon this move."),
 	TM65(165,0,0,Color.BLACK,Item.TMS,Move.SHADOW_CLAW,"Teaches a Pokemon this move."),
 	TM66(166,10000,0,Color.BLACK,Item.TMS,Move.DRACO_METEOR,"Teaches a Pokemon this move."),
 	TM67(167,2000,0,Color.BLACK,Item.TMS,Move.BREAKING_SWIPE,"Teaches a Pokemon this move."),

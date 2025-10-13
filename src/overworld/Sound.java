@@ -11,7 +11,7 @@ public class Sound {
 	
 	Clip clip;
 	URL[] soundURL = new URL[30];
-	int volumeScale = 3;
+	int volumeScale = 2;
 	FloatControl fc;
 	float volume;
 	
@@ -42,7 +42,7 @@ public class Sound {
 	}
 	
 	public void stop() {
-		clip.stop();
+		if (clip != null) clip.stop();
 	}
 	
 	public void checkVolume() {

@@ -6,7 +6,6 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.io.IOException;
-import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.SwingUtilities;
@@ -15,22 +14,12 @@ public class LoadingScreen {
 	private GamePanel gp;
 	private int progress; // 0-100
 	private String currentTask;
-	private Image icon;
 	private Image backgroundImage;
 	
 	public LoadingScreen(GamePanel gp) {
 		this.gp = gp;
 		reset();
 		loadBackground();
-		loadIcon();
-	}
-	
-	private void loadIcon() {
-		try {
-			icon = ImageIO.read(getClass().getResourceAsStream("/gen/icon4.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	private void loadBackground() {

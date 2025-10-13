@@ -227,10 +227,6 @@ public class GamePanel extends JPanel implements Runnable {
 				updateEntity();
 				//updateTempBag();
 			}
-		} else if (gameState == TITLE_STATE) {
-			if (titleScreen != null) {
-				titleScreen.update();
-			}
 		}
 		if (keyH.tabPressed) {
 			FPS = 120;
@@ -359,6 +355,7 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 	
 	public void playMusic(int i) {
+		music.stop();
 		music.setFile(i);
 		music.play();
 		music.loop();
