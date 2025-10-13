@@ -38,8 +38,6 @@ import util.ToolTip;
 public class UI extends AbstractUI {
 
 	public int menuNum = 0;
-	public int settingsState = 0;
-	public int subState = 0;
 	public int slotCol = 0;
 	public int slotRow = 0;
 	public int bagNum[] = new int[Item.KEY_ITEM];
@@ -48,9 +46,6 @@ public class UI extends AbstractUI {
 	public int bagState;
 	public int sellAmt = 1;
 	public ArrayList<Bag.Entry> currentItems;
-	
-	public int rebindingControl = -1; // -1 for not rebinding, otherwise index of control
-	public boolean waitingForKey = false;
 	
 	public int btX = 0;
 	public int btY = 0;
@@ -78,7 +73,6 @@ public class UI extends AbstractUI {
 	public Item tmCheck;
 	public boolean wasAPressed;
 	public final int maxMenuNum = 8;
-	public final int maxSettingsNum = 4;
 	public BufferedImage[] menuIcons;
 	public BufferedImage[] silhouettes = new BufferedImage[Pokemon.MAX_POKEMON];
 	
@@ -220,16 +214,12 @@ public class UI extends AbstractUI {
 			drawAreaName();
 		}
 		
+		if (showMessage) {
+			showMessageControls();
+		}
+		
 		if (gp.gameState == GamePanel.DIALOGUE_STATE) {
-			drawDialogueScreen(true);
-			
-			if (gp.keyH.wPressed || gp.keyH.sPressed) {
-				gp.keyH.wPressed = false;
-				gp.keyH.sPressed = false;
-				gp.gameState = GamePanel.PLAY_STATE;
-			}
-			
-			drawToolTips("OK", null, "OK", null);
+			drawDialogueState();
 		}
 		
 		if (gp.gameState == GamePanel.DEX_NAV_STATE) {
@@ -326,7 +316,7 @@ public class UI extends AbstractUI {
 		if (showMessage) {
 			drawDialogueScreen(above);
 			
-			if (messageSkippable()) gp.ui.drawToolTips("OK", null, "OK", "OK");
+			if (messageSkippable()) drawToolTips("OK", null, "OK", "OK");
 		}
 		
 		if (currentTask != null) {
@@ -699,6 +689,36 @@ public class UI extends AbstractUI {
 			drawItemWindow(gp.tileSize * 12, (int) (gp.tileSize * 2.5), currentTask.item.getImage2());
 			break;
 		}
+	}
+	
+	private void showMessageControls() {
+		if (messageSkippable()) {
+			if (gp.keyH.wPressed || gp.keyH.sPressed || gp.keyH.dPressed) {
+				gp.keyH.wPressed = false;
+				gp.keyH.sPressed = false;
+				gp.keyH.dPressed = false;
+				showMessage = false;
+				if (gp.gameState == GamePanel.USE_ITEM_STATE) {
+					goBackInBag();
+				} else if (gp.gameState == GamePanel.RARE_CANDY_STATE || gp.gameState == GamePanel.TASK_STATE) {
+					if (currentTask != null && currentTask.type != Task.SHAKE) {
+						currentTask = null;
+					}
+				}
+			}
+		}
+	}
+	
+	private void drawDialogueState() {
+		drawDialogueScreen(true);
+		
+		if (gp.keyH.wPressed || gp.keyH.sPressed) {
+			gp.keyH.wPressed = false;
+			gp.keyH.sPressed = false;
+			gp.gameState = GamePanel.PLAY_STATE;
+		}
+		
+		drawToolTips("OK", null, "OK", null);
 	}
 
 	private Font getFont(int type) {
@@ -2485,6 +2505,15 @@ public class UI extends AbstractUI {
 		if (gp.keyH.aPressed) {
 			gp.keyH.aPressed = false;
 			int max = starAmt >= 5 ? 4 : gp.player.p.calculatePokedexes();
+			dexType = dexType - 1;
+			if (dexType < 0) dexType = max - 1;
+			levelDexNum = 0;
+			tmDexNum = 0;
+		}
+		
+		if (gp.keyH.dPressed) {
+			gp.keyH.dPressed = false;
+			int max = starAmt >= 5 ? 4 : gp.player.p.calculatePokedexes();
 			dexType = (dexType + 1) % max;
 			levelDexNum = 0;
 			tmDexNum = 0;
@@ -2533,7 +2562,7 @@ public class UI extends AbstractUI {
 		}
 		
 		String wText = dexMode == 0 ? "Moves": null;
-		drawToolTips(wText, "Switch", "Back", "Back");
+		drawToolTips(wText, "Prev", "Back", "Next");
 	}
 
 	private void drawDexSummary(Pokemon p, int mode, ArrayList<Move> levelMoveList, ArrayList<String> levelLevelList, ArrayList<Item> tmList) {
@@ -4347,267 +4376,18 @@ public class UI extends AbstractUI {
 		drawToolTips("OK", "Swap", "Back", dText);
 	}
 	
-	private int indexOf(int[] array, int target) {
-		for (int i = 0; i < array.length; i++) {
-			if (array[i] == target) {
-				return i;
-			}
-		}
-		return -1;
-	}
-	
 	public void drawSettings() {
-		g2.setColor(Color.WHITE);
-		g2.setFont(g2.getFont().deriveFont(32F));
+		super.drawSettings();
 		
-		int frameX = gp.tileSize*4;
-		int frameY = gp.tileSize;
-		int frameWidth = gp.tileSize*8;
-		int frameHeight = gp.tileSize*10;
-		
-		switch(settingsState) {
-		case 0: drawSettingsTop(frameX, frameY, frameWidth, frameHeight); break;
-		case 1: drawControlsScreen(frameX-gp.tileSize*2, frameY, frameWidth+gp.tileSize*4, frameHeight); break;
-		}
-	}
-	
-	private void drawSettingsTop(int frameX, int frameY, int frameWidth, int frameHeight) {		
-		drawSubWindow(frameX, frameY, frameWidth, frameHeight);
-		
-		String text = "Settings";
-		int textX = this.getCenterAlignedTextX(text, gp.screenWidth / 2);
-		int textY = frameY + gp.tileSize;
-		g2.drawString(text, textX, textY);
-		
-		// MUSIC
-		textX = frameX + gp.tileSize;
-		textY += gp.tileSize * 2;
-		g2.drawString("Music", textX, textY);
-		if (commandNum == 0) {
-			g2.drawString(">", textX-gp.tileSize/2, textY);
-			if (gp.keyH.leftPressed) {
-				gp.keyH.leftPressed = false;
-				if (gp.music.volumeScale > 0) {
-					gp.music.volumeScale--;
-					gp.music.checkVolume();
-				}
-			}
-			if (gp.keyH.rightPressed) {
-				gp.keyH.rightPressed = false;
-				if (gp.music.volumeScale < 5) {
-					gp.music.volumeScale++;
-					gp.music.checkVolume();
-				}
-			}
-		}
-		
-		// SFX
-		textY += gp.tileSize;
-		g2.drawString("SFX", textX, textY);
-		if (commandNum == 1) {
-			g2.drawString(">", textX-gp.tileSize/2, textY);
-			if (gp.keyH.leftPressed) {
-				gp.keyH.leftPressed = false;
-				if (gp.sfx.volumeScale > 0) {
-					gp.sfx.volumeScale--;
-					gp.sfx.checkVolume();
-				}
-			}
-			if (gp.keyH.rightPressed) {
-				gp.keyH.rightPressed = false;
-				if (gp.sfx.volumeScale < 5) {
-					gp.sfx.volumeScale++;
-					gp.sfx.checkVolume();
-				}
-			}
-		}
-		
-		// CONTROLS
-		textY += gp.tileSize;
-		g2.drawString("Controls", textX, textY);
-		if (commandNum == 2) {
-			g2.drawString(">", textX-gp.tileSize/2, textY);
-			if (gp.keyH.wPressed) {
-				gp.keyH.wPressed = false;
-				settingsState = 1;
+		if (settingsState == 0) {
+			if (gp.keyH.sPressed || gp.keyH.dPressed) {
+				gp.keyH.sPressed = false;
+				gp.keyH.dPressed = false;
 				commandNum = 0;
+				settingsState = 0;
+				subState = 0;
 			}
-		}
-		
-		// UNUSED
-		textY += gp.tileSize;
-		g2.drawString("Unused", textX, textY);
-		if (commandNum == 3) {
-			g2.drawString(">", textX-gp.tileSize/2, textY);
-		}
-		
-		// UNUSED
-		textY += gp.tileSize;
-		g2.drawString("Unused", textX, textY);
-		if (commandNum == 4) {
-			g2.drawString(">", textX-gp.tileSize/2, textY);
-		}
-		
-		// MUSIC VOLUME
-		textX = frameX + (int)(gp.tileSize*4.5);
-		textY = frameY + (int)(gp.tileSize*2.5);
-		g2.drawRect(textX, textY, 120, 24);
-		int volumeWidth = 24 * gp.music.volumeScale;
-		g2.fillRect(textX, textY, volumeWidth, 24);
-		
-		// SFX VOLUME
-		textY += gp.tileSize;
-		g2.drawRect(textX, textY, 120, 24);
-		volumeWidth = 24 * gp.sfx.volumeScale;
-		g2.fillRect(textX, textY, volumeWidth, 24);
-		
-		if (gp.keyH.sPressed || gp.keyH.dPressed) {
-			gp.keyH.sPressed = false;
-			gp.keyH.dPressed = false;
-			commandNum = 0;
-			settingsState = 0;
-			subState = 0;
-		}
-		if (gp.keyH.upPressed) {
-			gp.keyH.upPressed = false;
-			commandNum--;
-			if (commandNum < 0) {
-				commandNum = maxSettingsNum;
-			}
-		}
-		if (gp.keyH.downPressed) {
-			gp.keyH.downPressed = false;
-			commandNum++;
-			if (commandNum > maxSettingsNum) {
-				commandNum = 0;
-			}
-		}
-		
-		drawToolTips("OK", null, "Back", "Back");
-	}
-	
-	private void drawControlsScreen(int frameX, int frameY, int frameWidth, int frameHeight) {
-		if (gp.config.pendingKeys == null) {
-			gp.config.pendingKeys = Arrays.copyOf(gp.config.keys, gp.config.keys.length);
-		}
-		
-		drawSubWindow(frameX, frameY, frameWidth, frameHeight);
-		
-		String text = "Controls";
-		int textX = this.getCenterAlignedTextX(text, gp.screenWidth / 2);
-		int textY = frameY + gp.tileSize;
-		g2.drawString(text, textX, textY);
-		
-		textX = frameX + gp.tileSize;
-		textY += gp.tileSize;
-		g2.setFont(g2.getFont().deriveFont(24F));
-		
-		ArrayList<ToolTip> keys = new ArrayList<>();
-		for (int i = 0; i < gp.config.keyNames.length; i++) {
-			ToolTip key = new ToolTip(gp, gp.config.keyNames[i], "", false, i);
-			key.buildKey("", false, gp.config.pendingKeys[i]);
-			keys.add(key);
-		}
-		
-		int controlsPerColumn = 11;
-		int totalOptions = gp.config.keyNames.length + 1;
-		
-		int leftX = frameX + gp.tileSize;
-		int startY = frameY + gp.tileSize * 2;
-		
-		for (int i = 0; i < controlsPerColumn && i < keys.size(); i++) {
-			int yPos = startY + (i * (int)(gp.tileSize * 0.75));
-			// control name
-			g2.setColor(Color.WHITE);
-			g2.drawString(keys.get(i).label + ":", leftX, yPos);
-			
-			// key
-			int keyTextX = textX + gp.tileSize * 3;
-			String keyText = keys.get(i).key;
-			
-			if (commandNum == i && !waitingForKey) {
-				g2.setColor(Color.YELLOW);
-			} else if (waitingForKey && commandNum == i) {
-				g2.setColor(Color.GREEN);
-				keyText = "Press key...";
-			} else {
-				g2.setColor(Color.LIGHT_GRAY);
-			}
-			g2.drawString(keyText, keyTextX, yPos);
-		}
-		
-		int rightX = frameX + frameWidth / 2 + gp.tileSize / 2;
-		
-		for (int i = controlsPerColumn; i < gp.config.keyNames.length; i++) {
-			int indexInRightColumn = i - controlsPerColumn;
-			int yPos = startY + (indexInRightColumn * (int) (gp.tileSize * 0.75));
-			
-			g2.setColor(Color.WHITE);
-			g2.drawString(keys.get(i).label + ":", rightX, yPos);
-			
-			int keyTextX = rightX + gp.tileSize * 3;
-			String keyText = keys.get(i).key;
-			
-			if (commandNum == i && !waitingForKey) {
-				g2.setColor(Color.YELLOW);
-			} else if (waitingForKey && commandNum == i) {
-				g2.setColor(Color.GREEN);
-				keyText = "Press key...";
-			} else {
-				g2.setColor(Color.LIGHT_GRAY);
-			}
-			g2.drawString(keyText, keyTextX, yPos);
-		}
-		
-		int resetIndex = gp.config.keyNames.length;
-		int resetYPos = startY + ((resetIndex - controlsPerColumn) * (int) (gp.tileSize * 0.75));
-		
-		if (commandNum == resetIndex) {
-			g2.setColor(Color.YELLOW);
-		} else {
-			g2.setColor(Color.WHITE);
-		}
-		g2.drawString("Reset to Default", rightX, resetYPos);
-		
-		if (!waitingForKey) {
-			if (gp.keyH.upPressed) {
-				gp.keyH.upPressed = false;
-				commandNum--;
-				if (commandNum < 0) commandNum = totalOptions - 1;
-			}
-			if (gp.keyH.downPressed) {
-				gp.keyH.downPressed = false;
-				commandNum++;
-				if (commandNum >= totalOptions) commandNum = 0;
-			}
-			if (gp.keyH.leftPressed) {
-				gp.keyH.leftPressed = false;
-				int currentColumn = commandNum / controlsPerColumn;
-				if (currentColumn == 1) {
-					int indexInColumn = commandNum % controlsPerColumn;
-					commandNum = indexInColumn;
-				}
-			}
-			if (gp.keyH.rightPressed) {
-				gp.keyH.rightPressed = false;
-				int currentColumn = commandNum / controlsPerColumn;
-				if (currentColumn == 0) {
-					int indexInColumn = commandNum % controlsPerColumn;
-					int targetIndex = indexInColumn + controlsPerColumn;
-					if (targetIndex < totalOptions) {
-						commandNum = targetIndex;
-					}
-				}
-			}
-			if (gp.keyH.wPressed) {
-				gp.keyH.wPressed = false;
-				if (commandNum == resetIndex) {
-					gp.config.resetControls();
-				} else {
-					waitingForKey = true;
-					rebindingControl = commandNum;
-				}
-			}
+		} else if (settingsState == 1) {
 			if (gp.keyH.sPressed || gp.keyH.dPressed) {
 				gp.keyH.sPressed = false;
 				gp.keyH.dPressed = false;
@@ -4616,10 +4396,16 @@ public class UI extends AbstractUI {
 				commandNum = 0;
 				if (changed) showMessage("Keybinds successfully updated!");
 			}
-			
-			String wText = (commandNum == resetIndex) ? "Reset" : "Rebind";
-			drawToolTips(waitingForKey ? null : wText, null, waitingForKey ? null : "Back", "Back");
 		}
+	}
+	
+	private int indexOf(int[] array, int target) {
+		for (int i = 0; i < array.length; i++) {
+			if (array[i] == target) {
+				return i;
+			}
+		}
+		return -1;
 	}
 
 	private void drawItemOptions() {

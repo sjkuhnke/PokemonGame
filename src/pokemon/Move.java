@@ -375,7 +375,7 @@ public enum Move {
 	PHANTOM_FORCE(100,100,0,0,0,0,PType.GHOST,"A two turn attack. User vanishes on the first, and attacks on the second. Hits through protect.",true,10),
 	PHOTON_GEYSER(130,90,-1,0,1,0,PType.LIGHT,"Lowers user's Sp.Atk by 2",false,5),
 	PIN_MISSILE(25,95,0,0,0,0,PType.BUG,"Hits 2-5 times",false,15),
-	PISTOL_POP(110,70,0,0,0,0,PType.STEEL,"A normal attack",false,5),
+	PISTOL_POP(150,70,0,0,0,0,PType.STEEL,"Can't be used twice in a row",false,5),
 	PLASMA_FISTS(100,100,-1,0,0,0,PType.ELECTRIC,"Turns NORMAL moves to ELECTRIC moves for the rest of the turn",true,10),
 	PLAY_NICE(0,100,0,0,2,0,PType.NORMAL,"Lowers foe's Attack by 1",false,25),
 	PLUCK(60,100,100,0,0,0,PType.FLYING,"% chance to eat foe's berry",true,20),

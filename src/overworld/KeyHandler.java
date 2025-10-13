@@ -11,7 +11,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 
-import pokemon.Task;
 import util.SaveManager;
 
 public class KeyHandler implements KeyListener {
@@ -36,7 +35,9 @@ public class KeyHandler implements KeyListener {
 		if (config == null) config = gp.config;
 		
 		if (gp.ui != null && gp.ui.waitingForKey && gp.ui.settingsState == 1) {
-			handleRebind(code);
+			gp.ui.handleRebind(code);
+		} else if (gp.titleScreen != null && gp.titleScreen.waitingForKey && gp.titleScreen.settingsState == 1) {
+			gp.titleScreen.handleRebind(code);
 			return;
 		}
 		
@@ -81,43 +82,39 @@ public class KeyHandler implements KeyListener {
 		if (code == gp.config.keys[gp.config.hotkey4]) hotkey4Pressed = true;
 		if (code == gp.config.keys[gp.config.hotkey5]) hotkey5Pressed = true;
 		
-		if (gp.ui != null && gp.ui.showMessage) {
-			showMessageState();
-		} else {
-			if (code == config.keys[config.upKey]) {
-				upPressed = true;
-			}
-			if (code == config.keys[config.downKey]) {
-				downPressed = true;
-			}
-			if (code == config.keys[config.leftKey]) {
-				leftPressed = true;
-			}
-			if (code == config.keys[config.rightKey]) {
-				rightPressed = true;
-			}
-			if (code == config.keys[config.aKey]) {
-				aPressed = true;
-			}
-			if (gp.battleUI != null && gp.battleUI.nicknaming == 1) {
-				if (code == config.keys[config.backspaceKey]) {
-					gp.battleUI.handleBackspace();
-				} else {
-					char c = e.getKeyChar();
-					if (c != KeyEvent.CHAR_UNDEFINED) {
-						gp.battleUI.handleKeyInput(c);
-						downPressed = false;
-					}
+		if (code == config.keys[config.upKey]) {
+			upPressed = true;
+		}
+		if (code == config.keys[config.downKey]) {
+			downPressed = true;
+		}
+		if (code == config.keys[config.leftKey]) {
+			leftPressed = true;
+		}
+		if (code == config.keys[config.rightKey]) {
+			rightPressed = true;
+		}
+		if (code == config.keys[config.aKey]) {
+			aPressed = true;
+		}
+		if (gp.battleUI != null && gp.battleUI.nicknaming == 1) {
+			if (code == config.keys[config.backspaceKey]) {
+				gp.battleUI.handleBackspace();
+			} else {
+				char c = e.getKeyChar();
+				if (c != KeyEvent.CHAR_UNDEFINED) {
+					gp.battleUI.handleKeyInput(c);
+					downPressed = false;
 				}
-			} else if (gp.ui != null && gp.ui.nicknaming == 1) {
-				if (code == config.keys[config.backspaceKey]) {
-					gp.ui.handleBackspace();
-				} else {
-					char c = e.getKeyChar();
-					if (c != KeyEvent.CHAR_UNDEFINED) {
-						gp.ui.handleKeyInput(c);
-						downPressed = false;
-					}
+			}
+		} else if (gp.ui != null && gp.ui.nicknaming == 1) {
+			if (code == config.keys[config.backspaceKey]) {
+				gp.ui.handleBackspace();
+			} else {
+				char c = e.getKeyChar();
+				if (c != KeyEvent.CHAR_UNDEFINED) {
+					gp.ui.handleKeyInput(c);
+					downPressed = false;
 				}
 			}
 		}
@@ -178,31 +175,6 @@ public class KeyHandler implements KeyListener {
 		if (code == gp.config.keys[gp.config.hotkey3]) hotkey3Pressed = false;
 		if (code == gp.config.keys[gp.config.hotkey4]) hotkey4Pressed = false;
 		if (code == gp.config.keys[gp.config.hotkey5]) hotkey5Pressed = false;
-	}
-	
-	private void handleRebind(int newKey) {
-		gp.config.setKeybind(gp.ui.rebindingControl, newKey);
-		
-		gp.ui.waitingForKey = false;
-		gp.ui.rebindingControl = -1;
-	}
-	
-	private void showMessageState() {
-		if (gp.ui.messageSkippable()) {
-			if (gp.keyH.wPressed || gp.keyH.sPressed || gp.keyH.dPressed) {
-				gp.keyH.wPressed = false;
-				gp.keyH.sPressed = false;
-				gp.keyH.dPressed = false;
-				gp.ui.showMessage = false;
-				if (gp.gameState == GamePanel.USE_ITEM_STATE) {
-					gp.ui.goBackInBag();
-				} else if (gp.gameState == GamePanel.RARE_CANDY_STATE || gp.gameState == GamePanel.TASK_STATE) {
-					if (gp.ui.currentTask != null && gp.ui.currentTask.type != Task.SHAKE) {
-						gp.ui.currentTask = null;
-					}
-				}
-			}
-		}
 	}
 	
 	public void resetKeys() {

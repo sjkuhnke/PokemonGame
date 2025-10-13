@@ -27,6 +27,9 @@ public abstract class AbstractUI {
 	public Graphics2D g2;
 	public String currentDialogue;
 	public int commandNum;
+	public int subState = 0;
+	public int settingsState = 0;
+	public final int maxSettingsNum = 4;
 	public int partyNum;
 	public int moveSummaryNum = -1;
 	public int moveSwapNum = -1;
@@ -45,6 +48,8 @@ public abstract class AbstractUI {
 	public boolean showIVOptions;
 	public boolean showStatusOptions;
 	public boolean gauntlet;
+	public int rebindingControl = -1; // -1 for not rebinding, otherwise index of control
+	public boolean waitingForKey = false;
 	
 	public int boxSwapNum;
 	public boolean showBoxParty;
@@ -101,6 +106,7 @@ public abstract class AbstractUI {
 		
 		drawSubWindow(x, y, width, height);
 		float fontSize = getFontSize();
+		g2.setColor(Color.WHITE);
 		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,fontSize));
 		x += gp.tileSize;
 		y += gp.tileSize;
@@ -157,7 +163,7 @@ public abstract class AbstractUI {
 	}
 		
 	public void drawKeyStrokes() {
-		if (!gp.keyH.shiftPressed) return;
+		if (gp == null || !gp.keyH.shiftPressed) return;
 		
 		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 24F));
 		
@@ -1258,6 +1264,7 @@ public abstract class AbstractUI {
 		if (tips.isEmpty()) return;
 		
 		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 24F));
+		g2.setColor(Color.WHITE);
 		FontMetrics keyMetrics = g2.getFontMetrics();
 		FontMetrics labelMetrics = g2.getFontMetrics(g2.getFont().deriveFont(20F));
 		int totalWidth = gp.tileSize;
@@ -1533,6 +1540,266 @@ public abstract class AbstractUI {
 
 	    drawToolTips(null, editable ? "Close" : null, "Close", null);
 	    
+	}
+	
+	public void drawSettings() {
+		g2.setColor(Color.WHITE);
+		g2.setFont(g2.getFont().deriveFont(32F));
+		
+		int frameX = gp.tileSize*4;
+		int frameY = gp.tileSize;
+		int frameWidth = gp.tileSize*8;
+		int frameHeight = gp.tileSize*10;
+		
+		switch(settingsState) {
+		case 0: drawSettingsTop(frameX, frameY, frameWidth, frameHeight); break;
+		case 1: drawControlsScreen(frameX-gp.tileSize*2, frameY, frameWidth+gp.tileSize*4, frameHeight); break;
+		}
+	}
+	
+	private void drawSettingsTop(int frameX, int frameY, int frameWidth, int frameHeight) {
+		drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+		
+		g2.setColor(Color.WHITE);
+		String text = "Settings";
+		int textX = this.getCenterAlignedTextX(text, gp.screenWidth / 2);
+		int textY = frameY + gp.tileSize;
+		g2.drawString(text, textX, textY);
+		
+		// MUSIC
+		textX = frameX + gp.tileSize;
+		textY += gp.tileSize * 2;
+		g2.drawString("Music", textX, textY);
+		if (commandNum == 0) {
+			g2.drawString(">", textX-gp.tileSize/2, textY);
+			if (gp.keyH.leftPressed) {
+				gp.keyH.leftPressed = false;
+				if (gp.music.volumeScale > 0) {
+					gp.music.volumeScale--;
+					gp.music.checkVolume();
+				}
+			}
+			if (gp.keyH.rightPressed) {
+				gp.keyH.rightPressed = false;
+				if (gp.music.volumeScale < 5) {
+					gp.music.volumeScale++;
+					gp.music.checkVolume();
+				}
+			}
+		}
+		
+		// SFX
+		textY += gp.tileSize;
+		g2.drawString("SFX", textX, textY);
+		if (commandNum == 1) {
+			g2.drawString(">", textX-gp.tileSize/2, textY);
+			if (gp.keyH.leftPressed) {
+				gp.keyH.leftPressed = false;
+				if (gp.sfx.volumeScale > 0) {
+					gp.sfx.volumeScale--;
+					gp.sfx.checkVolume();
+				}
+			}
+			if (gp.keyH.rightPressed) {
+				gp.keyH.rightPressed = false;
+				if (gp.sfx.volumeScale < 5) {
+					gp.sfx.volumeScale++;
+					gp.sfx.checkVolume();
+				}
+			}
+		}
+		
+		// CONTROLS
+		textY += gp.tileSize;
+		g2.drawString("Controls", textX, textY);
+		if (commandNum == 2) {
+			g2.drawString(">", textX-gp.tileSize/2, textY);
+			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				settingsState = 1;
+				commandNum = 0;
+			}
+		}
+		
+		// UNUSED
+		textY += gp.tileSize;
+		g2.drawString("Unused", textX, textY);
+		if (commandNum == 3) {
+			g2.drawString(">", textX-gp.tileSize/2, textY);
+		}
+		
+		// UNUSED
+		textY += gp.tileSize;
+		g2.drawString("Unused", textX, textY);
+		if (commandNum == 4) {
+			g2.drawString(">", textX-gp.tileSize/2, textY);
+		}
+		
+		// MUSIC VOLUME
+		textX = frameX + (int)(gp.tileSize*4.5);
+		textY = frameY + (int)(gp.tileSize*2.5);
+		g2.drawRect(textX, textY, 120, 24);
+		int volumeWidth = 24 * gp.music.volumeScale;
+		g2.fillRect(textX, textY, volumeWidth, 24);
+		
+		// SFX VOLUME
+		textY += gp.tileSize;
+		g2.drawRect(textX, textY, 120, 24);
+		volumeWidth = 24 * gp.sfx.volumeScale;
+		g2.fillRect(textX, textY, volumeWidth, 24);
+		
+		if (gp.keyH.upPressed) {
+			gp.keyH.upPressed = false;
+			commandNum--;
+			if (commandNum < 0) {
+				commandNum = maxSettingsNum;
+			}
+		}
+		if (gp.keyH.downPressed) {
+			gp.keyH.downPressed = false;
+			commandNum++;
+			if (commandNum > maxSettingsNum) {
+				commandNum = 0;
+			}
+		}
+		
+		drawToolTips("OK", null, "Back", "Back");
+	}
+	
+	private void drawControlsScreen(int frameX, int frameY, int frameWidth, int frameHeight) {
+		if (gp.config.pendingKeys == null) {
+			gp.config.pendingKeys = Arrays.copyOf(gp.config.keys, gp.config.keys.length);
+		}
+		
+		drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+		
+		g2.setColor(Color.WHITE);
+		String text = "Controls";
+		int textX = this.getCenterAlignedTextX(text, gp.screenWidth / 2);
+		int textY = frameY + gp.tileSize;
+		g2.drawString(text, textX, textY);
+		
+		textX = frameX + gp.tileSize;
+		textY += gp.tileSize;
+		g2.setFont(g2.getFont().deriveFont(24F));
+		
+		ArrayList<ToolTip> keys = new ArrayList<>();
+		for (int i = 0; i < gp.config.keyNames.length; i++) {
+			ToolTip key = new ToolTip(gp, gp.config.keyNames[i], "", false, i);
+			key.buildKey("", false, gp.config.pendingKeys[i]);
+			keys.add(key);
+		}
+		
+		int controlsPerColumn = 11;
+		int totalOptions = gp.config.keyNames.length + 1;
+		
+		int leftX = frameX + gp.tileSize;
+		int startY = frameY + gp.tileSize * 2;
+		
+		for (int i = 0; i < controlsPerColumn && i < keys.size(); i++) {
+			int yPos = startY + (i * (int)(gp.tileSize * 0.75));
+			// control name
+			g2.setColor(Color.WHITE);
+			g2.drawString(keys.get(i).label + ":", leftX, yPos);
+			
+			// key
+			int keyTextX = textX + gp.tileSize * 3;
+			String keyText = keys.get(i).key;
+			
+			if (commandNum == i && !waitingForKey) {
+				g2.setColor(Color.YELLOW);
+			} else if (waitingForKey && commandNum == i) {
+				g2.setColor(Color.GREEN);
+				keyText = "Press key...";
+			} else {
+				g2.setColor(Color.LIGHT_GRAY);
+			}
+			g2.drawString(keyText, keyTextX, yPos);
+		}
+		
+		int rightX = frameX + frameWidth / 2 + gp.tileSize / 2;
+		
+		for (int i = controlsPerColumn; i < gp.config.keyNames.length; i++) {
+			int indexInRightColumn = i - controlsPerColumn;
+			int yPos = startY + (indexInRightColumn * (int) (gp.tileSize * 0.75));
+			
+			g2.setColor(Color.WHITE);
+			g2.drawString(keys.get(i).label + ":", rightX, yPos);
+			
+			int keyTextX = rightX + gp.tileSize * 3;
+			String keyText = keys.get(i).key;
+			
+			if (commandNum == i && !waitingForKey) {
+				g2.setColor(Color.YELLOW);
+			} else if (waitingForKey && commandNum == i) {
+				g2.setColor(Color.GREEN);
+				keyText = "Press key...";
+			} else {
+				g2.setColor(Color.LIGHT_GRAY);
+			}
+			g2.drawString(keyText, keyTextX, yPos);
+		}
+		
+		int resetIndex = gp.config.keyNames.length;
+		int resetYPos = startY + ((resetIndex - controlsPerColumn) * (int) (gp.tileSize * 0.75));
+		
+		if (commandNum == resetIndex) {
+			g2.setColor(Color.YELLOW);
+		} else {
+			g2.setColor(Color.WHITE);
+		}
+		g2.drawString("Reset to Default", rightX, resetYPos);
+		
+		if (!waitingForKey) {
+			if (gp.keyH.upPressed) {
+				gp.keyH.upPressed = false;
+				commandNum--;
+				if (commandNum < 0) commandNum = totalOptions - 1;
+			}
+			if (gp.keyH.downPressed) {
+				gp.keyH.downPressed = false;
+				commandNum++;
+				if (commandNum >= totalOptions) commandNum = 0;
+			}
+			if (gp.keyH.leftPressed) {
+				gp.keyH.leftPressed = false;
+				int currentColumn = commandNum / controlsPerColumn;
+				if (currentColumn == 1) {
+					int indexInColumn = commandNum % controlsPerColumn;
+					commandNum = indexInColumn;
+				}
+			}
+			if (gp.keyH.rightPressed) {
+				gp.keyH.rightPressed = false;
+				int currentColumn = commandNum / controlsPerColumn;
+				if (currentColumn == 0) {
+					int indexInColumn = commandNum % controlsPerColumn;
+					int targetIndex = indexInColumn + controlsPerColumn;
+					if (targetIndex < totalOptions) {
+						commandNum = targetIndex;
+					}
+				}
+			}
+			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				if (commandNum == resetIndex) {
+					gp.config.resetControls();
+				} else {
+					waitingForKey = true;
+					rebindingControl = commandNum;
+				}
+			}
+			
+			String wText = (commandNum == resetIndex) ? "Reset" : "Rebind";
+			drawToolTips(waitingForKey ? null : wText, null, waitingForKey ? null : "Back", "Back");
+		}
+	}
+	
+	public void handleRebind(int newKey) {
+		gp.config.setKeybind(rebindingControl, newKey);
+		
+		waitingForKey = false;
+		rebindingControl = -1;
 	}
 	
 	public String getBetCurrencyName(boolean gauntlet) {

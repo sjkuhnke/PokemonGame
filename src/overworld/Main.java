@@ -92,7 +92,8 @@ public class Main {
 			Player.setupPokedex();
 			
 			loader.setProgress(100, "Complete!");
-
+			
+			gp.playMusic(1);
 			gp.setGameState(GamePanel.TITLE_STATE);
 			gp.keyH.resetKeys(false);
 			gp.startGameThread();
@@ -245,7 +246,6 @@ public class Main {
 					gp.player.p.setupPuzzles(gp, gp.currentMap);
 					gp.player.currentSave = fileName;
 					gp.setGameState(GamePanel.PLAY_STATE);
-					//gp.startGameThread();
 				});
 				
 			} catch (Exception e) {

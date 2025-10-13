@@ -1424,7 +1424,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 								score -= 20;
 							}
 						} else if (move == Move.DESTINY_BOND) {
-			    			score += 25;
+			    			score += 50;
 			    		} else if (move == Move.ENDURE) {
 			    			score += 20;
 			    		} else if (move == Move.TRICK || move == Move.SWITCHEROO || move == Move.TRICK_TACKLE) {
@@ -9606,7 +9606,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 						|| (this.getItem(field) != null && this.item.isChoiceItem() && this.choiceMove != null && this.choiceMove != m) || (this.getItem(field) == Item.ASSAULT_VEST && m.cat == 2)
 						|| (this.hasStatus(Status.LOCKED) && m != this.lastMoveUsed) || (this.hasStatus(Status.ENCORED) && m != this.lastMoveUsed)
 						|| (this.hasStatus(Status.CHARGING) && m != this.lastMoveUsed) || (this.hasStatus(Status.SEMI_INV) && m != this.lastMoveUsed)
-						|| hasStatus(Status.HEAL_BLOCK) && m.isHealing() || m == this.disabledMove) {
+						|| hasStatus(Status.HEAL_BLOCK) && m.isHealing() || m == this.disabledMove || (m == Move.PISTOL_POP && this.lastMoveUsed == Move.PISTOL_POP)) {
 	            	// nothing: don't add
 	            } else {
 	            	validMoves.add(m);
