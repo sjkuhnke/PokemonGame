@@ -17,13 +17,13 @@ import java.util.Comparator;
 import java.util.Date;
 
 import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
 
 import docs.TrainerDoc;
 import entity.PlayerCharacter;
 import overworld.GamePanel;
 import overworld.Main;
 import overworld.PMap;
+import overworld.Sound;
 import pokemon.Player;
 import pokemon.Pokemon;
 import util.SaveManager;
@@ -31,8 +31,6 @@ import util.ToolTip;
 
 public class TitleScreen extends AbstractUI {
 	private Image backgroundImage;
-	public Color textColor;
-	public int backgroundOpacity = 180;
 	public TextInputDialog textInputDialog;
 	
 	// MENU STATES
@@ -64,6 +62,11 @@ public class TitleScreen extends AbstractUI {
 	// DOC CHECKBOXES
 	private boolean[] docOptions = new boolean[8];
 	public boolean generateExcel = false;
+	
+	// DELETE CONFIRM FIELDS
+	private boolean showDeleteConfirm;
+	private String fileToDelete;
+	private int deleteConfirmNum;
 	
 	// MAIN MENU OPTIONS
 	private static final int MAIN_CONTINUE = 0;
@@ -103,9 +106,6 @@ public class TitleScreen extends AbstractUI {
 	private static final int MANAGE_OPEN_LOCATION = 2;
 	private static final int MANAGE_CANCEL = 3;
 	private int manageMenuNum = 0;
-	
-	// ANIMATION
-	private int pulseCounter = 0;
 	
 	public TitleScreen(GamePanel gp, boolean load) {
 		this.gp = gp;
@@ -177,6 +177,7 @@ public class TitleScreen extends AbstractUI {
 		int maxOption = MAIN_EXCEL_TOGGLE;
 		if (gp.keyH.upPressed) {
 			gp.keyH.upPressed = false;
+			gp.playSFX(Sound.S_MENU_1);
 			if (menuNum == MAIN_EXCEL_TOGGLE) { // for toggle going to left column
 				menuNum = ((MAIN_DOC_END - MAIN_DOC_START) / 2) + MAIN_DOC_START;
 			} else if (menuNum == ((MAIN_DOC_END - MAIN_DOC_START) / 2) + MAIN_DOC_START + 1) { // for top checkbox on the right column
@@ -187,6 +188,7 @@ public class TitleScreen extends AbstractUI {
 		}
 		if (gp.keyH.downPressed) {
 			gp.keyH.downPressed = false;
+			gp.playSFX(Sound.S_MENU_1);
 			if (menuNum == ((MAIN_DOC_END - MAIN_DOC_START) / 2) + MAIN_DOC_START) { // for bottom left column checkbox to the toggle
 				menuNum = MAIN_EXCEL_TOGGLE;
 			} else {
@@ -198,14 +200,21 @@ public class TitleScreen extends AbstractUI {
 			int docIndex = menuNum - MAIN_DOC_START;
 			if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
+				if (docOptions[docIndex]) {
+					gp.playSFX(Sound.S_MENU_CAN);
+				} else {
+					gp.playSFX(Sound.S_MENU_CON);
+				}
 				docOptions[docIndex] = !docOptions[docIndex];
 			}
 			if (gp.keyH.leftPressed && docIndex >= docOptions.length / 2) {
 				gp.keyH.leftPressed = false;
+				gp.playSFX(Sound.S_MENU_1);
 				menuNum -= docOptions.length / 2;
 			}
 			if (gp.keyH.rightPressed && docIndex < docOptions.length / 2) {
 				gp.keyH.rightPressed = false;
+				gp.playSFX(Sound.S_MENU_1);
 				menuNum += docOptions.length / 2;
 			}
 		}
@@ -215,12 +224,20 @@ public class TitleScreen extends AbstractUI {
 				gp.keyH.wPressed = false;
 				gp.keyH.leftPressed = false;
 				gp.keyH.rightPressed = false;
+				if (generateExcel) {
+					gp.playSFX(Sound.S_MENU_CAN);
+				} else {
+					gp.playSFX(Sound.S_MENU_CON);
+				}
 				generateExcel = !generateExcel;
 			}
 		}
 		
 		if (gp.keyH.wPressed) {
 			gp.keyH.wPressed = false;
+			if (menuNum > MAIN_CONTINUE) {
+				gp.playSFX(Sound.S_MENU_CON);
+			}
 			handleMainMenuSelection();
 		}
 	}
@@ -228,6 +245,7 @@ public class TitleScreen extends AbstractUI {
 	private void handleMainMenuSelection() {
 		switch (menuNum) {
 		case MAIN_CONTINUE:
+			gp.playSFX(Sound.S_MENU_START);
 			if (saveFiles.isEmpty()) {
 				showMessage("No save files found!");
 			} else {
@@ -270,6 +288,7 @@ public class TitleScreen extends AbstractUI {
 	private void updateSavesMenu() {
 		if (gp.keyH.upPressed) {
 			gp.keyH.upPressed = false;
+			gp.playSFX(Sound.S_MENU_1);
 			selectedSaveIndex--;
 			if (selectedSaveIndex < 0) selectedSaveIndex = saveFiles.size() - 1;
 			
@@ -284,6 +303,7 @@ public class TitleScreen extends AbstractUI {
 		
 		if (gp.keyH.downPressed) {
 			gp.keyH.downPressed = false;
+			gp.playSFX(Sound.S_MENU_1);
 			selectedSaveIndex++;
 			if (selectedSaveIndex >= saveFiles.size()) selectedSaveIndex = 0;
 			
@@ -298,6 +318,7 @@ public class TitleScreen extends AbstractUI {
 		
 		if (gp.keyH.wPressed) {
 			gp.keyH.wPressed = false;
+			gp.playSFX(Sound.S_MENU_CON);
 			menuState = MAIN_MENU;
 			menuNum = MAIN_SAVE_SELECT;
 		}
@@ -305,60 +326,116 @@ public class TitleScreen extends AbstractUI {
 		if (gp.keyH.sPressed || gp.keyH.dPressed) {
 			gp.keyH.sPressed = false;
 			gp.keyH.dPressed = false;
+			gp.playSFX(Sound.S_MENU_CAN);
 			menuState = MAIN_MENU;
 			menuNum = MAIN_SAVE_SELECT;
 		}
 		
 		if (gp.keyH.aPressed) {
 			gp.keyH.aPressed = false;
+			gp.playSFX(Sound.S_MENU_CON);
 			menuState = SORT_SAVES_MENU;
 			sortMenuNum = 0;
 		}
 	}
 	
 	private void updateManageMenu() {
-		if (textInputDialog == null || !textInputDialog.isActive()) {
-			if (gp.keyH.upPressed) {
-				gp.keyH.upPressed = false;
-				manageMenuNum--;
-				if (manageMenuNum < 0) manageMenuNum = MANAGE_CANCEL;
+		if (showDeleteConfirm || (textInputDialog != null && textInputDialog.isActive())) {
+			return;
+		}
+		
+		if (gp.keyH.upPressed) {
+			gp.keyH.upPressed = false;
+			gp.playSFX(Sound.S_MENU_1);
+			manageMenuNum--;
+			if (manageMenuNum < 0) manageMenuNum = MANAGE_CANCEL;
+		}
+		
+		if (gp.keyH.downPressed) {
+			gp.keyH.downPressed = false;
+			gp.playSFX(Sound.S_MENU_1);
+			manageMenuNum++;
+			if (manageMenuNum > MANAGE_CANCEL) manageMenuNum = 0;
+		}
+		
+		if (gp.keyH.wPressed) {
+			gp.keyH.wPressed = false;
+			gp.playSFX(Sound.S_MENU_CON);
+			handleManageMenuSelection();
+		}
+		
+		if (gp.keyH.sPressed || gp.keyH.dPressed) {
+			gp.keyH.sPressed = false;
+			gp.keyH.dPressed = false;
+			gp.playSFX(Sound.S_MENU_CAN);
+			menuState = MAIN_MENU;
+			manageMenuNum = 0;
+		}
+	}
+	
+	private void updateDeleteConfirm() {
+		if (gp.keyH.leftPressed || gp.keyH.rightPressed) {
+			gp.keyH.leftPressed = false;
+			gp.keyH.rightPressed = false;
+			gp.playSFX(Sound.S_MENU_1);
+			deleteConfirmNum = 1 - deleteConfirmNum;
+		}
+		
+		if (gp.keyH.wPressed) {
+			gp.keyH.wPressed = false;
+			if (deleteConfirmNum == 1) {
+				// Yes - Delete
+				gp.playSFX(Sound.S_MENU_CON);
+				try {
+					SaveManager.deleteSave(fileToDelete);
+					loadSaveFiles();
+					if (selectedSaveIndex >= saveFiles.size() && selectedSaveIndex > 0) {
+						selectedSaveIndex--;
+					}
+					if (!saveFiles.isEmpty()) {
+						loadPreviewPlayer(saveFiles.get(selectedSaveIndex));
+					}
+					showMessage("Save file deleted successfully!");
+				} catch (IOException e) {
+					e.printStackTrace();
+					showMessage("Error deleting save file!");
+				}
+			} else {
+				// No - Cancel
+				gp.playSFX(Sound.S_MENU_CAN);
 			}
-			
-			if (gp.keyH.downPressed) {
-				gp.keyH.downPressed = false;
-				manageMenuNum++;
-				if (manageMenuNum > MANAGE_CANCEL) manageMenuNum = 0;
-			}
-			
-			if (gp.keyH.wPressed) {
-				gp.keyH.wPressed = false;
-				handleManageMenuSelection();
-			}
-			
-			if (gp.keyH.sPressed || gp.keyH.dPressed) {
-				gp.keyH.sPressed = false;
-				gp.keyH.dPressed = false;
-				menuState = MAIN_MENU;
-				manageMenuNum = 0;
-			}
+			showDeleteConfirm = false;
+			fileToDelete = null;
+			menuState = MAIN_MENU;
+		}
+		
+		if (gp.keyH.sPressed || gp.keyH.dPressed) {
+			gp.keyH.sPressed = false;
+			gp.keyH.dPressed = false;
+			gp.playSFX(Sound.S_MENU_CAN);
+			showDeleteConfirm = false;
+			fileToDelete = null;
 		}
 	}
 	
 	private void updateSortSavesMenu() {
 		if (gp.keyH.upPressed) {
 			gp.keyH.upPressed = false;
+			gp.playSFX(Sound.S_MENU_1);
 			sortMenuNum--;
 			if (sortMenuNum < 0) sortMenuNum = SORT_BACK;
 		}
 		
 		if (gp.keyH.downPressed) {
 			gp.keyH.downPressed = false;
+			gp.playSFX(Sound.S_MENU_1);
 			sortMenuNum++;
 			if (sortMenuNum > SORT_BACK) sortMenuNum = 0;
 		}
 		
 		if (gp.keyH.wPressed) {
 			gp.keyH.wPressed = false;
+			gp.playSFX(Sound.S_MENU_1);
 			if (sortMenuNum != SORT_BACK) {
 				sortSaves(sortMenuNum);
 			}
@@ -369,6 +446,7 @@ public class TitleScreen extends AbstractUI {
 		if (gp.keyH.sPressed || gp.keyH.dPressed) {
 			gp.keyH.sPressed = false;
 			gp.keyH.dPressed = false;
+			gp.playSFX(Sound.S_MENU_CAN);
 			menuState = SAVES_MENU;
 			sortMenuNum = 0;
 		}
@@ -433,27 +511,9 @@ public class TitleScreen extends AbstractUI {
 	}
 	
 	private void handleDeleteSave(String fileName) {
-		int confirm = JOptionPane.showConfirmDialog(gp,
-			"Are you sure you want to delete " + fileName + "?",
-			"Confirm Deletion",
-			JOptionPane.YES_NO_OPTION);
-		
-		if (confirm == JOptionPane.YES_OPTION) {
-			try {
-				SaveManager.deleteSave(fileName);
-				loadSaveFiles();
-				if (selectedSaveIndex >= saveFiles.size() && selectedSaveIndex > 0) {
-					selectedSaveIndex--;
-				}
-				if (!saveFiles.isEmpty()) {
-					loadPreviewPlayer(saveFiles.get(selectedSaveIndex));
-				}
-				showMessage("Save file deleted successfully!");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		menuState = MAIN_MENU;
+		fileToDelete = fileName;
+		showDeleteConfirm = true;
+		deleteConfirmNum = 0;
 	}
 	
 	public void draw(Graphics2D g2) {
@@ -496,6 +556,10 @@ public class TitleScreen extends AbstractUI {
 			break;
 		}
 		
+		if (showDeleteConfirm) {
+			drawDeleteConfirmWindow();
+		}
+		
 		if (textInputDialog != null && textInputDialog.isActive()) {
 			textInputDialog.draw(g2);
 		}
@@ -522,6 +586,7 @@ public class TitleScreen extends AbstractUI {
 			gp.keyH.wPressed = false;
 			gp.keyH.sPressed = false;
 			gp.keyH.dPressed = false;
+			gp.playSFX(Sound.S_MENU_1);
 			showMessage = false;
 		}
 	}
@@ -579,6 +644,7 @@ public class TitleScreen extends AbstractUI {
 			
 			if (gp.keyH.upPressed) {
 				gp.keyH.upPressed = false;
+				gp.playSFX(Sound.S_MENU_1);
 				newGameMenuNum--;
 				if (newGameMenuNum < 0) newGameMenuNum = maxOption;
 				
@@ -590,6 +656,7 @@ public class TitleScreen extends AbstractUI {
 			
 			if (gp.keyH.downPressed) {
 				gp.keyH.downPressed = false;
+				gp.playSFX(Sound.S_MENU_1);
 				newGameMenuNum++;
 				if (newGameMenuNum > maxOption) newGameMenuNum = 0;
 				
@@ -603,6 +670,7 @@ public class TitleScreen extends AbstractUI {
 			case NG_SAVE_NAME:
 				if (gp.keyH.wPressed) {
 					gp.keyH.wPressed = false;
+					gp.playSFX(Sound.S_MENU_1);
 					textInputDialog = new TextInputDialog(gp, "Name Save", saveFileName, "Enter save file name", 30, textColor);
 					
 					textInputDialog.show(new TextInputDialog.InputCallback() {
@@ -624,6 +692,11 @@ public class TitleScreen extends AbstractUI {
 					gp.keyH.wPressed = false;
 					gp.keyH.leftPressed = false;
 					gp.keyH.rightPressed = false;
+					if (nuzlockeMode) {
+						gp.playSFX(Sound.S_MENU_CAN);
+					} else {
+						gp.playSFX(Sound.S_MENU_CON);
+					}
 					nuzlockeMode = !nuzlockeMode;
 				}
 				break;
@@ -631,11 +704,13 @@ public class TitleScreen extends AbstractUI {
 			case NG_DIFFICULTY:
 				if (gp.keyH.leftPressed) {
 					gp.keyH.leftPressed = false;
+					gp.playSFX(Sound.S_MENU_1);
 					difficultyLevel--;
 					if (difficultyLevel < 0) difficultyLevel = 2;
 				}
 				if (gp.keyH.rightPressed) {
 					gp.keyH.rightPressed = false;
+					gp.playSFX(Sound.S_MENU_1);
 					difficultyLevel++;
 					if (difficultyLevel > 2) difficultyLevel = 0;
 				}
@@ -646,6 +721,11 @@ public class TitleScreen extends AbstractUI {
 					gp.keyH.wPressed = false;
 					gp.keyH.leftPressed = false;
 					gp.keyH.rightPressed = false;
+					if (banShedinja) {
+						gp.playSFX(Sound.S_MENU_CAN);
+					} else {
+						gp.playSFX(Sound.S_MENU_CON);
+					}
 					banShedinja = !banShedinja;
 				}
 				break;
@@ -655,6 +735,11 @@ public class TitleScreen extends AbstractUI {
 					gp.keyH.wPressed = false;
 					gp.keyH.leftPressed = false;
 					gp.keyH.rightPressed = false;
+					if (allowRevives) {
+						gp.playSFX(Sound.S_MENU_CAN);
+					} else {
+						gp.playSFX(Sound.S_MENU_CON);
+					}
 					allowRevives = !allowRevives;
 				}
 				break;
@@ -662,11 +747,13 @@ public class TitleScreen extends AbstractUI {
 			case NG_LEVEL_CAP:
 				if (gp.keyH.leftPressed) {
 					gp.keyH.leftPressed = false;
+					gp.playSFX(Sound.S_MENU_1);
 					levelCapBonus--;
 					if (levelCapBonus < 0) levelCapBonus = 5;
 				}
 				if (gp.keyH.rightPressed) {
 					gp.keyH.rightPressed = false;
+					gp.playSFX(Sound.S_MENU_1);
 					levelCapBonus++;
 					if (levelCapBonus > 5) levelCapBonus = 0;
 				}
@@ -675,6 +762,7 @@ public class TitleScreen extends AbstractUI {
 			case NG_START:
 				if (gp.keyH.wPressed) {
 					gp.keyH.wPressed = false;
+					gp.playSFX(Sound.S_MENU_START);
 					handleNewGameStart();
 				}
 				break;
@@ -683,6 +771,7 @@ public class TitleScreen extends AbstractUI {
 			if (gp.keyH.sPressed || gp.keyH.dPressed) {
 				gp.keyH.sPressed = false;
 				gp.keyH.dPressed = false;
+				gp.playSFX(Sound.S_MENU_CAN);
 				menuState = MAIN_MENU;
 				menuNum = MAIN_NEW_GAME;
 			}
@@ -808,16 +897,24 @@ public class TitleScreen extends AbstractUI {
 			String diffDesc = "";
 			switch (difficultyLevel) {
 			case 0: // Normal
-				diffDesc = "Advanced Move AI, Advanced Switch-In AI, Minimal Switch-Out AI";
+				tipY -= gp.tileSize / 8;
+				drawOutlinedText("Advanced Move AI, Advanced Switch-In AI,", tipX, tipY, new Color(180, 180, 180), Color.BLACK);
+				tipY += gp.tileSize / 4;
+				diffDesc = "Minimal Switch-Out AI";
 				break;
 			case 1: // Hard
-				diffDesc = "Advanced Move AI, Advanced Switch-In AI, Advanced Switch-Out AI";
+				tipY -= gp.tileSize / 8;
+				drawOutlinedText("Advanced Move AI, Advanced Switch-In AI,", tipX, tipY, new Color(180, 180, 180), Color.BLACK);
+				tipY += gp.tileSize / 4;
+				diffDesc = "Advanced Switch-Out AI";
 				break;
 			case 2: // Extreme
-				tipY -= gp.tileSize / 8;
-				drawOutlinedText("Advanced Move AI, Advanced Switch-In AI, Advanced Switch-Out AI,", tipX, tipY, new Color(180, 180, 180), Color.BLACK);
-				contentY += gp.tileSize / 4;
-				diffDesc = "Both player and AI pick their lead at battle start";
+				tipY -= gp.tileSize / 4;
+				drawOutlinedText("Advanced Move AI, Advanced Switch-In AI,", tipX, tipY, new Color(180, 180, 180), Color.BLACK);
+				tipY += gp.tileSize / 4;
+				drawOutlinedText("Advanced Switch-Out AI,", tipX, tipY, new Color(180, 180, 180), Color.BLACK);
+				tipY += gp.tileSize / 4;
+				diffDesc = "Both player and AI pick lead at battle start";
 				break;
 			}
 			drawOutlinedText(diffDesc, tipX, tipY, new Color(180, 180, 180), Color.BLACK);
@@ -836,7 +933,7 @@ public class TitleScreen extends AbstractUI {
 			contentY += gp.tileSize / 3;
 		} else {
 			contentY += gp.tileSize * 2 / 3;
-			g2.setFont(g2.getFont().deriveFont(20F));
+			g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));
 			selected = newGameMenuNum == NG_BAN_SHEDINJA;
 			drawOutlinedText("Ban Shedinja:", contentX + gp.tileSize / 4, contentY, selected ? textColor : new Color(200, 200, 200), Color.BLACK);
 			
@@ -845,13 +942,13 @@ public class TitleScreen extends AbstractUI {
 			if (selected) {
 				int tipY = contentY - gp.tileSize / 8;
 				g2.setFont(g2.getFont().deriveFont(Font.ITALIC, 14F));
-				drawOutlinedText("Shedinja will not appear when evolving Nincada,", tipX, tipY, new Color(180, 180, 180), Color.BLACK);
+				drawOutlinedText("Shedinja will not appear when evolving", tipX, tipY, new Color(180, 180, 180), Color.BLACK);
 				tipY += gp.tileSize / 4;
-				drawOutlinedText("and will not be catchable in the wild", tipX, tipY, new Color(180, 180, 180), Color.BLACK);
+				drawOutlinedText("Nincada, and is not be catchable in the wild", tipX, tipY, new Color(180, 180, 180), Color.BLACK);
 			}
 			
 			contentY += (int)(gp.tileSize * 0.75);
-			g2.setFont(g2.getFont().deriveFont(20F));
+			g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));
 			selected = newGameMenuNum == NG_ALLOW_REVIVES;
 			drawOutlinedText("Allow Revives:", contentX + gp.tileSize / 4, contentY, selected ? textColor : new Color(200, 200, 200), Color.BLACK);
 			
@@ -864,7 +961,7 @@ public class TitleScreen extends AbstractUI {
 			}
 			
 			contentY += (int)(gp.tileSize * 0.75);
-			g2.setFont(g2.getFont().deriveFont(20F));
+			g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));
 			selected = newGameMenuNum == NG_LEVEL_CAP;
 			drawOutlinedText("Level Cap Bonus:", contentX + gp.tileSize / 4, contentY,selected ? textColor : new Color(200, 200, 200), Color.BLACK);
 			
@@ -873,8 +970,12 @@ public class TitleScreen extends AbstractUI {
 			
 			if (selected) {
 				int tipY = contentY;
+				tipX += gp.tileSize;
+				tipY -= gp.tileSize / 8;
 				g2.setFont(g2.getFont().deriveFont(Font.ITALIC, 14F));
-				drawOutlinedText("A set number to increase every level cap by", tipX, tipY, new Color(180, 180, 180), Color.BLACK);
+				drawOutlinedText("A set number to increase", tipX, tipY, new Color(180, 180, 180), Color.BLACK);
+				tipY += gp.tileSize / 4;
+				drawOutlinedText("every level cap by", tipX, tipY, new Color(180, 180, 180), Color.BLACK);
 			}
 		}
 		
@@ -1251,6 +1352,74 @@ public class TitleScreen extends AbstractUI {
 		updateManageMenu();
 	}
 	
+	private void drawDeleteConfirmWindow() {
+		int panelWidth = gp.tileSize * 6;
+		int panelHeight = gp.tileSize * 5;
+		int panelX = (gp.screenWidth - panelWidth) / 2;
+		int panelY = (gp.screenHeight - panelHeight) / 2;
+		
+		drawPanelWithBorder(panelX, panelY, panelWidth, panelHeight, 255, textColor);
+		
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 28F));
+		String title = "Delete Save?";
+		int titleX = getCenterAlignedTextX(title, gp.screenWidth / 2);
+		int titleY = panelY + gp.tileSize;
+		drawOutlinedText(title, titleX, titleY, textColor, Color.BLACK);
+		
+		g2.setFont(g2.getFont().deriveFont(18F));
+		String warningText = "Are you sure you want to delete";
+		int warningX = getCenterAlignedTextX(warningText, gp.screenWidth / 2);
+		int warningY = panelY + (int)(gp.tileSize * 1.75);
+		drawOutlinedText(warningText, warningX, warningY, new Color(200, 200, 200), Color.BLACK);
+		
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));
+		int fileX = getCenterAlignedTextX(fileToDelete, gp.screenWidth / 2);
+		int fileY = warningY + gp.tileSize / 2;
+		drawOutlinedText(fileToDelete, fileX, fileY, new Color(255, 100, 100), Color.BLACK);
+		
+		g2.setFont(g2.getFont().deriveFont(18F));
+		String warningText2 = "This cannot be undone!";
+		int warning2X = getCenterAlignedTextX(warningText2, gp.screenWidth / 2);
+		int warning2Y = fileY + gp.tileSize / 2;
+		drawOutlinedText(warningText2, warning2X, warning2Y, new Color(200, 200, 200), Color.BLACK);
+		
+		// Cancel Button
+		boolean selected = deleteConfirmNum == 0;
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 28F));
+		Color textCol = textColor;
+		String cancelText = "Cancel";
+		int buttonWidth = gp.tileSize * 2;
+		int buttonHeight = (int)(gp.tileSize * 0.75);
+		int buttonX = (gp.screenWidth - buttonWidth) / 2 - buttonWidth * 2/3;
+		int buttonY = panelY + panelHeight - gp.tileSize;
+		if (selected) {
+			drawPanelWithBorder(buttonX, buttonY, buttonWidth, buttonHeight, backgroundOpacity + 50, textCol);
+		} else {
+			drawPanelWithBorder(buttonX, buttonY, buttonWidth, buttonHeight, backgroundOpacity - 30, new Color(100, 100, 100));
+		}
+		int cancelX = getCenterAlignedTextX(cancelText, buttonX + buttonWidth / 2);
+		int cancelY = buttonY + (int)(gp.tileSize * 0.6);
+		drawOutlinedText(cancelText, cancelX, cancelY, selected ? textCol : new Color(200, 200, 200), Color.BLACK);
+		g2.setFont(g2.getFont().deriveFont(16F));
+		
+		// Confirm Button
+		selected = deleteConfirmNum == 1;
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 28F));
+		String confirmText = "Confirm";
+		buttonX = (gp.screenWidth - buttonWidth) / 2 + buttonWidth * 2/3;
+		if (selected) {
+			drawPanelWithBorder(buttonX, buttonY, buttonWidth, buttonHeight, backgroundOpacity + 50, textCol);
+		} else {
+			drawPanelWithBorder(buttonX, buttonY, buttonWidth, buttonHeight, backgroundOpacity - 30, new Color(100, 100, 100));
+		}
+		int confirmX = getCenterAlignedTextX(confirmText, buttonX + buttonWidth / 2);
+		drawOutlinedText(confirmText, confirmX, cancelY,
+			selected ? textCol : new Color(200, 200, 200), Color.BLACK);
+		g2.setFont(g2.getFont().deriveFont(16F));
+		
+		updateDeleteConfirm();
+	}
+	
 	private void drawOverlay() {
 		g2.setColor(new Color(0, 0, 0, 200));
 		g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
@@ -1455,6 +1624,7 @@ public class TitleScreen extends AbstractUI {
 			if (gp.keyH.sPressed || gp.keyH.dPressed) {
 				gp.keyH.sPressed = false;
 				gp.keyH.dPressed = false;
+				gp.playSFX(Sound.S_MENU_CAN);
 				settingsState = 0;
 				menuState = MAIN_MENU;
 			}
@@ -1462,6 +1632,7 @@ public class TitleScreen extends AbstractUI {
 			if (gp.keyH.sPressed || gp.keyH.dPressed) {
 				gp.keyH.sPressed = false;
 				gp.keyH.dPressed = false;
+				gp.playSFX(Sound.S_MENU_CAN);
 				boolean changed = gp.config.setKeys();
 				commandNum = 0;
 				settingsState = 0;

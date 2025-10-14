@@ -92,7 +92,7 @@ public class Main {
 			
 			loader.setProgress(100, "Complete!");
 			
-			gp.playMusic(1);
+			gp.playMusic(Sound.M_MENU_2);
 			gp.setGameState(GamePanel.TITLE_STATE);
 			gp.keyH.resetKeys(false);
 			gp.startGameThread();
@@ -241,6 +241,7 @@ public class Main {
 	    		}
 				
 				loader.setProgress(100, "Starting game...");
+				gp.playMusic(Sound.M_MENU_1);
 				Thread.sleep(300);
 				
 				// final setup

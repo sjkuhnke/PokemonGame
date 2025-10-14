@@ -18,58 +18,72 @@ import util.ToolTip;
 
 public class BattleUI extends AbstractUI {
 	
-	// Index of trainer and static Pokemon
+	// TRAINER/POKEMON IDS
 	public int index;
 	public int staticID;
-	
-	// User and foe
+
+	// BATTLE POKEMON
 	public Pokemon user;
 	public Pokemon foe;
-	
-	// Pointers for tasks
+
+	// TEMPORARY POKEMON POINTERS
 	public Pokemon tempUser;
 	public Pokemon tempFoe;
+
+	// DISPLAY STATE - USER
 	public String userName;
-	public String foeName;
 	public PType[] userType;
-	public PType[] foeType;
 	public int userHP;
-	public int foeHP;
 	public int maxUserHP;
-	public int maxFoeHP;
 	public Status userStatus;
-	public Status foeStatus;
 	public int userExp;
 	public int userExpMax;
 	public int userLevel;
+
+	// DISPLAY STATE - FOE
+	public String foeName;
+	public PType[] foeType;
+	public int foeHP;
+	public int maxFoeHP;
+	public Status foeStatus;
 	public int foeLevel;
 	public Move foeMove;
+
+	// FIELD EFFECTS
 	public FieldEffect weather;
 	public FieldEffect terrain;
 	protected Pokemon currentAbilityHost;
 	protected Ability currentAbility;
+
+	// FOE STATE
 	public int foeFainted;
-	
+
+	// BALL STATE
 	public int ballIndex;
 	public ArrayList<Entry> balls;
-	
+
+	// STATE MACHINE
 	public int subState = 0;
 	public int dialogueState = DIALOGUE_FREE_STATE;
 	public int moveNum = 0;
 	protected int dialogueCounter = 0;
 	protected int abilityCounter = 0;
 	protected int cooldownCounter = 0;
+
+	// BATTLE STATE
 	protected Field field;
 	protected boolean baton;
 	public boolean catchable;
 	public boolean invalidEncounter;
 	public char encType;
-	
+
+	// PARTY STATE
 	public boolean cancellableParty;
 	public boolean showMoveSummary;
 	public boolean showFoeSummary;
 	public Pokemon foeSummary;
-	
+
+	// IMAGES
 	protected BufferedImage battle;
 	protected BufferedImage userHPBar;
 	protected BufferedImage foeHPBar;
@@ -78,6 +92,7 @@ public class BattleUI extends AbstractUI {
 	protected BufferedImage faintedIcon;
 	protected BufferedImage emptyIcon;
 
+	// STATE CONSTANTS
 	public static final int STARTING_STATE = -1;
 	public static final int IDLE_STATE = 0;
 	public static final int TASK_STATE = 1;
@@ -88,11 +103,13 @@ public class BattleUI extends AbstractUI {
 	public static final int MOVE_MESSAGE_STATE = 6;
 	public static final int COOLDOWN_STATE = 9;
 	public static final int END_STATE = 10;
-	
+
+	// DIALOGUE STATE CONSTANTS
 	public static final int DIALOGUE_WAITING_STATE = 0;
 	public static final int DIALOGUE_STATE = 1;
 	public static final int DIALOGUE_FREE_STATE = 2;
-	
+
+	// SWITCH CONSTANTS
 	public static final int FREE_SWITCH = 0;
 	
 	public BattleUI(GamePanel gp) {

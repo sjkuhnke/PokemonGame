@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 
 import overworld.GamePanel;
+import overworld.Sound;
 import util.ToolTip;
 
 public class TextInputDialog extends TitleScreen {
@@ -169,6 +170,7 @@ public class TextInputDialog extends TitleScreen {
 		// Cancel Button
 		selected = commandNum == CANCEL;
 		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 28F));
+		textCol = textColor;
 		String cancelText = "Cancel";
 		int buttonWidth = gp.tileSize * 3;
 		int buttonHeight = (int)(gp.tileSize * 0.75);
@@ -217,12 +219,14 @@ public class TextInputDialog extends TitleScreen {
 		if (text.length() < maxLength && !Character.isISOControl(c)) {
 			text.append(c);
 		}
+		gp.playSFX(Sound.S_TYPE);
 	}
 	
 	public void handleBackspace() {
 		if (text.length() > 0) {
 			text.deleteCharAt(text.length() - 1);
 		}
+		gp.playSFX(Sound.S_BACKSPACE);
 	}
 	
 	private void confirm() {
@@ -231,6 +235,7 @@ public class TextInputDialog extends TitleScreen {
 			callback.onConfirm(text.toString());
 		}
 		commandNum = 0;
+		gp.playSFX(Sound.S_MENU_CON);
 	}
 	
 	private void cancel() {
@@ -239,6 +244,7 @@ public class TextInputDialog extends TitleScreen {
 			callback.onCancel();
 		}
 		commandNum = 0;
+		gp.playSFX(Sound.S_MENU_CAN);
 	}
 
 	@Override

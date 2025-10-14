@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -18,30 +19,44 @@ import javax.imageio.ImageIO;
 
 import entity.Entity;
 import overworld.GamePanel;
+import overworld.Sound;
 import pokemon.*;
 import util.Pair;
 import util.ToolTip;
 
 public abstract class AbstractUI {
 	
+	// CORE REFERENCES
 	public GamePanel gp;
 	public Graphics2D g2;
+
+	// DIALOGUE STATE
 	public String currentDialogue;
+	public Color textColor;
+	public int backgroundOpacity = 180;
+
+	// MENU STATE
 	public int commandNum;
 	public int subState = 0;
 	public int settingsState = 0;
 	public final int maxSettingsNum = 4;
+
+	// PARTY STATE
 	public int partyNum;
 	public int moveSummaryNum = -1;
 	public int moveSwapNum = -1;
 	public int partySelectedNum = -1;
 	public int partySelectedItem = -1;
 	public int moveOption = -1;
+
+	// FONTS
 	public Font creattion;
 	public Font monsier;
 	public Font cryptik;
 	public Font consolas;
 	public Font kids;
+
+	// GENERAL STATE
 	public int counter = 0;
 	public boolean showMoveOptions;
 	public Move currentMove;
@@ -49,30 +64,41 @@ public abstract class AbstractUI {
 	public boolean showIVOptions;
 	public boolean showStatusOptions;
 	public boolean gauntlet;
-	public int rebindingControl = -1; // -1 for not rebinding, otherwise index of control
+
+	// CONTROL REBINDING
+	public int rebindingControl = -1;
 	public boolean waitingForKey = false;
-	
+
+	// BOX STATE
 	public int boxSwapNum;
 	public boolean showBoxParty;
 	public boolean showBoxSummary;
 	public Pokemon itemSwapP;
-	
+
+	// TASK SYSTEM
 	public Task currentTask;
 	public ArrayList<Task> tasks;
 	public boolean checkTasks;
-	
+
+	// BETTING STATE
 	public static int MAX_PARLAYS = 6;
 	public boolean showParlays;
 	public int battleBet = Player.BET_INC;
 	public int parlayBet = Player.BET_INC;
 	public int[] parlays;
 	public boolean sheetFilled;
-	
+
+	// ANIMATION
+	public int pulseCounter = 0;
+
+	// NPC REFERENCE
 	public Entity npc;
-	
+
+	// NICKNAME STATE
 	public StringBuilder nickname = new StringBuilder();
 	public int nicknaming = -1;
-	
+
+	// IMAGES
 	public BufferedImage ballIcon;
 	public Color coinColor = Color.WHITE;
 
@@ -1560,23 +1586,77 @@ public abstract class AbstractUI {
 	}
 	
 	private void drawSettingsTop(int frameX, int frameY, int frameWidth, int frameHeight) {
-		drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+		// Use the TitleScreen style panel
+		drawPanelWithBorder(frameX, frameY, frameWidth, frameHeight, 220, textColor);
 		
-		g2.setColor(Color.WHITE);
+		// Title
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 36F));
 		String text = "Settings";
-		int textX = this.getCenterAlignedTextX(text, gp.screenWidth / 2);
+		int textX = getCenterAlignedTextX(text, gp.screenWidth / 2);
 		int textY = frameY + gp.tileSize;
-		g2.drawString(text, textX, textY);
+		drawOutlinedText(text, textX, textY, textColor, Color.BLACK);
+		
+		// Divider line
+		int dividerY = textY + gp.tileSize / 4;
+		g2.setColor(new Color(100, 100, 100));
+		g2.drawLine(frameX + gp.tileSize, dividerY, frameX + frameWidth - gp.tileSize, dividerY);
+		
+		int contentX = frameX + gp.tileSize;
+		int contentY = dividerY + (int)(gp.tileSize * 1.5);
+		int itemHeight = (int)(gp.tileSize * 1.25);
 		
 		// MUSIC
-		textX = frameX + gp.tileSize;
-		textY += gp.tileSize * 2;
-		g2.drawString("Music", textX, textY);
-		if (commandNum == 0) {
-			g2.drawString(">", textX-gp.tileSize/2, textY);
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 28F));
+		boolean selected = commandNum == 0;
+		drawOutlinedText("Music", contentX, contentY, 
+			selected ? textColor : new Color(200, 200, 200), Color.BLACK);
+		
+		// Music volume bar
+		int barX = contentX + gp.tileSize * 3;
+		int barY = contentY - gp.tileSize / 3;
+		int barWidth = (int)(gp.tileSize * 3);
+		int barHeight = gp.tileSize / 3;
+		
+		// Background
+		g2.setColor(new Color(30, 30, 30, 200));
+		g2.fillRoundRect(barX, barY, barWidth, barHeight, 10, 10);
+		
+		// Border
+		if (selected) {
+			g2.setStroke(new BasicStroke(3));
+			g2.setColor(textColor);
+		} else {
+			g2.setStroke(new BasicStroke(2));
+			g2.setColor(new Color(100, 100, 100));
+		}
+		g2.drawRoundRect(barX, barY, barWidth, barHeight, 10, 10);
+		
+		// Fill
+		int volumeWidth = (barWidth - 6) * gp.music.volumeScale / 5;
+		g2.setColor(selected ? textColor.darker() : new Color(100, 200, 100));
+		g2.fillRoundRect(barX + 3, barY + 3, volumeWidth, barHeight - 6, 8, 8);
+		
+		// Volume number
+		g2.setFont(g2.getFont().deriveFont(20F));
+		String volumeText = gp.music.volumeScale + "/5";
+		this.drawOutlinedText(volumeText, getCenterAlignedTextX(volumeText, barX + barWidth / 2), contentY, selected ? textColor : new Color(200, 200, 200), Color.BLACK);
+		
+		// Arrows if selected
+		if (selected) {
+			g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
+			float arrowAlpha = 0.6f + (float)(Math.sin(pulseCounter * 0.1) * 0.4);
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, arrowAlpha));
+			
+			g2.setColor(Color.YELLOW);
+			g2.drawString("<", barX - gp.tileSize / 2, contentY);
+			g2.drawString(">", barX + barWidth + gp.tileSize / 4, contentY);
+			
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+			
 			if (gp.keyH.leftPressed) {
 				gp.keyH.leftPressed = false;
 				if (gp.music.volumeScale > 0) {
+					gp.playSFX(Sound.S_MENU_1);
 					gp.music.volumeScale--;
 					gp.music.checkVolume();
 				}
@@ -1584,6 +1664,7 @@ public abstract class AbstractUI {
 			if (gp.keyH.rightPressed) {
 				gp.keyH.rightPressed = false;
 				if (gp.music.volumeScale < 5) {
+					gp.playSFX(Sound.S_MENU_1);
 					gp.music.volumeScale++;
 					gp.music.checkVolume();
 				}
@@ -1591,13 +1672,55 @@ public abstract class AbstractUI {
 		}
 		
 		// SFX
-		textY += gp.tileSize;
-		g2.drawString("SFX", textX, textY);
-		if (commandNum == 1) {
-			g2.drawString(">", textX-gp.tileSize/2, textY);
+		contentY += itemHeight;
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 28F));
+		selected = commandNum == 1;
+		drawOutlinedText("SFX", contentX, contentY, 
+			selected ? textColor : new Color(200, 200, 200), Color.BLACK);
+		
+		// SFX volume bar
+		barY = contentY - gp.tileSize / 3;
+		
+		// Background
+		g2.setColor(new Color(30, 30, 30, 200));
+		g2.fillRoundRect(barX, barY, barWidth, barHeight, 10, 10);
+		
+		// Border
+		if (selected) {
+			g2.setStroke(new BasicStroke(3));
+			g2.setColor(textColor);
+		} else {
+			g2.setStroke(new BasicStroke(2));
+			g2.setColor(new Color(100, 100, 100));
+		}
+		g2.drawRoundRect(barX, barY, barWidth, barHeight, 10, 10);
+		
+		// Fill
+		volumeWidth = (barWidth - 6) * gp.sfx.volumeScale / 5;
+		g2.setColor(selected ? textColor.darker() : new Color(100, 200, 100));
+		g2.fillRoundRect(barX + 3, barY + 3, volumeWidth, barHeight - 6, 8, 8);
+		
+		// Volume number
+		g2.setFont(g2.getFont().deriveFont(20F));
+		volumeText = gp.sfx.volumeScale + "/5";
+		this.drawOutlinedText(volumeText, getCenterAlignedTextX(volumeText, barX + barWidth / 2), contentY, selected ? textColor : new Color(200, 200, 200), Color.BLACK);
+		
+		// Arrows if selected
+		if (selected) {
+			g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
+			float arrowAlpha = 0.6f + (float)(Math.sin(pulseCounter * 0.1) * 0.4);
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, arrowAlpha));
+			
+			g2.setColor(Color.YELLOW);
+			g2.drawString("<", barX - gp.tileSize / 2, contentY);
+			g2.drawString(">", barX + barWidth + gp.tileSize / 4, contentY);
+			
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+			
 			if (gp.keyH.leftPressed) {
 				gp.keyH.leftPressed = false;
 				if (gp.sfx.volumeScale > 0) {
+					gp.playSFX(Sound.S_MENU_1);
 					gp.sfx.volumeScale--;
 					gp.sfx.checkVolume();
 				}
@@ -1605,63 +1728,91 @@ public abstract class AbstractUI {
 			if (gp.keyH.rightPressed) {
 				gp.keyH.rightPressed = false;
 				if (gp.sfx.volumeScale < 5) {
+					gp.playSFX(Sound.S_MENU_1);
 					gp.sfx.volumeScale++;
 					gp.sfx.checkVolume();
 				}
 			}
 		}
 		
-		// CONTROLS
-		textY += gp.tileSize;
-		g2.drawString("Controls", textX, textY);
-		if (commandNum == 2) {
-			g2.drawString(">", textX-gp.tileSize/2, textY);
-			if (gp.keyH.wPressed) {
-				gp.keyH.wPressed = false;
-				settingsState = 1;
-				commandNum = 0;
-			}
+		// Divider
+		contentY += itemHeight;
+		g2.setStroke(new BasicStroke(2));
+		g2.setColor(new Color(100, 100, 100));
+		g2.drawLine(frameX + gp.tileSize, contentY - gp.tileSize / 2, 
+			frameX + frameWidth - gp.tileSize, contentY - gp.tileSize / 2);
+		
+		// CONTROLS - Button style
+		selected = commandNum == 2;
+		int buttonWidth = frameWidth - gp.tileSize * 2;
+		int buttonHeight = (int)(gp.tileSize * 0.8);
+		int buttonX = frameX + gp.tileSize;
+		int buttonY = contentY - gp.tileSize / 3;
+		
+		if (selected) {
+			drawPanelWithBorder(buttonX, buttonY, buttonWidth, buttonHeight, backgroundOpacity + 30, textColor);
+		} else {
+			g2.setColor(new Color(40, 40, 40, 180));
+			g2.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
+			g2.setStroke(new BasicStroke(2));
+			g2.setColor(new Color(100, 100, 100));
+			g2.drawRect(buttonX, buttonY, buttonWidth, buttonHeight);
 		}
 		
-		// UNUSED
-		textY += gp.tileSize;
-		g2.drawString("Unused", textX, textY);
-		if (commandNum == 3) {
-			g2.drawString(">", textX-gp.tileSize/2, textY);
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 26F));
+		String controlsText = "Controls";
+		drawOutlinedText(controlsText, getCenterAlignedTextX(controlsText, frameX + frameWidth / 2), contentY + gp.tileSize / 4, selected ? textColor : new Color(200, 200, 200), Color.BLACK);
+		
+		if (selected && gp.keyH.wPressed) {
+			gp.keyH.wPressed = false;
+			gp.playSFX(Sound.S_MENU_1);
+			settingsState = 1;
+			commandNum = 0;
 		}
 		
-		// UNUSED
-		textY += gp.tileSize;
-		g2.drawString("Unused", textX, textY);
-		if (commandNum == 4) {
-			g2.drawString(">", textX-gp.tileSize/2, textY);
-		}
+		// UNUSED OPTIONS (grayed out)
+		contentY += itemHeight;
+		selected = commandNum == 3;
+		buttonY = contentY - gp.tileSize / 3;
 		
-		// MUSIC VOLUME
-		textX = frameX + (int)(gp.tileSize*4.5);
-		textY = frameY + (int)(gp.tileSize*2.5);
-		g2.drawRect(textX, textY, 120, 24);
-		int volumeWidth = 24 * gp.music.volumeScale;
-		g2.fillRect(textX, textY, volumeWidth, 24);
+		g2.setColor(new Color(20, 20, 20, 150));
+		g2.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
+		g2.setStroke(new BasicStroke(2));
+		g2.setColor(new Color(60, 60, 60));
+		g2.drawRect(buttonX, buttonY, buttonWidth, buttonHeight);
 		
-		// SFX VOLUME
-		textY += gp.tileSize;
-		g2.drawRect(textX, textY, 120, 24);
-		volumeWidth = 24 * gp.sfx.volumeScale;
-		g2.fillRect(textX, textY, volumeWidth, 24);
+		g2.setFont(g2.getFont().deriveFont(Font.ITALIC, 24F));
+		String unusedText = "Unused";
+		drawOutlinedText(unusedText, getCenterAlignedTextX(unusedText, frameX + frameWidth / 2), contentY + gp.tileSize / 4, new Color(100, 100, 100), Color.BLACK);
 		
+		contentY += itemHeight;
+		selected = commandNum == 4;
+		buttonY = contentY - gp.tileSize / 3;
+		
+		g2.setColor(new Color(20, 20, 20, 150));
+		g2.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
+		g2.setStroke(new BasicStroke(2));
+		g2.setColor(new Color(60, 60, 60));
+		g2.drawRect(buttonX, buttonY, buttonWidth, buttonHeight);
+		
+		g2.setFont(g2.getFont().deriveFont(Font.ITALIC, 24F));
+		drawOutlinedText(unusedText, getCenterAlignedTextX(unusedText, frameX + frameWidth / 2), contentY + gp.tileSize / 4, new Color(100, 100, 100), Color.BLACK);
+		
+		// Navigation
 		if (gp.keyH.upPressed) {
 			gp.keyH.upPressed = false;
+			gp.playSFX(Sound.S_MENU_1);
 			commandNum--;
 			if (commandNum < 0) {
-				commandNum = maxSettingsNum;
+				commandNum = 2; // Skip unused options
 			}
 		}
 		if (gp.keyH.downPressed) {
 			gp.keyH.downPressed = false;
+			gp.playSFX(Sound.S_MENU_1);
 			commandNum++;
-			if (commandNum > maxSettingsNum) {
-				commandNum = 0;
+			if (commandNum > 2) {
+				commandNum = 0; // Skip unused options
 			}
 		}
 		

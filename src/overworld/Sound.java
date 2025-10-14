@@ -11,16 +11,38 @@ public class Sound {
 	
 	Clip clip;
 	URL[] soundURL = new URL[30];
-	public int volumeScale = 2;
+	public int volumeScale;
 	FloatControl fc;
 	float volume;
+	int index;
 	
-	public Sound() {
-		soundURL[0] = getClass().getResource("/sound/videogame1-1.wav");
-		soundURL[1] = getClass().getResource("/sound/videogame1-2.wav");
-		soundURL[2] = getClass().getResource("/sound/videogame1-3.wav");
+	// CONSTANTS
+	public static final int M_MENU_1 = 0;
+	public static final int M_MENU_2 = 1;
+	public static final int S_MENU_1 = 2;
+	public static final int S_MENU_CON = 3;
+	public static final int S_MENU_CAN = 4;
+	public static final int S_MENU_START = 5;
+	public static final int S_TYPE = 6;
+	public static final int S_BACKSPACE = 7;
+	
+	public Sound(int volumeScale) {
+		setup("music", "videogame1-1");
+		setup("music", "videogame1-2");
+		setup("sfx", "menu-1");
+		setup("sfx", "menu-con");
+		setup("sfx", "menu-can");
+		setup("sfx", "menu-start");
+		setup("sfx", "type");
+		setup("sfx", "backspace");
+		
+		this.volumeScale = volumeScale;
 	}
 	
+	private void setup(String folder, String file) {
+		soundURL[index++] = getClass().getResource("/" + folder + "/" + file + ".wav");
+	}
+
 	public void setFile(int i) {
 		try {
 			AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[i]);
