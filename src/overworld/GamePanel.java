@@ -74,8 +74,8 @@ public class GamePanel extends JPanel implements Runnable {
 	public TitleScreen titleScreen;
 	public KeyHandler keyH;
 	public Config config;
-	public Sound music = new Sound();
-	public Sound sfx = new Sound();
+	public Sound music = new Sound(1);
+	public Sound sfx = new Sound(3);
 	public int FPS = 60;
 	public int ticks;
 	public Font marumonica;
@@ -368,7 +368,7 @@ public class GamePanel extends JPanel implements Runnable {
 		music.stop();
 	}
 	
-	public void playSE(int i) {
+	public void playSFX(int i) {
 		sfx.setFile(i);
 		sfx.play();
 	}
@@ -643,7 +643,6 @@ public class GamePanel extends JPanel implements Runnable {
 		aSetter.setObject();
 		loadingScreen.setProgress(40, "Setting up interactive objects...");
 		aSetter.setInteractiveTile(currentMap);
-		playMusic(0);
 		loadingScreen.setProgress(50, "Initializing scripts...");
 		script = new Script(this);
 		

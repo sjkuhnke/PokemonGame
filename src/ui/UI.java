@@ -34,6 +34,7 @@ import overworld.Fog;
 import overworld.GamePanel;
 import overworld.Main;
 import overworld.PMap;
+import overworld.Sound;
 import pokemon.*;
 import pokemon.Bag.SortType;
 import puzzle.Puzzle;
@@ -41,33 +42,41 @@ import util.Pair;
 import util.ToolTip;
 
 public class UI extends AbstractUI {
-
+	
+	// MENU STATE
 	public int menuNum = 0;
 	public int slotCol = 0;
 	public int slotRow = 0;
+
+	// BAG STATE
 	public int bagNum[] = new int[Item.KEY_ITEM];
 	public int selectedBagNum = -1;
 	public int currentPocket = Item.MEDICINE;
 	public int bagState;
 	public int sellAmt = 1;
 	public ArrayList<Bag.Entry> currentItems;
-	
+	public BufferedImage[] menuIcons;
+
+	// BATTLE TRANSITION
 	public int btX = 0;
 	public int btY = 0;
-	
+
+	// MESSAGE STATE
 	public boolean showMessage;
 	public boolean above;
 	public boolean showArea;
 	public int areaCounter;
 	public Pokemon currentPokemon;
 	public String currentHeader;
-	
+
+	// BOX STATE
 	public int boxNum;
 	public int pSelectBox;
 	public boolean isGauntlet;
 	public Pokemon currentBoxP;
 	public boolean release;
-	
+
+	// POKEDEX STATE
 	public int dexNum[] = new int[4];
 	public int dexMode;
 	public int dexType;
@@ -78,57 +87,65 @@ public class UI extends AbstractUI {
 	public Item tmCheck;
 	public boolean wasAPressed;
 	public final int maxMenuNum = 8;
-	public BufferedImage[] menuIcons;
 	public BufferedImage[] silhouettes = new BufferedImage[Pokemon.MAX_POKEMON];
-	
+
+	// MOVE REMINDER
 	public int remindNum;
+
+	// FLASH EFFECT
 	public boolean drawFlash;
 	public Color flashColor;
-	
+
+	// STARTER STATE
 	public int starter;
 	public boolean starterConfirm;
 	public boolean addItem;
-	
-	// Light Distortion fields
+
+	// LIGHT DISTORTION
 	public boolean drawLightOverlay;
 	private List<BufferedImage> lightFrames;
 	private int lightFrameIndex;
 	private long lightLastFrameTime;
-	
-	// Space GIF fields
+
+	// SPACE GIF
 	private List<BufferedImage> spaceFrames;
 	private int spaceFrameIndex = 0;
 	private int spaceFrameCounter;
-	
-	// diagonal cutscene fields
+
+	// DIAGONAL CUTSCENE
 	private double errorX;
 	private double errorY;
 	private int startX;
 	private int startY;
 	private boolean assignedStart;
-	
+
+	// ENCOUNTER DATA
 	private ArrayList<ArrayList<Encounter>> encounters;
-	
+
+	// IMAGES
 	BufferedImage interactIcon;
 	BufferedImage transitionBuffer;
-	
 	private BufferedImage[] bagIcons;
-	
+
+	// LETTER STATE
 	private String[][][] letter = new String[2][][];
 	private int currentLetter;
 	private int maxLine = 13;
 	public int pageNum = 0;
-	
+
+	// FOG/LIGHT
 	public Fog fog;
 	public boolean drawLight;
-	
+
+	// FONT
 	public Font currentFont;
-	
+
+	// RANDOM
 	private Random rand = new Random();
-	
+
+	// CONSTANTS
 	public static final int MAX_SHOP_COL = 11;
 	public static final int MAX_SHOP_ROW = 4;
-	
 	public static final int ITEMS = 0;
 	public static final int MAX_TEXTBOX = 43;
 	
@@ -138,6 +155,7 @@ public class UI extends AbstractUI {
 		currentDialogue = "";
 		commandNum = 0;
 		tasks = new ArrayList<>();
+		textColor = new Color(255, 251, 4);
 		
 		ballIcon = setup("/icons/ball", 1);
 		
@@ -198,6 +216,9 @@ public class UI extends AbstractUI {
 		g2.setFont(gp.marumonica);
 		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		g2.setColor(Color.WHITE);
+		
+		pulseCounter++;
+		if (pulseCounter > 120) pulseCounter = 0;
 		
 		if (drawLightOverlay) {
 			float opacity = gp.currentMap == 38 ? 0.7f : 1.4f;
@@ -693,6 +714,9 @@ public class UI extends AbstractUI {
 		case Task.ITEM:
 			drawItemWindow(gp.tileSize * 12, (int) (gp.tileSize * 2.5), currentTask.item.getImage2());
 			break;
+		case Task.MENU_ICON:
+			drawItemWindow(gp.tileSize * 12, (int) (gp.tileSize * 2.5), menuIcons[currentTask.counter]);
+			break;
 		}
 	}
 	
@@ -702,6 +726,7 @@ public class UI extends AbstractUI {
 				gp.keyH.wPressed = false;
 				gp.keyH.sPressed = false;
 				gp.keyH.dPressed = false;
+				gp.playSFX(Sound.S_MENU_1);
 				showMessage = false;
 				if (gp.gameState == GamePanel.USE_ITEM_STATE) {
 					goBackInBag();
@@ -1712,7 +1737,8 @@ public class UI extends AbstractUI {
 		drawSubWindow(x, y, width, height);
 		x += gp.tileSize / 4;
 		y += gp.tileSize / 4;
-		g2.drawImage(image, x, y, null);
+		int size = gp.tileSize;
+		g2.drawImage(image, x, y, size, size, null);
 	}
 
 	private void drawFlash(int i) {
@@ -3964,7 +3990,7 @@ public class UI extends AbstractUI {
 		textX = x + gp.tileSize * 2;
 		
 		// Pokedex
-		if (gp.player.p.flag[0][2]) { // TODO: show the map icon when unlocking pokedex
+		if (gp.player.p.flag[0][2]) {
 			text = "Pokedex";
 			textY += gp.tileSize;
 			g2.drawImage(menuIcons[0], textX - gp.tileSize, textY - gp.tileSize / 2, null);
@@ -4050,7 +4076,7 @@ public class UI extends AbstractUI {
 		}
 		
 		// Map
-		if (gp.player.p.flag[0][2]) { // TODO: show the map icon when unlocking map
+		if (gp.player.p.flag[0][2]) {
 			text = "Map";
 			textY += gp.tileSize;
 			g2.drawImage(menuIcons[5], textX - gp.tileSize, textY - gp.tileSize / 2, null);
@@ -4406,6 +4432,7 @@ public class UI extends AbstractUI {
 			if (gp.keyH.sPressed || gp.keyH.dPressed) {
 				gp.keyH.sPressed = false;
 				gp.keyH.dPressed = false;
+				gp.playSFX(Sound.S_MENU_CAN);
 				commandNum = 0;
 				settingsState = 0;
 				subState = 0;
@@ -4414,6 +4441,7 @@ public class UI extends AbstractUI {
 			if (gp.keyH.sPressed || gp.keyH.dPressed) {
 				gp.keyH.sPressed = false;
 				gp.keyH.dPressed = false;
+				gp.playSFX(Sound.S_MENU_CAN);
 				boolean changed = gp.config.setKeys();
 				settingsState = 0;
 				commandNum = 0;

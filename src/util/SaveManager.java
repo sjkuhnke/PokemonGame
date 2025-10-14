@@ -20,7 +20,7 @@ public class SaveManager {
 
     private static String getSafeSaveDir() {
     	if (USE_LOCAL_SAVES) {
-    		Path localPath = Paths.get("./saves2");
+    		Path localPath = Paths.get("./saves");
     		try {
     			Files.createDirectories(localPath);
     		} catch (IOException e) {

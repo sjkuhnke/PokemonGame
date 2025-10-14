@@ -14,21 +14,26 @@ import util.ToolTip;
 
 public class SimBattleUI extends BattleUI {
 	
+	// PARLAY STATE
 	public ArrayList<Pair<Double, String>> parlaySheet;
 	public Pair<Pokemon, Double> p1Moves;
 	public Pair<Pokemon, Double> p2Moves;
 	public Pair<Pokemon, String> p1Switch;
 	public Pair<Pokemon, String> p2Switch;
-	
+
+	// AUTOPLAY STATE
 	BufferedImage autoplayOff;
 	BufferedImage autoplayOn;
 	boolean autoplay;
 	boolean startAutoplay;
-	
+
+	// BETTING STATE
 	public int choice;
 	public int[] simOdds;
 	public int[] odds;
 	public int betPayout;
+
+	// PARLAY PROCESSING
 	public int currentParlay = -1;
 	private boolean parlayDone = true;
 	private int parlayPayout = -1;

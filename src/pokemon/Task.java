@@ -82,6 +82,7 @@ public class Task {
 	public static final int SUMMON = 65;
 	public static final int MONEY = 66; // unused for task type
 	public static final int DELETE_MOVE = 67;
+	public static final int MENU_ICON = 68; // counter: which icon index in menuIcons
 	
 	public static GamePanel gp;
 	
