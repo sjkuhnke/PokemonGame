@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-import overworld.BattleUI;
 import overworld.GamePanel;
 import pokemon.Field.FieldEffect;
+import ui.BattleUI;
 import util.*;
 
 public class Trainer implements Serializable {

@@ -1,4 +1,4 @@
-package overworld;
+package ui;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -9,6 +9,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.SwingUtilities;
+
+import overworld.GamePanel;
 
 public class LoadingScreen {
 	private GamePanel gp;
@@ -60,21 +62,6 @@ public class LoadingScreen {
 			g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
 		}
 		
-//		if (icon != null) {
-//			int iconSize = gp.tileSize * 3;
-//			int iconX = (gp.screenWidth - iconSize) / 2;
-//			int iconY = gp.tileSize * 2;
-//			g2.drawImage(icon, iconX, iconY, iconSize, iconSize, null);
-//		}
-		
-//		g2.setColor(Color.WHITE);
-//		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
-//		String title = Main.gameTitle;
-//		FontMetrics fm = g2.getFontMetrics();
-//		int titleX = (gp.screenWidth - fm.stringWidth(title)) / 2;
-//		int titleY = gp.tileSize * 6;
-//		g2.drawString(title, titleX, titleY);
-		
 		int barWidth = gp.tileSize * 10;
 		int barHeight = gp.tileSize / 2;
 		int barX = (gp.screenWidth - barWidth) / 2;
@@ -103,7 +90,7 @@ public class LoadingScreen {
 		for (String task : currentTask.split("\n")) {
 			int taskX = (gp.screenWidth - fm.stringWidth(task)) / 2;
 			g2.drawString(task, taskX, taskY);
-			taskY += gp.tileSize / 2;
+			taskY += gp.tileSize / 3;
 		}
 	}
 }

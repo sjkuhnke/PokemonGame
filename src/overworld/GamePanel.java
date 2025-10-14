@@ -26,6 +26,12 @@ import object.*;
 import pokemon.*;
 import puzzle.*;
 import tile.*;
+import ui.AbstractUI;
+import ui.BattleUI;
+import ui.LoadingScreen;
+import ui.SimBattleUI;
+import ui.TitleScreen;
+import ui.UI;
 import util.SaveManager;
 import util.ToolTip;
 
@@ -68,11 +74,11 @@ public class GamePanel extends JPanel implements Runnable {
 	public TitleScreen titleScreen;
 	public KeyHandler keyH;
 	public Config config;
-	Sound music = new Sound();
-	Sound sfx = new Sound();
+	public Sound music = new Sound();
+	public Sound sfx = new Sound();
 	public int FPS = 60;
 	public int ticks;
-	Font marumonica;
+	public Font marumonica;
 	
 	Thread gameThread;
 	
@@ -150,38 +156,35 @@ public class GamePanel extends JPanel implements Runnable {
 		loadingScreen = new LoadingScreen(this);
 	}
 	
-	public void setupGamePanel() {
-		loadingScreen.setProgress(0, "Loading config...");
-		config = new Config(this);
-		config.loadConfig();
-		
-		loadingScreen.setProgress(3, "Loading Asset Setter...");
+	public void setupGamePanel() {		
+		loadingScreen.setProgress(0, "Loading Asset Setter...");
 		aSetter = new AssetSetter(this);
 		
-		loadingScreen.setProgress(6, "Loading Event Handler...");
+		loadingScreen.setProgress(2, "Loading Event Handler...");
 		eHandler = new EventHandler(this);
 		
-		loadingScreen.setProgress(8, "Loading Collision Checker...");
+		loadingScreen.setProgress(4, "Loading Collision Checker...");
 		cChecker = new CollisionChecker(this);
 		
-		loadingScreen.setProgress(10, "Loading PlayerCharacter entity...");
+		loadingScreen.setProgress(6, "Loading PlayerCharacter entity...");
 		player = new PlayerCharacter(this, keyH);
 		
-		loadingScreen.setProgress(12, "Loading Puzzle Manager...");
+		loadingScreen.setProgress(8, "Loading Puzzle Manager...");
 		puzzleM = new PuzzleManager(this);
 		
-		loadingScreen.setProgress(15, "Loading UIs...");
+		loadingScreen.setProgress(10, "Loading UIs...");
 		ui = new UI(this);
 		battleUI = new BattleUI(this);
 		simBattleUI = new SimBattleUI(this);
+		titleScreen = new TitleScreen(this, true); // important that this is loaded before the config is
+		
+		loadingScreen.setProgress(15, "Loading config...");
+		config = new Config(this);
+		config.loadConfig();
 	}
 	
 	public void setGameState(int state) {
 		this.gameState = state;
-		
-		if (state == TITLE_STATE && titleScreen == null) {
-			titleScreen = new TitleScreen(this);
-		}
 	}
 	
 	public void startGameThread() {

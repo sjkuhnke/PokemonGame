@@ -1,4 +1,4 @@
-package overworld;
+package ui;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import entity.PlayerCharacter;
+import overworld.GamePanel;
 import pokemon.*;
 import pokemon.Bag.Entry;
 import pokemon.Field.Effect;
@@ -60,7 +61,7 @@ public class BattleUI extends AbstractUI {
 	protected int cooldownCounter = 0;
 	protected Field field;
 	protected boolean baton;
-	protected boolean catchable;
+	public boolean catchable;
 	public boolean invalidEncounter;
 	public char encType;
 	

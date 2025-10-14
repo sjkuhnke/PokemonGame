@@ -40,10 +40,10 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import entity.Entity;
 import entity.NPC_Prize_Shop;
 import entity.PlayerCharacter;
-import overworld.AbstractUI;
 import overworld.GamePanel;
-import overworld.UI;
 import pokemon.Bag.Entry;
+import ui.AbstractUI;
+import ui.UI;
 import util.*;
 
 public class Player extends Trainer implements Serializable {

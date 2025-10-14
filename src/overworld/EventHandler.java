@@ -11,12 +11,12 @@ public class EventHandler {
 	Player p;
 	EventRect eventRect[][][];
 	
-	int previousEventX, previousEventY;
-	boolean canTouchEvent = true;
+	public int previousEventX, previousEventY;
+	public boolean canTouchEvent = true;
 	
-	int tempMap, tempCol, tempRow;
-	boolean tempCooldown;
-	int tempDirection = -1;
+	public int tempMap, tempCol, tempRow;
+	public boolean tempCooldown;
+	public int tempDirection = -1;
 	
 	public EventHandler(GamePanel gp) {
 		this.gp = gp;

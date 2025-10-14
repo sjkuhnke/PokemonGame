@@ -1,4 +1,4 @@
-package overworld;
+package ui;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import overworld.GamePanel;
 import pokemon.*;
 import puzzle.Puzzle;
 import util.Pair;

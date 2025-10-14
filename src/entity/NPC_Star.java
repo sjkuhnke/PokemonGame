@@ -1,8 +1,8 @@
 package entity;
 
 import overworld.GamePanel;
-import overworld.UI;
 import pokemon.Item;
+import ui.UI;
 
 public class NPC_Star extends Entity {
 	public NPC_Star(GamePanel gp) {
