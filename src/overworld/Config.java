@@ -37,6 +37,9 @@ public class Config {
 	public int tooltipsKey = 17;
 	public int backspaceKey = 18;
 	
+	// Doc settings
+	public boolean excel = false;
+	
 	public final String[] keyNames;
 	public int[] keys;
 	public final int[] defaultKeys;
@@ -94,6 +97,10 @@ public class Config {
 			bw.write("sfx=" + gp.sfx.volumeScale);
 			bw.newLine();
 			
+			// Doc settings
+			bw.write("excel=" + (excel ? 1 : 0));
+			bw.newLine();
+			
 			// Keybinds
 			for (int i = 0; i < keys.length; i++) {
 				String keyString = keyNames[i].toLowerCase().replace(" ", "_") + "Key=";
@@ -137,6 +144,9 @@ public class Config {
 						break;
 					case "sfx":
 						gp.sfx.volumeScale = intValue;
+						break;
+					case "excel":
+						gp.titleScreen.generateExcel = intValue == 1;
 						break;
 					case "upKey": keyNum = upKey; break;
 					case "downKey": keyNum = downKey; break;

@@ -23,6 +23,7 @@ import overworld.*;
 import util.*;
 import pokemon.*;
 import puzzle.Puzzle;
+import ui.UI;
 
 public class PlayerCharacter extends Entity {
 	

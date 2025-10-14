@@ -9,6 +9,7 @@ import object.*;
 import pokemon.Item;
 import pokemon.Pokemon;
 import tile.TileManager;
+import ui.UI;
 
 public class AssetSetter {
 

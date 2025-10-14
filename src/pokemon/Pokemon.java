@@ -44,13 +44,13 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingUtilities;
 
-import overworld.BattleUI;
 import overworld.GamePanel;
 import pokemon.Bag.Entry;
 import pokemon.Field.Effect;
 import pokemon.Field.FieldEffect;
 import pokemon.Nursery.EggGroup;
 import puzzle.Puzzle;
+import ui.BattleUI;
 import util.DeepClonable;
 import util.Pair;
 

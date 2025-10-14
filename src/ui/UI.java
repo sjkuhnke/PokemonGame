@@ -1,4 +1,4 @@
-package overworld;
+package ui;
 
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
@@ -29,6 +29,11 @@ import javax.swing.SwingUtilities;
 
 import entity.*;
 import object.*;
+import overworld.BlackjackPanel;
+import overworld.Fog;
+import overworld.GamePanel;
+import overworld.Main;
+import overworld.PMap;
 import pokemon.*;
 import pokemon.Bag.SortType;
 import puzzle.Puzzle;
@@ -3829,7 +3834,7 @@ public class UI extends AbstractUI {
 		
 		switch(subState) {
 		case 0:
-			optionsTop(x, y);
+			optionsTop(x, y, width);
 			break;
 		case 1:
 			drawPokedex();
@@ -3923,20 +3928,44 @@ public class UI extends AbstractUI {
 			}
 		}
 	}
+	
+	@Override
+	public boolean isValidOption(int option) {
+		switch (option) {
+		case 0: // Pokedex
+			return gp.player.p.flag[0][2];
+		case 1: // Party
+			return gp.player.p.flag[0][1];
+		case 2: // Bag
+			return true;
+		case 3: // Save
+			return true;
+		case 4: // Player
+			return true;
+		case 5: // Map
+			return gp.player.p.flag[0][2];
+		case 6: // Settings
+			return true;
+		case 7: // Back
+			return true;
+		default:
+			return false;
+		}
+	}
 
-	public void optionsTop(int x, int y) {
+	public void optionsTop(int x, int y, int width) {
 		String text = "Menu";
 		
-		int textX = (int) (getTextX(text) + gp.tileSize * 4.5);
+		int textX = (int) (getCenterAlignedTextX(text, x + width / 2));
 		int textY = y + gp.tileSize;
 		g2.drawString(text, textX, textY);
 		
 		g2.setFont(g2.getFont().deriveFont(24F));
+		textX = x + gp.tileSize * 2;
 		
 		// Pokedex
-		if (gp.player.p.flag[0][2]) {
+		if (gp.player.p.flag[0][2]) { // TODO: show the map icon when unlocking pokedex
 			text = "Pokedex";
-			textX = x + gp.tileSize * 2;
 			textY += gp.tileSize;
 			g2.drawImage(menuIcons[0], textX - gp.tileSize, textY - gp.tileSize / 2, null);
 			g2.drawString(text, textX, textY);
@@ -4021,7 +4050,7 @@ public class UI extends AbstractUI {
 		}
 		
 		// Map
-		if (gp.player.p.flag[0][2]) {
+		if (gp.player.p.flag[0][2]) { // TODO: show the map icon when unlocking map
 			text = "Map";
 			textY += gp.tileSize;
 			g2.drawImage(menuIcons[5], textX - gp.tileSize, textY - gp.tileSize / 2, null);
@@ -4073,17 +4102,11 @@ public class UI extends AbstractUI {
 		}
 		if (gp.keyH.upPressed) {
 			gp.keyH.upPressed = false;
-			menuNum--;
-			if (menuNum < 0) {
-				menuNum = maxMenuNum-1;
-			}
+			menuNum = getNextValidOption(menuNum, maxMenuNum, true);
 		}
 		if (gp.keyH.downPressed) {
 			gp.keyH.downPressed = false;
-			menuNum++;
-			if (menuNum > maxMenuNum-1) {
-				menuNum = 0;
-			}
+			menuNum = getNextValidOption(menuNum, maxMenuNum, false);
 		}
 		
 		drawToolTips("OK", null, "Back", "Back");

@@ -97,27 +97,8 @@ public class KeyHandler implements KeyListener {
 		if (code == config.keys[config.aKey]) {
 			aPressed = true;
 		}
-		if (gp.battleUI != null && gp.battleUI.nicknaming == 1) {
-			if (code == config.keys[config.backspaceKey]) {
-				gp.battleUI.handleBackspace();
-			} else {
-				char c = e.getKeyChar();
-				if (c != KeyEvent.CHAR_UNDEFINED) {
-					gp.battleUI.handleKeyInput(c);
-					downPressed = false;
-				}
-			}
-		} else if (gp.ui != null && gp.ui.nicknaming == 1) {
-			if (code == config.keys[config.backspaceKey]) {
-				gp.ui.handleBackspace();
-			} else {
-				char c = e.getKeyChar();
-				if (c != KeyEvent.CHAR_UNDEFINED) {
-					gp.ui.handleKeyInput(c);
-					downPressed = false;
-				}
-			}
-		}
+		
+		handleTextInput(e);
 	}
 
 	@Override
@@ -206,6 +187,42 @@ public class KeyHandler implements KeyListener {
 		wPressed = false;
 		dPressed = false;
 		aPressed = false;
+	}
+	
+	private void handleTextInput(KeyEvent e) {
+		int code = e.getKeyCode();
+		
+		if (gp.battleUI != null && gp.battleUI.nicknaming == 1) {
+			if (code == config.keys[config.backspaceKey]) {
+				gp.battleUI.handleBackspace();
+			} else {
+				char c = e.getKeyChar();
+				if (c != KeyEvent.CHAR_UNDEFINED) {
+					gp.battleUI.handleKeyInput(c);
+					downPressed = false;
+				}
+			}
+		} else if (gp.ui != null && gp.ui.nicknaming == 1) {
+			if (code == config.keys[config.backspaceKey]) {
+				gp.ui.handleBackspace();
+			} else {
+				char c = e.getKeyChar();
+				if (c != KeyEvent.CHAR_UNDEFINED) {
+					gp.ui.handleKeyInput(c);
+					downPressed = false;
+				}
+			}
+		} else if (gp.titleScreen != null && gp.titleScreen.textInputDialog != null && gp.titleScreen.textInputDialog.isNaming()) {
+			if (code == config.keys[config.backspaceKey]) {
+				gp.titleScreen.textInputDialog.handleBackspace();
+			} else {
+				char c = e.getKeyChar();
+				if (c != KeyEvent.CHAR_UNDEFINED && !Character.isISOControl(c)) {
+					gp.titleScreen.textInputDialog.handleKeyInput(c);
+					downPressed = false;
+				}
+			}
+		}
 	}
 	
 	 private void takeScreenshot() {

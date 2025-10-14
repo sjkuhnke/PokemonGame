@@ -1,4 +1,4 @@
-package overworld;
+package ui;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -17,6 +17,7 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 import entity.Entity;
+import overworld.GamePanel;
 import pokemon.*;
 import util.Pair;
 import util.ToolTip;
@@ -144,15 +145,20 @@ public abstract class AbstractUI {
 		int width = gp.tileSize;
 		int height = gp.tileSize;
         if (pressed) {
-        	
         	g2.setColor(new Color(255,255,255,150));
             g2.fillRoundRect(x, y, width, height, 35, 35);
     		Color background = new Color(0, 0, 0, 200);
     		g2.setColor(background);
     		g2.drawRoundRect(x+5, y+5, width-10, height-10, 25, 25);
-       
         } else {
-            drawSubWindow(x, y, width, height);
+        	Color background = new Color(0, 0, 0, 200);
+    		g2.setColor(background);
+    		g2.fillRoundRect(x, y, width, height, 35, 35);
+    		
+    		Color border = new Color(255, 255, 255);
+    		g2.setColor(border);
+    		g2.setStroke(new BasicStroke(5));
+    		g2.drawRoundRect(x+5, y+5, width-10, height-10, 25, 25);
         }
         x += 14;
         y += 32;
@@ -176,13 +182,6 @@ public abstract class AbstractUI {
 		drawButton(0, gp.tileSize * 3, '\u2190', gp.keyH.kLeftPressed);
 		drawButton(gp.tileSize, gp.tileSize * 3,'\u2193', gp.keyH.kDownPressed);
 		drawButton(gp.tileSize * 2, gp.tileSize * 3 ,'\u2192', gp.keyH.kRightPressed);		
-	}
-	
-	public int getTextX(String text) {
-	    FontMetrics metrics = g2.getFontMetrics(); // Assuming g2 is your Graphics2D object
-	    int length = metrics.stringWidth(text); // Calculate the width of the text
-	    int x = (gp.screenWidth - length) / 2; // Calculate the x-coordinate for centering
-	    return x;
 	}
 	
 	public BufferedImage setup(String imageName, double scale) {
@@ -945,9 +944,7 @@ public abstract class AbstractUI {
 	}
 	
 	public int getTextWidth(String text) {
-		float fontSize = g2.getFont().getSize2D(); // Default font size
-
-	    FontMetrics metrics = g2.getFontMetrics(new Font(Font.SANS_SERIF, Font.PLAIN, (int) fontSize));
+	    FontMetrics metrics = g2.getFontMetrics();
 	    int textWidth = metrics.stringWidth(text);
 	    return textWidth;
 	}
@@ -1260,6 +1257,10 @@ public abstract class AbstractUI {
 		drawToolTips(0, (int) (gp.tileSize * 10.5), w, a, s, d, c);
 	}
 	
+	public void drawToolTipBar(ArrayList<ToolTip> tips) {
+		drawToolTipBar(0, (int) (gp.tileSize * 10.5), tips);
+	}
+	
 	public void drawToolTipBar(int x, int y, ArrayList<ToolTip> tips) {
 		if (tips.isEmpty()) return;
 		
@@ -1285,6 +1286,7 @@ public abstract class AbstractUI {
 			ToolTip tip = tips.get(i);
 			
 			g2.setFont(g2.getFont().deriveFont(24F));
+			g2.setColor(Color.WHITE);
 			
 			g2.drawString(tip.key, x, y);
 			x += keyMetrics.stringWidth(tip.key) + gp.tileSize / 4;
@@ -1795,6 +1797,33 @@ public abstract class AbstractUI {
 		}
 	}
 	
+	public void drawOutlinedText(String text, int x, int y, Color fillColor, Color outlineColor) {
+		g2.setColor(outlineColor);
+		for (int dx = -1; dx <= 1; dx++) {
+			for (int dy = -1; dy <= 1; dy++) {
+				if (dx != 0 || dy != 0) {
+					g2.drawString(text, x + dx, y + dy);
+				}
+			}
+		}
+		
+		g2.setColor(fillColor);
+		g2.drawString(text, x, y);
+	}
+	
+	public void drawPanelWithBorder(int x, int y, int width, int height, int opacity, Color borderColor) {
+		g2.setColor(new Color(0, 0, 0, Math.min(255, opacity)));
+		g2.fillRect(x, y, width, height);
+		
+		g2.setStroke(new BasicStroke(3));
+		g2.setColor(borderColor);
+		g2.drawRect(x, y, width, height);
+		
+		g2.setColor(new Color(255, 255, 255, 30));
+		g2.drawLine(x + 2, y + 2, x + width - 2, y + 2);
+		g2.drawLine(x + 2, y + 2, x + 2, y + height - 2);
+	}
+	
 	public void handleRebind(int newKey) {
 		gp.config.setKeybind(rebindingControl, newKey);
 		
@@ -1804,6 +1833,28 @@ public abstract class AbstractUI {
 	
 	public String getBetCurrencyName(boolean gauntlet) {
 		return gauntlet ? "Orbs" : "Coins";
+	}
+	
+	public int getNextValidOption(int current, int maxOption, boolean goingUp) {
+		int next = current;
+		int attempts = 0;
+		
+		do {
+			if (goingUp) {
+				next--;
+				if (next < 0) next = maxOption;
+			} else {
+				next++;
+				if (next > maxOption) next = 0;
+			}
+			attempts++;
+		} while (!isValidOption(next) && attempts <= maxOption + 1);
+		
+		return next;
+	}
+	
+	public boolean isValidOption(int option) {
+		return true; // isn't implemented in the abstract class
 	}
 
 }
