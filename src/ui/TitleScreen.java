@@ -118,7 +118,7 @@ public class TitleScreen extends AbstractUI {
 
 	private void loadBackground() {
 		try {
-			backgroundImage = ImageIO.read(getClass().getResourceAsStream("/gen/background5.png"));
+			backgroundImage = ImageIO.read(getClass().getResourceAsStream("/gen/background1.png"));
 			textColor = new Color(255, 251, 4);
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -192,7 +192,7 @@ public class UI extends AbstractUI {
 			menuIcons[i] = setup("/menu/menu_" + i, 2);
 		}
 		
-		lightFrames = extractFrames("/battle/light.gif");
+		lightFrames = extractFrames("/field/light.gif");
 		spaceFrames = extractFrames("/gen/space.gif");
 		interactIcon = setup("/interactive/interact", 3);
 		fog = new Fog(gp);

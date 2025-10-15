@@ -91,7 +91,7 @@ public class Field {
 			this.isWeather = isWeather;
 			this.isTerrain = isTerrain;
 			
-			String path = "/battle/" + super.toString().toLowerCase();
+			String path = "/field/" + super.toString().toLowerCase();
 			path = isWeather ? path + ".gif" : path + "_terrain.png";
 			image = setupImage(path);
 		}

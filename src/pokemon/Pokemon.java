@@ -860,14 +860,14 @@ public class Pokemon implements RoleAssignable, Serializable {
         if (canSwitch) {
         	StringBuilder sb = new StringBuilder("===========================================\n");
         	
-        	int currentScore = this.scorePokemon(foe, strongestMove, foeMaxDamagePair, foeCanKO, field, moveScores);
+        	int currentScore = this.scorePokemon(foe, strongestMove, foeMaxDamagePair, foeCanKO, field, moveScores, true);
         	//currentScore = Math.max(-100, currentScore);
         	
         	HashMap<Pokemon, Integer> scoreMap = new HashMap<>();
         	for (int i = 0; i < tr.team.length; i++) {
         		Pokemon ally = tr.team[i];
         		if (ally != null && ally != this) {
-        			int allyScore = ally.scorePokemon(foe, strongestMove, foeMaxDamagePair, foeCanKO, field, null);
+        			int allyScore = ally.scorePokemon(foe, strongestMove, foeMaxDamagePair, foeCanKO, field, null, false);
         			scoreMap.put(ally, allyScore);
         		}
         	}
@@ -1181,7 +1181,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		return false;
 	}
 	
-	public int scorePokemon(Pokemon foe, Move move, Pair<Integer, Double> foeMaxDamage, boolean foeCanKO, Field field, HashMap<Move, Integer> moveScores) {
+	public int scorePokemon(Pokemon foe, Move move, Pair<Integer, Double> foeMaxDamage, boolean foeCanKO, Field field, HashMap<Move, Integer> moveScores, boolean active) {
 		int score = 0;
 		
 		if (this.isFainted()) return Integer.MIN_VALUE;
@@ -1207,41 +1207,47 @@ public class Pokemon implements RoleAssignable, Serializable {
 //		}
 //		score += Math.min(Math.min(maxDamageP, foeHPPercent), 100);
 		if (foeMaxDamage == null) foeMaxDamage = new Pair<>(0, 0.0);
+		double hpPercent = this.currentHP * 100.0 / this.getStat(0);
 		
 		// --- Defensive matchup ---
 		double foeMaxDamageP = 0;
 		double foeDamageMoveP = 0;
 		boolean foeIsFaster = this.getFaster(foe, 0, 0, field) == foe;
-		if (foeCanKO) {
-			foeMaxDamageP = foe.calcWithTypes(this, move, foeIsFaster, field, false).getSecond();
-		} else {
-			for (Move m : foe.getValidMoveset()) {
-				double dmgP = foe.calcWithTypes(this, m, foeIsFaster, field, false).getSecond();
-				foeMaxDamageP = Math.max(foeMaxDamageP, dmgP);
-				if (m == move) foeDamageMoveP = dmgP;
-				
-				if (m.isHazard() && this.getAbility(field) == Ability.MAGIC_BOUNCE) {
-					if (isHazardUseful(m, this, field)) {
-						score += 50;
-					}
+		boolean enemyKills = false;
+		for (Move m : foe.getValidMoveset()) {
+			double dmgP = foe.calcWithTypes(this, m, foeIsFaster, field, false).getSecond();
+			if (dmgP >= hpPercent) enemyKills = true;
+			foeMaxDamageP = Math.max(foeMaxDamageP, dmgP);
+			if (m == move) foeDamageMoveP = dmgP;
+			
+			if (m.isHazard() && this.getAbility(field) == Ability.MAGIC_BOUNCE) {
+				if (isHazardUseful(m, this, field)) {
+					score += 50;
 				}
 			}
 		}
 		
-		double hpPercent = this.currentHP * 1.0 / this.getStat(0);
-		
-		if (foeCanKO) {
-			score -= Math.min(foeMaxDamageP, 100) * 2 * hpPercent;
-		} else if (move != null) {
-			score -= foeMaxDamageP + foeDamageMoveP / 2;
-		} else {
-			score -= Math.min(foeMaxDamageP, 100);
-		}
-		
+		// Score boosts before setting them to your HP Percent
 		if (foeMaxDamageP < 1.0) {
 			score += 50;
 		} else if (foeMaxDamageP < 20.0) {
 			score += 30;
+		}
+		
+		// dead to the enemy
+		if (enemyKills) {
+			score -= 30;
+		}
+		
+		foeMaxDamageP = Math.min(foeMaxDamageP, hpPercent);
+		foeDamageMoveP = Math.min(foeDamageMoveP, hpPercent);
+		
+		if (foeCanKO) {
+			score -= foeDamageMoveP * 2 + (active ? 0 : foeMaxDamageP);
+		} else if (move != null) {
+			score -= foeMaxDamageP + foeDamageMoveP / 2;
+		} else {
+			score -= Math.min(foeMaxDamageP, 100);
 		}
 		
 		// --- Statuses ---
@@ -1271,8 +1277,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 			}
 		}
 
-		if (bestAttack != Integer.MIN_VALUE) score += bestAttack;
-		if (bestStatus != Integer.MIN_VALUE) score += bestStatus;
+		if (bestAttack != Integer.MIN_VALUE) score += bestAttack; // limit the score value of their damaging moves
+		if (bestStatus != Integer.MIN_VALUE) score += bestStatus; // limit the score value of their status move
 		
 		if (score < 0) {
 			if (this.getItem(field) == Item.RED_CARD && foe.trainer != null && foe.trainer.hasValidMembers()) {
@@ -1441,6 +1447,21 @@ public class Pokemon implements RoleAssignable, Serializable {
 			    			score += hazards * 25;
 			    		} else if (move == Move.SEA_DRAGON && id == 150) {
 			    			score += 30;
+			    		} else if (move == Move.HEALING_WISH || move == Move.LUNAR_DANCE) {
+			    			if (this.trainer != null && this.trainer.hasValidMembers()) {
+			    				int maxBenefit = 0;
+			    				for (Pokemon p : this.trainer.team) {
+			    					if (p != null && p != this && !p.isFainted()) {
+			    						int hpMissing = p.getStat(0) - p.currentHP;
+			    						int benefit = hpMissing / 2;
+			    						if (p.status != Status.HEALTHY) benefit += 40;
+			    						maxBenefit = Math.max(maxBenefit, benefit);
+			    					}
+			    				}
+			    				score += maxBenefit;
+			    			} else {
+			    				score = -10;
+			    			}
 			    		}
 						// TODO: add heuristics for Spiky Shield/Lava Lair/Obstruct (if strongest move is contact), Aqua Veil (if foe is special attacker)
 					}
@@ -1469,13 +1490,23 @@ public class Pokemon implements RoleAssignable, Serializable {
     			score -= 20;
     		}
     	}
-    	
-    	/* TODO: Heuristics to add:
-    	 * - Aromatherapy/when to use
-    	 * - Healing Wish/Lunar Dance when to use
-    	 */
+
     	if (move.isPivotMove() && isUsefulPivot(foe, foeAbility, move)) {
     		score += 25;
+    	} else if (move == Move.AROMATHERAPY) {
+			int statusCount = 0;
+			if (this.trainer != null) {
+				for (Pokemon p : this.trainer.team) {
+					if (p != null && !p.isFainted() && p.status != Status.HEALTHY) {
+						statusCount++;
+					}
+				}
+			}
+			score += statusCount * 20;
+		}
+    	
+    	if (foe.getItem(field) == Item.EJECT_BUTTON && move.hasPriority(foe) && this.getFaster(foe, 0, 0, field) == foe && damagePercent > 0) {
+    		score += 30;
     	}
     	
 		
@@ -1540,8 +1571,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 				int youBeforeID = youClone.id;
 				int[] youBeforeStages = youClone.statStages.clone();
 				int[] foeBeforeStages = foeClone.statStages.clone();
-				ArrayList<StatusEffect> youBeforeV = youClone.vStatuses;
-				ArrayList<StatusEffect> foeBeforeV = foeClone.vStatuses;
+				ArrayList<StatusEffect> youBeforeV = DeepClonable.deepCloneList(youClone.vStatuses);
+				ArrayList<StatusEffect> foeBeforeV = DeepClonable.deepCloneList(foeClone.vStatuses);
 				Status youBeforeStatus = youClone.status;
 				Status foeBeforeStatus = foeClone.status;
 				int youBeforeHP = youClone.currentHP;
@@ -1598,8 +1629,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 						: youClone.getFieldEffects().size() > youBeforeFE)
 					|| (foeClone.status != foeBeforeStatus && foeClone.status != Status.HEALTHY)
 					|| (youClone.status != youBeforeStatus && youBeforeStatus == Status.HEALTHY)
-					|| (youClone.vStatuses.size() != youBeforeV.size())
-					|| (foeClone.vStatuses.size() != foeBeforeV.size()) // TODO: check if the arraylists are "equal" (checking the nums of the statuses too for Arcane Spell/Focus Energy)
+					|| !vStatusesEqual(youClone.vStatuses, youBeforeV)
+					|| !vStatusesEqual(foeClone.vStatuses, foeBeforeV)
 					|| (!Arrays.equals(foeBeforeStages, foeClone.statStages) && Arrays.stream(foeClone.statStages).sum() < Arrays.stream(foeBeforeStages).sum())
 					|| (!Arrays.equals(youBeforeStages, youClone.statStages) && Arrays.stream(youClone.statStages).sum() > Arrays.stream(youBeforeStages).sum())
 					|| (youClone.currentHP > youBeforeHP && move != Move.BELLY_DRUM && move != Move.CURSE && move != Move.HEALING_WISH && move != Move.LUNAR_DANCE && move != Move.MEMENTO)
@@ -1642,6 +1673,19 @@ public class Pokemon implements RoleAssignable, Serializable {
 		default:
 			return false;
 		}
+	}
+	
+	private boolean vStatusesEqual(ArrayList<StatusEffect> list1, ArrayList<StatusEffect> list2) {
+		if (list1.size() != list2.size()) return false;
+		
+		for (int i = 0; i < list1.size(); i++) {
+			StatusEffect se1 = list1.get(i);
+			StatusEffect se2 = list2.get(i);
+			if (se1.status != se2.status || se1.num != se2.num) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	public int calcStatBoostScore(Pokemon foe) {
