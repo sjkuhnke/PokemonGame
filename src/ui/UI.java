@@ -3407,7 +3407,7 @@ public class UI extends AbstractUI {
 			drawTask();
 		}
 		
-		if (gp.keyH.sPressed || gp.keyH.dPressed) {
+		if ((gp.keyH.sPressed || gp.keyH.dPressed) && !showMoveOptions) {
 			gp.keyH.sPressed = false;
 			gp.keyH.dPressed = false;
 			goBackInBag();
