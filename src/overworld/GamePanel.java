@@ -419,7 +419,7 @@ public class GamePanel extends JPanel implements Runnable {
 			int money = foe.trainer != null ? foe.trainer.getMoney() : 0;
 			if (money == 500) { // gym leader, find which Pokemon were over level cap
 				String reason = "The following Pokemon are over the level cap of "
-					+ Trainer.getLevelCap(player.p.badges)
+					+ Trainer.getLevelCap(player.p.badges, player.p)
 					+ ": "
 					+ player.p.getPokemonOverLevelCap()
 					+ " against "
@@ -431,7 +431,7 @@ public class GamePanel extends JPanel implements Runnable {
 				String reason = "Whole team was over the level cap against " + (foe.trainer != null ? foe.trainer.getName() : "a wild " + foe.getName());
 				user.getPlayer().invalidateNuzlocke(reason);
 				saveScum(reason);
-				Task.addTask(Task.TEXT, "Your whole team is over the level cap of " + Trainer.getLevelCap(player.p.badges) + "!");
+				Task.addTask(Task.TEXT, "Your whole team is over the level cap of " + Trainer.getLevelCap(player.p.badges, player.p) + "!");
 			}
 		}
 		

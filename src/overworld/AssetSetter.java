@@ -1931,7 +1931,7 @@ public class AssetSetter {
 		
 		mapNum = 32;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(FISHERMAN_DOWN, "Fisherman", 31, 40, "Back in my day, I used to be a top angler. Felt good reeling in them in, but I think I've outgrown it.", mapNum, 49, "Look at water and press 'A' to fish!");
+		gp.npc[mapNum][index] = NPCSetup(FISHERMAN_DOWN, "Fisherman", 31, 40, "Back in my day, I used to be a top angler. Felt good reeling in them in, but I think I've outgrown it.", mapNum, 49, "Look at water and use the Fishing Rod in your bag to fish!");
 		
 		mapNum = 33;
 		index = 0;

@@ -1287,7 +1287,7 @@ public class BattleUI extends AbstractUI {
 		}
 		if (gp.keyH.wPressed) {
 			gp.keyH.wPressed = false;
-			if (gp.player.p.nuzlocke && user.level > Trainer.getLevelCap(gp.getEffectiveBadges(foe))) {
+			if (gp.player.p.nuzlocke && user.level > Trainer.getLevelCap(gp.getEffectiveBadges(foe), gp.player.p)) {
 				if (user.getPlayer().canSwitch(foe)) {
 					subState = MOVE_MESSAGE_STATE;
 					showMessage(user.nickname + " is over the level cap: switch it out!");
@@ -1554,7 +1554,7 @@ public class BattleUI extends AbstractUI {
 				currentDialogue = select.getNickname() + " is already out!";
 			} else if (cancellableParty && user.isTrapped(foe)) {
         		currentDialogue = "You are trapped and cannot switch!";
-			} else if (gp.player.p.nuzlocke && select.level > Trainer.getLevelCap(gp.getEffectiveBadges(foe))) {
+			} else if (gp.player.p.nuzlocke && select.level > Trainer.getLevelCap(gp.getEffectiveBadges(foe), gp.player.p)) {
 				Pokemon current = user.getPlayer().getCurrent();
 				user.getPlayer().setCurrent(select);
 				boolean hasValid = user.getPlayer().hasValidMembers();
