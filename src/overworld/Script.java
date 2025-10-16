@@ -669,7 +669,7 @@ public class Script {
 			Task.addTask(Task.DIALOGUE, npc, "Say, you look like you'd be great at fishing. Here, take this spare I got lying around. Maybe you'll fish up a Durfish!");
 			Task t = Task.addTask(Task.ITEM, "");
 			t.item = Item.FISHING_ROD;
-			Task.addTask(Task.DIALOGUE, npc, "Look at water and use the item in your bag to fish!");
+			Task.addTask(Task.DIALOGUE, npc, "Look at water and use the Fishing Rod in your bag to fish!");
 		});
 		
 		scriptMap.put(16.0, (npc) -> { // stanford in power plant

@@ -49,7 +49,7 @@ public class UI extends AbstractUI {
 	public int slotRow = 0;
 
 	// BAG STATE
-	public int bagNum[] = new int[Item.KEY_ITEM];
+	public int[] bagNum = new int[Item.KEY_ITEM];
 	public int selectedBagNum = -1;
 	public int currentPocket = Item.MEDICINE;
 	public int bagState;
@@ -77,7 +77,7 @@ public class UI extends AbstractUI {
 	public boolean release;
 
 	// POKEDEX STATE
-	public int dexNum[] = new int[4];
+	public int[] dexNum = new int[4];
 	public int dexMode;
 	public int dexType;
 	public int levelDexNum;
@@ -103,12 +103,12 @@ public class UI extends AbstractUI {
 
 	// LIGHT DISTORTION
 	public boolean drawLightOverlay;
-	private List<BufferedImage> lightFrames;
+	private final List<BufferedImage> lightFrames;
 	private int lightFrameIndex;
 	private long lightLastFrameTime;
 
 	// SPACE GIF
-	private List<BufferedImage> spaceFrames;
+	private final List<BufferedImage> spaceFrames;
 	private int spaceFrameIndex = 0;
 	private int spaceFrameCounter;
 
@@ -125,13 +125,16 @@ public class UI extends AbstractUI {
 	// IMAGES
 	BufferedImage interactIcon;
 	BufferedImage transitionBuffer;
-	private BufferedImage[] bagIcons;
+	private final BufferedImage[] bagIcons;
 
 	// LETTER STATE
-	private String[][][] letter = new String[2][][];
+	private final String[][][] letter = new String[2][][];
 	private int currentLetter;
-	private int maxLine = 13;
-	public int pageNum = 0;
+    public int pageNum = 0;
+
+    // PLAYER INFO
+    private int playerScroll = 0;
+    public TextInputDialog cheatCodeDialog;
 
 	// FOG/LIGHT
 	public Fog fog;
@@ -141,7 +144,7 @@ public class UI extends AbstractUI {
 	public Font currentFont;
 
 	// RANDOM
-	private Random rand = new Random();
+	private final Random rand = new Random();
 
 	// CONSTANTS
 	public static final int MAX_SHOP_COL = 11;
@@ -1413,7 +1416,7 @@ public class UI extends AbstractUI {
 		// Make sure the front Pokemon isn't fainted
 		int index = 0;
 		Pokemon user = gp.player.p.getCurrent();
-		while (user.isFainted() || (gp.player.p.nuzlocke && user.isOverLevelCap(gp.player.p.badges))) {
+		while (user.isFainted() || (gp.player.p.nuzlocke && user.isOverLevelCap(gp.player.p.badges, gp.player.p))) {
 			gp.player.p.swapToFront(gp.player.p.team[++index], index, null);
 			user = gp.player.p.getCurrent();
 		}
@@ -3858,7 +3861,7 @@ public class UI extends AbstractUI {
 		
 		if (subState == 0) drawSubWindow(x, y, width, height);
 		
-		switch(subState) {
+		switch (subState) {
 		case 0:
 			optionsTop(x, y, width);
 			break;
@@ -3875,9 +3878,7 @@ public class UI extends AbstractUI {
 			saveGame();
 			break;
 		case 5:
-			gp.gameState = GamePanel.PLAY_STATE;
-			subState = 0;
-			gp.player.showPlayer();
+			showPlayer();
 			break;
 		case 6:
 			gp.openMap();
@@ -3888,6 +3889,9 @@ public class UI extends AbstractUI {
 		case 8:
 			drawSummary(null);
 			break;
+        case 9:
+            showPlayer(); // nuzlocke info
+            break;
 		}
 	}
 
@@ -4215,7 +4219,7 @@ public class UI extends AbstractUI {
 		int textX = descX + 20;
 		int textY = descY + gp.tileSize;
 		g2.setFont(g2.getFont().deriveFont(24F));
-		if (currentItems.size() > 0) {
+		if (!currentItems.isEmpty()) {
 			if (bagNum[currentPocket - 1] >= currentItems.size()) bagNum[currentPocket - 1]--;
 			String desc = currentItems.get(bagNum[currentPocket - 1]).getItem().getDesc();
 			for (String line : Item.breakString(desc, 23).split("\n")) {
@@ -4412,7 +4416,7 @@ public class UI extends AbstractUI {
 			gp.keyH.downPressed = false;
 			if (bagState == 0 || bagState == 1 || bagState == 3) {
 				int amt = gp.keyH.ctrlPressed ? 5 : 1;
-				if (currentItems.size() > 0) {
+				if (!currentItems.isEmpty()) {
 					bagNum[currentPocket - 1] += amt;
 					if (bagNum[currentPocket - 1] >= currentItems.size() - 1) {
 						bagNum[currentPocket - 1] = currentItems.size() - 1;
@@ -4424,6 +4428,427 @@ public class UI extends AbstractUI {
 		String dText = (bagState == 0 && currentPocket == Item.TMS) ? "Check" : null;
 		drawToolTips("OK", "Swap", "Back", dText);
 	}
+
+    private void showPlayer() {
+        int panelWidth = gp.tileSize * 14;
+        int panelHeight = gp.tileSize * 11;
+        int panelX = (gp.screenWidth - panelWidth) / 2;
+        int panelY = gp.tileSize / 2;
+
+        int PLAYER_INFO = 5;
+        int NUZLOCKE_INFO = 9;
+        int MAX_VISIBLE_ENCOUNTERS = 8;
+
+        drawPanelWithBorder(panelX, panelY, panelWidth, panelHeight, 220, textColor);
+
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 36F));
+        String title = "Player Info";
+        int titleX = getCenterAlignedTextX(title, gp.screenWidth / 2);
+        int titleY = panelY + gp.tileSize;
+        drawOutlinedText(title, titleX, titleY, textColor, Color.BLACK);
+
+        if (subState == PLAYER_INFO) {
+            drawPlayerInfo(panelX, panelY);
+        } else if (subState == NUZLOCKE_INFO) {
+            drawNuzlockeInfo(panelX, panelY, panelWidth, panelHeight, MAX_VISIBLE_ENCOUNTERS);
+        }
+
+        if (cheatCodeDialog != null && cheatCodeDialog.isActive()) {
+            cheatCodeDialog.draw(g2);
+            cheatCodeDialog.update();
+            return;
+        }
+
+        if (subState == PLAYER_INFO) {
+            int maxOption = gp.player.p.nuzlocke ? 2 : 1;
+
+            if (gp.keyH.upPressed) {
+                gp.keyH.upPressed = false;
+                gp.playSFX(Sound.S_MENU_1);
+                commandNum--;
+                if (commandNum < 0) commandNum = maxOption;
+            }
+
+            if (gp.keyH.downPressed) {
+                gp.keyH.downPressed = false;
+                gp.playSFX(Sound.S_MENU_1);
+                commandNum++;
+                if (commandNum > maxOption) commandNum = 0;
+            }
+
+            if (gp.keyH.wPressed) {
+                gp.keyH.wPressed = false;
+                gp.playSFX(Sound.S_MENU_CON);
+
+                if (gp.player.p.nuzlocke) {
+                    switch (commandNum) {
+                    case 0: // nuzlocke info
+                        subState = NUZLOCKE_INFO;
+                        playerScroll = 0;
+                        break;
+                    case 1: // cheat code
+                        showCheatCodeDialog();
+                        break;
+                    case 2: // back
+                        subState = 0;
+                        commandNum = 0;
+                        subState = PLAYER_INFO;
+                        break;
+                    }
+                } else {
+                    switch (commandNum) {
+                    case 0: // cheat code
+                        showCheatCodeDialog();
+                        break;
+                    case 1: // back
+                        subState = 0;
+                        commandNum = 0;
+                        subState = PLAYER_INFO;
+                        break;
+                    }
+                }
+            }
+
+            if (gp.keyH.sPressed || gp.keyH.dPressed) {
+                gp.keyH.sPressed = false;
+                gp.keyH.dPressed = false;
+                gp.playSFX(Sound.S_MENU_CAN);
+                subState = 0;
+                commandNum = 0;
+            }
+        } else if (subState == NUZLOCKE_INFO) {
+            if (gp.keyH.upPressed) {
+                gp.keyH.upPressed = false;
+                gp.playSFX(Sound.S_MENU_1);
+                if (gp.player.p.nuzlockeEncounters != null && playerScroll > 0) {
+                    playerScroll--;
+                }
+            }
+
+            if (gp.keyH.downPressed) {
+                gp.keyH.downPressed = false;
+                gp.playSFX(Sound.S_MENU_1);
+                if (gp.player.p.nuzlockeEncounters != null &&
+                        playerScroll < gp.player.p.nuzlockeEncounters.size() - MAX_VISIBLE_ENCOUNTERS) {
+                    playerScroll++;
+                }
+            }
+
+            if (gp.keyH.wPressed || gp.keyH.sPressed || gp.keyH.dPressed) {
+                gp.keyH.wPressed = false;
+                gp.keyH.sPressed = false;
+                gp.keyH.dPressed = false;
+                gp.playSFX(Sound.S_MENU_CAN);
+                subState = PLAYER_INFO;
+                commandNum = 0;
+                playerScroll = 0;
+            }
+        }
+
+        ArrayList<ToolTip> toolTips = new ArrayList<>();
+        if (subState == PLAYER_INFO) {
+            toolTips.add(new ToolTip(gp, "Navigate", "/", true, gp.config.upKey, gp.config.downKey));
+            toolTips.add(new ToolTip(gp, "Select", "", true, gp.config.wKey));
+            toolTips.add(new ToolTip(gp, "Back", "/", true, gp.config.sKey, gp.config.dKey));
+        } else if (subState == NUZLOCKE_INFO) {
+            if (gp.player.p.nuzlockeEncounters != null && gp.player.p.nuzlockeEncounters.size() > MAX_VISIBLE_ENCOUNTERS) {
+                toolTips.add(new ToolTip(gp, "Scroll", "/", true, gp.config.upKey, gp.config.downKey));
+            }
+            toolTips.add(new ToolTip(gp, "Back", "//", true, gp.config.wKey, gp.config.sKey, gp.config.dKey));
+        }
+
+        if (gp.keyH.shiftPressed && !toolTips.isEmpty()) {
+            drawToolTipBar(toolTips);
+        }
+    }
+
+    private void drawPlayerInfo(int x, int y) {
+        Player p = gp.player.p;
+        int contentX = x + gp.tileSize / 2;
+        int contentY = y + (int)(gp.tileSize * 1.75);
+
+        // sprite and name
+        BufferedImage playerSprite = gp.player.down1;
+        if (playerSprite != null) {
+            g2.drawImage(playerSprite, contentX, contentY, 64, 64, null);
+        }
+
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 28F));
+        String playerName = gp.player.getName();
+        drawOutlinedText(playerName, contentX + 80, contentY + 40, textColor, Color.BLACK);
+
+        contentY += 80;
+
+        // badges
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
+        drawOutlinedText("Badges:", contentX, contentY, new Color(200, 200, 200), Color.BLACK);
+
+        int badgeX = contentX + gp.tileSize * 2;
+        int badgeY = contentY - gp.tileSize / 4;
+        for (int i = 0; i < 8; i++) {
+            BufferedImage badgeIcon = menuIcons[i];
+            if (i < p.badges) {
+                g2.drawImage(badgeIcon, badgeX, badgeY, null);
+            } else {
+                // greyed out badge
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+                g2.drawImage(badgeIcon, badgeX, badgeY, null);
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+            }
+            badgeX += gp.tileSize / 2;
+            if ((i + 1) % 4 == 0) {
+                badgeX = contentX + gp.tileSize * 2;
+                badgeY += gp.tileSize / 2;
+            }
+        }
+
+        contentY += (int)(gp.tileSize * 1.25);
+
+        // money and coins
+        int col1X = contentX;
+        int col2X = contentX + gp.tileSize * 6;
+
+        g2.setFont(g2.getFont().deriveFont(24F));
+        drawOutlinedText("Money:", col1X, contentY, new Color(200, 200, 200), Color.BLACK);
+        drawOutlinedText("$" + p.getMoney(), col1X + gp.tileSize * 2, contentY, textColor, Color.BLACK);
+
+        drawOutlinedText("Coins:", col2X, contentY, new Color(200, 200, 200), Color.BLACK);
+        drawOutlinedText(String.valueOf(p.coins), col2X + gp.tileSize * 2, contentY, textColor, Color.BLACK);
+
+        contentY += gp.tileSize;
+
+        // difficulty
+        String[] difficulties = {"Normal", "Hard", "Extreme"};
+        String difficultyText = "Difficulty: " + difficulties[p.difficulty];
+        drawOutlinedText(difficultyText, col1X, contentY, new Color(200, 200, 200), Color.BLACK);
+
+        contentY += gp.tileSize;
+
+        // nuzlocke info
+        if (p.nuzlocke) {
+            drawOutlinedText("Nuzlocke Mode: ON", col1X, contentY, new Color(255, 100, 100), Color.BLACK);
+            contentY += (int)(gp.tileSize * 0.75);
+
+            int levelCap = Trainer.getLevelCap(p.badges, p);
+            int levelCapBonus = p.levelCapBonus;
+            String levelCapBonusString = levelCapBonus > 0 ? "(+" + levelCapBonus + " level bonus)" : "";
+            drawOutlinedText("Level Cap: " + levelCap + levelCapBonusString, col1X + gp.tileSize / 4, contentY, new Color(200, 200, 200), Color.BLACK);
+
+            contentY += gp.tileSize;
+
+            // info button
+            int buttonWidth = gp.tileSize * 5;
+            int buttonHeight = (int)(gp.tileSize * 0.75);
+            int buttonX = contentX;
+            int buttonY = contentY - (int)(gp.tileSize * 0.5);
+
+            boolean selected = commandNum == 0;
+            if (selected) {
+                drawPanelWithBorder(buttonX, buttonY, buttonWidth, buttonHeight, backgroundOpacity + 50, textColor);
+            } else {
+                drawPanelWithBorder(buttonX, buttonY, buttonWidth, buttonHeight, backgroundOpacity - 30, new Color(100, 100, 100));
+            }
+
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
+            String buttonText = "View Nuzlocke Info";
+            int textX = getCenterAlignedTextX(buttonText, buttonX + buttonWidth / 2);
+            int textY = buttonY + (int)(gp.tileSize * 0.55);
+            drawOutlinedText(buttonText, textX, textY, selected ? textColor : new Color(200, 200, 200), Color.BLACK);
+
+            contentY += gp.tileSize;
+        }
+
+        contentY += gp.tileSize / 2;
+
+        // cheat code
+        int buttonWidth = gp.tileSize * 5;
+        int buttonHeight = (int)(gp.tileSize * 0.75);
+        int buttonX = contentX;
+        int buttonY = contentY - (int)(gp.tileSize * 0.5);
+
+        boolean selected = p.nuzlocke ? commandNum == 1 : commandNum == 0;
+        if (selected) {
+            drawPanelWithBorder(buttonX, buttonY, buttonWidth, buttonHeight, backgroundOpacity + 50, textColor);
+        } else {
+            drawPanelWithBorder(buttonX, buttonY, buttonWidth, buttonHeight, backgroundOpacity - 30, new Color(100, 100, 100));
+        }
+
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
+        String buttonText = "Enter Cheat Code";
+        int textX = getCenterAlignedTextX(buttonText, buttonX + buttonWidth / 2);
+        int textY = buttonY + (int)(gp.tileSize * 0.55);
+        drawOutlinedText(buttonText, textX, textY, selected ? textColor : new Color(200, 200, 200), Color.BLACK);
+
+        // back
+        contentY += gp.tileSize;
+        buttonY = contentY - (int)(gp.tileSize * 0.5);
+        selected = p.nuzlocke ? commandNum == 2 : commandNum == 1;
+
+        if (selected) {
+            drawPanelWithBorder(buttonX, buttonY, buttonWidth, buttonHeight, backgroundOpacity + 50, textColor);
+        } else {
+            drawPanelWithBorder(buttonX, buttonY, buttonWidth, buttonHeight, backgroundOpacity - 30, new Color(100, 100, 100));
+        }
+
+        buttonText = "Back";
+        textX = getCenterAlignedTextX(buttonText, buttonX + buttonWidth / 2);
+        textY = buttonY + (int)(gp.tileSize * 0.55);
+        drawOutlinedText(buttonText, textX, textY, selected ? textColor : new Color(200, 200, 200), Color.BLACK);
+    }
+
+    private void drawNuzlockeInfo(int panelX, int panelY, int panelWidth, int panelHeight, int MAX_VISIBLE_ENCOUNTERS) {
+        Player p = gp.player.p;
+        int contentX = panelX + gp.tileSize / 2;
+        int contentY = panelY + (int)(gp.tileSize * 1.75);
+
+        // status title
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
+        drawOutlinedText("Status:", contentX, contentY, textColor, Color.BLACK);
+        contentY += (int)(gp.tileSize * 0.75);
+
+        g2.setFont(g2.getFont().deriveFont(20F));
+        int labelX = contentX + gp.tileSize / 4;
+
+        drawOutlinedText("Started: " + (p.nuzlockeStarted ? "Yes" : "No"), labelX, contentY, new Color(200, 200, 200), Color.BLACK);
+        contentY += (int)(gp.tileSize * 0.6);
+
+        Color validColor = p.isValidNuzlocke ? new Color(100, 255, 100) : new Color(255, 100, 100);
+        drawOutlinedText("Valid: " + (p.isValidNuzlocke ? "Yes" : "No"), labelX, contentY, validColor, Color.BLACK);
+        contentY += gp.tileSize;
+
+        // settings
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
+        drawOutlinedText("Settings:", contentX, contentY, textColor, Color.BLACK);
+        contentY += (int)(gp.tileSize * 0.75);
+
+        g2.setFont(g2.getFont().deriveFont(20F));
+        drawOutlinedText("Ban Shedinja: " + (p.banShedinja ? "Yes" : "No"), labelX, contentY, new Color(200, 200, 200), Color.BLACK);
+        contentY += (int)(gp.tileSize * 0.6);
+
+        drawOutlinedText("Ban Baton Pass: " + (p.banBatonPass ? "Yes" : "No"), labelX, contentY, new Color(200, 200, 200), Color.BLACK);
+        contentY += (int)(gp.tileSize * 0.6);
+
+        drawOutlinedText("Allow Revives: " + (p.allowRevives ? "Yes" : "No"), labelX, contentY, new Color(200, 200, 200), Color.BLACK);
+        contentY += (int)(gp.tileSize * 0.6);
+
+        if (p.allowRevives) {
+            drawOutlinedText("  Buyable Revives: " + (p.buyableRevives ? "Yes" : "No"), labelX, contentY, new Color(180, 180, 180), Color.BLACK);
+            contentY += (int)(gp.tileSize * 0.6);
+        }
+
+        drawOutlinedText("Level Cap Bonus: +" + p.levelCapBonus, labelX, contentY, new Color(200, 200, 200), Color.BLACK);
+        contentY += gp.tileSize;
+
+        // invalid reasons
+        if (!p.isValidNuzlocke && !p.invalidReasons.isEmpty()) {
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
+            drawOutlinedText("Invalid Reasons:", contentX, contentY, new Color(255, 100, 100), Color.BLACK);
+            contentY += (int)(gp.tileSize * 0.75);
+
+            int scrollableX = contentX;
+            int scrollableY = contentY;
+            int scrollableWidth = panelWidth - gp.tileSize;
+            int scrollableHeight = (int)(gp.tileSize * 1.5);
+
+            drawPanelWithBorder(scrollableX, scrollableY, scrollableWidth, scrollableHeight, 50, new Color(100, 100, 100));
+
+            g2.setClip(scrollableX, scrollableY, scrollableWidth, scrollableHeight);
+
+            int reasonY = scrollableY + gp.tileSize / 4;
+            g2.setFont(g2.getFont().deriveFont(16F));
+
+            for (String reason : p.invalidReasons) {
+                drawOutlinedText("• " + reason, scrollableX + gp.tileSize / 4, reasonY, new Color(255, 150, 150), Color.BLACK);
+                reasonY += gp.tileSize / 3;
+            }
+
+            g2.setClip(null);
+            contentY += scrollableHeight + gp.tileSize / 2;
+        }
+
+        // encounters
+        if (p.nuzlockeEncounters != null && !p.nuzlockeEncounters.isEmpty()) {
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
+            drawOutlinedText("Encounters (" + p.nuzlockeEncounters.size() + "):", contentX, contentY, textColor, Color.BLACK);
+            contentY += (int)(gp.tileSize * 0.75);
+
+            int scrollableX = contentX;
+            int scrollableY = contentY;
+            int scrollableWidth = panelWidth - gp.tileSize;
+            int scrollableHeight = (int)(gp.tileSize * 2.5);
+
+            drawPanelWithBorder(scrollableX, scrollableY, scrollableWidth, scrollableHeight, 50, new Color(100, 100, 100));
+
+            g2.setClip(scrollableX, scrollableY, scrollableWidth, scrollableHeight);
+
+            int encounterY = scrollableY + gp.tileSize / 4 - (playerScroll * (gp.tileSize / 3));
+            g2.setFont(g2.getFont().deriveFont(18F));
+
+            for (int i = 0; i < p.nuzlockeEncounters.size(); i++) {
+                String encounter = p.nuzlockeEncounters.get(i);
+                Color encounterColor = (i >= playerScroll && i < playerScroll + MAX_VISIBLE_ENCOUNTERS) ? new Color(200, 200, 200) : new Color(120, 120, 120);
+                drawOutlinedText("• " + encounter, scrollableX + gp.tileSize / 4, encounterY, encounterColor, Color.BLACK);
+                encounterY += gp.tileSize / 3;
+            }
+
+            g2.setClip(null);
+
+            // scrollbar
+            if (p.nuzlockeEncounters.size() > MAX_VISIBLE_ENCOUNTERS) {
+                int scrollbarX = scrollableX + scrollableWidth - 12;
+                int scrollbarY = scrollableY;
+                int scrollbarWidth = 8;
+                int scrollbarHeight = scrollableHeight;
+
+                g2.setColor(new Color(60, 60, 60));
+                g2.fillRect(scrollbarX, scrollbarY, scrollbarWidth, scrollbarHeight);
+
+                float thumbHeight = scrollbarHeight * ((float)MAX_VISIBLE_ENCOUNTERS / p.nuzlockeEncounters.size());
+                float maxScroll = p.nuzlockeEncounters.size() - MAX_VISIBLE_ENCOUNTERS;
+                float thumbY = scrollbarY + (scrollbarHeight - thumbHeight) * (playerScroll / maxScroll);
+
+                g2.setColor(textColor);
+                g2.fillRect(scrollbarX, (int)thumbY, scrollbarWidth, (int)thumbHeight);
+            }
+        }
+
+        // back
+        int buttonWidth = gp.tileSize * 3;
+        int buttonHeight = (int)(gp.tileSize * 0.75);
+        int buttonX = panelX + panelWidth - buttonWidth - gp.tileSize / 2;
+        int buttonY = panelY + panelHeight - buttonHeight - gp.tileSize / 2;
+
+        boolean selected = commandNum == 0;
+        if (selected) {
+            drawPanelWithBorder(buttonX, buttonY, buttonWidth, buttonHeight, backgroundOpacity + 50, textColor);
+        } else {
+            drawPanelWithBorder(buttonX, buttonY, buttonWidth, buttonHeight, backgroundOpacity - 30, new Color(100, 100, 100));
+        }
+
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
+        String buttonText = "Back";
+        int textX = getCenterAlignedTextX(buttonText, buttonX + buttonWidth / 2);
+        int textY = buttonY + (int)(gp.tileSize * 0.55);
+        drawOutlinedText(buttonText, textX, textY, selected ? textColor : new Color(200, 200, 200), Color.BLACK);
+    }
+
+    private void showCheatCodeDialog() {
+        UI ui = this;
+        cheatCodeDialog = new TextInputDialog(gp, "Cheat Code", "", "Enter cheat code", 50, textColor);
+
+        cheatCodeDialog.show(new TextInputDialog.InputCallback() {
+            @Override
+            public void onConfirm(String code) {
+                gp.player.runCode(code, ui);
+                cheatCodeDialog = null;
+            }
+
+            @Override
+            public void onCancel() {
+                cheatCodeDialog = null;
+            }
+        });
+    }
 	
 	public void drawSettings() {
 		super.drawSettings();
@@ -4501,7 +4926,7 @@ public class UI extends AbstractUI {
 						bagState = 5;
 						commandNum = 0;
 					} else {
-						bagState = currentPocket == Item.TMS ? 3 : currentPocket == Item.KEY_ITEM ? 1 : 2;
+						bagState = currentPocket == Item.TMS ? 3 : 2;
 					}
 				}
 			}
@@ -5178,8 +5603,7 @@ public class UI extends AbstractUI {
 	}
 
 	private int getItemIndexOnSlot(int maxCol) {
-		int itemIndex = slotCol + (slotRow*maxCol);
-		return itemIndex;
+        return slotCol + (slotRow*maxCol);
 	}
 	
 	private void drawPrizeScreen(NPC_Prize_Shop ps) {
@@ -6173,12 +6597,10 @@ public class UI extends AbstractUI {
 		InputStream is = getClass().getResourceAsStream(path);
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-			if (is != null) {
-				while ((str = reader.readLine()) != null) {
-					buf.append(str + "\n");
-				}
-			}
-			is.close();
+            while ((str = reader.readLine()) != null) {
+                buf.append(str).append("\n");
+            }
+            is.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -6189,15 +6611,14 @@ public class UI extends AbstractUI {
 		ArrayList<String> result = new ArrayList<>();
 		for (String s : message) {
 			String[] m = Item.breakString(s, length).split("\n");
-			for (String s1 : m) {
-				result.add(s1);
-			}
+            result.addAll(Arrays.asList(m));
 		}
 		return result.toArray(new String[1]);
 	}
 	
 	private String[][] splitMessage(String[] message) {
-		int numPages = (int) Math.ceil((double) message.length / maxLine);
+        int maxLine = 13;
+        int numPages = (int) Math.ceil((double) message.length / maxLine);
 		
 		String[][] result = new String[numPages][];
 
@@ -6206,9 +6627,7 @@ public class UI extends AbstractUI {
 			int finish = Math.min(start + maxLine, message.length);
 			
 			String[] page = new String[finish - start];
-			for (int j = 0; j < page.length; j++) {
-				page[j] = message[start + j];
-			}
+            System.arraycopy(message, start, page, 0, page.length);
 			result[i] = page;
 		}
 		

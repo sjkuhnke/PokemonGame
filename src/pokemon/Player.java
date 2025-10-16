@@ -43,6 +43,7 @@ import entity.PlayerCharacter;
 import overworld.GamePanel;
 import pokemon.Bag.Entry;
 import ui.AbstractUI;
+import ui.TextInputDialog;
 import ui.UI;
 import util.*;
 
@@ -106,12 +107,21 @@ public class Player extends Trainer implements Serializable {
 	private Integer id;
 	public boolean amulet;
 	public boolean spike;
-	
+
+    public int difficulty;
+
+    // NUZLOCKE
 	public boolean nuzlocke;
 	public boolean nuzlockeStarted;
 	public boolean isValidNuzlocke;
 	public ArrayList<String> nuzlockeEncounters;
 	public ArrayList<String> invalidReasons;
+    // settings
+    public boolean banShedinja;
+    public boolean banBatonPass;
+    public boolean allowRevives;
+    public boolean buyableRevives;
+    public int levelCapBonus;
 	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
@@ -195,7 +205,7 @@ public class Player extends Trainer implements Serializable {
 	public boolean catchPokemon(Pokemon p, boolean nickname, Item ball) {
 		if (p == null) return false;
 		boolean egg = p instanceof Egg;
-	    if (p == null || (p.isFainted() && !egg)) return false;
+	    if (p.isFainted() && !egg) return false;
 	    int index = 1;
 	    Task t = null;
 	    String metAt = PlayerCharacter.getMetAt();
@@ -1985,7 +1995,7 @@ public class Player extends Trainer implements Serializable {
 
 	public boolean hasPokemonOverLevelCap() {
 		for (Pokemon p : team) {
-			if (p != null && p.isOverLevelCap(badges)) return true;
+			if (p != null && p.isOverLevelCap(badges, this)) return true;
 		}
 		return false;
 	}
@@ -1993,7 +2003,7 @@ public class Player extends Trainer implements Serializable {
 	public boolean wholeTeamOverLevelCap() {
 		for (Pokemon p : team) {
 			if (p != null) {
-				if (!p.isOverLevelCap(badges)) return false;
+				if (!p.isOverLevelCap(badges, this)) return false;
 			}
 		}
 		return true;
@@ -2059,7 +2069,7 @@ public class Player extends Trainer implements Serializable {
 	public String getPokemonOverLevelCap() {
 		StringBuilder sb = new StringBuilder();
 		for (Pokemon p : team) {
-			if (p != null && p.isOverLevelCap(badges)) sb.append(p + ", ");
+			if (p != null && p.isOverLevelCap(badges, this)) sb.append(p + ", ");
 		}
 		String result = sb.toString();
 		return result.substring(0, result.length() - 2);

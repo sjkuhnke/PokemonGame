@@ -7,3 +7,4 @@
 /tools/dist/*
 !/tools/dist/.gitkeep
 /tools/mac_bundle
+/classes/

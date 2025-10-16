@@ -6,10 +6,7 @@ import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -566,38 +563,6 @@ public class PlayerCharacter extends Entity {
 			
 			gp.player.p.itemsCollected[gp.currentMap][objIndex] = true;
 		}
-	}
-	
-	public void showPlayer() {
-		gp.keyH.resetKeys();
-		JPanel playerInfo = new JPanel();
-    	playerInfo.setLayout(new GridLayout(6, 1));
-    	
-    	JLabel moneyLabel = new JLabel();
-    	moneyLabel.setText("$" + p.getMoney());
-    	JLabel badgesLabel = new JLabel();
-    	badgesLabel.setText(p.badges + " Badges");
-    	JLabel levelCap = new JLabel();
-    	levelCap.setText("Level Cap: " + Trainer.getLevelCap(p.badges));
-    	JButton nuzlockeInfo = new JButton("Nuzlocke Info");
-    	nuzlockeInfo.addActionListener(e -> p.showNuzlockeInfo());
-    	
-    	JTextField cheats = new JTextField();
-    	cheats.addActionListener(e -> {
-    		String code = cheats.getText();
-    		runCode(code, cheats);
-    	});
-    	
-    	playerInfo.add(moneyLabel);
-    	playerInfo.add(badgesLabel);
-    	if (p.nuzlocke) {
-    		playerInfo.add(levelCap);
-    		playerInfo.add(nuzlockeInfo);
-    	}
-    	playerInfo.add(cheats);
-    	System.out.println(gp.tileM.lavaMaps.toString());
-    	
-    	JOptionPane.showMessageDialog(null, playerInfo, "Player Info", JOptionPane.PLAIN_MESSAGE);
 	}
 
 	private void interactNurse(Entity npc) {
@@ -1182,55 +1147,47 @@ public class PlayerCharacter extends Entity {
 	    return result;
 	}
 	
-	private void runCode(String code, JTextField cheats) {
+	public void runCode(String code, UI ui) {
 		if (code.equals("RAR3")) {
 			p.bag.add(Item.RARE_CANDY);
 			p.bag.count[18] = 999;
 			p.invalidateNuzlocke("Used " + code);
-			SwingUtilities.getWindowAncestor(cheats).dispose();
 		} else if (code.equals("M1X3R")) {
 			p.random = !p.random;
 			String onoff = p.random ? "on!" : "off.";
-			JOptionPane.showMessageDialog(null, "Randomizer mode was turned " + onoff);
+			ui.showMessage("Randomizer mode was turned " + onoff);
 			p.invalidateNuzlocke("Used " + code);
-			SwingUtilities.getWindowAncestor(cheats).dispose();
 		} else if (code.equals("GASTLY")) {
 			p.ghost = !p.ghost;
 			inTallGrass = false;
 			String onoff = p.ghost ? "on!" : "off.";
-			JOptionPane.showMessageDialog(null, "Walk-through-walls mode was turned " + onoff);
+			ui.showMessage("Walk-through-walls mode was turned " + onoff);
 			p.invalidateNuzlocke("Used " + code);
-			SwingUtilities.getWindowAncestor(cheats).dispose();
 		} else if (code.equals("LIGMA")) {
 			for (Pokemon pokemon : p.team) {
 				if (pokemon != null) pokemon.heal();
 			}
 			p.invalidateNuzlocke("Used " + code);
-			SwingUtilities.getWindowAncestor(cheats).dispose();
 		} else if (code.equals("BALLZ")) {
 			JPanel panel = p.displayTweaker();
 			JOptionPane.showMessageDialog(null, panel);
 			p.invalidateNuzlocke("Used " + code);
-    	    SwingUtilities.getWindowAncestor(cheats).dispose();
 		} else if (code.equals("KANY3")) {
 			p.setMoney(1000000);
 			p.itemsCollected = new boolean[gp.obj.length][gp.obj[1].length];
 			gp.aSetter.setObject();
 			p.invalidateNuzlocke("Used " + code);
-			SwingUtilities.getWindowAncestor(cheats).dispose();
 		} else if (code.equals("Ben")) {
 			p.catchPokemon(new Pokemon(238, 5, true, false));
 			p.invalidateNuzlocke("Used " + code);
-			SwingUtilities.getWindowAncestor(cheats).dispose();
 		} else if (code.startsWith("dex")) {
 			String[] parts = code.split(" ");
 		    if (parts.length > 1) {
 		        try {
 		            PType type = PType.valueOf(parts[1]);
 		            dexType = type;
-		            SwingUtilities.getWindowAncestor(cheats).dispose();
 		        } catch (IllegalArgumentException g) {
-		            JOptionPane.showMessageDialog(null, "Dex Type reset");
+		            ui.showMessage("Dex Type reset");
 		            dexType = null;
 		        }
 		        newDex = null;
@@ -1243,17 +1200,14 @@ public class PlayerCharacter extends Entity {
 		            int level = Integer.parseInt(parts[2]);
 		            p.catchPokemon(new Pokemon(id, level, true, false));
 		            p.invalidateNuzlocke("Used " + code);
-		            SwingUtilities.getWindowAncestor(cheats).dispose();
 		        } catch (NumberFormatException g) {
 		            // Handle invalid input (e.g., if the entered value is not a valid integer)
-		        	JOptionPane.showMessageDialog(null, "Invalid Pokemon ID/Level.");
+		        	ui.showMessage("Invalid Pokemon ID/Level.");
 		        }
 		    }
 		} else if (code.equals("UPDATE")) {
 			p.update(gp);
-    	    
-    	    JOptionPane.showMessageDialog(null, "Player successfully updated!");
-    	    SwingUtilities.getWindowAncestor(cheats).dispose();
+    	    ui.showMessage("Player successfully updated!");
 		} else if (code.equals("HP")) {
 			String message = "";
 			for (Pokemon p : p.team) {
@@ -1263,31 +1217,21 @@ public class PlayerCharacter extends Entity {
 	    			message += "\n";
 				}
 			}
-			
-    	    
-    	    JOptionPane.showMessageDialog(null, message);
-    	    SwingUtilities.getWindowAncestor(cheats).dispose();
+    	    ui.showMessage(message);
 		} else if (code.equals("nei")) {
-			for (int i = 0; i < p.pokedex.length; i++) {
-				p.pokedex[i] = 2;
-			}
+            Arrays.fill(p.pokedex, 2);
 			p.invalidateNuzlocke("Used " + code);
-    	    SwingUtilities.getWindowAncestor(cheats).dispose();
 		} else if (code.equals("GENN")) {
 			Pokemon po = Item.displayGenerator(null);
 			p.catchPokemon(po, false);
 			p.invalidateNuzlocke("Used " + code);
-    	    SwingUtilities.getWindowAncestor(cheats).dispose();
 		} else if (code.equals("ASH KETCHUP")) {
 			p.trainersBeat = new boolean[Trainer.MAX_TRAINERS];
 			p.invalidateNuzlocke("Used " + code);
-			SwingUtilities.getWindowAncestor(cheats).dispose();
+
 		} else if (code.equals("ASH MUSTARD")) {
-			for (int i = 0; i < p.trainersBeat.length; i++) {
-				p.trainersBeat[i] = true;
-			}
+            Arrays.fill(p.trainersBeat, true);
 			p.invalidateNuzlocke("Used " + code);
-			SwingUtilities.getWindowAncestor(cheats).dispose();
 		} else if (code.equals("exptrainer")) {
 			StringBuilder result = new StringBuilder();
 			for (boolean value : p.trainersBeat) {
@@ -1300,7 +1244,6 @@ public class PlayerCharacter extends Entity {
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
-			SwingUtilities.getWindowAncestor(cheats).dispose();
 		} else if (code.equals("expitem")) {
 			StringBuilder result = new StringBuilder();
 
@@ -1310,25 +1253,21 @@ public class PlayerCharacter extends Entity {
 		        }
 		        result.append("\n");
 		    }
-
 			try {
 				FileWriter writer = new FileWriter("./items.txt");
 				writer.write(result.toString());
 				writer.close();
 			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-			SwingUtilities.getWindowAncestor(cheats).dispose();
+                e1.printStackTrace();
+            }
 		} else if (code.equals("EDGEMEDADDY")) {
 			p.bag.add(Item.EDGE_KIT);
 			p.invalidateNuzlocke("Used " + code);
-			SwingUtilities.getWindowAncestor(cheats).dispose();
 		} else if (code.equals("GIMMIE")) {
 			for (int i = 0; i < p.bag.count.length; i++) {
 				p.bag.count[i] = 1;
 			}
 			p.invalidateNuzlocke("Used " + code);
-			SwingUtilities.getWindowAncestor(cheats).dispose();
 		} else if (code.equals("ITEMHASH")) {
 			// Ensure all items from Item.values() are present in the map with at least 0 count
 			for (Item item : Item.values()) {
@@ -1340,10 +1279,8 @@ public class PlayerCharacter extends Entity {
 			    System.out.println(item + "," + gp.aSetter.itemMap.get(item));
 			}
 
-			SwingUtilities.getWindowAncestor(cheats).dispose();
 		} else if (code.equals("MVFX")) {
 			p.deleteInvalidMoves();
-			SwingUtilities.getWindowAncestor(cheats).dispose();
 		} else if (code.startsWith("dicklover")) {
 			String[] parts = code.split(" ");
 			if (parts.length == 2) {
@@ -1351,9 +1288,9 @@ public class PlayerCharacter extends Entity {
 					int map = Integer.parseInt(parts[1]);
 					gp.eHandler.teleport(map, worldX / gp.tileSize, worldY / gp.tileSize, false);
 					p.invalidateNuzlocke("Used " + code);
-					SwingUtilities.getWindowAncestor(cheats).dispose();
+		
 				} catch (NumberFormatException g) {
-		        	JOptionPane.showMessageDialog(null, "Invalid map ID.");
+		        	ui.showMessage("Invalid map ID.");
 		        }
 			}
 		} else if (code.equals("leveldown")) {
@@ -1361,7 +1298,6 @@ public class PlayerCharacter extends Entity {
 			p.current.setStats();
 			p.current.verifyHP();
 			p.invalidateNuzlocke("Used " + code);
-			SwingUtilities.getWindowAncestor(cheats).dispose();
 		}
 	}
 

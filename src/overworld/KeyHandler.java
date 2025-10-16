@@ -222,7 +222,17 @@ public class KeyHandler implements KeyListener {
 					downPressed = false;
 				}
 			}
-		}
+		} else if (gp.ui != null && gp.ui.cheatCodeDialog != null && gp.ui.cheatCodeDialog.isNaming()) {
+            if (code == config.keys[config.backspaceKey]) {
+                gp.ui.cheatCodeDialog.handleBackspace();
+            } else {
+                char c = e.getKeyChar();
+                if (c != KeyEvent.CHAR_UNDEFINED && !Character.isISOControl(c)) {
+                    gp.ui.cheatCodeDialog.handleKeyInput(c);
+                    downPressed = false;
+                }
+            }
+        }
 	}
 	
 	 private void takeScreenshot() {
@@ -250,7 +260,7 @@ public class KeyHandler implements KeyListener {
     }
 
     private static class TransferableImage implements Transferable {
-        private Image image;
+        private final Image image;
 
         public TransferableImage(Image image) {
             this.image = image;

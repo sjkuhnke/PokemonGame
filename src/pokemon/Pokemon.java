@@ -10432,7 +10432,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 		frontSprite = setFrontSprite();
 		backSprite = setBackSprite();
 	}
-	public static void writeInfoToCSV(String filePath) {
+
+	public static void writeInfoToCSV(String filePath) {
 	    try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
 	        for (int i = 1; i <= MAX_POKEMON; i++) {
 	            StringBuilder sb = new StringBuilder();
@@ -11576,8 +11577,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 		return Move.SPLASH;
 	}
 
-	public boolean isOverLevelCap(int badges) {
-		int levelCap = Trainer.getLevelCap(badges);
+	public boolean isOverLevelCap(int badges, Player player) {
+		int levelCap = Trainer.getLevelCap(badges, player);
 		return level > levelCap;
 	}
 

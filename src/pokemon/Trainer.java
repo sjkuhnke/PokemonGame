@@ -552,8 +552,8 @@ public class Trainer implements Serializable {
 		levelCaps[levelCapIndex++] = cap;
 	}
 	
-	public static int getLevelCap(int badges) {
-		return levelCaps[badges];
+	public static int getLevelCap(int badges, Player player) {
+		return Math.min(levelCaps[badges] + player.levelCapBonus, 100);
 	}
 	
 	public Pokemon[] getSlotOrderedTeam() {
