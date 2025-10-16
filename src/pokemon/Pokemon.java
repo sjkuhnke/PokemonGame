@@ -1220,7 +1220,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			foeMaxDamageP = Math.max(foeMaxDamageP, dmgP);
 			if (m == move) foeDamageMoveP = dmgP;
 			
-			if (m.isHazard() && this.getAbility(field) == Ability.MAGIC_BOUNCE) {
+			if (m.isHazard() && (this.getAbility(field) == Ability.MAGIC_BOUNCE || this.getAbility(field) == Ability.MOUTHWATER)) {
 				if (isHazardUseful(m, this, field)) {
 					score += 50;
 				}

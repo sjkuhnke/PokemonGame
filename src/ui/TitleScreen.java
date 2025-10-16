@@ -51,7 +51,9 @@ public class TitleScreen extends AbstractUI {
 	private boolean nuzlockeMode;
 	private int difficultyLevel;
 	private boolean banShedinja;
+	private boolean banBatonPass;
 	private boolean allowRevives;
+	private boolean buyableRevives;
 	private int levelCapBonus;
 	
 	// SAVE FILE DATA
@@ -83,9 +85,15 @@ public class TitleScreen extends AbstractUI {
 	private static final int NG_NUZLOCKE_TOGGLE = 1;
 	private static final int NG_DIFFICULTY = 2;
 	private static final int NG_BAN_SHEDINJA = 3;
-	private static final int NG_ALLOW_REVIVES = 4;
-	private static final int NG_LEVEL_CAP = 5;
-	private static final int NG_START = 6;
+	private static final int NG_BAN_BATON_PASS = 4;
+	private static final int NG_ALLOW_REVIVES = 5;
+	private static final int NG_BUYABLE_REVIVES = 6;
+	private static final int NG_LEVEL_CAP = 7;
+	private static final int NG_START = 8;
+	
+	// NEW GAME SCROLL
+	private int newGameMenuScroll = 0;
+	private static final int MAX_VISIBLE_NG_OPTIONS = 5;
 	
 	// SAVES MENU
 	private int savesMenuScroll = 0;
@@ -281,8 +289,11 @@ public class TitleScreen extends AbstractUI {
 		nuzlockeMode = false;
 		difficultyLevel = 1;
 		banShedinja = false;
+		banBatonPass = false;
 		allowRevives = true;
+		buyableRevives = false;
 		levelCapBonus = 0;
+		newGameMenuScroll = 0;
 	}
 	
 	private void updateSavesMenu() {
@@ -648,9 +659,21 @@ public class TitleScreen extends AbstractUI {
 				newGameMenuNum--;
 				if (newGameMenuNum < 0) newGameMenuNum = maxOption;
 				
-				if (!nuzlockeMode && (newGameMenuNum == NG_BAN_SHEDINJA || 
-					newGameMenuNum == NG_ALLOW_REVIVES || newGameMenuNum == NG_LEVEL_CAP)) {
+				// skip disabled options
+				if (!nuzlockeMode && (newGameMenuNum >= NG_BAN_SHEDINJA && newGameMenuNum <= NG_LEVEL_CAP)) {
 					newGameMenuNum = NG_DIFFICULTY;
+				}
+				// skip buyable revives if allow revives is off
+				if (newGameMenuNum == NG_BUYABLE_REVIVES && !allowRevives) {
+					newGameMenuNum = NG_ALLOW_REVIVES;
+				}
+				// update scroll position
+				if (newGameMenuNum < newGameMenuScroll) {
+					newGameMenuScroll = newGameMenuNum;
+				}
+				// ensure start button is always reachable
+				if (newGameMenuNum == NG_LEVEL_CAP) {
+					newGameMenuScroll = NG_LEVEL_CAP - MAX_VISIBLE_NG_OPTIONS;
 				}
 			}
 			
@@ -658,10 +681,25 @@ public class TitleScreen extends AbstractUI {
 				gp.keyH.downPressed = false;
 				gp.playSFX(Sound.S_MENU_1);
 				newGameMenuNum++;
-				if (newGameMenuNum > maxOption) newGameMenuNum = 0;
+				if (newGameMenuNum > maxOption) {
+					newGameMenuNum = 0;
+					newGameMenuScroll = 0;
+				}
 				
-				if (!nuzlockeMode && (newGameMenuNum == NG_BAN_SHEDINJA || 
-						newGameMenuNum == NG_ALLOW_REVIVES || newGameMenuNum == NG_LEVEL_CAP)) {
+				// skip disabled options
+				if (!nuzlockeMode && (newGameMenuNum >= NG_BAN_SHEDINJA && newGameMenuNum <= NG_LEVEL_CAP)) {
+					newGameMenuNum = NG_START;
+				}
+				// skip buyable revives if allow revives is off
+				if (newGameMenuNum == NG_BUYABLE_REVIVES && !allowRevives) {
+					newGameMenuNum = NG_LEVEL_CAP;
+				}
+				// update scroll position
+				if (newGameMenuNum >= newGameMenuScroll + MAX_VISIBLE_NG_OPTIONS && newGameMenuNum <= NG_LEVEL_CAP) {
+					newGameMenuScroll = newGameMenuNum - MAX_VISIBLE_NG_OPTIONS;
+				}
+				// ensure start button is always reachable
+				if (newGameMenuNum != NG_START && isLastScrollableOption(newGameMenuNum)) {
 					newGameMenuNum = NG_START;
 				}
 			}
@@ -729,6 +767,18 @@ public class TitleScreen extends AbstractUI {
 					banShedinja = !banShedinja;
 				}
 				break;
+			case NG_BAN_BATON_PASS:
+				if (gp.keyH.wPressed || gp.keyH.leftPressed || gp.keyH.rightPressed) {
+					gp.keyH.wPressed = false;
+					gp.keyH.leftPressed = false;
+					gp.keyH.rightPressed = false;
+					if (banBatonPass) {
+						gp.playSFX(Sound.S_MENU_CAN);
+					} else {
+						gp.playSFX(Sound.S_MENU_CON);
+					}
+					banBatonPass = !banBatonPass;
+				}
 				
 			case NG_ALLOW_REVIVES:
 				if (gp.keyH.wPressed || gp.keyH.leftPressed || gp.keyH.rightPressed) {
@@ -737,12 +787,26 @@ public class TitleScreen extends AbstractUI {
 					gp.keyH.rightPressed = false;
 					if (allowRevives) {
 						gp.playSFX(Sound.S_MENU_CAN);
+						buyableRevives = false;
 					} else {
 						gp.playSFX(Sound.S_MENU_CON);
 					}
 					allowRevives = !allowRevives;
 				}
 				break;
+				
+			case NG_BUYABLE_REVIVES:
+				if (gp.keyH.wPressed || gp.keyH.leftPressed || gp.keyH.rightPressed) {
+					gp.keyH.wPressed = false;
+					gp.keyH.leftPressed = false;
+					gp.keyH.rightPressed = false;
+					if (buyableRevives) {
+						gp.playSFX(Sound.S_MENU_CAN);
+					} else {
+						gp.playSFX(Sound.S_MENU_CON);
+					}
+					buyableRevives = !buyableRevives;
+				}
 				
 			case NG_LEVEL_CAP:
 				if (gp.keyH.leftPressed) {
@@ -778,6 +842,33 @@ public class TitleScreen extends AbstractUI {
 		}
 	}
 	
+	private boolean isLastScrollableOption(int option) {
+		for (int i = option; i < NG_START; i++) {
+			if (isOptionVisible(i)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	private boolean isOptionVisible(int option) {
+		if (!nuzlockeMode && (option >= NG_BAN_SHEDINJA && option <= NG_LEVEL_CAP)) {
+			return false;
+		}
+		if (!allowRevives && option == NG_BUYABLE_REVIVES) {
+			return false;
+		}
+		return true;
+	}
+	
+	private int getTotalOptions() {
+		int result = 0;
+		for (int i = 0; i < NG_START - 1; i++) {
+			if (isOptionVisible(i)) result++;
+		}
+		return result;
+	}
+
 	private void handleNewGameStart() {
 		String fileName = saveFileName.trim();
 		if (fileName.isEmpty()) {
@@ -825,8 +916,17 @@ public class TitleScreen extends AbstractUI {
 		int titleY = panelY + gp.tileSize;
 		drawOutlinedText(title, titleX, titleY, textColor, Color.BLACK);
 		
-		int contentX = panelX + gp.tileSize / 2;
-		int contentY = panelY + (int)(gp.tileSize * 1.75);
+		int scrollableX = panelX + gp.tileSize / 4;
+		int scrollableY = panelY + (int)(gp.tileSize * 1.75);
+		int scrollableWidth = panelWidth - gp.tileSize / 2;
+		int scrollableHeight = panelHeight - (int)(gp.tileSize * 3.5);
+		
+		drawPanelWithBorder(scrollableX, scrollableY, scrollableWidth, scrollableHeight, 50, new Color(100, 100, 100));
+		
+		g2.setClip(scrollableX, scrollableY, scrollableWidth, scrollableHeight);
+		
+		int contentX = scrollableX + gp.tileSize / 4;
+		int contentY = scrollableY - calculateScrollOffset();
 		
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
 		boolean selected = newGameMenuNum == NG_SAVE_NAME;
@@ -851,24 +951,23 @@ public class TitleScreen extends AbstractUI {
 		int textY = contentY + gp.tileSize * 3 / 4;
 		
 		String displayText = saveFileName.isEmpty() ? "(empty - will use 'player')" : saveFileName;
-		Color textCol = saveFileName.isEmpty() ? new Color(150, 150, 150) : 
-			(selected ? textColor : new Color(200, 200, 200));
+		Color textCol = saveFileName.isEmpty() ? new Color(150, 150, 150) : (selected ? textColor : new Color(200, 200, 200));
 		drawOutlinedText(displayText, textX, textY, textCol, Color.BLACK);
 		
-		contentY += gp.tileSize * 1.5;
-		g2.setColor(new Color(100, 100, 100));
-		g2.drawLine(contentX, contentY, contentX + panelWidth - gp.tileSize, contentY);
+		contentY += gp.tileSize;
 		
+		contentY += gp.tileSize / 2;
+		g2.setColor(new Color(100, 100, 100));
+		g2.drawLine(contentX, contentY, contentX + panelWidth - gp.tileSize, contentY);		
 		contentY += (int)(gp.tileSize * 0.75);
+		
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));
 		selected = newGameMenuNum == NG_NUZLOCKE_TOGGLE;
-		drawOutlinedText("Nuzlocke Mode:", contentX, contentY,
-			selected ? textColor : new Color(200, 200, 200), Color.BLACK);
+		drawOutlinedText("Nuzlocke Mode:", contentX, contentY,selected ? textColor : new Color(200, 200, 200), Color.BLACK);
 		
-		drawToggleSwitch(contentX + gp.tileSize * 4, contentY - gp.tileSize / 4, 
-			nuzlockeMode, selected);
+		drawToggleSwitch(contentX + gp.tileSize * 4, contentY - gp.tileSize / 4, nuzlockeMode, selected);
 		
-		int tipX = contentX + gp.tileSize * 7;
+		int tipX = contentX + (int)(gp.tileSize * 6.5);
 		if (selected) {
 			int tipY = contentY - gp.tileSize / 4;
 			g2.setFont(g2.getFont().deriveFont(Font.ITALIC, 14F));
@@ -880,10 +979,11 @@ public class TitleScreen extends AbstractUI {
 		}
 		
 		contentY += gp.tileSize * 3 / 4;
+		
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 18F));
 		drawOutlinedText("Game Settings:", contentX, contentY, new Color(180, 180, 180), Color.BLACK);
-		
 		contentY += gp.tileSize * 2 / 3;
+		
 		g2.setFont(g2.getFont().deriveFont(20F));
 		selected = newGameMenuNum == NG_DIFFICULTY;
 		drawOutlinedText("Difficulty:", contentX + gp.tileSize / 4, contentY, selected ? textColor : new Color(200, 200, 200), Color.BLACK);
@@ -921,6 +1021,7 @@ public class TitleScreen extends AbstractUI {
 		}
 		
 		contentY += gp.tileSize * 3 / 4;
+		
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 18F));
 		Color nuzColor = nuzlockeMode ? new Color(180, 180, 180) : new Color(100, 100, 100);
 		drawOutlinedText("Nuzlocke Settings:", contentX, contentY, nuzColor, Color.BLACK);
@@ -928,8 +1029,7 @@ public class TitleScreen extends AbstractUI {
 		if (!nuzlockeMode) {
 			g2.setFont(g2.getFont().deriveFont(Font.ITALIC, 14F));
 			contentY += gp.tileSize / 3;
-			drawOutlinedText("(Enable Nuzlocke Mode to access these settings)", 
-				contentX + gp.tileSize / 4, contentY, new Color(120, 120, 120), Color.BLACK);
+			drawOutlinedText("(Enable Nuzlocke Mode to access these settings)", contentX + gp.tileSize / 4, contentY, new Color(120, 120, 120), Color.BLACK);
 			contentY += gp.tileSize / 3;
 		} else {
 			contentY += gp.tileSize * 2 / 3;
@@ -948,6 +1048,23 @@ public class TitleScreen extends AbstractUI {
 			}
 			
 			contentY += (int)(gp.tileSize * 0.75);
+			
+			g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));
+			selected = newGameMenuNum == NG_BAN_BATON_PASS;
+			drawOutlinedText("Ban Baton Pass:", contentX + gp.tileSize / 4, contentY, selected ? textColor : new Color(200, 200, 200), Color.BLACK);
+			
+			drawToggleSwitch(contentX + gp.tileSize * 4, contentY - gp.tileSize / 4, banBatonPass, selected);
+			
+			if (selected) {
+				int tipY = contentY - gp.tileSize / 8;
+				g2.setFont(g2.getFont().deriveFont(Font.ITALIC, 14F));
+				drawOutlinedText("Baton Pass will be unavailable for all Pokemon.", tipX, tipY, new Color(180, 180, 180), Color.BLACK);
+				tipY += gp.tileSize / 4;
+				drawOutlinedText("Prevents powerful setup sweep strategies.", tipX, tipY, new Color(180, 180, 180), Color.BLACK);
+			}
+			
+			contentY += (int)(gp.tileSize * 0.75);
+			
 			g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));
 			selected = newGameMenuNum == NG_ALLOW_REVIVES;
 			drawOutlinedText("Allow Revives:", contentX + gp.tileSize / 4, contentY, selected ? textColor : new Color(200, 200, 200), Color.BLACK);
@@ -961,6 +1078,26 @@ public class TitleScreen extends AbstractUI {
 			}
 			
 			contentY += (int)(gp.tileSize * 0.75);
+			
+			if (allowRevives) {
+				g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));
+				selected = newGameMenuNum == NG_BUYABLE_REVIVES;
+				
+				drawOutlinedText("\u2022 Buyable Revives:", contentX + gp.tileSize / 4, contentY, selected ? textColor : new Color(200, 200, 200), Color.BLACK);
+				
+				drawToggleSwitch(contentX + gp.tileSize * 4, contentY - gp.tileSize / 4, buyableRevives, selected);
+				
+				if (selected) {
+					int tipY = contentY - gp.tileSize / 8;
+					g2.setFont(g2.getFont().deriveFont(Font.ITALIC, 14F));
+					drawOutlinedText("Revives can be purchased from shops.", tipX, tipY, new Color(180, 180, 180), Color.BLACK);
+					tipY += gp.tileSize / 4;
+					drawOutlinedText("Otherwise, only overworld revives are available.", tipX, tipY, new Color(180, 180, 180), Color.BLACK);
+				}
+				
+				contentY += (int)(gp.tileSize * 0.75);
+			}
+			
 			g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));
 			selected = newGameMenuNum == NG_LEVEL_CAP;
 			drawOutlinedText("Level Cap Bonus:", contentX + gp.tileSize / 4, contentY,selected ? textColor : new Color(200, 200, 200), Color.BLACK);
@@ -979,6 +1116,28 @@ public class TitleScreen extends AbstractUI {
 			}
 		}
 		
+		g2.setClip(null);
+		
+		int totalOptions = getTotalOptions();
+		int effectiveTotal = totalOptions;
+		
+		if (effectiveTotal > MAX_VISIBLE_NG_OPTIONS) {
+			int scrollbarX = panelX + panelWidth - gp.tileSize / 4;
+			int scrollbarY = scrollableY;
+			int scrollbarWidth = 8;
+			int scrollbarHeight = scrollableHeight;
+			
+			g2.setColor(new Color(60, 60, 60));
+			g2.fillRect(scrollbarX, scrollbarY, scrollbarWidth, scrollbarHeight);
+			
+			float thumbHeight = scrollbarHeight * ((float)MAX_VISIBLE_NG_OPTIONS / effectiveTotal);
+			float maxScroll = effectiveTotal - MAX_VISIBLE_NG_OPTIONS;
+			float thumbY = scrollbarY + (scrollbarHeight - thumbHeight) * (newGameMenuScroll / maxScroll);
+			
+			g2.setColor(textColor);
+			g2.fillRect(scrollbarX, (int)thumbY, scrollbarWidth, (int)thumbHeight);
+		}
+		
 		contentY = panelY + panelHeight - (int)(gp.tileSize * 1.25);
 		int buttonWidth = gp.tileSize * 3;
 		int buttonHeight = (int)(gp.tileSize * 0.75);
@@ -995,8 +1154,8 @@ public class TitleScreen extends AbstractUI {
 		String startText = "Start";
 		int startX = getCenterAlignedTextX(startText, gp.screenWidth / 2);
 		int startY = contentY + (int)(gp.tileSize * 0.55);
-		drawOutlinedText(startText, startX, startY,
-			selected ? textColor : new Color(200, 200, 200), Color.BLACK);
+		drawOutlinedText(startText, startX, startY, selected ? textColor : new Color(200, 200, 200), Color.BLACK);
+		
 		g2.setFont(g2.getFont().deriveFont(16F));
 		ArrayList<ToolTip> toolTips = new ArrayList<>();
 		
@@ -1017,6 +1176,21 @@ public class TitleScreen extends AbstractUI {
 		}
 		
 		updateNewGameMenu();
+	}
+	
+	private int calculateScrollOffset() {
+		int offset = 0;
+		
+		for (int i = 0; i < newGameMenuScroll; i++) {
+			if (i == NG_SAVE_NAME) offset += (int)(gp.tileSize * 1.4);
+			else if (i == NG_NUZLOCKE_TOGGLE) offset += (int)(gp.tileSize * 0.75);
+			else if (i == NG_DIFFICULTY) offset += gp.tileSize;
+			else if (!nuzlockeMode && i >= NG_BAN_SHEDINJA && i <= NG_LEVEL_CAP) continue;
+			else if (!allowRevives && i == NG_BUYABLE_REVIVES) continue;
+			else offset += (int)(gp.tileSize * 0.75);
+		}
+		
+		return offset;
 	}
 	
 	private void drawToggleSwitch(int x, int y, boolean isOn, boolean selected) {
