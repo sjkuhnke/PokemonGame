@@ -48,13 +48,13 @@ public class TitleScreen extends AbstractUI {
 	// NEW GAME
 	private String saveFileName = "";
 	private int newGameMenuNum;
-	private boolean nuzlockeMode;
-	private int difficultyLevel;
-	private boolean banShedinja;
-	private boolean banBatonPass;
-	private boolean allowRevives;
-	private boolean buyableRevives;
-	private int levelCapBonus;
+	public boolean nuzlockeMode;
+	public int difficultyLevel;
+	public boolean banShedinja;
+	public boolean banBatonPass;
+	public boolean allowRevives;
+	public boolean buyableRevives;
+	public int levelCapBonus;
 	
 	// SAVE FILE DATA
 	private ArrayList<String> saveFiles;
@@ -62,7 +62,7 @@ public class TitleScreen extends AbstractUI {
 	private Player previewPlayer;
 	
 	// DOC CHECKBOXES
-	private boolean[] docOptions = new boolean[8];
+	public boolean[] docOptions = new boolean[8];
 	public boolean generateExcel = false;
 	
 	// DELETE CONFIRM FIELDS
@@ -257,7 +257,7 @@ public class TitleScreen extends AbstractUI {
 			if (saveFiles.isEmpty()) {
 				showMessage("No save files found!");
 			} else {
-				Main.loadGame(saveFiles.get(selectedSaveIndex), docOptions, generateExcel, false);
+				Main.loadGame(saveFiles.get(selectedSaveIndex));
 			}
 			break;
 		case MAIN_NEW_GAME:
@@ -879,8 +879,7 @@ public class TitleScreen extends AbstractUI {
 		fileName = getUniqueSaveFileName(fileName);
 		fileName += ".dat";
 		
-		// TODO: pass additional settings
-		Main.loadGame(fileName, docOptions, generateExcel, nuzlockeMode);
+		Main.loadGame(fileName);
 	}
 
 	private String sanitizeFileName(String name) {
@@ -917,17 +916,17 @@ public class TitleScreen extends AbstractUI {
 		drawOutlinedText(title, titleX, titleY, textColor, Color.BLACK);
 		
 		int scrollableX = panelX + gp.tileSize / 4;
-		int scrollableY = panelY + (int)(gp.tileSize * 1.75);
+		int scrollableY = panelY + (int)(gp.tileSize * 1.25);
 		int scrollableWidth = panelWidth - gp.tileSize / 2;
-		int scrollableHeight = panelHeight - (int)(gp.tileSize * 3.5);
+		int scrollableHeight = panelHeight - gp.tileSize * 3;
 		
 		drawPanelWithBorder(scrollableX, scrollableY, scrollableWidth, scrollableHeight, 50, new Color(100, 100, 100));
 		
-		g2.setClip(scrollableX, scrollableY, scrollableWidth, scrollableHeight);
-		
 		int contentX = scrollableX + gp.tileSize / 4;
 		int contentY = scrollableY - calculateScrollOffset();
+		g2.setClip(scrollableX + 3, scrollableY + 3, scrollableWidth - 6, scrollableHeight - 6);
 		
+		contentY += gp.tileSize * 0.75;
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
 		boolean selected = newGameMenuNum == NG_SAVE_NAME;
 		drawOutlinedText("Save File Name:", contentX, contentY, selected ? textColor : new Color(200, 200, 200), Color.BLACK);
@@ -1183,7 +1182,7 @@ public class TitleScreen extends AbstractUI {
 		
 		for (int i = 0; i < newGameMenuScroll; i++) {
 			if (i == NG_SAVE_NAME) offset += (int)(gp.tileSize * 1.4);
-			else if (i == NG_NUZLOCKE_TOGGLE) offset += (int)(gp.tileSize * 0.75);
+			else if (i == NG_NUZLOCKE_TOGGLE) offset += (int)(gp.tileSize * 0.5);
 			else if (i == NG_DIFFICULTY) offset += gp.tileSize;
 			else if (!nuzlockeMode && i >= NG_BAN_SHEDINJA && i <= NG_LEVEL_CAP) continue;
 			else if (!allowRevives && i == NG_BUYABLE_REVIVES) continue;
@@ -1267,7 +1266,7 @@ public class TitleScreen extends AbstractUI {
 	private void drawSavesMenu() {		
 		drawOverlay();
 		
-		int panelWidth = gp.tileSize * 12;
+		int panelWidth = (int) (gp.tileSize * 13);
 		int panelHeight = gp.tileSize * 9;
 		int panelX = (gp.screenWidth - panelWidth) / 2;
 		int panelY = gp.tileSize * 3 / 2;
@@ -1340,7 +1339,7 @@ public class TitleScreen extends AbstractUI {
 		if (previewPlayer != null) {
 			int previewX = panelX + panelWidth / 2 + gp.tileSize / 4;
 			int previewY = listY;
-			drawSavePreview(previewX, previewY, panelWidth / 2 - gp.tileSize / 2);
+			drawSavePreview(previewX, previewY, gp.tileSize * 6);
 		}
 		
 		g2.setFont(g2.getFont().deriveFont(18F));
@@ -1440,7 +1439,7 @@ public class TitleScreen extends AbstractUI {
 			}
 		}
 		
-		contentY += iconSize * 2 + gp.tileSize / 2;
+		contentY += iconSize * 2 + gp.tileSize;
 		
 		g2.setFont(g2.getFont().deriveFont(18F));
 		PMap.getLoc(previewPlayer.currentMap,
@@ -1461,6 +1460,12 @@ public class TitleScreen extends AbstractUI {
 		drawOutlinedText("Modified:", contentX, contentY, new Color(150, 150, 150), Color.BLACK);
 		contentY += gp.tileSize / 3;
 		drawOutlinedText(lastModifiedStr, contentX, contentY, new Color(180, 180, 180), Color.BLACK);
+		
+		int badgeBoxWidth = (int)(gp.tileSize * 4.5);
+		int badgeBoxHeight = (int)(gp.tileSize * 2.25);
+		int badgeX = x + width - badgeBoxWidth;
+		int badgeY = y + height - badgeBoxHeight;
+		drawBadgesWindow(badgeX, badgeY, badgeBoxWidth, badgeBoxHeight, previewPlayer, gp, false);
 	}
 	
 	private void drawManageMenu() {		

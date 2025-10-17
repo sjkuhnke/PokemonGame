@@ -231,7 +231,15 @@ public class Script {
 		
 		scriptMap.put(3.0, (npc) -> { // avery
 			Task.addTask(Task.DIALOGUE, npc, "I believe he was looking to introduce himself to you, he mentioned he was heading towards New Minnow Town.");
-			Task.addTask(Task.DIALOGUE, npc, "Please do make haste, I do hope he's okay.");
+			Task.addTask(Task.DIALOGUE, npc, "Please do make haste, I sure hope he's okay.");
+			
+			if (!p.flag[0][4] && p.getDexAmounts(p.getDexType(0))[1] <= 2) {
+				Task.addTask(Task.DIALOGUE, npc, "Oh! And I reckon he's itching to have a Pokemon battle.");
+				Task.addTask(Task.DIALOGUE, npc, "I trust you won't be underprepared, but since you haven't caught any wild Pokemon yet, here you are.");
+				Task t = Task.addTask(Task.ITEM, "");
+				t.item = Item.POKEBALL;
+				t.counter = 5;
+			}
 			p.flag[0][4] = true;
 		});
 		

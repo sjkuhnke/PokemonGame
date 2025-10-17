@@ -222,7 +222,8 @@ public abstract class AbstractUI {
 	        	image = originalImage;
 	        }
 	        
-	    } catch (IOException e) {
+	    } catch (IOException | IllegalArgumentException e) {
+	    	System.out.println(imageName + " is null!");
 	        e.printStackTrace();
 	    }
 	    
@@ -243,6 +244,30 @@ public abstract class AbstractUI {
         g2d.dispose();
         
         return result;
+	}
+	
+	public BufferedImage makeSilhouette(BufferedImage image) {
+		int width = image.getWidth();
+		int height = image.getHeight();
+		BufferedImage silhouette = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		
+		// Define the light grey color
+		int lightGrey = new Color(211, 211, 211).getRGB(); // Light grey color with RGB (211, 211, 211)
+		
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				int pixel = image.getRGB(x, y);
+				// Check if the pixel is transparent
+				if ((pixel >> 24) == 0x00) {
+					// Copy the transparent pixel to the silhouette
+					silhouette.setRGB(x, y, pixel);
+				} else {
+					// Set the non-transparent pixel to light grey
+					silhouette.setRGB(x, y, lightGrey);
+				}
+			}
+		}
+		return silhouette;
 	}
 	
 	public int getRightAlignedTextX(String text, int rightX) {
@@ -2006,6 +2031,110 @@ public abstract class AbstractUI {
 	
 	public boolean isValidOption(int option) {
 		return true; // isn't implemented in the abstract class
+	}
+	
+	public void drawBadgesWindow(int x, int y, int width, int height, Player p, GamePanel gp, boolean drawBorder) {
+    	if (p.badges >= 8) {
+            drawFireAnimation(x, y, width, height);
+        }
+        
+        // Draw badge container with border
+    	if (drawBorder) {
+    		drawPanelWithBorder(x, y, width, height, 50, p.badges >= 8 ? new Color(255, 215, 0) : new Color(150, 150, 150)); // Gold border if all badges
+    	}
+        
+        // Draw badges in a 4x2 grid
+        int badgeX = x + gp.tileSize / 2;
+        int startBadgeX = badgeX;
+        int badgeY = y + gp.tileSize / 4;
+        int badgeSpacing = gp.tileSize;
+        
+        for (int i = 0; i < 8; i++) {
+            if (i < p.badges) {
+                BufferedImage badgeIcon = gp.ui.badgeIcons[i];
+                g2.drawImage(badgeIcon, badgeX, badgeY, null);
+            } else {
+                // Greyed out badge
+                BufferedImage badgeIcon = gp.ui.badgeIcons[i + 8];
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+                g2.drawImage(badgeIcon, badgeX, badgeY, null);
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+            }
+            
+            badgeX += badgeSpacing;
+            if ((i + 1) % 4 == 0) {
+                badgeX = startBadgeX;
+                badgeY += badgeSpacing;
+            }
+        }
+	}
+	
+	public void drawFireAnimation(int x, int y, int width, int height) {
+	    // Create animated fire effect around the badge box
+	    float pulseProgress = pulseCounter / 120f; // Normalize to [0, 1)
+	    
+	    // Draw multiple layers of "flames" with varying colors and offsets
+	    int numFlames = 12;
+	    
+	    for (int i = 0; i < numFlames; i++) {
+	        float angle = (float) (i * Math.PI * 2 / numFlames + pulseProgress * Math.PI * 2);
+	        float offset = (float) (Math.sin(pulseProgress * Math.PI * 4 + i) * 6 + 4);
+	        
+	        // Calculate flame position around the box
+	        float flameCenterX = x + width / 2f + (float) Math.cos(angle) * (width / 2f + offset);
+	        float flameCenterY = y + height / 2f + (float) Math.sin(angle) * (height / 2f + offset);
+	        
+	        // Flame color transitions: red -> orange -> yellow
+	        float colorPhase = (pulseProgress + i / (float) numFlames) % 1.0f;
+	        Color flameColor;
+	        
+	        if (colorPhase < 0.33f) {
+	            // Red to Orange
+	            float t = colorPhase / 0.33f;
+	            flameColor = new Color(255, (int) (100 + 155 * t), 0);
+	        } else if (colorPhase < 0.66f) {
+	            // Orange to Yellow
+	            float t = (colorPhase - 0.33f) / 0.33f;
+	            flameColor = new Color(255, (int) (200 + 55 * t), (int) (50 * t));
+	        } else {
+	            // Yellow to Red
+	            float t = (colorPhase - 0.66f) / 0.34f;
+	            flameColor = new Color(255, (int) (255 - 155 * t), (int) (50 - 50 * t));
+	        }
+	        
+	        // Size varies with pulse and position
+	        float sizeMultiplier = (float) (0.5 + 0.5 * Math.sin(pulseProgress * Math.PI * 2 + i * 0.5));
+	        int flameSize = (int) (8 + 4 * sizeMultiplier);
+	        
+	        // Draw flame with alpha for glow effect
+	        float alpha = 0.3f + 0.4f * sizeMultiplier;
+	        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+	        
+	        // Draw outer glow
+	        g2.setColor(new Color(flameColor.getRed(), flameColor.getGreen(), 0, 100));
+	        g2.fillOval((int) flameCenterX - flameSize, (int) flameCenterY - flameSize, 
+	                    flameSize * 2, flameSize * 2);
+	        
+	        // Draw inner flame
+	        g2.setColor(flameColor);
+	        g2.fillOval((int) flameCenterX - flameSize / 2, (int) flameCenterY - flameSize / 2, 
+	                    flameSize, flameSize);
+	    }
+	    
+	    // Add inner glow effect
+	    float innerGlowAlpha = 0.1f + 0.1f * (float) Math.sin(pulseProgress * Math.PI * 2);
+	    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, innerGlowAlpha));
+	    
+	    GradientPaint innerGlow = new GradientPaint(
+	        x + width / 2f, y, new Color(255, 200, 0, 150),
+	        x + width / 2f, y + height, new Color(255, 100, 0, 50)
+	    );
+	    g2.setPaint(innerGlow);
+	    g2.fillRoundRect(x + 4, y + 4, width - 8, height - 8, 25, 25);
+	    
+	    // Reset composite
+	    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+	    g2.setColor(Color.WHITE);
 	}
 
 }
