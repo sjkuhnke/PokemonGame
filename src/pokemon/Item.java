@@ -456,6 +456,7 @@ public enum Item {
 	LOGIC_CORE(384,0,0,Color.BLACK,Item.KEY_ITEM,false,"A shard of crystallized thought, sharp and cold to the touch. It hums with the relentless force of reason."),
 	LETTER_2(394,0,0,Color.BLACK,Item.KEY_ITEM,true,"A letter from your father delivered by Robin, it's notably urgent."),
 	FABLE_STONE(395,0,0,Color.BLACK,Item.KEY_ITEM,true,"A stone of fantastical luster and lapidary, humming with legendary energy. Its presence calls out to unknown forces beyond the veil, seemingly needing 5 Fable Charges to activate."),
+	COIN(398,0,0,Color.BLACK,Item.OTHER,null,"Just here for the sprite"),
 	;
 	
 	private int id;

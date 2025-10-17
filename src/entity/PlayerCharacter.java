@@ -2,17 +2,13 @@ package entity;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import object.*;
@@ -36,6 +32,7 @@ public class PlayerCharacter extends Entity {
 	public Pokemon[] newDex; // for testing
 
 	private int cooldown;
+	public BufferedImage surf1, surf2, surf3, surf4, fight;
 	
 	public static String currentMapName;
 	private int SPEED_1 = gp.tileSize / 12;
@@ -73,6 +70,7 @@ public class PlayerCharacter extends Entity {
 		surf2 = setup("/player/surf2");
 		surf3 = setup("/player/surf3");
 		surf4 = setup("/player/surf4");
+		fight = setup("/player/fight");
 	}
 	
 	public void update() {

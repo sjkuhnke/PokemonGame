@@ -55,7 +55,6 @@ public class UI extends AbstractUI {
 	public int bagState;
 	public int sellAmt = 1;
 	public ArrayList<Bag.Entry> currentItems;
-	public BufferedImage[] menuIcons;
 
 	// BATTLE TRANSITION
 	public int btX = 0;
@@ -87,7 +86,6 @@ public class UI extends AbstractUI {
 	public Item tmCheck;
 	public boolean wasAPressed;
 	public final int maxMenuNum = 8;
-	public BufferedImage[] silhouettes = new BufferedImage[Pokemon.MAX_POKEMON];
 
 	// MOVE REMINDER
 	public int remindNum;
@@ -125,7 +123,10 @@ public class UI extends AbstractUI {
 	// IMAGES
 	BufferedImage interactIcon;
 	BufferedImage transitionBuffer;
+	private BufferedImage[] menuIcons;
 	private final BufferedImage[] bagIcons;
+	private BufferedImage[] silhouettes;
+	public BufferedImage[] badgeIcons;
 
 	// LETTER STATE
 	private final String[][][] letter = new String[2][][];
@@ -193,6 +194,11 @@ public class UI extends AbstractUI {
 		menuIcons = new BufferedImage[maxMenuNum];
 		for (int i = 0; i < menuIcons.length; i++) {
 			menuIcons[i] = setup("/menu/menu_" + i, 2);
+		}
+		badgeIcons = new BufferedImage[16];
+		for (int i = 0; i < badgeIcons.length / 2; i++) {
+			badgeIcons[i] = setup("/player/badge" + (i + 1), 2);
+			badgeIcons[i + 8] = makeSilhouette(badgeIcons[i]);
 		}
 		
 		lightFrames = extractFrames("/field/light.gif");
@@ -4430,14 +4436,14 @@ public class UI extends AbstractUI {
 	}
 
     private void showPlayer() {
-        int panelWidth = gp.tileSize * 14;
+        int panelWidth = gp.tileSize * 10;
         int panelHeight = gp.tileSize * 11;
         int panelX = (gp.screenWidth - panelWidth) / 2;
         int panelY = gp.tileSize / 2;
 
         int PLAYER_INFO = 5;
         int NUZLOCKE_INFO = 9;
-        int MAX_VISIBLE_ENCOUNTERS = 8;
+        int MAX_VISIBLE_ENCOUNTERS = 6;
 
         drawPanelWithBorder(panelX, panelY, panelWidth, panelHeight, 220, textColor);
 
@@ -4462,15 +4468,17 @@ public class UI extends AbstractUI {
         if (subState == PLAYER_INFO) {
             int maxOption = gp.player.p.nuzlocke ? 2 : 1;
 
-            if (gp.keyH.upPressed) {
+            if ((gp.keyH.upPressed || gp.keyH.leftPressed) && !showMessage) {
                 gp.keyH.upPressed = false;
+                gp.keyH.leftPressed = false;
                 gp.playSFX(Sound.S_MENU_1);
                 commandNum--;
                 if (commandNum < 0) commandNum = maxOption;
             }
 
-            if (gp.keyH.downPressed) {
+            if ((gp.keyH.downPressed || gp.keyH.rightPressed) && !showMessage) {
                 gp.keyH.downPressed = false;
+                gp.keyH.rightPressed = false;
                 gp.playSFX(Sound.S_MENU_1);
                 commandNum++;
                 if (commandNum > maxOption) commandNum = 0;
@@ -4478,32 +4486,34 @@ public class UI extends AbstractUI {
 
             if (gp.keyH.wPressed) {
                 gp.keyH.wPressed = false;
-                gp.playSFX(Sound.S_MENU_CON);
 
                 if (gp.player.p.nuzlocke) {
                     switch (commandNum) {
                     case 0: // nuzlocke info
+                    	gp.playSFX(Sound.S_MENU_CON);
                         subState = NUZLOCKE_INFO;
                         playerScroll = 0;
                         break;
                     case 1: // cheat code
+                    	gp.playSFX(Sound.S_MENU_CON);
                         showCheatCodeDialog();
                         break;
                     case 2: // back
+                    	gp.playSFX(Sound.S_MENU_CAN);
                         subState = 0;
                         commandNum = 0;
-                        subState = PLAYER_INFO;
                         break;
                     }
                 } else {
                     switch (commandNum) {
                     case 0: // cheat code
+                    	gp.playSFX(Sound.S_MENU_CON);
                         showCheatCodeDialog();
                         break;
                     case 1: // back
+                    	gp.playSFX(Sound.S_MENU_CAN);
                         subState = 0;
                         commandNum = 0;
-                        subState = PLAYER_INFO;
                         break;
                     }
                 }
@@ -4562,144 +4572,212 @@ public class UI extends AbstractUI {
         }
     }
 
-    private void drawPlayerInfo(int x, int y) {
+    private void drawPlayerInfo(int panelX, int panelY) {
         Player p = gp.player.p;
-        int contentX = x + gp.tileSize / 2;
-        int contentY = y + (int)(gp.tileSize * 1.75);
-
-        // sprite and name
-        BufferedImage playerSprite = gp.player.down1;
+        int contentX = panelX + gp.tileSize / 2;
+        int contentY = panelY + gp.tileSize;
+        
+        // === LEFT COLUMN ===
+        int leftColX = contentX;
+        int leftColY = contentY;
+        
+        // Player sprite
+        BufferedImage playerSprite = gp.player.fight;
         if (playerSprite != null) {
-            g2.drawImage(playerSprite, contentX, contentY, 64, 64, null);
+            g2.drawImage(playerSprite, leftColX, leftColY, 128, 128, null);
         }
-
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 28F));
+        
+        // Player name below sprite
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 32F));
         String playerName = gp.player.getName();
-        drawOutlinedText(playerName, contentX + 80, contentY + 40, textColor, Color.BLACK);
-
-        contentY += 80;
-
-        // badges
+        int nameX = getCenterAlignedTextX(playerName, leftColX + 64);
+        drawOutlinedText(playerName, nameX, leftColY + 140, textColor, Color.BLACK);
+        
+        leftColY += 180; // Move down past sprite and name
+        
+        // Money section
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
-        drawOutlinedText("Badges:", contentX, contentY, new Color(200, 200, 200), Color.BLACK);
-
-        int badgeX = contentX + gp.tileSize * 2;
-        int badgeY = contentY - gp.tileSize / 4;
-        for (int i = 0; i < 8; i++) {
-            BufferedImage badgeIcon = menuIcons[i];
-            if (i < p.badges) {
-                g2.drawImage(badgeIcon, badgeX, badgeY, null);
-            } else {
-                // greyed out badge
-                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
-                g2.drawImage(badgeIcon, badgeX, badgeY, null);
-                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
-            }
-            badgeX += gp.tileSize / 2;
-            if ((i + 1) % 4 == 0) {
-                badgeX = contentX + gp.tileSize * 2;
-                badgeY += gp.tileSize / 2;
-            }
-        }
-
-        contentY += (int)(gp.tileSize * 1.25);
-
-        // money and coins
-        int col1X = contentX;
-        int col2X = contentX + gp.tileSize * 6;
-
-        g2.setFont(g2.getFont().deriveFont(24F));
-        drawOutlinedText("Money:", col1X, contentY, new Color(200, 200, 200), Color.BLACK);
-        drawOutlinedText("$" + p.getMoney(), col1X + gp.tileSize * 2, contentY, textColor, Color.BLACK);
-
-        drawOutlinedText("Coins:", col2X, contentY, new Color(200, 200, 200), Color.BLACK);
-        drawOutlinedText(String.valueOf(p.coins), col2X + gp.tileSize * 2, contentY, textColor, Color.BLACK);
-
-        contentY += gp.tileSize;
-
-        // difficulty
+        drawOutlinedText("Money", leftColX, leftColY, new Color(200, 200, 200), Color.BLACK);
+        leftColY += gp.tileSize * 0.75;
+        
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 32F));
+        String moneyText = "$" + p.getMoney();
+        drawOutlinedText(moneyText, leftColX + gp.tileSize / 4, leftColY, textColor, Color.BLACK);
+        
+        leftColY += gp.tileSize;
+        
+        // Coins section
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
+        drawOutlinedText("Coins", leftColX, leftColY, new Color(200, 200, 200), Color.BLACK);
+        leftColY += gp.tileSize * 0.75;
+        
+        g2.drawImage(Item.COIN.getImage(), leftColX + gp.tileSize / 4, leftColY - gp.tileSize / 2, null);
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 32F));
+        drawOutlinedText(String.valueOf(p.coins), leftColX + gp.tileSize / 4 + gp.tileSize / 2, leftColY, textColor, Color.BLACK);
+        
+        leftColY += gp.tileSize;
+        
+        // Difficulty section
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
+        drawOutlinedText("Difficulty", leftColX, leftColY, new Color(200, 200, 200), Color.BLACK);
+        leftColY += gp.tileSize * 0.75;
+        
         String[] difficulties = {"Normal", "Hard", "Extreme"};
-        String difficultyText = "Difficulty: " + difficulties[p.difficulty];
-        drawOutlinedText(difficultyText, col1X, contentY, new Color(200, 200, 200), Color.BLACK);
-
-        contentY += gp.tileSize;
-
-        // nuzlocke info
+        Color[] difficultyColors = {
+            new Color(100, 255, 100),  // Green for Normal
+            new Color(255, 200, 100),  // Orange for Hard
+            new Color(255, 100, 100)   // Red for Extreme
+        };
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 28F));
+        drawOutlinedText(difficulties[p.difficulty], leftColX + gp.tileSize / 4, leftColY, 
+            difficultyColors[p.difficulty], Color.BLACK);
+        
+        // === RIGHT COLUMN ===
+        int rightColX = contentX + gp.tileSize * 4;
+        int rightColY = contentY + gp.tileSize;
+        
+        // Badge display box
+        int badgeBoxX = rightColX;
+        int badgeBoxWidth = (int)(gp.tileSize * 4.5);
+        
+        // Badges section with box
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 28F));
+        String badgesTitle = "Badges: " + p.badges + "/8";
+        drawOutlinedText(badgesTitle, getCenterAlignedTextX(badgesTitle, badgeBoxX + badgeBoxWidth / 2), rightColY, textColor, Color.BLACK);
+        
+        rightColY += gp.tileSize * 0.75;
+        
+        int badgeBoxY = rightColY - gp.tileSize / 4;
+        int badgeBoxHeight = (int)(gp.tileSize * 2.25);
+        
+        drawBadgesWindow(badgeBoxX, badgeBoxY, badgeBoxWidth, badgeBoxHeight, p, gp, true);
+        
+        rightColY += badgeBoxHeight + gp.tileSize / 4;
+        
+        // Nuzlocke info section (if applicable)
         if (p.nuzlocke) {
-            drawOutlinedText("Nuzlocke Mode: ON", col1X, contentY, new Color(255, 100, 100), Color.BLACK);
-            contentY += (int)(gp.tileSize * 0.75);
-
+            // Nuzlocke mode indicator
+            int nuzBoxX = rightColX - gp.tileSize / 4;
+            int nuzBoxY = rightColY;
+            int nuzBoxWidth = gp.tileSize * 5;
+            int nuzBoxHeight = (int)(gp.tileSize * 2.5);
+            
+            drawPanelWithBorder(nuzBoxX, nuzBoxY, nuzBoxWidth, nuzBoxHeight, 70, 
+                new Color(255, 100, 100));
+            
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
+            String nuzTitle = "Nuzlocke Mode";
+            int nuzTitleX = getCenterAlignedTextX(nuzTitle, nuzBoxX + nuzBoxWidth / 2);
+            drawOutlinedText(nuzTitle, nuzTitleX, nuzBoxY + gp.tileSize / 2, 
+                new Color(255, 100, 100), Color.BLACK);
+            
+            // Level cap info
             int levelCap = Trainer.getLevelCap(p.badges, p);
-            int levelCapBonus = p.levelCapBonus;
-            String levelCapBonusString = levelCapBonus > 0 ? "(+" + levelCapBonus + " level bonus)" : "";
-            drawOutlinedText("Level Cap: " + levelCap + levelCapBonusString, col1X + gp.tileSize / 4, contentY, new Color(200, 200, 200), Color.BLACK);
-
-            contentY += gp.tileSize;
-
-            // info button
-            int buttonWidth = gp.tileSize * 5;
+            String capText = "Level Cap: " + levelCap;
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 28F));
+            int capX = getCenterAlignedTextX(capText, nuzBoxX + nuzBoxWidth / 2);
+            drawOutlinedText(capText, capX, nuzBoxY + gp.tileSize, textColor, Color.BLACK);
+            
+            // Bonus info (if any)
+            if (p.levelCapBonus > 0) {
+                String bonusText = "(+" + p.levelCapBonus + " bonus)";
+                g2.setFont(g2.getFont().deriveFont(Font.ITALIC, 18F));
+                int bonusX = getCenterAlignedTextX(bonusText, nuzBoxX + nuzBoxWidth / 2);
+                drawOutlinedText(bonusText, bonusX, nuzBoxY + gp.tileSize * 11 / 8, 
+                    new Color(120, 120, 120), Color.BLACK);
+            }
+            
+            // Status indicators
+            g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 16F));
+            int statusY = nuzBoxY + gp.tileSize * 2;
+            String statusText = (p.nuzlockeStarted ? "\u2611 Started" : "\u00d7 Not Started") + 
+                               "  |  " + 
+                               (p.isValidNuzlocke ? "\u2611 Valid" : "\u00d7 Invalid");
+            Color statusColor = p.isValidNuzlocke ? new Color(150, 255, 150) : new Color(255, 150, 150);
+            int statusX = getCenterAlignedTextX(statusText, nuzBoxX + nuzBoxWidth / 2);
+            drawOutlinedText(statusText, statusX, statusY, statusColor, Color.BLACK);
+            
+            rightColY += nuzBoxHeight + gp.tileSize;
+            
+            // Nuzlocke Info Button
+            int buttonWidth = gp.tileSize * 4;
             int buttonHeight = (int)(gp.tileSize * 0.75);
-            int buttonX = contentX;
-            int buttonY = contentY - (int)(gp.tileSize * 0.5);
-
+            int buttonX = nuzBoxX + gp.tileSize / 2;
+            int buttonY = rightColY - gp.tileSize / 2;
+            
             boolean selected = commandNum == 0;
             if (selected) {
-                drawPanelWithBorder(buttonX, buttonY, buttonWidth, buttonHeight, backgroundOpacity + 50, textColor);
+                drawPanelWithBorder(buttonX, buttonY, buttonWidth, buttonHeight, 
+                    backgroundOpacity + 50, textColor);
             } else {
-                drawPanelWithBorder(buttonX, buttonY, buttonWidth, buttonHeight, backgroundOpacity - 30, new Color(100, 100, 100));
+                drawPanelWithBorder(buttonX, buttonY, buttonWidth, buttonHeight, 
+                    backgroundOpacity - 30, new Color(100, 100, 100));
             }
-
-            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
+            
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));
             String buttonText = "View Nuzlocke Info";
             int textX = getCenterAlignedTextX(buttonText, buttonX + buttonWidth / 2);
             int textY = buttonY + (int)(gp.tileSize * 0.55);
-            drawOutlinedText(buttonText, textX, textY, selected ? textColor : new Color(200, 200, 200), Color.BLACK);
-
-            contentY += gp.tileSize;
+            drawOutlinedText(buttonText, textX, textY, 
+                selected ? textColor : new Color(200, 200, 200), Color.BLACK);
+            
+            rightColY += gp.tileSize;
         }
-
-        contentY += gp.tileSize / 2;
-
-        // cheat code
-        int buttonWidth = gp.tileSize * 5;
+        
+        // === BOTTOM BUTTONS (Centered) ===
+        int buttonsY = panelY + gp.tileSize * 10;
+        int buttonWidth = gp.tileSize * 4;
         int buttonHeight = (int)(gp.tileSize * 0.75);
-        int buttonX = contentX;
-        int buttonY = contentY - (int)(gp.tileSize * 0.5);
-
-        boolean selected = p.nuzlocke ? commandNum == 1 : commandNum == 0;
-        if (selected) {
-            drawPanelWithBorder(buttonX, buttonY, buttonWidth, buttonHeight, backgroundOpacity + 50, textColor);
+        int buttonGap = gp.tileSize / 2;
+        int totalButtonsWidth = buttonWidth * 2 + buttonGap;
+        int buttonsStartX = panelX + (gp.tileSize * 10 - totalButtonsWidth) / 2;
+        
+        // Cheat Code Button
+        int cheatButtonX = buttonsStartX;
+        int cheatButtonY = buttonsY;
+        
+        boolean cheatSelected = p.nuzlocke ? commandNum == 1 : commandNum == 0;
+        if (cheatSelected) {
+            drawPanelWithBorder(cheatButtonX, cheatButtonY, buttonWidth, buttonHeight, 
+                backgroundOpacity + 50, textColor);
         } else {
-            drawPanelWithBorder(buttonX, buttonY, buttonWidth, buttonHeight, backgroundOpacity - 30, new Color(100, 100, 100));
+            drawPanelWithBorder(cheatButtonX, cheatButtonY, buttonWidth, buttonHeight, 
+                backgroundOpacity - 30, new Color(100, 100, 100));
         }
-
+        
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 22F));
+        String cheatText = "Enter Cheat Code";
+        int cheatTextX = getCenterAlignedTextX(cheatText, cheatButtonX + buttonWidth / 2);
+        int cheatTextY = cheatButtonY + (int)(gp.tileSize * 0.55);
+        drawOutlinedText(cheatText, cheatTextX, cheatTextY, 
+            cheatSelected ? textColor : new Color(200, 200, 200), Color.BLACK);
+        
+        // Back Button
+        int backButtonX = buttonsStartX + buttonWidth + buttonGap;
+        int backButtonY = buttonsY;
+        
+        boolean backSelected = p.nuzlocke ? commandNum == 2 : commandNum == 1;
+        if (backSelected) {
+            drawPanelWithBorder(backButtonX, backButtonY, buttonWidth, buttonHeight, 
+                backgroundOpacity + 50, textColor);
+        } else {
+            drawPanelWithBorder(backButtonX, backButtonY, buttonWidth, buttonHeight, 
+                backgroundOpacity - 30, new Color(100, 100, 100));
+        }
+        
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
-        String buttonText = "Enter Cheat Code";
-        int textX = getCenterAlignedTextX(buttonText, buttonX + buttonWidth / 2);
-        int textY = buttonY + (int)(gp.tileSize * 0.55);
-        drawOutlinedText(buttonText, textX, textY, selected ? textColor : new Color(200, 200, 200), Color.BLACK);
-
-        // back
-        contentY += gp.tileSize;
-        buttonY = contentY - (int)(gp.tileSize * 0.5);
-        selected = p.nuzlocke ? commandNum == 2 : commandNum == 1;
-
-        if (selected) {
-            drawPanelWithBorder(buttonX, buttonY, buttonWidth, buttonHeight, backgroundOpacity + 50, textColor);
-        } else {
-            drawPanelWithBorder(buttonX, buttonY, buttonWidth, buttonHeight, backgroundOpacity - 30, new Color(100, 100, 100));
-        }
-
-        buttonText = "Back";
-        textX = getCenterAlignedTextX(buttonText, buttonX + buttonWidth / 2);
-        textY = buttonY + (int)(gp.tileSize * 0.55);
-        drawOutlinedText(buttonText, textX, textY, selected ? textColor : new Color(200, 200, 200), Color.BLACK);
+        String backText = "Back";
+        int backTextX = getCenterAlignedTextX(backText, backButtonX + buttonWidth / 2);
+        int backTextY = backButtonY + (int)(gp.tileSize * 0.55);
+        drawOutlinedText(backText, backTextX, backTextY, 
+            backSelected ? textColor : new Color(200, 200, 200), Color.BLACK);
     }
 
-    private void drawNuzlockeInfo(int panelX, int panelY, int panelWidth, int panelHeight, int MAX_VISIBLE_ENCOUNTERS) {
+	private void drawNuzlockeInfo(int panelX, int panelY, int panelWidth, int panelHeight, int MAX_VISIBLE_ENCOUNTERS) {
         Player p = gp.player.p;
         int contentX = panelX + gp.tileSize / 2;
         int contentY = panelY + (int)(gp.tileSize * 1.75);
+        int startY = contentY;
 
         // status title
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
@@ -4717,6 +4795,10 @@ public class UI extends AbstractUI {
         contentY += gp.tileSize;
 
         // settings
+        contentX += gp.tileSize * 4;
+        labelX = contentX + gp.tileSize / 4;
+        contentY = startY;
+        
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
         drawOutlinedText("Settings:", contentX, contentY, textColor, Color.BLACK);
         contentY += (int)(gp.tileSize * 0.75);
@@ -4732,29 +4814,30 @@ public class UI extends AbstractUI {
         contentY += (int)(gp.tileSize * 0.6);
 
         if (p.allowRevives) {
-            drawOutlinedText("  Buyable Revives: " + (p.buyableRevives ? "Yes" : "No"), labelX, contentY, new Color(180, 180, 180), Color.BLACK);
+            drawOutlinedText("\u2022 Buyable Revives: " + (p.buyableRevives ? "Yes" : "No"), labelX, contentY, new Color(180, 180, 180), Color.BLACK);
             contentY += (int)(gp.tileSize * 0.6);
         }
 
         drawOutlinedText("Level Cap Bonus: +" + p.levelCapBonus, labelX, contentY, new Color(200, 200, 200), Color.BLACK);
-        contentY += gp.tileSize;
+        contentX -= gp.tileSize * 4;
+        contentY = startY + gp.tileSize * 3;
 
         // invalid reasons
         if (!p.isValidNuzlocke && !p.invalidReasons.isEmpty()) {
             g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
             drawOutlinedText("Invalid Reasons:", contentX, contentY, new Color(255, 100, 100), Color.BLACK);
-            contentY += (int)(gp.tileSize * 0.75);
+            contentY += gp.tileSize / 4;
 
             int scrollableX = contentX;
-            int scrollableY = contentY;
+            int scrollableY = contentY + 2;
             int scrollableWidth = panelWidth - gp.tileSize;
-            int scrollableHeight = (int)(gp.tileSize * 1.5);
+            int scrollableHeight = (int)(gp.tileSize * 1.5) + 4;
 
             drawPanelWithBorder(scrollableX, scrollableY, scrollableWidth, scrollableHeight, 50, new Color(100, 100, 100));
 
-            g2.setClip(scrollableX, scrollableY, scrollableWidth, scrollableHeight);
+            g2.setClip(scrollableX, scrollableY + 2, scrollableWidth, scrollableHeight - 4);
 
-            int reasonY = scrollableY + gp.tileSize / 4;
+            int reasonY = scrollableY + gp.tileSize / 3;
             g2.setFont(g2.getFont().deriveFont(16F));
 
             for (String reason : p.invalidReasons) {
@@ -4770,24 +4853,24 @@ public class UI extends AbstractUI {
         if (p.nuzlockeEncounters != null && !p.nuzlockeEncounters.isEmpty()) {
             g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
             drawOutlinedText("Encounters (" + p.nuzlockeEncounters.size() + "):", contentX, contentY, textColor, Color.BLACK);
-            contentY += (int)(gp.tileSize * 0.75);
+            contentY += gp.tileSize / 4;
 
             int scrollableX = contentX;
-            int scrollableY = contentY;
+            int scrollableY = contentY + 2;
             int scrollableWidth = panelWidth - gp.tileSize;
-            int scrollableHeight = (int)(gp.tileSize * 2.5);
+            int scrollableHeight = gp.tileSize * 2 + 4;
 
             drawPanelWithBorder(scrollableX, scrollableY, scrollableWidth, scrollableHeight, 50, new Color(100, 100, 100));
 
-            g2.setClip(scrollableX, scrollableY, scrollableWidth, scrollableHeight);
+            g2.setClip(scrollableX, scrollableY + 2, scrollableWidth, scrollableHeight - 4);
 
-            int encounterY = scrollableY + gp.tileSize / 4 - (playerScroll * (gp.tileSize / 3));
+            int encounterY = scrollableY + gp.tileSize / 3 - (playerScroll * (gp.tileSize / 3));
             g2.setFont(g2.getFont().deriveFont(18F));
 
             for (int i = 0; i < p.nuzlockeEncounters.size(); i++) {
                 String encounter = p.nuzlockeEncounters.get(i);
                 Color encounterColor = (i >= playerScroll && i < playerScroll + MAX_VISIBLE_ENCOUNTERS) ? new Color(200, 200, 200) : new Color(120, 120, 120);
-                drawOutlinedText("• " + encounter, scrollableX + gp.tileSize / 4, encounterY, encounterColor, Color.BLACK);
+                drawOutlinedText((i+1) + ") " + encounter, scrollableX + gp.tileSize / 4, encounterY, encounterColor, Color.BLACK);
                 encounterY += gp.tileSize / 3;
             }
 
@@ -4796,9 +4879,9 @@ public class UI extends AbstractUI {
             // scrollbar
             if (p.nuzlockeEncounters.size() > MAX_VISIBLE_ENCOUNTERS) {
                 int scrollbarX = scrollableX + scrollableWidth - 12;
-                int scrollbarY = scrollableY;
+                int scrollbarY = scrollableY + 4;
                 int scrollbarWidth = 8;
-                int scrollbarHeight = scrollableHeight;
+                int scrollbarHeight = scrollableHeight - 8;
 
                 g2.setColor(new Color(60, 60, 60));
                 g2.fillRect(scrollbarX, scrollbarY, scrollbarWidth, scrollbarHeight);
@@ -6504,32 +6587,13 @@ public class UI extends AbstractUI {
 	}
 	
 	private BufferedImage getSilhouette(Pokemon p) {
+		if (silhouettes == null) silhouettes = new BufferedImage[Pokemon.MAX_POKEMON];
 		if (silhouettes[p.id - 1] != null) return silhouettes[p.id - 1];
 		BufferedImage sprite = p.getSprite();
-		int width = sprite.getWidth();
-	    int height = sprite.getHeight();
-	    BufferedImage silhouette = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-	    
-	    // Define the light grey color
-	    int lightGrey = new Color(211, 211, 211).getRGB(); // Light grey color with RGB (211, 211, 211)
-	    
-	    for (int y = 0; y < height; y++) {
-	        for (int x = 0; x < width; x++) {
-	            int pixel = sprite.getRGB(x, y);
-	            // Check if the pixel is transparent
-	            if ((pixel >> 24) == 0x00) {
-	                // Copy the transparent pixel to the silhouette
-	                silhouette.setRGB(x, y, pixel);
-	            } else {
-	                // Set the non-transparent pixel to light grey
-	                silhouette.setRGB(x, y, lightGrey);
-	            }
-	        }
-	    }
-	    
-	    return silhouette;
+		
+		return makeSilhouette(sprite);
 	}
-	
+
 	private void drawLetterState() {
 		int x = gp.tileSize * 2;
 		int y = gp.tileSize / 2;

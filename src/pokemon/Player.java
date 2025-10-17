@@ -43,7 +43,6 @@ import entity.PlayerCharacter;
 import overworld.GamePanel;
 import pokemon.Bag.Entry;
 import ui.AbstractUI;
-import ui.TextInputDialog;
 import ui.UI;
 import util.*;
 
@@ -108,24 +107,24 @@ public class Player extends Trainer implements Serializable {
 	public boolean amulet;
 	public boolean spike;
 
-    public int difficulty;
+ 	public int difficulty;
 
-    // NUZLOCKE
+ 	// NUZLOCKE
 	public boolean nuzlocke;
 	public boolean nuzlockeStarted;
 	public boolean isValidNuzlocke;
 	public ArrayList<String> nuzlockeEncounters;
 	public ArrayList<String> invalidReasons;
-    // settings
-    public boolean banShedinja;
-    public boolean banBatonPass;
-    public boolean allowRevives;
-    public boolean buyableRevives;
-    public int levelCapBonus;
+	// settings
+	public boolean banShedinja;
+	public boolean banBatonPass;
+	public boolean allowRevives;
+	public boolean buyableRevives;
+	public int levelCapBonus;
 	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 77;
+	public static final int VERSION = 78;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	public static final int BET_INC = 10;
@@ -187,7 +186,7 @@ public class Player extends Trainer implements Serializable {
 		return this.id;
 	}
 	
-	public void setupNuzlocke() {
+	public void setupNuzlocke(boolean banShedinja, boolean banBatonPass, boolean allowRevives, boolean buyableRevives, int levelCapBonus) {
 		this.nuzlocke = true;
 		this.nuzlockeStarted = false;
 		this.isValidNuzlocke = true;
@@ -200,6 +199,13 @@ public class Player extends Trainer implements Serializable {
 		this.bag.add(Item.EDGE_KIT);
 		this.bag.add(Item.STATUS_KIT);
 		this.bag.add(Item.DAMAGE_KIT);
+		
+		// SETTINGS
+		this.banShedinja = banShedinja;
+		this.banBatonPass = banBatonPass;
+		this.allowRevives = allowRevives;
+		this.buyableRevives = buyableRevives;
+		this.levelCapBonus = levelCapBonus;
 	}
 
 	public boolean catchPokemon(Pokemon p, boolean nickname, Item ball) {
@@ -1462,6 +1468,10 @@ public class Player extends Trainer implements Serializable {
 		if (registeredItems == null) registeredItems = new Item[MAX_HOTKEYS];
 		updateRegisteredItems();
 		if (!flag[4][6]) updateCoins();
+		if (!flag[0][23]) {
+			difficulty = 1;
+			flag[0][23] = true;
+		}
 		version = VERSION;
 	}
 

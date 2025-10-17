@@ -178,6 +178,9 @@ public class Config {
 					System.err.println("Invalid config value: " + line);
 				}
 			}
+			if (pendingKeys == null) {
+				pendingKeys = Arrays.copyOf(keys, keys.length);
+			}
 			setKeys();
 			
 			br.close();

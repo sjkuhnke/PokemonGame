@@ -127,9 +127,20 @@ public class Main {
 		}
 	}
 	
-	public static void loadGame(String fileName, boolean[] selectedOptions, boolean excel, boolean nuzlocke) {
+	public static void loadGame(String fileName) {
 		gp.setGameState(GamePanel.LOADING_STATE);
 		gp.loadingScreen.reset();
+		
+		// SETTINGS
+		boolean[] selectedOptions = gp.titleScreen.docOptions;
+		boolean excel = gp.titleScreen.generateExcel;
+		boolean nuzlocke = gp.titleScreen.nuzlockeMode;
+		int difficulty = gp.titleScreen.difficultyLevel;
+		boolean banShedinja = gp.titleScreen.banShedinja;
+	    boolean banBatonPass = gp.titleScreen.banBatonPass;
+	    boolean allowRevives = gp.titleScreen.allowRevives;
+	    boolean buyableRevives = gp.titleScreen.buyableRevives;
+	    int levelCapBonus = gp.titleScreen.levelCapBonus;
 		
 		new Thread(() -> {
 			try {
@@ -154,21 +165,12 @@ public class Main {
 					gp.player.worldY = gp.player.p.getPosY();
 					gp.currentMap = gp.player.p.currentMap;
 					
-					if (gp.player.p.surf) {
-						for (Integer i : gp.tileM.getWaterTiles()) {
-							gp.tileM.tile[i].collision = false;
-						}
-					}
-					if (gp.player.p.lavasurf) {
-			        	for (Integer i : gp.tileM.getLavaTiles()) {
-			        		gp.tileM.tile[i].collision = false;
-						}
-			        }
-			        if (gp.player.p.visor) gp.player.setupPlayerImages(true);
+					if (gp.player.p.visor) gp.player.setupPlayerImages(true);
 				} else {
 					loader.setProgress(5, "Creating new player...");
 					gp.player.p = new Player(gp);
-					if (nuzlocke) gp.player.p.setupNuzlocke();
+					if (nuzlocke) gp.player.p.setupNuzlocke(banShedinja, banBatonPass, allowRevives, buyableRevives, levelCapBonus);
+					gp.player.p.difficulty = difficulty;
 				}
 				loader.setProgress(6, "Saving Config");
 				gp.config.excel = excel;
@@ -190,6 +192,19 @@ public class Main {
 				loader.setProgress(9, "Setting up game...");
 				gp.setupGame();
 				
+				if (gp.player.p.surf) {
+					loader.setProgress(64, "Setting up water tiles for Surfing...");
+					for (Integer i : gp.tileM.getWaterTiles()) {
+						gp.tileM.tile[i].collision = false;
+					}
+				}
+				if (gp.player.p.lavasurf) {
+					loader.setProgress(64, "Setting up lava tiles for Lava Surfing...");
+					for (Integer i : gp.tileM.getLavaTiles()) {
+						gp.tileM.tile[i].collision = false;
+					}
+				}
+				
 				if (hasAnyChecked(selectedOptions)) {
 					Path docsDirectory = SaveManager.getDocsDirectory();
 					
@@ -200,45 +215,45 @@ public class Main {
 						} else {
 							TrainerDoc.writeTrainersToTxt(gp, docsDirectory);
 						}		    			
-		    		}
-		    		if (selectedOptions[1]) {
-		    			loader.setProgress(85, "Generating Pokemon docs...");
-		    			writePokemon(docsDirectory);
-		    		}
-		    		if (selectedOptions[2]) {
-		    			loader.setProgress(88, "Generating encounter docs...");
-		    			writeEncounters(docsDirectory);
-		    		}
-		    		if (selectedOptions[3]) {
-		    			loader.setProgress(91, "Generating move docs...");
-		    			writeMoves(docsDirectory);
-		    		}
-		    		if (selectedOptions[4]) {
-		    			loader.setProgress(92, "Generating ability docs...");
-		    			writeAbilities(docsDirectory);
-		    		}
-		    		if (selectedOptions[5]) {
-		    			loader.setProgress(94, "Generating item docs...");
-		    			writeItems(gp, docsDirectory);
-		    		}
-		    		if (selectedOptions[6]) {
-		    			loader.setProgress(96, "Generating defensive type docs...");
-		    			writeDefensiveTypes(docsDirectory);
-		    		}
-		    		if (selectedOptions[7]) {
-		    			loader.setProgress(98, "Generating offensive type docs...");
-		    			writeOffensiveTypes(docsDirectory);
-		    		}
-		    		
-		    		
+					}
+					if (selectedOptions[1]) {
+						loader.setProgress(85, "Generating Pokemon docs...");
+						writePokemon(docsDirectory);
+					}
+					if (selectedOptions[2]) {
+						loader.setProgress(88, "Generating encounter docs...");
+						writeEncounters(docsDirectory);
+					}
+					if (selectedOptions[3]) {
+						loader.setProgress(91, "Generating move docs...");
+						writeMoves(docsDirectory);
+					}
+					if (selectedOptions[4]) {
+						loader.setProgress(92, "Generating ability docs...");
+						writeAbilities(docsDirectory);
+					}
+					if (selectedOptions[5]) {
+						loader.setProgress(94, "Generating item docs...");
+						writeItems(gp, docsDirectory);
+					}
+					if (selectedOptions[6]) {
+						loader.setProgress(96, "Generating defensive type docs...");
+						writeDefensiveTypes(docsDirectory);
+					}
+					if (selectedOptions[7]) {
+						loader.setProgress(98, "Generating offensive type docs...");
+						writeOffensiveTypes(docsDirectory);
+					}
+					
+					
 					
 					loader.setProgress(99, "Opening docs folder...");
-	    			try {
+					try {
 						Desktop.getDesktop().open(docsDirectory.toFile());
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
-	    		}
+				}
 				
 				loader.setProgress(100, "Starting game...");
 				gp.playMusic(Sound.M_MENU_1);
