@@ -81,6 +81,7 @@ public class Player extends Trainer implements Serializable {
 	public boolean ghost = false;
 	public int steps;
 	public boolean repel;
+	public boolean toggleRun;
 	public boolean surf;
 	public boolean lavasurf;
 	public boolean visor;
@@ -129,6 +130,13 @@ public class Player extends Trainer implements Serializable {
 	public static final int MAX_POKEDEX_PAGES = 4;
 	public static final int BET_INC = 10;
 	public static final int MAX_HOTKEYS = 5;
+	
+	public static final String[] DIFFICULTIES = {"Normal", "Hard", "Extreme"};
+	public static final Color[] DIFFICULTY_COLORS = {
+		new Color(100, 255, 100),  // Green for Normal
+		new Color(255, 200, 100),  // Orange for Hard
+		new Color(255, 100, 100)   // Red for Extreme
+	};
 	
 	public static Pokemon[] pokedex1 = new Pokemon[Pokemon.POKEDEX_1_SIZE]; // regular
 	public static Pokemon[] pokedex2 = new Pokemon[Pokemon.POKEDEX_METEOR_SIZE]; // shadow

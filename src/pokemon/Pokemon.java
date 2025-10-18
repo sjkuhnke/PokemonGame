@@ -857,13 +857,12 @@ public class Pokemon implements RoleAssignable, Serializable {
         	moveScores.put(move, scoreMove(move, foe, field, foeCanKO, strongestMove, foeMaxDamagePair));
         }
         
+        HashMap<Pokemon, Integer> scoreMap = new HashMap<>();
         if (canSwitch) {
         	StringBuilder sb = new StringBuilder("===========================================\n");
         	
         	int currentScore = this.scorePokemon(foe, strongestMove, foeMaxDamagePair, foeCanKO, field, moveScores, true);
-        	//currentScore = Math.max(-100, currentScore);
         	
-        	HashMap<Pokemon, Integer> scoreMap = new HashMap<>();
         	for (int i = 0; i < tr.team.length; i++) {
         		Pokemon ally = tr.team[i];
         		if (ally != null && ally != this) {
@@ -901,8 +900,8 @@ public class Pokemon implements RoleAssignable, Serializable {
         		
         		double r = Math.random() * totalWeight;
         		Pokemon chosen = null;
+        		int chosenSlot = Integer.MIN_VALUE;
         		int chosenScore = Integer.MIN_VALUE;
-        		int chosenSlot = -1;
         		for (int i = 0; i < tr.team.length; i++) {
         			Pokemon ally = tr.team[i];
         			if (ally != null && weights.containsKey(ally)) {
@@ -986,6 +985,21 @@ public class Pokemon implements RoleAssignable, Serializable {
                 		gp.simBattleUI.p2Moves = new Pair<>(this, positiveWeights.get(chosenMove) / totalPositiveWeight * 100.0);
                 	}
                 }
+        		if (!scoreMap.isEmpty() && canSwitch && chosenMove.isPivotMove()) {
+            		int chosenSlot = Integer.MIN_VALUE;
+            		int maxScore = Integer.MIN_VALUE;
+            		for (int i = 0; i < tr.team.length; i++) {
+            			Pokemon ally = tr.team[i];
+            			if (ally != null && scoreMap.containsKey(ally)) {
+            				int score = scoreMap.get(ally);
+            				if (score > maxScore) {
+            					maxScore = score;
+            					chosenSlot = i;
+            				}
+            			}
+            		}
+        			this.addStatus(Status.TEMP_SWITCHING, -(chosenSlot + 1));
+        		}
         		return chosenMove;
         	}
         }
@@ -1430,9 +1444,17 @@ public class Pokemon implements RoleAssignable, Serializable {
 								score -= 20;
 							}
 						} else if (move == Move.DESTINY_BOND) {
-			    			score += 50;
+							if (foeCanKO) {
+								score += 50;
+							} else {
+								score -= 20;
+							}
 			    		} else if (move == Move.ENDURE) {
-			    			score += 20;
+			    			if (foeCanKO) {
+								score += 20;
+							} else {
+								score -= -20;
+							}
 			    		} else if (move == Move.TRICK || move == Move.SWITCHEROO || move == Move.TRICK_TACKLE) {
 			    			if (this.getItem(field) != null && this.getItem(field).isTrickable()) {
 			    				score += 25;
@@ -1484,10 +1506,6 @@ public class Pokemon implements RoleAssignable, Serializable {
     		// pick a last-ditch move
     		if (move.hasPriority(foe) && this.getFaster(foe, 0, 0, field) == foe && ((move.cat == 2 && howUseful == 1) || damagePercent > 0)) {
     			score += 55;
-    		}
-    	} else {
-    		if (move == Move.DESTINY_BOND || move == Move.ENDURE) {
-    			score -= 20;
     		}
     	}
 
@@ -3849,7 +3867,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (this.trainer != null && this.trainer.hasValidMembers()) {
 				Task.addTask(Task.TEXT, this.nickname + " went back to " + this.trainer.getBattleName() + "!");
 			}
-			this.addStatus(Status.SWITCHING);
+			int switchSlot = this.getStatusNum(Status.TEMP_SWITCHING);
+			this.addStatus(Status.SWITCHING, switchSlot);
 		}
 		
 		if (move == Move.SELF$DESTRUCT || move == Move.EXPLOSION || move == Move.SUPERNOVA_EXPLOSION) {
@@ -5360,7 +5379,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 		case TELEPORT:
 			if (this.trainer != null && this.trainer.hasValidMembers()) {
 				Task.addTask(Task.TEXT, this.nickname + " went back to " + this.trainer.getBattleName() + "!");
-				this.addStatus(Status.SWITCHING);
+				int switchSlot = this.getStatusNum(Status.TEMP_SWITCHING);
+				this.addStatus(Status.SWITCHING, switchSlot);
 			} else {
 				fail = fail();
 			}
@@ -5397,7 +5417,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 			if (succ && item == Item.ICY_ROCK) field.weatherTurns = 8;
 			if (this.trainer != null && this.trainer.hasValidMembers()) {
 				Task.addTask(Task.TEXT, this.nickname + " went back to " + this.trainer.getBattleName() + "!");
-				this.addStatus(Status.SWITCHING);
+				int switchSlot = this.getStatusNum(Status.TEMP_SWITCHING);
+				this.addStatus(Status.SWITCHING, switchSlot);
 			}
 			break;
 		case COIL:
@@ -5868,7 +5889,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 			stat(foe, 2, -1, this);
 			if (this.trainer != null && this.trainer.hasValidMembers()) {
 				Task.addTask(Task.TEXT, this.nickname + " went back to " + this.trainer.getBattleName() + "!");
-				this.addStatus(Status.SWITCHING);
+				int switchSlot = this.getStatusNum(Status.TEMP_SWITCHING);
+				this.addStatus(Status.SWITCHING, switchSlot);
 			}
 			break;
 		case PERISH_SONG:
@@ -7929,6 +7951,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		this.removeStatus(Status.PROTECT);
 		this.removeStatus(Status.ENDURE);
 		this.removeStatus(Status.SWITCHING);
+		this.removeStatus(Status.TEMP_SWITCHING);
 		if (this.hasStatus(Status.LANDED)) {
 			if (this.type1 == PType.UNKNOWN) {
 				this.type1 = PType.FLYING;

@@ -2,6 +2,7 @@ package ui;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -101,6 +102,7 @@ public class BattleUI extends AbstractUI {
 	public static final int SUMMARY_STATE = 4;
 	public static final int INFO_STATE = 5;
 	public static final int MOVE_MESSAGE_STATE = 6;
+	public static final int CHOOSE_LEAD_STATE = 7;
 	public static final int COOLDOWN_STATE = 9;
 	public static final int END_STATE = 10;
 
@@ -212,6 +214,10 @@ public class BattleUI extends AbstractUI {
 			drawInfo();
 		}
 		
+		if (subState == CHOOSE_LEAD_STATE) {
+			drawFoeTeamPreview();
+		}
+		
 		if (subState == MOVE_MESSAGE_STATE) {
 			showMessage(currentDialogue);
 		}
@@ -221,6 +227,264 @@ public class BattleUI extends AbstractUI {
 			drawDialogueState();
 		}
 		drawKeyStrokes();
+	}
+
+	private void drawFoeTeamPreview() {
+		if (!foe.trainerOwned()) return;
+		
+		int x = (int) (gp.tileSize * 4.25);
+		int y = gp.tileSize;
+		int width = (int) (gp.tileSize * 7.5);
+		int height = gp.tileSize * 6;
+		
+		drawSubWindow(x, y, width, height);
+		
+		// Draw trainer name
+		g2.setColor(Color.WHITE);
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 28F));
+		String trainerName = foe.trainer.toString();
+		drawOutlinedText(trainerName, getCenterAlignedTextX(trainerName, x + width / 2), y + (int)(gp.tileSize * 0.75), Color.WHITE, Color.BLACK);
+		
+		// Draw team
+		int startX = x + gp.tileSize * 3 / 4;
+		int startY = y + gp.tileSize;
+		int spriteSize = 80;
+		int spacing = gp.tileSize / 2;
+		
+		Pokemon[] team = foe.trainer.getTeam();
+		Pokemon selectedPokemon = null;
+		int selectedDrawX = 0;
+		int selectedDrawY = 0;
+		
+		for (int i = 0; i < team.length; i++) {
+			if (team[i] != null) {
+				int drawX = startX + ((i % 3) * (spriteSize + spacing));
+				int drawY = startY + ((i / 3) * (spriteSize + spacing + gp.tileSize / 4));
+				
+				if (commandNum == i) {
+					g2.setColor(Color.YELLOW);
+					g2.setStroke(new BasicStroke(3));
+					g2.drawRoundRect(drawX - 5, drawY + 2, spriteSize + 10, spriteSize + gp.tileSize / 2 + 10, 15, 15);
+					selectedPokemon = team[i];
+					selectedDrawX = drawX;
+					selectedDrawY = drawY;
+				}
+				
+				// Draw sprite
+				g2.setColor(Color.WHITE);
+				g2.drawImage(team[i].getSprite(), drawX, drawY, null);
+				
+				// Draw name and level
+				g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 16F));
+				String name = team[i].getName();
+				g2.drawString(name, drawX, drawY + spriteSize + gp.tileSize / 4);
+				
+				g2.setFont(g2.getFont().deriveFont(14F));
+				String level = "Lv. " + team[i].getLevel();
+				g2.drawString(level, drawX, drawY + spriteSize + gp.tileSize * 2 / 3);
+			}
+		}
+		
+		drawUserTeamPreview();
+		
+		if (selectedPokemon != null) {
+			drawPreviewPanel(selectedPokemon, selectedDrawX, selectedDrawY + spriteSize + gp.tileSize);
+		}
+	}
+	
+	private void drawUserTeamPreview() {
+		int offset = foe.trainer.team.length;
+		// Draw title
+		g2.setColor(Color.WHITE);
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 36F));
+		String title = "Choose your lead Pokemon!";
+		drawOutlinedText(title, getCenterAlignedTextX(title, gp.screenWidth / 2), gp.tileSize * 3 / 4, Color.WHITE, Color.BLACK);
+		
+		// Draw team preview
+		int startX = gp.tileSize * 2;
+		int startY = gp.tileSize * 9;
+		int spriteSize = 80;
+		int spacing = gp.tileSize * 2;
+		
+		Pokemon[] team = gp.player.p.getTeam();
+		for (int i = 0; i < team.length && team[i] != null; i++) {
+			Pokemon p = team[i];
+			int drawX = startX + (i * spacing);
+			int drawY = startY;
+			
+			// Draw selection box
+			if (commandNum == i + offset) {
+				g2.setColor(Color.YELLOW);
+				g2.setStroke(new BasicStroke(3));
+				g2.drawRoundRect(drawX - 5, drawY - 5, spriteSize + 10, spriteSize + gp.tileSize + 10, 15, 15);
+			}
+			
+			// Draw sprite
+			g2.setColor(Color.WHITE);
+			g2.drawImage(p.getSprite(), drawX, drawY, null);
+			
+			// Draw name and level
+			g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 18F));
+			String name = p.getName();
+			g2.drawString(name, drawX, drawY + spriteSize + gp.tileSize / 4);
+			
+			g2.setFont(g2.getFont().deriveFont(16F));
+			String level = "Lv. " + p.getLevel();
+			g2.drawString(level, drawX, drawY + spriteSize + gp.tileSize * 2 / 3);
+			
+			// Draw detailed panel for selected Pokemon
+			if (commandNum == i + offset) {
+				drawPreviewPanel(p, drawX, (int) (gp.tileSize * 4.5));
+			}
+		}
+		
+		// Handle input
+		if (gp.keyH.leftPressed) {
+			gp.keyH.leftPressed = false;
+			if (commandNum >= offset) {
+	            // In player team - move left
+	            if (commandNum > offset) commandNum--;
+	        } else {
+	            // In foe team - move left in grid
+	            if (commandNum % 3 > 0) commandNum--;
+	        }
+		}
+		if (gp.keyH.rightPressed) {
+			gp.keyH.rightPressed = false;
+			if (commandNum >= offset) {
+	            // In player team - move right
+	            int maxIndex = offset;
+	            for (int i = 0; i < team.length; i++) {
+	                if (team[i] != null) maxIndex = i + offset;
+	            }
+	            if (commandNum < maxIndex) commandNum++;
+	        } else {
+	            // In foe team - move right in grid
+	            Pokemon[] foeTeam = foe.trainer.getTeam();
+	            if (commandNum % 3 < 2 && commandNum + 1 < foeTeam.length && foeTeam[commandNum + 1] != null) {
+	                commandNum++;
+	            }
+	        }
+		}
+		if (gp.keyH.upPressed) {
+			gp.keyH.upPressed = false;
+			// Move up in the grid
+			if (commandNum >= offset) {
+	            // In player team - move to foe team (bottom row, same column if possible)
+	            int playerIndex = commandNum - offset;
+	            int foeTeamSize = foe.trainer.team.length;
+	            // Go to bottom row of foe team
+	            if (foeTeamSize > 3) {
+	                commandNum = Math.min(3 + playerIndex, foeTeamSize - 1);
+	            } else {
+	                commandNum = Math.min(playerIndex, foeTeamSize - 1);
+	            }
+	        } else {
+	            // In foe team - move up in grid
+	            if (commandNum >= 3) commandNum -= 3;
+	        }
+		}
+		if (gp.keyH.downPressed) {
+			gp.keyH.downPressed = false;
+			// Move down in the grid
+			if (commandNum >= offset) {
+	            // Already in player team - do nothing
+	        } else {
+	            // In foe team
+	            Pokemon[] foeTeam = foe.trainer.getTeam();
+	            if (commandNum + 3 < foeTeam.length && foeTeam[commandNum + 3] != null) {
+	                // Move down in grid
+	                commandNum += 3;
+	            } else {
+	                // Move to player team
+	                int col = commandNum % 3;
+	                int playerTeamSize = 0;
+	                for (int i = 0; i < team.length && team[i] != null; i++) {
+	                    playerTeamSize++;
+	                }
+	                commandNum = offset + Math.min(col, playerTeamSize - 1);
+	            }
+	        }
+		}
+		if (gp.keyH.wPressed) {
+			gp.keyH.wPressed = false;
+			if (commandNum >= offset) { // player team
+	            int playerIndex = commandNum - offset;
+	            Pokemon current = gp.player.p.current;
+	            Pokemon pokemon = gp.player.p.team[playerIndex];
+	            gp.player.p.setCurrent(pokemon);
+	            gp.player.p.team[0] = pokemon;
+	            gp.player.p.team[playerIndex] = current;
+	            user = pokemon;
+	            commandNum = 0;
+	            subState = STARTING_STATE;
+	        }
+		}
+		
+		drawToolTips("Select", null, null, null);
+	}
+	
+	private void drawPreviewPanel(Pokemon p, int baseX, int baseY) {
+		int x = baseX - gp.tileSize;
+		int y = baseY;
+		int width = (int) (gp.tileSize * 4.5);
+		int height = gp.tileSize * 4;
+		
+		// Make sure panel doesn't go off screen
+		if (x + width > gp.screenWidth) {
+			x = gp.screenWidth - width - gp.tileSize / 2;
+		}
+		if (x < gp.tileSize / 2) {
+			x = gp.tileSize / 2;
+		}
+		
+		drawPanelWithBorder(x, y, width, height, 230, Color.YELLOW);
+		
+		g2.setColor(Color.WHITE);
+		int contentX = x + gp.tileSize / 3;
+		int contentY = y + gp.tileSize / 2;
+		
+		// Draw Pokemon name and level
+		g2.setFont(g2.getFont().deriveFont(24F));
+		String nameLevel = p.getName() + " Lv. " + p.getLevel();
+		g2.drawString(nameLevel, contentX, contentY);
+		
+		contentY += gp.tileSize / 3;
+		
+		// Draw types
+		g2.drawImage(p.type1.getImage(), contentX, contentY, null);
+		contentX += gp.tileSize * 0.75;
+		if (p.type2 != null) {
+			g2.drawImage(p.type2.getImage(), contentX, contentY, null);
+		}
+		
+		contentX = x + gp.tileSize / 4;
+		contentY += gp.tileSize;
+		
+		// Draw item
+		g2.setFont(g2.getFont().deriveFont(18F));
+		if (p.item != null) {
+			g2.drawString("@ " + p.item.toString(), contentX, contentY);
+			g2.drawImage(p.item.getImage(), contentX + gp.tileSize * 3, contentY - gp.tileSize / 2, null);
+		}
+		
+		contentY += gp.tileSize / 2;
+		
+		// Draw ability
+		g2.drawString(p.ability.toString(), contentX, contentY);
+		
+		contentY += gp.tileSize / 2;
+		
+		// Draw moveset
+		g2.setFont(g2.getFont().deriveFont(16F));
+		for (Moveslot m : p.moveset) {
+			if (m != null) {
+				String moveString = "- " + m.move.toString();
+				Color color = m.move.mtype.getColor();
+				drawOutlinedText(moveString, contentX, contentY, color, Color.BLACK);
+				contentY += gp.tileSize / 3;
+			}
+		}
 	}
 
 	protected void endTask() {
@@ -536,6 +800,7 @@ public class BattleUI extends AbstractUI {
 	}
 
 	protected void drawUser() {
+		if (user == null) return; // hasn't started yet
 		Pokemon draw = user.trainer == null ? user : user.trainer.findVisiblePokemon();
 		if (draw == null) return;
 		drawHPImage(draw);
@@ -549,6 +814,7 @@ public class BattleUI extends AbstractUI {
 	}
 
 	protected void drawFoe() {
+		if (foe == null) return; // hasn't started yet
 		Pokemon draw = foe.trainerOwned() ? foe.trainer.findVisiblePokemon() : foe;
 		if (draw == null || !draw.isVisible()) return;
 		drawHPImage(draw);
@@ -572,6 +838,7 @@ public class BattleUI extends AbstractUI {
 	}
 	
 	private void drawPartyIcons(Pokemon current, int x, int y) {
+		if (current == null) return;
 		int width = 20;
 		Pokemon[] team = current.trainer.getSlotOrderedTeam();
 		for (Pokemon p : team) {
@@ -648,7 +915,6 @@ public class BattleUI extends AbstractUI {
 			switch(subState) {
 			case STARTING_STATE:
 			    setStartingTasks();
-				subState = TASK_STATE;
 				break;
 			case END_STATE:
 				if (tasks.isEmpty()) {
@@ -669,6 +935,34 @@ public class BattleUI extends AbstractUI {
 	}
 	
 	protected void setStartingTasks() {
+		if (gp.player.p.difficulty == 2 && user == null) {
+			subState = CHOOSE_LEAD_STATE;
+			return;
+		}
+		
+		subState = TASK_STATE;
+		
+		if (user == null) {
+			// Make sure the front Pokemon isn't fainted
+			int index = 0;
+			Pokemon user = gp.player.p.getCurrent();
+			while (user.isFainted() || (gp.player.p.nuzlocke && user.isOverLevelCap(gp.player.p.badges, gp.player.p))) {
+				Pokemon.createTask = false;
+				gp.player.p.swapToFront(gp.player.p.team[++index], index, null);
+				user = gp.player.p.getCurrent();
+				Pokemon.createTask = true;
+			}
+			this.user = user;
+		}
+		
+		gp.player.p.clearBattled();
+		gp.player.p.amulet = user.item == Item.AMULET_COIN;
+		user.battled = true;
+		
+		tempUser = user.clone();
+		tempFoe = foe.clone();
+		partyNum = 0;
+		
 		field = new Field();
 		user.getFieldEffects().clear();
 		foe.getFieldEffects().clear();
@@ -717,21 +1011,6 @@ public class BattleUI extends AbstractUI {
 	    Pokemon fasterInit = user.getFaster(foe, 0, 0, field);
 		Pokemon slowerInit = fasterInit == user ? foe : user;
 		fasterInit.swapIn(slowerInit, true);
-		if (fasterInit.playerOwned()) {
-			if (fasterInit.trainer.hasValidMembers() && hasAlive() && fasterInit.hasStatus(Status.SWITCHING)) {
-				Task.addTask(Task.PARTY, "");
-				subState = TASK_STATE;
-	        	return;
-			}
-		} else {
-			if (fasterInit.trainer != null && fasterInit.trainer.hasValidMembers() && fasterInit.hasStatus(Status.SWITCHING)) {
-				fasterInit = foe.trainer.swapOut2(slowerInit, FREE_SWITCH, false, false);
-				if (fasterInit == user) { user = fasterInit; }
-				else { foe = fasterInit; }
-			}
-		}
-		
-		slowerInit.swapIn(fasterInit, true);
 		if (slowerInit.playerOwned()) {
 			if (slowerInit.trainer.hasValidMembers() && hasAlive() && slowerInit.hasStatus(Status.SWITCHING)) {
 				Task.addTask(Task.PARTY, "");
@@ -743,6 +1022,21 @@ public class BattleUI extends AbstractUI {
 				slowerInit = foe.trainer.swapOut2(fasterInit, FREE_SWITCH, false, false);
 				if (slowerInit == user) { user = slowerInit; }
 				else { foe = slowerInit; }
+			}
+		}
+		
+		slowerInit.swapIn(fasterInit, true);
+		if (fasterInit.playerOwned()) {
+			if (fasterInit.trainer.hasValidMembers() && hasAlive() && fasterInit.hasStatus(Status.SWITCHING)) {
+				Task.addTask(Task.PARTY, "");
+				subState = TASK_STATE;
+	        	return;
+			}
+		} else {
+			if (fasterInit.trainer != null && fasterInit.trainer.hasValidMembers() && fasterInit.hasStatus(Status.SWITCHING)) {
+				fasterInit = foe.trainer.swapOut2(slowerInit, FREE_SWITCH, false, false);
+				if (fasterInit == user) { user = fasterInit; }
+				else { foe = fasterInit; }
 			}
 		}
 	}
@@ -1448,7 +1742,7 @@ public class BattleUI extends AbstractUI {
  			}
  			// Check for swap (AI)
 	        if (foe.trainer != null && foe.trainer.hasValidMembers() && faster.hasStatus(Status.SWITCHING)) {
-	        	faster = foe.trainer.swapOut2(slower, switchSlot, faster.lastMoveUsed == Move.BATON_PASS, false);
+	        	faster = foe.trainer.swapOut2(slower, faster.getStatusNum(Status.SWITCHING), faster.lastMoveUsed == Move.BATON_PASS, false);
 	        	foeCanMove = false;
 	        	foeMove = null;
 	        }
@@ -1519,7 +1813,7 @@ public class BattleUI extends AbstractUI {
 		subState = TASK_STATE;
 		boolean fullWipe = staticID != 235;
     	if (fullWipe) {
-    		String message = "Player wiped to " + (foe.trainerOwned() ? foe.trainer.getName() : "a wild " + foe.getName());
+    		String message = "Player wiped to " + (foe.trainerOwned() ? foe.trainer.toString() : "a wild " + foe.getName());
     		gp.saveScum(message); // for if they save scum
     		gp.player.p.invalidateNuzlocke(message); // for if they don't save scum
     		int loss = gp.player.p.getMoney() >= 500 ? 500 : gp.player.p.getMoney();

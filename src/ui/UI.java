@@ -1419,28 +1419,20 @@ public class UI extends AbstractUI {
 		transitionBuffer = new BufferedImage(gp.screenWidth, gp.screenHeight, BufferedImage.TYPE_INT_ARGB);
 		gp.gameState = GamePanel.START_BATTLE_STATE;
 		
-		// Make sure the front Pokemon isn't fainted
-		int index = 0;
-		Pokemon user = gp.player.p.getCurrent();
-		while (user.isFainted() || (gp.player.p.nuzlocke && user.isOverLevelCap(gp.player.p.badges, gp.player.p))) {
-			gp.player.p.swapToFront(gp.player.p.team[++index], index, null);
-			user = gp.player.p.getCurrent();
+		Pokemon foe = currentTask.p;
+		if (gp.player.p.difficulty == 2) { // extreme difficulty
+			if (foe.trainerOwned()) {
+				foe = foe.trainer.pickLead(gp.player.p.getCurrent());
+			}
 		}
 		
-		gp.player.p.clearBattled();
-		gp.player.p.amulet = user.item == Item.AMULET_COIN;
-		user.battled = true;
-		gp.battleUI.user = user;
-		gp.battleUI.foe = currentTask.p;
-		gp.battleUI.tempUser = gp.battleUI.user.clone();
-		gp.battleUI.tempFoe = gp.battleUI.foe.clone();
+		gp.battleUI.foe = foe;
 		gp.battleUI.index = currentTask.counter;
 		gp.battleUI.staticID = currentTask.start;
-		gp.battleUI.partyNum = 0;
 		gp.battleUI.encType = currentTask.message.charAt(0);
 		
-		if (currentTask.p.trainer != null) {
-			currentTask.p.trainer.setSprites();
+		if (foe.trainer != null) {
+			foe.trainer.setSprites();
 		}
 		
 		currentTask = null;
@@ -4622,15 +4614,9 @@ public class UI extends AbstractUI {
         drawOutlinedText("Difficulty", leftColX, leftColY, new Color(200, 200, 200), Color.BLACK);
         leftColY += gp.tileSize * 0.75;
         
-        String[] difficulties = {"Normal", "Hard", "Extreme"};
-        Color[] difficultyColors = {
-            new Color(100, 255, 100),  // Green for Normal
-            new Color(255, 200, 100),  // Orange for Hard
-            new Color(255, 100, 100)   // Red for Extreme
-        };
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 28F));
-        drawOutlinedText(difficulties[p.difficulty], leftColX + gp.tileSize / 4, leftColY, 
-            difficultyColors[p.difficulty], Color.BLACK);
+        drawOutlinedText(Player.DIFFICULTIES[p.difficulty], leftColX + gp.tileSize / 4, leftColY, 
+            Player.DIFFICULTY_COLORS[p.difficulty], Color.BLACK);
         
         // === RIGHT COLUMN ===
         int rightColX = contentX + gp.tileSize * 4;
@@ -4954,6 +4940,14 @@ public class UI extends AbstractUI {
 				settingsState = 0;
 				commandNum = 0;
 				if (changed) showMessage("Keybinds successfully updated!");
+			}
+		} else if (settingsState == 2) {
+			if (gp.keyH.sPressed || gp.keyH.dPressed) {
+				gp.keyH.sPressed = false;
+				gp.keyH.dPressed = false;
+				gp.playSFX(Sound.S_MENU_CAN);
+				settingsState = 0;
+				commandNum = 0;
 			}
 		}
 	}
