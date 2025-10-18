@@ -589,4 +589,48 @@ public class Trainer implements Serializable {
 	public String getBattleName() {
 		return toString();
 	}
+
+	public Pokemon pickLead(Pokemon foe) {
+		if (!foe.playerOwned()) return current;
+		int[] averageScores = new int[team.length];
+		int[] scoreCounts = new int[team.length];
+		for (int myPSlot = 0; myPSlot < team.length; myPSlot++) {
+			Pokemon ally = team[myPSlot];
+			if (ally == null) continue;
+			
+			int totalScore = 0;
+			StringBuilder scoreList = new StringBuilder();
+			int count = 0;
+			
+			for (int foeP = 0; foeP < foe.trainer.team.length; foeP++) {
+				Pokemon f = foe.trainer.team[foeP];
+				if (f != null) {
+					int score = ally.scorePokemon(f, null, new Pair<>(0, 0.0), false, Pokemon.field, null, false);
+					totalScore += score;
+					count++;
+					
+					if (scoreList.length() > 0) scoreList.append(", ");
+					scoreList.append(score);
+				}
+			}
+			scoreCounts[myPSlot] = count;
+			averageScores[myPSlot] = (count > 0) ? totalScore / count : 0;
+			
+			double avgScore = (count > 0) ? (double) totalScore / count : 0.0;
+			System.out.println(ally.name + " scores: " + scoreList + " (average " + String.format("%.1f", avgScore) + ")");
+		}
+		
+		int maxScore = Integer.MIN_VALUE;
+		int chosenSlot = 0;
+		for (int i = 0; i < averageScores.length; i++) {
+			if (team[i] != null && averageScores[i] > maxScore) {
+				maxScore = averageScores[i];
+				chosenSlot = i;
+			}
+		}
+		
+		current = team[chosenSlot];
+		System.out.println(current.name + " chosen as lead");
+		return current;
+	}
 }

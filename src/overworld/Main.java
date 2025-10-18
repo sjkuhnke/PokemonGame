@@ -172,7 +172,7 @@ public class Main {
 					if (nuzlocke) gp.player.p.setupNuzlocke(banShedinja, banBatonPass, allowRevives, buyableRevives, levelCapBonus);
 					gp.player.p.difficulty = difficulty;
 				}
-				loader.setProgress(6, "Saving Config");
+				loader.setProgress(6, "Saving Config...");
 				gp.config.excel = excel;
 				gp.config.saveConfig();
 				

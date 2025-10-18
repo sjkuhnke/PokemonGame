@@ -40,6 +40,10 @@ public class Config {
 	// Doc settings
 	public boolean excel = false;
 	
+	// Other settings
+	public boolean fullscreen = false;
+	public boolean toggleRun = false;
+	
 	public final String[] keyNames;
 	public int[] keys;
 	public final int[] defaultKeys;
@@ -101,6 +105,12 @@ public class Config {
 			bw.write("excel=" + (excel ? 1 : 0));
 			bw.newLine();
 			
+			// Misc settings
+			bw.write("fullscreen=" + (fullscreen ? 1 : 0));
+			bw.newLine();
+			bw.write("togglerun=" + (toggleRun ? 1 : 0));
+			bw.newLine();
+			
 			// Keybinds
 			for (int i = 0; i < keys.length; i++) {
 				String keyString = keyNames[i].toLowerCase().replace(" ", "_") + "Key=";
@@ -147,6 +157,12 @@ public class Config {
 						break;
 					case "excel":
 						gp.titleScreen.generateExcel = intValue == 1;
+						break;
+					case "fullscreen":
+						fullscreen = intValue == 1;
+						break;
+					case "togglerun":
+						toggleRun = intValue == 1;
 						break;
 					case "upKey": keyNum = upKey; break;
 					case "downKey": keyNum = downKey; break;

@@ -39,7 +39,7 @@ public abstract class AbstractUI {
 	public int commandNum;
 	public int subState = 0;
 	public int settingsState = 0;
-	public final int maxSettingsNum = 4;
+	public int difficultyNum = 0;
 
 	// PARTY STATE
 	public int partyNum;
@@ -1607,21 +1607,21 @@ public abstract class AbstractUI {
 		switch(settingsState) {
 		case 0: drawSettingsTop(frameX, frameY, frameWidth, frameHeight); break;
 		case 1: drawControlsScreen(frameX-gp.tileSize*2, frameY, frameWidth+gp.tileSize*4, frameHeight); break;
+		case 2: drawDifficultyScreen(frameX+gp.tileSize, frameY+gp.tileSize, frameWidth-gp.tileSize*2, frameHeight-gp.tileSize*2);
 		}
 	}
 	
 	private void drawSettingsTop(int frameX, int frameY, int frameWidth, int frameHeight) {
-		// Use the TitleScreen style panel
 		drawPanelWithBorder(frameX, frameY, frameWidth, frameHeight, 220, textColor);
 		
-		// Title
+		// title
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 36F));
 		String text = "Settings";
 		int textX = getCenterAlignedTextX(text, gp.screenWidth / 2);
 		int textY = frameY + gp.tileSize;
 		drawOutlinedText(text, textX, textY, textColor, Color.BLACK);
 		
-		// Divider line
+		// div line
 		int dividerY = textY + gp.tileSize / 4;
 		g2.setColor(new Color(100, 100, 100));
 		g2.drawLine(frameX + gp.tileSize, dividerY, frameX + frameWidth - gp.tileSize, dividerY);
@@ -1633,20 +1633,17 @@ public abstract class AbstractUI {
 		// MUSIC
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 28F));
 		boolean selected = commandNum == 0;
-		drawOutlinedText("Music", contentX, contentY, 
-			selected ? textColor : new Color(200, 200, 200), Color.BLACK);
+		drawOutlinedText("Music", contentX, contentY, selected ? textColor : new Color(200, 200, 200), Color.BLACK);
 		
-		// Music volume bar
+		// music volume bar
 		int barX = contentX + gp.tileSize * 3;
 		int barY = contentY - gp.tileSize / 3;
 		int barWidth = (int)(gp.tileSize * 3);
 		int barHeight = gp.tileSize / 3;
 		
-		// Background
 		g2.setColor(new Color(30, 30, 30, 200));
 		g2.fillRoundRect(barX, barY, barWidth, barHeight, 10, 10);
 		
-		// Border
 		if (selected) {
 			g2.setStroke(new BasicStroke(3));
 			g2.setColor(textColor);
@@ -1656,17 +1653,14 @@ public abstract class AbstractUI {
 		}
 		g2.drawRoundRect(barX, barY, barWidth, barHeight, 10, 10);
 		
-		// Fill
 		int volumeWidth = (barWidth - 6) * gp.music.volumeScale / 5;
 		g2.setColor(selected ? textColor.darker() : new Color(100, 200, 100));
 		g2.fillRoundRect(barX + 3, barY + 3, volumeWidth, barHeight - 6, 8, 8);
 		
-		// Volume number
 		g2.setFont(g2.getFont().deriveFont(20F));
 		String volumeText = gp.music.volumeScale + "/5";
 		this.drawOutlinedText(volumeText, getCenterAlignedTextX(volumeText, barX + barWidth / 2), contentY, selected ? textColor : new Color(200, 200, 200), Color.BLACK);
 		
-		// Arrows if selected
 		if (selected) {
 			g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
 			float arrowAlpha = 0.6f + (float)(Math.sin(pulseCounter * 0.1) * 0.4);
@@ -1706,11 +1700,9 @@ public abstract class AbstractUI {
 		// SFX volume bar
 		barY = contentY - gp.tileSize / 3;
 		
-		// Background
 		g2.setColor(new Color(30, 30, 30, 200));
 		g2.fillRoundRect(barX, barY, barWidth, barHeight, 10, 10);
 		
-		// Border
 		if (selected) {
 			g2.setStroke(new BasicStroke(3));
 			g2.setColor(textColor);
@@ -1720,17 +1712,14 @@ public abstract class AbstractUI {
 		}
 		g2.drawRoundRect(barX, barY, barWidth, barHeight, 10, 10);
 		
-		// Fill
 		volumeWidth = (barWidth - 6) * gp.sfx.volumeScale / 5;
 		g2.setColor(selected ? textColor.darker() : new Color(100, 200, 100));
 		g2.fillRoundRect(barX + 3, barY + 3, volumeWidth, barHeight - 6, 8, 8);
 		
-		// Volume number
 		g2.setFont(g2.getFont().deriveFont(20F));
 		volumeText = gp.sfx.volumeScale + "/5";
 		this.drawOutlinedText(volumeText, getCenterAlignedTextX(volumeText, barX + barWidth / 2), contentY, selected ? textColor : new Color(200, 200, 200), Color.BLACK);
 		
-		// Arrows if selected
 		if (selected) {
 			g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
 			float arrowAlpha = 0.6f + (float)(Math.sin(pulseCounter * 0.1) * 0.4);
@@ -1760,15 +1749,99 @@ public abstract class AbstractUI {
 			}
 		}
 		
-		// Divider
-		contentY += itemHeight;
+		// div line
+		contentY += itemHeight - gp.tileSize / 3;
 		g2.setStroke(new BasicStroke(2));
 		g2.setColor(new Color(100, 100, 100));
-		g2.drawLine(frameX + gp.tileSize, contentY - gp.tileSize / 2, 
-			frameX + frameWidth - gp.tileSize, contentY - gp.tileSize / 2);
+		g2.drawLine(frameX + gp.tileSize, contentY - gp.tileSize / 2, frameX + frameWidth - gp.tileSize, contentY - gp.tileSize / 2);
 		
-		// CONTROLS - Button style
+		// FULLSCREEN
+		contentY += gp.tileSize / 3;
 		selected = commandNum == 2;
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 28F));
+		drawOutlinedText("Fullscreen", contentX, contentY, selected ? textColor : new Color(200, 200, 200), Color.BLACK);
+		
+		int toggleX = contentX + gp.tileSize * 3;
+		int toggleY = contentY - gp.tileSize / 3;
+		drawToggleSwitch(toggleX, toggleY, gp.config.fullscreen, selected);
+		
+		if (selected && (gp.keyH.wPressed || gp.keyH.leftPressed || gp.keyH.rightPressed)) {
+			gp.keyH.wPressed = false;
+			gp.keyH.leftPressed = false;
+			gp.keyH.rightPressed = false;
+			if (gp.config.fullscreen) {
+				gp.playSFX(Sound.S_MENU_CAN);
+			} else {
+				gp.playSFX(Sound.S_MENU_CON);
+			}
+			// TODO: Toggle fullscreen functionality
+			gp.config.fullscreen = !gp.config.fullscreen;
+		}
+		
+		// TOGGLE RUN
+		contentY += itemHeight;
+		selected = commandNum == 3;
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 28F));
+		drawOutlinedText("Toggle Run", contentX, contentY, 
+			selected ? textColor : new Color(200, 200, 200), Color.BLACK);
+		
+		toggleY = contentY - gp.tileSize / 3;
+		drawToggleSwitch(toggleX, toggleY, gp.config.toggleRun, selected);
+		
+		if (selected && (gp.keyH.wPressed || gp.keyH.leftPressed || gp.keyH.rightPressed)) {
+			gp.keyH.wPressed = false;
+			gp.keyH.leftPressed = false;
+			gp.keyH.rightPressed = false;
+			if (gp.config.toggleRun) {
+				gp.playSFX(Sound.S_MENU_CAN);
+			} else {
+				gp.playSFX(Sound.S_MENU_CON);
+			}
+			// TODO: Toggle run functionality
+			gp.config.toggleRun = !gp.config.toggleRun;
+		}
+		
+		// DIFFICULTY SELECTOR
+		contentY += itemHeight;
+		selected = commandNum == 4;
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 28F));
+		drawOutlinedText("Difficulty", contentX, contentY, 
+			selected ? textColor : new Color(200, 200, 200), Color.BLACK);
+		
+		boolean difficultyChangable = gp.gameState == GamePanel.MENU_STATE;
+		int selectorX = toggleX;
+		String difficulty = difficultyChangable ? Player.DIFFICULTIES[gp.player.p.difficulty] : "N/A";
+		Color difficultyColor = difficultyChangable ? Player.DIFFICULTY_COLORS[gp.player.p.difficulty] : new Color(100, 100, 100);
+		
+		// colored difficulty text
+		g2.setFont(g2.getFont().deriveFont(difficultyChangable ? Font.BOLD : Font.ITALIC, 24F));
+		int diffX = selectorX + gp.tileSize / 2;
+		if (selected) {
+			drawOutlinedText(difficulty, diffX, contentY, difficultyColor, Color.BLACK);
+		} else {
+			Color desaturated = new Color(
+				(difficultyColor.getRed() + 100) / 2,
+				(difficultyColor.getGreen() + 100) / 2,
+				(difficultyColor.getBlue() + 100) / 2
+			);
+			drawOutlinedText(difficulty, diffX, contentY, desaturated, Color.BLACK);
+		}
+		
+		if (selected && gp.keyH.wPressed) {
+			gp.keyH.wPressed = false;
+			if (difficultyChangable) {
+				gp.playSFX(Sound.S_MENU_1);
+				settingsState = 2;
+				commandNum = 0;
+				difficultyNum = gp.player.p.difficulty;
+			} else {
+				gp.playSFX(Sound.S_MENU_CAN);
+			}
+		}
+		
+		// CONTROLS
+		contentY += gp.tileSize;
+		selected = commandNum == 5;
 		int buttonWidth = frameWidth - gp.tileSize * 2;
 		int buttonHeight = (int)(gp.tileSize * 0.8);
 		int buttonX = frameX + gp.tileSize;
@@ -1795,33 +1868,7 @@ public abstract class AbstractUI {
 			commandNum = 0;
 		}
 		
-		// UNUSED OPTIONS (grayed out)
-		contentY += itemHeight;
-		selected = commandNum == 3;
-		buttonY = contentY - gp.tileSize / 3;
-		
-		g2.setColor(new Color(20, 20, 20, 150));
-		g2.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
-		g2.setStroke(new BasicStroke(2));
-		g2.setColor(new Color(60, 60, 60));
-		g2.drawRect(buttonX, buttonY, buttonWidth, buttonHeight);
-		
-		g2.setFont(g2.getFont().deriveFont(Font.ITALIC, 24F));
-		String unusedText = "Unused";
-		drawOutlinedText(unusedText, getCenterAlignedTextX(unusedText, frameX + frameWidth / 2), contentY + gp.tileSize / 4, new Color(100, 100, 100), Color.BLACK);
-		
-		contentY += itemHeight;
-		selected = commandNum == 4;
-		buttonY = contentY - gp.tileSize / 3;
-		
-		g2.setColor(new Color(20, 20, 20, 150));
-		g2.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
-		g2.setStroke(new BasicStroke(2));
-		g2.setColor(new Color(60, 60, 60));
-		g2.drawRect(buttonX, buttonY, buttonWidth, buttonHeight);
-		
-		g2.setFont(g2.getFont().deriveFont(Font.ITALIC, 24F));
-		drawOutlinedText(unusedText, getCenterAlignedTextX(unusedText, frameX + frameWidth / 2), contentY + gp.tileSize / 4, new Color(100, 100, 100), Color.BLACK);
+		int MAX_OPTIONS = 5;
 		
 		// Navigation
 		if (gp.keyH.upPressed) {
@@ -1829,14 +1876,14 @@ public abstract class AbstractUI {
 			gp.playSFX(Sound.S_MENU_1);
 			commandNum--;
 			if (commandNum < 0) {
-				commandNum = 2; // Skip unused options
+				commandNum = MAX_OPTIONS; // Skip unused options
 			}
 		}
 		if (gp.keyH.downPressed) {
 			gp.keyH.downPressed = false;
 			gp.playSFX(Sound.S_MENU_1);
 			commandNum++;
-			if (commandNum > 2) {
+			if (commandNum > MAX_OPTIONS) {
 				commandNum = 0; // Skip unused options
 			}
 		}
@@ -1971,6 +2018,227 @@ public abstract class AbstractUI {
 			String wText = (commandNum == resetIndex) ? "Reset" : "Rebind";
 			drawToolTips(waitingForKey ? null : wText, null, waitingForKey ? null : "Back", "Back");
 		}
+	}
+	
+	public void drawDifficultyScreen(int frameX, int frameY, int frameWidth, int frameHeight) {
+		drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+		
+		// Title
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 32F));
+		g2.setColor(Color.WHITE);
+		String title = "Change Difficulty";
+		int titleX = getCenterAlignedTextX(title, frameX + frameWidth / 2);
+		int titleY = frameY + gp.tileSize;
+		drawOutlinedText(title, titleX, titleY, textColor, Color.BLACK);
+		
+		// Divider
+		int dividerY = titleY + gp.tileSize / 4;
+		g2.setStroke(new BasicStroke(2));
+		g2.setColor(new Color(100, 100, 100));
+		g2.drawLine(frameX + gp.tileSize / 2, dividerY, frameX + frameWidth - gp.tileSize / 2, dividerY);
+		
+		// Current difficulty display
+		int contentY = dividerY + gp.tileSize * 2 / 3;
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 28F));
+		String currentLabel = "Current Difficulty:";
+		int labelX = getCenterAlignedTextX(currentLabel, frameX + frameWidth / 2);
+		drawOutlinedText(currentLabel, labelX, contentY, new Color(200, 200, 200), Color.BLACK);
+		
+		contentY += gp.tileSize * 2 / 3;
+		String currentDifficulty = Player.DIFFICULTIES[gp.player.p.difficulty];
+		Color currentColor = Player.DIFFICULTY_COLORS[gp.player.p.difficulty];
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 36F));
+		int currentX = getCenterAlignedTextX(currentDifficulty, frameX + frameWidth / 2);
+		drawOutlinedText(currentDifficulty, currentX, contentY, currentColor, Color.BLACK);
+		
+		// New difficulty selector
+		contentY += gp.tileSize * 1.25;
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 28F));
+		String newLabel = "New Difficulty:";
+		labelX = getCenterAlignedTextX(newLabel, frameX + frameWidth / 2);
+		drawOutlinedText(newLabel, labelX, contentY, commandNum == 0 ? textColor : new Color(200, 200, 200), Color.BLACK);
+		
+		contentY += gp.tileSize * 3 / 4;
+		String newDifficulty = Player.DIFFICULTIES[difficultyNum];
+		Color newColor = Player.DIFFICULTY_COLORS[difficultyNum];
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 36F));
+		int selectorX = frameX + frameWidth / 2 - gp.tileSize * 3 / 2;
+		
+		// Draw colored difficulty text with selector styling
+		int diffX = getCenterAlignedTextX(newDifficulty, frameX + frameWidth / 2);
+		if (commandNum == 0) {
+			int selectorWidth = gp.tileSize * 3;
+			int selectorHeight = (int)(gp.tileSize * 0.75);
+			int selectorY = contentY - selectorHeight + gp.tileSize / 8;
+			
+			g2.setColor(new Color(0, 0, 0, 150));
+			g2.fillRect(selectorX, selectorY, selectorWidth, selectorHeight);
+			g2.setStroke(new BasicStroke(2));
+			g2.setColor(textColor);
+			g2.drawRect(selectorX, selectorY, selectorWidth, selectorHeight);
+			
+			drawOutlinedText(newDifficulty, diffX, contentY, newColor, Color.BLACK);
+			
+			// Draw arrows
+			g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
+			float arrowAlpha = 0.6f + (float)(Math.sin(pulseCounter * 0.1) * 0.4);
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, arrowAlpha));
+			
+			g2.setColor(Color.YELLOW);
+			g2.drawString("<", selectorX - gp.tileSize / 2, contentY);
+			g2.drawString(">", selectorX + selectorWidth + gp.tileSize / 4, contentY);
+			
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+		} else {
+			Color desaturated = new Color(
+				(newColor.getRed() + 100) / 2,
+				(newColor.getGreen() + 100) / 2,
+				(newColor.getBlue() + 100) / 2
+			);
+			drawOutlinedText(newDifficulty, diffX, contentY, desaturated, Color.BLACK);
+		}
+		
+		// Nuzlocke warning if applicable
+		boolean nuzlockeActive = gp.player.p.nuzlocke;
+		boolean difficultyChanged = difficultyNum != gp.player.p.difficulty;
+		
+		if (nuzlockeActive && difficultyChanged) {
+			contentY += gp.tileSize;
+			
+			// Warning box
+			int warningX = frameX + gp.tileSize / 2;
+			int warningY = contentY - gp.tileSize * 3 / 4;
+			int warningWidth = frameWidth - gp.tileSize;
+			int warningHeight = (int)(gp.tileSize * 1.5);
+			
+			// Red warning background
+			g2.setColor(new Color(150, 0, 0, 180));
+			g2.fillRoundRect(warningX, warningY, warningWidth, warningHeight, 15, 15);
+			g2.setStroke(new BasicStroke(3));
+			g2.setColor(Color.RED);
+			g2.drawRoundRect(warningX, warningY, warningWidth, warningHeight, 15, 15);
+			
+			// Warning text
+			g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));
+			contentY -= gp.tileSize / 8;
+			String warning1 = "WARNING:";
+			int warningTextX = getCenterAlignedTextX(warning1, frameX + frameWidth / 2);
+			drawOutlinedText(warning1, warningTextX, contentY, Color.YELLOW, Color.BLACK);
+			
+			contentY += gp.tileSize / 3;
+			g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 18F));
+			String warning2 = "Changing difficulty will";
+			warningTextX = getCenterAlignedTextX(warning2, frameX + frameWidth / 2);
+			drawOutlinedText(warning2, warningTextX, contentY, Color.WHITE, Color.BLACK);
+			
+			contentY += gp.tileSize / 3;
+			String warning3 = "invalidate your Nuzlocke!";
+			warningTextX = getCenterAlignedTextX(warning3, frameX + frameWidth / 2);
+			drawOutlinedText(warning3, warningTextX, contentY, Color.WHITE, Color.BLACK);
+		}
+		
+		// Confirm button
+		contentY = frameY + frameHeight - gp.tileSize;
+		boolean confirmSelected = commandNum == 1;
+		boolean canConfirm = difficultyChanged;
+		
+		int buttonWidth = gp.tileSize * 3;
+		int buttonHeight = (int)(gp.tileSize * 0.8);
+		int buttonX = frameX + frameWidth / 2 - buttonWidth / 2;
+		int buttonY = contentY - gp.tileSize / 3;
+		
+		if (!canConfirm) {
+			// Grayed out button
+			g2.setColor(new Color(20, 20, 20, 150));
+			g2.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
+			g2.setStroke(new BasicStroke(2));
+			g2.setColor(new Color(60, 60, 60));
+			g2.drawRect(buttonX, buttonY, buttonWidth, buttonHeight);
+			
+			g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
+			String confirmText = "Confirm";
+			drawOutlinedText(confirmText, getCenterAlignedTextX(confirmText, frameX + frameWidth / 2), contentY + gp.tileSize / 4, new Color(100, 100, 100), Color.BLACK);
+		} else if (confirmSelected) {
+			drawPanelWithBorder(buttonX, buttonY, buttonWidth, buttonHeight, backgroundOpacity + 30, textColor);
+			
+			g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
+			String confirmText = "Confirm";
+			drawOutlinedText(confirmText, getCenterAlignedTextX(confirmText, frameX + frameWidth / 2), contentY + gp.tileSize / 4, textColor, Color.BLACK);
+		} else {
+			g2.setColor(new Color(40, 40, 40, 180));
+			g2.fillRect(buttonX, buttonY, buttonWidth, buttonHeight);
+			g2.setStroke(new BasicStroke(2));
+			g2.setColor(new Color(100, 100, 100));
+			g2.drawRect(buttonX, buttonY, buttonWidth, buttonHeight);
+			
+			g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
+			String confirmText = "Confirm";
+			drawOutlinedText(confirmText, getCenterAlignedTextX(confirmText, frameX + frameWidth / 2), contentY + gp.tileSize / 4, new Color(200, 200, 200), Color.BLACK);
+		}
+		
+		// Navigation
+		if (gp.keyH.upPressed) {
+			gp.keyH.upPressed = false;
+			gp.playSFX(Sound.S_MENU_1);
+			commandNum--;
+			if (commandNum < 0) commandNum = canConfirm ? 1 : 0;
+		}
+		
+		if (gp.keyH.downPressed) {
+			gp.keyH.downPressed = false;
+			gp.playSFX(Sound.S_MENU_1);
+			commandNum++;
+			if (commandNum > (canConfirm ? 1 : 0)) commandNum = 0;
+		}
+		
+		if (commandNum == 0) {
+			if (gp.keyH.leftPressed) {
+				gp.keyH.leftPressed = false;
+				gp.playSFX(Sound.S_MENU_1);
+				difficultyNum--;
+				if (difficultyNum < 0) difficultyNum = Player.DIFFICULTIES.length - 1;
+			}
+			
+			if (gp.keyH.rightPressed) {
+				gp.keyH.rightPressed = false;
+				gp.playSFX(Sound.S_MENU_1);
+				difficultyNum++;
+				if (difficultyNum >= Player.DIFFICULTIES.length) difficultyNum = 0;
+			}
+		}
+		
+		if (gp.keyH.wPressed) {
+			gp.keyH.wPressed = false;
+			if (commandNum == 1 && canConfirm) {
+				gp.playSFX(Sound.S_MENU_CON);
+				// Invalidate nuzlocke if active
+				if (nuzlockeActive) {
+					gp.player.p.invalidateNuzlocke("Changed difficulty from " + Player.DIFFICULTIES[gp.player.p.difficulty] + " to " + Player.DIFFICULTIES[difficultyNum]);
+				}
+				
+				// Apply difficulty change
+				gp.player.p.difficulty = difficultyNum;
+				
+				// Return to settings
+				settingsState = 0;
+				commandNum = 4; // Return to difficulty option
+				difficultyNum = 0;
+			} else if (commandNum == 0 || !canConfirm) {
+				gp.playSFX(Sound.S_MENU_CAN);
+			}
+		}
+		
+		if (gp.keyH.sPressed) {
+			gp.keyH.sPressed = false;
+			gp.playSFX(Sound.S_MENU_CAN);
+			// Return to settings without saving
+			settingsState = 0;
+			commandNum = 4; // Return to difficulty option
+			difficultyNum = 0;
+		}
+		
+		String wText = (commandNum == 1 && canConfirm) ? "Confirm" : null;
+		drawToolTips(wText, null, "Back", "Back");
 	}
 	
 	public void drawOutlinedText(String text, int x, int y, Color fillColor, Color outlineColor) {
@@ -2136,5 +2404,75 @@ public abstract class AbstractUI {
 	    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
 	    g2.setColor(Color.WHITE);
 	}
+	
+	public void drawToggleSwitch(int x, int y, boolean isOn, boolean selected) {
+		int toggleWidth = (int)(gp.tileSize * 1.5);
+		int toggleHeight = gp.tileSize / 3;
+		
+		Color bgColor = isOn ? new Color(0, 150, 0) : new Color(100, 100, 100);
+		g2.setColor(bgColor);
+		g2.fillRoundRect(x, y, toggleWidth, toggleHeight, toggleHeight, toggleHeight);
+		
+		if (selected) {
+			g2.setStroke(new BasicStroke(3));
+			g2.setColor(Color.YELLOW);
+			g2.drawRoundRect(x - 2, y - 2, toggleWidth + 4, toggleHeight + 4, 
+				toggleHeight + 4, toggleHeight + 4);
+		}
+		
+		g2.setStroke(new BasicStroke(2));
+		g2.setColor(Color.WHITE);
+		g2.drawRoundRect(x, y, toggleWidth, toggleHeight, toggleHeight, toggleHeight);
+		
+		int knobSize = toggleHeight - 4;
+		int knobX = isOn ? x + toggleWidth - knobSize - 2 : x + 2;
+		int knobY = y + 2;
+		
+		g2.setColor(Color.WHITE);
+		g2.fillOval(knobX, knobY, knobSize, knobSize);
+		g2.setColor(Color.DARK_GRAY);
+		g2.drawOval(knobX, knobY, knobSize, knobSize);
+		
+		g2.setFont(g2.getFont().deriveFont(16F));
+		String status = isOn ? "ON" : "OFF";
+		int statusX = x + toggleWidth + 10;
+		int statusY = y + toggleHeight / 2 + 6;
+		Color statusColor = selected ? textColor : new Color(180, 180, 180);
+		drawOutlinedText(status, statusX, statusY, statusColor, Color.BLACK);
+	}
 
+	public void drawSelector(int x, int y, String value, boolean selected) {
+		int selectorWidth = gp.tileSize * 3;
+		int selectorHeight = (int)(gp.tileSize * 0.5);
+		int selectorY = y - selectorHeight + gp.tileSize / 8;
+		
+		// Background
+		if (selected) {
+			g2.setColor(new Color(0, 0, 0, 150));
+			g2.fillRect(x, selectorY, selectorWidth, selectorHeight);
+			g2.setStroke(new BasicStroke(2));
+			g2.setColor(textColor);
+			g2.drawRect(x, selectorY, selectorWidth, selectorHeight);
+		}
+		
+		// Value
+		g2.setFont(g2.getFont().deriveFont(20F));
+		int valueX = getCenterAlignedTextX(value, x + selectorWidth / 2);
+		int valueY = y;
+		Color valueColor = selected ? textColor : new Color(200, 200, 200);
+		drawOutlinedText(value, valueX, valueY, valueColor, Color.BLACK);
+		
+		// Arrows if selected
+		if (selected) {
+			g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));
+			float arrowAlpha = 0.6f + (float)(Math.sin(pulseCounter * 0.1) * 0.4);
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, arrowAlpha));
+			
+			g2.setColor(Color.YELLOW);
+			g2.drawString("<", x - 10, y);
+			g2.drawString(">", x + selectorWidth + 5, y);
+			
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+		}
+	}
 }

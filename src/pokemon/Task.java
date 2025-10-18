@@ -277,12 +277,11 @@ public class Task {
 			gp.ui.tasks.add(t);
 			gp.ui.checkTasks = true;
 			return t;
-		} else if (gp != null) {
+		} else if (gp != null && Pokemon.createTask) {
 			if (type == Task.TEXT) {
 				gp.ui.showMessage(string);
 			}
-			System.out.println("GameState wasn't Task or Rare Candy state, it was: " + gp.gameState);
-			return null;
+			throw new IllegalStateException("GameState wasn't Task or Rare Candy state, it was: " + gp.gameState);
 		} else {
 			return createTask(type, string, p);
 		}

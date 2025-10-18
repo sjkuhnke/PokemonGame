@@ -43,7 +43,7 @@ public class TitleScreen extends AbstractUI {
 	
 	private boolean showMessage;
 	private int menuState = MAIN_MENU;
-	private int menuNum = -1;
+	private int menuNum;
 	
 	// NEW GAME
 	private String saveFileName = "";
@@ -987,8 +987,7 @@ public class TitleScreen extends AbstractUI {
 		selected = newGameMenuNum == NG_DIFFICULTY;
 		drawOutlinedText("Difficulty:", contentX + gp.tileSize / 4, contentY, selected ? textColor : new Color(200, 200, 200), Color.BLACK);
 		
-		String[] difficulties = {"Normal", "Hard", "Extreme"};
-		drawSelector(contentX + gp.tileSize * 3, contentY, difficulties[difficultyLevel], selected);
+		drawSelector(contentX + gp.tileSize * 3, contentY, Player.DIFFICULTIES[difficultyLevel], selected);
 		
 		if (selected) {
 			int tipY = contentY;
@@ -1190,77 +1189,6 @@ public class TitleScreen extends AbstractUI {
 		}
 		
 		return offset;
-	}
-	
-	private void drawToggleSwitch(int x, int y, boolean isOn, boolean selected) {
-		int toggleWidth = (int)(gp.tileSize * 1.5);
-		int toggleHeight = gp.tileSize / 3;
-		
-		Color bgColor = isOn ? new Color(0, 150, 0) : new Color(100, 100, 100);
-		g2.setColor(bgColor);
-		g2.fillRoundRect(x, y, toggleWidth, toggleHeight, toggleHeight, toggleHeight);
-		
-		if (selected) {
-			g2.setStroke(new BasicStroke(3));
-			g2.setColor(Color.YELLOW);
-			g2.drawRoundRect(x - 2, y - 2, toggleWidth + 4, toggleHeight + 4, 
-				toggleHeight + 4, toggleHeight + 4);
-		}
-		
-		g2.setStroke(new BasicStroke(2));
-		g2.setColor(Color.WHITE);
-		g2.drawRoundRect(x, y, toggleWidth, toggleHeight, toggleHeight, toggleHeight);
-		
-		int knobSize = toggleHeight - 4;
-		int knobX = isOn ? x + toggleWidth - knobSize - 2 : x + 2;
-		int knobY = y + 2;
-		
-		g2.setColor(Color.WHITE);
-		g2.fillOval(knobX, knobY, knobSize, knobSize);
-		g2.setColor(Color.DARK_GRAY);
-		g2.drawOval(knobX, knobY, knobSize, knobSize);
-		
-		g2.setFont(g2.getFont().deriveFont(16F));
-		String status = isOn ? "ON" : "OFF";
-		int statusX = x + toggleWidth + 10;
-		int statusY = y + toggleHeight / 2 + 6;
-		Color statusColor = selected ? textColor : new Color(180, 180, 180);
-		drawOutlinedText(status, statusX, statusY, statusColor, Color.BLACK);
-	}
-
-	private void drawSelector(int x, int y, String value, boolean selected) {
-		int selectorWidth = gp.tileSize * 3;
-		int selectorHeight = (int)(gp.tileSize * 0.5);
-		int selectorY = y - selectorHeight + gp.tileSize / 8;
-		
-		// Background
-		if (selected) {
-			g2.setColor(new Color(0, 0, 0, 150));
-			g2.fillRect(x, selectorY, selectorWidth, selectorHeight);
-			g2.setStroke(new BasicStroke(2));
-			g2.setColor(textColor);
-			g2.drawRect(x, selectorY, selectorWidth, selectorHeight);
-		}
-		
-		// Value
-		g2.setFont(g2.getFont().deriveFont(20F));
-		int valueX = getCenterAlignedTextX(value, x + selectorWidth / 2);
-		int valueY = y;
-		Color valueColor = selected ? textColor : new Color(200, 200, 200);
-		drawOutlinedText(value, valueX, valueY, valueColor, Color.BLACK);
-		
-		// Arrows if selected
-		if (selected) {
-			g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));
-			float arrowAlpha = 0.6f + (float)(Math.sin(pulseCounter * 0.1) * 0.4);
-			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, arrowAlpha));
-			
-			g2.setColor(Color.YELLOW);
-			g2.drawString("<", x - 10, y);
-			g2.drawString(">", x + selectorWidth + 5, y);
-			
-			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
-		}
 	}
 
 	private void drawSavesMenu() {		
@@ -1816,6 +1744,15 @@ public class TitleScreen extends AbstractUI {
 				commandNum = 0;
 				settingsState = 0;
 				if (changed) showMessage("Keybinds successfully updated!");
+			}
+		} else if (settingsState == 2) {
+			if (gp.keyH.sPressed || gp.keyH.dPressed) {
+				gp.keyH.sPressed = false;
+				gp.keyH.dPressed = false;
+				gp.playSFX(Sound.S_MENU_CAN);
+				commandNum = 4;
+				settingsState = 0;
+				difficultyNum = 0;
 			}
 		}
 	}
