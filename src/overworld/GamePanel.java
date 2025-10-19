@@ -6,6 +6,9 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -55,6 +58,12 @@ public class GamePanel extends JPanel implements Runnable {
 	public final int maxScreenRow = 12; // 36
 	public final int screenWidth = tileSize * maxScreenCol;
 	public final int screenHeight = tileSize * maxScreenRow;
+	
+	// FULLSCREEN
+	public int fullScreenWidth = screenWidth;
+	public int fullScreenHeight = screenHeight;
+	BufferedImage screen;
+	Graphics2D g2;
 	
 	// WORLD SETTINGS
 	public final int maxWorldCol = 100;
@@ -136,7 +145,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public GamePanel(JFrame window) {
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
 		this.setBackground(Color.black);
-		this.setDoubleBuffered(true);
+		this.setDoubleBuffered(false);
 		
 		keyH = new KeyHandler(this);
 		
@@ -156,31 +165,42 @@ public class GamePanel extends JPanel implements Runnable {
 		loadingScreen = new LoadingScreen(this);
 	}
 	
-	public void setupGamePanel() {		
-		loadingScreen.setProgress(0, "Loading Asset Setter...");
+	public void setupGamePanel() {
+		screen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
+		g2 = (Graphics2D) screen.getGraphics();
+		
+		startGameThread();
+		
+		loadingScreen.setProgress(5, "Loading Title Screen...");
+		titleScreen = new TitleScreen(this, true); // important that this is loaded before the config is
+		
+		loadingScreen.setProgress(1, "Loading config...");
+		config = new Config(this);
+		config.loadConfig();
+		
+		if (config.fullscreen) {
+			setFullScreen();
+		}
+		
+		loadingScreen.setProgress(5, "Loading Asset Setter...");
 		aSetter = new AssetSetter(this);
 		
-		loadingScreen.setProgress(2, "Loading Event Handler...");
+		loadingScreen.setProgress(7, "Loading Event Handler...");
 		eHandler = new EventHandler(this);
 		
-		loadingScreen.setProgress(4, "Loading Collision Checker...");
+		loadingScreen.setProgress(9, "Loading Collision Checker...");
 		cChecker = new CollisionChecker(this);
 		
-		loadingScreen.setProgress(6, "Loading PlayerCharacter entity...");
+		loadingScreen.setProgress(11, "Loading PlayerCharacter entity...");
 		player = new PlayerCharacter(this, keyH);
 		
-		loadingScreen.setProgress(8, "Loading Puzzle Manager...");
+		loadingScreen.setProgress(13, "Loading Puzzle Manager...");
 		puzzleM = new PuzzleManager(this);
 		
-		loadingScreen.setProgress(10, "Loading UIs...");
+		loadingScreen.setProgress(15, "Loading UIs...");
 		ui = new UI(this);
 		battleUI = new BattleUI(this);
 		simBattleUI = new SimBattleUI(this);
-		titleScreen = new TitleScreen(this, true); // important that this is loaded before the config is
-		
-		loadingScreen.setProgress(15, "Loading config...");
-		config = new Config(this);
-		config.loadConfig();
 	}
 	
 	public void setGameState(int state) {
@@ -194,27 +214,47 @@ public class GamePanel extends JPanel implements Runnable {
 
 	@Override
 	public void run() {
-		double drawInterval = 1000000000/FPS;
-		double nextDrawTime = System.nanoTime() + drawInterval;
+		double delta = 0;
+		long lastTime = System.nanoTime();
+		long currentTime;
+		long timer = 0;
 		
 		while (gameThread != null) {
-			drawInterval = 1000000000/FPS;
-			update();
+			if (!window.isVisible() || (window.getExtendedState() & JFrame.ICONIFIED) != 0) {
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				lastTime = System.nanoTime();
+				delta = 0;
+				continue;
+			}
 			
-			repaint();
+			double drawInterval = 1000000000/FPS;
+			currentTime = System.nanoTime();
 			
-			try {
-				double remainingTime = nextDrawTime - System.nanoTime();
-				remainingTime /= 1000000;
+			long elapsed = currentTime - lastTime;
+			
+			if (elapsed > 1000000000L) {
+				elapsed = (long) drawInterval;
+			}
+			
+			delta += elapsed / drawInterval;
+			timer += elapsed;
+			lastTime = currentTime;
+			
+			if (delta >= 1) {
+				if (delta > 5) delta = 1; // cap delta
 				
-				if (remainingTime < 0) remainingTime = 0;
-				
-				Thread.sleep((long)remainingTime);
-				
-				nextDrawTime += drawInterval;
-				
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+				update();
+				drawToTempScreen(); // draw everything to the buffered image
+				drawToScreen(); // draw everything to the screen
+				delta--;
+			}
+			
+			if (timer >= 1000000000) {
+				timer = 0;
 			}
 		}
 	}
@@ -235,6 +275,15 @@ public class GamePanel extends JPanel implements Runnable {
 			FPS = 120;
 		} else {
 			FPS = 60;
+		}
+		if (keyH.escPressed && config != null && config.fullscreen) {
+			keyH.escPressed = false;
+			config.fullscreen = false;
+			setDefaultView();
+		}
+		if (keyH.fullPressed && config != null) {
+			keyH.fullPressed = false;
+			toggleFullScreen();
 		}
 		if (keyH.ctrlPressed && keyH.shiftPressed) {
 			System.out.println("------------------------------------------");
@@ -293,17 +342,11 @@ public class GamePanel extends JPanel implements Runnable {
 		
 	}
 	
-	@Override
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		Graphics2D g2 = (Graphics2D)g;
-		
+	public void drawToTempScreen() {
 		if (gameState == LOADING_STATE) {
 			loadingScreen.draw(g2);
 		} else if (gameState == TITLE_STATE) {
-			if (titleScreen != null) {
-				titleScreen.draw(g2);
-			}
+			titleScreen.draw(g2);
 		} else if (gameState == SIM_BATTLE_STATE) {
 			// Draw Sim Battle Screen
 			simBattleUI.draw(g2);
@@ -353,8 +396,16 @@ public class GamePanel extends JPanel implements Runnable {
 			// Draw Tooltips
 			drawOverworldToolTips(g2);
 		}
+	}
+	
+	public void drawToScreen() {
+		Graphics g = getGraphics();
 		
-		g2.dispose();
+		if (g != null) {
+			int screenX = config != null && config.fullscreen ? (window.getWidth() - fullScreenWidth) / 2 : 0;
+			g.drawImage(screen, screenX, 0, fullScreenWidth, fullScreenHeight, null);
+			g.dispose();
+		}
 	}
 	
 	public void playMusic(int i) {
@@ -549,6 +600,7 @@ public class GamePanel extends JPanel implements Runnable {
 		Pokemon.field = new Field();
 		battleUI.tasks = new ArrayList<>();
 		battleUI.currentTask = null;
+		battleUI.selectedLead = false;
 		battleUI.tempUser = null;
 		battleUI.tempFoe = null;
 		battleUI.weather = null;
@@ -661,10 +713,81 @@ public class GamePanel extends JPanel implements Runnable {
 		test.trainer.current = test;
 		Item.useCalc(test, null, null, false);
 	}
+	
+	public void setFullScreen() {
+		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		GraphicsDevice gd = ge.getDefaultScreenDevice();
+		
+		// Dispose of the window to prepare for fullscreen
+		window.dispose();
+		window.setUndecorated(true);
+		
+		// Set fullscreen window
+		gd.setFullScreenWindow(window);
+		
+		// Get actual screen dimensions
+		int screenWidth = window.getWidth();
+		int screenHeight = window.getHeight();
+		
+		// Calculate aspect ratio preserved dimensions
+		// Original game aspect ratio is 4:3 (screenWidth:screenHeight from settings)
+		double gameAspect = (double) this.screenWidth / this.screenHeight;
+		double screenAspect = (double) screenWidth / screenHeight;
+		
+		if (screenAspect > gameAspect) {
+			// Screen is wider than game - add black bars on sides
+			fullScreenHeight = screenHeight;
+			fullScreenWidth = (int) (screenHeight * gameAspect);
+		} else {
+			// Screen is taller than game - add black bars on top/bottom
+			fullScreenWidth = screenWidth;
+			fullScreenHeight = (int) (screenWidth / gameAspect);
+		}
+		
+		window.setVisible(true);
+		this.requestFocusInWindow();
+	}
 
-	public Pokemon encounterPokemon(String area, char type, boolean random) {
+	public void setDefaultView() {
+		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		GraphicsDevice gd = ge.getDefaultScreenDevice();
+		
+		// Exit fullscreen mode
+		if (gd.getFullScreenWindow() == window) {
+			gd.setFullScreenWindow(null);
+		}
+		
+		// Dispose and reconfigure window
+		window.dispose();
+		window.setUndecorated(false);
+		
+		// Reset to default dimensions
+		fullScreenWidth = screenWidth;
+		fullScreenHeight = screenHeight;
+		offsetX = 0;
+		offsetY = 0;
+		
+		// Set window size and center it
+		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
+		window.pack();
+		window.setLocationRelativeTo(null);
+		
+		window.setVisible(true);
+		this.requestFocusInWindow();
+	}
+	
+	public void toggleFullScreen() {
+		config.fullscreen = !config.fullscreen;
+		if (config.fullscreen) {
+			setFullScreen();
+		} else {
+			setDefaultView();
+		}
+	}
+
+	public Pokemon encounterPokemon(String area, char type, boolean banShedinja) {
 		if (currentMap == 149) return null;
-	    ArrayList<Encounter> encounters = Encounter.getEncounters(area, type, random);
+	    ArrayList<Encounter> encounters = Encounter.getEncounters(area, type, banShedinja);
 
 	    // Calculate the total encounter chance for the route
 	    double totalChance = 0.0;

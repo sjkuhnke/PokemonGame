@@ -8,7 +8,6 @@ import java.awt.Image;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.SwingUtilities;
 
 import overworld.GamePanel;
 
@@ -35,16 +34,6 @@ public class LoadingScreen {
 	public synchronized void setProgress(int progress, String task) {
 		this.progress = Math.min(100, Math.max(0, progress));
 		this.currentTask = task;
-		
-		SwingUtilities.invokeLater(() -> {
-			gp.repaint();
-		});
-		
-		try {
-			Thread.sleep(50);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	public void reset() {

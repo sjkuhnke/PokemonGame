@@ -32,6 +32,7 @@ public class PlayerCharacter extends Entity {
 	public Pokemon[] newDex; // for testing
 
 	private int cooldown;
+	public boolean isRunning;
 	public BufferedImage surf1, surf2, surf3, surf4, fight;
 	
 	public static String currentMapName;
@@ -262,10 +263,18 @@ public class PlayerCharacter extends Entity {
 			resetSpriteNum();
 			gp.gameState = GamePanel.MENU_STATE;
 		}
-		if (keyH.sPressed || ice) {
+		if (ice) {
 			speed = SPEED_2;
 		} else {
-			speed = SPEED_1;
+			if (gp.config.toggleRun) {
+				if (keyH.sPressed) {
+					keyH.sPressed = false;
+					isRunning = !isRunning;
+				}
+				speed = isRunning ? SPEED_2 : SPEED_1;
+			} else {
+				speed = keyH.sPressed ? SPEED_2 : SPEED_1;
+			}
 		}
 		if (!ice) {
 			for (int i = 0; i < gp.npc[1].length; i++) {
@@ -486,7 +495,7 @@ public class PlayerCharacter extends Entity {
 	
 	public void startWild(String area, char type) {
 		if (p.wiped()) return;
-		Pokemon foe = gp.encounterPokemon(area, type, p.random);
+		Pokemon foe = gp.encounterPokemon(area, type, p.banShedinja);
 		if (p.nuzlocke && p.wholeTeamOverLevelCap()) {
 			gp.wipe(true, p.current, foe, false);
 			return;
@@ -1124,25 +1133,38 @@ public class PlayerCharacter extends Entity {
 	}
 	
 	public Item[] getItems() {
-		int available = 8;
-	    if (p.badges > 7) available += 2;
-	    if (p.badges > 5) available ++;
-	    if (p.badges > 3) available += 2;
-	    if (p.badges > 2) available += 2;
-	    if (p.badges > 1) available ++;
-	    if (p.badges > 0) available += 2;
-	    Item[] shopItems = new Item[] {Item.REPEL, Item.POKEBALL, Item.POTION, Item.ANTIDOTE, Item.AWAKENING, Item.BURN_HEAL, Item.PARALYZE_HEAL, Item.FREEZE_HEAL, // 0 badges
-	    		Item.GREAT_BALL, Item.SUPER_POTION, // 1 badge
-	    		Item.ELIXIR, // 2 badges
-	    		Item.FULL_HEAL, Item.REVIVE, // 3 badges
-	    		Item.ULTRA_BALL, Item.HYPER_POTION, // 4 badges
-	    		Item.MAX_POTION, // 6 badges
-	    		Item.FULL_RESTORE, Item.MAX_REVIVE}; // 8 badges
-	    Item[] result = new Item[available];
-	    for (int i = 0; i < available; i++) {
-	    	result[i] = shopItems[i];
-	    }
-	    return result;
+		List<Item> items = new ArrayList<>();
+		
+		// base items
+		items.addAll(Arrays.asList(
+			Item.REPEL, Item.POKEBALL, Item.POTION,
+			Item.ANTIDOTE, Item.AWAKENING, Item.BURN_HEAL,
+			Item.PARALYZE_HEAL, Item.FREEZE_HEAL
+		));
+
+		// badge tiers
+		if (p.badges >= 1) {
+			items.addAll(Arrays.asList(Item.GREAT_BALL, Item.SUPER_POTION));
+		}
+		if (p.badges >= 2) {
+			items.add(Item.ELIXIR);
+		}
+		if (p.badges >= 3) {
+			items.add(Item.FULL_HEAL);
+			if (p.buyableRevives) items.add(Item.REVIVE);
+		}
+		if (p.badges >= 4) {
+			items.addAll(Arrays.asList(Item.ULTRA_BALL, Item.HYPER_POTION));
+		}
+		if (p.badges >= 6) {
+			items.add(Item.MAX_POTION);
+		}
+		if (p.badges >= 8) {
+			items.add(Item.FULL_RESTORE);
+			if (p.buyableRevives) items.add(Item.MAX_REVIVE);
+		}
+
+		return items.toArray(new Item[0]);
 	}
 	
 	public void runCode(String code, UI ui) {

@@ -3,6 +3,7 @@ import java.awt.Desktop;
 import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
@@ -41,29 +42,26 @@ import ui.LoadingScreen;
 public class Main {
 	public static JFrame window;
 	public static GamePanel gp;
-	public final static String gameTitle = "Pokemon Xhenos";
+	public static final String gameTitle = "Pokemon Xhenos";
+	public static final BufferedImage[] icons = new BufferedImage[5];
 
 	public static void main(String[] args) {
-		SwingUtilities.invokeLater(() -> {
-			window = new JFrame();
-			window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			window.setResizable(false);
-			window.setTitle(gameTitle);
-			
-			loadIcon(4);
-			
-			gp = new GamePanel(window);
-			gp.setGameState(GamePanel.LOADING_STATE);
-			
-			window.add(gp);
-			window.pack();
-			window.setLocationRelativeTo(null);
-			window.setVisible(true);
-			
-			new Thread(() -> {
-				performInitialLoad();
-			}).start();
-		});
+		window = new JFrame();
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		window.setResizable(false);
+		window.setTitle(gameTitle);
+		
+		loadIcon(window, 4);
+		
+		gp = new GamePanel(window);
+		gp.setGameState(GamePanel.LOADING_STATE);
+		
+		window.add(gp);
+		window.pack();
+		window.setLocationRelativeTo(null);
+		window.setVisible(true);
+		
+		performInitialLoad();
 	}
 	
 	private static void performInitialLoad() {
@@ -95,18 +93,25 @@ public class Main {
 			gp.playMusic(Sound.M_MENU_2);
 			gp.setGameState(GamePanel.TITLE_STATE);
 			gp.keyH.resetKeys(false);
-			gp.startGameThread();
 		} catch (Exception e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(window, "Error during initial load: " + e.getMessage());
 		}
 	}
 
-	private static void loadIcon(int image) {
+	public static void loadIcon(JFrame window, int image) {
 		try {
-		    URL iconURL = Main.class.getResource("/gen/icon" + image + ".png");
-		    if (iconURL != null) {
-		        Image icon = ImageIO.read(iconURL);
+			BufferedImage icon = null;
+			if (icons[image - 1] != null) {
+				icon = icons[image - 1];
+			} else {
+				URL iconURL = Main.class.getResource("/gen/icon" + image + ".png");
+				if (iconURL != null) {
+			        icon = ImageIO.read(iconURL);
+				}
+				icons[image - 1] = icon;
+			}
+		    if (icon != null) {
 		        window.setIconImage(icon);
 		        
 		        if (icon != null && System.getProperty("os.name").toLowerCase().contains("mac")) {
@@ -295,6 +300,7 @@ public class Main {
 								gp.battleUI.foe.trainer.getName() :
 								"a wild " + gp.battleUI.foe.getName()));
 					}
+					Sound.disposeAll();
 					System.exit(0);
 				}
 			}

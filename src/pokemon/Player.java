@@ -131,6 +131,10 @@ public class Player extends Trainer implements Serializable {
 	public static final int BET_INC = 10;
 	public static final int MAX_HOTKEYS = 5;
 	
+	// DIFFICULTY
+	public static final int NORMAL = 0;
+	public static final int HARD = 1;
+	public static final int EXTREME = 2;
 	public static final String[] DIFFICULTIES = {"Normal", "Hard", "Extreme"};
 	public static final Color[] DIFFICULTY_COLORS = {
 		new Color(100, 255, 100),  // Green for Normal
@@ -179,8 +183,8 @@ public class Player extends Trainer implements Serializable {
 		registeredItems = new Item[MAX_HOTKEYS];
 		
 		setupStatBerries();
-        setupResistBerries();
-        setupCrystals();
+		setupResistBerries();
+		setupCrystals();
 		
 		version = VERSION;
 	}
@@ -420,8 +424,8 @@ public class Player extends Trainer implements Serializable {
 		return bag;
 	}
 	
-	public void elevate(Pokemon pokemon) {
-		if (nuzlocke && pokemon.isFainted()) return;
+	public boolean elevate(Pokemon pokemon) {
+		if (nuzlocke && pokemon.isFainted()) return false;
 		int expAmt = pokemon.expMax - pokemon.exp;
     	pokemon.exp += expAmt;
     	while (pokemon.exp >= pokemon.expMax) {
@@ -431,6 +435,7 @@ public class Player extends Trainer implements Serializable {
             pokemon.exp = 0;
         }
     	pokemon.fainted = false;
+    	return true;
 	}
 	
 	public boolean buy(Item item) {
@@ -1060,6 +1065,10 @@ public class Player extends Trainer implements Serializable {
 	        		gp.ui.showMessage(p.nickname + " isn't fainted!");
 	        		return;
 	        	} else {
+	        		if (!allowRevives) {
+						gp.ui.showMessage("Revives are banned in your Nuzlocke settings!");
+						return;
+					}
 	        		p.fainted = false;
 	        		if (nuzlocke) {
 	        			invalidateNuzlocke("Used " + item.toString() + " on " + p.getName() + ".");
@@ -1477,7 +1486,7 @@ public class Player extends Trainer implements Serializable {
 		updateRegisteredItems();
 		if (!flag[4][6]) updateCoins();
 		if (!flag[0][23]) {
-			difficulty = 1;
+			difficulty = HARD;
 			flag[0][23] = true;
 		}
 		version = VERSION;
@@ -1957,7 +1966,7 @@ public class Player extends Trainer implements Serializable {
         text.types = new PType[] {p.type1, p.type2};
         Task.insertTask(text, 0);
         pokedex[p.id] = 2;
-        if (oldID == 129) {
+        if (oldID == 129 && !banShedinja) {
         	Pokemon shedinja = p.clone();
         	catchPokemon(shedinja.evolve(131), false);
         }

@@ -15,7 +15,7 @@ import util.SaveManager;
 
 public class KeyHandler implements KeyListener {
 
-	public boolean upPressed, downPressed, leftPressed, rightPressed, sPressed, wPressed, dPressed, aPressed, tabPressed, shiftPressed, ctrlPressed, calcPressed, kUpPressed, kDownPressed, kLeftPressed, kRightPressed, kSPressed, kWPressed, kDPressed, kAPressed;
+	public boolean upPressed, downPressed, leftPressed, rightPressed, sPressed, wPressed, dPressed, aPressed, tabPressed, shiftPressed, ctrlPressed, calcPressed, escPressed, fullPressed, kUpPressed, kDownPressed, kLeftPressed, kRightPressed, kSPressed, kWPressed, kDPressed, kAPressed;
 	public boolean hotkey1Pressed, hotkey2Pressed, hotkey3Pressed, hotkey4Pressed, hotkey5Pressed;
 	
 	GamePanel gp;
@@ -69,6 +69,14 @@ public class KeyHandler implements KeyListener {
 		
 		if (code == config.keys[config.calcKey]) {
 			calcPressed = true;
+		}
+		
+		if (code == config.keys[config.escKey]) {
+			escPressed = true;
+		}
+		
+		if (code == config.keys[config.fullKey]) {
+			fullPressed = true;
 		}
 		
 		if (code == config.keys[config.screenshotKey]) {
@@ -150,6 +158,12 @@ public class KeyHandler implements KeyListener {
 		if (code == config.keys[config.calcKey]) {
 			calcPressed = false;
 		}
+		if (code == config.keys[config.escKey]) {
+			escPressed = false;
+		}
+		if (code == config.keys[config.fullKey]) {
+			fullPressed = false;
+		}
 		
 		if (code == gp.config.keys[gp.config.hotkey1]) hotkey1Pressed = false;
 		if (code == gp.config.keys[gp.config.hotkey2]) hotkey2Pressed = false;
@@ -168,10 +182,7 @@ public class KeyHandler implements KeyListener {
 		downPressed = false;
 		leftPressed = false;
 		rightPressed = false;
-		sPressed = false;
-		wPressed = false;
-		dPressed = false;
-		aPressed = false;
+		resetMainKeys();
 		ctrlPressed = false;
 		if (resetShift) shiftPressed = false;
 		calcPressed = false;
@@ -237,8 +248,7 @@ public class KeyHandler implements KeyListener {
 	
 	 private void takeScreenshot() {
         // Create a BufferedImage from the JPanel's graphics
-        BufferedImage screenshot = new BufferedImage(gp.getWidth(), gp.getHeight(), BufferedImage.TYPE_INT_ARGB);
-        gp.paint(screenshot.getGraphics());
+        BufferedImage screenshot = gp.screen;
 
         SaveManager.saveScreenshot(screenshot);
 

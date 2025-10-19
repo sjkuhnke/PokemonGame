@@ -128,7 +128,7 @@
 150|Whiskeroar   |FIGHTING|MAGIC   |ADAPTABILITY      |JUSTIFIED         |NO_GUARD          |[95, 130, 100, 85, 75, 55]    |145.1 |35 |FIELD       |HUMAN$LIKE  |
 78 |Nincada      |BUG     |GROUND  |COMPOUND_EYES     |TINTED_LENS       |SWARM             |[31, 45, 90, 30, 30, 40]      |12.1  |255|BUG         |BUG         |
 79 |Ninjask      |BUG     |FLYING  |SPEED_BOOST       |TINTED_LENS       |SWARM             |[61, 90, 45, 50, 50, 160]     |26.5  |120|BUG         |BUG         |
-80 |Shedinja     |BUG     |GHOST   |WONDER_GUARD      |WONDER_GUARD      |WONDER_GUARD      |[1, 90, 45, 30, 30, 40]       |2.6   |45 |MINERAL     |MINERAL     |
+80 |Shedinja     |BUG     |GHOST   |WONDER_GUARD      |WONDER_GUARD      |WONDER_GUARD      |[1, 90, 45, 30, 30, 40]       |2.6   |45 |UNDISCOVERED|UNDISCOVERED|
 192|Sheltor      |WATER   |GHOST   |SWIFT_SWIM        |REGENERATOR       |SHELL_ARMOR       |[68, 29, 71, 31, 58, 33]      |9.5   |200|WATER_1     |WATER_1     |
 193|Shelnado     |WATER   |GHOST   |SWIFT_SWIM        |REGENERATOR       |SHELL_ARMOR       |[87, 51, 75, 97, 86, 83]      |65.7  |45 |WATER_1     |WATER_1     |
 154|Lilyray      |WATER   |null    |UNAWARE           |WATER_ABSORB      |LIGHTNING_ROD     |[34, 14, 20, 27, 90, 15]      |9.9   |140|WATER_2     |WATER_2     |

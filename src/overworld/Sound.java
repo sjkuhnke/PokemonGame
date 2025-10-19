@@ -1,11 +1,16 @@
 package overworld;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.LineEvent;
 
 public class Sound {
 	
@@ -15,6 +20,10 @@ public class Sound {
 	FloatControl fc;
 	float volume;
 	int index;
+	
+	// Clip Pool
+	private static Map<Integer, List<Clip>> clipPools = new HashMap<>();
+	private static final int CLIPS_PER_SOUND = 5;
 	
 	// CONSTANTS
 	public static final int M_MENU_1 = 0;
@@ -45,11 +54,43 @@ public class Sound {
 
 	public void setFile(int i) {
 		try {
-			AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[i]);
-			clip = AudioSystem.getClip();
-			clip.open(ais);
-			fc = (FloatControl)clip.getControl(FloatControl.Type.MASTER_GAIN);
-			checkVolume();
+			List<Clip> pool = clipPools.computeIfAbsent(i, k -> new ArrayList<>());
+			
+			Clip availableClip = null;
+			for (Clip c : pool) {
+				if (!c.isRunning()) {
+					availableClip = c;
+					break;
+				}
+			}
+			if (availableClip == null && pool.size() < CLIPS_PER_SOUND) {
+				AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[i]);
+				availableClip = AudioSystem.getClip();
+				availableClip.open(ais);
+				pool.add(availableClip);
+				
+				availableClip.addLineListener(event -> {
+					if (event.getType() == LineEvent.Type.STOP) {
+						Clip c = (Clip) event.getLine();
+						c.setFramePosition(0);
+					}
+				});
+			}
+			
+			if (availableClip == null && !pool.isEmpty()) {
+				availableClip = pool.get(0);
+				availableClip.stop();
+				
+				availableClip.setFramePosition(0);
+			}
+			
+			clip = availableClip;
+			
+			if (clip != null) {
+				clip.setFramePosition(0);
+				fc = (FloatControl)clip.getControl(FloatControl.Type.MASTER_GAIN);
+				checkVolume();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -64,7 +105,21 @@ public class Sound {
 	}
 	
 	public void stop() {
-		if (clip != null) clip.stop();
+		if (clip != null) {
+			clip.stop();
+			clip.setFramePosition(0);
+		}
+	}
+	
+	public static void disposeAll() {
+		for (List<Clip> pool : clipPools.values()) {
+			for (Clip c : pool) {
+				if (c != null && c.isOpen()) {
+					c.close();
+				}
+			}
+		}
+		clipPools.clear();
 	}
 	
 	public void checkVolume() {
