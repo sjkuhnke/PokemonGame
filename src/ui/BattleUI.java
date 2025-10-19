@@ -70,6 +70,7 @@ public class BattleUI extends AbstractUI {
 	protected int dialogueCounter = 0;
 	protected int abilityCounter = 0;
 	protected int cooldownCounter = 0;
+	public boolean selectedLead;
 
 	// BATTLE STATE
 	protected Field field;
@@ -77,6 +78,7 @@ public class BattleUI extends AbstractUI {
 	public boolean catchable;
 	public boolean invalidEncounter;
 	public char encType;
+	public int difficulty;
 
 	// PARTY STATE
 	public boolean cancellableParty;
@@ -113,6 +115,7 @@ public class BattleUI extends AbstractUI {
 
 	// SWITCH CONSTANTS
 	public static final int FREE_SWITCH = 0;
+	public static final int NORMAL_SWITCH = 10; // for Normal difficulty swapping out
 	
 	public BattleUI(GamePanel gp) {
 		this.gp = gp;
@@ -196,29 +199,17 @@ public class BattleUI extends AbstractUI {
 		
 		if (subState == MOVE_SELECTION_STATE) {
 			drawMoveSelectionScreen();
-		}
-		
-		if (subState == PARTY_SELECTION_STATE) {
+		} else if (subState == PARTY_SELECTION_STATE) {
 			drawPartySelectionScreen();
-		}
-		
-		if (subState == IDLE_STATE) {
+		} else if (subState == IDLE_STATE) {
 			drawIdleScreen();
-		}
-		
-		if (subState == SUMMARY_STATE) {
+		} else if (subState == SUMMARY_STATE) {
 			drawSummary(foe);
-		}
-		
-		if (subState == INFO_STATE) {
+		} else if (subState == INFO_STATE) {
 			drawInfo();
-		}
-		
-		if (subState == CHOOSE_LEAD_STATE) {
+		} else if (subState == CHOOSE_LEAD_STATE) {
 			drawFoeTeamPreview();
-		}
-		
-		if (subState == MOVE_MESSAGE_STATE) {
+		} else if (subState == MOVE_MESSAGE_STATE) {
 			showMessage(currentDialogue);
 		}
 		
@@ -285,6 +276,12 @@ public class BattleUI extends AbstractUI {
 			}
 		}
 		
+		drawCalcWindow();
+		if (gp.keyH.calcPressed) {
+			gp.keyH.calcPressed = false;
+			Item.useCalc(user, null, foe.trainer.team[0], true);
+		}
+		
 		drawUserTeamPreview();
 		
 		if (selectedPokemon != null) {
@@ -320,8 +317,9 @@ public class BattleUI extends AbstractUI {
 			}
 			
 			// Draw sprite
+			boolean egg = p instanceof Egg;
 			g2.setColor(Color.WHITE);
-			g2.drawImage(p.getSprite(), drawX, drawY, null);
+			g2.drawImage(p.isFainted() && !egg ? p.getFaintedSprite() : p.getSprite(), drawX, drawY, null);
 			
 			// Draw name and level
 			g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 18F));
@@ -334,7 +332,7 @@ public class BattleUI extends AbstractUI {
 			
 			// Draw detailed panel for selected Pokemon
 			if (commandNum == i + offset) {
-				drawPreviewPanel(p, drawX, (int) (gp.tileSize * 4.5));
+				drawPreviewPanel(p, drawX, (int) (gp.tileSize * 4.25));
 			}
 		}
 		
@@ -410,25 +408,28 @@ public class BattleUI extends AbstractUI {
 			gp.keyH.wPressed = false;
 			if (commandNum >= offset) { // player team
 	            int playerIndex = commandNum - offset;
-	            Pokemon current = gp.player.p.current;
 	            Pokemon pokemon = gp.player.p.team[playerIndex];
-	            gp.player.p.setCurrent(pokemon);
-	            gp.player.p.team[0] = pokemon;
-	            gp.player.p.team[playerIndex] = current;
-	            user = pokemon;
-	            commandNum = 0;
-	            subState = STARTING_STATE;
+	            if (!pokemon.isFainted()) {
+	            	Pokemon current = gp.player.p.current;
+		            gp.player.p.setCurrent(pokemon);
+		            gp.player.p.team[0] = pokemon;
+		            gp.player.p.team[playerIndex] = current;
+		            user = pokemon;
+		            commandNum = 0;
+		            selectedLead = true;
+		            subState = STARTING_STATE;
+	            }
 	        }
 		}
 		
-		drawToolTips("Select", null, null, null);
+		drawToolTips(commandNum >= offset ? "Select" : null, null, null, null, "Calc");
 	}
 	
 	private void drawPreviewPanel(Pokemon p, int baseX, int baseY) {
-		int x = baseX - gp.tileSize;
+		int x = baseX - (int)(gp.tileSize * 2.25);
 		int y = baseY;
-		int width = (int) (gp.tileSize * 4.5);
-		int height = gp.tileSize * 4;
+		int width = (int)(gp.tileSize * 6.75);
+		int height = (int)(gp.tileSize * 4.5);
 		
 		// Make sure panel doesn't go off screen
 		if (x + width > gp.screenWidth) {
@@ -449,7 +450,7 @@ public class BattleUI extends AbstractUI {
 		String nameLevel = p.getName() + " Lv. " + p.getLevel();
 		g2.drawString(nameLevel, contentX, contentY);
 		
-		contentY += gp.tileSize / 3;
+		contentY += gp.tileSize / 8;
 		
 		// Draw types
 		g2.drawImage(p.type1.getImage(), contentX, contentY, null);
@@ -459,21 +460,49 @@ public class BattleUI extends AbstractUI {
 		}
 		
 		contentX = x + gp.tileSize / 4;
-		contentY += gp.tileSize;
+		contentY += gp.tileSize * 1.1;
 		
-		// Draw item
-		g2.setFont(g2.getFont().deriveFont(18F));
-		if (p.item != null) {
-			g2.drawString("@ " + p.item.toString(), contentX, contentY);
-			g2.drawImage(p.item.getImage(), contentX + gp.tileSize * 3, contentY - gp.tileSize / 2, null);
+		int lineX = x + gp.tileSize / 8;
+		int lineY = contentY - gp.tileSize / 2;
+		g2.setColor(new Color(180, 180, 180));
+		g2.setStroke(new BasicStroke(1));
+		g2.drawLine(lineX, lineY, lineX + width - gp.tileSize / 4, lineY);
+		
+		// hp/status
+		g2.setFont(g2.getFont().deriveFont(22F));
+		g2.setColor(p.isFainted() ? new Color(200, 0, 0) : Color.WHITE);
+		String hpString = String.format("HP: %.1f%% (%d/%d)", p.currentHP * 100.0 / p.getStat(0), p.currentHP, p.getStat(0));
+		g2.drawString(hpString, contentX, contentY);
+		if (p.status != Status.HEALTHY) {
+			g2.drawImage(p.status.getImage(), contentX + (int)(gp.tileSize * 3.5), contentY - gp.tileSize / 3, null);
 		}
 		
 		contentY += gp.tileSize / 2;
 		
-		// Draw ability
-		g2.drawString(p.ability.toString(), contentX, contentY);
+		// draw ability/item
+		g2.setFont(g2.getFont().deriveFont(18F));
+		g2.setColor(Color.WHITE);
+		String abilityItemString = "Ability: " + p.ability.toString();
+		if (p.item != null) {
+			abilityItemString += " / @ " + p.item.toString();
+		}
+		g2.drawString(abilityItemString, contentX, contentY);
+		if (p.item != null) {
+			g2.drawImage(p.item.getImage(), contentX + (int)(gp.tileSize * 5.5), contentY - gp.tileSize / 3, null);
+		}
 		
 		contentY += gp.tileSize / 2;
+		
+		// draw stats
+		String statString = String.format("Atk %d / Def %d / SpA %d / SpD %d / Spe %d", p.getStat(1), p.getStat(2), p.getStat(3), p.getStat(4), p.getStat(5));
+		g2.drawString(statString, contentX, contentY);
+		
+		contentY += gp.tileSize / 2;
+		
+		lineY = contentY - gp.tileSize / 3;
+		g2.setColor(new Color(180, 180, 180));
+		g2.setStroke(new BasicStroke(1));
+		g2.drawLine(lineX, lineY, lineX + width - gp.tileSize / 4, lineY);
 		
 		// Draw moveset
 		g2.setFont(g2.getFont().deriveFont(16F));
@@ -772,7 +801,14 @@ public class BattleUI extends AbstractUI {
 	}
 	
 	public void drawSummary(Pokemon foe) {
+		drawCalcWindow();
+		
 		super.drawSummary(foe);
+		
+		if (gp.keyH.calcPressed) {
+			gp.keyH.calcPressed = false;
+			Item.useCalc(user, null, foe, true);
+		}
 		
 		if (gp.keyH.sPressed) {
 			gp.keyH.sPressed = false;
@@ -935,14 +971,14 @@ public class BattleUI extends AbstractUI {
 	}
 	
 	protected void setStartingTasks() {
-		if (gp.player.p.difficulty == 2 && user == null) {
+		if (gp.player.p.difficulty == Player.EXTREME && !selectedLead && foe.trainerOwned()) {
 			subState = CHOOSE_LEAD_STATE;
 			return;
 		}
 		
 		subState = TASK_STATE;
 		
-		if (user == null) {
+		if (user.isFainted()) {
 			// Make sure the front Pokemon isn't fainted
 			int index = 0;
 			Pokemon user = gp.player.p.getCurrent();
@@ -1438,7 +1474,7 @@ public class BattleUI extends AbstractUI {
 			showMoveSummary = !showMoveSummary;
 		}
 		drawCalcWindow();
-		drawToolTips("OK", null, "Back", "Info");
+		drawToolTips("OK", null, "Back", "Info", "Calc");
 	}
 	
 	protected void drawCalcWindow() {
@@ -1508,9 +1544,17 @@ public class BattleUI extends AbstractUI {
 	}
 
 	protected void drawPartySelectionScreen() {
+		drawCalcWindow();
+		
 		drawParty(null);
+		
+		if (gp.keyH.calcPressed) {
+			gp.keyH.calcPressed = false;
+			Item.useCalc(user, null, foe, true);
+		}
+		
 		String sText = cancellableParty ? "Back" : null;
-		drawToolTips("Info", "Swap", sText, null);
+		drawToolTips("Info", "Swap", sText, null, "Calc");
 	}
 
 	protected void drawActionBackground(Pokemon p, int x, int y, int width, int height) {
@@ -1591,6 +1635,11 @@ public class BattleUI extends AbstractUI {
 				return;
 			}
 			
+			if (moves[moveNum].move == Move.BATON_PASS && !user.movesetEmpty()) {
+				subState = MOVE_MESSAGE_STATE;
+    			showMessage("Baton Pass is banned in your Nuzlocke rules!");
+    			return;
+    		}
 			if (moves[moveNum].currentPP == 0 && !user.movesetEmpty()) {
 				subState = MOVE_MESSAGE_STATE;
     			showMessage("No more PP remaining!");
@@ -1604,7 +1653,7 @@ public class BattleUI extends AbstractUI {
         	Move move = moves[moveNum].move;
     		if (user.movesetEmpty()) move = Move.STRUGGLE;
 			
-        	foeMove = foe.trainerOwned() ? foe.bestMove2(user, user.getFaster(foe, 0, 0, field) == foe) : foe.randomMove();
+        	foeMove = foe.trainerOwned() ? foe.bestMove2(user, user.getFaster(foe, 0, 0, field) == foe, difficulty) : foe.randomMove();
         	
         	showMoveSummary = false;
         	turn(move, foeMove);
@@ -1863,7 +1912,7 @@ public class BattleUI extends AbstractUI {
 				boolean fainted = user.isFainted();
 				if (fainted) foeMove = null;
 				if (cancellableParty && !fainted){
-					foeMove = foe.trainerOwned() ? foe.bestMove2(user, user.getFaster(foe, 0, 0, field) == foe) : foe.randomMove();
+					foeMove = foe.trainerOwned() ? foe.bestMove2(user, user.getFaster(foe, 0, 0, field) == foe, difficulty) : foe.randomMove();
 				}
 				if (baton) {
 					gp.player.p.team[partyNum].statStages = user.statStages.clone();
@@ -1908,6 +1957,8 @@ public class BattleUI extends AbstractUI {
 	}
 	
 	protected void drawInfo() {
+		drawCalcWindow();
+		
 		int x = gp.tileSize * 3;
 		int y = gp.tileSize / 2;
 		int width = gp.tileSize * 10;
@@ -2082,12 +2133,17 @@ public class BattleUI extends AbstractUI {
 	    	y += gp.tileSize / 2;
 	    }
 	    
+	    if (gp.keyH.calcPressed) {
+			gp.keyH.calcPressed = false;
+			Item.useCalc(user, null, foe, true);
+		}
+	    
 	    if (gp.keyH.sPressed) {
 			gp.keyH.sPressed = false;
 			subState = IDLE_STATE;
 		}
 	    
-	    drawToolTips(null, null, "Back", null);
+	    drawToolTips(null, null, "Back", null, "Calc");
 	}
 
 	protected void startingState() {

@@ -125,7 +125,6 @@ public class UI extends AbstractUI {
 	BufferedImage transitionBuffer;
 	private BufferedImage[] menuIcons;
 	private final BufferedImage[] bagIcons;
-	private BufferedImage[] silhouettes;
 	public BufferedImage[] badgeIcons;
 
 	// LETTER STATE
@@ -1420,16 +1419,18 @@ public class UI extends AbstractUI {
 		gp.gameState = GamePanel.START_BATTLE_STATE;
 		
 		Pokemon foe = currentTask.p;
-		if (gp.player.p.difficulty == 2) { // extreme difficulty
+		if (gp.player.p.difficulty == Player.EXTREME) { // extreme difficulty
 			if (foe.trainerOwned()) {
 				foe = foe.trainer.pickLead(gp.player.p.getCurrent());
 			}
 		}
 		
+		gp.battleUI.user = gp.player.p.getCurrent();
 		gp.battleUI.foe = foe;
 		gp.battleUI.index = currentTask.counter;
 		gp.battleUI.staticID = currentTask.start;
 		gp.battleUI.encType = currentTask.message.charAt(0);
+		gp.battleUI.difficulty = gp.player.p.difficulty;
 		
 		if (foe.trainer != null) {
 			foe.trainer.setSprites();
@@ -2855,7 +2856,8 @@ public class UI extends AbstractUI {
 			}
 			
 			if (i < cBox.length && cBox[i] != null) {
-				g2.drawImage(cBox[i].getSprite(), cX, cY, null);
+				boolean egg = cBox[i] instanceof Egg;
+				g2.drawImage(cBox[i].isFainted() && !egg ? cBox[i].getFaintedSprite() : cBox[i].getSprite(), cX, cY, null);
 				int itemX = cX + 4;
 				int itemY = cY + 56;
 				if (!showBoxParty && (cBox[i] == itemSwapP || (itemSwapP != null && i == boxNum))) {
@@ -3688,12 +3690,16 @@ public class UI extends AbstractUI {
 	
 	private void useRareCandy(Pokemon pokemon) {
 		if (pokemon == null) return;
-        if (pokemon.getLevel() == 100) {
-            showMessage("It won't have any effect.");
-            return;
-        }
-        gp.player.p.elevate(pokemon);
-        if (currentItem == Item.RARE_CANDY) gp.player.p.bag.remove(Item.RARE_CANDY);
+		if (pokemon.getLevel() == 100) {
+			showMessage("It won't have any effect.");
+			return;
+		}
+		boolean worked = gp.player.p.elevate(pokemon);
+		if (!worked) {
+			showMessage("It won't have any effect.");
+			return;
+		}
+		if (currentItem == Item.RARE_CANDY) gp.player.p.bag.remove(Item.RARE_CANDY);
 	}
 
 	private void useItem() {
@@ -3736,7 +3742,7 @@ public class UI extends AbstractUI {
 		} else if (item == Item.CALCULATOR) {
 			Item.useCalc(gp.player.p.getCurrent(), null, null, true);
 		} else if (item == Item.DEX_NAV) {
-			encounters = Encounter.getAllEncounters();
+			encounters = Encounter.getAllEncounters(gp.player.p.banShedinja);
 			gp.gameState = GamePanel.DEX_NAV_STATE;
 		} else if (item == Item.FISHING_ROD) {
 			int result = gp.cChecker.checkTileType(gp.player);
@@ -3799,6 +3805,8 @@ public class UI extends AbstractUI {
 				Task.addTask(Task.PARTY, "Teach # a move?", Task.REMIND);
 				bagState = 0;
 			}
+		} else if (item == Item.TM13 && gp.player.p.banBatonPass) { // baton pass
+			showMessage("Baton Pass is banned in your Nuzlocke rules!");
 		} else if (!item.isUsable()) {
 			// do nothing
 		} else {
@@ -6581,11 +6589,13 @@ public class UI extends AbstractUI {
 	}
 	
 	private BufferedImage getSilhouette(Pokemon p) {
-		if (silhouettes == null) silhouettes = new BufferedImage[Pokemon.MAX_POKEMON];
-		if (silhouettes[p.id - 1] != null) return silhouettes[p.id - 1];
+		if (AbstractUI.silhouettes == null) silhouettes = new BufferedImage[Pokemon.MAX_POKEMON];
+		if (AbstractUI.silhouettes[p.id - 1] != null) return silhouettes[p.id - 1];
 		BufferedImage sprite = p.getSprite();
 		
-		return makeSilhouette(sprite);
+		BufferedImage result = makeSilhouette(sprite);
+		AbstractUI.silhouettes[p.id - 1] = result;
+		return result;
 	}
 
 	private void drawLetterState() {

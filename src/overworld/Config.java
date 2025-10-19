@@ -36,6 +36,8 @@ public class Config {
 	public int ctrlKey = 16;
 	public int tooltipsKey = 17;
 	public int backspaceKey = 18;
+	public int escKey = 19;
+	public int fullKey = 20;
 	
 	// Doc settings
 	public boolean excel = false;
@@ -53,12 +55,13 @@ public class Config {
 		this.gp = gp;
 		keyNames = new String[] {"Up", "Down", "Left", "Right", "Confirm", "Cancel", "Menu", "Swap", "Calc",
 				"Hotkey 1", "Hotkey 2", "Hotkey 3", "Hotkey 4", "Hotkey 5",
-				"Screenshot", "Speedup", "Control", "Tooltips", "Backspace",
+				"Screenshot", "Speedup", "Control", "Tooltips", "Backspace", "Escape", "Fullscreen",
 				};
 		keys = new int[] {KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_W,
 				KeyEvent.VK_S, KeyEvent.VK_D, KeyEvent.VK_A, KeyEvent.VK_C,
 				KeyEvent.VK_1, KeyEvent.VK_2, KeyEvent.VK_3, KeyEvent.VK_4, KeyEvent.VK_5,
 				KeyEvent.VK_ENTER, KeyEvent.VK_TAB, KeyEvent.VK_CONTROL, KeyEvent.VK_SHIFT, KeyEvent.VK_BACK_SPACE,
+				KeyEvent.VK_ESCAPE, KeyEvent.VK_F11
 				};
 		defaultKeys = Arrays.copyOf(keys, keys.length);
 	}
@@ -177,6 +180,8 @@ public class Config {
 					case "ctrlKey": keyNum = ctrlKey; break;
 					case "tooltipsKey": keyNum = tooltipsKey; break;
 					case "backspaceKey": keyNum = backspaceKey; break;
+					case "escKey": keyNum = escKey; break;
+					case "fullKey": keyNum = fullKey; break;
 					case "hotkey_1Key": keyNum = hotkey1; break;
 					case "hotkey_2Key": keyNum = hotkey2; break;
 					case "hotkey_3Key": keyNum = hotkey3; break;

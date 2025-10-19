@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -101,6 +102,10 @@ public abstract class AbstractUI {
 	// IMAGES
 	public BufferedImage ballIcon;
 	public Color coinColor = Color.WHITE;
+	
+	// IMAGE CACHES
+	public static BufferedImage[] silhouettes;
+	public static Image[] faintedSprites;
 
 	public abstract void showMessage(String message);
 
@@ -830,8 +835,11 @@ public abstract class AbstractUI {
 				: egg
 					? null
 					: "Name";
+			String cText = gp.gameState == GamePanel.BATTLE_STATE || gp.gameState == GamePanel.SIM_BATTLE_STATE
+				? "Calc"
+				: null;
 			
-			drawToolTips(wText, aText, "Back", dText);
+			drawToolTips(wText, aText, "Back", dText, cText);
 		} else {
 			currentDialogue = "Change " + p.name() + "'s nickname?";
 			drawDialogueScreen(true);
@@ -1774,8 +1782,7 @@ public abstract class AbstractUI {
 			} else {
 				gp.playSFX(Sound.S_MENU_CON);
 			}
-			// TODO: Toggle fullscreen functionality
-			gp.config.fullscreen = !gp.config.fullscreen;
+			gp.toggleFullScreen();
 		}
 		
 		// TOGGLE RUN
@@ -1797,7 +1804,7 @@ public abstract class AbstractUI {
 			} else {
 				gp.playSFX(Sound.S_MENU_CON);
 			}
-			// TODO: Toggle run functionality
+			gp.player.isRunning = false;
 			gp.config.toggleRun = !gp.config.toggleRun;
 		}
 		

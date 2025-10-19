@@ -54,6 +54,7 @@ import javax.swing.SwingUtilities;
 
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
+import overworld.Main;
 import pokemon.Field.Effect;
 import util.Pair;
 
@@ -1371,7 +1372,8 @@ public enum Item {
 
             calcFrame.add(contentPanel);
             calcFrame.pack();
-            calcFrame.setLocationRelativeTo(Pokemon.gp); // Center on screen
+            Main.loadIcon(calcFrame, 5);
+            if (!Pokemon.gp.config.fullscreen) calcFrame.setLocationRelativeTo(Pokemon.gp); // Center on screen
 		}
 		
 		if (calc != null) {
@@ -1480,10 +1482,11 @@ public enum Item {
         }
         
         if (display) {
-        	calcFrame.setLocationRelativeTo(Pokemon.gp); // Center on screen
+        	if (!Pokemon.gp.config.fullscreen) calcFrame.setLocationRelativeTo(Pokemon.gp); // Center on screen
         	// Make OK button the default button for Enter key
             JRootPane rootPane = calcFrame.getRootPane();
             rootPane.setDefaultButton(okButton);
+            Main.loadIcon(calcFrame, 5);
         	calcFrame.setVisible(true);
         }
 		

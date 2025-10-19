@@ -1,6 +1,7 @@
 package pokemon;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 
 import entity.PlayerCharacter;
@@ -36,11 +37,20 @@ public class Encounter {
 		return maxLevel;
 	}
 
-	public static ArrayList<Encounter> getEncounters(String area, char type, boolean random) {
+	public static ArrayList<Encounter> getEncounters(String area, char type, boolean banShedinja) {
 		String key = area + "|" + type;
 		ArrayList<Encounter> en = encounters.get(key);
 		
 		if (en == null) en = new ArrayList<>();
+		if (banShedinja) {
+			Iterator<Encounter> it = en.iterator();
+			while (it.hasNext()) {
+				Encounter e = it.next();
+				if (e.id == 131) {
+					it.remove(); // remove shedinja from the table
+				}
+			}
+		}
 		
 		double total = 0;
 		for (Encounter e : en) {
@@ -50,11 +60,11 @@ public class Encounter {
 		return en;
 	}
 
-	public static ArrayList<ArrayList<Encounter>> getAllEncounters() {		
-		ArrayList<Encounter> encountersReg = getEncounters(PlayerCharacter.currentMapName, 'G', false);
-		ArrayList<Encounter> encountersFish = getEncounters(PlayerCharacter.currentMapName, 'F', false);
-		ArrayList<Encounter> encountersSurf = getEncounters(PlayerCharacter.currentMapName, 'S', false);
-		ArrayList<Encounter> encountersLava = getEncounters(PlayerCharacter.currentMapName, 'L', false);
+	public static ArrayList<ArrayList<Encounter>> getAllEncounters(boolean banShedinja) {		
+		ArrayList<Encounter> encountersReg = getEncounters(PlayerCharacter.currentMapName, 'G', banShedinja);
+		ArrayList<Encounter> encountersFish = getEncounters(PlayerCharacter.currentMapName, 'F', banShedinja);
+		ArrayList<Encounter> encountersSurf = getEncounters(PlayerCharacter.currentMapName, 'S', banShedinja);
+		ArrayList<Encounter> encountersLava = getEncounters(PlayerCharacter.currentMapName, 'L', banShedinja);
 		
 		ArrayList<ArrayList<Encounter>> result = new ArrayList<>(4);
 		
