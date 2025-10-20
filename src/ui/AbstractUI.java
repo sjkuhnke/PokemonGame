@@ -1003,7 +1003,9 @@ public abstract class AbstractUI {
 	}
 	
 	public int getTextWidth(String text) {
-	    FontMetrics metrics = g2.getFontMetrics();
+		float fontSize = g2.getFont().getSize2D(); // Default font size
+
+	    FontMetrics metrics = g2.getFontMetrics(new Font(g2.getFont().getFamily(), g2.getFont().getStyle(), (int) fontSize));
 	    int textWidth = metrics.stringWidth(text);
 	    return textWidth;
 	}

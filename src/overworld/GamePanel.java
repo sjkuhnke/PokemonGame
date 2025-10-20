@@ -751,7 +751,9 @@ public class GamePanel extends JPanel implements Runnable {
 		window.setUndecorated(true);
 		window.setResizable(false);
 		
-		Item.calcFrame.dispose();
+		if (Item.calcFrame != null) {
+			Item.calcFrame.dispose();
+		}
 		
 		// set fullscreen window on the monitor where the window currently is
 		targetDevice.setFullScreenWindow(window);

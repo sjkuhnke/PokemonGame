@@ -1170,3 +1170,15 @@ Redid the Title Screen and added a Loading Screen with a progress bar! Title Scr
 - Save File Selection menu with A SORT OPTION
 - Generate Documentation checkboxes with a Excel toggle for whether or not you want them to generate as Excel sheets (only Trainer doc supported for now!)
 Revamped the sprite caching logic to be more efficient and work with fainted sprites too
+Gave Hattrem/Hatterene Teleport at lv 37
+Gave Teddician/Teddinaut Solar Beam by TM
+Fixed LV 100 Pokemon in the TrainerInfo Excel sheet to be displayed correctly
+Made Eject Pack working on Turn 0 (at the start of the battle) work properly
+Made Shell Bell NPC properly set the flag for completing his trade
+Removed Trick Room from Bronzong-X's learnset to make it more scarce
+Removed the one-way ledge on Mt Splinkty on 2B where the optional is to not get stuck and forced to teleport out
+Fixed a tile in St Joseph 2B to block walking past a ledge
+Changed the Pokedex controls to have 'A' be change section back and 'D' be change section forward instead of 'A' just being cycle section
+Fixed Close Combat having a buy price since it's now an overworld TM instead of in a shop
+Buffed Pistol Pop to be 150 BP and have a drawback of can't be used twice in a row to make it stand out from Pop Pop
+Buffed Destiny Bond's incentive to make the AI more likely to click it
