@@ -2,7 +2,7 @@
 setlocal enabledelayedexpansion
 
 :: Prompt for version
-set /p VERSION=Enter new version (e.g. 1.2.3): 
+set /p VERSION=Enter new version (e.g. v1.2.3): 
 
 echo.
 echo === Running InstallerPrep with version %VERSION% ===

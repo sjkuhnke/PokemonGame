@@ -1635,11 +1635,6 @@ public class BattleUI extends AbstractUI {
 				return;
 			}
 			
-			if (moves[moveNum].move == Move.BATON_PASS && !user.movesetEmpty()) {
-				subState = MOVE_MESSAGE_STATE;
-    			showMessage("Baton Pass is banned in your Nuzlocke rules!");
-    			return;
-    		}
 			if (moves[moveNum].currentPP == 0 && !user.movesetEmpty()) {
 				subState = MOVE_MESSAGE_STATE;
     			showMessage("No more PP remaining!");
