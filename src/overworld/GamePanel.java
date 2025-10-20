@@ -64,6 +64,9 @@ public class GamePanel extends JPanel implements Runnable {
 	public int fullScreenHeight = screenHeight;
 	BufferedImage screen;
 	Graphics2D g2;
+	public int lastWindowWidth;
+	public int lastWindowHeight;
+	private GraphicsDevice lastScreenDevice;
 	
 	// WORLD SETTINGS
 	public final int maxWorldCol = 100;
@@ -247,9 +250,11 @@ public class GamePanel extends JPanel implements Runnable {
 			if (delta >= 1) {
 				if (delta > 5) delta = 1; // cap delta
 				
-				update();
-				drawToTempScreen(); // draw everything to the buffered image
-				drawToScreen(); // draw everything to the screen
+				if (this.isShowing() && this.isDisplayable()) { // to handle other JPanels being drawn
+					update();
+					drawToTempScreen(); // draw everything to the buffered image
+					drawToScreen(); // draw everything to the screen
+				}
 				delta--;
 			}
 			
@@ -285,6 +290,7 @@ public class GamePanel extends JPanel implements Runnable {
 			keyH.fullPressed = false;
 			toggleFullScreen();
 		}
+		checkWindowResize();
 		if (keyH.ctrlPressed && keyH.shiftPressed) {
 			System.out.println("------------------------------------------");
 			System.out.println("GAME STATE: " + gameState);
@@ -402,8 +408,27 @@ public class GamePanel extends JPanel implements Runnable {
 		Graphics g = getGraphics();
 		
 		if (g != null) {
-			int screenX = config != null && config.fullscreen ? (window.getWidth() - fullScreenWidth) / 2 : 0;
-			g.drawImage(screen, screenX, 0, fullScreenWidth, fullScreenHeight, null);
+			int windowWidth = getWidth();
+			int windowHeight = getHeight();
+			
+			double gameAspect = (double) screenWidth / screenHeight;
+			double windowAspect = (double) windowWidth / windowHeight;
+			
+			int renderWidth, renderHeight, xOffset, yOffset;
+			
+			if (windowAspect > gameAspect) { // window is wider
+				renderHeight = windowHeight;
+				renderWidth = (int) (windowHeight * gameAspect);
+				xOffset = (windowWidth - renderWidth) / 2;
+				yOffset = 0;
+			} else { // window is taller
+				renderWidth = windowWidth;
+				renderHeight = (int) (windowWidth / gameAspect);
+				xOffset = 0;
+				yOffset = (windowHeight - renderHeight) / 2;
+			}
+			
+			g.drawImage(screen, xOffset, yOffset, renderWidth, renderHeight, null);
 			g.dispose();
 		}
 	}
@@ -715,34 +740,21 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 	
 	public void setFullScreen() {
-		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-		GraphicsDevice gd = ge.getDefaultScreenDevice();
+		//GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		
-		// Dispose of the window to prepare for fullscreen
+		GraphicsDevice targetDevice = window.getGraphicsConfiguration().getDevice();
+		
+		lastScreenDevice = targetDevice;
+		
+		// dispose of the window to prepare for fullscreen
 		window.dispose();
 		window.setUndecorated(true);
+		window.setResizable(false);
 		
-		// Set fullscreen window
-		gd.setFullScreenWindow(window);
+		Item.calcFrame.dispose();
 		
-		// Get actual screen dimensions
-		int screenWidth = window.getWidth();
-		int screenHeight = window.getHeight();
-		
-		// Calculate aspect ratio preserved dimensions
-		// Original game aspect ratio is 4:3 (screenWidth:screenHeight from settings)
-		double gameAspect = (double) this.screenWidth / this.screenHeight;
-		double screenAspect = (double) screenWidth / screenHeight;
-		
-		if (screenAspect > gameAspect) {
-			// Screen is wider than game - add black bars on sides
-			fullScreenHeight = screenHeight;
-			fullScreenWidth = (int) (screenHeight * gameAspect);
-		} else {
-			// Screen is taller than game - add black bars on top/bottom
-			fullScreenWidth = screenWidth;
-			fullScreenHeight = (int) (screenWidth / gameAspect);
-		}
+		// set fullscreen window on the monitor where the window currently is
+		targetDevice.setFullScreenWindow(window);
 		
 		window.setVisible(true);
 		this.requestFocusInWindow();
@@ -750,30 +762,36 @@ public class GamePanel extends JPanel implements Runnable {
 
 	public void setDefaultView() {
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-		GraphicsDevice gd = ge.getDefaultScreenDevice();
 		
-		// Exit fullscreen mode
-		if (gd.getFullScreenWindow() == window) {
-			gd.setFullScreenWindow(null);
-		}
-		
-		// Dispose and reconfigure window
-		window.dispose();
-		window.setUndecorated(false);
-		
-		// Reset to default dimensions
-		fullScreenWidth = screenWidth;
-		fullScreenHeight = screenHeight;
-		offsetX = 0;
-		offsetY = 0;
-		
-		// Set window size and center it
-		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
-		window.pack();
-		window.setLocationRelativeTo(null);
-		
-		window.setVisible(true);
-		this.requestFocusInWindow();
+		// Exit fullscreen mode on whichever device it's on
+	    if (lastScreenDevice != null && lastScreenDevice.getFullScreenWindow() == window) {
+	        lastScreenDevice.setFullScreenWindow(null);
+	    } else {
+	        // Fallback: check all devices
+	        for (GraphicsDevice gd : ge.getScreenDevices()) {
+	            if (gd.getFullScreenWindow() == window) {
+	                gd.setFullScreenWindow(null);
+	                break;
+	            }
+	        }
+	    }
+	    
+	    // Dispose and reconfigure window
+	    window.dispose();
+	    window.setUndecorated(false);
+	    window.setResizable(true); // Enable resizing in windowed mode
+	    
+	    // Reset to default dimensions
+	    fullScreenWidth = screenWidth;
+	    fullScreenHeight = screenHeight;
+	    
+	    // Set window size and center it
+	    this.setPreferredSize(new Dimension(screenWidth, screenHeight));
+	    window.pack();
+	    window.setLocationRelativeTo(null);
+	    
+	    window.setVisible(true);
+	    this.requestFocusInWindow();
 	}
 	
 	public void toggleFullScreen() {
@@ -783,6 +801,23 @@ public class GamePanel extends JPanel implements Runnable {
 		} else {
 			setDefaultView();
 		}
+	}
+	
+	public Dimension getMinimumSize() {
+	    // Prevent window from being resized smaller than the base game resolution
+	    return new Dimension(screenWidth / 2, screenHeight / 2);
+	}
+
+	// Optional: Add this to your update() method to track window size changes
+	private void checkWindowResize() {
+	    int currentWidth = window.getWidth();
+	    int currentHeight = window.getHeight();
+	    
+	    if (currentWidth != lastWindowWidth || currentHeight != lastWindowHeight) {
+	        lastWindowWidth = currentWidth;
+	        lastWindowHeight = currentHeight;
+	        // Window was resized - you can add any additional logic here if needed
+	    }
 	}
 
 	public Pokemon encounterPokemon(String area, char type, boolean banShedinja) {
