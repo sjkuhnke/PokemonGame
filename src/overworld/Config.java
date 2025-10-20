@@ -114,6 +114,12 @@ public class Config {
 			bw.write("togglerun=" + (toggleRun ? 1 : 0));
 			bw.newLine();
 			
+			// Screen settings
+			bw.write("screenWidth=" + gp.lastWindowWidth);
+			bw.newLine();
+			bw.write("screenHeight=" + gp.lastWindowHeight);
+			bw.newLine();
+			
 			// Keybinds
 			for (int i = 0; i < keys.length; i++) {
 				String keyString = keyNames[i].toLowerCase().replace(" ", "_") + "Key=";
@@ -139,6 +145,9 @@ public class Config {
 			
 			BufferedReader br = new BufferedReader(new FileReader(configFile));
 			String line;
+			
+			int loadedWidth = -1;
+			int loadedHeight = -1;
 			
 			while ((line = br.readLine()) != null) {
 				String[] parts = line.split("=");
@@ -166,6 +175,12 @@ public class Config {
 						break;
 					case "togglerun":
 						toggleRun = intValue == 1;
+						break;
+					case "screenWidth":
+						loadedWidth = intValue;
+						break;
+					case "screenHeight":
+						loadedHeight = intValue;
 						break;
 					case "upKey": keyNum = upKey; break;
 					case "downKey": keyNum = downKey; break;
@@ -205,8 +220,28 @@ public class Config {
 			setKeys();
 			
 			br.close();
+			
+			if (!fullscreen && loadedWidth > 0 && loadedHeight > 0) {
+				applyWindowSize(loadedWidth, loadedHeight);
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	private void applyWindowSize(int width, int height) {
+		int minWidth = gp.screenWidth / 2;
+		int minHeight = gp.screenHeight / 2;
+		
+		if (width < minWidth) width = gp.screenWidth;
+		if (height < minHeight) height = gp.screenHeight;
+		
+		gp.lastWindowWidth = width;
+		gp.lastWindowHeight = height;
+		
+		if (!fullscreen && gp.window != null) {
+			gp.window.setSize(width, height);
+			gp.window.setLocationRelativeTo(null);
 		}
 	}
 	

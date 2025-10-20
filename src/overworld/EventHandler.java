@@ -621,8 +621,10 @@ public class EventHandler {
 						t.finish = 57;
 						t.wipe = false;
 						Task.addTask(Task.TEXT, "This portal seems to be jammed by the Ghosts everywhere...");
-						Task.addTask(Task.TEXT, "There are " + (10 - gp.player.p.grustCount) + " Ghosts remaining!");
+						Task.addTask(Task.TEXT, "There are " + (10 - gp.player.p.grustCount) + " Ghost(s) remaining!");
 					} else if (!gp.player.p.flag[5][2]) {
+						gp.player.p.flag[5][10] = true;
+						gp.aSetter.updateNPC(107);
 						gp.player.interactNPC(gp.npc[107][0], true);
 					} else {
 						gp.setTaskState();

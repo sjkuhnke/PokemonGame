@@ -3518,6 +3518,10 @@ public class UI extends AbstractUI {
 				}
 			}
 		}
+		
+		if (gp.keyH.sPressed || gp.keyH.dPressed) {
+			showIVOptions = false;
+		}
 	}
 	
 	public void drawIVOptions(Pokemon p, String header) {
@@ -3705,24 +3709,27 @@ public class UI extends AbstractUI {
 	private void useItem() {
 		drawItemUsingScreen();
 		drawParty(currentItem);
-		if (gp.keyH.wPressed && !showMoveOptions && !showIVOptions && !showStatusOptions) {
-			if (currentItem == Item.RARE_CANDY || currentItem == Item.RARE_CANDY_BOX) {
-				gp.gameState = GamePanel.RARE_CANDY_STATE;
-			} else {
-				gp.keyH.wPressed = false;
-				gp.player.p.useItem(gp.player.p.team[partyNum], currentItem, gp);	
+		
+		if (!showMessage) {
+			if (gp.keyH.wPressed && !showMoveOptions && !showIVOptions && !showStatusOptions) {
+				if (currentItem == Item.RARE_CANDY || currentItem == Item.RARE_CANDY_BOX) {
+					gp.gameState = GamePanel.RARE_CANDY_STATE;
+				} else {
+					gp.keyH.wPressed = false;
+					gp.player.p.useItem(gp.player.p.team[partyNum], currentItem, gp);	
+				}
 			}
-		}
-		if (gp.keyH.sPressed || gp.keyH.dPressed) {
-			gp.keyH.sPressed = false;
-			gp.keyH.dPressed = false;
-			if (showMoveOptions || showIVOptions || showStatusOptions) {
-				moveOption = -1;
-				showIVOptions = false;
-				showMoveOptions = false;
-				showStatusOptions = false;
-			} else {
-				goBackInBag();
+			if (gp.keyH.sPressed || gp.keyH.dPressed) {
+				gp.keyH.sPressed = false;
+				gp.keyH.dPressed = false;
+				if (showMoveOptions || showIVOptions || showStatusOptions) {
+					moveOption = -1;
+					showIVOptions = false;
+					showMoveOptions = false;
+					showStatusOptions = false;
+				} else {
+					goBackInBag();
+				}
 			}
 		}
 		
@@ -3935,17 +3942,19 @@ public class UI extends AbstractUI {
 			}
 		}
 		
-		if (gp.keyH.sPressed || gp.keyH.dPressed) {
-			gp.keyH.sPressed = false;
-			gp.keyH.dPressed = false;
-			subState = 0;
-			commandNum = 0;
-		}
-		
-		if (gp.keyH.upPressed || gp.keyH.downPressed) {
-			gp.keyH.upPressed = false;
-			gp.keyH.downPressed = false;
-			commandNum = 1 - commandNum;
+		if (!showMessage) {
+			if (gp.keyH.sPressed || gp.keyH.dPressed) {
+				gp.keyH.sPressed = false;
+				gp.keyH.dPressed = false;
+				subState = 0;
+				commandNum = 0;
+			}
+			
+			if (gp.keyH.upPressed || gp.keyH.downPressed) {
+				gp.keyH.upPressed = false;
+				gp.keyH.downPressed = false;
+				commandNum = 1 - commandNum;
+			}
 		}
 		
 		drawToolTips("OK", null, "Back", "Back");

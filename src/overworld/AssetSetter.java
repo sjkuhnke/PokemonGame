@@ -3556,6 +3556,11 @@ public class AssetSetter {
 		SetupPit(mapNum, 64, 80, 197, 32, 90, map); // bottom left
 		SetupPit(mapNum, 72, 74, 197, 50, 81, map); // middle
 		SetupPit(mapNum, 63, 67, 197, 32, 71, map); // top left
+		gp.iTile[mapNum][iIndex] = ITileSetup(79, 81, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(79, 82, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(79, 83, VINE_CROSS, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(55, 86, RIGHT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(56, 86, RIGHT, 2, mapNum, map);
 		
 		mapNum = 145;
 		iIndex = 0;
@@ -4300,7 +4305,7 @@ public class AssetSetter {
 			}
 		}
 		
-		if (!flag[5][3] && gp.player.p.grustCount >= 10) {
+		if (flag[5][10] && !flag[5][3] && gp.player.p.grustCount >= 10) {
 			int x = flag[5][2] ? 46 : 47;
 			int y = flag[5][2] ? 60 : 3;
 			if (gp.npc[107][0] == null) gp.npc[107][0] = NPCSetup(RICK, "Rick", x, y, "", 107.1, 162,

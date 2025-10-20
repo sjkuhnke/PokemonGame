@@ -491,8 +491,8 @@ public enum Item {
     public static int mintID = 0;
     public static int ballID = 0;
     
-    private static JPanel calc;
-    private static JFrame calcFrame;
+    public static JPanel calc;
+    public static JFrame calcFrame;
     private static JComboBox<Pokemon> userMons;
     private static JComboBox<Pokemon> foeMons;
     private static JSpinner userLevel;

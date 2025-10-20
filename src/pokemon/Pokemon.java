@@ -3725,11 +3725,12 @@ public class Pokemon implements RoleAssignable, Serializable {
 				}
 			}
 			if (foe.currentHP <= 0) { // Check for kill
+				boolean bonded = foe.hasStatus(Status.BONDED);
 				foe.faint(true, this);
 				if (move == Move.FELL_STINGER) stat(this, 0, 3, foe);
 				if (move == Move.COMET_PUNCH) stat(this, 4, 2, foe);
-				if (foe.hasStatus(Status.BONDED)) {
-					this.damage(this.currentHP, foe, move, foe.nickname + " took its attacker down with it!", -1);
+				if (bonded) {
+					this.damage(this.currentHP, foe, Move.DESTINY_BOND, foe.nickname + " took its attacker down with it!", -1);
 					if (this.currentHP <= 0) {
 						this.faint(true, foe);
 					}
