@@ -491,7 +491,7 @@ public class Pokemon implements RoleAssignable, Serializable {
         int maxDamage = Collections.max(moveToDamage.values());
         boolean iKill = maxDamage >= foe.currentHP;
         
-        Ability foeAbility = foe.ability;
+        Ability foeAbility = foe.getAbility(field);
         if (foe.getItem(field) != Item.ABILITY_SHIELD && this.getAbility(field) == Ability.MOLD_BREAKER) {
 			foeAbility = Ability.NULL;
 		}
@@ -846,7 +846,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		}
 		
 		// for Parting Shot specifically
-		Ability foeAbility = foe.ability;
+		Ability foeAbility = foe.getAbility(field);
 		if (foe.getItem(field) != Item.ABILITY_SHIELD && this.getAbility(field) == Ability.MOLD_BREAKER) {
 			foeAbility = Ability.NULL;
 		}
@@ -1365,7 +1365,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		// --- Damage Score ---
 		score += Math.min(Math.min(foeHPPercent, damagePercent), 100);
 		
-		Ability foeAbility = foe.ability;
+		Ability foeAbility = foe.getAbility(field);
 		if (foe.getItem(field) != Item.ABILITY_SHIELD && this.getAbility(field) == Ability.MOLD_BREAKER) {
 			foeAbility = Ability.NULL;
 		}
@@ -2393,7 +2393,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		int secChance = move.secondary;
 		PType moveType = move.mtype;
 		int critChance = move.critChance;
-		Ability foeAbility = foe.ability;
+		Ability foeAbility = foe.getAbility(field);
 		boolean contact = move.contact;
 		boolean sheer = false;
 		
@@ -7065,7 +7065,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		int secChance = move.secondary;
 		PType moveType = move.mtype;
 		int critChance = move.critChance;
-		Ability foeAbility = foe.ability;
+		Ability foeAbility = foe.getAbility(field);
 		boolean contact = move.contact;
 		
 		if (this.hasStatus(Status.TORMENTED) && move == this.lastMoveUsed) {

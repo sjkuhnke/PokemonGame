@@ -93,7 +93,7 @@
 53 |Barkflare    |FIRE    |NORMAL  |INTIMIDATE        |FLASH_FIRE        |RECKLESS          |[65, 103, 82, 66, 79, 100]    |93.6  |50 |FIELD       |FIELD       |
 54 |Sember       |FIRE    |null    |FLAME_BODY        |FLASH_FIRE        |UNBURDEN          |[30, 20, 40, 103, 30, 83]     |10.0  |195|FIELD       |HUMAN$LIKE  |
 55 |Kaboon       |FIRE    |FIGHTING|FLAME_BODY        |IRON_FIST         |UNBURDEN          |[43, 88, 50, 74, 52, 93]      |145.6 |100|FIELD       |HUMAN$LIKE  |
-56 |Detonape     |FIRE    |FIGHTING|FLAME_BODY        |IRON_FIST         |UNBURDEN          |[65, 115, 55, 106, 75, 100]   |195.0 |50 |FIELD       |HUMAN$LIKE  |
+56 |Detonape     |FIRE    |FIGHTING|FLAME_BODY        |IRON_FIST         |UNBURDEN          |[65, 120, 75, 60, 75, 121]    |195.0 |50 |FIELD       |HUMAN$LIKE  |
 191|Magmaclang   |FIRE    |GHOST   |STEELWORKER       |STEELWORKER       |STEELWORKER       |[105, 35, 120, 90, 90, 65]    |165.3 |80 |AMORPHOUS   |AMORPHOUS   |
 209|Flamehox     |FIRE    |GROUND  |FLAME_BODY        |FLAME_BODY        |SAND_VEIL         |[70, 53, 70, 55, 60, 52]      |290.2 |55 |FIELD       |MONSTER     |
 210|Fireshard    |FIRE    |FLYING  |INTIMIDATE        |INTIMIDATE        |SAND_VEIL         |[75, 75, 75, 90, 75, 70]      |301.3 |35 |FIELD       |MONSTER     |
@@ -235,9 +235,9 @@
 247|Dragowrath   |GALACTIC|DRAGON  |WHITE_HOLE        |WHITE_HOLE        |WHITE_HOLE        |[110, 100, 100, 160, 100, 130]|956.4 |3  |UNDISCOVERED|UNDISCOVERED|
 249|Solaroxyous  |FIRE    |GALACTIC|DROUGHT           |DROUGHT           |DROUGHT           |[190, 75, 120, 90, 120, 75]   |9999.9|3  |UNDISCOVERED|UNDISCOVERED|
 0  |Kissyfishy-D |WATER   |DRAGON  |ADAPTABILITY      |WATER_VEIL        |INTIMIDATE        |[160, 100, 75, 100, 75, 90]   |895.4 |3  |UNDISCOVERED|UNDISCOVERED|
-89 |Scraggy      |DARK    |FIGHTING|INTIMIDATE        |MOXIE             |SHED_SKIN         |[50, 75, 70, 35, 70, 48]      |26.0  |180|FIELD       |DRAGON      |
-90 |Scrafty      |DARK    |FIGHTING|INTIMIDATE        |MOXIE             |SHED_SKIN         |[65, 90, 115, 45, 115, 58]    |66.1  |90 |FIELD       |DRAGON      |
-91 |Scraftagon   |DRAGON  |FIGHTING|SCALY_SKIN        |MOXIE             |SHED_SKIN         |[70, 110, 120, 45, 120, 90]   |92.6  |45 |FIELD       |DRAGON      |
+89 |Scraggy      |DARK    |FIGHTING|SHED_SKIN         |MOXIE             |INTIMIDATE        |[50, 75, 70, 35, 70, 48]      |26.0  |180|FIELD       |DRAGON      |
+90 |Scrafty      |DARK    |FIGHTING|SHED_SKIN         |MOXIE             |INTIMIDATE        |[65, 90, 115, 45, 115, 58]    |66.1  |90 |FIELD       |DRAGON      |
+91 |Scraftagon   |DRAGON  |FIGHTING|SHED_SKIN         |MOXIE             |SCALY_SKIN        |[70, 110, 120, 45, 120, 90]   |92.6  |45 |FIELD       |DRAGON      |
 198|Glimmet      |ROCK    |POISON  |TOXIC_DEBRIS      |TOXIC_DEBRIS      |CORROSION         |[48, 35, 42, 105, 60, 60]     |17.6  |70 |MINERAL     |MINERAL     |
 199|Glimmora     |ROCK    |POISON  |TOXIC_DEBRIS      |TOXIC_DEBRIS      |CORROSION         |[83, 55, 90, 130, 81, 86]     |99.2  |25 |MINERAL     |MINERAL     |
 46 |Abra         |PSYCHIC |null    |MAGICAL           |SYNCHRONIZE       |MAGIC_GUARD       |[25, 20, 15, 105, 55, 90]     |43.0  |200|HUMAN$LIKE  |HUMAN$LIKE  |

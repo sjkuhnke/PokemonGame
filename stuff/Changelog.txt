@@ -1110,3 +1110,63 @@ Made AI not click Fake Out/Unseen Strangle for its effect against Shield Dust, I
 Made Full Force not activate if the Pokemon faints at the same time as consuming its item
 Fixed using Ability Capsule on a Pokemon that has its hidden displaying the right message/label
 Tweaked Ability Capsule's description to make it more clear
+
+Version 0.8.0-alpha Released
+Made Focus Energy cap at +4 crit stages and updated its description accordinly, it fails if the user is already at +4 crit stages
+Made Star Storm's crit chance boost also cap at +4 crit stages
+Fixed issue with TMs not displaying "LEARNED" correctly if they already have the move
+Made Accuracy check a lot better with stuff like Wide Lens not bypassing Semi-Invulnerable turn of Fly/Dig/Dive if the move's accuracy goes above 100%
+Made Accuracy in move summary be dynamic based on the situation up to 1 decimal place (i.e. Sleep Powder with Compound Eyes will display 97.5 for the accuracy)
+Fixed a Rare Candy item in the wrong place in Sicab Office 2A
+Made Trainer AI not have a negative score for damaging moves with non-useful secondary effects to be consistent with damaging moves with no secondary effect
+Made taking a screenshot open the screenshots folder to make it more clear where the image goes
+Created a sound engine and have it working with sound effects on some menus for now, and a title screen song and an overworld song for now
+Added a settings menu option to the overworld menu with the following settings:
+- Music Volume
+- SFX Volume
+- Fullscreen toggle
+- Toggle Run toggle
+- Difficulty selection
+- Controls menu with a customize keybinds screen
+New sprites for Sparkitten, Fireblion and Flamebless!
+Revamped tooltips to auto-shorten if the key text is too long (i.e. NumPad 8 will shorten to Num 8)
+Made the tip shorten with ellipses which is relevant for the hotkey system implemented in this update (i.e. Rare Candy Box will shorten to Rare Can...)
+Made the tooltips in the battle menu/overworld support the new calckey as well (defaults to 'C' and will say [C] Calc)
+Added a config file (saved in the same parent folder where the docs and screenshots folders are) that keeps track of your keybinds and other settings through different game runs
+Made the teleports in Sicab Office 1A/2A flip your direction so it looks more natural, also flipped which stairs mapped to which
+Made Heat Wave 100 BP from 95 so it's a bit more useful since it's a singles only game
+Added 5 hotkey buttons (default [1] - [5]) that you can assign to key items in the overworld so you can quickly use stuff like the Pocket PC and other items!
+Gave Teddician/Teddinaut Snore at lv 30 and moved Quick Spell to 32
+Fixed Grandma sprites facing the wrong way
+Made checking the tall grass fixed to take the middle of the character's hitbox (same pixel as checking what map you're in so they'll update on the same frame)
+Fixed Actress Georgina referring to her Willolagos as "Bluebunn" (old name)
+Fixed Lady Cleena and Gentleman Gallagher having the opposite's sprites
+Changed the position of 2 different Invisible Magicians in Merlin's gym so there wouldn't be any back-to-back battles
+Made the turns of an effect not show for specific sides' field effects if they don't expire too (like Healing Wish/Lunar Dance)
+Fixed the fisherman in Sicab City saying to use the Fishing Rod from your bag instead of pressing 'A' if you talk to him after getting the rod too
+Changed Dad's starting dialogue to tell you to press 'C' instead of 'A'/'Ctrl + A' for calcing since we have a specific key for it now
+Made Gold Bottle Caps sell for 2000 instead of 1000 (inflation am I right)
+Made Defog/Perish Song >100% accuracy so it can't miss against an evasive foe or something, just added a specific check for Wonder Skin
+Updated Torment's description to make it clear that it blocks mid-turn as well in this game
+Made the AI click Counter/Mirror Coat/Metal Burst even if they predict they'll be KOed if they have Focus Band
+Made Icy Path's higher levels have a different ground texture
+Made the choice lock happen AFTER the para/flinch/confusion self hit checks so you aren't choice locked in those situations and can pick a new move if you weren't already choice locked
+Redid the Title Screen and added a Loading Screen with a progress bar! Title Screen features:
+- Continue Button (greyed out if you don't have any saves)
+- New Game Button (with a separate menu where you can have the following settings for your save):
+-   Save File Name
+-   Nuzlocke Toggle
+-   Difficulty (Normal, Hard, Extreme)
+-   Ban Shedinja (nuzlocke specific)
+-   Ban Revives  (nuzlocke specific)
+-   Ban Buyable Revives (nuzlocke specific)
+-   Ban Baton Pass (nuzlocke specific)
+-   Level Cap Bonus (+0 - +5) (nuzlocke specific)
+- Manage Save with a separate menu with the following settings:
+-   Rename
+-   Delete
+-   Open File Location
+- Settings menu (same as one in-game)
+- Save File Selection menu with A SORT OPTION
+- Generate Documentation checkboxes with a Excel toggle for whether or not you want them to generate as Excel sheets (only Trainer doc supported for now!)
+Revamped the sprite caching logic to be more efficient and work with fainted sprites too

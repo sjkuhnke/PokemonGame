@@ -36,6 +36,7 @@ public enum Move {
 	ALCHEMY(0,1000,0,0,2,0,PType.MAGIC,"Heals 33% HP, if user holds an item will remove it and heal 100%",false,10),
 	AMNESIA(0,1000,0,0,2,0,PType.PSYCHIC,"Raises user's Sp.Def by 2",false,20),
 	ANCIENT_POWER(60,100,10,0,1,0,PType.ROCK,"% chance to raise all of the user's stats by 1",false,5),
+	AQUA_CUTTER(70,100,0,1,0,0,PType.WATER,"Boosted crit rate",false,20),
 	AQUA_JET(40,100,0,0,0,1,PType.WATER,"Increased priority",true,15),
 	AQUA_RING(0,1000,0,0,2,0,PType.WATER,"Restores a small amount of HP at the end of every turn",false,15),
 	AQUA_TAIL(90,90,0,0,0,0,PType.WATER,"A normal attack",true,10),
@@ -1041,6 +1042,7 @@ public enum Move {
 		result.add(RAZOR_LEAF);
 		result.add(VENOSTEEL_CROSSCUT);
 		result.add(FALSE_SWIPE);
+		result.add(AQUA_CUTTER);
 		
 		if (result.contains(this)) {
 			return true;
