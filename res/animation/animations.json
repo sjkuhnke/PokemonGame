@@ -1,0 +1,13 @@
+{
+  "tackle": {
+    "type": "physical",
+    "frames": [
+      {"type": "MOVE", "target": "ATTACKER", "delay": 0, "duration": 200, 
+       "properties": {"offsetX": 0.6, "easing": "decel"}},
+      {"type": "SHAKE", "target": "DEFENDER", "delay": 200, "duration": 100,
+       "properties": {"intensity": 5}},
+      {"type": "MOVE", "target": "ATTACKER", "delay": 300, "duration": 200,
+       "properties": {"offsetX": 0, "easing": "linear"}}
+    ]
+  }
+}

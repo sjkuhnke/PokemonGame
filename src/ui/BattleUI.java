@@ -5,10 +5,15 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 
+import animation.AnimationFrame;
+import animation.AnimationFrame.Target;
+import animation.BattleAnimation;
+import animation.BattleAnimationManager;
 import entity.PlayerCharacter;
 import overworld.GamePanel;
 import pokemon.*;
@@ -40,6 +45,9 @@ public class BattleUI extends AbstractUI {
 	public int userExp;
 	public int userExpMax;
 	public int userLevel;
+	public int userX;
+	public int userY;
+	public Point2D userOriginalPos;
 
 	// DISPLAY STATE - FOE
 	public String foeName;
@@ -49,6 +57,9 @@ public class BattleUI extends AbstractUI {
 	public Status foeStatus;
 	public int foeLevel;
 	public Move foeMove;
+	public int foeX;
+	public int foeY;
+	public Point2D foeOriginalPos;
 
 	// FIELD EFFECTS
 	public FieldEffect weather;
@@ -94,6 +105,10 @@ public class BattleUI extends AbstractUI {
 	protected BufferedImage statusedIcon;
 	protected BufferedImage faintedIcon;
 	protected BufferedImage emptyIcon;
+	
+	// ANIMATION
+	private long animStartTime;
+	private int currentAnimFrame;
 
 	// STATE CONSTANTS
 	public static final int STARTING_STATE = -1;
@@ -132,6 +147,15 @@ public class BattleUI extends AbstractUI {
 		statusedIcon = setup("/icons/ballstatus", 1);
 		faintedIcon = setup("/icons/ballfainted", 1);
 		emptyIcon = setup("/icons/empty", 1);
+		
+		userX = 80;
+		userY = 235;
+		foeX = 515;
+		foeY = 70;
+		userOriginalPos = new Point2D.Float(userX, userY);
+		foeOriginalPos = new Point2D.Double(foeX, foeY);
+		
+		BattleAnimationManager.getInstance(); // initialize animations
 	}
 	
 	@Override
@@ -797,6 +821,13 @@ public class BattleUI extends AbstractUI {
 				endTask();
 			}
 			break;
+		case Task.USE_MOVE:
+			System.out.println("Use move");
+			drawMoveAnimation();
+			message = currentTask.message.contains("\n") ? currentTask.message : Item.breakString(currentTask.message, 64);
+			showMessage(message);
+			currentTask.p.spriteVisible = currentTask.wipe;
+			break;
 		}
 	}
 	
@@ -1116,11 +1147,11 @@ public class BattleUI extends AbstractUI {
 	}
 	
 	protected void drawFoeSprite(Pokemon p) {
-		g2.drawImage(p.getFrontSprite(), 515, 70, null);
+		g2.drawImage(p.getFrontSprite(), foeX, foeY, null);
 	}
 	
 	protected void drawUserSprite(Pokemon p) {
-		g2.drawImage(p.getBackSprite(), 80, 235, null);
+		g2.drawImage(p.getBackSprite(), userX, userY, null);
 	}
 
 	protected void drawHPBar(Pokemon p, double amt, double maxHP) {
@@ -2163,5 +2194,132 @@ public class BattleUI extends AbstractUI {
 		balls = gp.player.p.getBalls();
 		ballIndex = (ballIndex == -1 && !balls.isEmpty()) ? 0 : Math.min(ballIndex, balls.size() - 1);
 	}
+	
+	private void drawMoveAnimation() {
+		System.out.println("draw move animation");
+		if (animStartTime == 0) {
+			animStartTime = System.currentTimeMillis();
+		}
+		
+		long elapsed = System.currentTimeMillis() - animStartTime;
+		BattleAnimation anim = currentTask.animation;
+		
+		for (int i = currentAnimFrame; i < anim.getFrames().size(); i++) {
+			AnimationFrame frame = anim.getFrames().get(i);
+			
+			if (elapsed >= frame.delay) {
+				executeAnimationFrame(frame, elapsed - frame.delay);
+				
+				if (elapsed >= frame.delay + frame.duration) {
+					currentAnimFrame++;
+				}
+			}
+		}
+		
+		if (currentAnimFrame >= anim.frames.size()) {
+			animStartTime = 0;
+			currentAnimFrame = 0;
+			endTask();
+		}
+	}
 
+	private void executeAnimationFrame(AnimationFrame frame, long elapsed) {
+		Pokemon target = getTargetPokemon(frame.target);
+		
+		if (target == null) return;
+		
+		switch (frame.type) {
+		case EFFECT:
+			animateMove(target, frame, elapsed);
+			break;
+		case MOVE:
+			animateShake(target, frame, elapsed);
+			break;
+		case SHAKE:
+			animateEffect(target, frame, elapsed);
+			break;
+		case WAIT:
+			break;
+		default:
+			break;
+		
+		}
+	}
+	
+	private Pokemon getTargetPokemon(Target target) {
+		switch (target) {
+		case ATTACKER: return currentTask.p;
+		case DEFENDER: return currentTask.foe;
+		case BOTH: return currentTask.p;
+		default: return null;
+		}
+	}
+
+	private void animateMove(Pokemon target, AnimationFrame frame, long elapsed) {
+		double progress = Math.min(1.0, (double) elapsed / frame.duration);
+		
+		String easing = (String) frame.getProperty("easing");
+		progress = applyEasing(progress, easing);
+		
+		double offsetX = ((Number) frame.getProperty("offsetX")).doubleValue();
+		double offsetY = ((Number) frame.getPropertyOrDefault("offsetY", 0.0)).doubleValue();
+		
+		boolean isUser = target == user;
+		Point2D originalPos = isUser ? userOriginalPos : foeOriginalPos;
+		
+		int targetX = isUser ? foeX : userX;
+		int deltaX = (int) ((targetX - originalPos.getX()) * offsetX * progress);
+		int deltaY = (int) (offsetY * 50 * progress);
+		
+		if (isUser) {
+			userX = (int) originalPos.getX() + deltaX;
+			userY = (int) originalPos.getY() + deltaY;
+		} else {
+			foeX = (int) originalPos.getX() + deltaX;
+			foeY = (int) originalPos.getY() + deltaY;
+		}
+		
+		if (progress >= 1.0 && offsetX == 0.0 && offsetY == 0.0) {
+			if (isUser) {
+				userX = (int) originalPos.getX();
+				userY = (int) originalPos.getY();
+				userOriginalPos = null;
+			} else {
+				foeX = (int) originalPos.getX();
+				foeY = (int) originalPos.getY();
+				foeOriginalPos = null;
+			}
+		}
+	}
+
+	private void animateShake(Pokemon target, AnimationFrame frame, long elapsed) {
+		int intensity = ((Number) frame.getProperty("intensity")).intValue();
+		double progress = (double) elapsed / frame.duration;
+		
+		// Simple shake: oscillate position
+		int offset = (int) (Math.sin(progress * Math.PI * 8) * intensity);
+		
+		if (target == user) {
+			userX += offset;
+		} else {
+			foeX += offset;
+		}
+		
+	}
+
+	private void animateEffect(Pokemon target, AnimationFrame frame, long elapsed) {
+		return;
+	}
+	
+	private double applyEasing(double t, String easing) {
+		if (easing == null) return t;
+		
+		switch (easing.toLowerCase()) {
+		case "linear": return t;
+		case "decel": return 1 - Math.pow(1 - t, 2);
+		case "accel": return t * t;
+		case "ballistic": return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+		default: return t;
+    }
+	}
 }

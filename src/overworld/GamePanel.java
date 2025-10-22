@@ -464,7 +464,6 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 	
 	public void openMap() {
-		
 		PMap map = new PMap(this);
 		removePanel();
 		addPanel(map, true);

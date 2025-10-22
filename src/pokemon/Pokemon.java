@@ -55,7 +55,7 @@ import ui.BattleUI;
 import util.DeepClonable;
 import util.Pair;
 
-public class Pokemon implements RoleAssignable, Serializable {
+public class Pokemon implements Serializable {
 	/**
 	 * 
 	 */
@@ -188,7 +188,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 	
 	// trainer field
 	public Trainer trainer;
-	public transient int role;
 	
 	// Sprite fields
 	protected transient BufferedImage sprite;
@@ -2731,7 +2730,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (move == Move.SKULL_BASH || move == Move.SKY_ATTACK || ((move == Move.SOLAR_BEAM || move == Move.SOLAR_BLADE) && !field.equals(field.weather, Effect.SUN, this))
 				|| this.hasStatus(Status.CHARGING) || move == Move.BLACK_HOLE_ECLIPSE || move == Move.GEOMANCY || move == Move.METEOR_BEAM) {
 			if (this.getItem(field) == Item.POWER_HERB) {
-				announceUseMove(move);
+				announceUseMove(move, foe);
 				Task.addTask(Task.TEXT, this.nickname + " started charging up!");
 				this.addStatus(Status.CHARGING);
 				if (move == Move.SKULL_BASH) stat(this, 1, 1, foe);
@@ -2741,7 +2740,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				this.consumeItem(foe);
 			}
 			if (!this.hasStatus(Status.CHARGING)) {
-				announceUseMove(move);
+				announceUseMove(move, foe);
 				Task.addTask(Task.TEXT, this.nickname + " started charging up!");
 				this.addStatus(Status.CHARGING);
 				if (move == Move.SKULL_BASH) stat(this, 1, 1, foe);
@@ -2767,7 +2766,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		
 		if (move == Move.DIG || move == Move.DIVE || move == Move.FLY || move == Move.BOUNCE || move == Move.PHANTOM_FORCE || move == Move.VANISHING_ACT || this.hasStatus(Status.SEMI_INV)) {
 			if (this.getItem(field) == Item.POWER_HERB) {
-				announceUseMove(move);
+				announceUseMove(move, foe);
 				if (move == Move.DIG) Task.addTask(Task.SEMI_INV, this.nickname + " burrowed underground!", this);
 				if (move == Move.DIVE) Task.addTask(Task.SEMI_INV, this.nickname + " dove underwater!", this);
 				if (move == Move.FLY) Task.addTask(Task.SEMI_INV, this.nickname + " flew up high!", this);
@@ -2778,7 +2777,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 				this.consumeItem(foe);
 			}
 			if (!this.hasStatus(Status.SEMI_INV)) {
-				announceUseMove(move);
+				announceUseMove(move, foe);
 				if (move == Move.DIG) Task.addTask(Task.SEMI_INV, this.nickname + " burrowed underground!", this);
 				if (move == Move.DIVE) Task.addTask(Task.SEMI_INV, this.nickname + " dove underwater!", this);
 				if (move == Move.FLY) Task.addTask(Task.SEMI_INV, this.nickname + " flew up high!", this);
@@ -3297,6 +3296,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 			
 			if (move == Move.CHROMO_BEAM && checkSecondary(this.getAbility(field) == Ability.SERENE_GRACE || field.equals(field.terrain, Effect.SPARKLY) ? 60 : 30)) {
 				Task.insertTask(Task.createTask(Task.TEXT, this.nickname + " is going all out for this attack!"), damageIndex++);
+				bp *= 2;
+			}
+			
+			if (move.isCrushing() && foe.hasStatus(Status.MINIMIZED)) {
 				bp *= 2;
 			}
 			
@@ -3977,7 +3980,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 
 	private void useMove(Move move, Pokemon foe) {
 		if (move == Move.FAILED_SUCKER) move = Move.SUCKER_PUNCH;
-		announceUseMove(move);
+		announceUseMove(move, foe);
 		for (Moveslot m : this.moveset) {
 			if (m != null && m.move == move) {
 				m.currentPP -= foe.getAbility(field) == Ability.PRESSURE ? 2 : 1;
@@ -3994,12 +3997,12 @@ public class Pokemon implements RoleAssignable, Serializable {
 		}
 	}
 	
-	private void announceUseMove(Move move) {
+	private void announceUseMove(Move move, Pokemon foe) {
 		String msg = this.nickname + " used " + move.toString() + "!";
 		if (gp.gameState == GamePanel.SIM_BATTLE_STATE) {
 			msg = writeMoveChance(msg);
 		}
-		Task t = Task.addTask(Task.SEMI_INV, msg, this);
+		Task t = Task.addMoveAnimTask(move, this, foe);
 		t.wipe = true;
 	}
 
@@ -4173,6 +4176,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 		
 		if (move == Move.FUTURE_SIGHT) return 1.1;
 		
+		if (move.isCrushing() && foe.hasStatus(Status.MINIMIZED)) return 1.1;
+		
 		if (move == Move.FROSTBIND && this.isType(PType.ICE)) acc = 100;
 		if (move == Move.THUNDER_WAVE && this.isType(PType.ELECTRIC)) acc = 100;
 		if (move == Move.WILL$O$WISP && this.isType(PType.FIRE)) acc = 100;
@@ -4329,6 +4334,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 		case PLASMA_FISTS:
 			field.setEffect(field.new FieldEffect(Effect.ION), false);
 			Task.addTask(Task.TEXT, "A deluge of ions showered the battlefield!");
+			break;
+		case PSYCHO_BOOST:
+			stat(this, 2, -2, foe);
 			break;
 		case ROCKFALL_FRENZY:
 			if (field.getLayers(foe.getFieldEffects(), Effect.STEALTH_ROCKS) < 1) {
@@ -5866,6 +5874,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 			break;
 		case MINIMIZE:
 			stat(this, 6, 2, foe);
+			if (!this.hasStatus(Status.MINIMIZED)) {
+				this.addStatus(Status.MINIMIZED);
+			}
 			break;
 		case MORNING_SUN:
 		case MOONLIGHT:
@@ -6479,7 +6490,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 		int a = amt;
 		if (p.getAbility(field) == Ability.SIMPLE) a *= 2;
 		if (p.getAbility(field) == Ability.CONTRARY) a *= -1;
-		if (foe != null && foe.getAbility(field) == Ability.BRAINWASH) a *= -1;
+		if (foe != null && foe.getAbility(field) == Ability.CONTRARY) a *= -1;
 		String type = "";
 		if (i == 0) type = "Attack";
 		if (i == 1) type = "Defense";
@@ -6546,10 +6557,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 		}
 		
 		if (this != p) {
-			if (p.getAbility(field) == Ability.DEFIANT && foe != null && foe.ability != Ability.BRAINWASH && a < 0) {
+			if (p.getAbility(field) == Ability.DEFIANT && foe != null && foe.ability != Ability.CONTRARY && a < 0) {
 				Task.addAbilityTask(p);
 				stat(p, 0, 2, foe);
-			} else if (p.getAbility(field) == Ability.COMPETITIVE && foe != null && foe.ability != Ability.BRAINWASH && a < 0) {
+			} else if (p.getAbility(field) == Ability.COMPETITIVE && foe != null && foe.ability != Ability.CONTRARY && a < 0) {
 				Task.addAbilityTask(p);
 				stat(p, 2, 2, foe);
 			}
@@ -7373,6 +7384,10 @@ public class Pokemon implements RoleAssignable, Serializable {
 		if (this.getItem(field) == Item.LIFE_ORB) bp *= 1.3;
 		
 		if (mode == 0 && move == Move.CHROMO_BEAM && checkSecondary(this.getAbility(field) == Ability.SERENE_GRACE || field.equals(field.terrain, Effect.SPARKLY) ? 60 : 30)) bp *= 2;
+		
+		if (move.isCrushing() && foe.hasStatus(Status.MINIMIZED)) {
+			bp *= 2;
+		}
 		
 		int arcane = this.getStatusNum(Status.ARCANE_SPELL);
 		if (arcane != 0 && bp > 20) {
@@ -9833,8 +9848,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 	    clonedPokemon.frontSprite = this.frontSprite;
 	    clonedPokemon.backSprite = this.backSprite;
 	    
-	    clonedPokemon.role = this.role;
-	    
 	    // Trainer
 	    clonedPokemon.trainer = this.trainer;
 	    clonedPokemon.cloned = true;
@@ -10103,24 +10116,34 @@ public class Pokemon implements RoleAssignable, Serializable {
 		reverseEvoMap = new HashMap<>();
 		
 		// build the bidirectional evolution map
-	    for (int i = 1; i <= MAX_POKEMON; i++) {
-	        String evolveStr = getEvolveString(i);
-	        if (evolveStr == null) continue;
+		for (int i = 1; i <= MAX_POKEMON; i++) {
+			String evolveStr = getEvolveString(i);
+			if (evolveStr == null) continue;
 
-	        String baseName = getName(i);
-	        String[] lines = evolveStr.split("\n");
+			String baseName = getName(i);
+			String[] lines = evolveStr.split("\n");
 
-	        for (String line : lines) {
-	            String[] parts = line.split("->");
-	            if (parts.length == 2) {
-	                String evolvedName = parts[1].split("\\(")[0].trim();
+			for (String line : lines) {
+				if (line.trim().startsWith("+")) {
+					String bonusEvoName = line.trim().substring(1).trim();
+					
+					// add link between base and bonus evo (shedinja)
+					forwardEvoMap.computeIfAbsent(baseName, k -> new HashSet<>()).add(bonusEvoName);
+					reverseEvoMap.computeIfAbsent(bonusEvoName, k -> new HashSet<>()).add(baseName);
+					continue;
+				}
+				
+				// handle normal evos
+				String[] parts = line.split("->");
+				if (parts.length == 2) {
+					String evolvedName = parts[1].split("\\(")[0].trim();
 
-	                // Initialize sets if not already present
-	                forwardEvoMap.computeIfAbsent(baseName, k -> new HashSet<String>()).add(evolvedName);
-	                reverseEvoMap.computeIfAbsent(evolvedName, k -> new HashSet<String>()).add(baseName);
-	            }
-	        }
-	    }
+					// initialize sets if not already present
+					forwardEvoMap.computeIfAbsent(baseName, k -> new HashSet<String>()).add(evolvedName);
+					reverseEvoMap.computeIfAbsent(evolvedName, k -> new HashSet<String>()).add(baseName);
+				}
+			}
+		}
 	}
 	
 	public int getBabyStage() {
@@ -10426,14 +10449,14 @@ public class Pokemon implements RoleAssignable, Serializable {
 	public int canLearnMove(Move move) {
 		if (move == null) return -1;
 		boolean learnable = move == Move.ENDURE;
-        boolean learned = this.knowsMove(move);
-        if (!learnable) {
-        	return 0;
-        } else if (learned) {
-        	return 2;
-        } else {
-        	return 1;
-        }
+		boolean learned = this.knowsMove(move);
+		if (!learnable) {
+			return 0;
+		} else if (learned) {
+			return 2;
+		} else {
+			return 1;
+		}
 	}
 
 	public ArrayList<String> getStatusLabels() {
@@ -10441,8 +10464,8 @@ public class Pokemon implements RoleAssignable, Serializable {
 		for (StatusEffect s : vStatuses) {
 			String add = s.toString();
 			if (s.num != 0) add += " " + s.num;
-	    	result.add(add);
-	    }
+			result.add(add);
+		}
 		if (perishCount > 0) {
 			result.add("Perish in " + perishCount);
 		}
@@ -10503,40 +10526,40 @@ public class Pokemon implements RoleAssignable, Serializable {
 	}
 
 	public static void writeInfoToCSV(String filePath) {
-	    try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
-	        for (int i = 1; i <= MAX_POKEMON; i++) {
-	            StringBuilder sb = new StringBuilder();
-	            Pokemon p = new Pokemon(i, 1, false, true);
-	            sb.append("|").append(padString(p.name, 13));
-	            sb.append("|").append(padString(p.type1.superToString(), 8));
-	            sb.append("|").append(padString(p.type2 == null ? "null" : p.type2.superToString(), 8));
-	            sb.append("|").append(padString(p.ability.superToString(), 18));
-	            p.setAbility(1);
-	            sb.append("|").append(padString(p.ability.superToString(), 18));
-	            sb.append("|").append(padString(Arrays.toString(p.baseStats), 30));
-	            sb.append("|").append(padString(String.valueOf(p.weight), 6));
-	            sb.append("|").append(padString(String.valueOf(p.catchRate), 3)).append("|");
-	            writer.println(sb.toString());
-	        }
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
+		try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
+			for (int i = 1; i <= MAX_POKEMON; i++) {
+				StringBuilder sb = new StringBuilder();
+				Pokemon p = new Pokemon(i, 1, false, true);
+				sb.append("|").append(padString(p.name, 13));
+				sb.append("|").append(padString(p.type1.superToString(), 8));
+				sb.append("|").append(padString(p.type2 == null ? "null" : p.type2.superToString(), 8));
+				sb.append("|").append(padString(p.ability.superToString(), 18));
+				p.setAbility(1);
+				sb.append("|").append(padString(p.ability.superToString(), 18));
+				sb.append("|").append(padString(Arrays.toString(p.baseStats), 30));
+				sb.append("|").append(padString(String.valueOf(p.weight), 6));
+				sb.append("|").append(padString(String.valueOf(p.catchRate), 3)).append("|");
+				writer.println(sb.toString());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private static String padString(String str, int length) {
-	    if (str.length() >= length) {
-	        return str;
-	    } else {
-	        StringBuilder padded = new StringBuilder(str);
-	        for (int i = str.length(); i < length; i++) {
-	            padded.append(" ");
-	        }
-	        return padded.toString();
-	    }
-	}    
+		if (str.length() >= length) {
+			return str;
+		} else {
+			StringBuilder padded = new StringBuilder(str);
+			for (int i = str.length(); i < length; i++) {
+				padded.append(" ");
+			}
+			return padded.toString();
+		}
+	}
 	
 	public static void readInfoFromCSV() {
-        try (Scanner scanner = new Scanner(Pokemon.class.getResourceAsStream("/info/pokemon.csv"))) {
+		try (Scanner scanner = new Scanner(Pokemon.class.getResourceAsStream("/info/pokemon.csv"))) {
 			for (int i = 0; i < MAX_POKEMON; i++) {
 				String line = scanner.nextLine();
 				String[] tokens = line.split("\\|");
@@ -10560,9 +10583,9 @@ public class Pokemon implements RoleAssignable, Serializable {
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		}
-        
-        setEvolutionMaps();
-    }
+		
+		setEvolutionMaps();
+	}
 	
 	public static void readMovebanksFromCSV() {
 		try (Scanner scanner = new Scanner(Pokemon.class.getResourceAsStream("/info/movebank.csv"))) {
@@ -10730,7 +10753,13 @@ public class Pokemon implements RoleAssignable, Serializable {
 				}
 				pokemon.setStats();
 				pokemon.currentHP = pokemon.getStat(0);
-				pokemon.validateMoveset(index, name);
+				boolean[] movesValid = pokemon.validateMoveset();
+				for (int b = 0; b < movesValid.length; b++) {
+					if (!movesValid[b]) {
+						System.err.println(index + " " + name + "'s " + pokemon.name + " (ID " + pokemon.id + ")'s " + pokemon.moveset[b].move.toString()
+							+ " in index " + b + " is illegal");
+					}
+				}
 				
 				if (type != null) {
 					pokemon.ivs = determineOptimalIVs(type);
@@ -10747,8 +10776,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 						break;
 					}
 				}
-				
-				pokemon.role = RoleAssignable.assignRole(pokemon);
 				
 				// DEBUGGING
 				if (!abilitySet) {
@@ -10820,84 +10847,110 @@ public class Pokemon implements RoleAssignable, Serializable {
 	    }
 	    return seed;
 	}
+	
+	public boolean[] validateMoveset() {
+		ArrayList<Move> moveset = new ArrayList<>();
+		for (Moveslot m : this.moveset) {
+			if (m != null) {
+				moveset.add(m.move);
+			}
+		}
+		return validateMoveset(id, level, moveset);
+	}
 
-	private void validateMoveset(int index, String name) {
-		ArrayList<Move> thisMovebank = getMovebankAtLevel(this.id, this.level);
+	public static boolean[] validateMoveset(int id, int level, ArrayList<Move> moveset) {
+		ArrayList<Move> thisMovebank = getMovebankAtLevel(id, level);
 		ArrayList<Move> tmMoves = Item.getTMMoves();
 		ArrayList<Item> tms = Item.getTMs();
-		boolean[] movesValid = new boolean[this.moveset.length];
+		boolean[] movesValid = new boolean[moveset.size()];
 		HashSet<Move> seenMoves = new HashSet<>();
-		for (int i = 0; i < this.moveset.length; i++) {
-			if (this.moveset[i] == null) {
-				movesValid[i] = true;
-				continue;
-			}
-			Move m = this.moveset[i].move;
+		
+		for (int i = 0; i < moveset.size(); i++) {
+			Move m = moveset.get(i);
+			
+			// check for duplicate moves
 			if (seenMoves.contains(m)) {
 				movesValid[i] = false;
-				System.err.println(index + " " + name + "'s " + this.name + " (ID " + this.id + ") has duplicate move: " + m + " in index " + i);
 				continue;
 			} else {
 				seenMoves.add(m);
 			}
+			
+			if (m.id >= Move.HP_ROCK.id && m.id <= Move.RETURN_GALACTIC.id) {
+				m = m.id <= Move.HP_GALACTIC.id ? Move.HIDDEN_POWER : Move.RETURN;
+			}
+			
+			// check tms
 			int tmIndex = tmMoves.indexOf(m);
 			if (tmIndex >= 0) {
 				Item tmItem = tms.get(tmIndex);
-				if (tmItem.getLearned(this)) {
+				if (tmItem.getLearned(id)) {
 					movesValid[i] = true;
 					continue;
 				}
 			}
-			if (thisMovebank.contains(m)) movesValid[i] = true;
-			if (Move.getMoveTutorMoves().contains(m)) movesValid[i] = true; // endure is a universal move tutor move
-		}
-		
-		boolean movesetValid = true;
-		for (boolean b : movesValid) {
-			if (!b) {
-				movesetValid = false;
-				break;
+			
+			// check move tutor moves
+			if (Move.getMoveTutorMoves().contains(m)) {
+				movesValid[i] = true;
+				continue;
 			}
-		}
-		int pokemonChecked = 1;
-		int prevoID = this.id;
-		while (!movesetValid && pokemonChecked < 4) { // check prevos
-			prevoID--;
-			String evolvedString = getEvolveString(prevoID);
-			if (evolvedString != null && (evolvedString.contains(getName(this.id)) || evolvedString.contains(getName(this.id - 1)) || evolvedString.contains(getName(this.id - 2)))) {
-				ArrayList<Move> prevoMovebank = getMovebankAtLevel(prevoID, this.level);
-				for (int i = 0; i < this.moveset.length; i++) {
-					if (!movesValid[i]) {
-						Move m = this.moveset[i].move;
-						int tmIndex = tmMoves.indexOf(m);
-						if (tmIndex >= 0) {
-							Item tmItem = tms.get(tmIndex);
-							if (tmItem.getLearned(prevoID)) {
-								movesValid[i] = true;
-							}
-						}
-						if (prevoMovebank.contains(m)) movesValid[i] = true;
-					}
-				}
+			
+			// check current Pokemon's movebank
+			if (thisMovebank.contains(m)) {
+				movesValid[i] = true;
+				continue;
 			}
-			pokemonChecked++;
-			for (boolean b : movesValid) {
-				if (!b) {
-					movesetValid = false;
-					break;
-				}
+			
+			// check all pre evos
+			if (canLearnFromPreEvos(id, m, level, tmMoves, tms)) {
+				movesValid[i] = true;
 			}
 		}
 		
-		if (!movesetValid) {
-			for (int i = 0; i < movesValid.length; i++) {
-				if (!movesValid[i]) {
-					System.err.println(index + " " + name + "'s " + this.name + " (ID " + this.id + ")'s " + this.moveset[i].move.toString()
-							+ " in index " + i + " is illegal");
+		return movesValid;		
+	}
+
+	private static boolean canLearnFromPreEvos(int id, Move move, int level, ArrayList<Move> tmMoves, ArrayList<Item> tms) {
+		String currentName = getName(id);
+		Queue<String> queue = new LinkedList<>();
+		HashSet<String> visited = new HashSet<>();
+		
+		visited.add(currentName);
+		
+		HashSet<String> preEvos = reverseEvoMap.getOrDefault(currentName, new HashSet<>());
+		for (String prevo : preEvos) {
+			visited.add(prevo);
+			queue.add(prevo);
+		}
+		
+		while (!queue.isEmpty()) {
+			String pokemonName = queue.poll();
+			int pokemonID = getIDFromName(pokemonName);
+			
+			ArrayList<Move> prevoMovebank = getMovebankAtLevel(pokemonID, level);
+			if (prevoMovebank.contains(move)) {
+				return true;
+			}
+			
+			int tmIndex = tmMoves.indexOf(move);
+			if (tmIndex >= 0) {
+				Item tmItem = tms.get(tmIndex);
+				if (tmItem.getLearned(pokemonID)) {
+					return true;
+				}
+			}
+			
+			HashSet<String> olderPreEvos = reverseEvoMap.getOrDefault(pokemonName, new HashSet<>());
+			for (String prevo : olderPreEvos) {
+				if (!visited.contains(prevo)) {
+					visited.add(prevo);
+					queue.add(prevo);
 				}
 			}
 		}
 		
+		return false;
 		
 	}
 
@@ -11358,7 +11411,7 @@ public class Pokemon implements RoleAssignable, Serializable {
 			set.setItems(items);
 			set.setNatures(ns);
 			
-			set.setRole(RoleAssignable.assignRole(set));
+			set.validate();
 			
 			if (newID) {
 				compIDs.add(id);
@@ -11374,7 +11427,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 		scanner.close();
 	}
 
-	@Override
 	public ArrayList<Move> getMoves() {
 		ArrayList<Move> allMoves = new ArrayList<>();
 		for (Moveslot m : this.moveset) {
@@ -11383,27 +11435,6 @@ public class Pokemon implements RoleAssignable, Serializable {
 			}
 		}
 		return allMoves;
-	}
-
-	@Override
-	public ArrayList<Ability> getAbilities() {
-		ArrayList<Ability> result = new ArrayList<>();
-		result.add(this.ability);
-		return result;
-	}
-
-	@Override
-	public ArrayList<Item> getItems() {
-		ArrayList<Item> result = new ArrayList<>();
-		result.add(this.item);
-		return result;
-	}
-
-	@Override
-	public ArrayList<Nature> getNatures() {
-		ArrayList<Nature> result = new ArrayList<>();
-		result.add(this.nat);
-		return result;
 	}
 
 	public static int getRandomBasePokemon(Random random) {

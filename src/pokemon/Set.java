@@ -4,13 +4,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-public class Set implements RoleAssignable {
+public class Set {
 	private int id;
 	private ArrayList<Ability> abilities;
 	private ArrayList<Item> items;
 	private ArrayList<Nature> natures;
 	private int[] ivs;
-	private int role;
 	
 	private ArrayList<Move>[] moves;
 	
@@ -40,7 +39,6 @@ public class Set implements RoleAssignable {
 		}
 		p.moveset = moveslot;
 		p.ivs = this.ivs;
-		p.role = role;
 		return p;
 	}
 	
@@ -86,7 +84,6 @@ public class Set implements RoleAssignable {
 		if (this.moves[index].size() == 1) return this.moves[index].get(0);
 		Move m = this.moves[index].get(RANDOM.nextInt(this.moves[index].size()));
 		if (m.id >= Move.HP_ROCK.id && m.id <= Move.RETURN_GALACTIC.id) {
-			System.out.println(m);
 			PType type = m.mtype;
 			setIVs(type);
 			m = m.id <= Move.HP_GALACTIC.id ? Move.HIDDEN_POWER : Move.RETURN;
@@ -107,31 +104,14 @@ public class Set implements RoleAssignable {
 	@Override
 	public String toString() {
 	    return "Set{id=" + id +
-	           ", items=" + items +
-	           ", natures=" + natures +
-	           ", abilities=" + abilities +
-	           ", ivs=" + Arrays.toString(ivs) +
-	           ", moves=" + Arrays.deepToString(moves) +
-	           '}';
-	}
-	
-	public boolean hasRole(int role) {
-	    return (this.role & role) != 0;
+           ", items=" + items +
+           ", natures=" + natures +
+           ", abilities=" + abilities +
+           ", ivs=" + Arrays.toString(ivs) +
+           ", moves=" + Arrays.deepToString(moves) +
+           '}';
 	}
 
-	public void addRole(int role) {
-	    this.role |= role;
-	}
-
-	public void removeRole(int role) {
-	    this.role &= ~role;
-	}
-	
-	public void setRole(int role) {
-		this.role = role;
-	}
-
-	@Override
 	public ArrayList<Move> getMoves() {
 		ArrayList<Move> allMoves = new ArrayList<>();
 		for (ArrayList<Move> moveSlot : moves) {
@@ -141,24 +121,48 @@ public class Set implements RoleAssignable {
 		}
 		return allMoves;
 	}
-
-	@Override
-	public int[] getBaseStats() {
-		return Pokemon.getBaseStats(id);
-	}
-
-	@Override
-	public ArrayList<Ability> getAbilities() {
-		return this.abilities;
-	}
-
-	@Override
-	public ArrayList<Item> getItems() {
-		return this.items;
-	}
-
-	@Override
-	public ArrayList<Nature> getNatures() {
-		return this.natures;
+	
+	public void validate() {
+		Pokemon temp = new Pokemon(id, 100, false, true);
+		String pokemonName = temp.name();
+		
+		// Validate abilities
+		Ability[] validAbilities = new Ability[3];
+		for (int k = 0; k < 3; k++) {
+			validAbilities[k] = temp.getAbility(k);
+		}
+		
+		ArrayList<Ability> invalidAbilities = new ArrayList<>();
+		for (Ability ability : this.abilities) {
+			boolean isValid = false;
+			for (Ability validAbility : validAbilities) {
+				if (ability == validAbility) {
+					isValid = true;
+					break;
+				}
+			}
+			if (!isValid) {
+				invalidAbilities.add(ability);
+			}
+		}
+		
+		if (!invalidAbilities.isEmpty()) {
+			System.err.println("\nWARNING: " + pokemonName + " has invalid abilities: " + invalidAbilities);
+			System.err.println("  Valid abilities are: " + Arrays.toString(validAbilities));
+		}
+		
+		// Validate moves
+		ArrayList<Move> allMoves = getMoves();
+		boolean[] movesValid = Pokemon.validateMoveset(this.id, 100, allMoves);
+		ArrayList<Move> invalidMoves = new ArrayList<>();
+		for (int b = 0; b < allMoves.size(); b++) {
+			if (!movesValid[b]) {
+				invalidMoves.add(allMoves.get(b));
+			}
+		}
+		
+		if (!invalidMoves.isEmpty()) {
+			System.err.println("\nWARNING: " + this + " has invalid moves: " + invalidMoves);
+		}
 	}
 }
