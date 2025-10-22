@@ -3,6 +3,8 @@ package pokemon;
 import java.awt.Color;
 import java.util.ArrayList;
 
+import animation.BattleAnimation;
+import animation.BattleAnimationManager;
 import entity.Entity;
 import object.TemplateParticle;
 import overworld.GamePanel;
@@ -83,6 +85,7 @@ public class Task {
 	public static final int MONEY = 66; // unused for task type
 	public static final int DELETE_MOVE = 67;
 	public static final int MENU_ICON = 68; // counter: which icon index in menuIcons
+	public static final int USE_MOVE = 69;
 	
 	public static GamePanel gp;
 	
@@ -103,6 +106,7 @@ public class Task {
 	public Item item;
 	public PType[] types;
 	public int ui; // used for drawing extra ui components for a task
+	public BattleAnimation animation;
 	
 	public Entity e;
 	public Trainer[] trainers;
@@ -449,5 +453,14 @@ public class Task {
 			p.spawnDelay = i;
 			t.particleList.add(p);
 		}
+	}
+	
+	public static Task addMoveAnimTask(Move move, Pokemon attacker, Pokemon defender) {
+		Task t = addTask(USE_MOVE, "");
+		t.move = move;
+		t.p = attacker;
+		t.foe = defender;
+		t.animation = BattleAnimationManager.getInstance().getAnimation(move.name());
+		return t;
 	}
 }

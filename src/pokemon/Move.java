@@ -400,6 +400,7 @@ public enum Move {
 	PSYCHIC_FANGS(85,100,-1,0,0,0,PType.PSYCHIC,"Breaks Screen effects and breaks Magic Reflect",true,10),
 	PSYCHIC_NOISE(75,100,100,0,1,0,PType.PSYCHIC,"% to inflict foe with the Heal Block effect",false,10),
 	PSYCHIC_TERRAIN(0,1000,0,0,2,0,PType.PSYCHIC,"Changes the terrain to PSYCHIC for 5 turns",false,15),
+	PSYCHO_BOOST(140,90,-1,0,1,0,PType.PSYCHIC,"Lowers user's Sp.Atk by 2",false,5),
 	PSYCHO_CUT(70,100,0,1,0,0,PType.PSYCHIC,"Boosted crit rate",false,20),
 	PSYSHOCK(80,100,0,0,1,0,PType.PSYCHIC,"Uses foe's Defense instead of Sp.Def in damage calculation",false,15),
 	PSYWAVE(0,100,0,-999,1,0,PType.PSYCHIC,"Deals damage equal to user's level",false,15),
@@ -1430,6 +1431,22 @@ public enum Move {
 			this == Move.TOXIC_SPIKES ||
 			this == Move.STICKY_WEB ||
 			this == Move.FLOODLIGHT;
+	}
+	
+	public boolean isCrushing() {
+		ArrayList<Move> result = new ArrayList<>();
+		result.add(BODY_SLAM);
+		result.add(STOMP);
+		result.add(EXTRASENSORY);
+		result.add(NEEDLE_ARM);
+		result.add(DRAGON_RUSH);
+		result.add(HEAT_CRASH);
+		result.add(HEAVY_SLAM);
+		result.add(PHANTOM_FORCE);
+		if (result.contains(this)) {
+			return true;
+		}
+		return false;
 	}
 
 }

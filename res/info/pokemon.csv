@@ -87,13 +87,13 @@
 65 |Gardevoir    |PSYCHIC |LIGHT   |EMPATHIC_LINK     |TRACE             |PIXILATE          |[68, 65, 65, 125, 115, 80]    |106.7 |45 |HUMAN$LIKE  |FAIRY       |
 66 |Gallade      |PSYCHIC |FIGHTING|SHARPNESS         |JUSTIFIED         |INNER_FOCUS       |[68, 125, 65, 65, 115, 80]    |114.6 |45 |HUMAN$LIKE  |FAIRY       |
 83 |Benglow      |LIGHT   |NORMAL  |SIMPLE            |NORMALIZE         |PIXILATE          |[65, 79, 67, 103, 72, 69]     |250.4 |65 |FIELD       |FIELD       |
-137|Inkay        |PSYCHIC |DARK    |CONTRARY          |BRAINWASH         |ILLUMINATION      |[53, 54, 53, 37, 46, 45]      |7.7   |190|WATER_1     |WATER_2     |
-138|Malamar      |PSYCHIC |DARK    |CONTRARY          |BRAINWASH         |ILLUMINATION      |[86, 92, 88, 68, 75, 73]      |103.6 |80 |WATER_1     |WATER_2     |
+137|Inkay        |PSYCHIC |DARK    |CONTRARY          |CONTRARY          |ILLUMINATION      |[53, 54, 53, 37, 46, 45]      |7.7   |190|WATER_1     |WATER_2     |
+138|Malamar      |PSYCHIC |DARK    |CONTRARY          |CONTRARY          |ILLUMINATION      |[86, 92, 88, 68, 75, 73]      |103.6 |80 |WATER_1     |WATER_2     |
 52 |Flameruff    |FIRE    |NORMAL  |INTIMIDATE        |FLASH_FIRE        |RECKLESS          |[46, 74, 68, 48, 58, 81]      |21.0  |75 |FIELD       |FIELD       |
 53 |Barkflare    |FIRE    |NORMAL  |INTIMIDATE        |FLASH_FIRE        |RECKLESS          |[65, 103, 82, 66, 79, 100]    |93.6  |50 |FIELD       |FIELD       |
 54 |Sember       |FIRE    |null    |FLAME_BODY        |FLASH_FIRE        |UNBURDEN          |[30, 20, 40, 103, 30, 83]     |10.0  |195|FIELD       |HUMAN$LIKE  |
-55 |Kaboon       |FIRE    |FIGHTING|FLAME_BODY        |IRON_FIST         |UNBURDEN          |[43, 88, 50, 74, 52, 93]      |145.6 |100|FIELD       |HUMAN$LIKE  |
-56 |Detonape     |FIRE    |FIGHTING|FLAME_BODY        |IRON_FIST         |UNBURDEN          |[65, 120, 75, 60, 75, 121]    |195.0 |50 |FIELD       |HUMAN$LIKE  |
+55 |Kaboon       |FIRE    |FIGHTING|FLAME_BODY        |IRON_FIST         |UNBURDEN          |[45, 88, 50, 70, 54, 93]      |145.6 |100|FIELD       |HUMAN$LIKE  |
+56 |Detonape     |FIRE    |FIGHTING|FLAME_BODY        |IRON_FIST         |UNBURDEN          |[65, 120, 70, 60, 78, 123]    |195.0 |50 |FIELD       |HUMAN$LIKE  |
 191|Magmaclang   |FIRE    |GHOST   |STEELWORKER       |STEELWORKER       |STEELWORKER       |[105, 35, 120, 90, 90, 65]    |165.3 |80 |AMORPHOUS   |AMORPHOUS   |
 209|Flamehox     |FIRE    |GROUND  |FLAME_BODY        |FLAME_BODY        |SAND_VEIL         |[70, 53, 70, 55, 60, 52]      |290.2 |55 |FIELD       |MONSTER     |
 210|Fireshard    |FIRE    |FLYING  |INTIMIDATE        |INTIMIDATE        |SAND_VEIL         |[75, 75, 75, 90, 75, 70]      |301.3 |35 |FIELD       |MONSTER     |
