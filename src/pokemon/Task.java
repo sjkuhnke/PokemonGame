@@ -455,12 +455,18 @@ public class Task {
 		}
 	}
 	
-	public static Task addMoveAnimTask(Move move, Pokemon attacker, Pokemon defender) {
-		Task t = addTask(USE_MOVE, "");
+	public static Task addMoveAnimTask(Move move, String msg, Pokemon attacker, Pokemon defender) {
+		Task t = addTask(USE_MOVE, msg);
 		t.move = move;
 		t.p = attacker;
 		t.foe = defender;
-		t.animation = BattleAnimationManager.getInstance().getAnimation(move.name());
+		t.animation = BattleAnimationManager.getInstance().getAnimation(move);
 		return t;
+	}
+
+	public static void addStatTask(String msg, Pokemon p, int amt) {
+		Task t = addTask(STAT, msg);
+		t.p = p;
+		t.counter = amt;
 	}
 }

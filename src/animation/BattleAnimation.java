@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BattleAnimation {
-	public String animationType; // slide, shake, effect, etc
+	public String animationType;
 	public List<AnimationFrame> frames;
 	public int duration;
 	

@@ -8,12 +8,16 @@ import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 import animation.AnimationFrame;
 import animation.AnimationFrame.Target;
 import animation.BattleAnimation;
 import animation.BattleAnimationManager;
+import animation.EffectParticle;
+import animation.StatParticle;
 import entity.PlayerCharacter;
 import overworld.GamePanel;
 import pokemon.*;
@@ -109,6 +113,8 @@ public class BattleUI extends AbstractUI {
 	// ANIMATION
 	private long animStartTime;
 	private int currentAnimFrame;
+	private List<EffectParticle> activeEffects;
+	private List<StatParticle> statParticles;
 
 	// STATE CONSTANTS
 	public static final int STARTING_STATE = -1;
@@ -156,6 +162,8 @@ public class BattleUI extends AbstractUI {
 		foeOriginalPos = new Point2D.Double(foeX, foeY);
 		
 		BattleAnimationManager.getInstance(); // initialize animations
+		activeEffects = new ArrayList<>();
+		statParticles = new ArrayList<>();
 	}
 	
 	@Override
@@ -542,14 +550,18 @@ public class BattleUI extends AbstractUI {
 
 	protected void endTask() {
 		subState = COOLDOWN_STATE;
+		userX = (int) userOriginalPos.getX();
+		userY = (int) userOriginalPos.getY();
+		foeX = (int) foeOriginalPos.getX();
+		foeY = (int) foeOriginalPos.getY();
 	}
 
 	protected void cooldownState() {
 		currentTask = null;
-		currentAbility = null;
 		cooldownCounter++;
-		if (cooldownCounter >= 25) {
+		if (cooldownCounter >= 50) {
 			cooldownCounter = 0;
+			currentAbility = null;
 			subState = TASK_STATE;
 		}
 	}
@@ -568,14 +580,8 @@ public class BattleUI extends AbstractUI {
 		}
 	}
 
-	protected void drawAbility() {
-		if (currentTask == null) {
-			abilityCounter = 0;
-			currentAbility = null;
-			return;
-		}
-		
-		if (currentTask.type == Task.ABILITY) abilityCounter++;
+	protected void drawAbility() {		
+		if (currentTask != null && currentTask.type == Task.ABILITY) abilityCounter++;
 		
 		int x = gp.screenWidth - (4 * gp.tileSize);
 		int y = gp.screenHeight - (6 * gp.tileSize);
@@ -591,7 +597,7 @@ public class BattleUI extends AbstractUI {
 		String bottomText = currentAbility.toString() + ":";
 		g2.drawString(bottomText, this.getCenterAlignedTextX(bottomText, x), y);
 		
-		if (abilityCounter == 25) {
+		if (abilityCounter > 25) {
 			abilityCounter = 0;
 			currentTask = null;
 		}
@@ -602,7 +608,7 @@ public class BattleUI extends AbstractUI {
 		switch (currentTask.type) {
 		case Task.TEXT:
 			message = currentTask.message.contains("\n") ? currentTask.message : Item.breakString(currentTask.message, 63);
-			showMessage(message);
+			displayMessage(message);
 			break;
 		case Task.DAMAGE:
 			if (!currentTask.p.isVisible()) {
@@ -712,7 +718,7 @@ public class BattleUI extends AbstractUI {
 			break;
 		case Task.STATUS:
 			message = currentTask.message.contains("\n") ? currentTask.message : Item.breakString(currentTask.message, 63);
-			showMessage(message);
+			displayMessage(message);
 			if (currentTask.p == user) {
 				userStatus = currentTask.status;
 			} else {
@@ -780,11 +786,11 @@ public class BattleUI extends AbstractUI {
 			drawEvolution(currentTask);
 			break;
 		case Task.WEATHER:
-			showMessage(currentTask.message);
+			displayMessage(currentTask.message);
 			weather = currentTask.fe;
 			break;
 		case Task.TERRAIN:
-			showMessage(currentTask.message);
+			displayMessage(currentTask.message);
 			terrain = currentTask.fe;
 			break;
 		case Task.SPRITE:
@@ -822,12 +828,30 @@ public class BattleUI extends AbstractUI {
 			}
 			break;
 		case Task.USE_MOVE:
-			System.out.println("Use move");
 			drawMoveAnimation();
-			message = currentTask.message.contains("\n") ? currentTask.message : Item.breakString(currentTask.message, 64);
-			showMessage(message);
-			currentTask.p.spriteVisible = currentTask.wipe;
+			if (currentTask != null) {
+				currentDialogue = currentTask.message.contains("\n") ? currentTask.message : Item.breakString(currentTask.message, 64);
+				currentTask.p.spriteVisible = currentTask.wipe;
+			}
 			break;
+		case Task.STAT:
+			drawStatChange();
+			currentDialogue = currentTask.message.contains("\n") ? currentTask.message : Item.breakString(currentTask.message, 63);
+			break;
+		}
+	}
+	
+	/**
+	 * A method for determining whether to pause and wait for the user's input
+	 * If this is the last task before idling, then the message will not pause
+	 * @param message to be displayed
+	 */
+	protected void displayMessage(String message) {
+		if (tasks.isEmpty()) {
+			showMessage(message);
+		} else {
+			currentDialogue = message;
+			endTask();
 		}
 	}
 	
@@ -854,6 +878,7 @@ public class BattleUI extends AbstractUI {
 	
 	protected void drawIdleScreen() {
 		currentDialogue = "What will\n" + user.nickname + " do?";
+		currentAbility = null;
 		drawDialogueScreen(false);
 		drawCalcWindow();
 		if (gp.keyH.calcPressed) {
@@ -870,10 +895,10 @@ public class BattleUI extends AbstractUI {
 		if (user == null) return; // hasn't started yet
 		Pokemon draw = user.trainer == null ? user : user.trainer.findVisiblePokemon();
 		if (draw == null) return;
+		if (draw.spriteVisible) drawUserSprite(draw);
 		drawHPImage(draw);
 		drawHPBar(draw, userHP, maxUserHP);
 		drawNameLabel(draw, userLevel);
-		if (draw.spriteVisible) drawUserSprite(draw);
 		drawUserHP();
 		drawStatus(draw);
 		drawTypes(draw);
@@ -1152,6 +1177,9 @@ public class BattleUI extends AbstractUI {
 	
 	protected void drawUserSprite(Pokemon p) {
 		g2.drawImage(p.getBackSprite(), userX, userY, null);
+		int[] center = p.getSpriteCenter();
+		g2.setColor(Color.WHITE);
+		g2.fillOval(userX + center[0]*2, userY + center[1]*2, 3, 3);
 	}
 
 	protected void drawHPBar(Pokemon p, double amt, double maxHP) {
@@ -2196,7 +2224,6 @@ public class BattleUI extends AbstractUI {
 	}
 	
 	private void drawMoveAnimation() {
-		System.out.println("draw move animation");
 		if (animStartTime == 0) {
 			animStartTime = System.currentTimeMillis();
 		}
@@ -2216,6 +2243,8 @@ public class BattleUI extends AbstractUI {
 			}
 		}
 		
+		drawActiveEffects();
+		
 		if (currentAnimFrame >= anim.frames.size()) {
 			animStartTime = 0;
 			currentAnimFrame = 0;
@@ -2223,35 +2252,110 @@ public class BattleUI extends AbstractUI {
 		}
 	}
 
+	private void drawActiveEffects() {
+		Iterator<EffectParticle> iterator = activeEffects.iterator();
+		while (iterator.hasNext()) {
+			EffectParticle particle = iterator.next();
+			if (!particle.update()) {
+				iterator.remove();
+			} else {
+				particle.draw(g2);
+			}
+		}
+	}
+
 	private void executeAnimationFrame(AnimationFrame frame, long elapsed) {
-		Pokemon target = getTargetPokemon(frame.target);
-		
-		if (target == null) return;
-		
+		if (frame.target == Target.BOTH) {
+			Pokemon attacker = currentTask.p;
+			Pokemon defender = currentTask.foe;
+			
+			if (attacker != null) {
+				executeFrameForTarget(attacker, frame, elapsed);
+			}
+			if (defender != null) {
+				executeFrameForTarget(defender, frame, elapsed);
+			}
+		} else {
+			Pokemon target = getTargetPokemon(frame.target);
+			if (target != null) {
+				executeFrameForTarget(target, frame, elapsed);
+			}
+		}
+	}
+	
+	private void executeFrameForTarget(Pokemon target, AnimationFrame frame, long elapsed) {
 		switch (frame.type) {
 		case EFFECT:
-			animateMove(target, frame, elapsed);
+			animateEffect(target, frame, elapsed);
 			break;
 		case MOVE:
-			animateShake(target, frame, elapsed);
+			animateMove(target, frame, elapsed);
 			break;
 		case SHAKE:
-			animateEffect(target, frame, elapsed);
+			animateShake(target, frame, elapsed);
 			break;
 		case WAIT:
 			break;
 		default:
 			break;
-		
 		}
 	}
-	
+
 	private Pokemon getTargetPokemon(Target target) {
 		switch (target) {
 		case ATTACKER: return currentTask.p;
 		case DEFENDER: return currentTask.foe;
 		case BOTH: return currentTask.p;
 		default: return null;
+		}
+	}
+	
+	private void animateEffect(Pokemon target, AnimationFrame frame, long elapsed) {
+		if (elapsed < 50) { // Small threshold to avoid recreating
+			String spriteName = (String) frame.getProperty("sprite");
+			BufferedImage sprite = BattleAnimationManager.getInstance().getSprite(spriteName);
+			
+			if (sprite == null) return;
+			
+			boolean isUser = target == user;
+			double startXOffset = ((Number) frame.getProperty("startX")).doubleValue();
+			double startYOffset = ((Number) frame.getProperty("startY")).doubleValue();
+			double endXOffset = ((Number) frame.getProperty("endX")).doubleValue();
+			double endYOffset = ((Number) frame.getPropertyOrDefault("endY", 0.0)).doubleValue();
+			boolean towardsTarget = (boolean) frame.getPropertyOrDefault("towardsTarget", false);
+			String easing = (String) frame.getPropertyOrDefault("easing", "linear");
+			
+			int[] attackerCenter = isUser ? user.getSpriteCenter() : foe.getSpriteCenter();
+			int[] defenderCenter = isUser ? foe.getSpriteCenter() : user.getSpriteCenter();
+			
+			// Calculate actual positions
+			int baseX = (isUser ? userX : foeX) + attackerCenter[0]*2;
+			int baseY = (isUser ? userY : foeY) + attackerCenter[1]*2;
+			int targetX = (isUser ? foeX : userX) + defenderCenter[0]*2;
+			int targetY = (isUser ? foeY : userY) + defenderCenter[1]*2;
+			
+			double startX, startY, endX, endY;
+			
+			if (towardsTarget) {
+				double vectorX = targetX - baseX;
+				double vectorY = targetY - baseY;
+				
+				startX = baseX + (vectorX * startXOffset);
+				startY = baseY + (vectorY * startXOffset);
+				
+				endX = baseX + (vectorX * endXOffset);
+				endY = baseY + (vectorY * endXOffset);
+			} else {
+				startX = baseX + (targetX - baseX) * startXOffset;
+				startY = baseY + (targetY - baseY) * startYOffset + startYOffset * 50;
+				endX = baseX + (targetX - baseX) * endXOffset;
+				endY = baseY + (targetY - baseY) * endYOffset + endYOffset * 50;
+			}			
+			
+			EffectParticle particle = new EffectParticle(
+				sprite, startX, startY, endX, endY, frame.duration, easing
+			);
+			activeEffects.add(particle);
 		}
 	}
 
@@ -2263,13 +2367,32 @@ public class BattleUI extends AbstractUI {
 		
 		double offsetX = ((Number) frame.getProperty("offsetX")).doubleValue();
 		double offsetY = ((Number) frame.getPropertyOrDefault("offsetY", 0.0)).doubleValue();
+		boolean towardsTarget = (boolean) frame.getPropertyOrDefault("towardsTarget", false);
 		
 		boolean isUser = target == user;
 		Point2D originalPos = isUser ? userOriginalPos : foeOriginalPos;
 		
-		int targetX = isUser ? foeX : userX;
-		int deltaX = (int) ((targetX - originalPos.getX()) * offsetX * progress);
-		int deltaY = (int) (offsetY * 50 * progress);
+		int deltaX, deltaY;
+		
+		if (towardsTarget) {
+			int[] attackerCenter = isUser ? user.getSpriteCenter() : foe.getSpriteCenter();
+			int[] defenderCenter = isUser ? foe.getSpriteCenter() : user.getSpriteCenter();
+			
+			int attackerCenterX = (int) originalPos.getX() + attackerCenter[0]*2;
+			int attackerCenterY = (int) originalPos.getY() + attackerCenter[1]*2;
+			int defenderCenterX = (isUser ? foeX : userX) + defenderCenter[0]*2;
+			int defenderCenterY = (isUser ? foeY : userY) + defenderCenter[1]*2;
+			
+			double vectorX = defenderCenterX - attackerCenterX;
+			double vectorY = defenderCenterY - attackerCenterY;
+			
+			deltaX = (int) (vectorX * offsetX * progress);
+			deltaY = (int) (vectorY * offsetX * progress);
+		} else {
+			int targetX = isUser ? foeX : userX;
+			deltaX = (int) ((targetX - originalPos.getX()) * offsetX * progress);
+			deltaY = (int) (offsetY * 50 * progress);
+		}
 		
 		if (isUser) {
 			userX = (int) originalPos.getX() + deltaX;
@@ -2283,17 +2406,15 @@ public class BattleUI extends AbstractUI {
 			if (isUser) {
 				userX = (int) originalPos.getX();
 				userY = (int) originalPos.getY();
-				userOriginalPos = null;
 			} else {
 				foeX = (int) originalPos.getX();
 				foeY = (int) originalPos.getY();
-				foeOriginalPos = null;
 			}
 		}
 	}
 
 	private void animateShake(Pokemon target, AnimationFrame frame, long elapsed) {
-		int intensity = ((Number) frame.getProperty("intensity")).intValue();
+		int intensity = ((Number) frame.getPropertyOrDefault("intensity", 1)).intValue();
 		double progress = (double) elapsed / frame.duration;
 		
 		// Simple shake: oscillate position
@@ -2306,10 +2427,6 @@ public class BattleUI extends AbstractUI {
 		}
 		
 	}
-
-	private void animateEffect(Pokemon target, AnimationFrame frame, long elapsed) {
-		return;
-	}
 	
 	private double applyEasing(double t, String easing) {
 		if (easing == null) return t;
@@ -2320,6 +2437,68 @@ public class BattleUI extends AbstractUI {
 		case "accel": return t * t;
 		case "ballistic": return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
 		default: return t;
-    }
+		}
+	}
+	
+	private void drawStatChange() {
+		if (animStartTime == 0) {
+			animStartTime = System.currentTimeMillis();
+		}
+		
+		long elapsed = System.currentTimeMillis() - animStartTime;
+		int duration = 600; // total animation duration
+		
+		if (elapsed < duration) {
+			boolean isUser = currentTask.p == user;
+			
+			int[] spriteCenter = currentTask.p.getSpriteCenter();
+			int baseX = (isUser ? userX : foeX) + spriteCenter[0]*2;
+			int baseY = (isUser ? userY : foeY) + spriteCenter[1]*2;
+			
+			// Determine if it's a buff or debuff
+			boolean isBuff = currentTask.counter > 0;
+			int particleCount = Math.abs(currentTask.counter); // More particles for bigger changes
+			if (!isBuff) baseY -= 40;
+			
+			// Create particles at intervals
+			if (elapsed % 100 == 0 || elapsed < 50) {
+				for (int i = 0; i < particleCount; i++) {
+					createStatParticle(baseX, baseY, isBuff, elapsed);
+				}
+			}
+			
+			drawStatParticles();
+		} else {
+			animStartTime = 0;
+			endTask();
+		}
+	}
+
+	private void createStatParticle(int baseX, int baseY, boolean isBuff, long elapsed) {
+		// Random offset around the Pokemon
+		int offsetX = (int) (Math.random() * 80 - 40); // Spread particles in a circle
+		int startY = baseY + (int) (Math.random() * 40 - 20); // Start near center
+		
+		// Buff: particles rise (orange/red)
+		// Debuff: particles fall (blue)
+		int endY = isBuff ? startY - 80 : startY + 40;
+		
+		StatParticle particle = new StatParticle(
+			baseX + offsetX, startY, baseX + offsetX, endY, 
+			500, isBuff
+		);
+		statParticles.add(particle);
+	}
+	
+	private void drawStatParticles() {
+		Iterator<StatParticle> iterator = statParticles.iterator();
+		while (iterator.hasNext()) {
+			StatParticle particle = iterator.next();
+			if (!particle.update()) {
+				iterator.remove();
+			} else {
+				particle.draw(g2);
+			}
+		}
 	}
 }

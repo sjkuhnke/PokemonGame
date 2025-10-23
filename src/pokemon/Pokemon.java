@@ -87,6 +87,7 @@ public class Pokemon implements Serializable {
 	private static String[] entries = new String[MAX_POKEMON];
 	private static boolean[][] tms = new boolean[MAX_POKEMON][107];
 	private static EggGroup[][] egg_groups = new EggGroup[MAX_POKEMON][2];
+	private static int[][] sprite_center = new int[MAX_POKEMON][2];
 	
 	private static ArrayList<Integer> rivalIndices = new ArrayList<>();
 	
@@ -881,9 +882,9 @@ public class Pokemon implements Serializable {
 	            return Move.GROWL;
 	        }
 	        
-	        // 70% chance to swap if all moves do 0 damage
-	        if (maxScore <= 20 && !validMoves.equals(new ArrayList<>(Arrays.asList(new Move[] {Move.METRONOME})))) {
-	            double chance = 70;
+	        // 50% chance to swap if all moves do 0 damage
+	        if (maxScore <= 25 && !validMoves.equals(new ArrayList<>(Arrays.asList(new Move[] {Move.METRONOME})))) {
+	            double chance = 50;
 	            if (this.impressive) chance *= 0.75;
 	            if (checkSecondary((int) chance)) {
 	                String rsn = "[All moves do 0 damage : " + String.format("%.1f", chance) + "%]";
@@ -2347,6 +2348,15 @@ public class Pokemon implements Serializable {
 		return getBaseStats(id);
 	}
 	
+	private enum MoveType {
+		REG,
+		MISS,
+		IMMUNE,
+		SEMI_INV,
+		CHARGE,
+		PROTECT
+	}
+	
 	public void moveInit(Pokemon foe, Move move, boolean first) {
 		Pokemon faster = first ? this : foe;
 		Pokemon slower = faster == this ? foe : this;
@@ -2447,7 +2457,7 @@ public class Pokemon implements Serializable {
 				Task.addTask(Task.TEXT, this.nickname + " is fast asleep.");
 				this.sleepCounter--;
 				if (move == Move.SLEEP_TALK) {
-					useMove(move, foe);
+					useMove(move, foe, MoveType.REG);
 					ArrayList<Move> moves = new ArrayList<>();
 					for (Moveslot moveslot : this.moveset) {
 						if (moveslot != null) {
@@ -2623,7 +2633,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (move == Move.METRONOME) {
-			useMove(move, foe);
+			useMove(move, foe, MoveType.REG);
 			Move[] moves = Move.getAllMoves();
 			move = moves[new Random().nextInt(moves.length)];
 			bp = move.basePower;
@@ -2660,7 +2670,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (move == Move.MIRROR_MOVE || move == Move.MIMIC) {
-			useMove(move, foe);
+			useMove(move, foe, MoveType.REG);
 			move = foe.lastMoveUsed;
 			if (move == null || move == Move.MIRROR_MOVE || move == Move.MIMIC) {
 				Task.addTask(Task.TEXT, "But it failed!");
@@ -2719,7 +2729,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (move == Move.FAILED_SUCKER) {
-			useMove(move, foe);
+			useMove(move, foe, MoveType.REG);
 			fail();
 			this.impressive = false;
 			this.moveMultiplier = 1;
@@ -2730,7 +2740,7 @@ public class Pokemon implements Serializable {
 		if (move == Move.SKULL_BASH || move == Move.SKY_ATTACK || ((move == Move.SOLAR_BEAM || move == Move.SOLAR_BLADE) && !field.equals(field.weather, Effect.SUN, this))
 				|| this.hasStatus(Status.CHARGING) || move == Move.BLACK_HOLE_ECLIPSE || move == Move.GEOMANCY || move == Move.METEOR_BEAM) {
 			if (this.getItem(field) == Item.POWER_HERB) {
-				announceUseMove(move, foe);
+				announceUseMove(move, foe, MoveType.CHARGE);
 				Task.addTask(Task.TEXT, this.nickname + " started charging up!");
 				this.addStatus(Status.CHARGING);
 				if (move == Move.SKULL_BASH) stat(this, 1, 1, foe);
@@ -2740,7 +2750,7 @@ public class Pokemon implements Serializable {
 				this.consumeItem(foe);
 			}
 			if (!this.hasStatus(Status.CHARGING)) {
-				announceUseMove(move, foe);
+				announceUseMove(move, foe, MoveType.CHARGE);
 				Task.addTask(Task.TEXT, this.nickname + " started charging up!");
 				this.addStatus(Status.CHARGING);
 				if (move == Move.SKULL_BASH) stat(this, 1, 1, foe);
@@ -2766,7 +2776,7 @@ public class Pokemon implements Serializable {
 		
 		if (move == Move.DIG || move == Move.DIVE || move == Move.FLY || move == Move.BOUNCE || move == Move.PHANTOM_FORCE || move == Move.VANISHING_ACT || this.hasStatus(Status.SEMI_INV)) {
 			if (this.getItem(field) == Item.POWER_HERB) {
-				announceUseMove(move, foe);
+				announceUseMove(move, foe, MoveType.SEMI_INV);
 				if (move == Move.DIG) Task.addTask(Task.SEMI_INV, this.nickname + " burrowed underground!", this);
 				if (move == Move.DIVE) Task.addTask(Task.SEMI_INV, this.nickname + " dove underwater!", this);
 				if (move == Move.FLY) Task.addTask(Task.SEMI_INV, this.nickname + " flew up high!", this);
@@ -2777,7 +2787,7 @@ public class Pokemon implements Serializable {
 				this.consumeItem(foe);
 			}
 			if (!this.hasStatus(Status.SEMI_INV)) {
-				announceUseMove(move, foe);
+				announceUseMove(move, foe, MoveType.SEMI_INV);
 				if (move == Move.DIG) Task.addTask(Task.SEMI_INV, this.nickname + " burrowed underground!", this);
 				if (move == Move.DIVE) Task.addTask(Task.SEMI_INV, this.nickname + " dove underwater!", this);
 				if (move == Move.FLY) Task.addTask(Task.SEMI_INV, this.nickname + " flew up high!", this);
@@ -2803,7 +2813,7 @@ public class Pokemon implements Serializable {
 		
 		if (foe.hasStatus(Status.PROTECT) && (move.accuracy <= 100 || move.cat != 2) && move != Move.FEINT && move != Move.PHANTOM_FORCE
 				&& move != Move.VANISHING_ACT && move != Move.MIGHTY_CLEAVE && move != Move.FUTURE_SIGHT) {
-			useMove(move, foe);
+			useMove(move, foe, MoveType.PROTECT);
 			Task.addTask(Task.TEXT, foe.nickname + " protected itself!");
 			if (contact) {
 				if (foe.lastMoveUsed == Move.OBSTRUCT) stat(this, 1, -2, foe);
@@ -2860,7 +2870,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (move.isMagicBounceEffected(this, foe, foeAbility, acc)) {
-			useMove(move, foe);
+			useMove(move, foe, MoveType.IMMUNE);
 			Task.addAbilityTask(foe);
 			foe.move(this, move, true);
 			Task.addTask(Task.TEXT, foe.nickname + " bounced the " + move + " back!");
@@ -2885,7 +2895,7 @@ public class Pokemon implements Serializable {
 			return;
 		}
 		if ((move == Move.SLEEP_TALK || move == Move.SNORE) && status != Status.ASLEEP) {
-			useMove(move, foe);
+			useMove(move, foe, MoveType.IMMUNE);
 			fail();
 			this.impressive = false;
 			this.moveMultiplier = 1;
@@ -2894,7 +2904,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		if ((move == Move.FIRST_IMPRESSION || move == Move.BELCH || move == Move.UNSEEN_STRANGLE || move == Move.FAKE_OUT) && !this.impressive) {
-			useMove(move, foe);
+			useMove(move, foe, MoveType.IMMUNE);
 			fail();
 			this.moveMultiplier = 1;
 			this.metronome = -1;
@@ -2902,7 +2912,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (foeAbility == Ability.WONDER_SKIN && move.cat == 2 && (acc <= 100 || move == Move.PERISH_SONG || move == Move.DEFOG)) {
-			useMove(move, foe);
+			useMove(move, foe, MoveType.IMMUNE);
 			Task.addAbilityTask(foe);
 			Task.addTask(Task.TEXT, "It doesn't effect " + foe.nickname + "...");
 			endMove();
@@ -2916,7 +2926,7 @@ public class Pokemon implements Serializable {
 		if (move == Move.POP_POP) effectiveAccuracy = 1.1;
 
 		if (effectiveAccuracy <= 1.0 && (!hit(effectiveAccuracy * 100) || foe.hasStatus(Status.SEMI_INV))) {
-			useMove(move, foe);
+			useMove(move, foe, MoveType.MISS);
 			Task.addTask(Task.TEXT, move.getMissString(this, foe, effectiveAccuracy));
 			field.misses++;
 			if (move == Move.HI_JUMP_KICK) {
@@ -2940,12 +2950,11 @@ public class Pokemon implements Serializable {
 		
 		int numHits = move.getNumHits(this, this.trainer == null ? null : this.trainer.team);
 		
+		String moveText = useMove(move, foe, MoveType.REG);
+		
 		ArrayList<Task> tasks = gp.gameState == GamePanel.BATTLE_STATE ? gp.battleUI.tasks : gp.simBattleUI.tasks;
 		int damageIndex = tasks.size();
-		
-		useMove(move, foe);
-		Task msgTask = Task.getTask(damageIndex);
-		String message = msgTask == null ? "" : msgTask.message;
+
 		int hits = 0;
 		boolean foeEject = false;
 		boolean aboveHalfHP = foe.currentHP >= foe.getStat(0) / 2;
@@ -3557,7 +3566,7 @@ public class Pokemon implements Serializable {
 			if (foeAbility == Ability.GALACTIC_AURA && (moveType == PType.PSYCHIC || moveType == PType.ICE)) damage /= 2;
 			
 			if (multiplier > 1) {
-				message += multiplier > 2 ? "\nIt's extremely effective!" : "\nIt's super effective!";
+				Task.addTask(Task.TEXT, multiplier > 2 ? "It's extremely effective!" : "It's super effective!");
 				field.superEffective++;
 				if (foeAbility == Ability.SOLID_ROCK || foeAbility == Ability.FILTER) damage /= 2;
 				if (foeAbility == Ability.ANTICIPATION && foe.illusion) {
@@ -3574,7 +3583,7 @@ public class Pokemon implements Serializable {
 				}
 			}
 			if (multiplier < 1) {
-				message += multiplier < 0.5 ? "\nIt's mostly ineffective..." : "\nIt's not very effective...";
+				Task.addTask(Task.TEXT, multiplier < 0.5 ? "It's mostly ineffective..." : "It's not very effective...");
 				if (ability == Ability.TINTED_LENS) damage *= 2;
 			}
 			
@@ -3679,14 +3688,10 @@ public class Pokemon implements Serializable {
 			
 			if (damage > 0) {
 				if (numHits > 1) {
-					if (hit == 1) {
-						foe.damage(damage, this, move, message + "\n" + damagePercentText, damageIndex, sturdy);
-					} else {
-						foe.damage(damage, this, move, damagePercentText, -1, sturdy);
-					}
+					foe.damage(damage, this, move, damagePercentText, -1, sturdy);
 				} else {
 					Task.addTask(Task.TEXT, damagePercentText);
-					foe.damage(damage, this, move, message, damageIndex, sturdy);
+					foe.damage(damage, this, move, moveText, damageIndex, sturdy);
 				}
 			}
 			
@@ -3978,9 +3983,9 @@ public class Pokemon implements Serializable {
 		return result;
 	}
 
-	private void useMove(Move move, Pokemon foe) {
+	private String useMove(Move move, Pokemon foe, MoveType type) {
 		if (move == Move.FAILED_SUCKER) move = Move.SUCKER_PUNCH;
-		announceUseMove(move, foe);
+		String result = announceUseMove(move, foe, type);
 		for (Moveslot m : this.moveset) {
 			if (m != null && m.move == move) {
 				m.currentPP -= foe.getAbility(field) == Ability.PRESSURE ? 2 : 1;
@@ -3995,15 +4000,22 @@ public class Pokemon implements Serializable {
 				}
 			}
 		}
+		
+		return result;
 	}
 	
-	private void announceUseMove(Move move, Pokemon foe) {
+	private String announceUseMove(Move move, Pokemon foe, MoveType type) {
 		String msg = this.nickname + " used " + move.toString() + "!";
 		if (gp.gameState == GamePanel.SIM_BATTLE_STATE) {
 			msg = writeMoveChance(msg);
 		}
-		Task t = Task.addMoveAnimTask(move, this, foe);
-		t.wipe = true;
+		if (type != MoveType.IMMUNE && type != MoveType.MISS) {
+			Task t = Task.addMoveAnimTask(move, msg, this, foe);
+			t.wipe = true;
+		} else {
+			Task.addTask(Task.TEXT, msg);
+		}
+		return msg;
 	}
 
 	private String writeMoveChance(String msg) {
@@ -5287,7 +5299,7 @@ public class Pokemon implements Serializable {
 			return false;
 		}
 	}
-
+	
 	private void statusEffect(Pokemon foe, Move move, Field field) {
 		boolean fail = false;
 		switch (move) {
@@ -6541,7 +6553,7 @@ public class Pokemon implements Serializable {
 		} else if (p.statStages[i] <= -6 && a < 0) {
 			if (a != 12) Task.addTask(Task.TEXT, p.nickname + "'s " + type + " won't go any lower!");
 		} else {
-			Task.addTask(Task.TEXT, p.nickname + "'s " + type + amount + "!");
+			Task.addStatTask(p.nickname + "'s " + type + amount + "!", p, a);
 		}
 		if (foe != null && foe.getAbility(field) == Ability.EMPATHIC_LINK && a > 0) {
 			Task.addAbilityTask(foe);
@@ -9302,7 +9314,7 @@ public class Pokemon implements Serializable {
 			t = Task.createTask(Task.DAMAGE, message, this);
 			t.wipe = true;
 			t.foe = foe;
-			Task.setTask(damageIndex, t);
+			Task.insertTask(t, damageIndex);
 		} else {
 			t = Task.addTask(Task.DAMAGE, message, this);
 		}
@@ -10523,6 +10535,48 @@ public class Pokemon implements Serializable {
 		sprite = setSprite();
 		frontSprite = setFrontSprite();
 		backSprite = setBackSprite();
+		setSpriteCenter();
+	}
+
+	private void setSpriteCenter() {
+		int[] center = getSpriteCenter();
+		if (center[0] == 0 && center[1] == 0) {
+			sprite_center[this.id - 1] = getVisibleCenter(sprite);
+		}
+	}
+	
+	public int[] getSpriteCenter() {
+		return sprite_center[this.id - 1];
+	}
+	
+	private static int[] getVisibleCenter(BufferedImage img) {
+		int width = img.getWidth();
+		int height = img.getHeight();
+
+		int minX = width, minY = height, maxX = -1, maxY = -1;
+
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				int pixel = img.getRGB(x, y);
+				int alpha = (pixel >> 24) & 0xff;
+				if (alpha > 0) { // visible pixel
+					if (x < minX) minX = x;
+					if (x > maxX) maxX = x;
+					if (y < minY) minY = y;
+					if (y > maxY) maxY = y;
+				}
+			}
+		}
+
+		// fallback for fully transparent
+		if (maxX == -1 || maxY == -1) {
+			return new int[] { width / 2, height / 2 };
+		}
+
+		int centerX = (minX + maxX) / 2;
+		int centerY = (minY + maxY) / 2;
+
+		return new int[] { centerX, centerY };
 	}
 
 	public static void writeInfoToCSV(String filePath) {
