@@ -1,6 +1,7 @@
 package animation;
 
 import java.awt.image.BufferedImage;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +11,7 @@ import javax.imageio.ImageIO;
 import com.google.gson.*;
 
 import pokemon.Move;
+import pokemon.PType;
 
 public class BattleAnimationManager {
 	private static BattleAnimationManager instance;
@@ -30,19 +32,34 @@ public class BattleAnimationManager {
 	}
 	
 	private void loadAnimations() {
-		try {
-			Gson gson = new Gson();
-			InputStreamReader reader = new InputStreamReader(BattleAnimationManager.class.getResourceAsStream("/animation/animations.json"), "UTF-8");
-			JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
-			
-			for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
-				String moveName = entry.getKey();
-				BattleAnimation anim = parseAnimation(entry.getValue().getAsJsonObject());
-				animations.put(moveName.toLowerCase(), anim);
+		Gson gson = new Gson();
+		
+		for (int i = 0; i < PType.values().length; i++) {
+			PType type = PType.values()[i];
+			String spriteName = type.name().toLowerCase();
+			try {
+				InputStream stream = BattleAnimationManager.class.getResourceAsStream("/animation/" + spriteName + ".json");
+				if (stream == null) {
+					System.out.println("Animation file not found: " + spriteName + ".json (skipping)");
+				} else {
+					InputStreamReader reader = new InputStreamReader(stream, "UTF-8");
+					JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
+					
+					for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
+						String moveNames = entry.getKey();
+						BattleAnimation anim = parseAnimation(entry.getValue().getAsJsonObject());
+						
+						String[] names = moveNames.split("/");
+						for (String name : names) {
+							animations.put(name.trim().toLowerCase(), anim);
+						}
+					}
+					reader.close();
+				}
+			} catch (Exception e) {
+				System.err.println("Error loading animation file: " + spriteName + ".json");
+				e.printStackTrace();
 			}
-			reader.close();
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 	
