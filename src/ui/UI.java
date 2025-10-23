@@ -2955,7 +2955,7 @@ public class UI extends AbstractUI {
 			drawTMCheckWindow(selectX, selectY);
 		}
 		
-		if (!showBoxSummary && !showBoxParty && !release && nicknaming < 0) {
+		if (!showBoxSummary && !showBoxParty && !release && nicknaming < 0 && !showMessage) {
 			if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
 				if (boxNum >= 0) {
