@@ -4188,7 +4188,7 @@ public class Pokemon implements Serializable {
 		
 		if (move == Move.FUTURE_SIGHT) return 1.1;
 		
-		if (move.isCrushing() && foe.hasStatus(Status.MINIMIZED)) return 1.1;
+		if (move.isCrushing() && foe != null && foe.hasStatus(Status.MINIMIZED)) return 1.1;
 		
 		if (move == Move.FROSTBIND && this.isType(PType.ICE)) acc = 100;
 		if (move == Move.THUNDER_WAVE && this.isType(PType.ELECTRIC)) acc = 100;
