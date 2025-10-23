@@ -2253,110 +2253,137 @@ public class BattleUI extends AbstractUI {
 	}
 
 	private void drawActiveEffects() {
-		Iterator<EffectParticle> iterator = activeEffects.iterator();
+		Iterator<EffectParticle> iterator = this.activeEffects.iterator();
 		while (iterator.hasNext()) {
 			EffectParticle particle = iterator.next();
 			if (!particle.update()) {
 				iterator.remove();
-			} else {
-				particle.draw(g2);
+				continue;
 			}
+			particle.draw(this.g2);
 		}
 	}
 
 	private void executeAnimationFrame(AnimationFrame frame, long elapsed) {
 		if (frame.target == Target.BOTH) {
-			Pokemon attacker = currentTask.p;
-			Pokemon defender = currentTask.foe;
+			Pokemon attacker = this.currentTask.p;
+			Pokemon defender = this.currentTask.foe;
 			
 			if (attacker != null) {
-				executeFrameForTarget(attacker, frame, elapsed);
+				this.executeFrameForTarget(attacker, frame, elapsed);
 			}
 			if (defender != null) {
-				executeFrameForTarget(defender, frame, elapsed);
+				this.executeFrameForTarget(defender, frame, elapsed);
 			}
 		} else {
-			Pokemon target = getTargetPokemon(frame.target);
+			Pokemon target = this.getTargetPokemon(frame.target);
 			if (target != null) {
-				executeFrameForTarget(target, frame, elapsed);
+				this.executeFrameForTarget(target, frame, elapsed);
 			}
-		}
-	}
-	
-	private void executeFrameForTarget(Pokemon target, AnimationFrame frame, long elapsed) {
-		switch (frame.type) {
-		case EFFECT:
-			animateEffect(target, frame, elapsed);
-			break;
-		case MOVE:
-			animateMove(target, frame, elapsed);
-			break;
-		case SHAKE:
-			animateShake(target, frame, elapsed);
-			break;
-		case WAIT:
-			break;
-		default:
-			break;
 		}
 	}
 
-	private Pokemon getTargetPokemon(Target target) {
+	private void executeFrameForTarget(Pokemon target, AnimationFrame frame, long elapsed) {
+		switch (frame.type) {
+		case EFFECT: {
+			animateEffect(target, frame, elapsed);
+			break;
+		}
+		case MOVE: {
+			animateMove(target, frame, elapsed);
+			break;
+		}
+		case SHAKE: {
+			animateShake(target, frame, elapsed);
+			break;
+		}
+		case WAIT: {
+			break;
+		}
+		}
+	}
+
+	private Pokemon getTargetPokemon(AnimationFrame.Target target) {
 		switch (target) {
 		case ATTACKER: return currentTask.p;
 		case DEFENDER: return currentTask.foe;
-		case BOTH: return currentTask.p;
-		default: return null;
+		case BOTH: return this.currentTask.p;
+		}
+		return null;
+	}
+
+	private void animateEffect(Pokemon target, AnimationFrame frame, long elapsed) {
+		String spriteName = (String) frame.getProperty("sprite");
+		BufferedImage sprite = BattleAnimationManager.getInstance().getSprite(spriteName);
+		
+		if (sprite == null) return;
+		
+		int count = ((Number) frame.getPropertyOrDefault("count", 1)).intValue();
+		int delayBetween = ((Number) frame.getPropertyOrDefault("delayBetween", 0)).intValue();
+		double spreadX = ((Number) frame.getPropertyOrDefault("spreadX", 0.0)).doubleValue();
+		double spreadY = ((Number) frame.getPropertyOrDefault("spreadY", 0.0)).doubleValue();
+		
+		// Create multiple particles with staggered timing
+		for (int i = 0; i < count; i++) {
+			int particleDelay = i * delayBetween;
+			
+			// Only create this particle if we're past its delay and haven't created it yet
+			if (elapsed >= particleDelay && elapsed < particleDelay + 50) {
+				createSingleEffectParticle(target, frame, sprite, i, count, spreadX, spreadY);
+			}
 		}
 	}
-	
-	private void animateEffect(Pokemon target, AnimationFrame frame, long elapsed) {
-		if (elapsed < 50) { // Small threshold to avoid recreating
-			String spriteName = (String) frame.getProperty("sprite");
-			BufferedImage sprite = BattleAnimationManager.getInstance().getSprite(spriteName);
-			
-			if (sprite == null) return;
-			
-			boolean isUser = target == user;
-			double startXOffset = ((Number) frame.getProperty("startX")).doubleValue();
-			double startYOffset = ((Number) frame.getProperty("startY")).doubleValue();
-			double endXOffset = ((Number) frame.getProperty("endX")).doubleValue();
-			double endYOffset = ((Number) frame.getPropertyOrDefault("endY", 0.0)).doubleValue();
-			boolean towardsTarget = (boolean) frame.getPropertyOrDefault("towardsTarget", false);
-			String easing = (String) frame.getPropertyOrDefault("easing", "linear");
-			
-			int[] attackerCenter = isUser ? user.getSpriteCenter() : foe.getSpriteCenter();
-			int[] defenderCenter = isUser ? foe.getSpriteCenter() : user.getSpriteCenter();
-			
-			// Calculate actual positions
-			int baseX = (isUser ? userX : foeX) + attackerCenter[0]*2;
-			int baseY = (isUser ? userY : foeY) + attackerCenter[1]*2;
-			int targetX = (isUser ? foeX : userX) + defenderCenter[0]*2;
-			int targetY = (isUser ? foeY : userY) + defenderCenter[1]*2;
-			
-			double startX, startY, endX, endY;
-			
-			if (towardsTarget) {
-				double vectorX = targetX - baseX;
-				double vectorY = targetY - baseY;
-				
-				startX = baseX + (vectorX * startXOffset);
-				startY = baseY + (vectorY * startXOffset);
-				
-				endX = baseX + (vectorX * endXOffset);
-				endY = baseY + (vectorY * endXOffset);
-			} else {
-				startX = baseX + (targetX - baseX) * startXOffset;
-				startY = baseY + (targetY - baseY) * startYOffset + startYOffset * 50;
-				endX = baseX + (targetX - baseX) * endXOffset;
-				endY = baseY + (targetY - baseY) * endYOffset + endYOffset * 50;
-			}			
-			
-			EffectParticle particle = new EffectParticle(
-				sprite, startX, startY, endX, endY, frame.duration, easing
-			);
-			activeEffects.add(particle);
+
+	private void createSingleEffectParticle(Pokemon target, AnimationFrame frame, BufferedImage sprite, int particleIndex,
+			int totalParticles, double spreadX, double spreadY) {
+		
+		boolean isUser = target == user;
+		double startXOffset = ((Number) frame.getProperty("startX")).doubleValue();
+		double startYOffset = ((Number) frame.getProperty("startY")).doubleValue();
+		double endXOffset = ((Number) frame.getProperty("endX")).doubleValue();
+		double endYOffset = ((Number) frame.getPropertyOrDefault("endY", 0.0)).doubleValue();
+		boolean towardsTarget = (boolean) frame.getPropertyOrDefault("towardsTarget", false);
+		String easing = (String) frame.getPropertyOrDefault("easing", "linear");
+		
+		int[] attackerCenter = isUser ? user.getSpriteCenter() : foe.getSpriteCenter();
+		int[] defenderCenter = isUser ? foe.getSpriteCenter() : user.getSpriteCenter();
+		
+		// Calculate actual positions
+		int baseX = (isUser ? userX : foeX) + attackerCenter[0]*2;
+		int baseY = (isUser ? userY : foeY) + attackerCenter[1]*2;
+		int targetX = (isUser ? foeX : userX) + defenderCenter[0]*2;
+		int targetY = (isUser ? foeY : userY) + defenderCenter[1]*2;
+		
+		// Calculate spread offset for this particle
+		double spreadOffsetX = 0;
+		double spreadOffsetY = 0;
+		if (totalParticles > 1) {
+			// Distribute particles evenly around center
+			double angle = (2 * Math.PI * particleIndex) / totalParticles;
+			spreadOffsetX = Math.cos(angle) * spreadX * 100;
+			spreadOffsetY = Math.sin(angle) * spreadY * 100;
 		}
+		
+		double startX, startY, endX, endY;
+		
+		if (towardsTarget) {
+			double vectorX = targetX - baseX;
+			double vectorY = targetY - baseY;
+			
+			startX = baseX + (vectorX * startXOffset) + spreadOffsetX;
+			startY = baseY + (vectorY * startXOffset) + spreadOffsetY;
+			
+			endX = baseX + (vectorX * endXOffset);
+			endY = baseY + (vectorY * endXOffset);
+		} else {
+			startX = baseX + (targetX - baseX) * startXOffset + spreadOffsetX;
+			startY = baseY + (targetY - baseY) * startYOffset + startYOffset * 50 + spreadOffsetY;
+			endX = baseX + (targetX - baseX) * endXOffset;
+			endY = baseY + (targetY - baseY) * endYOffset + endYOffset * 50;
+		}
+		
+		EffectParticle particle = new EffectParticle(sprite, startX, startY, endX, endY, frame.duration, easing);
+		activeEffects.add(particle);
 	}
 
 	private void animateMove(Pokemon target, AnimationFrame frame, long elapsed) {
