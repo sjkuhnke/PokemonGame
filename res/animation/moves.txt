@@ -164,7 +164,7 @@
  Eruption       X    | Special  | 150 | 100 | 5 PP  : Power is higher the more HP the user has
  Fiery Dance    !    | Special  | 80  | 100 | 10 PP : 50% chance to raise user's Sp.Atk by 1
  Fire Blast     !    | Special  | 110 | 85  | 5 PP  : 10% chance to Burn foe
- Fire Fang          | Physical | 65  | 95  | 15 PP : 20% of flinching and/or Burning foe
+ Fire Fang      X    | Physical | 65  | 95  | 15 PP : 20% of flinching and/or Burning foe
  Fire Punch     X    | Physical | 75  | 100 | 15 PP : 20% to Burn foe
  Fire Spin      !    | Special  | 35  | 85  | 15 PP : 100% to spin the foe for 4-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch
  Flame Burst    X    | Special  | 70  | 100 | 15 PP : A normal attack

@@ -188,7 +188,7 @@
         "type": "EFFECT",
         "target": "DEFENDER",
         "delay": 300,
-        "duration": 100,
+        "duration": 200,
         "properties": {
           "sprite": "foot",
           "startX": 0,
@@ -280,7 +280,7 @@
         "type": "EFFECT",
         "target": "DEFENDER",
         "delay": 250,
-        "duration": 100,
+        "duration": 200,
         "properties": {
           "sprite": "fist",
           "startX": 0,
@@ -317,6 +317,94 @@
         "duration": 100,
         "properties": {
           "intensity": 6
+        }
+      },
+      {
+        "type": "MOVE",
+        "target": "ATTACKER",
+        "delay": 350,
+        "duration": 200,
+        "properties": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "towardsTarget": true,
+          "easing": "decel"
+        }
+      }
+    ]
+  },
+
+  "fire_fang": {
+    "type": "physical_contact",
+    "frames": [
+      {
+        "type": "MOVE",
+        "target": "ATTACKER",
+        "delay": 0,
+        "duration": 200,
+        "properties": {
+          "offsetX": 0.75,
+          "offsetY": -0.15,
+          "towardsTarget": true,
+          "easing": "accel"
+        }
+      },
+      {
+        "type": "EFFECT",
+        "target": "DEFENDER",
+        "delay": 200,
+        "duration": 250,
+        "properties": {
+          "sprite": "topbite",
+          "startX": 0,
+          "startY": -0.4,
+          "endX": 0,
+          "endY": -0.1,
+          "towardsTarget": false,
+          "easing": "decel"
+        }
+      },
+      {
+        "type": "EFFECT",
+        "target": "DEFENDER",
+        "delay": 200,
+        "duration": 250,
+        "properties": {
+          "sprite": "bottombite",
+          "startX": 0,
+          "startY": 0.4,
+          "endX": 0,
+          "endY": 0.1,
+          "towardsTarget": false,
+          "easing": "decel"
+        }
+      },
+      {
+        "type": "EFFECT",
+        "target": "DEFENDER",
+        "delay": 220,
+        "duration": 180,
+        "properties": {
+          "sprite": "flame",
+          "startX": 0,
+          "startY": 0,
+          "endX": 0.2,
+          "endY": -0.2,
+          "towardsTarget": false,
+          "easing": "decel",
+          "count": 8,
+          "spreadX": 0.18,
+          "spreadY": 0.18,
+          "delayBetween": 20
+        }
+      },
+      {
+        "type": "SHAKE",
+        "target": "DEFENDER",
+        "delay": 200,
+        "duration": 150,
+        "properties": {
+          "intensity": 7
         }
       },
       {
