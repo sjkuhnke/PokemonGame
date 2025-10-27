@@ -1,0 +1,849 @@
+{
+  "physical_electric": {
+    "type": "physical_contact",
+    "frames": [
+      {
+        "type": "EFFECT",
+        "target": "ATTACKER",
+        "delay": 0,
+        "duration": 300,
+        "properties": {
+          "sprite": "lightning",
+          "startX": 0,
+          "startY": 0,
+          "endX": -0.2,
+          "endY": 0,
+          "towardsTarget": true,
+          "easing": "linear",
+          "count": 8,
+          "spreadX": 0.15,
+          "spreadY": 0.15,
+          "delayBetween": 30
+        }
+      },
+      {
+        "type": "MOVE",
+        "target": "ATTACKER",
+        "delay": 0,
+        "duration": 200,
+        "properties": {
+          "offsetX": 0.8,
+          "towardsTarget": true,
+          "easing": "accel"
+        }
+      },
+      {
+        "type": "EFFECT",
+        "target": "DEFENDER",
+        "delay": 200,
+        "duration": 100,
+        "properties": {
+          "sprite": "impact",
+          "startX": 0,
+          "startY": 0,
+          "endX": 0,
+          "endY": 0,
+          "towardsTarget": false,
+          "easing": "linear"
+        }
+      },
+      {
+        "type": "EFFECT",
+        "target": "DEFENDER",
+        "delay": 200,
+        "duration": 200,
+        "properties": {
+          "sprite": "lightning",
+          "startX": 0,
+          "startY": 0,
+          "endX": 0.3,
+          "endY": 0,
+          "towardsTarget": false,
+          "easing": "decel",
+          "count": 6,
+          "spreadX": 0.2,
+          "spreadY": 0.2,
+          "delayBetween": 25
+        }
+      },
+      {
+        "type": "SHAKE",
+        "target": "BOTH",
+        "delay": 200,
+        "duration": 150,
+        "properties": {
+          "intensity": 7
+        }
+      },
+      {
+        "type": "MOVE",
+        "target": "ATTACKER",
+        "delay": 350,
+        "duration": 200,
+        "properties": {
+          "offsetX": 0,
+          "towardsTarget": true,
+          "easing": "decel"
+        }
+      }
+    ]
+  },
+
+  "bolt_strike/volt_tackle": {
+    "type": "physical_contact",
+    "frames": [
+      {
+        "type": "EFFECT",
+        "target": "ATTACKER",
+        "delay": 0,
+        "duration": 400,
+        "properties": {
+          "sprite": "lightning",
+          "startX": 0,
+          "startY": 0,
+          "endX": -0.3,
+          "endY": 0,
+          "towardsTarget": true,
+          "easing": "linear",
+          "count": 15,
+          "spreadX": 0.2,
+          "spreadY": 0.2,
+          "delayBetween": 20
+        }
+      },
+      {
+        "type": "MOVE",
+        "target": "ATTACKER",
+        "delay": 0,
+        "duration": 250,
+        "properties": {
+          "offsetX": 0.9,
+          "towardsTarget": true,
+          "easing": "accel"
+        }
+      },
+      {
+        "type": "EFFECT",
+        "target": "DEFENDER",
+        "delay": 250,
+        "duration": 150,
+        "properties": {
+          "sprite": "impact",
+          "startX": 0,
+          "startY": 0,
+          "endX": 0,
+          "endY": 0,
+          "towardsTarget": false,
+          "easing": "linear"
+        }
+      },
+      {
+        "type": "EFFECT",
+        "target": "DEFENDER",
+        "delay": 250,
+        "duration": 300,
+        "properties": {
+          "sprite": "lightning",
+          "startX": 0,
+          "startY": 0,
+          "endX": 0.4,
+          "endY": 0,
+          "towardsTarget": false,
+          "easing": "decel",
+          "count": 12,
+          "spreadX": 0.3,
+          "spreadY": 0.3,
+          "delayBetween": 20
+        }
+      },
+      {
+        "type": "SHAKE",
+        "target": "BOTH",
+        "delay": 250,
+        "duration": 250,
+        "properties": {
+          "intensity": 10
+        }
+      },
+      {
+        "type": "MOVE",
+        "target": "ATTACKER",
+        "delay": 400,
+        "duration": 200,
+        "properties": {
+          "offsetX": 0,
+          "towardsTarget": true,
+          "easing": "decel"
+        }
+      }
+    ]
+  },
+
+  "charge": {
+    "type": "status",
+    "frames": [
+      {
+        "type": "EFFECT",
+        "target": "ATTACKER",
+        "delay": 0,
+        "duration": 600,
+        "properties": {
+          "sprite": "lightning",
+          "startX": 0.3,
+          "startY": 0.3,
+          "endX": 0,
+          "endY": 0,
+          "towardsTarget": false,
+          "easing": "decel",
+          "count": 12,
+          "spreadX": 0.4,
+          "spreadY": 0.4,
+          "delayBetween": 40
+        }
+      },
+      {
+        "type": "SHAKE",
+        "target": "ATTACKER",
+        "delay": 300,
+        "duration": 200,
+        "properties": {
+          "intensity": 4
+        }
+      }
+    ]
+  },
+
+  "special_electric": {
+    "type": "ranged",
+    "frames": [
+      {
+        "type": "EFFECT",
+        "target": "ATTACKER",
+        "delay": 0,
+        "duration": 300,
+        "properties": {
+          "sprite": "electroball",
+          "startX": 0,
+          "startY": 0,
+          "endX": 1.0,
+          "towardsTarget": true,
+          "easing": "ballistic",
+          "count": 3,
+          "spreadX": 0.15,
+          "spreadY": 0.15,
+          "delayBetween": 30
+        }
+      },
+      {
+        "type": "SHAKE",
+        "target": "DEFENDER",
+        "delay": 300,
+        "duration": 200,
+        "properties": {
+          "intensity": 5
+        }
+      }
+    ]
+  },
+
+  "electro_ball/zap_cannon": {
+    "type": "ranged",
+    "frames": [
+      {
+        "type": "EFFECT",
+        "target": "ATTACKER",
+        "delay": 0,
+        "duration": 400,
+        "properties": {
+          "sprite": "electroball",
+          "startX": 0,
+          "startY": 0,
+          "endX": 1.0,
+          "towardsTarget": true,
+          "easing": "ballistic"
+        }
+      },
+      {
+        "type": "EFFECT",
+        "target": "DEFENDER",
+        "delay": 400,
+        "duration": 300,
+        "properties": {
+          "sprite": "lightning",
+          "startX": 0,
+          "startY": 0,
+          "endX": 0.3,
+          "endY": -0.3,
+          "towardsTarget": false,
+          "easing": "decel",
+          "count": 10,
+          "spreadX": 0.25,
+          "spreadY": 0.25,
+          "delayBetween": 25
+        }
+      },
+      {
+        "type": "SHAKE",
+        "target": "DEFENDER",
+        "delay": 400,
+        "duration": 250,
+        "properties": {
+          "intensity": 8
+        }
+      }
+    ]
+  },
+
+  "electroweb": {
+    "type": "ranged",
+    "frames": [
+      {
+        "type": "EFFECT",
+        "target": "ATTACKER",
+        "delay": 0,
+        "duration": 400,
+        "properties": {
+          "sprite": "electroball",
+          "startX": 0,
+          "startY": 0,
+          "endX": 1.0,
+          "towardsTarget": true,
+          "easing": "ballistic"
+        }
+      },
+      {
+        "type": "EFFECT",
+        "target": "DEFENDER",
+        "delay": 400,
+        "duration": 500,
+        "properties": {
+          "sprite": "web",
+          "startX": 0,
+          "startY": 0,
+          "endX": 0,
+          "endY": 0,
+          "towardsTarget": false,
+          "easing": "linear"
+        }
+      },
+      {
+        "type": "EFFECT",
+        "target": "DEFENDER",
+        "delay": 450,
+        "duration": 300,
+        "properties": {
+          "sprite": "lightning",
+          "startX": 0,
+          "startY": 0,
+          "endX": 0.2,
+          "endY": -0.2,
+          "towardsTarget": false,
+          "easing": "decel",
+          "count": 6,
+          "spreadX": 0.2,
+          "spreadY": 0.2,
+          "delayBetween": 40
+        }
+      },
+      {
+        "type": "SHAKE",
+        "target": "DEFENDER",
+        "delay": 400,
+        "duration": 150,
+        "properties": {
+          "intensity": 4
+        }
+      }
+    ]
+  },
+
+  "nuzzle": {
+    "type": "physical_contact",
+    "frames": [
+      {
+        "type": "MOVE",
+        "target": "ATTACKER",
+        "delay": 0,
+        "duration": 250,
+        "properties": {
+          "offsetX": 0.7,
+          "offsetY": -0.1,
+          "towardsTarget": true,
+          "easing": "decel"
+        }
+      },
+      {
+        "type": "EFFECT",
+        "target": "DEFENDER",
+        "delay": 250,
+        "duration": 400,
+        "properties": {
+          "sprite": "lightning",
+          "startX": 0,
+          "startY": 0,
+          "endX": 0.15,
+          "endY": -0.15,
+          "towardsTarget": false,
+          "easing": "decel",
+          "count": 8,
+          "spreadX": 0.2,
+          "spreadY": 0.2,
+          "delayBetween": 40
+        }
+      },
+      {
+        "type": "SHAKE",
+        "target": "DEFENDER",
+        "delay": 250,
+        "duration": 300,
+        "properties": {
+          "intensity": 5
+        }
+      },
+      {
+        "type": "MOVE",
+        "target": "ATTACKER",
+        "delay": 450,
+        "duration": 200,
+        "properties": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "towardsTarget": true,
+          "easing": "decel"
+        }
+      }
+    ]
+  },
+
+  "plasma_fists": {
+    "type": "physical_contact",
+    "frames": [
+      {
+        "type": "EFFECT",
+        "target": "ATTACKER",
+        "delay": 0,
+        "duration": 200,
+        "properties": {
+          "sprite": "lightning",
+          "startX": 0,
+          "startY": 0,
+          "endX": 0.2,
+          "endY": 0.2,
+          "towardsTarget": false,
+          "easing": "decel",
+          "count": 6,
+          "spreadX": 0.15,
+          "spreadY": 0.15,
+          "delayBetween": 30
+        }
+      },
+      {
+        "type": "EFFECT",
+        "target": "ATTACKER",
+        "delay": 100,
+        "duration": 300,
+        "properties": {
+          "sprite": "fist",
+          "startX": 0,
+          "startY": 0,
+          "endX": 1.0,
+          "endY": 0,
+          "towardsTarget": true,
+          "easing": "ballistic"
+        }
+      },
+      {
+        "type": "EFFECT",
+        "target": "ATTACKER",
+        "delay": 150,
+        "duration": 300,
+        "properties": {
+          "sprite": "fist1",
+          "startX": 0,
+          "startY": 0,
+          "endX": 1.0,
+          "endY": 0,
+          "towardsTarget": true,
+          "easing": "ballistic"
+        }
+      },
+      {
+        "type": "EFFECT",
+        "target": "DEFENDER",
+        "delay": 400,
+        "duration": 250,
+        "properties": {
+          "sprite": "lightning",
+          "startX": 0,
+          "startY": 0,
+          "endX": 0.3,
+          "endY": -0.3,
+          "towardsTarget": false,
+          "easing": "decel",
+          "count": 12,
+          "spreadX": 0.25,
+          "spreadY": 0.25,
+          "delayBetween": 20
+        }
+      },
+      {
+        "type": "SHAKE",
+        "target": "DEFENDER",
+        "delay": 400,
+        "duration": 200,
+        "properties": {
+          "intensity": 9
+        }
+      }
+    ]
+  },
+
+  "thunder/thunderbolt/thundershock": {
+    "type": "ranged",
+    "frames": [
+      {
+        "type": "EFFECT",
+        "target": "DEFENDER",
+        "delay": 0,
+        "duration": 300,
+        "properties": {
+          "sprite": "lightning",
+          "startX": 0,
+          "startY": -0.6,
+          "endX": 0,
+          "endY": 0,
+          "towardsTarget": false,
+          "easing": "accel"
+        }
+      },
+      {
+        "type": "EFFECT",
+        "target": "DEFENDER",
+        "delay": 300,
+        "duration": 300,
+        "properties": {
+          "sprite": "lightning",
+          "startX": 0,
+          "startY": 0,
+          "endX": 0.3,
+          "endY": 0.3,
+          "towardsTarget": false,
+          "easing": "decel",
+          "count": 10,
+          "spreadX": 0.3,
+          "spreadY": 0.3,
+          "delayBetween": 25
+        }
+      },
+      {
+        "type": "SHAKE",
+        "target": "DEFENDER",
+        "delay": 300,
+        "duration": 250,
+        "properties": {
+          "intensity": 8
+        }
+      }
+    ]
+  },
+
+  "thunder_fang": {
+    "type": "physical_contact",
+    "frames": [
+      {
+        "type": "MOVE",
+        "target": "ATTACKER",
+        "delay": 0,
+        "duration": 200,
+        "properties": {
+          "offsetX": 0.75,
+          "offsetY": -0.15,
+          "towardsTarget": true,
+          "easing": "accel"
+        }
+      },
+      {
+        "type": "EFFECT",
+        "target": "DEFENDER",
+        "delay": 200,
+        "duration": 250,
+        "properties": {
+          "sprite": "topbite",
+          "startX": 0,
+          "startY": -0.4,
+          "endX": 0,
+          "endY": -0.1,
+          "towardsTarget": false,
+          "easing": "decel"
+        }
+      },
+      {
+        "type": "EFFECT",
+        "target": "DEFENDER",
+        "delay": 200,
+        "duration": 250,
+        "properties": {
+          "sprite": "bottombite",
+          "startX": 0,
+          "startY": 0.4,
+          "endX": 0,
+          "endY": 0.1,
+          "towardsTarget": false,
+          "easing": "decel"
+        }
+      },
+      {
+        "type": "EFFECT",
+        "target": "DEFENDER",
+        "delay": 220,
+        "duration": 180,
+        "properties": {
+          "sprite": "lightning",
+          "startX": 0,
+          "startY": 0,
+          "endX": 0.2,
+          "endY": -0.2,
+          "towardsTarget": false,
+          "easing": "decel",
+          "count": 8,
+          "spreadX": 0.18,
+          "spreadY": 0.18,
+          "delayBetween": 20
+        }
+      },
+      {
+        "type": "SHAKE",
+        "target": "DEFENDER",
+        "delay": 200,
+        "duration": 150,
+        "properties": {
+          "intensity": 7
+        }
+      },
+      {
+        "type": "MOVE",
+        "target": "ATTACKER",
+        "delay": 350,
+        "duration": 200,
+        "properties": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "towardsTarget": true,
+          "easing": "decel"
+        }
+      }
+    ]
+  },
+
+  "thunder_punch": {
+    "type": "physical_contact",
+    "frames": [
+      {
+        "type": "MOVE",
+        "target": "ATTACKER",
+        "delay": 0,
+        "duration": 250,
+        "properties": {
+          "offsetX": 0.7,
+          "offsetY": -0.2,
+          "towardsTarget": true,
+          "easing": "ballistic"
+        }
+      },
+      {
+        "type": "EFFECT",
+        "target": "ATTACKER",
+        "delay": 80,
+        "duration": 170,
+        "properties": {
+          "sprite": "lightning",
+          "startX": 0.4,
+          "startY": 0,
+          "endX": 0.7,
+          "endY": 0,
+          "towardsTarget": true,
+          "easing": "linear",
+          "count": 4,
+          "spreadX": 0.08,
+          "spreadY": 0.08,
+          "delayBetween": 35
+        }
+      },
+      {
+        "type": "EFFECT",
+        "target": "DEFENDER",
+        "delay": 250,
+        "duration": 200,
+        "properties": {
+          "sprite": "fist",
+          "startX": 0,
+          "startY": 0,
+          "endX": 0,
+          "endY": 0,
+          "towardsTarget": false,
+          "easing": "linear"
+        }
+      },
+      {
+        "type": "EFFECT",
+        "target": "DEFENDER",
+        "delay": 250,
+        "duration": 150,
+        "properties": {
+          "sprite": "lightning",
+          "startX": 0,
+          "startY": 0,
+          "endX": 0.15,
+          "endY": -0.15,
+          "towardsTarget": false,
+          "easing": "decel",
+          "count": 5,
+          "spreadX": 0.12,
+          "spreadY": 0.12,
+          "delayBetween": 25
+        }
+      },
+      {
+        "type": "SHAKE",
+        "target": "DEFENDER",
+        "delay": 250,
+        "duration": 100,
+        "properties": {
+          "intensity": 6
+        }
+      },
+      {
+        "type": "MOVE",
+        "target": "ATTACKER",
+        "delay": 350,
+        "duration": 200,
+        "properties": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "towardsTarget": true,
+          "easing": "decel"
+        }
+      }
+    ]
+  },
+
+  "thunder_wave": {
+    "type": "status",
+    "frames": [
+      {
+        "type": "EFFECT",
+        "target": "ATTACKER",
+        "delay": 0,
+        "duration": 500,
+        "properties": {
+          "sprite": "lightning",
+          "startX": 0,
+          "startY": 0,
+          "endX": 1.0,
+          "endY": 0,
+          "towardsTarget": true,
+          "easing": "linear",
+          "count": 5,
+          "spreadX": 0.2,
+          "spreadY": 0.2,
+          "delayBetween": 60
+        }
+      },
+      {
+        "type": "EFFECT",
+        "target": "DEFENDER",
+        "delay": 500,
+        "duration": 400,
+        "properties": {
+          "sprite": "lightning",
+          "startX": 0,
+          "startY": 0,
+          "endX": 0.2,
+          "endY": -0.2,
+          "towardsTarget": false,
+          "easing": "decel",
+          "count": 8,
+          "spreadX": 0.25,
+          "spreadY": 0.25,
+          "delayBetween": 40
+        }
+      },
+      {
+        "type": "SHAKE",
+        "target": "DEFENDER",
+        "delay": 500,
+        "duration": 200,
+        "properties": {
+          "intensity": 4
+        }
+      }
+    ]
+  },
+
+  "volt_switch": {
+    "type": "ranged",
+    "frames": [
+      {
+        "type": "EFFECT",
+        "target": "ATTACKER",
+        "delay": 0,
+        "duration": 300,
+        "properties": {
+          "sprite": "electroball",
+          "startX": 0,
+          "startY": 0,
+          "endX": 1.0,
+          "towardsTarget": true,
+          "easing": "ballistic"
+        }
+      },
+      {
+        "type": "EFFECT",
+        "target": "DEFENDER",
+        "delay": 300,
+        "duration": 200,
+        "properties": {
+          "sprite": "lightning",
+          "startX": 0,
+          "startY": 0,
+          "endX": 0.25,
+          "endY": -0.25,
+          "towardsTarget": false,
+          "easing": "decel",
+          "count": 6,
+          "spreadX": 0.2,
+          "spreadY": 0.2,
+          "delayBetween": 30
+        }
+      },
+      {
+        "type": "SHAKE",
+        "target": "DEFENDER",
+        "delay": 300,
+        "duration": 150,
+        "properties": {
+          "intensity": 5
+        }
+      },
+      {
+        "type": "EFFECT",
+        "target": "ATTACKER",
+        "delay": 500,
+        "duration": 300,
+        "properties": {
+          "sprite": "lightning",
+          "startX": 0,
+          "startY": 0,
+          "endX": 0.2,
+          "endY": 0.2,
+          "towardsTarget": false,
+          "easing": "decel",
+          "count": 8,
+          "spreadX": 0.3,
+          "spreadY": 0.3,
+          "delayBetween": 30
+        }
+      }
+    ]
+  }
+}

@@ -38,7 +38,7 @@ public class BattleAnimationManager {
 			PType type = PType.values()[i];
 			String spriteName = type.name().toLowerCase();
 			try {
-				InputStream stream = BattleAnimationManager.class.getResourceAsStream("/animation/" + spriteName + ".json");
+				InputStream stream = BattleAnimationManager.class.getResourceAsStream("/data/" + spriteName + ".json");
 				if (stream == null) {
 					System.out.println("Animation file not found: " + spriteName + ".json (skipping)");
 				} else {
