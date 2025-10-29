@@ -619,7 +619,7 @@ public enum Move {
 	ZEN_HEADBUTT(80,90,30,0,0,0,PType.PSYCHIC,"% of causing foe to flinch",true,15),
 	ZING_ZAP(80,100,30,0,0,0,PType.ELECTRIC,"% of causing foe to flinch",true,15),
 	
-	STRUGGLE(40,1000,0,0,0,0,PType.UNKNOWN,"Deals 25% of user's max HP as recoil",true,1),
+	STRUGGLE(50,1000,0,0,0,0,PType.UNKNOWN,"Deals 25% of user's max HP as recoil",true,1),
 	FAILED_SUCKER(0,100,0,0,0,0,PType.DARK,"If you're seeing this, something went horribly wrong",false,1),
 	
 	HP_ROCK(60,100,0,0,1,0,PType.ROCK,"Calc only move",false,15),

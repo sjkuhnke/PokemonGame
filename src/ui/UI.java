@@ -130,11 +130,11 @@ public class UI extends AbstractUI {
 	// LETTER STATE
 	private final String[][][] letter = new String[2][][];
 	private int currentLetter;
-    public int pageNum = 0;
+	public int pageNum = 0;
 
-    // PLAYER INFO
-    private int playerScroll = 0;
-    public TextInputDialog cheatCodeDialog;
+	// PLAYER INFO
+	private int playerScroll = 0;
+	public TextInputDialog cheatCodeDialog;
 
 	// FOG/LIGHT
 	public Fog fog;
@@ -555,21 +555,21 @@ public class UI extends AbstractUI {
 			gp.keyH.resetKeys();
 			if (!currentTask.wipe) Task.addTask(Task.TEXT, "Come play again soon, okay?");
 			// Remove all existing components from the JFrame
-		    Main.window.getContentPane().removeAll();
+			Main.window.getContentPane().removeAll();
 
-		    // Create and add the BlackjackPanel
-		    BlackjackPanel bjPanel = new BlackjackPanel(gp, currentTask.wipe);
-		    Main.window.getContentPane().add(bjPanel);
+			// Create and add the BlackjackPanel
+			BlackjackPanel bjPanel = new BlackjackPanel(gp, currentTask.wipe);
+			Main.window.getContentPane().add(bjPanel);
 
-		    // Set focus on the BlackjackPanel
-		    bjPanel.requestFocusInWindow();
+			// Set focus on the BlackjackPanel
+			bjPanel.requestFocusInWindow();
 
-		    // Repaint the JFrame to reflect the changes
-		    Main.window.revalidate();
-		    Main.window.repaint();
-		    
-		    currentTask = null;
-		    break;
+			// Repaint the JFrame to reflect the changes
+			Main.window.revalidate();
+			Main.window.repaint();
+			
+			currentTask = null;
+			break;
 		case Task.MUSHROOM:
 			drawMushroom(gp.player.p.bag);
 			break;
@@ -639,7 +639,7 @@ public class UI extends AbstractUI {
 					double randomizedLine = randomizeParlayLine(avg, p.getSecond());
 					p.setFirst(randomizedLine);
 					if (print) System.out.println(String.format("%s line: %.1f (was %.1f)", 
-			                   p.getSecond(), randomizedLine, avg));
+							   p.getSecond(), randomizedLine, avg));
 				}
 				gauntlet = currentTask.wipe;
 				gp.simBattleUI.gauntlet = currentTask.wipe;
@@ -888,11 +888,11 @@ public class UI extends AbstractUI {
 
 	private int getActiveBets() {
 		int result = 0;
-	    
-	    // Count the number of lines the player has bet on
-	    for (int i = 0; i < parlays.length; i++) {
-	        if (parlays[i] != 0) result++;
-	    }
+		
+		// Count the number of lines the player has bet on
+		for (int i = 0; i < parlays.length; i++) {
+			if (parlays[i] != 0) result++;
+		}
 		return result;
 	}
 
@@ -928,34 +928,34 @@ public class UI extends AbstractUI {
 		int activeBets = getActiveBets();
 		if (activeBets < 2) return; // No payout if less than 2 bets are active
 
-	    int x = gp.tileSize * 11;
-	    int y = (int) (gp.tileSize * 2.5);
-	    int width = gp.tileSize * 5;
-	    int height = gp.tileSize * 7;
+		int x = gp.tileSize * 11;
+		int y = (int) (gp.tileSize * 2.5);
+		int width = gp.tileSize * 5;
+		int height = gp.tileSize * 7;
 
-	    drawSubWindow(x, y, width, height);
+		drawSubWindow(x, y, width, height);
 
-	    x += gp.tileSize / 2;
-	    y += gp.tileSize;
+		x += gp.tileSize / 2;
+		y += gp.tileSize;
 
-	    int lineSpacing = gp.tileSize;
+		int lineSpacing = gp.tileSize;
 
-	    g2.setFont(g2.getFont().deriveFont(24F));
-	    g2.setColor(Color.WHITE);
-	    g2.drawString("Net Payouts:", x, y);
-	    y += lineSpacing;
-	    
-	    int amtPaid = parlayBet * activeBets;
+		g2.setFont(g2.getFont().deriveFont(24F));
+		g2.setColor(Color.WHITE);
+		g2.drawString("Net Payouts:", x, y);
+		y += lineSpacing;
+		
+		int amtPaid = parlayBet * activeBets;
 
-	    for (int correct = 2; correct <= activeBets; correct++) {
-	        int payout = SimBattleUI.calculateParlayPayout(parlays, null, null, parlayBet, correct);
-	        int netPayout = payout - amtPaid;
+		for (int correct = 2; correct <= activeBets; correct++) {
+			int payout = SimBattleUI.calculateParlayPayout(parlays, null, null, parlayBet, correct);
+			int netPayout = payout - amtPaid;
 
-	        // Display correct bets count and corresponding payout
-	        String payoutText = correct + " correct: " + (netPayout >= 0 ? "+" : "") + netPayout + " " + getBetCurrencyName(gauntlet);
-	        g2.drawString(payoutText, x, y);
-	        y += lineSpacing;
-	    }
+			// Display correct bets count and corresponding payout
+			String payoutText = correct + " correct: " + (netPayout >= 0 ? "+" : "") + netPayout + " " + getBetCurrencyName(gauntlet);
+			g2.drawString(payoutText, x, y);
+			y += lineSpacing;
+		}
 		
 	}
 
@@ -1174,115 +1174,115 @@ public class UI extends AbstractUI {
 	public static int calculateOdds(int[] odds, int choice) {
 		int totalGames = odds[0] + odds[1];
 
-	    // If a trainer won 0 games, return max underdog odds
-	    if (odds[choice] == 0) return +10000;
-	    // If a trainer won all games, return max favorite odds
-	    if (odds[choice] == totalGames) return -10000;
+		// If a trainer won 0 games, return max underdog odds
+		if (odds[choice] == 0) return +10000;
+		// If a trainer won all games, return max favorite odds
+		if (odds[choice] == totalGames) return -10000;
 
-	    double probability = (double) odds[choice] / totalGames;
-	    int americanOdds;
+		double probability = (double) odds[choice] / totalGames;
+		int americanOdds;
 
-	    if (probability > 0.5) {
-	        americanOdds = (int) (- (probability / (1 - probability) * 100));
-	    } else {
-	        americanOdds = (int) ((1 - probability) / probability * 100);
-	    }
+		if (probability > 0.5) {
+			americanOdds = (int) (- (probability / (1 - probability) * 100));
+		} else {
+			americanOdds = (int) ((1 - probability) / probability * 100);
+		}
 
-	    // Cap the odds within reasonable bounds
-	    if (americanOdds > 10000) americanOdds = 10000;
-	    if (americanOdds < -10000) americanOdds = -10000;
+		// Cap the odds within reasonable bounds
+		if (americanOdds > 10000) americanOdds = 10000;
+		if (americanOdds < -10000) americanOdds = -10000;
 
-	    return americanOdds;
+		return americanOdds;
 	}
 	
 	public static int[] adjustSimulatedOdds(int[] originalOdds) {
 		int totalGames = originalOdds[0] + originalOdds[1];
 		Random rand = new Random();
-	    
-	    // Scale up to 100 games (10x)
-	    double scaledTeam1Wins = originalOdds[0] * 10.0;
-	    double scaledTeam2Wins = originalOdds[1] * 10.0;
-	    double scaledTotal = totalGames * 10.0;
-	    
-	    // Apply randomness (0.85x to 1.15x multiplier)
-	    double randomFactor = 0.85 + rand.nextDouble() * 0.3; // Range: 0.85-1.15
-	    scaledTeam1Wins *= randomFactor;
-	    scaledTeam2Wins *= (2.0 - randomFactor); // Ensure total stays ~100
-	    
-	    // Clamp to avoid extremes (min 1 win, max 99 wins per team)
-	    scaledTeam1Wins = Math.max(1, Math.min(scaledTeam1Wins, scaledTotal - 1));
-	    scaledTeam2Wins = Math.max(1, Math.min(scaledTeam2Wins, scaledTotal - 1));
-	    
-	    // Normalize to 100 games (fix rounding errors from randomness)
-	    double normalizedTotal = scaledTeam1Wins + scaledTeam2Wins;
-	    scaledTeam1Wins = (scaledTeam1Wins / normalizedTotal) * 100;
-	    scaledTeam2Wins = (scaledTeam2Wins / normalizedTotal) * 100;
-	    
-	    // Apply probability compression (sigmoid-like curve)
-	    double compressExponent = 0.7; // Tweakable (0.5 = aggressive, 0.8 = mild)
-	    double team1Prob = scaledTeam1Wins / 100.0;
-	    double team2Prob = scaledTeam2Wins / 100.0;
-	    
-	    // Compress probabilities toward 50%
-	    if (team1Prob < 0.5) {
-	        team1Prob = 0.5 * Math.pow(team1Prob / 0.5, compressExponent);
-	    } else {
-	        team1Prob = 1 - 0.5 * Math.pow((1 - team1Prob) / 0.5, compressExponent);
-	    }
-	    
-	    if (team2Prob < 0.5) {
-	        team2Prob = 0.5 * Math.pow(team2Prob / 0.5, compressExponent);
-	    } else {
-	        team2Prob = 1 - 0.5 * Math.pow((1 - team2Prob) / 0.5, compressExponent);
-	    }
-	    
-	    // Normalize to ensure probabilities sum to 1
-	    double sum = team1Prob + team2Prob;
-	    team1Prob /= sum;
-	    team2Prob /= sum;
-	    
-	    // Convert back to win counts (out of 100)
-	    int adjustedTeam1Wins = (int) Math.round(team1Prob * 100);
-	    int adjustedTeam2Wins = (int) Math.round(team2Prob * 100);
-	    
-	    // Ensure we never return 0-100 or 100-0
-	    adjustedTeam1Wins = Math.max(1, Math.min(99, adjustedTeam1Wins));
-	    adjustedTeam2Wins = Math.max(1, Math.min(99, adjustedTeam2Wins));
-	    
-	    return new int[]{adjustedTeam1Wins, adjustedTeam2Wins};
+		
+		// Scale up to 100 games (10x)
+		double scaledTeam1Wins = originalOdds[0] * 10.0;
+		double scaledTeam2Wins = originalOdds[1] * 10.0;
+		double scaledTotal = totalGames * 10.0;
+		
+		// Apply randomness (0.85x to 1.15x multiplier)
+		double randomFactor = 0.85 + rand.nextDouble() * 0.3; // Range: 0.85-1.15
+		scaledTeam1Wins *= randomFactor;
+		scaledTeam2Wins *= (2.0 - randomFactor); // Ensure total stays ~100
+		
+		// Clamp to avoid extremes (min 1 win, max 99 wins per team)
+		scaledTeam1Wins = Math.max(1, Math.min(scaledTeam1Wins, scaledTotal - 1));
+		scaledTeam2Wins = Math.max(1, Math.min(scaledTeam2Wins, scaledTotal - 1));
+		
+		// Normalize to 100 games (fix rounding errors from randomness)
+		double normalizedTotal = scaledTeam1Wins + scaledTeam2Wins;
+		scaledTeam1Wins = (scaledTeam1Wins / normalizedTotal) * 100;
+		scaledTeam2Wins = (scaledTeam2Wins / normalizedTotal) * 100;
+		
+		// Apply probability compression (sigmoid-like curve)
+		double compressExponent = 0.7; // Tweakable (0.5 = aggressive, 0.8 = mild)
+		double team1Prob = scaledTeam1Wins / 100.0;
+		double team2Prob = scaledTeam2Wins / 100.0;
+		
+		// Compress probabilities toward 50%
+		if (team1Prob < 0.5) {
+			team1Prob = 0.5 * Math.pow(team1Prob / 0.5, compressExponent);
+		} else {
+			team1Prob = 1 - 0.5 * Math.pow((1 - team1Prob) / 0.5, compressExponent);
+		}
+		
+		if (team2Prob < 0.5) {
+			team2Prob = 0.5 * Math.pow(team2Prob / 0.5, compressExponent);
+		} else {
+			team2Prob = 1 - 0.5 * Math.pow((1 - team2Prob) / 0.5, compressExponent);
+		}
+		
+		// Normalize to ensure probabilities sum to 1
+		double sum = team1Prob + team2Prob;
+		team1Prob /= sum;
+		team2Prob /= sum;
+		
+		// Convert back to win counts (out of 100)
+		int adjustedTeam1Wins = (int) Math.round(team1Prob * 100);
+		int adjustedTeam2Wins = (int) Math.round(team2Prob * 100);
+		
+		// Ensure we never return 0-100 or 100-0
+		adjustedTeam1Wins = Math.max(1, Math.min(99, adjustedTeam1Wins));
+		adjustedTeam2Wins = Math.max(1, Math.min(99, adjustedTeam2Wins));
+		
+		return new int[]{adjustedTeam1Wins, adjustedTeam2Wins};
 	}
 	
 	public static double randomizeParlayLine(double originalAvg, String statName) {
-	    Random rand = new Random();
-	    
-	    // 1. Scale randomness - bigger averages get more variance
-	    double variance = 0.5 + (originalAvg * 0.2);
-	    
-	    // 2. Apply adjusted randomness (bell curve distribution)
-	    double randomized = originalAvg + (rand.nextGaussian() * variance);
-	    
-	    // 3. Convert to nearest 0.5 increment
-	    double result = Math.floor(randomized) + 0.5; // Always rounds down to X.5
-	    
-	    // 4. Special case: If original was exactly X.0 and we want ±0.5 variation
-	    if (originalAvg % 1 == 0) {
-	        result = originalAvg + (rand.nextBoolean() ? 0.5 : -0.5);
-	    }
-	    
-	    // 5. Enforce stat-specific minimums (all as .5 values)
-	    switch (statName) {
-	        case "total turns":
-	            result = Math.max(3.5, result);
-	            break;
-	        case "knockouts":
-	            result = Math.max(3.5, result);
-	            result = Math.min(4.5, result);
-	            break;
-	        default:
-	            result = Math.max(0.5, result); // Global minimum
-	    }
-	    
-	    return result;
+		Random rand = new Random();
+		
+		// 1. Scale randomness - bigger averages get more variance
+		double variance = 0.5 + (originalAvg * 0.2);
+		
+		// 2. Apply adjusted randomness (bell curve distribution)
+		double randomized = originalAvg + (rand.nextGaussian() * variance);
+		
+		// 3. Convert to nearest 0.5 increment
+		double result = Math.floor(randomized) + 0.5; // Always rounds down to X.5
+		
+		// 4. Special case: If original was exactly X.0 and we want ±0.5 variation
+		if (originalAvg % 1 == 0) {
+			result = originalAvg + (rand.nextBoolean() ? 0.5 : -0.5);
+		}
+		
+		// 5. Enforce stat-specific minimums (all as .5 values)
+		switch (statName) {
+			case "total turns":
+				result = Math.max(3.5, result);
+				break;
+			case "knockouts":
+				result = Math.max(3.5, result);
+				result = Math.min(4.5, result);
+				break;
+			default:
+				result = Math.max(0.5, result); // Global minimum
+		}
+		
+		return result;
 	}
 
 	private void drawSleep() {
@@ -1360,13 +1360,13 @@ public class UI extends AbstractUI {
 			counter++;
 
 			if (counter >= totalFrames) {
-			    gp.offsetX = currentTask.start;
-			    gp.offsetY = currentTask.finish;
-			    counter = 0;
-			    errorX = 0;
-			    errorY = 0;
-			    assignedStart = false;
-			    currentTask = null;
+				gp.offsetX = currentTask.start;
+				gp.offsetY = currentTask.finish;
+				counter = 0;
+				errorX = 0;
+				errorY = 0;
+				assignedStart = false;
+				currentTask = null;
 			}
 
 		} else { // cardinal
@@ -1398,10 +1398,10 @@ public class UI extends AbstractUI {
 		}
 		counter += 1;
 		int maxShake = (int) ((currentTask.counter - counter) / 4.0);
-	    maxShake = Math.max(0, Math.min(maxShake, currentTask.counter/2));
+		maxShake = Math.max(0, Math.min(maxShake, currentTask.counter/2));
 
-	    gp.offsetX = rand.nextInt(2 * maxShake + 1) - maxShake + currentTask.start;
-	    gp.offsetY = rand.nextInt(2 * maxShake + 1) - maxShake + currentTask.finish;
+		gp.offsetX = rand.nextInt(2 * maxShake + 1) - maxShake + currentTask.start;
+		gp.offsetY = rand.nextInt(2 * maxShake + 1) - maxShake + currentTask.finish;
 		if (counter >= currentTask.counter - 1) {
 			counter = 0;
 			gp.offsetX = currentTask.start;
@@ -1462,45 +1462,47 @@ public class UI extends AbstractUI {
 	private void drawNurseryDeposit() {
 		drawParty(null);
 		
-		if (gp.keyH.wPressed) {
-			gp.keyH.wPressed = false;
-			
-			if (gp.player.p.team[partyNum] instanceof Egg) {
-				showMessage("We can't take Eggs here! Only hatched Pokemon!");
-                return;
+		if (!showMessage) {
+			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				
+				if (gp.player.p.team[partyNum] instanceof Egg) {
+					showMessage("We can't take Eggs here! Only hatched Pokemon!");
+					return;
+				}
+				if (partyNum == 0) {
+					if (gp.player.p.team[partyNum + 1] == null) {
+						showMessage("That's your last Pokemon!");
+						return;
+					}
+				}
+				if (gp.player.p.teamWouldBeFainted(partyNum)) {
+					showMessage("That's your last Pokemon!");
+					return;
+				}
+				
+				Pokemon p = gp.player.p.team[partyNum];
+				gp.player.p.team[partyNum] = null;
+				gp.player.p.shiftTeamForward(partyNum);
+				
+				if (partyNum == 0) gp.player.p.setCurrent();
+				
+				gp.player.p.nursery.deposit(p);
+				Task.addTask(Task.TEXT, "Deposited " + p.getNickname() + "!");
+				if (!gp.player.p.nursery.isFull()) {
+					Task.addTask(Task.DIALOGUE, npc, "We can hold up to 2 Pokemon. Would you like to deposit a Pokemon?");
+					Task.addTask(Task.NURSERY_DEPOSIT, "");
+				}
+				currentTask = null;
+				partyNum = 0;
 			}
-			if (partyNum == 0) {
-            	if (gp.player.p.team[partyNum + 1] == null) {
-            		showMessage("That's your last Pokemon!");
-                    return;
-            	}
-            }
-            if (gp.player.p.teamWouldBeFainted(partyNum)) {
-            	showMessage("That's your last Pokemon!");
-                return;
-            }
 			
-			Pokemon p = gp.player.p.team[partyNum];
-			gp.player.p.team[partyNum] = null;
-            gp.player.p.shiftTeamForward(partyNum);
-            
-            if (partyNum == 0) gp.player.p.setCurrent();
-            
-			gp.player.p.nursery.deposit(p);
-			Task.addTask(Task.TEXT, "Deposited " + p.getNickname() + "!");
-			if (!gp.player.p.nursery.isFull()) {
-				Task.addTask(Task.DIALOGUE, npc, "We can hold up to 2 Pokemon. Would you like to deposit a Pokemon?");
-				Task.addTask(Task.NURSERY_DEPOSIT, "");
+			if (gp.keyH.sPressed) {
+				gp.keyH.sPressed = false;
+				currentTask = null;
+				gp.gameState = GamePanel.PLAY_STATE;
+				partyNum = 0;
 			}
-			currentTask = null;
-			partyNum = 0;
-		}
-		
-		if (gp.keyH.sPressed) {
-			gp.keyH.sPressed = false;
-			currentTask = null;
-			gp.gameState = GamePanel.PLAY_STATE;
-			partyNum = 0;
 		}
 	}
 	
@@ -2121,16 +2123,16 @@ public class UI extends AbstractUI {
 		for (Pokemon p : team) {
 			if (p != null) {
 				String message = "";
-    			message += p.nickname;
-    			//if (!p.nickname.equals(p.name())) message += (" (" + p.name() + ")");
-    			message += " : ";
-    			PType type = p.determineHPType();
-    			message += type;
-    			
-    			g2.drawString(message, x, y);
-    			g2.drawImage(type.getImage(), (int) (x + gp.tileSize * 6.5), y - gp.tileSize / 2 + 4, null);
-    			
-    			y += textHeight;
+				message += p.nickname;
+				//if (!p.nickname.equals(p.name())) message += (" (" + p.name() + ")");
+				message += " : ";
+				PType type = p.determineHPType();
+				message += type;
+				
+				g2.drawString(message, x, y);
+				g2.drawImage(type.getImage(), (int) (x + gp.tileSize * 6.5), y - gp.tileSize / 2 + 4, null);
+				
+				y += textHeight;
 			}
 		}		
 		
@@ -2155,33 +2157,33 @@ public class UI extends AbstractUI {
 
 		ArrayList<Move> forgottenMoves = new ArrayList<>();
 		Node[] movebank = p.getMovebank();
-        for (int i = 0; i <= p.getLevel(); i++) {
-        	if (i < movebank.length) {
-        		Node move = movebank[i];
-        		while (move != null) {
-        			if (!p.knowsMove(move.data) && !forgottenMoves.contains(move.data)) {
-        				forgottenMoves.add(move.data);
-        			}
-        			move = move.next;
-        		}
-        	}
-        }
-        if (forgottenMoves.isEmpty()) {
-            Task.addTask(Task.TEXT, "This Pokemon has not forgotten any moves.");
-            currentTask = null;
-            partyNum = 0;
-            return;
-        }
-        
-        drawSubWindow(x, y, width, height);
-        
-        x += gp.tileSize;
-        y += gp.tileSize / 2;
-        int moveWidth = gp.tileSize * 4;
-        int moveHeight = (int) (gp.tileSize * 0.75);
-        
-        for (int i = remindNum; i < remindNum + 9; i++) {
-        	g2.setColor(Color.WHITE);
+		for (int i = 0; i <= p.getLevel(); i++) {
+			if (i < movebank.length) {
+				Node move = movebank[i];
+				while (move != null) {
+					if (!p.knowsMove(move.data) && !forgottenMoves.contains(move.data)) {
+						forgottenMoves.add(move.data);
+					}
+					move = move.next;
+				}
+			}
+		}
+		if (forgottenMoves.isEmpty()) {
+			Task.addTask(Task.TEXT, "This Pokemon has not forgotten any moves.");
+			currentTask = null;
+			partyNum = 0;
+			return;
+		}
+		
+		drawSubWindow(x, y, width, height);
+		
+		x += gp.tileSize;
+		y += gp.tileSize / 2;
+		int moveWidth = gp.tileSize * 4;
+		int moveHeight = (int) (gp.tileSize * 0.75);
+		
+		for (int i = remindNum; i < remindNum + 9; i++) {
+			g2.setColor(Color.WHITE);
 			if (i == remindNum) {
 				g2.drawString(">", (x - gp.tileSize / 2) - 2, y + gp.tileSize / 2);
 			}
@@ -2197,9 +2199,9 @@ public class UI extends AbstractUI {
 				g2.drawString(moveString, getCenterAlignedTextX(moveString, x + (moveWidth / 2)), y);
 				y += gp.tileSize / 3;
 			}
-        }
-        
-        Move m = forgottenMoves.get(remindNum);
+		}
+		
+		Move m = forgottenMoves.get(remindNum);
 		
 		drawMoveSummary(sumX, sumY, p, null, null, m);
 		
@@ -2220,45 +2222,47 @@ public class UI extends AbstractUI {
 			g2.fillPolygon(new int[] {x2, (x2 + width2), (x2 + width2 / 2)}, new int[] {y2 + height2, y2 + height2, y2}, 3);
 		}
 		
-		if (gp.keyH.wPressed) {
-			gp.keyH.wPressed = false;
-			boolean learnedMove = false;
-            for (int k = 0; k < 4; k++) {
-                if (p.moveset[k] == null) {
-                	p.moveset[k] = new Moveslot(m);
-                	Task.addTask(Task.TEXT, p.nickname + " learned " + m + "!");
-                    learnedMove = true;
-                    break;
-                }
-            }
-            if (!learnedMove) {
-            	Task t = Task.addTask(Task.MOVE, "", p);
-    			t.move = m;
-            }
-			currentTask = null;
-		}
-		
-		if (gp.keyH.sPressed) {
-			gp.keyH.sPressed = false;
-			Task.addTask(Task.PARTY, "Teach # a move?", Task.REMIND);
-			currentTask = null;
-		}
-		
-		if (gp.keyH.upPressed) {
-			gp.keyH.upPressed = false;
-			int amt = gp.keyH.ctrlPressed ? 5 : 1;
-			remindNum -= amt;
-			if (remindNum < 0) {
-				remindNum = 0;
+		if (!showMessage) {
+			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				boolean learnedMove = false;
+				for (int k = 0; k < 4; k++) {
+					if (p.moveset[k] == null) {
+						p.moveset[k] = new Moveslot(m);
+						Task.addTask(Task.TEXT, p.nickname + " learned " + m + "!");
+						learnedMove = true;
+						break;
+					}
+				}
+				if (!learnedMove) {
+					Task t = Task.addTask(Task.MOVE, "", p);
+					t.move = m;
+				}
+				currentTask = null;
 			}
-		}
-		
-		if (gp.keyH.downPressed) {
-			gp.keyH.downPressed = false;
-			int amt = gp.keyH.ctrlPressed ? 5 : 1;
-			remindNum += amt;
-			if (remindNum > forgottenMoves.size() - 1) {
-				remindNum = forgottenMoves.size() - 1;
+			
+			if (gp.keyH.sPressed) {
+				gp.keyH.sPressed = false;
+				Task.addTask(Task.PARTY, "Teach # a move?", Task.REMIND);
+				currentTask = null;
+			}
+			
+			if (gp.keyH.upPressed) {
+				gp.keyH.upPressed = false;
+				int amt = gp.keyH.ctrlPressed ? 5 : 1;
+				remindNum -= amt;
+				if (remindNum < 0) {
+					remindNum = 0;
+				}
+			}
+			
+			if (gp.keyH.downPressed) {
+				gp.keyH.downPressed = false;
+				int amt = gp.keyH.ctrlPressed ? 5 : 1;
+				remindNum += amt;
+				if (remindNum > forgottenMoves.size() - 1) {
+					remindNum = forgottenMoves.size() - 1;
+				}
 			}
 		}
 		
@@ -2268,42 +2272,44 @@ public class UI extends AbstractUI {
 	private void drawPartyTask() {
 		drawParty(currentTask.move, null);
 		
-		if (gp.keyH.wPressed) {
-			gp.keyH.wPressed = false;
-			Pokemon p = gp.player.p.team[partyNum];
-			if (p instanceof Egg) {
-				Task.addTask(Task.TEXT, "That's an Egg!");
-				currentTask = null;
-				return;
-			}
-			boolean skip = false;
-			if (currentTask.move != null) {
-				int move = p.canLearnMove(currentTask.move);
-				if (move == 0) {
-					Task.addTask(Task.TEXT, p.nickname + " can't learn " + currentTask.move + "!");
-					skip = true;
-				} else if (move == 2) {
-					Task.addTask(Task.TEXT, p.nickname + " already knows " + currentTask.move + "!");
-					skip = true;
-				} else if (move == -1) {
-					Task.addTask(Task.TEXT, "Error: currentTask.move was null");
-					skip = true;
+		if (!showMessage) {
+			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				Pokemon p = gp.player.p.team[partyNum];
+				if (p instanceof Egg) {
+					Task.addTask(Task.TEXT, "That's an Egg!");
+					currentTask = null;
+					return;
 				}
+				boolean skip = false;
+				if (currentTask.move != null) {
+					int move = p.canLearnMove(currentTask.move);
+					if (move == 0) {
+						Task.addTask(Task.TEXT, p.nickname + " can't learn " + currentTask.move + "!");
+						skip = true;
+					} else if (move == 2) {
+						Task.addTask(Task.TEXT, p.nickname + " already knows " + currentTask.move + "!");
+						skip = true;
+					} else if (move == -1) {
+						Task.addTask(Task.TEXT, "Error: currentTask.move was null");
+						skip = true;
+					}
+				}
+				if (!skip) {
+					String message = currentTask.message.replace("#", p.nickname);
+					Task t = Task.addTask(currentTask.counter, message, p); // pass in the Task type and Message in the Task.PARTY creation
+					t.setMove(currentTask.move);
+					moveOption = -1;
+				}
+				remindNum = 0;
+				currentTask = null;
 			}
-			if (!skip) {
-				String message = currentTask.message.replace("#", p.nickname);
-				Task t = Task.addTask(currentTask.counter, message, p); // pass in the Task type and Message in the Task.PARTY creation
-				t.setMove(currentTask.move);
-				moveOption = -1;
+			
+			if (gp.keyH.sPressed) {
+				gp.keyH.sPressed = false;
+				currentTask = null;
+				partyNum = 0;
 			}
-			remindNum = 0;
-			currentTask = null;
-		}
-		
-		if (gp.keyH.sPressed) {
-			gp.keyH.sPressed = false;
-			currentTask = null;
-			partyNum = 0;
 		}
 		
 		drawToolTips("OK", null, "Back", null);
@@ -2451,21 +2457,21 @@ public class UI extends AbstractUI {
 		if (mode == 2) {
 			Node[] movebank = test.getMovebank();
 			if (movebank != null) {
-			    for (int i = 0; i < movebank.length; i++) {
-			        Node move = movebank[i];
-			        while (move != null) {
-			        	levelMoveList.add(move.data);
-			        	levelLevelList.add(i == 0 ? "Evo." : i + "");
-			            move = move.next;
-			        }
-			    }
+				for (int i = 0; i < movebank.length; i++) {
+					Node move = movebank[i];
+					while (move != null) {
+						levelMoveList.add(move.data);
+						levelLevelList.add(i == 0 ? "Evo." : i + "");
+						move = move.next;
+					}
+				}
 			}
 			
 			for (int i = 93; i < 200; i++) {
 				Item testItem = Item.getItem(i);
-		    	if (testItem.getLearned(test)) {
-		    		tmList.add(testItem);
-		    	}
+				if (testItem.getLearned(test)) {
+					tmList.add(testItem);
+				}
 			}
 		}
 		drawDexSummary(test, mode, levelMoveList, levelLevelList, tmList);
@@ -2506,7 +2512,7 @@ public class UI extends AbstractUI {
 				}
 				dexNum[dexType] += amt;
 				if (dexNum[dexType] >= maxShow) {
-					dexNum[dexType] = maxShow;					
+					dexNum[dexType] = maxShow;
 				}
 				levelDexNum = 0;
 				tmDexNum = 0;
@@ -2585,13 +2591,13 @@ public class UI extends AbstractUI {
 		int starWidth = (gp.tileSize * 2 / 3) - 4;
 		for (int i = 0; i < starAmt; i++) {
 			// Create a GradientPaint for each star individually
-		    int starX = infoTextX + (i * starWidth);
-		    GradientPaint starPaint = new GradientPaint(
-		        starX + 6, infoTextY - 6, new Color(255, 215, 0), // Start point and color
-		        starX + starWidth - 10, infoTextY - starWidth + 10, new Color(245, 225, 210) // End point and color
-		    );
-		    g2.setPaint(starPaint);
-		    g2.drawString('\u2605' + "", starX, infoTextY);
+			int starX = infoTextX + (i * starWidth);
+			GradientPaint starPaint = new GradientPaint(
+				starX + 6, infoTextY - 6, new Color(255, 215, 0), // Start point and color
+				starX + starWidth - 10, infoTextY - starWidth + 10, new Color(245, 225, 210) // End point and color
+					);
+			g2.setPaint(starPaint);
+			g2.drawString('\u2605' + "", starX, infoTextY);
 		}
 		
 		String wText = dexMode == 0 ? "Moves": null;
@@ -2704,26 +2710,26 @@ public class UI extends AbstractUI {
 			g2.setColor(Color.WHITE);
 			x = startX;
 			String type = Pokemon.getStatType(i, false);
-        	g2.drawString(type, x, y);
-        	
-        	g2.setFont(g2.getFont().deriveFont(16F));
-        	x += gp.tileSize * 0.75;
-        	int statWidth = 3 * gp.tileSize;
-        	int statHeight = gp.tileSize / 2;
-        	y -= gp.tileSize / 2 - 4;
-        	g2.setColor(Color.BLACK);
-        	g2.fillRect(x, y, statWidth, statHeight);
-        	g2.setColor(Color.WHITE);
-        	g2.fillRect(x + 2, y + 2, statWidth - 4, statHeight - 4);
-        	double bar = Math.min(p.getBaseStat(i) * 1.0 / 200, 1.0);
-        	g2.setColor(Pokemon.getColor(p.getBaseStat(i)));
-        	g2.fillRect(x + 2, y + 2, (int) ((statWidth - 4) * bar), statHeight - 4);
-        	x += 4;
-        	y += (gp.tileSize / 2) - 4;
-        	g2.setColor(Color.BLACK);
-        	g2.drawString(p.getBaseStat(i) + "", x, y);
-        	
-        	y = sY + gp.tileSize / 2;
+			g2.drawString(type, x, y);
+			
+			g2.setFont(g2.getFont().deriveFont(16F));
+			x += gp.tileSize * 0.75;
+			int statWidth = 3 * gp.tileSize;
+			int statHeight = gp.tileSize / 2;
+			y -= gp.tileSize / 2 - 4;
+			g2.setColor(Color.BLACK);
+			g2.fillRect(x, y, statWidth, statHeight);
+			g2.setColor(Color.WHITE);
+			g2.fillRect(x + 2, y + 2, statWidth - 4, statHeight - 4);
+			double bar = Math.min(p.getBaseStat(i) * 1.0 / 200, 1.0);
+			g2.setColor(Pokemon.getColor(p.getBaseStat(i)));
+			g2.fillRect(x + 2, y + 2, (int) ((statWidth - 4) * bar), statHeight - 4);
+			x += 4;
+			y += (gp.tileSize / 2) - 4;
+			g2.setColor(Color.BLACK);
+			g2.drawString(p.getBaseStat(i) + "", x, y);
+			
+			y = sY + gp.tileSize / 2;
 		}
 		g2.setFont(g2.getFont().deriveFont(20F));
 		g2.setColor(Color.WHITE);
@@ -2751,18 +2757,18 @@ public class UI extends AbstractUI {
 		int moveHeight = gp.tileSize / 2;
 		Move m = null;
 		for (int i = levelDexNum; i < levelDexNum + 5; i++) {
-	        if (i == levelDexNum && dexMode == 1) {
-	            g2.setColor(Color.RED);
-	            g2.drawRoundRect(x, y, moveWidth, moveHeight, 8, 8);
-	            m = levelMoveList.get(i);
-	        }
-	        if (i < levelMoveList.size()) {
-	        	g2.setColor(levelMoveList.get(i).mtype.getColor());
-		        g2.fillRoundRect(x, y, moveWidth, moveHeight, 8, 8);
-		        g2.setColor(Color.BLACK);
-		        g2.drawString(levelLevelList.get(i) + " " + levelMoveList.get(i).toString(), x + 8, y + 19);
-		        y += gp.tileSize * 0.6;
-	        }
+			if (i == levelDexNum && dexMode == 1) {
+				g2.setColor(Color.RED);
+				g2.drawRoundRect(x, y, moveWidth, moveHeight, 8, 8);
+				m = levelMoveList.get(i);
+			}
+			if (i < levelMoveList.size()) {
+				g2.setColor(levelMoveList.get(i).mtype.getColor());
+				g2.fillRoundRect(x, y, moveWidth, moveHeight, 8, 8);
+				g2.setColor(Color.BLACK);
+				g2.drawString(levelLevelList.get(i) + " " + levelMoveList.get(i).toString(), x + 8, y + 19);
+				y += gp.tileSize * 0.6;
+			}
 		}
 		
 		// TM moves
@@ -2775,17 +2781,17 @@ public class UI extends AbstractUI {
 		
 		for (int i = tmDexNum; i < tmDexNum + 5; i++) {
 			if (i == tmDexNum && dexMode == 2) {
-	            g2.setColor(Color.RED);
-	            g2.drawRoundRect(x, y, moveWidth, moveHeight, 8, 8);
-	            m = tmList.get(i).getMove();
-	        }
+				g2.setColor(Color.RED);
+				g2.drawRoundRect(x, y, moveWidth, moveHeight, 8, 8);
+				m = tmList.get(i).getMove();
+			}
 			if (i < tmList.size()) {
 				g2.setColor(tmList.get(i).getMove().mtype.getColor());
-		        g2.fillRoundRect(x, y, moveWidth, moveHeight, 8, 8);
-		        g2.setColor(Color.BLACK);
-		        g2.drawString(tmList.get(i).toString(), x + 8, y + 19);
+				g2.fillRoundRect(x, y, moveWidth, moveHeight, 8, 8);
+				g2.setColor(Color.BLACK);
+				g2.drawString(tmList.get(i).toString(), x + 8, y + 19);
 			}
-	        y += gp.tileSize * 0.6;
+			y += gp.tileSize * 0.6;
 		}
 		
 		int moveSumX = gp.tileSize * 6;
@@ -2981,52 +2987,52 @@ public class UI extends AbstractUI {
 				if (boxSwapNum == boxNum && cBoxIndex == pSelectBox) {
 					// withdraw
 					if (cBox[boxNum] != null) {
-	    				int nullIndex = -1;
-	    				for (int i = 0; i < gp.player.p.team.length; i++) {
-	    					if (gp.player.p.team[i] == null) {
-	    						nullIndex = i;
-	    						break;
-	    					}
-	    				}
-	    				if (nullIndex == -1) {
-	    					partyNum = 0;
-	    					showBoxParty = true;
-	    					return;
-	    				} else {
-	    					gp.player.p.team[nullIndex] = cBox[boxNum];
-	    					cBox[boxNum] = null;
-	    					boxSwapNum = -1;
-	    				}
-	    			}
+						int nullIndex = -1;
+						for (int i = 0; i < gp.player.p.team.length; i++) {
+							if (gp.player.p.team[i] == null) {
+								nullIndex = i;
+								break;
+							}
+						}
+						if (nullIndex == -1) {
+							partyNum = 0;
+							showBoxParty = true;
+							return;
+						} else {
+							gp.player.p.team[nullIndex] = cBox[boxNum];
+							cBox[boxNum] = null;
+							boxSwapNum = -1;
+						}
+					}
 				} else if (partySelectedNum >= 0) {
 					if (cBox[boxNum] == null) {
 						if (partySelectedNum == 0 || gp.player.p.team[partySelectedNum - 1] != null) { // depositing lead or it's not the last pokemon in your party
 							if (partySelectedNum == 0) {
-                            	if (gp.player.p.team[partySelectedNum + 1] == null) {
-                            		showMessage("That's your last Pokemon!");
-    	                            return;
-                            	}
-                            }
-                            if (gp.player.p.teamWouldBeFainted(partySelectedNum)) {
-                            	showMessage("That's your last Pokemon!");
-	                            return;
-                            }
+								if (gp.player.p.team[partySelectedNum + 1] == null) {
+									showMessage("That's your last Pokemon!");
+									return;
+								}
+							}
+							if (gp.player.p.teamWouldBeFainted(partySelectedNum)) {
+								showMessage("That's your last Pokemon!");
+								return;
+							}
 						}
 					}
 					if (cBox[boxNum] instanceof Egg && partySelectedNum == 0 && gp.player.p.teamWouldBeFainted(partySelectedNum)) {
 						showMessage("That's your last Pokemon!");
-                        return;
+						return;
 					}
 					Pokemon temp = gp.player.p.team[partySelectedNum];
 					if (temp != null) {
-                        temp.heal();
-                    }
+						temp.heal();
+					}
 					gp.player.p.team[partySelectedNum] = cBox[boxNum];
 					cBox[boxNum] = temp;
 					
 					if (gp.player.p.team[partySelectedNum] == null) {
-                    	gp.player.p.shiftTeamForward(partySelectedNum);
-                    }
+						gp.player.p.shiftTeamForward(partySelectedNum);
+					}
 					
 					if (partySelectedNum == 0) gp.player.p.setCurrent();
 					
@@ -3101,8 +3107,8 @@ public class UI extends AbstractUI {
 			}
 		}
 		
-		if (showBoxParty) {
-			if (gp.keyH.wPressed && !showBoxSummary) {
+		if (showBoxParty && !showMessage && !showBoxSummary) {
+			if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
 				currentBoxP = gp.player.p.team[partyNum];
 				if (currentBoxP != null) {
@@ -3110,66 +3116,66 @@ public class UI extends AbstractUI {
 				}
 			}
 			
-			if (gp.keyH.aPressed && !showBoxSummary) {
+			if (gp.keyH.aPressed) {
 				gp.keyH.aPressed = false;
 				if (partySelectedNum == partyNum) {
 					// deposit
-	            	int index = -1;
-	                for (int i = 0; i < cBox.length; i++) {
-	                	if (cBox[i] == null) {
-	                		index = i;
-	                		break;
-	                	}
-	                }
-	                if (index == -1) {
-	                	showMessage("Box is full!");
-	                	return;
-	                } else if ((partyNum == 0 && gp.player.p.team[1] == null) || gp.player.p.teamWouldBeFainted(partyNum)) {
-                		showMessage("That's your last Pokemon!");
-                		return;
-                	} else {
-	                	Pokemon temp = gp.player.p.team[partyNum];
-                        if (temp != null) {
-                            temp.heal();
-                        }
-                        gp.player.p.team[partyNum] = null;
-                        cBox[index] = temp;
-                        
-                        gp.player.p.shiftTeamForward(partyNum);
-                        if (gp.player.p.team[partyNum] == null) partyNum--;
-	                }
-	                partySelectedNum = -1;
+					int index = -1;
+					for (int i = 0; i < cBox.length; i++) {
+						if (cBox[i] == null) {
+							index = i;
+							break;
+						}
+					}
+					if (index == -1) {
+						showMessage("Box is full!");
+						return;
+					} else if ((partyNum == 0 && gp.player.p.team[1] == null) || gp.player.p.teamWouldBeFainted(partyNum)) {
+						showMessage("That's your last Pokemon!");
+						return;
+					} else {
+						Pokemon temp = gp.player.p.team[partyNum];
+						if (temp != null) {
+							temp.heal();
+						}
+						gp.player.p.team[partyNum] = null;
+						cBox[index] = temp;
+						
+						gp.player.p.shiftTeamForward(partyNum);
+						if (gp.player.p.team[partyNum] == null) partyNum--;
+					}
+					partySelectedNum = -1;
 				} else if (boxSwapNum >= 0) {
 					if (dBox[boxSwapNum] == null) {
 						if (partyNum == 0 || gp.player.p.team[partyNum - 1] != null) { // depositing lead or it's not the last pokemon in your party
 							if (partyNum == 0) {
-                            	if (gp.player.p.team[partyNum + 1] == null) {
-                            		showMessage("That's your last Pokemon!");
-    	                            return;
-                            	}
-                            }
-                            if (gp.player.p.teamWouldBeFainted(partyNum)) {
-                            	showMessage("That's your last Pokemon!");
-	                            return;
-                            }
+								if (gp.player.p.team[partyNum + 1] == null) {
+									showMessage("That's your last Pokemon!");
+									return;
+								}
+							}
+							if (gp.player.p.teamWouldBeFainted(partyNum)) {
+								showMessage("That's your last Pokemon!");
+								return;
+							}
 						}
 					}
 					
 					if (dBox[boxSwapNum] instanceof Egg && partyNum == 0 && gp.player.p.teamWouldBeFainted(partyNum)) {
 						showMessage("That's your last Pokemon!");
-                        return;
+						return;
 					}
 					
 					Pokemon temp = gp.player.p.team[partyNum];
 					if (temp != null) {
-                        temp.heal();
-                    }
+						temp.heal();
+					}
 					gp.player.p.team[partyNum] = dBox[boxSwapNum];
 					dBox[boxSwapNum] = temp;
 					
 					if (gp.player.p.team[partyNum] == null) {
-                    	gp.player.p.shiftTeamForward(partyNum);
-                    }
+						gp.player.p.shiftTeamForward(partyNum);
+					}
 					
 					if (partyNum == 0) gp.player.p.setCurrent();
 					
@@ -3226,7 +3232,7 @@ public class UI extends AbstractUI {
 		}
 		
 		if (gp.keyH.dPressed) {
-			if (!showBoxSummary && !release && nicknaming < 0) { // in idle box/party
+			if (!showBoxSummary && !release && nicknaming < 0 && !showMessage) { // in idle box/party
 				gp.keyH.dPressed = false;
 				if (gp.keyH.ctrlPressed) {
 					if (!showBoxParty) { // party is closed
@@ -3265,7 +3271,7 @@ public class UI extends AbstractUI {
 			}
 		}
 		
-		if (gp.keyH.sPressed) {
+		if (gp.keyH.sPressed && !showMessage) {
 			gp.keyH.sPressed = false;
 			if (nicknaming < 0) {
 				if (release) {
@@ -3356,10 +3362,10 @@ public class UI extends AbstractUI {
 	private int getHighlightWidth(String boxText) {
 		float fontSize = g2.getFont().getSize2D(); // Default font size
 
-	    FontMetrics metrics = g2.getFontMetrics(new Font(Font.SANS_SERIF, Font.PLAIN, (int) fontSize));
-	    int textWidth = metrics.stringWidth(boxText);
-	    
-	    return (int) (textWidth * 0.75);
+		FontMetrics metrics = g2.getFontMetrics(new Font(Font.SANS_SERIF, Font.PLAIN, (int) fontSize));
+		int textWidth = metrics.stringWidth(boxText);
+		
+		return (int) (textWidth * 0.75);
 	}
 
 	private void taskState() {
@@ -3410,7 +3416,7 @@ public class UI extends AbstractUI {
 			drawTask();
 		}
 		
-		if ((gp.keyH.sPressed || gp.keyH.dPressed) && !showMoveOptions) {
+		if ((gp.keyH.sPressed || gp.keyH.dPressed) && !showMoveOptions && !showMessage) {
 			gp.keyH.sPressed = false;
 			gp.keyH.dPressed = false;
 			goBackInBag();
@@ -3422,7 +3428,7 @@ public class UI extends AbstractUI {
 		currentHeader = "Which move to delete?";
 		showMoveOptions();
 		
-		if (gp.keyH.sPressed) {
+		if (gp.keyH.sPressed && !showMessage) {
 			gp.keyH.sPressed = false;
 			currentTask = null;
 			showMoveOptions = false;
@@ -3439,30 +3445,30 @@ public class UI extends AbstractUI {
 					if (currentItem == Item.ELIXIR) {
 						Moveslot m = currentPokemon.moveset[moveOption - 1];
 						if (m.currentPP != m.maxPP) {
-			        		m.currentPP = m.maxPP;
-    	showMessage(m.move.toString() + "'s PP was restored!");
-    	gp.player.p.bag.remove(currentItem);
-    	moveOption = -1;
-			        		currentItems = gp.player.p.getItems(currentPocket);
-			        	} else {
-			        		showMessage("It won't have any effect.");
-			        	}
+							m.currentPP = m.maxPP;
+		showMessage(m.move.toString() + "'s PP was restored!");
+		gp.player.p.bag.remove(currentItem);
+		moveOption = -1;
+							currentItems = gp.player.p.getItems(currentPocket);
+						} else {
+							showMessage("It won't have any effect.");
+						}
 					} else if (currentItem == Item.PP_UP || currentItem == Item.PP_MAX) {
 						Moveslot m = currentPokemon.moveset[moveOption - 1];
 						if (m.maxPP < (m.move.pp * 8 / 5)) {
-			    			if (currentItem == Item.PP_UP) { // PP Up
-			    				m.ppUp();
-			    				showMessage(m.move.toString() + "'s PP was increased!");
-			    			} else { // PP Max
-			    				m.maxPP();
-			    				showMessage(m.move.toString() + "'s PP was maxed!");
-			    			}
-			    			gp.player.p.bag.remove(currentItem);
-			    			moveOption = -1;
-			        		currentItems = gp.player.p.getItems(currentPocket);
-			    		} else {
-			    			showMessage("It won't have any effect.");
-			    		}
+							if (currentItem == Item.PP_UP) { // PP Up
+								m.ppUp();
+								showMessage(m.move.toString() + "'s PP was increased!");
+							} else { // PP Max
+								m.maxPP();
+								showMessage(m.move.toString() + "'s PP was maxed!");
+							}
+							gp.player.p.bag.remove(currentItem);
+							moveOption = -1;
+							currentItems = gp.player.p.getItems(currentPocket);
+						} else {
+							showMessage("It won't have any effect.");
+						}
 					} else if (currentTask != null && currentTask.type == Task.DELETE_MOVE) {
 						if (moveOption - 1 == 0 && currentPokemon.moveset[moveOption] == null) {
 							Task.addTask(Task.TEXT, "That's " + currentPokemon.nickname + "'s last move!");
@@ -3492,12 +3498,12 @@ public class UI extends AbstractUI {
 					if (currentPokemon.ivs[moveOption] < 31) {
 						currentPokemon.ivs[moveOption] = 31;
 						currentPokemon.setStats();
-			        	showMessage(Item.breakString(currentPokemon + "'s " + Pokemon.getStatType(moveOption, true) + " IV was maxed out!", MAX_TEXTBOX));
-			        	gp.player.p.bag.remove(currentItem);
-		        		currentItems = gp.player.p.getItems(currentPocket);
-		        	} else {
-		        		showMessage("It won't have any effect.");
-		        	}
+						showMessage(Item.breakString(currentPokemon + "'s " + Pokemon.getStatType(moveOption, true) + " IV was maxed out!", MAX_TEXTBOX));
+						gp.player.p.bag.remove(currentItem);
+						currentItems = gp.player.p.getItems(currentPocket);
+					} else {
+						showMessage("It won't have any effect.");
+					}
 					showIVOptions = false;
 					moveOption = -1;
 				}
@@ -3507,19 +3513,21 @@ public class UI extends AbstractUI {
 						currentPokemon.ivs[moveOption] = 0;
 						currentPokemon.setStats();
 						currentPokemon.verifyHP();
-			        	showMessage(Item.breakString(currentPokemon + "'s " + Pokemon.getStatType(moveOption, true) + " IV was set to 0!", MAX_TEXTBOX));
-			        	gp.player.p.bag.remove(currentItem);
-		        		currentItems = gp.player.p.getItems(currentPocket);
-		        	} else {
-		        		showMessage("It won't have any effect.");
-		        	}
+						showMessage(Item.breakString(currentPokemon + "'s " + Pokemon.getStatType(moveOption, true) + " IV was set to 0!", MAX_TEXTBOX));
+						gp.player.p.bag.remove(currentItem);
+						currentItems = gp.player.p.getItems(currentPocket);
+					} else {
+						showMessage("It won't have any effect.");
+					}
 					showIVOptions = false;
 					moveOption = -1;
 				}
 			}
 		}
 		
-		if (gp.keyH.sPressed || gp.keyH.dPressed) {
+		if ((gp.keyH.sPressed || gp.keyH.dPressed) && !showMessage) {
+			gp.keyH.sPressed = false;
+			gp.keyH.dPressed = false;
 			showIVOptions = false;
 		}
 	}
@@ -3546,13 +3554,13 @@ public class UI extends AbstractUI {
 			g2.setColor(Color.LIGHT_GRAY);
 			g2.fillRoundRect(x, y, ivWidth, ivHeight, 10, 10);
 			g2.setColor(Color.BLACK);
-	        String text = Pokemon.getStatType(i, false) + ": " + iv;
-	        g2.drawString(text, getCenterAlignedTextX(text, x + ivWidth / 2), y + gp.tileSize / 2);
-	        if (moveOption == i) {
-	            g2.setColor(Color.RED);
-	            g2.drawRoundRect(x - 2, y - 2, ivWidth + 4, ivHeight + 4, 10, 10);
-	        }
-	        y += gp.tileSize;
+			String text = Pokemon.getStatType(i, false) + ": " + iv;
+			g2.drawString(text, getCenterAlignedTextX(text, x + ivWidth / 2), y + gp.tileSize / 2);
+			if (moveOption == i) {
+				g2.setColor(Color.RED);
+				g2.drawRoundRect(x - 2, y - 2, ivWidth + 4, ivHeight + 4, 10, 10);
+			}
+			y += gp.tileSize;
 		}
 		
 		if (gp.keyH.upPressed) {
@@ -3664,13 +3672,13 @@ public class UI extends AbstractUI {
 			g2.setColor(status.getColor());
 			g2.fillRoundRect(x, y, ivWidth, ivHeight, 10, 10);
 			g2.setColor(status.getTextColor());
-	        String text = status.getName();
-	        g2.drawString(text, getCenterAlignedTextX(text, x + ivWidth / 2), y + gp.tileSize / 2);
-	        if (moveOption == i) {
-	            g2.setColor(Color.RED);
-	            g2.drawRoundRect(x - 2, y - 2, ivWidth + 4, ivHeight + 4, 10, 10);
-	        }
-	        y += gp.tileSize;
+			String text = status.getName();
+			g2.drawString(text, getCenterAlignedTextX(text, x + ivWidth / 2), y + gp.tileSize / 2);
+			if (moveOption == i) {
+				g2.setColor(Color.RED);
+				g2.drawRoundRect(x - 2, y - 2, ivWidth + 4, ivHeight + 4, 10, 10);
+			}
+			y += gp.tileSize;
 		}
 		
 		if (gp.keyH.upPressed) {
@@ -3719,7 +3727,7 @@ public class UI extends AbstractUI {
 					gp.player.p.useItem(gp.player.p.team[partyNum], currentItem, gp);	
 				}
 			}
-			if (gp.keyH.sPressed || gp.keyH.dPressed) {
+			if ((gp.keyH.sPressed || gp.keyH.dPressed) && !showMessage) {
 				gp.keyH.sPressed = false;
 				gp.keyH.dPressed = false;
 				if (showMoveOptions || showIVOptions || showStatusOptions) {
@@ -3742,9 +3750,9 @@ public class UI extends AbstractUI {
 		if (item == Item.REPEL) {
 			if (!gp.player.p.repel) {
 				gp.player.useRepel();
-		    } else {
-		    	showMessage("It won't have any effect.");
-		    }
+			} else {
+				showMessage("It won't have any effect.");
+			}
 			bagState = 0;
 		} else if (item == Item.CALCULATOR) {
 			Item.useCalc(gp.player.p.getCurrent(), null, null, true);
@@ -3902,9 +3910,9 @@ public class UI extends AbstractUI {
 		case 8:
 			drawSummary(null);
 			break;
-        case 9:
-            showPlayer(); // nuzlocke info
-            break;
+		case 9:
+			showPlayer(); // nuzlocke info
+			break;
 		}
 	}
 
@@ -3963,7 +3971,7 @@ public class UI extends AbstractUI {
 	public void drawSummary(Pokemon foe) {
 		super.drawSummary(null);
 		
-		if (gp.keyH.sPressed && nicknaming < 0) {
+		if (gp.keyH.sPressed && nicknaming < 0 && !showMessage) {
 			gp.keyH.sPressed = false;
 			if (moveSummaryNum == -1) {
 				subState = 2;
@@ -4140,7 +4148,7 @@ public class UI extends AbstractUI {
 			}
 		}
 		
-		if (gp.keyH.sPressed || gp.keyH.dPressed) {
+		if ((gp.keyH.sPressed || gp.keyH.dPressed) && !showMessage) {
 			gp.keyH.sPressed = false;
 			gp.keyH.dPressed = false;
 			gp.gameState = GamePanel.PLAY_STATE;
@@ -4159,41 +4167,43 @@ public class UI extends AbstractUI {
 	
 	private void showParty() {
 		drawParty(null);
-		if (gp.keyH.aPressed) {
-			gp.keyH.aPressed = false;
-			if (partySelectedNum == -1) {
-				partySelectedNum = partyNum;
-			} else {
-				if (partySelectedNum != partyNum) {
-					gp.player.p.swap(partySelectedNum, partyNum);
-				}
-				partySelectedNum = -1;
-			}
-		}
-		if (gp.keyH.dPressed) {
-			gp.keyH.dPressed = false;
-			if (partySelectedItem == -1) {
-				partySelectedItem = partyNum;
-			} else {
-				if (partySelectedItem != partyNum) {
-					gp.player.p.swapItem(gp.player.p.team[partySelectedItem], gp.player.p.team[partyNum]);
+		if (!showMessage) {
+			if (gp.keyH.aPressed) {
+				gp.keyH.aPressed = false;
+				if (partySelectedNum == -1) {
+					partySelectedNum = partyNum;
 				} else {
-					gp.player.p.takeItem(gp.player.p.team[partyNum], this);
+					if (partySelectedNum != partyNum) {
+						gp.player.p.swap(partySelectedNum, partyNum);
+					}
+					partySelectedNum = -1;
 				}
+			}
+			if (gp.keyH.dPressed) {
+				gp.keyH.dPressed = false;
+				if (partySelectedItem == -1) {
+					partySelectedItem = partyNum;
+				} else {
+					if (partySelectedItem != partyNum) {
+						gp.player.p.swapItem(gp.player.p.team[partySelectedItem], gp.player.p.team[partyNum]);
+					} else {
+						gp.player.p.takeItem(gp.player.p.team[partyNum], this);
+					}
+					partySelectedItem = -1;
+				}
+			}
+			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				subState = 8;
+			}
+			if (gp.keyH.sPressed) {
+				gp.keyH.sPressed = false;
+				subState = 0;
+				partySelectedNum = -1;
+				partyNum = 0;
+				commandNum = 0;
 				partySelectedItem = -1;
 			}
-		}
-		if (gp.keyH.wPressed) {
-			gp.keyH.wPressed = false;
-			subState = 8;
-		}
-		if (gp.keyH.sPressed) {
-			gp.keyH.sPressed = false;
-			subState = 0;
-			partySelectedNum = -1;
-			partyNum = 0;
-			commandNum = 0;
-			partySelectedItem = -1;
 		}
 		
 		drawToolTips("Info", "Swap", "Back", "Item");
@@ -4410,31 +4420,33 @@ public class UI extends AbstractUI {
 			}
 		}
 		
-		if (gp.keyH.sPressed || gp.keyH.dPressed) {
-			gp.keyH.sPressed = false;
-			gp.keyH.dPressed = false;
-			bagState = 0;
-			commandNum = 0;
-			sellAmt = 1;
-		}
-		if (gp.keyH.upPressed) {
-			gp.keyH.upPressed = false;
-			if (bagState == 0 || bagState == 1 || bagState == 3) {
-				int amt = gp.keyH.ctrlPressed ? 5 : 1;
-				bagNum[currentPocket - 1] -= amt;
-				if (bagNum[currentPocket - 1] <= 0) {
-					bagNum[currentPocket - 1] = 0;
+		if (!showMessage) {
+			if (gp.keyH.sPressed || gp.keyH.dPressed) {
+				gp.keyH.sPressed = false;
+				gp.keyH.dPressed = false;
+				bagState = 0;
+				commandNum = 0;
+				sellAmt = 1;
+			}
+			if (gp.keyH.upPressed) {
+				gp.keyH.upPressed = false;
+				if (bagState == 0 || bagState == 1 || bagState == 3) {
+					int amt = gp.keyH.ctrlPressed ? 5 : 1;
+					bagNum[currentPocket - 1] -= amt;
+					if (bagNum[currentPocket - 1] <= 0) {
+						bagNum[currentPocket - 1] = 0;
+					}
 				}
 			}
-		}
-		if (gp.keyH.downPressed) {
-			gp.keyH.downPressed = false;
-			if (bagState == 0 || bagState == 1 || bagState == 3) {
-				int amt = gp.keyH.ctrlPressed ? 5 : 1;
-				if (!currentItems.isEmpty()) {
-					bagNum[currentPocket - 1] += amt;
-					if (bagNum[currentPocket - 1] >= currentItems.size() - 1) {
-						bagNum[currentPocket - 1] = currentItems.size() - 1;
+			if (gp.keyH.downPressed) {
+				gp.keyH.downPressed = false;
+				if (bagState == 0 || bagState == 1 || bagState == 3) {
+					int amt = gp.keyH.ctrlPressed ? 5 : 1;
+					if (!currentItems.isEmpty()) {
+						bagNum[currentPocket - 1] += amt;
+						if (bagNum[currentPocket - 1] >= currentItems.size() - 1) {
+							bagNum[currentPocket - 1] = currentItems.size() - 1;
+						}
 					}
 				}
 			}
@@ -4444,503 +4456,505 @@ public class UI extends AbstractUI {
 		drawToolTips("OK", "Swap", "Back", dText);
 	}
 
-    private void showPlayer() {
-        int panelWidth = gp.tileSize * 10;
-        int panelHeight = gp.tileSize * 11;
-        int panelX = (gp.screenWidth - panelWidth) / 2;
-        int panelY = gp.tileSize / 2;
+	private void showPlayer() {
+		int panelWidth = gp.tileSize * 10;
+		int panelHeight = gp.tileSize * 11;
+		int panelX = (gp.screenWidth - panelWidth) / 2;
+		int panelY = gp.tileSize / 2;
 
-        int PLAYER_INFO = 5;
-        int NUZLOCKE_INFO = 9;
-        int MAX_VISIBLE_ENCOUNTERS = 6;
+		int PLAYER_INFO = 5;
+		int NUZLOCKE_INFO = 9;
+		int MAX_VISIBLE_ENCOUNTERS = 6;
 
-        drawPanelWithBorder(panelX, panelY, panelWidth, panelHeight, 220, textColor);
+		drawPanelWithBorder(panelX, panelY, panelWidth, panelHeight, 220, textColor);
 
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 36F));
-        String title = "Player Info";
-        int titleX = getCenterAlignedTextX(title, gp.screenWidth / 2);
-        int titleY = panelY + gp.tileSize;
-        drawOutlinedText(title, titleX, titleY, textColor, Color.BLACK);
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 36F));
+		String title = "Player Info";
+		int titleX = getCenterAlignedTextX(title, gp.screenWidth / 2);
+		int titleY = panelY + gp.tileSize;
+		drawOutlinedText(title, titleX, titleY, textColor, Color.BLACK);
 
-        if (subState == PLAYER_INFO) {
-            drawPlayerInfo(panelX, panelY);
-        } else if (subState == NUZLOCKE_INFO) {
-            drawNuzlockeInfo(panelX, panelY, panelWidth, panelHeight, MAX_VISIBLE_ENCOUNTERS);
-        }
+		if (subState == PLAYER_INFO) {
+			drawPlayerInfo(panelX, panelY);
+		} else if (subState == NUZLOCKE_INFO) {
+			drawNuzlockeInfo(panelX, panelY, panelWidth, panelHeight, MAX_VISIBLE_ENCOUNTERS);
+		}
 
-        if (cheatCodeDialog != null && cheatCodeDialog.isActive()) {
-            cheatCodeDialog.draw(g2);
-            cheatCodeDialog.update();
-            return;
-        }
+		if (cheatCodeDialog != null && cheatCodeDialog.isActive()) {
+			cheatCodeDialog.draw(g2);
+			cheatCodeDialog.update();
+			return;
+		}
 
-        if (subState == PLAYER_INFO) {
-            int maxOption = gp.player.p.nuzlocke ? 2 : 1;
+		if (subState == PLAYER_INFO) {
+			int maxOption = gp.player.p.nuzlocke ? 2 : 1;
 
-            if ((gp.keyH.upPressed || gp.keyH.leftPressed) && !showMessage) {
-                gp.keyH.upPressed = false;
-                gp.keyH.leftPressed = false;
-                gp.playSFX(Sound.S_MENU_1);
-                commandNum--;
-                if (commandNum < 0) commandNum = maxOption;
-            }
+			if ((gp.keyH.upPressed || gp.keyH.leftPressed) && !showMessage) {
+				gp.keyH.upPressed = false;
+				gp.keyH.leftPressed = false;
+				gp.playSFX(Sound.S_MENU_1);
+				commandNum--;
+				if (commandNum < 0) commandNum = maxOption;
+			}
 
-            if ((gp.keyH.downPressed || gp.keyH.rightPressed) && !showMessage) {
-                gp.keyH.downPressed = false;
-                gp.keyH.rightPressed = false;
-                gp.playSFX(Sound.S_MENU_1);
-                commandNum++;
-                if (commandNum > maxOption) commandNum = 0;
-            }
+			if ((gp.keyH.downPressed || gp.keyH.rightPressed) && !showMessage) {
+				gp.keyH.downPressed = false;
+				gp.keyH.rightPressed = false;
+				gp.playSFX(Sound.S_MENU_1);
+				commandNum++;
+				if (commandNum > maxOption) commandNum = 0;
+			}
 
-            if (gp.keyH.wPressed) {
-                gp.keyH.wPressed = false;
+			if (gp.keyH.wPressed && !showMessage) {
+				gp.keyH.wPressed = false;
 
-                if (gp.player.p.nuzlocke) {
-                    switch (commandNum) {
-                    case 0: // nuzlocke info
-                    	gp.playSFX(Sound.S_MENU_CON);
-                        subState = NUZLOCKE_INFO;
-                        playerScroll = 0;
-                        break;
-                    case 1: // cheat code
-                    	gp.playSFX(Sound.S_MENU_CON);
-                        showCheatCodeDialog();
-                        break;
-                    case 2: // back
-                    	gp.playSFX(Sound.S_MENU_CAN);
-                        subState = 0;
-                        commandNum = 0;
-                        break;
-                    }
-                } else {
-                    switch (commandNum) {
-                    case 0: // cheat code
-                    	gp.playSFX(Sound.S_MENU_CON);
-                        showCheatCodeDialog();
-                        break;
-                    case 1: // back
-                    	gp.playSFX(Sound.S_MENU_CAN);
-                        subState = 0;
-                        commandNum = 0;
-                        break;
-                    }
-                }
-            }
+				if (gp.player.p.nuzlocke) {
+					switch (commandNum) {
+					case 0: // nuzlocke info
+						gp.playSFX(Sound.S_MENU_CON);
+						subState = NUZLOCKE_INFO;
+						playerScroll = 0;
+						break;
+					case 1: // cheat code
+						gp.playSFX(Sound.S_MENU_CON);
+						showCheatCodeDialog();
+						break;
+					case 2: // back
+						gp.playSFX(Sound.S_MENU_CAN);
+						subState = 0;
+						commandNum = 0;
+						break;
+					}
+				} else {
+					switch (commandNum) {
+					case 0: // cheat code
+						gp.playSFX(Sound.S_MENU_CON);
+						showCheatCodeDialog();
+						break;
+					case 1: // back
+						gp.playSFX(Sound.S_MENU_CAN);
+						subState = 0;
+						commandNum = 0;
+						break;
+					}
+				}
+			}
 
-            if (gp.keyH.sPressed || gp.keyH.dPressed) {
-                gp.keyH.sPressed = false;
-                gp.keyH.dPressed = false;
-                gp.playSFX(Sound.S_MENU_CAN);
-                subState = 0;
-                commandNum = 0;
-            }
-        } else if (subState == NUZLOCKE_INFO) {
-            if (gp.keyH.upPressed) {
-                gp.keyH.upPressed = false;
-                gp.playSFX(Sound.S_MENU_1);
-                if (gp.player.p.nuzlockeEncounters != null && playerScroll > 0) {
-                    playerScroll--;
-                }
-            }
+			if ((gp.keyH.sPressed || gp.keyH.dPressed) && !showMessage) {
+				gp.keyH.sPressed = false;
+				gp.keyH.dPressed = false;
+				gp.playSFX(Sound.S_MENU_CAN);
+				subState = 0;
+				commandNum = 0;
+			}
+		} else if (subState == NUZLOCKE_INFO) {
+			if (!showMessage) {
+				if (gp.keyH.upPressed) {
+					gp.keyH.upPressed = false;
+					gp.playSFX(Sound.S_MENU_1);
+					if (gp.player.p.nuzlockeEncounters != null && playerScroll > 0) {
+						playerScroll--;
+					}
+				}
 
-            if (gp.keyH.downPressed) {
-                gp.keyH.downPressed = false;
-                gp.playSFX(Sound.S_MENU_1);
-                if (gp.player.p.nuzlockeEncounters != null &&
-                        playerScroll < gp.player.p.nuzlockeEncounters.size() - MAX_VISIBLE_ENCOUNTERS) {
-                    playerScroll++;
-                }
-            }
+				if (gp.keyH.downPressed) {
+					gp.keyH.downPressed = false;
+					gp.playSFX(Sound.S_MENU_1);
+					if (gp.player.p.nuzlockeEncounters != null &&
+							playerScroll < gp.player.p.nuzlockeEncounters.size() - MAX_VISIBLE_ENCOUNTERS) {
+						playerScroll++;
+					}
+				}
 
-            if (gp.keyH.wPressed || gp.keyH.sPressed || gp.keyH.dPressed) {
-                gp.keyH.wPressed = false;
-                gp.keyH.sPressed = false;
-                gp.keyH.dPressed = false;
-                gp.playSFX(Sound.S_MENU_CAN);
-                subState = PLAYER_INFO;
-                commandNum = 0;
-                playerScroll = 0;
-            }
-        }
+				if (gp.keyH.wPressed || gp.keyH.sPressed || gp.keyH.dPressed) {
+					gp.keyH.wPressed = false;
+					gp.keyH.sPressed = false;
+					gp.keyH.dPressed = false;
+					gp.playSFX(Sound.S_MENU_CAN);
+					subState = PLAYER_INFO;
+					commandNum = 0;
+					playerScroll = 0;
+				}
+			}
+		}
 
-        ArrayList<ToolTip> toolTips = new ArrayList<>();
-        if (subState == PLAYER_INFO) {
-            toolTips.add(new ToolTip(gp, "Navigate", "/", true, gp.config.upKey, gp.config.downKey));
-            toolTips.add(new ToolTip(gp, "Select", "", true, gp.config.wKey));
-            toolTips.add(new ToolTip(gp, "Back", "/", true, gp.config.sKey, gp.config.dKey));
-        } else if (subState == NUZLOCKE_INFO) {
-            if (gp.player.p.nuzlockeEncounters != null && gp.player.p.nuzlockeEncounters.size() > MAX_VISIBLE_ENCOUNTERS) {
-                toolTips.add(new ToolTip(gp, "Scroll", "/", true, gp.config.upKey, gp.config.downKey));
-            }
-            toolTips.add(new ToolTip(gp, "Back", "//", true, gp.config.wKey, gp.config.sKey, gp.config.dKey));
-        }
+		ArrayList<ToolTip> toolTips = new ArrayList<>();
+		if (subState == PLAYER_INFO) {
+			toolTips.add(new ToolTip(gp, "Navigate", "/", true, gp.config.upKey, gp.config.downKey));
+			toolTips.add(new ToolTip(gp, "Select", "", true, gp.config.wKey));
+			toolTips.add(new ToolTip(gp, "Back", "/", true, gp.config.sKey, gp.config.dKey));
+		} else if (subState == NUZLOCKE_INFO) {
+			if (gp.player.p.nuzlockeEncounters != null && gp.player.p.nuzlockeEncounters.size() > MAX_VISIBLE_ENCOUNTERS) {
+				toolTips.add(new ToolTip(gp, "Scroll", "/", true, gp.config.upKey, gp.config.downKey));
+			}
+			toolTips.add(new ToolTip(gp, "Back", "//", true, gp.config.wKey, gp.config.sKey, gp.config.dKey));
+		}
 
-        if (gp.keyH.shiftPressed && !toolTips.isEmpty()) {
-            drawToolTipBar(toolTips);
-        }
-    }
+		if (gp.keyH.shiftPressed && !toolTips.isEmpty()) {
+			drawToolTipBar(toolTips);
+		}
+	}
 
-    private void drawPlayerInfo(int panelX, int panelY) {
-        Player p = gp.player.p;
-        int contentX = panelX + gp.tileSize / 2;
-        int contentY = panelY + gp.tileSize;
-        
-        // === LEFT COLUMN ===
-        int leftColX = contentX;
-        int leftColY = contentY;
-        
-        // Player sprite
-        BufferedImage playerSprite = gp.player.fight;
-        if (playerSprite != null) {
-            g2.drawImage(playerSprite, leftColX, leftColY, 128, 128, null);
-        }
-        
-        // Player name below sprite
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 32F));
-        String playerName = gp.player.getName();
-        int nameX = getCenterAlignedTextX(playerName, leftColX + 64);
-        drawOutlinedText(playerName, nameX, leftColY + 140, textColor, Color.BLACK);
-        
-        leftColY += 180; // Move down past sprite and name
-        
-        // Money section
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
-        drawOutlinedText("Money", leftColX, leftColY, new Color(200, 200, 200), Color.BLACK);
-        leftColY += gp.tileSize * 0.75;
-        
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 32F));
-        String moneyText = "$" + p.getMoney();
-        drawOutlinedText(moneyText, leftColX + gp.tileSize / 4, leftColY, textColor, Color.BLACK);
-        
-        leftColY += gp.tileSize;
-        
-        // Coins section
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
-        drawOutlinedText("Coins", leftColX, leftColY, new Color(200, 200, 200), Color.BLACK);
-        leftColY += gp.tileSize * 0.75;
-        
-        g2.drawImage(Item.COIN.getImage(), leftColX + gp.tileSize / 4, leftColY - gp.tileSize / 2, null);
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 32F));
-        drawOutlinedText(String.valueOf(p.coins), leftColX + gp.tileSize / 4 + gp.tileSize / 2, leftColY, textColor, Color.BLACK);
-        
-        leftColY += gp.tileSize;
-        
-        // Difficulty section
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
-        drawOutlinedText("Difficulty", leftColX, leftColY, new Color(200, 200, 200), Color.BLACK);
-        leftColY += gp.tileSize * 0.75;
-        
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 28F));
-        drawOutlinedText(Player.DIFFICULTIES[p.difficulty], leftColX + gp.tileSize / 4, leftColY, 
-            Player.DIFFICULTY_COLORS[p.difficulty], Color.BLACK);
-        
-        // === RIGHT COLUMN ===
-        int rightColX = contentX + gp.tileSize * 4;
-        int rightColY = contentY + gp.tileSize;
-        
-        // Badge display box
-        int badgeBoxX = rightColX;
-        int badgeBoxWidth = (int)(gp.tileSize * 4.5);
-        
-        // Badges section with box
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 28F));
-        String badgesTitle = "Badges: " + p.badges + "/8";
-        drawOutlinedText(badgesTitle, getCenterAlignedTextX(badgesTitle, badgeBoxX + badgeBoxWidth / 2), rightColY, textColor, Color.BLACK);
-        
-        rightColY += gp.tileSize * 0.75;
-        
-        int badgeBoxY = rightColY - gp.tileSize / 4;
-        int badgeBoxHeight = (int)(gp.tileSize * 2.25);
-        
-        drawBadgesWindow(badgeBoxX, badgeBoxY, badgeBoxWidth, badgeBoxHeight, p, gp, true);
-        
-        rightColY += badgeBoxHeight + gp.tileSize / 4;
-        
-        // Nuzlocke info section (if applicable)
-        if (p.nuzlocke) {
-            // Nuzlocke mode indicator
-            int nuzBoxX = rightColX - gp.tileSize / 4;
-            int nuzBoxY = rightColY;
-            int nuzBoxWidth = gp.tileSize * 5;
-            int nuzBoxHeight = (int)(gp.tileSize * 2.5);
-            
-            drawPanelWithBorder(nuzBoxX, nuzBoxY, nuzBoxWidth, nuzBoxHeight, 70, 
-                new Color(255, 100, 100));
-            
-            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
-            String nuzTitle = "Nuzlocke Mode";
-            int nuzTitleX = getCenterAlignedTextX(nuzTitle, nuzBoxX + nuzBoxWidth / 2);
-            drawOutlinedText(nuzTitle, nuzTitleX, nuzBoxY + gp.tileSize / 2, 
-                new Color(255, 100, 100), Color.BLACK);
-            
-            // Level cap info
-            int levelCap = Trainer.getLevelCap(p.badges, p);
-            String capText = "Level Cap: " + levelCap;
-            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 28F));
-            int capX = getCenterAlignedTextX(capText, nuzBoxX + nuzBoxWidth / 2);
-            drawOutlinedText(capText, capX, nuzBoxY + gp.tileSize, textColor, Color.BLACK);
-            
-            // Bonus info (if any)
-            if (p.levelCapBonus > 0) {
-                String bonusText = "(+" + p.levelCapBonus + " bonus)";
-                g2.setFont(g2.getFont().deriveFont(Font.ITALIC, 18F));
-                int bonusX = getCenterAlignedTextX(bonusText, nuzBoxX + nuzBoxWidth / 2);
-                drawOutlinedText(bonusText, bonusX, nuzBoxY + gp.tileSize * 11 / 8, 
-                    new Color(120, 120, 120), Color.BLACK);
-            }
-            
-            // Status indicators
-            g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 16F));
-            int statusY = nuzBoxY + gp.tileSize * 2;
-            String statusText = (p.nuzlockeStarted ? "\u2611 Started" : "\u00d7 Not Started") + 
-                               "  |  " + 
-                               (p.isValidNuzlocke ? "\u2611 Valid" : "\u00d7 Invalid");
-            Color statusColor = p.isValidNuzlocke ? new Color(150, 255, 150) : new Color(255, 150, 150);
-            int statusX = getCenterAlignedTextX(statusText, nuzBoxX + nuzBoxWidth / 2);
-            drawOutlinedText(statusText, statusX, statusY, statusColor, Color.BLACK);
-            
-            rightColY += nuzBoxHeight + gp.tileSize;
-            
-            // Nuzlocke Info Button
-            int buttonWidth = gp.tileSize * 4;
-            int buttonHeight = (int)(gp.tileSize * 0.75);
-            int buttonX = nuzBoxX + gp.tileSize / 2;
-            int buttonY = rightColY - gp.tileSize / 2;
-            
-            boolean selected = commandNum == 0;
-            if (selected) {
-                drawPanelWithBorder(buttonX, buttonY, buttonWidth, buttonHeight, 
-                    backgroundOpacity + 50, textColor);
-            } else {
-                drawPanelWithBorder(buttonX, buttonY, buttonWidth, buttonHeight, 
-                    backgroundOpacity - 30, new Color(100, 100, 100));
-            }
-            
-            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));
-            String buttonText = "View Nuzlocke Info";
-            int textX = getCenterAlignedTextX(buttonText, buttonX + buttonWidth / 2);
-            int textY = buttonY + (int)(gp.tileSize * 0.55);
-            drawOutlinedText(buttonText, textX, textY, 
-                selected ? textColor : new Color(200, 200, 200), Color.BLACK);
-            
-            rightColY += gp.tileSize;
-        }
-        
-        // === BOTTOM BUTTONS (Centered) ===
-        int buttonsY = panelY + gp.tileSize * 10;
-        int buttonWidth = gp.tileSize * 4;
-        int buttonHeight = (int)(gp.tileSize * 0.75);
-        int buttonGap = gp.tileSize / 2;
-        int totalButtonsWidth = buttonWidth * 2 + buttonGap;
-        int buttonsStartX = panelX + (gp.tileSize * 10 - totalButtonsWidth) / 2;
-        
-        // Cheat Code Button
-        int cheatButtonX = buttonsStartX;
-        int cheatButtonY = buttonsY;
-        
-        boolean cheatSelected = p.nuzlocke ? commandNum == 1 : commandNum == 0;
-        if (cheatSelected) {
-            drawPanelWithBorder(cheatButtonX, cheatButtonY, buttonWidth, buttonHeight, 
-                backgroundOpacity + 50, textColor);
-        } else {
-            drawPanelWithBorder(cheatButtonX, cheatButtonY, buttonWidth, buttonHeight, 
-                backgroundOpacity - 30, new Color(100, 100, 100));
-        }
-        
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 22F));
-        String cheatText = "Enter Cheat Code";
-        int cheatTextX = getCenterAlignedTextX(cheatText, cheatButtonX + buttonWidth / 2);
-        int cheatTextY = cheatButtonY + (int)(gp.tileSize * 0.55);
-        drawOutlinedText(cheatText, cheatTextX, cheatTextY, 
-            cheatSelected ? textColor : new Color(200, 200, 200), Color.BLACK);
-        
-        // Back Button
-        int backButtonX = buttonsStartX + buttonWidth + buttonGap;
-        int backButtonY = buttonsY;
-        
-        boolean backSelected = p.nuzlocke ? commandNum == 2 : commandNum == 1;
-        if (backSelected) {
-            drawPanelWithBorder(backButtonX, backButtonY, buttonWidth, buttonHeight, 
-                backgroundOpacity + 50, textColor);
-        } else {
-            drawPanelWithBorder(backButtonX, backButtonY, buttonWidth, buttonHeight, 
-                backgroundOpacity - 30, new Color(100, 100, 100));
-        }
-        
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
-        String backText = "Back";
-        int backTextX = getCenterAlignedTextX(backText, backButtonX + buttonWidth / 2);
-        int backTextY = backButtonY + (int)(gp.tileSize * 0.55);
-        drawOutlinedText(backText, backTextX, backTextY, 
-            backSelected ? textColor : new Color(200, 200, 200), Color.BLACK);
-    }
+	private void drawPlayerInfo(int panelX, int panelY) {
+		Player p = gp.player.p;
+		int contentX = panelX + gp.tileSize / 2;
+		int contentY = panelY + gp.tileSize;
+		
+		// === LEFT COLUMN ===
+		int leftColX = contentX;
+		int leftColY = contentY;
+		
+		// Player sprite
+		BufferedImage playerSprite = gp.player.fight;
+		if (playerSprite != null) {
+			g2.drawImage(playerSprite, leftColX, leftColY, 128, 128, null);
+		}
+		
+		// Player name below sprite
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 32F));
+		String playerName = gp.player.getName();
+		int nameX = getCenterAlignedTextX(playerName, leftColX + 64);
+		drawOutlinedText(playerName, nameX, leftColY + 140, textColor, Color.BLACK);
+		
+		leftColY += 180; // Move down past sprite and name
+		
+		// Money section
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
+		drawOutlinedText("Money", leftColX, leftColY, new Color(200, 200, 200), Color.BLACK);
+		leftColY += gp.tileSize * 0.75;
+		
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 32F));
+		String moneyText = "$" + p.getMoney();
+		drawOutlinedText(moneyText, leftColX + gp.tileSize / 4, leftColY, textColor, Color.BLACK);
+		
+		leftColY += gp.tileSize;
+		
+		// Coins section
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
+		drawOutlinedText("Coins", leftColX, leftColY, new Color(200, 200, 200), Color.BLACK);
+		leftColY += gp.tileSize * 0.75;
+		
+		g2.drawImage(Item.COIN.getImage(), leftColX + gp.tileSize / 4, leftColY - gp.tileSize / 2, null);
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 32F));
+		drawOutlinedText(String.valueOf(p.coins), leftColX + gp.tileSize / 4 + gp.tileSize / 2, leftColY, textColor, Color.BLACK);
+		
+		leftColY += gp.tileSize;
+		
+		// Difficulty section
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
+		drawOutlinedText("Difficulty", leftColX, leftColY, new Color(200, 200, 200), Color.BLACK);
+		leftColY += gp.tileSize * 0.75;
+		
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 28F));
+		drawOutlinedText(Player.DIFFICULTIES[p.difficulty], leftColX + gp.tileSize / 4, leftColY, 
+			Player.DIFFICULTY_COLORS[p.difficulty], Color.BLACK);
+		
+		// === RIGHT COLUMN ===
+		int rightColX = contentX + gp.tileSize * 4;
+		int rightColY = contentY + gp.tileSize;
+		
+		// Badge display box
+		int badgeBoxX = rightColX;
+		int badgeBoxWidth = (int)(gp.tileSize * 4.5);
+		
+		// Badges section with box
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 28F));
+		String badgesTitle = "Badges: " + p.badges + "/8";
+		drawOutlinedText(badgesTitle, getCenterAlignedTextX(badgesTitle, badgeBoxX + badgeBoxWidth / 2), rightColY, textColor, Color.BLACK);
+		
+		rightColY += gp.tileSize * 0.75;
+		
+		int badgeBoxY = rightColY - gp.tileSize / 4;
+		int badgeBoxHeight = (int)(gp.tileSize * 2.25);
+		
+		drawBadgesWindow(badgeBoxX, badgeBoxY, badgeBoxWidth, badgeBoxHeight, p, gp, true);
+		
+		rightColY += badgeBoxHeight + gp.tileSize / 4;
+		
+		// Nuzlocke info section (if applicable)
+		if (p.nuzlocke) {
+			// Nuzlocke mode indicator
+			int nuzBoxX = rightColX - gp.tileSize / 4;
+			int nuzBoxY = rightColY;
+			int nuzBoxWidth = gp.tileSize * 5;
+			int nuzBoxHeight = (int)(gp.tileSize * 2.5);
+			
+			drawPanelWithBorder(nuzBoxX, nuzBoxY, nuzBoxWidth, nuzBoxHeight, 70, 
+				new Color(255, 100, 100));
+			
+			g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
+			String nuzTitle = "Nuzlocke Mode";
+			int nuzTitleX = getCenterAlignedTextX(nuzTitle, nuzBoxX + nuzBoxWidth / 2);
+			drawOutlinedText(nuzTitle, nuzTitleX, nuzBoxY + gp.tileSize / 2, 
+				new Color(255, 100, 100), Color.BLACK);
+			
+			// Level cap info
+			int levelCap = Trainer.getLevelCap(p.badges, p);
+			String capText = "Level Cap: " + levelCap;
+			g2.setFont(g2.getFont().deriveFont(Font.BOLD, 28F));
+			int capX = getCenterAlignedTextX(capText, nuzBoxX + nuzBoxWidth / 2);
+			drawOutlinedText(capText, capX, nuzBoxY + gp.tileSize, textColor, Color.BLACK);
+			
+			// Bonus info (if any)
+			if (p.levelCapBonus > 0) {
+				String bonusText = "(+" + p.levelCapBonus + " bonus)";
+				g2.setFont(g2.getFont().deriveFont(Font.ITALIC, 18F));
+				int bonusX = getCenterAlignedTextX(bonusText, nuzBoxX + nuzBoxWidth / 2);
+				drawOutlinedText(bonusText, bonusX, nuzBoxY + gp.tileSize * 11 / 8, 
+					new Color(120, 120, 120), Color.BLACK);
+			}
+			
+			// Status indicators
+			g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 16F));
+			int statusY = nuzBoxY + gp.tileSize * 2;
+			String statusText = (p.nuzlockeStarted ? "\u2611 Started" : "\u00d7 Not Started") + 
+							   "  |  " + 
+							   (p.isValidNuzlocke ? "\u2611 Valid" : "\u00d7 Invalid");
+			Color statusColor = p.isValidNuzlocke ? new Color(150, 255, 150) : new Color(255, 150, 150);
+			int statusX = getCenterAlignedTextX(statusText, nuzBoxX + nuzBoxWidth / 2);
+			drawOutlinedText(statusText, statusX, statusY, statusColor, Color.BLACK);
+			
+			rightColY += nuzBoxHeight + gp.tileSize;
+			
+			// Nuzlocke Info Button
+			int buttonWidth = gp.tileSize * 4;
+			int buttonHeight = (int)(gp.tileSize * 0.75);
+			int buttonX = nuzBoxX + gp.tileSize / 2;
+			int buttonY = rightColY - gp.tileSize / 2;
+			
+			boolean selected = commandNum == 0;
+			if (selected) {
+				drawPanelWithBorder(buttonX, buttonY, buttonWidth, buttonHeight, 
+					backgroundOpacity + 50, textColor);
+			} else {
+				drawPanelWithBorder(buttonX, buttonY, buttonWidth, buttonHeight, 
+					backgroundOpacity - 30, new Color(100, 100, 100));
+			}
+			
+			g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));
+			String buttonText = "View Nuzlocke Info";
+			int textX = getCenterAlignedTextX(buttonText, buttonX + buttonWidth / 2);
+			int textY = buttonY + (int)(gp.tileSize * 0.55);
+			drawOutlinedText(buttonText, textX, textY, 
+				selected ? textColor : new Color(200, 200, 200), Color.BLACK);
+			
+			rightColY += gp.tileSize;
+		}
+		
+		// === BOTTOM BUTTONS (Centered) ===
+		int buttonsY = panelY + gp.tileSize * 10;
+		int buttonWidth = gp.tileSize * 4;
+		int buttonHeight = (int)(gp.tileSize * 0.75);
+		int buttonGap = gp.tileSize / 2;
+		int totalButtonsWidth = buttonWidth * 2 + buttonGap;
+		int buttonsStartX = panelX + (gp.tileSize * 10 - totalButtonsWidth) / 2;
+		
+		// Cheat Code Button
+		int cheatButtonX = buttonsStartX;
+		int cheatButtonY = buttonsY;
+		
+		boolean cheatSelected = p.nuzlocke ? commandNum == 1 : commandNum == 0;
+		if (cheatSelected) {
+			drawPanelWithBorder(cheatButtonX, cheatButtonY, buttonWidth, buttonHeight, 
+				backgroundOpacity + 50, textColor);
+		} else {
+			drawPanelWithBorder(cheatButtonX, cheatButtonY, buttonWidth, buttonHeight, 
+				backgroundOpacity - 30, new Color(100, 100, 100));
+		}
+		
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 22F));
+		String cheatText = "Enter Cheat Code";
+		int cheatTextX = getCenterAlignedTextX(cheatText, cheatButtonX + buttonWidth / 2);
+		int cheatTextY = cheatButtonY + (int)(gp.tileSize * 0.55);
+		drawOutlinedText(cheatText, cheatTextX, cheatTextY, 
+			cheatSelected ? textColor : new Color(200, 200, 200), Color.BLACK);
+		
+		// Back Button
+		int backButtonX = buttonsStartX + buttonWidth + buttonGap;
+		int backButtonY = buttonsY;
+		
+		boolean backSelected = p.nuzlocke ? commandNum == 2 : commandNum == 1;
+		if (backSelected) {
+			drawPanelWithBorder(backButtonX, backButtonY, buttonWidth, buttonHeight, 
+				backgroundOpacity + 50, textColor);
+		} else {
+			drawPanelWithBorder(backButtonX, backButtonY, buttonWidth, buttonHeight, 
+				backgroundOpacity - 30, new Color(100, 100, 100));
+		}
+		
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
+		String backText = "Back";
+		int backTextX = getCenterAlignedTextX(backText, backButtonX + buttonWidth / 2);
+		int backTextY = backButtonY + (int)(gp.tileSize * 0.55);
+		drawOutlinedText(backText, backTextX, backTextY, 
+			backSelected ? textColor : new Color(200, 200, 200), Color.BLACK);
+	}
 
 	private void drawNuzlockeInfo(int panelX, int panelY, int panelWidth, int panelHeight, int MAX_VISIBLE_ENCOUNTERS) {
-        Player p = gp.player.p;
-        int contentX = panelX + gp.tileSize / 2;
-        int contentY = panelY + (int)(gp.tileSize * 1.75);
-        int startY = contentY;
+		Player p = gp.player.p;
+		int contentX = panelX + gp.tileSize / 2;
+		int contentY = panelY + (int)(gp.tileSize * 1.75);
+		int startY = contentY;
 
-        // status title
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
-        drawOutlinedText("Status:", contentX, contentY, textColor, Color.BLACK);
-        contentY += (int)(gp.tileSize * 0.75);
+		// status title
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
+		drawOutlinedText("Status:", contentX, contentY, textColor, Color.BLACK);
+		contentY += (int)(gp.tileSize * 0.75);
 
-        g2.setFont(g2.getFont().deriveFont(20F));
-        int labelX = contentX + gp.tileSize / 4;
+		g2.setFont(g2.getFont().deriveFont(20F));
+		int labelX = contentX + gp.tileSize / 4;
 
-        drawOutlinedText("Started: " + (p.nuzlockeStarted ? "Yes" : "No"), labelX, contentY, new Color(200, 200, 200), Color.BLACK);
-        contentY += (int)(gp.tileSize * 0.6);
+		drawOutlinedText("Started: " + (p.nuzlockeStarted ? "Yes" : "No"), labelX, contentY, new Color(200, 200, 200), Color.BLACK);
+		contentY += (int)(gp.tileSize * 0.6);
 
-        Color validColor = p.isValidNuzlocke ? new Color(100, 255, 100) : new Color(255, 100, 100);
-        drawOutlinedText("Valid: " + (p.isValidNuzlocke ? "Yes" : "No"), labelX, contentY, validColor, Color.BLACK);
-        contentY += gp.tileSize;
+		Color validColor = p.isValidNuzlocke ? new Color(100, 255, 100) : new Color(255, 100, 100);
+		drawOutlinedText("Valid: " + (p.isValidNuzlocke ? "Yes" : "No"), labelX, contentY, validColor, Color.BLACK);
+		contentY += gp.tileSize;
 
-        // settings
-        contentX += gp.tileSize * 4;
-        labelX = contentX + gp.tileSize / 4;
-        contentY = startY;
-        
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
-        drawOutlinedText("Settings:", contentX, contentY, textColor, Color.BLACK);
-        contentY += (int)(gp.tileSize * 0.75);
+		// settings
+		contentX += gp.tileSize * 4;
+		labelX = contentX + gp.tileSize / 4;
+		contentY = startY;
+		
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
+		drawOutlinedText("Settings:", contentX, contentY, textColor, Color.BLACK);
+		contentY += (int)(gp.tileSize * 0.75);
 
-        g2.setFont(g2.getFont().deriveFont(20F));
-        drawOutlinedText("Ban Shedinja: " + (p.banShedinja ? "Yes" : "No"), labelX, contentY, new Color(200, 200, 200), Color.BLACK);
-        contentY += (int)(gp.tileSize * 0.6);
+		g2.setFont(g2.getFont().deriveFont(20F));
+		drawOutlinedText("Ban Shedinja: " + (p.banShedinja ? "Yes" : "No"), labelX, contentY, new Color(200, 200, 200), Color.BLACK);
+		contentY += (int)(gp.tileSize * 0.6);
 
-        drawOutlinedText("Ban Baton Pass: " + (p.banBatonPass ? "Yes" : "No"), labelX, contentY, new Color(200, 200, 200), Color.BLACK);
-        contentY += (int)(gp.tileSize * 0.6);
+		drawOutlinedText("Ban Baton Pass: " + (p.banBatonPass ? "Yes" : "No"), labelX, contentY, new Color(200, 200, 200), Color.BLACK);
+		contentY += (int)(gp.tileSize * 0.6);
 
-        drawOutlinedText("Allow Revives: " + (p.allowRevives ? "Yes" : "No"), labelX, contentY, new Color(200, 200, 200), Color.BLACK);
-        contentY += (int)(gp.tileSize * 0.6);
+		drawOutlinedText("Allow Revives: " + (p.allowRevives ? "Yes" : "No"), labelX, contentY, new Color(200, 200, 200), Color.BLACK);
+		contentY += (int)(gp.tileSize * 0.6);
 
-        if (p.allowRevives) {
-            drawOutlinedText("\u2022 Buyable Revives: " + (p.buyableRevives ? "Yes" : "No"), labelX, contentY, new Color(180, 180, 180), Color.BLACK);
-            contentY += (int)(gp.tileSize * 0.6);
-        }
+		if (p.allowRevives) {
+			drawOutlinedText("\u2022 Buyable Revives: " + (p.buyableRevives ? "Yes" : "No"), labelX, contentY, new Color(180, 180, 180), Color.BLACK);
+			contentY += (int)(gp.tileSize * 0.6);
+		}
 
-        drawOutlinedText("Level Cap Bonus: +" + p.levelCapBonus, labelX, contentY, new Color(200, 200, 200), Color.BLACK);
-        contentX -= gp.tileSize * 4;
-        contentY = startY + gp.tileSize * 3;
+		drawOutlinedText("Level Cap Bonus: +" + p.levelCapBonus, labelX, contentY, new Color(200, 200, 200), Color.BLACK);
+		contentX -= gp.tileSize * 4;
+		contentY = startY + gp.tileSize * 3;
 
-        // invalid reasons
-        if (!p.isValidNuzlocke && !p.invalidReasons.isEmpty()) {
-            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
-            drawOutlinedText("Invalid Reasons:", contentX, contentY, new Color(255, 100, 100), Color.BLACK);
-            contentY += gp.tileSize / 4;
+		// invalid reasons
+		if (!p.isValidNuzlocke && !p.invalidReasons.isEmpty()) {
+			g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
+			drawOutlinedText("Invalid Reasons:", contentX, contentY, new Color(255, 100, 100), Color.BLACK);
+			contentY += gp.tileSize / 4;
 
-            int scrollableX = contentX;
-            int scrollableY = contentY + 2;
-            int scrollableWidth = panelWidth - gp.tileSize;
-            int scrollableHeight = (int)(gp.tileSize * 1.5) + 4;
+			int scrollableX = contentX;
+			int scrollableY = contentY + 2;
+			int scrollableWidth = panelWidth - gp.tileSize;
+			int scrollableHeight = (int)(gp.tileSize * 1.5) + 4;
 
-            drawPanelWithBorder(scrollableX, scrollableY, scrollableWidth, scrollableHeight, 50, new Color(100, 100, 100));
+			drawPanelWithBorder(scrollableX, scrollableY, scrollableWidth, scrollableHeight, 50, new Color(100, 100, 100));
 
-            g2.setClip(scrollableX, scrollableY + 2, scrollableWidth, scrollableHeight - 4);
+			g2.setClip(scrollableX, scrollableY + 2, scrollableWidth, scrollableHeight - 4);
 
-            int reasonY = scrollableY + gp.tileSize / 3;
-            g2.setFont(g2.getFont().deriveFont(16F));
+			int reasonY = scrollableY + gp.tileSize / 3;
+			g2.setFont(g2.getFont().deriveFont(16F));
 
-            for (String reason : p.invalidReasons) {
-                drawOutlinedText("• " + reason, scrollableX + gp.tileSize / 4, reasonY, new Color(255, 150, 150), Color.BLACK);
-                reasonY += gp.tileSize / 3;
-            }
+			for (String reason : p.invalidReasons) {
+				drawOutlinedText("• " + reason, scrollableX + gp.tileSize / 4, reasonY, new Color(255, 150, 150), Color.BLACK);
+				reasonY += gp.tileSize / 3;
+			}
 
-            g2.setClip(null);
-            contentY += scrollableHeight + gp.tileSize / 2;
-        }
+			g2.setClip(null);
+			contentY += scrollableHeight + gp.tileSize / 2;
+		}
 
-        // encounters
-        if (p.nuzlockeEncounters != null && !p.nuzlockeEncounters.isEmpty()) {
-            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
-            drawOutlinedText("Encounters (" + p.nuzlockeEncounters.size() + "):", contentX, contentY, textColor, Color.BLACK);
-            contentY += gp.tileSize / 4;
+		// encounters
+		if (p.nuzlockeEncounters != null && !p.nuzlockeEncounters.isEmpty()) {
+			g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
+			drawOutlinedText("Encounters (" + p.nuzlockeEncounters.size() + "):", contentX, contentY, textColor, Color.BLACK);
+			contentY += gp.tileSize / 4;
 
-            int scrollableX = contentX;
-            int scrollableY = contentY + 2;
-            int scrollableWidth = panelWidth - gp.tileSize;
-            int scrollableHeight = gp.tileSize * 2 + 4;
+			int scrollableX = contentX;
+			int scrollableY = contentY + 2;
+			int scrollableWidth = panelWidth - gp.tileSize;
+			int scrollableHeight = gp.tileSize * 2 + 4;
 
-            drawPanelWithBorder(scrollableX, scrollableY, scrollableWidth, scrollableHeight, 50, new Color(100, 100, 100));
+			drawPanelWithBorder(scrollableX, scrollableY, scrollableWidth, scrollableHeight, 50, new Color(100, 100, 100));
 
-            g2.setClip(scrollableX, scrollableY + 2, scrollableWidth, scrollableHeight - 4);
+			g2.setClip(scrollableX, scrollableY + 2, scrollableWidth, scrollableHeight - 4);
 
-            int encounterY = scrollableY + gp.tileSize / 3 - (playerScroll * (gp.tileSize / 3));
-            g2.setFont(g2.getFont().deriveFont(18F));
+			int encounterY = scrollableY + gp.tileSize / 3 - (playerScroll * (gp.tileSize / 3));
+			g2.setFont(g2.getFont().deriveFont(18F));
 
-            for (int i = 0; i < p.nuzlockeEncounters.size(); i++) {
-                String encounter = p.nuzlockeEncounters.get(i);
-                Color encounterColor = (i >= playerScroll && i < playerScroll + MAX_VISIBLE_ENCOUNTERS) ? new Color(200, 200, 200) : new Color(120, 120, 120);
-                drawOutlinedText((i+1) + ") " + encounter, scrollableX + gp.tileSize / 4, encounterY, encounterColor, Color.BLACK);
-                encounterY += gp.tileSize / 3;
-            }
+			for (int i = 0; i < p.nuzlockeEncounters.size(); i++) {
+				String encounter = p.nuzlockeEncounters.get(i);
+				Color encounterColor = (i >= playerScroll && i < playerScroll + MAX_VISIBLE_ENCOUNTERS) ? new Color(200, 200, 200) : new Color(120, 120, 120);
+				drawOutlinedText((i+1) + ") " + encounter, scrollableX + gp.tileSize / 4, encounterY, encounterColor, Color.BLACK);
+				encounterY += gp.tileSize / 3;
+			}
 
-            g2.setClip(null);
+			g2.setClip(null);
 
-            // scrollbar
-            if (p.nuzlockeEncounters.size() > MAX_VISIBLE_ENCOUNTERS) {
-                int scrollbarX = scrollableX + scrollableWidth - 12;
-                int scrollbarY = scrollableY + 4;
-                int scrollbarWidth = 8;
-                int scrollbarHeight = scrollableHeight - 8;
+			// scrollbar
+			if (p.nuzlockeEncounters.size() > MAX_VISIBLE_ENCOUNTERS) {
+				int scrollbarX = scrollableX + scrollableWidth - 12;
+				int scrollbarY = scrollableY + 4;
+				int scrollbarWidth = 8;
+				int scrollbarHeight = scrollableHeight - 8;
 
-                g2.setColor(new Color(60, 60, 60));
-                g2.fillRect(scrollbarX, scrollbarY, scrollbarWidth, scrollbarHeight);
+				g2.setColor(new Color(60, 60, 60));
+				g2.fillRect(scrollbarX, scrollbarY, scrollbarWidth, scrollbarHeight);
 
-                float thumbHeight = scrollbarHeight * ((float)MAX_VISIBLE_ENCOUNTERS / p.nuzlockeEncounters.size());
-                float maxScroll = p.nuzlockeEncounters.size() - MAX_VISIBLE_ENCOUNTERS;
-                float thumbY = scrollbarY + (scrollbarHeight - thumbHeight) * (playerScroll / maxScroll);
+				float thumbHeight = scrollbarHeight * ((float)MAX_VISIBLE_ENCOUNTERS / p.nuzlockeEncounters.size());
+				float maxScroll = p.nuzlockeEncounters.size() - MAX_VISIBLE_ENCOUNTERS;
+				float thumbY = scrollbarY + (scrollbarHeight - thumbHeight) * (playerScroll / maxScroll);
 
-                g2.setColor(textColor);
-                g2.fillRect(scrollbarX, (int)thumbY, scrollbarWidth, (int)thumbHeight);
-            }
-        }
+				g2.setColor(textColor);
+				g2.fillRect(scrollbarX, (int)thumbY, scrollbarWidth, (int)thumbHeight);
+			}
+		}
 
-        // back
-        int buttonWidth = gp.tileSize * 3;
-        int buttonHeight = (int)(gp.tileSize * 0.75);
-        int buttonX = panelX + panelWidth - buttonWidth - gp.tileSize / 2;
-        int buttonY = panelY + panelHeight - buttonHeight - gp.tileSize / 2;
+		// back
+		int buttonWidth = gp.tileSize * 3;
+		int buttonHeight = (int)(gp.tileSize * 0.75);
+		int buttonX = panelX + panelWidth - buttonWidth - gp.tileSize / 2;
+		int buttonY = panelY + panelHeight - buttonHeight - gp.tileSize / 2;
 
-        boolean selected = commandNum == 0;
-        if (selected) {
-            drawPanelWithBorder(buttonX, buttonY, buttonWidth, buttonHeight, backgroundOpacity + 50, textColor);
-        } else {
-            drawPanelWithBorder(buttonX, buttonY, buttonWidth, buttonHeight, backgroundOpacity - 30, new Color(100, 100, 100));
-        }
+		boolean selected = commandNum == 0;
+		if (selected) {
+			drawPanelWithBorder(buttonX, buttonY, buttonWidth, buttonHeight, backgroundOpacity + 50, textColor);
+		} else {
+			drawPanelWithBorder(buttonX, buttonY, buttonWidth, buttonHeight, backgroundOpacity - 30, new Color(100, 100, 100));
+		}
 
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
-        String buttonText = "Back";
-        int textX = getCenterAlignedTextX(buttonText, buttonX + buttonWidth / 2);
-        int textY = buttonY + (int)(gp.tileSize * 0.55);
-        drawOutlinedText(buttonText, textX, textY, selected ? textColor : new Color(200, 200, 200), Color.BLACK);
-    }
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
+		String buttonText = "Back";
+		int textX = getCenterAlignedTextX(buttonText, buttonX + buttonWidth / 2);
+		int textY = buttonY + (int)(gp.tileSize * 0.55);
+		drawOutlinedText(buttonText, textX, textY, selected ? textColor : new Color(200, 200, 200), Color.BLACK);
+	}
 
-    private void showCheatCodeDialog() {
-        UI ui = this;
-        cheatCodeDialog = new TextInputDialog(gp, "Cheat Code", "", "Enter cheat code", 50, textColor);
+	private void showCheatCodeDialog() {
+		UI ui = this;
+		cheatCodeDialog = new TextInputDialog(gp, "Cheat Code", "", "Enter cheat code", 50, textColor);
 
-        cheatCodeDialog.show(new TextInputDialog.InputCallback() {
-            @Override
-            public void onConfirm(String code) {
-                gp.player.runCode(code, ui);
-                cheatCodeDialog = null;
-            }
+		cheatCodeDialog.show(new TextInputDialog.InputCallback() {
+			@Override
+			public void onConfirm(String code) {
+				gp.player.runCode(code, ui);
+				cheatCodeDialog = null;
+			}
 
-            @Override
-            public void onCancel() {
-                cheatCodeDialog = null;
-            }
-        });
-    }
+			@Override
+			public void onCancel() {
+				cheatCodeDialog = null;
+			}
+		});
+	}
 	
 	public void drawSettings() {
 		super.drawSettings();
 		
 		if (settingsState == 0) {
-			if (gp.keyH.sPressed || gp.keyH.dPressed) {
+			if ((gp.keyH.sPressed || gp.keyH.dPressed) && !showMessage) {
 				gp.keyH.sPressed = false;
 				gp.keyH.dPressed = false;
 				gp.playSFX(Sound.S_MENU_CAN);
@@ -4949,7 +4963,7 @@ public class UI extends AbstractUI {
 				subState = 0;
 			}
 		} else if (settingsState == 1) {
-			if (gp.keyH.sPressed || gp.keyH.dPressed) {
+			if ((gp.keyH.sPressed || gp.keyH.dPressed) && !showMessage) {
 				gp.keyH.sPressed = false;
 				gp.keyH.dPressed = false;
 				gp.playSFX(Sound.S_MENU_CAN);
@@ -4959,7 +4973,7 @@ public class UI extends AbstractUI {
 				if (changed) showMessage("Keybinds successfully updated!");
 			}
 		} else if (settingsState == 2) {
-			if (gp.keyH.sPressed || gp.keyH.dPressed) {
+			if ((gp.keyH.sPressed || gp.keyH.dPressed) && !showMessage) {
 				gp.keyH.sPressed = false;
 				gp.keyH.dPressed = false;
 				gp.playSFX(Sound.S_MENU_CAN);
@@ -5280,38 +5294,39 @@ public class UI extends AbstractUI {
 				showMessage("Come back soon!");
 			}
 		}
-		if (gp.keyH.sPressed) {
-			gp.keyH.sPressed = false;
-			gp.gameState = GamePanel.PLAY_STATE;
-			sellAmt = 1;
-		}
-		
-		if (gp.keyH.upPressed) {
-			gp.keyH.upPressed = false;
-			sellAmt++;
-			if (sellAmt > gp.player.p.getMaxCoins()) sellAmt = 0;
-		}
-		
-		if (gp.keyH.downPressed) {
-			gp.keyH.downPressed = false;
-			sellAmt--;
-			if (sellAmt < 0) sellAmt = gp.player.p.getMaxCoins();
-		}
-		
-		if (gp.keyH.leftPressed) {
-			gp.keyH.leftPressed = false;
-			int max = gp.player.p.getMaxCoins();
-			sellAmt -= max > 10 ? 10 : 1;
-			if (sellAmt < 0) sellAmt += max;
-		}
-		
-		if (gp.keyH.rightPressed) {
-			gp.keyH.rightPressed = false;
-			int max = gp.player.p.getMaxCoins();
-			sellAmt += max > 10 ? 10 : 1;
-			if (sellAmt > max) sellAmt -= max;
-		}
-		
+		if (!showMessage) {
+			if (gp.keyH.sPressed) {
+				gp.keyH.sPressed = false;
+				gp.gameState = GamePanel.PLAY_STATE;
+				sellAmt = 1;
+			}
+			
+			if (gp.keyH.upPressed) {
+				gp.keyH.upPressed = false;
+				sellAmt++;
+				if (sellAmt > gp.player.p.getMaxCoins()) sellAmt = 0;
+			}
+			
+			if (gp.keyH.downPressed) {
+				gp.keyH.downPressed = false;
+				sellAmt--;
+				if (sellAmt < 0) sellAmt = gp.player.p.getMaxCoins();
+			}
+			
+			if (gp.keyH.leftPressed) {
+				gp.keyH.leftPressed = false;
+				int max = gp.player.p.getMaxCoins();
+				sellAmt -= max > 10 ? 10 : 1;
+				if (sellAmt < 0) sellAmt += max;
+			}
+			
+			if (gp.keyH.rightPressed) {
+				gp.keyH.rightPressed = false;
+				int max = gp.player.p.getMaxCoins();
+				sellAmt += max > 10 ? 10 : 1;
+				if (sellAmt > max) sellAmt -= max;
+			}
+		}		
 	}
 	
 	public void drawTransition() {
@@ -5390,9 +5405,9 @@ public class UI extends AbstractUI {
 		Graphics2D transitionGraphics = transitionBuffer.createGraphics();
 		transitionGraphics.setColor(Color.BLACK);
 		transitionGraphics.fillRect(btX, btY, width, height);
-	    transitionGraphics.dispose();
+		transitionGraphics.dispose();
 
-	    g2.drawImage(transitionBuffer, 0, 0, null);
+		g2.drawImage(transitionBuffer, 0, 0, null);
 
 		btX += width;
 		if (btX >= gp.screenWidth) {
@@ -5456,17 +5471,19 @@ public class UI extends AbstractUI {
 		
 		gp.keyH.wPressed = false;
 		
-		if (gp.keyH.sPressed || gp.keyH.dPressed) {
-			gp.keyH.sPressed = false;
-			gp.keyH.dPressed = false;
-			gp.gameState = GamePanel.PLAY_STATE;
-			subState = 0;
-			commandNum = 0;
-		}
-		if (gp.keyH.upPressed || gp.keyH.downPressed) {
-			gp.keyH.upPressed = false;
-			gp.keyH.downPressed = false;
-			commandNum = 1 - commandNum;
+		if (!showMessage) {
+			if (gp.keyH.sPressed || gp.keyH.dPressed) {
+				gp.keyH.sPressed = false;
+				gp.keyH.dPressed = false;
+				gp.gameState = GamePanel.PLAY_STATE;
+				subState = 0;
+				commandNum = 0;
+			}
+			if (gp.keyH.upPressed || gp.keyH.downPressed) {
+				gp.keyH.upPressed = false;
+				gp.keyH.downPressed = false;
+				commandNum = 1 - commandNum;
+			}
 		}
 	}
 	
@@ -5510,19 +5527,21 @@ public class UI extends AbstractUI {
 			}
 		}
 		
-		if (gp.keyH.sPressed || gp.keyH.dPressed) {
-			gp.keyH.sPressed = false;
-			gp.keyH.dPressed = false;
-			gp.gameState = GamePanel.PLAY_STATE;
-			subState = 0;
-			commandNum = 0;
-			slotRow = 0;
-			slotCol = 0;
-		}
-		if (gp.keyH.upPressed || gp.keyH.downPressed) {
-			gp.keyH.upPressed = false;
-			gp.keyH.downPressed = false;
-			commandNum = 1 - commandNum;
+		if (!showMessage) {
+			if (gp.keyH.sPressed || gp.keyH.dPressed) {
+				gp.keyH.sPressed = false;
+				gp.keyH.dPressed = false;
+				gp.gameState = GamePanel.PLAY_STATE;
+				subState = 0;
+				commandNum = 0;
+				slotRow = 0;
+				slotCol = 0;
+			}
+			if (gp.keyH.upPressed || gp.keyH.downPressed) {
+				gp.keyH.upPressed = false;
+				gp.keyH.downPressed = false;
+				commandNum = 1 - commandNum;
+			}
 		}
 		
 		drawToolTips("OK", null, "Back", "Back");
@@ -5531,42 +5550,44 @@ public class UI extends AbstractUI {
 	public void shopBuy() {
 		drawInventory(npc.inventory, ITEMS);
 		
-		if (gp.keyH.sPressed || gp.keyH.dPressed) {
-			gp.keyH.sPressed = false;
-			gp.keyH.dPressed = false;
-			if (premier > 0) {
-				gp.setTaskState();
-				Task.addTask(Task.TEXT, "Thanks for being a loyal customer! Here, this is on us!");
-				String itemName = premier > 1 ? "s" : "";
-				Task t = Task.addTask(Task.ITEM, "You got " + premier + " " + Item.PREMIER_BALL.toString() + itemName + "!", premier);
-				t.item = Item.PREMIER_BALL;
-				premier = 0;
+		if (!showMessage) {
+			if (gp.keyH.sPressed || gp.keyH.dPressed) {
+				gp.keyH.sPressed = false;
+				gp.keyH.dPressed = false;
+				if (premier > 0) {
+					gp.setTaskState();
+					Task.addTask(Task.TEXT, "Thanks for being a loyal customer! Here, this is on us!");
+					String itemName = premier > 1 ? "s" : "";
+					Task t = Task.addTask(Task.ITEM, "You got " + premier + " " + Item.PREMIER_BALL.toString() + itemName + "!", premier);
+					t.item = Item.PREMIER_BALL;
+					premier = 0;
+				}
+				subState = 0;
+				currentDialogue = npc.dialogues[0];
 			}
-			subState = 0;
-			currentDialogue = npc.dialogues[0];
-		}
-		if (gp.keyH.upPressed) {
-			gp.keyH.upPressed = false;
-			if (slotRow > 0) {
-				slotRow--;
+			if (gp.keyH.upPressed) {
+				gp.keyH.upPressed = false;
+				if (slotRow > 0) {
+					slotRow--;
+				}
 			}
-		}
-		if (gp.keyH.downPressed) {
-			gp.keyH.downPressed = false;
-			if (slotRow < MAX_SHOP_ROW) {
-				slotRow++;
+			if (gp.keyH.downPressed) {
+				gp.keyH.downPressed = false;
+				if (slotRow < MAX_SHOP_ROW) {
+					slotRow++;
+				}
 			}
-		}
-		if (gp.keyH.leftPressed) {
-			gp.keyH.leftPressed = false;
-			if (slotCol > 0) {
-				slotCol--;
+			if (gp.keyH.leftPressed) {
+				gp.keyH.leftPressed = false;
+				if (slotCol > 0) {
+					slotCol--;
+				}
 			}
-		}
-		if (gp.keyH.rightPressed) {
-			gp.keyH.rightPressed = false;
-			if (slotCol < MAX_SHOP_COL - 1) {
-				slotCol++;
+			if (gp.keyH.rightPressed) {
+				gp.keyH.rightPressed = false;
+				if (slotCol < MAX_SHOP_COL - 1) {
+					slotCol++;
+				}
 			}
 		}
 	}
@@ -5697,7 +5718,7 @@ public class UI extends AbstractUI {
 	}
 
 	private int getItemIndexOnSlot(int maxCol) {
-        return slotCol + (slotRow*maxCol);
+		return slotCol + (slotRow*maxCol);
 	}
 	
 	private void drawPrizeScreen(NPC_Prize_Shop ps) {
@@ -5712,7 +5733,7 @@ public class UI extends AbstractUI {
 		}
 		gp.keyH.wPressed = false;
 		
-		if (subState > 0) {
+		if (subState > 0 && !showMessage) {
 			if (gp.keyH.sPressed) {
 				gp.keyH.sPressed = false;
 				subState = 0;
@@ -5982,40 +6003,42 @@ public class UI extends AbstractUI {
 		g2.setFont(g2.getFont().deriveFont(32F));
 		g2.drawString("$" + gp.player.p.getMoney(), textX, textY);
 		
-		if (gp.keyH.wPressed) {
-			gp.keyH.wPressed = false;
-			if (commandNum == 0) {
-				if (hasTM) {
-					bag.remove(Item.TINY_MUSHROOM);
-					gp.player.p.setMoney(gp.player.p.getMoney() + price1);
-				} else {
-					Task.addTask(Task.DIALOGUE, currentTask.e, "You don't have any Tiny Mushrooms for your boi?!");
-					Task.addTask(Task.MUSHROOM, currentTask.e, currentTask.message);
-					currentTask = null;
-				}
-			} else if (commandNum == 1) {
-				if (hasBM) {
-					bag.remove(Item.BIG_MUSHROOM);
-					gp.player.p.setMoney(gp.player.p.getMoney() + price2);
-				} else {
-					Task.addTask(Task.DIALOGUE, currentTask.e, "I NEEEED a BIG SHROOM!!");
-					Task.addTask(Task.MUSHROOM, currentTask.e, currentTask.message);
-					currentTask = null;
+		if (showMessage) {
+			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				if (commandNum == 0) {
+					if (hasTM) {
+						bag.remove(Item.TINY_MUSHROOM);
+						gp.player.p.setMoney(gp.player.p.getMoney() + price1);
+					} else {
+						Task.addTask(Task.DIALOGUE, currentTask.e, "You don't have any Tiny Mushrooms for your boi?!");
+						Task.addTask(Task.MUSHROOM, currentTask.e, currentTask.message);
+						currentTask = null;
+					}
+				} else if (commandNum == 1) {
+					if (hasBM) {
+						bag.remove(Item.BIG_MUSHROOM);
+						gp.player.p.setMoney(gp.player.p.getMoney() + price2);
+					} else {
+						Task.addTask(Task.DIALOGUE, currentTask.e, "I NEEEED a BIG SHROOM!!");
+						Task.addTask(Task.MUSHROOM, currentTask.e, currentTask.message);
+						currentTask = null;
+					}
 				}
 			}
-		}
-		
-		if (gp.keyH.sPressed) {
-			gp.keyH.sPressed = false;
-			Task.addTask(Task.DIALOGUE, currentTask.e, "You BETTER go fetch Daddy some kush!");
-			commandNum = 0;
-			currentTask = null;
-		}
-		
-		if (gp.keyH.upPressed || gp.keyH.downPressed) {
-			gp.keyH.upPressed = false;
-			gp.keyH.downPressed = false;
-			commandNum = 1 - commandNum;
+			
+			if (gp.keyH.sPressed) {
+				gp.keyH.sPressed = false;
+				Task.addTask(Task.DIALOGUE, currentTask.e, "You BETTER go fetch Daddy some kush!");
+				commandNum = 0;
+				currentTask = null;
+			}
+			
+			if (gp.keyH.upPressed || gp.keyH.downPressed) {
+				gp.keyH.upPressed = false;
+				gp.keyH.downPressed = false;
+				commandNum = 1 - commandNum;
+			}
 		}
 		drawToolTips("Sell", null, "Back", null);
 	}
@@ -6028,7 +6051,7 @@ public class UI extends AbstractUI {
 		}
 		gp.keyH.wPressed = false;
 		
-		if (subState > 0) {
+		if (subState > 0 && !showMessage) {
 			if (gp.keyH.sPressed || gp.keyH.dPressed) {
 				gp.keyH.sPressed = false;
 				gp.keyH.dPressed = false;
@@ -6082,25 +6105,27 @@ public class UI extends AbstractUI {
 			}
 		}
 		
-		if (gp.keyH.sPressed || gp.keyH.dPressed) {
-			gp.keyH.sPressed = false;
-			gp.keyH.dPressed = false;
-			gp.gameState = GamePanel.PLAY_STATE;
-			subState = 0;
-			commandNum = 0;
-		}
-		if (gp.keyH.upPressed) {
-			gp.keyH.upPressed = false;
-			commandNum--;
-			if (commandNum < 0) {
-				commandNum = 2;
-			}
-		}
-		if (gp.keyH.downPressed) {
-			gp.keyH.downPressed = false;
-			commandNum++;
-			if (commandNum > 2) {
+		if (!showMessage) {
+			if (gp.keyH.sPressed || gp.keyH.dPressed) {
+				gp.keyH.sPressed = false;
+				gp.keyH.dPressed = false;
+				gp.gameState = GamePanel.PLAY_STATE;
+				subState = 0;
 				commandNum = 0;
+			}
+			if (gp.keyH.upPressed) {
+				gp.keyH.upPressed = false;
+				commandNum--;
+				if (commandNum < 0) {
+					commandNum = 2;
+				}
+			}
+			if (gp.keyH.downPressed) {
+				gp.keyH.downPressed = false;
+				commandNum++;
+				if (commandNum > 2) {
+					commandNum = 0;
+				}
 			}
 		}
 		
@@ -6184,7 +6209,7 @@ public class UI extends AbstractUI {
 		drawSubWindow(dFrameX,dFrameY,dFrameWidth,dFrameHeight);
 		g2.drawString(current.toString(), textX, textY);
 		
-		int priceX = getRightAlignedTextX("$     ", dFrameX + dFrameWidth - gp.tileSize / 2);
+		int priceX = getRightAlignedTextX("$	 ", dFrameX + dFrameWidth - gp.tileSize / 2);
 		g2.drawImage(Item.STAR_PIECE.getImage2(), priceX, (int) (textY - gp.tileSize * 0.75), null);
 		String price = String.valueOf(current.getCost());
 		priceX += gp.tileSize * 0.9;
@@ -6345,7 +6370,7 @@ public class UI extends AbstractUI {
 		drawSubWindow(dFrameX,dFrameY,dFrameWidth,dFrameHeight);
 		g2.drawString(current.toString(), textX, textY);
 		
-		int priceX = getRightAlignedTextX("$     ", dFrameX + dFrameWidth - gp.tileSize / 2);
+		int priceX = getRightAlignedTextX("$	 ", dFrameX + dFrameWidth - gp.tileSize / 2);
 		textY += gp.tileSize / 4;
 		g2.drawImage(Item.STAR_PIECE.getImage2(), priceX, (int) (textY - gp.tileSize * 0.75), null);
 		String price = String.valueOf(cost);
@@ -6381,15 +6406,15 @@ public class UI extends AbstractUI {
 			gp.keyH.wPressed = false;
 			if (gp.player.p.bag.contains(costItem)) {
 				if (gp.player.p.bag.count[Item.STAR_PIECE.getID()] >= cost) {
-					showMessage(Item.breakString("Thank you! Here's your " + costItem.toString() + " repaired into a " + current.toString() + "!", 42));
+					showMessage(Item.breakString("Thank you! Here's your " + costItem.toString() + " repaired into a " + current.toString() + "!", MAX_TEXTBOX));
 					gp.player.p.bag.add(current);
 					gp.player.p.bag.remove(Item.STAR_PIECE, cost);
 					gp.player.p.bag.remove(costItem);
 				} else {
-					showMessage("You don't have enough Star Pieces to repair your " + costItem.toString() + "!");
+					showMessage(Item.breakString("You don't have enough Star Pieces to repair your " + costItem.toString() + "!", MAX_TEXTBOX));
 				}
 			} else {
-				showMessage("You don't have a " + costItem.toString() + " to repair!");
+				showMessage(Item.breakString("You don't have a " + costItem.toString() + " to repair!", MAX_TEXTBOX));
 			}
 		}
 		
@@ -6450,16 +6475,18 @@ public class UI extends AbstractUI {
 			}
 		}
 		
-		if (gp.keyH.sPressed || gp.keyH.dPressed) {
-			gp.keyH.sPressed = false;
-			gp.keyH.dPressed = false;
-			gp.gameState = GamePanel.PLAY_STATE;
-			commandNum = 0;
-		}
-		if (gp.keyH.upPressed || gp.keyH.downPressed) {
-			gp.keyH.upPressed = false;
-			gp.keyH.downPressed = false;
-			commandNum = 1 - commandNum;
+		if (showMessage) {
+			if (gp.keyH.sPressed || gp.keyH.dPressed) {
+				gp.keyH.sPressed = false;
+				gp.keyH.dPressed = false;
+				gp.gameState = GamePanel.PLAY_STATE;
+				commandNum = 0;
+			}
+			if (gp.keyH.upPressed || gp.keyH.downPressed) {
+				gp.keyH.upPressed = false;
+				gp.keyH.downPressed = false;
+				commandNum = 1 - commandNum;
+			}
 		}
 		
 		drawToolTips("OK", null, "Back", "Back");
@@ -6576,12 +6603,12 @@ public class UI extends AbstractUI {
 				int starY = windowY + gp.tileSize;
 				int starWidth = (gp.tileSize * 2 / 3) - 4;
 				g2.setFont(g2.getFont().deriveFont(40F));
-			    GradientPaint starPaint = new GradientPaint(
-			        starX + 6, starY - 6, new Color(255, 215, 0), // Start point and color
-			        starX +  - 10, starY - starWidth + 10, new Color(245, 225, 210) // End point and color
-			    );
-			    g2.setPaint(starPaint);
-			    g2.drawString('\u2605' + "", starX, starY);
+				GradientPaint starPaint = new GradientPaint(
+					starX + 6, starY - 6, new Color(255, 215, 0), // Start point and color
+					starX +  - 10, starY - starWidth + 10, new Color(245, 225, 210) // End point and color
+				);
+				g2.setPaint(starPaint);
+				g2.drawString('\u2605' + "", starX, starY);
 			}
 			
 			y = winY + height - gp.tileSize * 2 / 3;
@@ -6589,7 +6616,7 @@ public class UI extends AbstractUI {
 			index++;
 		}
 		
-		if (gp.keyH.sPressed) {
+		if (gp.keyH.sPressed && !showMessage) {
 			gp.keyH.sPressed = false;
 			goBackInBag();
 		}
@@ -6660,7 +6687,7 @@ public class UI extends AbstractUI {
 				gp.gameState = GamePanel.MENU_STATE;
 			}
 		}
-		if (gp.keyH.sPressed) {
+		if (gp.keyH.sPressed && !showMessage) {
 			gp.keyH.sPressed = false;
 			goBackInBag();
 		}
@@ -6674,10 +6701,10 @@ public class UI extends AbstractUI {
 		InputStream is = getClass().getResourceAsStream(path);
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-            while ((str = reader.readLine()) != null) {
-                buf.append(str).append("\n");
-            }
-            is.close();
+			while ((str = reader.readLine()) != null) {
+				buf.append(str).append("\n");
+			}
+			is.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -6688,14 +6715,14 @@ public class UI extends AbstractUI {
 		ArrayList<String> result = new ArrayList<>();
 		for (String s : message) {
 			String[] m = Item.breakString(s, length).split("\n");
-            result.addAll(Arrays.asList(m));
+			result.addAll(Arrays.asList(m));
 		}
 		return result.toArray(new String[1]);
 	}
 	
 	private String[][] splitMessage(String[] message) {
-        int maxLine = 13;
-        int numPages = (int) Math.ceil((double) message.length / maxLine);
+		int maxLine = 13;
+		int numPages = (int) Math.ceil((double) message.length / maxLine);
 		
 		String[][] result = new String[numPages][];
 
@@ -6704,7 +6731,7 @@ public class UI extends AbstractUI {
 			int finish = Math.min(start + maxLine, message.length);
 			
 			String[] page = new String[finish - start];
-            System.arraycopy(message, start, page, 0, page.length);
+			System.arraycopy(message, start, page, 0, page.length);
 			result[i] = page;
 		}
 		
@@ -6773,60 +6800,62 @@ public class UI extends AbstractUI {
 			y = startY;
 		}
 		
-		if (gp.keyH.wPressed) {
-			gp.keyH.wPressed = false;
-			if (starterConfirm) {
-				if (commandNum == 0) {
-					gp.player.p.flag[0][1] = true;
-					gp.player.p.starter = starter;
-					gp.setTaskState();
-					Task.addTask(Task.GIFT, "", starters[starter]);
-					starterConfirm = false;
-					
-			        int secondStarter = -1;
-			        do {
-			        	secondStarter = rand.nextInt(3);
-			        } while (secondStarter == gp.player.p.starter);
-			        gp.player.p.secondStarter = secondStarter;
-			        
-			        Pokemon.updateRivals();
+		if (!showMessage) {
+			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				if (starterConfirm) {
+					if (commandNum == 0) {
+						gp.player.p.flag[0][1] = true;
+						gp.player.p.starter = starter;
+						gp.setTaskState();
+						Task.addTask(Task.GIFT, "", starters[starter]);
+						starterConfirm = false;
+						
+						int secondStarter = -1;
+						do {
+							secondStarter = rand.nextInt(3);
+						} while (secondStarter == gp.player.p.starter);
+						gp.player.p.secondStarter = secondStarter;
+						
+						Pokemon.updateRivals();
+					} else {
+						starterConfirm = false;
+						commandNum = 0;
+					}
 				} else {
+					starterConfirm = true;
+				}
+			}
+			if (gp.keyH.sPressed) {
+				gp.keyH.sPressed = false;
+				if (starterConfirm) {
 					starterConfirm = false;
 					commandNum = 0;
+				} else {
+					gp.gameState = GamePanel.PLAY_STATE;
+					starter = 0;
 				}
-			} else {
-				starterConfirm = true;
 			}
-		}
-		if (gp.keyH.sPressed) {
-			gp.keyH.sPressed = false;
-			if (starterConfirm) {
-				starterConfirm = false;
-				commandNum = 0;
-			} else {
-				gp.gameState = GamePanel.PLAY_STATE;
-				starter = 0;
+			
+			if (gp.keyH.upPressed) {
+				gp.keyH.upPressed = false;
+				commandNum = 1 - commandNum;
 			}
-		}
-		
-		if (gp.keyH.upPressed) {
-			gp.keyH.upPressed = false;
-			commandNum = 1 - commandNum;
-		}
-		
-		if (gp.keyH.downPressed) {
-			gp.keyH.downPressed = false;
-			commandNum = 1 - commandNum;
-		}
-		
-		if (gp.keyH.leftPressed) {
-			gp.keyH.leftPressed = false;
-			starter = starterConfirm ? starter : (starter + 2) % 3;
-		}
-		
-		if (gp.keyH.rightPressed) {
-			gp.keyH.rightPressed = false;
-			starter = starterConfirm ? starter : (starter + 1) % 3;
+			
+			if (gp.keyH.downPressed) {
+				gp.keyH.downPressed = false;
+				commandNum = 1 - commandNum;
+			}
+			
+			if (gp.keyH.leftPressed) {
+				gp.keyH.leftPressed = false;
+				starter = starterConfirm ? starter : (starter + 2) % 3;
+			}
+			
+			if (gp.keyH.rightPressed) {
+				gp.keyH.rightPressed = false;
+				starter = starterConfirm ? starter : (starter + 1) % 3;
+			}
 		}
 		
 		if (starterConfirm) {
@@ -6991,7 +7020,7 @@ public class UI extends AbstractUI {
 			}
 		}
 		
-		if (gp.keyH.sPressed) {
+		if (gp.keyH.sPressed && !showMessage) {
 			gp.keyH.sPressed = false;
 			currentTask = null;
 		}

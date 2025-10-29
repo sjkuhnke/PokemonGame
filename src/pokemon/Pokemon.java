@@ -8610,6 +8610,7 @@ public class Pokemon implements Serializable {
 		this.removeStatus(Status.ARCANE_SPELL);
 		this.removeStatus(Status.SPELLBIND);
 		this.removeStatus(Status.DECK_CHANGE);
+		this.perishCount = 0;
 	}
 
 	public boolean knowsMove(Move move) {
