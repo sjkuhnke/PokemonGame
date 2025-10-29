@@ -191,6 +191,7 @@ public class KeyHandler implements KeyListener {
 		hotkey3Pressed = false;
 		hotkey4Pressed = false;
 		hotkey5Pressed = false;
+		gp.ui.showMessage = false;
 	}
 	
 	public void resetMainKeys() {

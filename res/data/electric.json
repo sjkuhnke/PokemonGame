@@ -15,7 +15,7 @@
           "endY": 0,
           "towardsTarget": true,
           "easing": "linear",
-          "count": 8,
+          "count": 3,
           "spreadX": 0.15,
           "spreadY": 0.15,
           "delayBetween": 30
@@ -101,14 +101,14 @@
           "sprite": "lightning",
           "startX": 0,
           "startY": 0,
-          "endX": -0.3,
+          "endX": 0.5,
           "endY": 0,
           "towardsTarget": true,
           "easing": "linear",
-          "count": 15,
+          "count": 5,
           "spreadX": 0.2,
           "spreadY": 0.2,
-          "delayBetween": 20
+          "delayBetween": 30
         }
       },
       {
@@ -150,7 +150,7 @@
           "endY": 0,
           "towardsTarget": false,
           "easing": "decel",
-          "count": 12,
+          "count": 5,
           "spreadX": 0.3,
           "spreadY": 0.3,
           "delayBetween": 20
@@ -160,15 +160,15 @@
         "type": "SHAKE",
         "target": "BOTH",
         "delay": 250,
-        "duration": 250,
+        "duration": 350,
         "properties": {
-          "intensity": 10
+          "intensity": 20
         }
       },
       {
         "type": "MOVE",
         "target": "ATTACKER",
-        "delay": 400,
+        "delay": 500,
         "duration": 200,
         "properties": {
           "offsetX": 0,
@@ -189,13 +189,13 @@
         "duration": 600,
         "properties": {
           "sprite": "lightning",
-          "startX": 0.3,
-          "startY": 0.3,
-          "endX": 0,
-          "endY": 0,
+          "startX": 0.2,
+          "startY": 0.2,
+          "endX": -0.2,
+          "endY": -0.2,
           "towardsTarget": false,
           "easing": "decel",
-          "count": 12,
+          "count": 3,
           "spreadX": 0.4,
           "spreadY": 0.4,
           "delayBetween": 40
@@ -232,6 +232,25 @@
           "spreadX": 0.15,
           "spreadY": 0.15,
           "delayBetween": 30
+        }
+      },
+      {
+        "type": "EFFECT",
+        "target": "DEFENDER",
+        "delay": 400,
+        "duration": 300,
+        "properties": {
+          "sprite": "lightning",
+          "startX": 0,
+          "startY": 0,
+          "endX": 0.3,
+          "endY": -0.3,
+          "towardsTarget": false,
+          "easing": "decel",
+          "count": 3,
+          "spreadX": 0.25,
+          "spreadY": 0.25,
+          "delayBetween": 25
         }
       },
       {
@@ -276,7 +295,7 @@
           "endY": -0.3,
           "towardsTarget": false,
           "easing": "decel",
-          "count": 10,
+          "count": 5,
           "spreadX": 0.25,
           "spreadY": 0.25,
           "delayBetween": 25
@@ -385,7 +404,7 @@
           "endY": -0.15,
           "towardsTarget": false,
           "easing": "decel",
-          "count": 8,
+          "count": 1,
           "spreadX": 0.2,
           "spreadY": 0.2,
           "delayBetween": 40
@@ -438,6 +457,17 @@
         }
       },
       {
+        "type": "MOVE",
+        "target": "ATTACKER",
+        "delay": 125,
+        "duration": 200,
+        "properties": {
+          "offsetX": 0.8,
+          "towardsTarget": true,
+          "easing": "accel"
+        }
+      },
+      {
         "type": "EFFECT",
         "target": "ATTACKER",
         "delay": 100,
@@ -460,9 +490,24 @@
         "properties": {
           "sprite": "fist1",
           "startX": 0,
-          "startY": 0,
+          "startY": 0.1,
           "endX": 1.0,
-          "endY": 0,
+          "endY": 0.2,
+          "towardsTarget": true,
+          "easing": "ballistic"
+        }
+      },
+      {
+        "type": "EFFECT",
+        "target": "ATTACKER",
+        "delay": 175,
+        "duration": 300,
+        "properties": {
+          "sprite": "fist",
+          "startX": 0,
+          "startY": -0.1,
+          "endX": 1.0,
+          "endY": 0.1,
           "towardsTarget": true,
           "easing": "ballistic"
         }
@@ -493,6 +538,17 @@
         "duration": 200,
         "properties": {
           "intensity": 9
+        }
+      },
+      {
+        "type": "MOVE",
+        "target": "ATTACKER",
+        "delay": 500,
+        "duration": 200,
+        "properties": {
+          "offsetX": 0,
+          "towardsTarget": true,
+          "easing": "decel"
         }
       }
     ]
@@ -529,7 +585,7 @@
           "endY": 0.3,
           "towardsTarget": false,
           "easing": "decel",
-          "count": 10,
+          "count": 4,
           "spreadX": 0.3,
           "spreadY": 0.3,
           "delayBetween": 25
@@ -605,7 +661,7 @@
           "endY": -0.2,
           "towardsTarget": false,
           "easing": "decel",
-          "count": 8,
+          "count": 3,
           "spreadX": 0.18,
           "spreadY": 0.18,
           "delayBetween": 20
@@ -697,7 +753,7 @@
           "endY": -0.15,
           "towardsTarget": false,
           "easing": "decel",
-          "count": 5,
+          "count": 3,
           "spreadX": 0.12,
           "spreadY": 0.12,
           "delayBetween": 25
@@ -743,7 +799,7 @@
           "endY": 0,
           "towardsTarget": true,
           "easing": "linear",
-          "count": 5,
+          "count": 2,
           "spreadX": 0.2,
           "spreadY": 0.2,
           "delayBetween": 60

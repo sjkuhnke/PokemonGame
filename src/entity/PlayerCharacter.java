@@ -258,7 +258,7 @@ public class PlayerCharacter extends Entity {
 			if (gp.grusts[index] != null) gp.grusts[index].turnRandom();
 		}
 		
-		if (keyH.dPressed && !ice) {
+		if (keyH.dPressed && !ice && !gp.ui.showMessage) {
 			gp.keyH.resetKeys(false);
 			resetSpriteNum();
 			gp.gameState = GamePanel.MENU_STATE;
@@ -266,14 +266,15 @@ public class PlayerCharacter extends Entity {
 		if (ice) {
 			speed = SPEED_2;
 		} else {
+			boolean sPressed = !gp.ui.showMessage && keyH.sPressed;
 			if (gp.config.toggleRun) {
-				if (keyH.sPressed) {
+				if (sPressed) {
 					keyH.sPressed = false;
 					isRunning = !isRunning;
 				}
 				speed = isRunning ? SPEED_2 : SPEED_1;
 			} else {
-				speed = keyH.sPressed ? SPEED_2 : SPEED_1;
+				speed = sPressed ? SPEED_2 : SPEED_1;
 			}
 		}
 		if (!ice) {
@@ -285,7 +286,7 @@ public class PlayerCharacter extends Entity {
 				if (gp.ticks % 4 == 3 && gp.npc[gp.currentMap][i] != null && gp.cChecker.checkTrainer(this, gp.npc[gp.currentMap][i], trainer) && gp.npc[gp.currentMap][i].direction == "right") trainerSpot(gp.npc[gp.currentMap][i]);
 			}
 		}
-		if (keyH.wPressed) {
+		if (keyH.wPressed && !gp.ui.showMessage) {
 			// Check trainers
 			int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
 			if (npcIndex != 999) {
