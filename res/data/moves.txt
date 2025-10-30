@@ -270,59 +270,59 @@
 =============================================================================================================
                                                   Grass
 =============================================================================================================
- Absorb             | Special  | 20  | 100 | 25 PP : Heals 50% of damage dealt to foe
- Aromatherapy       | Status   | --  | --  | 5 PP  : Cures team of any status conditions
- Branch Poke        | Physical | 40  | 100 | 35 PP : A normal attack
- Bullet Seed        | Physical | 25  | 100 | 30 PP : Attacks 2-5 times
- Cotton Guard       | Status   | --  | --  | 5 PP  : Raises user's Defense by 3
- Energy Ball        | Special  | 90  | 100 | 10 PP : 10% chance to lower foe's Sp.Def by 1
- Forests Curse      | Status   | --  | 100 | 20 PP : Changes foe's type to GRASS
- Frenzy Plant       | Special  | 150 | 90  | 10 PP : User must rest after using this move
- Giga Drain         | Special  | 75  | 100 | 10 PP : Heals 50% of damage dealt to foe
- Grass Knot         | Special  | --  | 100 | 20 PP : Damage is based on how heavy foe is
- Grass Whistle      | Status   | --  | 55  | 15 PP : Foe falls asleep
+ Absorb           X  | Special  | 20  | 100 | 25 PP : Heals 50% of damage dealt to foe
+ Aromatherapy     X  | Status   | --  | --  | 5 PP  : Cures team of any status conditions
+ Branch Poke      X  | Physical | 40  | 100 | 35 PP : A normal attack
+ Bullet Seed      X  | Physical | 25  | 100 | 30 PP : Attacks 2-5 times
+ Cotton Guard     X  | Status   | --  | --  | 5 PP  : Raises user's Defense by 3
+ Energy Ball      X  | Special  | 90  | 100 | 10 PP : 10% chance to lower foe's Sp.Def by 1
+ Forests Curse    X  | Status   | --  | 100 | 20 PP : Changes foe's type to GRASS
+ Frenzy Plant     X  | Special  | 150 | 90  | 10 PP : User must rest after using this move
+ Giga Drain       X  | Special  | 75  | 100 | 10 PP : Heals 50% of damage dealt to foe
+ Grass Knot       X  | Special  | --  | 100 | 20 PP : Damage is based on how heavy foe is
+ Grass Whistle    X  | Status   | --  | 55  | 15 PP : Foe falls asleep
  Grassy Terrain     | Status   | --  | --  | 10 PP : Sets the terrain to GRASSY for 5 turns
- Growth             | Status   | --  | --  | 15 PP : Raises user's Attack and Sp.Atk by 1, 2 each in the SUN
- Horn Leech         | Physical | 75  | 100 | 10 PP : Heals 50% of damage dealt to foe
+ Growth           X  | Status   | --  | --  | 15 PP : Raises user's Attack and Sp.Atk by 1, 2 each in the SUN
+ Horn Leech       !  | Physical | 75  | 100 | 10 PP : Heals 50% of damage dealt to foe
  Hp Grass           | Special  | 60  | 100 | 15 PP : Calc only move
- Ingrain            | Status   | --  | --  | 15 PP : Restores a small amount of HP at the end of every turn, user can't switch out
- Leaf Blade         | Physical | 90  | 100 | 10 PP : Boosted crit rate
- Leaf Storm         | Special  | 130 | 90  | 5 PP  : Lowers user's Sp.Atk by 2
- Leaf Tornado       | Special  | 65  | 90  | 10 PP : 50% to lower foe's Accuracy by 1
- Leafage            | Physical | 40  | 100 | 35 PP : A normal attack
- Leech Seed         | Status   | --  | 90  | 5 PP  : At the end of every turn, user steals 1/8 of foe's max HP
- Magical Leaf       | Special  | 60  | --  | 20 PP : This move will never miss
- Mega Drain         | Special  | 40  | 100 | 15 PP : Heals 50% of damage dealt
- Needle Arm         | Physical | 90  | 100 | 10 PP : 30% chance to flinch foe
- Petal Blizzard     | Physical | 90  | 100 | 15 PP : A normal attack
- Petal Dance        | Special  | 120 | 100 | 10 PP : User is locked into this move for 2-3 turns, Confuses user when the effect is done
- Power Whip         | Physical | 120 | 85  | 10 PP : A normal attack
- Razor Leaf         | Physical | 55  | 95  | 25 PP : Boosted crit rate
+ Ingrain          X  | Status   | --  | --  | 15 PP : Restores a small amount of HP at the end of every turn, user can't switch out
+ Leaf Blade       X  | Physical | 90  | 100 | 10 PP : Boosted crit rate
+ Leaf Storm       X  | Special  | 130 | 90  | 5 PP  : Lowers user's Sp.Atk by 2
+ Leaf Tornado     X  | Special  | 65  | 90  | 10 PP : 50% to lower foe's Accuracy by 1
+ Leafage          X  | Physical | 40  | 100 | 35 PP : A normal attack
+ Leech Seed       X  | Status   | --  | 90  | 5 PP  : At the end of every turn, user steals 1/8 of foe's max HP
+ Magical Leaf     X  | Special  | 60  | --  | 20 PP : This move will never miss
+ Mega Drain       X  | Special  | 40  | 100 | 15 PP : Heals 50% of damage dealt
+ Needle Arm       !  | Physical | 90  | 100 | 10 PP : 30% chance to flinch foe
+ Petal Blizzard   !  | Physical | 90  | 100 | 15 PP : A normal attack
+ Petal Dance      X  | Special  | 120 | 100 | 10 PP : User is locked into this move for 2-3 turns, Confuses user when the effect is done
+ Power Whip       !  | Physical | 120 | 85  | 10 PP : A normal attack
+ Razor Leaf       X  | Physical | 55  | 95  | 25 PP : Boosted crit rate
  Return Grass       | Physical | 70  | 100 | 15 PP : Calc only move
- Sambal Sear        | Special  | 80  | 100 | 10 PP : 30% chance to Burn foe, 1.5x damage in SUN
- Seed Bomb          | Physical | 80  | 100 | 15 PP : A normal attack
- Sleep Powder       | Status   | --  | 75  | 10 PP : Foe falls asleep
- Solar Beam         | Special  | 120 | 100 | 10 PP : User must charge up on the first turn, attacks on the second. No charge in SUN
- Solar Blade        | Physical | 125 | 100 | 10 PP : User must charge up on the first turn, attacks on the second. No charge in SUN
+ Sambal Sear      X  | Special  | 80  | 100 | 10 PP : 30% chance to Burn foe, 1.5x damage in SUN
+ Seed Bomb        X  | Physical | 80  | 100 | 15 PP : A normal attack
+ Sleep Powder     X  | Status   | --  | 75  | 10 PP : Foe falls asleep
+ Solar Beam       X  | Special  | 120 | 100 | 10 PP : User must charge up on the first turn, attacks on the second. No charge in SUN
+ Solar Blade      X  | Physical | 125 | 100 | 10 PP : User must charge up on the first turn, attacks on the second. No charge in SUN
  Spiky Shield       | Status   | --  | --  | 10 PP : User protects itself, can't be used in succession. Damages foe if they make contact
- Strength Sap       | Status   | --  | 100 | 10 PP : Heals user an HP amount equal to foe's Attack stat; lowers foe's Attack by 1
- Stun Spore         | Status   | --  | 75  | 25 PP : Paralyzes foe
- Synthesis          | Status   | --  | --  | 5 PP  : Restores 1/2 of user's max HP, 2/3 in SUN, 1/4 in any other weather
- Vine Cross         | Physical | 70  | 95  | 15 PP : 100% chance to lower foe's Speed by 1
- Vine Whip          | Physical | 45  | 100 | 25 PP : A normal attack
- Wood Hammer        | Physical | 120 | 100 | 15 PP : User takes 1/3 of damage inflicted
- Worry Seed         | Status   | --  | 100 | 10 PP : Changes foe's ability to INSOMNIA
+ Strength Sap     X  | Status   | --  | 100 | 10 PP : Heals user an HP amount equal to foe's Attack stat; lowers foe's Attack by 1
+ Stun Spore       X  | Status   | --  | 75  | 25 PP : Paralyzes foe
+ Synthesis        X  | Status   | --  | --  | 5 PP  : Restores 1/2 of user's max HP, 2/3 in SUN, 1/4 in any other weather
+ Vine Cross       X  | Physical | 70  | 95  | 15 PP : 100% chance to lower foe's Speed by 1
+ Vine Whip        X  | Physical | 45  | 100 | 25 PP : A normal attack
+ Wood Hammer      !  | Physical | 120 | 100 | 15 PP : User takes 1/3 of damage inflicted
+ Worry Seed       X  | Status   | --  | 100 | 10 PP : Changes foe's ability to INSOMNIA
 =============================================================================================================
                                                   Ground
 =============================================================================================================
- Bulldoze           | Physical | 60  | 100 | 20 PP : 100% chance to lower foe's Speed by 1
- Dig                | Physical | 80  | 100 | 15 PP : A two turn attack. Digs underground on the first, attacks on the second
- Drill Run          | Physical | 80  | 95  | 15 PP : Boosted crit rate
- Earth Power        | Special  | 90  | 100 | 10 PP : 10% chance to lower foe's Sp.Def by 1
- Earthquake         | Physical | 100 | 100 | 10 PP : A normal attack
- Fissure            | Physical | --  | 30  | 5 PP  : If this move hits, it always K.Os foe
+ Bulldoze         X  | Physical | 60  | 100 | 20 PP : 100% chance to lower foe's Speed by 1
+ Dig              X  | Physical | 80  | 100 | 15 PP : A two turn attack. Digs underground on the first, attacks on the second
+ Drill Run        X  | Physical | 80  | 95  | 15 PP : Boosted crit rate
+ Earth Power      X  | Special  | 90  | 100 | 10 PP : 10% chance to lower foe's Sp.Def by 1
+ Earthquake       X  | Physical | 100 | 100 | 10 PP : A normal attack
+ Fissure          X  | Physical | --  | 30  | 5 PP  : If this move hits, it always K.Os foe
  Hp Ground          | Special  | 60  | 100 | 15 PP : Calc only move
- Magnitude          | Physical | --  | 100 | 25 PP : A random Magnitude between 4-10 will be used, corresponding to its power
+ Magnitude        X  | Physical | --  | 100 | 25 PP : A random Magnitude between 4-10 will be used, corresponding to its power
  Magnitude 10       | Physical | 150 | 100 | 25 PP : Calc only move
  Magnitude 4        | Physical | 10  | 100 | 25 PP : Calc only move
  Magnitude 5        | Physical | 30  | 100 | 25 PP : Calc only move
@@ -330,15 +330,15 @@
  Magnitude 7        | Physical | 70  | 100 | 25 PP : Calc only move
  Magnitude 8        | Physical | 90  | 100 | 25 PP : Calc only move
  Magnitude 9        | Physical | 110 | 100 | 25 PP : Calc only move
- Mud Bomb           | Special  | 65  | 85  | 10 PP : 30% to lower foe's Accuracy by 1
- Mud Shot           | Special  | 55  | 95  | 15 PP : 100% chance to lower foe's Speed by 1
- Mud Sport          | Status   | --  | --  | 15 PP : Makes ELECTRIC moves deal 1/3 damage for 8 turns
- Mud-Slap           | Special  | 20  | 100 | 15 PP : 100% to lower foe's Accuracy by 1
+ Mud Bomb         X  | Special  | 65  | 85  | 10 PP : 30% to lower foe's Accuracy by 1
+ Mud Shot         X  | Special  | 55  | 95  | 15 PP : 100% chance to lower foe's Speed by 1
+ Mud Sport        X  | Status   | --  | --  | 15 PP : Makes ELECTRIC moves deal 1/3 damage for 8 turns
+ Mud-Slap         X  | Special  | 20  | 100 | 15 PP : 100% to lower foe's Accuracy by 1
  Return Ground      | Physical | 70  | 100 | 15 PP : Calc only move
- Sand Attack        | Status   | --  | 100 | 20 PP : Lowers foe's Accuracy by 1
- Scorching Sands    | Special  | 70  | 100 | 15 PP : 30% chance to burn foe
- Shore Up           | Status   | --  | --  | 5 PP  : Restores 1/2 of user's total HP, 2/3 in SANDSTORM
- Spikes             | Status   | --  | --  | 20 PP : Lays spikes on the opponents side. Depending on the layers laid (1-3) will damage any grounded foe (1/8, 1/6, 1/4) upon switch-in
+ Sand Attack      X  | Status   | --  | 100 | 20 PP : Lowers foe's Accuracy by 1
+ Scorching Sands  X  | Special  | 70  | 100 | 15 PP : 30% chance to burn foe
+ Shore Up         X  | Status   | --  | --  | 5 PP  : Restores 1/2 of user's total HP, 2/3 in SANDSTORM
+ Spikes           X  | Status   | --  | --  | 20 PP : Lays spikes on the opponents side. Depending on the layers laid (1-3) will damage any grounded foe (1/8, 1/6, 1/4) upon switch-in
 =============================================================================================================
                                                   Ice
 =============================================================================================================
