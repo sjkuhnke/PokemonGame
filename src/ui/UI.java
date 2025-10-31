@@ -6003,7 +6003,7 @@ public class UI extends AbstractUI {
 		g2.setFont(g2.getFont().deriveFont(32F));
 		g2.drawString("$" + gp.player.p.getMoney(), textX, textY);
 		
-		if (showMessage) {
+		if (!showMessage) {
 			if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
 				if (commandNum == 0) {
@@ -6475,7 +6475,7 @@ public class UI extends AbstractUI {
 			}
 		}
 		
-		if (showMessage) {
+		if (!showMessage) {
 			if (gp.keyH.sPressed || gp.keyH.dPressed) {
 				gp.keyH.sPressed = false;
 				gp.keyH.dPressed = false;

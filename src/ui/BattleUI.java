@@ -1177,9 +1177,6 @@ public class BattleUI extends AbstractUI {
 	
 	protected void drawUserSprite(Pokemon p) {
 		g2.drawImage(p.getBackSprite(), userX, userY, null);
-		int[] center = p.getSpriteCenter();
-		g2.setColor(Color.WHITE);
-		g2.fillOval(userX + center[0]*2, userY + center[1]*2, 3, 3);
 	}
 
 	protected void drawHPBar(Pokemon p, double amt, double maxHP) {

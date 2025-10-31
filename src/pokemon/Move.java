@@ -213,7 +213,7 @@ public enum Move {
 	FURY_CUTTER(-1,95,0,0,0,0,PType.BUG,"Power increases the more times this move is used in succession",true,10),
 	FURY_SWIPES(18,95,0,0,0,0,PType.NORMAL,"Attacks 2-5 times",true,15),
 	FUSION_BOLT(100,100,0,0,1,0,PType.ELECTRIC,"Ignores the effects of the foe's ability, and doubles in power if Fusion Flare was used last turn",false,5),
-	FUSION_FLARE(100,100,0,0,1,0,PType.FIRE,"Ignores the effects of the foe's ability, and doubles in power if Fusion Flare was used last turn",false,5),
+	FUSION_FLARE(100,100,0,0,1,0,PType.FIRE,"Ignores the effects of the foe's ability, and doubles in power if Fusion Bolt was used last turn",false,5),
 	FUTURE_SIGHT(120,100,0,0,1,0,PType.PSYCHIC,"Attacks the foe 2 turns after this move is used",false,10),
 	GALAXY_BLAST(90,100,20,0,1,0,PType.GALACTIC,"% to lower either foe's Sp.Atk or Sp.Def by 1",false,10),
 	GASTRO_ACID(0,100,0,0,2,0,PType.POISON,"Supresses the foe's ability",false,20),

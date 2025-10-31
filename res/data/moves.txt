@@ -342,28 +342,28 @@
 =============================================================================================================
                                                   Ice
 =============================================================================================================
- Aurora Beam        | Special  | 75  | 100 | 20 PP : 10% chance to lower foe's Attack by 1
- Aurora Veil        | Status   | --  | --  | 10 PP : Can only be used in SNOW, reduces both physical and special damage on user's team recieved for 5 turns
- Blizzard           | Special  | 110 | 70  | 5 PP  : 20% chance to Frostbite foe, doesn't check accuracy in SNOW
+ Aurora Beam      X  | Special  | 75  | 100 | 20 PP : 10% chance to lower foe's Attack by 1
+ Aurora Veil      X  | Status   | --  | --  | 10 PP : Can only be used in SNOW, reduces both physical and special damage on user's team recieved for 5 turns
+ Blizzard         X  | Special  | 110 | 70  | 5 PP  : 20% chance to Frostbite foe, doesn't check accuracy in SNOW
  Chilly Reception   | Status   | --  | --  | 10 PP : Sets SNOW and then causes user to switch out
- Freeze-Dry         | Special  | 70  | 100 | 15 PP : 10% chance to Frostbite foe, super effective against WATER types too
- Frostbind          | Status   | --  | 90  | 10 PP : Inflicts foe with Frostbite, accuracy is 100% for ICE Pokemon
- Glaciate           | Special  | 65  | 95  | 10 PP : 100% chance to lower foe's Speed by 1
- Haze               | Status   | --  | --  | 25 PP : Clears all stat changes on the field
+ Freeze-Dry       !  | Special  | 70  | 100 | 15 PP : 10% chance to Frostbite foe, super effective against WATER types too
+ Frostbind        X  | Status   | --  | 90  | 10 PP : Inflicts foe with Frostbite, accuracy is 100% for ICE Pokemon
+ Glaciate         X  | Special  | 65  | 95  | 10 PP : 100% chance to lower foe's Speed by 1
+ Haze             X  | Status   | --  | --  | 25 PP : Clears all stat changes on the field
  Hp Ice             | Special  | 60  | 100 | 15 PP : Calc only move
- Ice Ball           | Physical | 30  | 90  | 20 PP : Attacks up to 5 times, damage doubles each time. While active, user cannot switch out
- Ice Beam           | Special  | 90  | 100 | 10 PP : 10% chance to Frostbite foe
- Ice Fang           | Physical | 65  | 95  | 15 PP : 20% chance of flinching and/or Frostbite foe
- Ice Punch          | Physical | 75  | 100 | 15 PP : 20% chance to Frostbite foe
- Ice Shard          | Physical | 40  | 100 | 15 PP : Increased priority
- Ice Spinner        | Physical | 80  | 100 | 10 PP : 100% chance to remove the terrain if there is any
- Icicle Crash       | Physical | 85  | 90  | 10 PP : 30% chance to cause foe to flinch
- Icicle Spear       | Physical | 25  | 100 | 25 PP : Hits 2-5 times
- Icy Wind           | Special  | 55  | 95  | 15 PP : 100% chance to lower foe's Speed by 1
- Powder Snow        | Special  | 40  | 100 | 25 PP : 50% chance to Frostbite foe
+ Ice Ball         X  | Physical | 30  | 90  | 20 PP : Attacks up to 5 times, damage doubles each time. While active, user cannot switch out
+ Ice Beam         X  | Special  | 90  | 100 | 10 PP : 10% chance to Frostbite foe
+ Ice Fang         X  | Physical | 65  | 95  | 15 PP : 20% chance of flinching and/or Frostbite foe
+ Ice Punch        X  | Physical | 75  | 100 | 15 PP : 20% chance to Frostbite foe
+ Ice Shard        X  | Physical | 40  | 100 | 15 PP : Increased priority
+ Ice Spinner      X  | Physical | 80  | 100 | 10 PP : 100% chance to remove the terrain if there is any
+ Icicle Crash     X  | Physical | 85  | 90  | 10 PP : 30% chance to cause foe to flinch
+ Icicle Spear     X  | Physical | 25  | 100 | 25 PP : Hits 2-5 times
+ Icy Wind         X  | Special  | 55  | 95  | 15 PP : 100% chance to lower foe's Speed by 1
+ Powder Snow      X  | Special  | 40  | 100 | 25 PP : 50% chance to Frostbite foe
  Return Ice         | Physical | 70  | 100 | 15 PP : Calc only move
- Sheer Cold         | Special  | --  | 30  | 5 PP  : If this move hits, it always K.Os foe. Doesn't effect ICE types
- Snow Plume         | Special  | 80  | 100 | 15 PP : 30% to Frostbite foe
+ Sheer Cold       X  | Special  | --  | 30  | 5 PP  : If this move hits, it always K.Os foe. Doesn't effect ICE types
+ Snow Plume       X  | Special  | 80  | 100 | 15 PP : 30% to Frostbite foe
  Snowscape          | Status   | --  | --  | 10 PP : Sets the weather to SNOW for 5 turns
 =============================================================================================================
                                                   Light
@@ -667,41 +667,41 @@
 =============================================================================================================
                                                   Water
 =============================================================================================================
- Aqua Jet           | Physical | 40  | 100 | 15 PP : Increased priority
- Aqua Ring          | Status   | --  | --  | 15 PP : Restores a small amount of HP at the end of every turn
- Aqua Tail          | Physical | 90  | 90  | 10 PP : A normal attack
+ Aqua Jet         X  | Physical | 40  | 100 | 15 PP : Increased priority
+ Aqua Ring        X  | Status   | --  | --  | 15 PP : Restores a small amount of HP at the end of every turn
+ Aqua Tail        X  | Physical | 90  | 90  | 10 PP : A normal attack
  Aqua Veil          | Status   | --  | --  | 5 PP  : User protects itself, can't be used in succession. Lowers foe's SpA by 1 if they use a move into the protect.
- Brine              | Special  | 65  | 100 | 10 PP : Damage is doubled if foe is below 50% HP
- Bubble             | Special  | 20  | 100 | 30 PP : A normal attack
- Bubblebeam         | Special  | 65  | 100 | 20 PP : 10% to lower foe's Speed by 1
- Deep Sea Bubble    | Special  | 100 | 100 | 5 PP  : A normal attack. Turns into Draco Meteor when used by Kissyfishy-D
- Dive               | Physical | 80  | 100 | 15 PP : A two turn attack. Dives underwater on the first, attacks on the second
- Flip Turn          | Physical | 60  | 100 | 10 PP : Causes user to switch out after use
+ Brine            X  | Special  | 65  | 100 | 10 PP : Damage is doubled if foe is below 50% HP
+ Bubble           X  | Special  | 20  | 100 | 30 PP : A normal attack
+ Bubblebeam       X  | Special  | 65  | 100 | 20 PP : 10% to lower foe's Speed by 1
+ Deep Sea Bubble  X  | Special  | 100 | 100 | 5 PP  : A normal attack. Turns into Draco Meteor when used by Kissyfishy-D
+ Dive             X  | Physical | 80  | 100 | 15 PP : A two turn attack. Dives underwater on the first, attacks on the second
+ Flip Turn        X  | Physical | 60  | 100 | 10 PP : Causes user to switch out after use
  Hp Water           | Special  | 60  | 100 | 15 PP : Calc only move
- Hydro Cannon       | Special  | 150 | 90  | 5 PP  : User must rest after using this move
- Hydro Pump         | Special  | 110 | 80  | 5 PP  : A normal attack
- Hydro Vortex       | Special  | 90  | 100 | 5 PP  : 40% chance of confusing foe or causing foe to flinch
- Life Dew           | Status   | --  | --  | 15 PP : Restores 25% HP
- Liquidation        | Physical | 85  | 100 | 10 PP : 20% chance to lower foe's Defense by 1
- Muddy Water        | Special  | 90  | 85  | 10 PP : 30% chance to lower foe's Accuracy by 1
+ Hydro Cannon     X  | Special  | 150 | 90  | 5 PP  : User must rest after using this move
+ Hydro Pump       X  | Special  | 110 | 80  | 5 PP  : A normal attack
+ Hydro Vortex     X  | Special  | 90  | 100 | 5 PP  : 40% chance of confusing foe or causing foe to flinch
+ Life Dew         X  | Status   | --  | --  | 15 PP : Restores 25% HP
+ Liquidation      X  | Physical | 85  | 100 | 10 PP : 20% chance to lower foe's Defense by 1
+ Muddy Water      X  | Special  | 90  | 85  | 10 PP : 30% chance to lower foe's Accuracy by 1
  Rain Dance         | Status   | --  | --  | 5 PP  : Changes the weather to RAIN for 5 turns
- Razor Shell        | Physical | 75  | 95  | 10 PP : 50% chance to lower foe's Defense by 1
+ Razor Shell      X  | Physical | 75  | 95  | 10 PP : 50% chance to lower foe's Defense by 1
  Return Water       | Physical | 70  | 100 | 15 PP : Calc only move
- Scald              | Special  | 80  | 100 | 15 PP : 30% chance to Burn foe
- Soak               | Status   | --  | 100 | 15 PP : Changes foe's type to WATER
- Sparkling Aria     | Special  | 90  | 100 | 10 PP : 100% to cure user of its Burn if it has one
- Sparkling Water    | Status   | --  | --  | 15 PP : Raises Sp.Def by 2. Turns into Sparkling Aria when used by Kissyfishy-D
- Supercharged Splash| Special  | 10  | 100 | 15 PP : 75% chance to raise user's Sp.Atk by 3. Turns into Thunder when used by Kissyfishy-D
- Surf               | Special  | 90  | 100 | 10 PP : A normal attack
- Water Clap         | Physical | 20  | 100 | 15 PP : 100% to Paralyze foe. Turns into Dragon Darts when used by Kissyfishy-D
- Water Flick        | Status   | --  | 100 | 20 PP : Lowers foe's Attack by 2. Turns into Flamethrower when used by Kissyfishy-D
- Water Gun          | Special  | 40  | 100 | 25 PP : A normal attack
- Water Kick         | Physical | 130 | 90  | 15 PP : A normal attack. Turns into Hi Jump Kick when used by Kissyfishy-D
- Water Pulse        | Special  | 60  | 100 | 20 PP : 30% to Confuse foe
- Water Smack        | Physical | 40  | 95  | 10 PP : 50% chance of causing foe to flinch. Turns into Darkest Lariat when used by Kissyfishy-D
- Water Sport        | Status   | --  | --  | 15 PP : Makes FIRE moves deal 1/3 damage for 8 turns
- Water Spout        | Special  | 150 | 100 | 5 PP  : Power is higher the more HP the user has
- Waterfall          | Physical | 80  | 100 | 10 PP : 20% of causing foe to flinch
- Wave Crash         | Physical | 120 | 100 | 10 PP : User takes 1/3 of damage dealt as recoil
- Whirlpool          | Special  | 35  | 95  | 15 PP : 100% to spin the foe for 4-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch
- Withdraw           | Status   | --  | --  | 35 PP : Raises user's Defense by 1
+ Scald            X  | Special  | 80  | 100 | 15 PP : 30% chance to Burn foe
+ Soak             X  | Status   | --  | 100 | 15 PP : Changes foe's type to WATER
+ Sparkling Aria   !  | Special  | 90  | 100 | 10 PP : 100% to cure user of its Burn if it has one
+ Sparkling Water  X  | Status   | --  | --  | 15 PP : Raises Sp.Def by 2. Turns into Sparkling Aria when used by Kissyfishy-D
+ Supercharged SplashX| Special  | 10  | 100 | 15 PP : 75% chance to raise user's Sp.Atk by 3. Turns into Thunder when used by Kissyfishy-D
+ Surf             X  | Special  | 90  | 100 | 10 PP : A normal attack
+ Water Clap       X  | Physical | 20  | 100 | 15 PP : 100% to Paralyze foe. Turns into Dragon Darts when used by Kissyfishy-D
+ Water Flick      X  | Status   | --  | 100 | 20 PP : Lowers foe's Attack by 2. Turns into Flamethrower when used by Kissyfishy-D
+ Water Gun        X  | Special  | 40  | 100 | 25 PP : A normal attack
+ Water Kick       X  | Physical | 130 | 90  | 15 PP : A normal attack. Turns into Hi Jump Kick when used by Kissyfishy-D
+ Water Pulse      X  | Special  | 60  | 100 | 20 PP : 30% to Confuse foe
+ Water Smack      X  | Physical | 40  | 95  | 10 PP : 50% chance of causing foe to flinch. Turns into Darkest Lariat when used by Kissyfishy-D
+ Water Sport      X  | Status   | --  | --  | 15 PP : Makes FIRE moves deal 1/3 damage for 8 turns
+ Water Spout      X  | Special  | 150 | 100 | 5 PP  : Power is higher the more HP the user has
+ Waterfall        X  | Physical | 80  | 100 | 10 PP : 20% of causing foe to flinch
+ Wave Crash       X  | Physical | 120 | 100 | 10 PP : User takes 1/3 of damage dealt as recoil
+ Whirlpool        X  | Special  | 35  | 95  | 15 PP : 100% to spin the foe for 4-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch
+ Withdraw         X  | Status   | --  | --  | 35 PP : Raises user's Defense by 1

@@ -1634,8 +1634,8 @@ public class Pokemon implements Serializable {
 				Item foeBeforeItem = foeClone.item;
 				int foeBeforePerish = foeClone.perishCount;
 				Ability foeBeforeAbility = foeClone.getAbility(fieldClone);
-				int foeBeforeFE = foeClone.getFieldEffects().size();
-				int youBeforeFE = youClone.getFieldEffects().size();
+				int foeBeforeFE = foeClone.getFieldEffectsSize();
+				int youBeforeFE = youClone.getFieldEffectsSize();
 				int fieldBeforeFE = fieldClone.fieldEffects.size();
 				Effect beforeWeather = fieldClone.weather == null ? null : fieldClone.weather.effect;
 				Effect beforeTerrain = fieldClone.terrain == null ? null : fieldClone.terrain.effect;
@@ -1676,11 +1676,11 @@ public class Pokemon implements Serializable {
 				boolean useful =
 					youBeforeID != youClone.id
 					|| ((move == Move.BRICK_BREAK || move == Move.PSYCHIC_FANGS) // brick break + psychic fangs should check if they can break screens
-						? foeClone.getFieldEffects().size() < foeBeforeFE
-						: foeClone.getFieldEffects().size() > foeBeforeFE)
+						? foeClone.getFieldEffectsSize() < foeBeforeFE
+						: foeClone.getFieldEffectsSize() > foeBeforeFE)
 					|| ((move == Move.RAPID_SPIN || move == Move.DEFOG) // rapid spin/defog should check if they can clear hazards on your side
-						? youClone.getFieldEffects().size() < youBeforeFE
-						: youClone.getFieldEffects().size() > youBeforeFE)
+						? youClone.getFieldEffectsSize() < youBeforeFE
+						: youClone.getFieldEffectsSize() > youBeforeFE)
 					|| (foeClone.status != foeBeforeStatus && foeClone.status != Status.HEALTHY)
 					|| (youClone.status != youBeforeStatus && youBeforeStatus == Status.HEALTHY)
 					|| !vStatusesEqual(youClone.vStatuses, youBeforeV)
@@ -1727,6 +1727,16 @@ public class Pokemon implements Serializable {
 		default:
 			return false;
 		}
+	}
+	
+	private int getFieldEffectsSize() {
+		ArrayList<FieldEffect> fes = this.getFieldEffects();
+		int result = 0;
+		
+		for (FieldEffect fe : fes) {
+			if (fe != null) result += 1 + fe.layers;
+		}
+		return result;
 	}
 	
 	private boolean vStatusesEqual(ArrayList<StatusEffect> list1, ArrayList<StatusEffect> list2) {
@@ -7842,7 +7852,7 @@ public class Pokemon implements Serializable {
 					heal(getHPAmount(1.0/16), this.nickname + " restored a little HP using its Black Sludge!");
 				}
 			} else {
-				this.damage(getHPAmount(1.0/16), f, this.nickname + " was hurt by its Black Sludge!");
+				this.damage(getHPAmount(1.0/8), f, this.nickname + " was hurt by its Black Sludge!");
 				if (this.currentHP <= 0) { // Check for kill
 					this.faint(true, f);
 					return;
