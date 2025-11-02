@@ -1,0 +1,508 @@
+Changed Eclipse Grunt 24's Fireshard's item Wide Lens -> Charti Berry since Will-O-Wisp's accuracy is 100% for Fire-types
+Changed dialogue boxes' max text length to format text a bit better
+Added a cheat code for teleporting with an argument for a map #
+Gave Walrein Belly Drum at lv 55
+Gave Staryu Rapid Spin at lv 29
+Gave Crobat Nasty Plot at lv 50 and rearranged surrounding moves
+New Sprites for Diggie and Drillatron!
+Fixed Pokemon evolving HP not being correct
+Removed a hyphen in Ultra Ball description to make it wrap better
+Fixed Steel Beam's secondary chance + description to be more clear since it doesn't have a secondary effect
+Fixed Waterfall's flinch chance to be 20% instead of 10%
+Gave Sedisoftra-E Stealth Rock at lv 40
+Gave Sedisoftra-E and Prismodon-E Fire Blast by TM
+Fixed TM CSV file having the new updated names
+Fixed bug with Eject Button/Pack not actually letting the foe switch sometimes
+Made the Tiny/Big Mushroom NPC draw his name label in his UI
+Let Consumed Item be a checkbox in the "More" menu in calc
+Buffed Channeling Blow to be 75 BP (same as Urshifu's signature moves since they all always crit too)
+Updated Curse's description to show both Ghost- and non-Ghost-type effects
+Fixed last used move not being set to null when the Pokemon doesn't move (bc of flinching, sleeping, full para, etc) so it can still be encored subsequently
+Fixed Weak Armor FOR REAL NOW activating when they're fainted lol
+Made Core Enforcer's ability supression not announce if the foe is already fainted
+Fixed Room Service not activating for opponents previously
+Gave Blobmo Comet Punch at lv 35
+Removed Nebulimb's Comet Punch as evo move and gave it Seismic Toss as evo move instead (and lv 40)
+Fixed Galactasolder not getting Aurora Glow
+Gave Shockfang + Electrocobra Whirlpool by TM
+Buffed Magician Marcia's Kissyfishy lv 82 -> 85 since it's her only Pokemon
+Made the repel prompt and egg hatching reset your sprite (so you're not stuck in walking position)
+Fixed the learn <move> and forgot <oldMove> text to not double-wrap (causing weird line wrapping)
+Made getting an item from beating a trainer happen in the overworld with the item pickup logic/UI now instead of just text at the end of a battle
+Made ending a battle reset your sprite num so when you get an item you're not mid-walk
+Fixed Whirlpool not effecting Water-types (used to not effect Fire-types, oops)
+Made Solar Power announce the ability when getting hurt at the end of a turn instead of just taking the damage
+Fixed typo in Sedinister-E (static)'s trainer name
+Added Trainer coordinates to the TrainerInfo doc (as well as which direction they're facing and if they spin, shown with an asterisk)
+Fixed a random \n in the Electric Tunnel/Shadow Ravine gift NPC in Schrice City
+Made interacting with any obstacle reset your sprite so you're not mid-walk
+Rearranged Thalarctic's moves to put Close Combat at the end and Superpower at the beginning of the rearrangements; gave it Double-Edge at 60 for Refrigerate sets
+Implemented Chilly Reception and gave it to Shockbranch and Thunderzap at lv 20 and 60 respectively, gave Walrein it at lv 60 and moved Sheer Cold to lv 65
+Gave Weavile Low Kick at lv 1
+Gave Beheeyem Future Sight at lv 67
+Gave Azumarill Wave Crash at lv 60
+Made Twigzap line compatible with Snowscape since they get Chilly Reception now
+Made Butterfree-X lv 22-24 instead of 23-24 in R27 since lv22 Butterfree-X when traded for Butterfree would have Sleep Powder still
+Removed Calm Mind from Pterator's level up moveset (gave it to it by TM instead) and put Aura Sphere there at lv 60
+Gave Sneasel Knock Off at lv 45 and Weavile Knock Off at lv 63
+Changed Caterpie's first ability Shield Dust -> Rattled (since both abilities were the same)
+Changed Metapod's (not Metapod-X) second ability Shed Skin -> Shield Dust (since both abilities were the same)
+Changed Butterfree's second ability Compound Eyes -> Shield Dust (since both abilities were the same)
+Gave Bug Catcher Petrus's Butterfree Shield Dust and Focus Sash (was Tinted Lens and Heavy-Duty Boots but Shield Dust blocks hazard damage in this game too)
+Made Normalize buff ALL moves BP (not just non-Normal moves), tbh didn't know that's how it worked in vanilla games
+Fixed a typo in the word "suppress" in Core Enforcer's description
+Fixed Heal Pulse's description for consistency
+Fixed base power checking their ability in the Pokedex for move's base power (shouldn't do that)
+Fixed Friendly Ghost blocking self-targeting status moves (like non-ghost user Curse)
+Gave Wormbot and Wormatron Stealth Rock at lv 28, fixed Wormatron not getting Iron Defense at lv 20
+Gave Sludge Bomb via TM to Abra line
+Gave Eclipse Grunt 35's Wormatron Stealth Rock instead of Spikes
+New Sprites for Wormite and Wormbot!
+Changed Frostbind's description to say that accuracy is 100% for ICE Pokemon (instead of can't miss which isn't true anymore)
+Fixed Frostbind/Will-O-Wisp/Thunder Wave's accuracy in the AI calcing logic
+Gave Leavanny Switcheroo at lv 42 and bumped the previous moves down a level or two to make room
+Gave Butterfree-X Magic Fang to compliment Serene Grace
+Removed Psychic TM compatibility from Milipleura and fixed it getting Facade instead
+Gave rest of Minipede line Facade by TM as well
+Gave Busheep line Facade by TM
+Gave Scarabit line Facade by TM
+Gave Asmethiss line Facade by TM
+Gave Poof line Facade by TM
+Gave Poov line Facade by TM
+Gave Cluuz line Facade by TM
+Gave Wormite line Facade by TM
+Gave Wormite-S line Facade by TM
+Gave Cluuz-S line Facade by TM
+Gave Grubbin line Super Fang by TM
+Removed Psychic by TM for Magwoo and Lafloo
+Changed Astronomer Adelio's Rockmite's item Eject Button -> Red Card
+Fixed tiles in Shadow Path (near Shadow Cavern) and St Joseph 3B
+Moved Magic Possessed Trainer in Kleine Village one tile down
+Fixed a Rock Climb in Shadow Path being Up not Down
+Fixed a double assign in Merlin's NPC outside his gym
+Made Both Gauntlet entrances default you to "No" option when asking if you're ready to enter
+Gave an extra tile of width to the box tooltips upper section
+Gave Fire Fang, Ice Fang, Thunder Fang 20% to flinch and/or their status
+Changed "Flinch" to be "flinch" and fixed Ice Fang's description for consistency
+Buffed Shadow Ball's SpDef lowering chance 20% -> 30% to match Crunch's buff
+Changed Magic Fang's description to show it BREAKS Magic Reflect, not just bypasses it
+Made foe AI know that Everstone isn't trickable in checking if they should Trick/Switcheroo/Trick Tackle you
+Fixed moveset validator to know Endure is a (future) move tutor universal move, and to check 4 evos back instead of just 3
+Added encounters to Splinkty 4A and Shadow Cavern areas (where 2 legendaries are)
+Added Snow Plume: a Lava Plume clone for Frostbite, gave it to Snowlet at lv 35, Nixnerva at lv 30, Cervora at lv 30, Frosmoth at lv 23, Spheal line at lv 27
+Gave Snow Plume to a bunch of different trainers below:
+Bug Catcher Sampson's Frosmoth, Athlete Cesar's Sealeo (and Frostbind -> Encore), Explorer Oyvind's Frosmoth, Bird Keeper Nikola's Nixnerva,
+Actress Cintia's Cervora, Explorer Johannes's Nixnerva, Swimmer Anita's Cervora, Magician Camilla's Cervora, Ice Master's Sealeo (and Frostbind -> Super Fang)
+Added Frost Orb (Kleine Village area), has Frostbite equivalent effect as Flame Orb, and gave to a bunch of trainers instead of Flame Orb for Guts mons
+(since Frostbite is technically better than Burn in case you lose your ability)
+Fixed a cave tile in Icy Path
+ADDED A NUZLOCKE MODE (can activate by creating a new save -> checking the Nuzlocke Mode checkbox on the Welcome Menu):
+- Enforced encounters: the game keeps track of which places you've got an encounter at and won't let you catch anything past the first Pokemon you see
+- Dupes Clause: the game will not count the first encounter as your encounter if you've already registered a member of its evolutionary family
+- Gift Encounters: a gift counts for your encounter in that area - won't let you recieve the gift if you've already gotten an encounter in that area
+- Eggs: an egg counts as encounter in the area you hatch it in, it won't hatch in that area if you've already gotten an encounter in that area
+- Permadeath: Fainting will never let that Pokemon become unfainted unless you use a revive which will invalidate your save file's nuzlocke (see below)
+- Nuzlocke Invalidation: wiping, using a revive, save scumming, as well as some secret mechanisms will mark your save file as invalid so I can evaluate it if you're trying to get your own NPC
+- Nuzlocke Starting: the nuzlocke rules won't start until you get Pokeballs
+- Enforced Level Caps: the game knows your current level cap and won't let you enter a fight if you have an overleveled Pokemon in your team
+- Overleveling: if you overlevel in a fight, the game will make you switch it out if you can, won't let you switch it in, but if it's your last mon you will wipe
+- Nuzlocke info: a Nuzlocke Info button has been added to the player screen which shows your list of encounters, whether or not your nuzlocke is valid
+- Level Cap display: the current level cap is displayed in your player card as well. the NEXT level cap applies as soon as you TALK to the current gym leader
+Fixed tile snapping for Rock Climbing
+Fixed a bug with foe getting reassigned twice, meaning that it's like it never switched which is bad
+Made starting a Nuzlocke automatically give you the following QOL items:
+- Infinite Repel: toggles repel on/off
+- Healing Pack: heals your team to full (doesn't work in gauntlets/before you get access to Map Teleport)
+- Pocket PC: lets you access the PC from anywhere ('')
+- Rare Candy Box: infinite rare candies essentially
+- Edge Kit: leaves your Pokemon at 1 xp to leveling up (to use before Gym Fights)
+- Status Kit: inflicts a status of your choosing on the Pokemon (provided it effects them)
+- Damage Kit: subtracts 1 HP from the Pokemon (won't go < 1)
+Tweaked Professor and Photon's dex checking dialogue to say "caught" instead of "seen" to reflect that they're looking for caught Pokemon not seen
+Fixed using Elixir resetting your move selected index
+Updated Synchronize's description to say that it also passes a frostbite since it does
+Fixed Trick Room/Magic Room having opposite messages when they end
+Fixed Fusion Bolt/Fusion Flare not updating the last used move
+Fixed a Pokemon getting xp if they faint
+Updated all the status methods to allow for null user/foe for the Status Kit
+Updated Game Tools to have a "Search by Pokemon" dropdown in the Trainer menu to find all Trainers with that Pokemon
+Fixed a Gladipede set being called Ninjakik still in the competitive set
+Changed 'A' key in the overworld to be any key item (that the player can assign) instead of just fishing
+Draws a Gold star next to the Key Item you have assigned to 'A' in the bag
+Fixed Revenge giving the damage boost the opposite way (if you're faster, which is wrong)
+Fixed a typo in the evo strings "Torrged" -> "Torgged"
+CREATED AN EXCEL FORMAT TRAINER DOCUMENTATION GENERATOR: JUST USE THE Trainers[] checkbox on the Welcome Menu!
+Buffed Wormbot and Wormatron's weight to accurately represent the new sprites (100.6 -> 163.6, 185.3 -> 245.3 respectively)
+Fixed Assault Vest not applying if you got crit (probably need to rework how crits are handled in the future)
+Fixed Froshrog's evo level showing 32 even though it's actually 31
+Fixed Scovillains both showing they evolve into "Kerbenero" instead of "Despenero"
+Made Hammo 15% -> 13%, Teddull 15% -> 14%, and Seviper 7% -> 10% on Route 25
+Made Sapwin 16% -> 15%, Sedinister 11% -> 8%, Ralts 10% -> 9%, and added Benglow (5%) to Route 26
+New sprites for Twigzap, Shockbranch and Thunderzap!
+Added Egg Groups, assigned fitting Egg Groups to each Pokemon, and added in a Nursery in Iron Town (8th gym split)!
+Nursery mechanics are a bit different in this game due to there not being genders for Pokemon, so here's how everything works as of now:
+- If any 2 Pokemon in the nursery share at least 1 egg group, they're compatible, unless either is in the UNDISCOVERED Egg Group.
+- If 2 Pokemon are compatible, there's a 25% chance every 256 frames (50% if both Pokemon are from the same evolution family) that an egg is made
+- The species is a coin flip between the two unless 1 is holding Destiny Knot - in which case that one will be the "parent" (Egg will be same species)
+- Egg's ability is 80% selected parent's if it's a regular ability, or 60% hidden ability, 20% another ability slot if the parent has its hidden ability
+- Nature is random unless one of the parents are holding an everstone, in which case the Egg will have that nature
+- IVs are either 3 passed down picked from either parent, or 5 passed down if one is holding Destiny Knot
+- Whichever parent is selected will pass down its ball to the egg as well
+- Egg cycles that it takes to hatch are now a formula based inversely on its final stage's catch rate - basically, the rarer the Pokemon, the longer it takes to hatch!
+Made Draco Meteor cost $10000 instead of $2000
+Made debug task function (holding Ctrl + Shift will print to the console) also print the game state in int form
+Buffed Poison Gas accuracy to be 90% to match the vanilla buff
+Changed Shedinja's catch rate to be 45 instead of 5 (idk why it was ever 5 in my game, oops)
+Did some fancy bidirectional mapping and breadth-first search to get the evolution family, baby stage and final stage of any given Pokemon
+This has some weird implications (like Caterpie not being connected to regular Metapod and Butterfree since Caterpie evolves into Metapod-X, and Shedinja being its own thing not really connected to Nincada) but it's fine
+Made the shiny exclusive move (can't be retaught) coloring also apply to moves that the Pokemon learns but doesn't have in the level-up moveset yet (like getting it earlier from a pre-evo)
+Made Photon giving you Map Teleport also have some extra dialogue if you're nuzlocking to tell the player that their Pocket PC and Healing Pack are online
+Gave Scraggy Headbutt at lv 31 and Scrafty at lv 42 to help make it easier to evolve
+New sprites for Elelamb, Electroram, Superchargo, Minishoo, and Glittleshoo!
+Made interacting with any PC (Gauntlet or not) immediately heal your team
+Changed Edge Kit's description now that it's a nuzlocke item to be a bit more family friendly lmao
+Fixed Fishing Rod's description since it isn't just default 'A' now
+Added "hidden" to the crystal's description to make it more clear what they do (changes hidden power type)
+Added "effect is preserved even if foe switches out" to Arcane Spell's description to make that more clear
+Fixed Hammer Arm not being a Punching move
+Gave Pterator Roost at lv 70
+Made Elelamb line compatible with Rock Polish TM
+Removed the left-facing ledge on Route 22 next to New Minnow Town since apparently new players don't realize they can go that way
+Made the guard to Route 40 in the gate say "swear to Arceus" instead of "swear to god"
+Made saving the game save your saves in your AppData folder to help the issue of not having permission to save in certain systems
+Also makes it work easier with the .exe installer I made
+Made docs generate in your Documents folder on your PC and auto-open the folder whenever any new docs are created so you can find them easier
+Made screenshots go into your Documents folder as well instead of the same directory as where the game is
+Changed screenshots file naming to be Date_Time instead of System Milliseconds when the screenshot was captured
+Changed King's Rock, Shed Shell, Muscle Band and Wise Glasses to all sell for $0 since when they had a price they were sellable in the bag, which isn't intended since I previously made all only-1-of held items unsellable
+Made opening the calc with no Pokemon (the player doesn't even have the calc yet) not crash the game - will eventually remove the tooltip before you have calc too
+Gave Cervora Magic Reflect at lv 37
+Gave Swimmer Anita's, Magician Monika's, Magician Yolanda's Cervora's Magic Reflect in their movesets
+Made Star Trade NPC, all other NPCs if not already overwritten, and static encounters use UI.MAX_TEXTBOX instead of an arbitrary number
+Made Anticipation have its own separate text in the Info screen in battle if it's active instead of just using Illusion
+Added Weight, Catch Rate, Egg Cycles, and Egg Groups in a table for each Pokemon in the PokemonInfo doc!
+Fixed Protecting against a Rollout unlocking you from Rollout
+Lowered the levels of Staryu's moves past lv 31 to make them more accessible before evolving, as well as made room for Abduct at lv 42 (new move for Staryu line)
+Gave Starmie Abduct at lv 1 as well
+Gave Azumarill Extreme Speed at lv 65
+Changed Swimmer Dionne's Starmie's Icy HP Ice -> Icy Wind
+Changed Black Belt Maxton's Starmie's Recover -> Abduct
+Changed Gentleman Dennis's Starmie's Recover -> Abduct
+Changed Hiker Stacy's Azumarill's Quick Attack -> Extreme Speed
+Made Trainer AI know that moves with positive Primary Effects (Knock Off, Dragon Tail, etc) should be treated as status moves
+Made Eject Button "cancel" Pivoting moves to match vanilla mechanics
+Made falling asleep from Yawn announce if it failed, blocked by Psychic typing, etc
+Fixed how AI sees ground immunity by recognizing if a Pokemon is ungrounded or not, instead of just Levitate and Air Balloon (to work with magnet rise, smack down, gravity and such)
+Added "Open Location" under the Manage button on the startup menu to open the location of a save file to help the player find it easier
+Fixed Magic Bounce not being able to bounce back status moves that are used on themselves (from Magic Reflect/Abduct)
+Buffed Magnet Rise to permanently levitate you (via a status effect) until you switch out instead of a counter
+Changed Knock Off's move description to make its effect and damage boost more clear
+Redid how crits are handled/calculated to work with a ton of niche cases like Psyshock, Foul Play, Body Press, etc. and for scalability
+Made Rare Candies sellable for $600 (instead of $0) since nuzlockers now have a key item for Rare Candies and not just 999x Rare Candy item
+Fixed AI knowing which move Kissyfishy-D is using (replaced base moves with the -D moves in the AI)
+Gave Osceloma Nasty Plot at lv 54 and moved Psychic Terrain and Energy Ball back a bit to make room
+Gave Zoroark Frostbind at lv 68
+Gave Hast-E Rising Voltage at lv 60
+Gave Sedisoftra-E Diamond Storm at lv 60 and moved Fire Blast to lv 58 to buff its viability a bit and make it closer to Prismodon-E viability
+Gave Diamond Storm to Glimmora at lv 60
+Gave Psycorboratr Body Slam via TM
+Fixed a critical game-crashing Burn Up bug with a Pokemon being Fire secondary typing (only applies to Scovillain/Despenero but it's fixed)
+Gave Lagma line Scald via TM since they already get Surf and Whirlpool
+Gave Fireblion Earthquake via TM since it already gets Drill Run by level up
+Fixed multiple Pokemon not being able to evolve on the same exp yield (1 Pokemon still can't evolve 2 different times from the same exp yield - this is intentional)
+Added checking for duplicate moves in a moveset to the moveset validator
+Made entering a cutscene reset your sprite
+Changed a bunch of "..?" to "...?" for consistency and proper syntax
+Fixed bug with Dex Nav window width being calculated slightly incorrectly
+Added pressing 'D' when hovering a Pokeball will show the ball's info and the catch change in % for the wild Pokemon you're fighting!
+Changed Love Ball to be same family: catch multiplier = 8, in compatible egg groups: catch mul = 4, otherwise just 1 instead of just checking if they're the same ID
+Added new sprites for Sheltor, Shelnado, Rhypo, Rhynee, Rhypolar
+Revamped Casino Coin held items to scale with your gym badges - meaning only certain items are available for purchase with more being available after each gym badge
+Fixed bug with Evolution text (<Pokemon> evolved into <New Species>!) and how it interacted with text that's supposed to show for learning a move
+Finally fixed the other Choice Item (the one you didn't pick in Sicab City tower) showing up correctly in Power Plant (pt.2)
+Fixed an Adrenaline Orb in Shadow Ravine -1A being on the same tile as the Slow Fall pit destination
+Fixed user/foe party to show the active Pokemon relative to what slot they are on your team (as opposed to always showing the first Pokemon in the line is active)
+Fixed a bug with Breeder lady in Glurg Town and one dialogue not having her nametag
+Removed the fishing boolean flag from the player class since it's a fully functional item now
+Added a buffer for Silhouette sprites so they only need to be loaded once to make Dex Nav less laggy
+Fixed a bug with deleting a save file not showing the new save file that's selected's team and location and last date modified
+Fixed Arcane Spell effect sometimes actually buffing a move's base power to the "minimum cap" of 20 BP (weak Eruption, multi-hit moves that are below 20 BP per hit, etc)
+Fixed checking if the trainer's Pokemon is a dupe for efficiency sake (unneccesary check)
+Fixed evolving your lead Pokemon that is not active anymore overwriting your active Pokemon's displayed HP and max HP (purely visual bug)
+Fixed a crucial bug with the Pokemon's exp points going into the negative after levelling up (recalculated exp too many times)
+Made Destiny Bond effect go on the user, not the target (since it targets itself anyways)
+Fixed Flinching being able to be applied more than once due to King's rock and the move also being able to flinch
+Added the following flags to the move summary UI(s):
+- Makes Contact
+- Priority Stage
+- Crit Stage
+- Slicing Move (Sharpness)
+- Punching Move (Iron Fist and Punching Glove)
+- Tail Move (Sharp Tail)
+- No Combo Move (meaning other moves or this move with this flag can't be used in succession with itself)
+- Sound Move (Throat Chop and Throat Spray)
+- Biting Move (Strong Jaw)
+- Healing Move (gets blocked by Heal Block effect)
+Reorganized and redesigned the move summary UI a bit to fit this info in a reasonable space (had to make the UI a little taller vertically but not too bad)
+Resized some UIs that relied on the move summary UI being a specific size, namely:
+- Pokedex moves summary
+- Learning a move (both hovering the move to learn and the move to forget)
+- Move reminder (also made the scroll pane taller/fit an extra move at once and now allows for holding [Ctrl] while scrolling to scroll 5x at once)
+- In battle (by pressing 'D')
+- Pokemon's summary
+- Info for TMs in bag
+Changed the second Wiki Berry tree (on Route 43, need Surf) to be a second Sitrus Berry tree
+Made Font Size scale in the selecting move screen in battle for long move names (FINALLY!)
+Fixed PP Max's description saying it increases a move by 160% to just 60% which is less confusing since PP Up says increases by 20%
+Fixed Luxury Ball not doubling friendship LOST (by fainting)
+Fixed Bug Catcher Maude giving $200 instead of $100
+Added what slot the Pokemon is in when you're looking at its summary in either your party or viewing the foe's party (for identical eggs differention)
+Changed having a status effect (Burn, Poison, etc.) in your party view making the background the color of the status instead of always yellow for all of them
+Tweaked the colors of Burn, Paralysis, Poison, and Toxic Poison due to above (also made Poison and Toxic Poison have a slightly different shade of purple)
+Fixed some minor formatting with where the status icon is in the Pokemon's summary view if they have one
+Changed dialogue for the gift -E/-S NPC in Frenco City and the Breeder that gives you a gift egg in Glurg Town to make it WAY better and more interesting
+Changed the gift egg that the aformentioned Breeder gives you to be [Minishoo/Zorua (or if you have either, guaranteed Flamehox)] -> to be one of randomly: [Zorua, Flamehox, Scraggy, Solosis-X, Seviper, Gulpin-X, Azurill] since Minishoo is already a gift elsewhere and to give it more variety
+Revamped the fossil NPC in Glurg Town to have way more interesting dialogue and to give you an Egg of the fossil ONLY ON NUZLOCKE MODE so you can potentially get both fossils guaranteed by hatching them in different locations!
+ADDED CUSTOM ITEM SORTING IN YOUR BAG POCKETS WITH A BUNCH OF PRESET SORTING MECHANISMS FOR YOU TO PICK FROM ([Ctrl] + [A]!), NAMELY:
+- Alphabetical (any pocket)
+- Reverse Alphabetical (any pocket)
+- Count (high -> low) (any pocket but TMs and Key Items)
+- Sell Price (high -> low) (any pocket but TMs and Key Items)
+- Default (the order in which i picked that every save defaults to) (any pocket)
+- Move type alphabetically (TMs only)
+- Move Base Power (high -> low) (TMs only)
+- Move Category (Phys -> Spec -> Stat) (TMs only)
+- Move Accuracy (high -> low) (TMs only)
+- Move Priority (high -> low) (TMs only)
+- Move PP (high -> low) (TMs only)
+- And probably more to come! Feel free to offer any suggestions!
+Made Healing Circle not clickable by AI if the user doesn't have any valid team members left
+Fixed Jaboca Berry and Kee Berry still printing that they activated if the holder fainted when they activated
+Fixed bug with trapping effects not being removed from yourself when you use a phazing move on the opponent (if you're wrapped and you Dragon Tail out the wrapper, for example, used to not remove the wrap effect from you)
+Made Tailwind show the effective speed stat of the affected Pokemon in the Calculator
+Added Unerodible ability as something for the AI to consider when checking for resists in the back since Superchargo is technically a Ground resist with it (should've had it in there from the start anyways)
+Removed the move that you're trying to learn name in the header since the move is literally right below that, so I formatted the header to all fit on one line just saying "<Pokemon> wants to learn:"
+Fixed TM58 Dragon Pulse location in Item Info doc
+Moved TM95 Trick Room from the Frenco City shop to Abandoned Tower (8th gym split) since Ice Beam is only in the Deep Chasm, to mirror
+Sprite for Wormatron added!
+Gave Metapod Electroweb at 11 and moved Iron Defense to 9 (from 11), and gave it Sticky Web at 15
+Gave Butterfree Electroweb at 17 and Sticky Web at 55
+Gave Metapod-X Electroweb at 15 and Sticky Web at 20
+Gave Butterfree-X Electroweb as move reminder (lv 1) and Sticky Web at 60
+Changed Ace Trainer Avianna's Butterfree-X's Tailwind -> Electroweb
+Made move reminder just teach you the move if you have an empty slot instead of asking which move to forget
+Fixed Battle Betting to actually display "Calculating odds..." properly while it's, yknow, calculating odds
+Fixed the tooltips showing that you can press [Ctrl] + [A] for calc before you have a Pokemon
+Made getting items after a battle support plurals ("You got 3 Fable Charges!")
+Wrote a method for checking if a Pokemon has any boosts so that way Talented can not announce for sure unless they have boosts
+Changed Magician Laurita's Buterfree-X's Deck Change -> Sticky Web
+Changed Lady Serapha's Butterfree's Quiver Dance -> Sticky Web
+Added a statused icon for the team icons in the Battle UI (a darker red Pokeball)
+Reworked Healing Circle to make it restore 50% of the Pokemon's missing HP instead of 25% of their max HP on switch in
+Added overworld sprites for Glacius, Ryder, Mindy, Rayna and Merlin
+Fixed a very crucial (and complicated) bug with the calc settings where enabling Reflect/Light Screen/Aurora Glow actually sets the effect on that side
+Made Covert Cloak block the flinch chance from King's Rock
+Changed getting Poisoned/Toxic Poisoned from TSpikes not know who is on the other side (so corrosion can't activate if the foe has it when you get poisoned from TSpikes)
+Reworked Cloud Nine to block weather from going up while in, as well as its previous effect of resetting weather on switch-in
+Gave Flamigo Swords Dance at 55 and Reversal at 60, moved Throat Chop and Brave Bird down a bit to compensate
+Gave Athlete Gutierre's Flamigo Reversal and Endure instead of Close Combat and Facade
+Reworked Dad scripting to handle the Lava Surf cutscene after beating 8 gyms
+New sprites for Magie and Cumin!
+Fixed getting Taunted, Tormented, Heal Blocked, Disabled, and Throat Chopped mid-turn removing the Locked, Charging, and Semi-Invulnerable status effects correctly (so you don't get softlocked if taunted when on turn 2 of Geomancy or something)
+Fixed Gallade's speed being 80 (NOT 63 - OOPS)
+Fixed flag for stopping player from teleporting in Kleine Village being the incorrect one
+Added "Reduces user's weight by 220 lbs" to Autotomize's description
+Moved Metronome/Mirror Move/Mimic above the charging move check so it can properly call a charging move like Solar Beam and not just use it immediately
+Changed Sedisoftra's Hidden Ability Solid Rock -> Sand Stream
+Changed Prismodon's Hidden Ability Mirror Armor -> Sand Stream
+Changed Lutrineer's Hidden Ability Hydration -> Drizzle
+Changed Swimmer Dionne's Lutrineer's Swift Swim -> Drizzle and her Spinaquata's Drizzle, Damp Rock and Hurricane to Lightning Rod, Enigma Berry and Sludge Bomb respectively
+Changed Hiker Iisakki's Sedisoftra's Sturdy and Weakness Policy to Sand Stream and Smooth Rock
+Changed Hiker Peyton's Prismodon's Sturdy to Sand Stream
+Changed Psychic Feline's Lutrineer's Water Veil -> Drizzle
+Changed Rival Fred 3's Lutrineer's Water Veil -> Drizzle
+Changed Rival Fred 3's Gyarados-E's Rindo Berry and Rain Dance -> Assault Vest and Earthquake
+Changed Hiker Gilroy's Prismodon's Filter -> Sand Stream
+Changed Actor Marcel's Prismodon's Mirror Armor -> Filter
+Changed Ground Master's Drillatron's Mold Breaker -> Sand Force, and his Sedisoftra's Unerodible -> Sand Stream
+Changed Rival Fred 4's Lutrineer's Water Veil -> Drizzle
+Fixed a couple of break out early calls in the move logic (like charging a move) correctly setting the last move used flag
+Gave Thunderzap Strength Sap at lv 1
+Moved Nincada to Gelb Forest 2A instead of 1A and rebalanced some percentages to account for this
+Changed Swalot-X's Hidden Ability Simple -> Cloud Nine
+Reworked battle betting to add a bit of Gaussian (bell curve) randomness to both the odds and parlay lines to make it not just the exact (rounded) averages
+Changed Swimmer Frey's Swalot-X's Simple/Weakness Policy -> Cloud Nine/Black Sludge
+Revamped Blackjack by adding actual Blackjack 3:2 payouts, insurance for when dealer shows an ace, and a bet spinner to place bets with an arrow key
+Added blackjack stats for the following:
+- # Insurance Offered
+- Insurance Take Rate
+- Insurance Win Rate
+- # Insurance Times Declined
+- % of Missed Blackjack Opportunities
+- % of Correct Declines
+- # of Insurances won
+- Amt of Insurance Profit
+Added some text to the blackjack UI table showcasing payout info and bet info
+Changed the min bet for everything to be 10 coins to have more accurate payouts for both battle betting and blackjack
+Rebalanced gift coins and everything to account for coins being worth 10x less essentially (now start with 100 coins instead of 10 etc)
+Also made coins sell for twice as much technically (since 10 coins = 1 old coin, and 1 old coin sold for 50 but 1 new coin sells for 10)
+Made the sell UI default to 0 coins instead of 1 now so you don't accidentally sell coins
+Fixed Huminescense getting Twister and Air Cutter on evo too (only Humbrill is supposed to get these), moved them to lv 1 moves
+Fixed NPC gifts checking if you have that specific species registered to now check if the Pokemon is a "dupe" (if you have any member of the evo line)
+Fixed slight bug with being poisoned on a Poison/Steel type (if foe is null (status kit) the game thinks the foe had corrosion)
+Made Hoghoncho way heavier than it currently is (205 -> 785 lbs)
+Gave Lunymph and Fearomoth Slow Fall by TM (since they're moths they could def fly)
+Gave Shockbranch/Thunderzap Focus Blast by TM since they're literally weed plants, they could focus enough to blast ;)
+Changed Magician Batraz's Butterfree-X's Mosaic Wings, Infestation and Arcane Spell -> Serene Grace, Air Slash and Magic Tomb
+Changed Magician Noel's Butterfree-X's Mosaic Wings, Enigma Berry, Arcane Spell and Psyshock -> Serene Grace, Focus Sash, Magic Tomb and Air Slash
+Fixed prize shop to have the correct prices for items to account for coin worth update
+Fixed bug with the TM Check feature added where it would crash in Gauntlet Box
+Added a little TM icon to the move summary screen if the move is a TM and the player has the TM!
+Changed the "shiny" move button (signifying that the Pokemon can't relearn it) to also account if the Pokemon has the move at a later level than they are right now, or if it's a TM but the Pokemon isn't compatible with it (but a pre-evo was which is how they have it)
+Fixed incorrect flag in place for a locked door in Schrice City School
+Added Endure as a move tutor and placed the NPC in Sicab Office 2A (have to beat Flamehox-E and turn on the fuse box first!)
+Added a move deletor and placed him in the same room
+Made Spectral Thief only announced that it stole a stat boost if it, yknow, stole at least 1 stat boost
+Added Reuniclus-X to Route 35 and rebalanced other encounter chances to account
+Made Swimmer Anita spin Left + Right
+Fixed info screen showing the "Illusion/Anticipation" flag correctly depending on what ability you have since they use the same spot in memory for true/false
+Added "Extremely effective" and "Mostly ineffective" blurbs to account for the new Pokemon direct showing that in Pokemon Champions
+Added font scaling to the map name/number box in the debug screen
+Made a bunch of gift encounters have their hidden abilities or a chance for hidden abilities:
+- The gift random Pokemon egg in Research Post A: 100% hidden
+- The gift Abra from Ryder: 40% hidden
+- The gift non-E form Pokemon in Research Post B: 100% hidden
+- The gift magic mon in Sicab Office 2A: 100% hidden
+- The gift "ancient" Pokemon in Kleine Village: 100% hidden
+- The gift "starter" in Schrice City: 40% hidden
+- The gift Flamigo from Ryder: 40% hidden
+- The gift E/S form in Frenco City: 100% hidden
+- The gift egg in Glurg Town: 100% hidden
+Made Lansat Berry increase your crit stages by 2 instead of 1
+Tweaked formatting of Mushroom collector's UI
+Added Counter, Mirror Coat and Metal Burst and distributed to a TON of Pokemon:
+- Counter: Iguaton, Dragave, Sapwin, Kappalm, Gladipede, Teddull line, Detonape, Clefairy/Clefable, Gallade, Timburr line, Rhypolar, Scraggy line, Houndoom, Whiskie line, Dompster, Rexisilt line, Weavile, Sneasler, Thalarctic, Ceramber line, Flamigo, Fever Dream, Detonape-S
+- Mirror Coat: Armoraven, Humbrill/Huminescence, Butterfree-X, Bushewe, Clefairy/Clefable, Gardevoir, Glittleshoo, Benglow, Snowlet line, Duosion-X/Reuniclus-X, Bronzor-X line, Prismodon, Snom line, Starmie, Cervora, Kissyfishy, Icy Serpent, Bronzor line
+- Metal Burst: Magron, Wormbot/Wormatron, Psyballs/Psycorboratr, Megawatt, Magmaclang, Droid line, Plasamp line, Shocky Spire, Armoid-E/Soldrota-E
+Gave Ceramber/Topazatops a signature ability "Fortify" (where it gets +1 Def at the end of every turn it doesn't take damage (and doesn't protect), max 2 stacks), replacing Rock Head (I was sick of having 3 different Head Smash/Rock Head combo mons)
+Gave Butterfree-X a signature ability "Enchanted Dust" (where it changes the foe's type to Magic when it switches in), replaces Magical (was boring/flavorless)
+Distributed Counter, Mirror Coat and Metal Burst to a ton of different trainers
+Changed each Rock Head Ceramber/Topazatops and Magical Butterfree-X to different abilities
+Fixed one of the NPCs (on the Route 29 side) not being in the correct spot when blocking off Electric Tunnel in the 6th gym split
+Removed the "press 'A' to fish" text from the Fisherman that gives the Fishing Rod since with the Register bag system that's not always true
+Reworked the following abilities to always raise the highest offensive stat instead of just a specific one when the condition is met:
+- Djinn's Favor, Lightning Rod, Sap Sipper, Empathic Link, Starborn, Anger Point, Moxie
+Reworked the following abilities:
+- Blaze, Torrent, Overgrow, Swarm: now gives a flat 20% boost to the respective type, still keeping the 50% boost when below 1/3 HP
+- Magma Armor: now gives a crit immunity in addition to being immune to frostbite
+- Merciless: attacks now become crits when the target is paralyzed too
+- Wonder Skin: gives the Pokemon full immunity to status moves instead of just making them 50% accurate against the user (Good as Gold clone)
+Added Magma Storm and gave to Lafloo at lv 70
+Reworked Wormite-S line's movebanks and edited trainers with them accordingly
+Changed the "Crit rate" to "crit rate" in moves to make the descriptions consistent
+Reworked the following moves:
+- Comet Punch: now gives +2 speed if it faints the foe (Fell Stinger semiclone)
+- Fatal Bind: 70 -> 75 BP, only puts the perish counter on the foe
+- Fire Spin/Whirlpool no longer doesn't effect Fire/Water types respectively
+- Galaxy Blast: now has a 20% chance to lower either foe's Sp.Atk or Sp.Def by 1
+- Star Storm: now has a 30% chance to raise the user's crit stage by 1
+Added "50% accuracy in Sun" to Thunder/Hurricane's description to make it more clear for users
+Added Magnitude 4-10 as calc only moves to see how much magnitude can do
+Made Fatal Bind only announce if the perish count is actually being applied (subsequent uses will be silent)
+Fixed Psycorboratr's movebank to match Psyballs' level up ones
+Changed Metaslate-E's Rock Blast 36 -> 35 to match regular Metaslate and to get Sedisoftra-E 1 level earlier
+Gave Sedisoftra-E Nuzzle at lv 1, and Volt Switch at lv 42 to help it stand out a bit more to Prismodon-E
+Made Sedisoftra-E/Prismodon-E compatible with TM02 Radio Burst
+Changed Icy Path to have Ice cave tiles since I have those now for Deep Chasm!
+Swap Map Numbers of Grandpa's House and Gym 5 to make the jumpscare back-to-back appear before the gym trainers on the Trainer doc
+Added an item outline image (autogenerated) and used it in the box and party so you can see what Pokemon are holding items easier
+Made Sambal Sear deal 1.5x damage in Sun to make it a bit more useful
+Made wild Pokemon/Gift Pokemon only start with 70 + 25x happiness (was 70 + 50x happiness), where x is number of badges, so Pokemon you've had for longer will still have a friendship advantage
+Gave Shaboom and Galactasolder Focus Energy at lv 1
+Gave Cosmocrash Aurora Veil at lv 60
+Added Berserk (made it give +2 SpA instead of +1 though) and gave it to Serpenge
+Gave Dompster a signature ability "Seabed Sifter" (clears terrain on entry and heals to full if a terrain was cleared) and replaces Illumination
+Gave it another signature ability "Slipstream" (Emergency Exit clone) and made it its hidden (replaced NULL)
+Gave Dompster-S a signature ability "Shadow Veil" (Disguise clone) and replaced Illumination
+Gave Durfish, Durfish-S and Dompster-S Slipstream as Hidden Abilities too
+Changed Wormatron-S's stats to make it a bit better: 100 -> 115 Atk, 100 -> 85 SpA
+Gave Psyballs/Psycorboratr Protect via TM (oops)
+Gave Comsmocrash TM30 U-Turn compatibility
+Gave Rockmite/Stellarock TM78 Swords Dance compatibility
+Removed the "Won $x!" text from trainers that give $0 (static Pokemon)
+Made Plasma Fists work like real Pokemon (turns Normal moves -> Electric for the rest of the turn)
+Finally fixed calc not supporting accurate damage percentages for moves reflected on yourself (Magic Reflect/Abduct), now the accurate HP percentage is shown (since it always assumed the denominator was the foe's HP and couldn't ever be yours)
+Nerfed Burn Up BP: 130 -> 115 since it can be used even when you're not a Fire type in this game
+Made Sunsteel Strike ignore the foe's ability
+Finally made Wrap/Bind/etc say the correct effect name when getting hurt at the end of each turn (i.e. ___ was hurt by the fiery vortex!)
+Made the AI check your moveset in a random order when checking for a move that kills them so you can't abuse it by having a move you want them to see kills at the front of your moveset
+Made Insomnia cure a sleeping Pokemon
+Decided to finally give Teddinaut Hyper Voice at lv 70
+Made Rhypolar way heavier (489.1 -> 889.1 lbs) since it's a Rhyno tank
+Made Clefairy/Clefable compatible with TM56 Trick Tackle
+Changed Amulet Coin giving 1.5x money -> 2x money
+Changed the "Change box's name?" text to "Change Box #'s name?" so you can see what number it's supposed to be if you want to change it back
+Changed Aurora Glow's effect name to "Aurora Glow" (was just "Aurora")
+Changed Healing Circle's turns 8 -> 10
+Made Future Sight able to crit and work with Sniper, Anger Point, Analytic, Icy Scales and Multiscale
+Changed Merlin's team to update the new legendaries: Hueduu and Perilyte!
+Redid the "Is Sellable" item logic so you can have multiple of a held item, but can't sell your last one (so if you had 3 hard stones, you can only sell 2)
+Made Ability Capsule sell for 2500 (was 1250)
+Made Ability Patch sell for 5000 (was 1500)
+Replaced Inkay with Spheal on Route 30 Fishing to add a bit of diversity
+Gave Nixnerva Roost at 48
+Gave Gallade Shadow Sneak at lv 1
+Finally fixed Healing Wish/Lunar Dance and replaced Clefairy/Clefable's Healing Wish with Lunar Dance
+Changed Sparkdust's catch rate 50 -> 100
+Changed Splame's catch rate 25 -> 50
+Removed Hueduu and Sasquotta from the Casino prize shop since they're obtainable now via summoning, and made Dragee cost one more win streak to have a nice linear progression of the Pokemon
+Made checking for an encounter happen AFTER dismounting Surf so you can't get a Surf encounter on land on the same frame you dismount
+Made the top rock climb tile only have the top 1/4 of the tile have collision to match the other top of cliff tile collision
+Fixed bug with displaying the typings of the user not always at the correct time
+Added double-pressing 'D' in the party menu or 'Ctrl + D' in the PC take a Pokemon's item
+Made getting a status effect message get a line break
+Made having a Field Effect with no turns (Neutralizing Gas) not display "-1/-1" turns and center it differently
+Centered the bet text in the bet confirm window in battle betting for better formatting
+REDID CASINO TILES/LAYOUT TO MAKE IT LOOK A LOT BETTER!
+Added the variant dex researcher (lady by tent) give you a Master Ball if you filled out the Variant Dex
+Added "avoided the attack" for moves that were affected by Acc/Eva instead of everything always just saying "attack missed!"
+Redid the UI for item summary (i.e. after opening a chest) to account for big digs from the new Mining minigame
+Added an optional UI element for both displaying the player's money balance and displaying an item of choosing on a dialgoue window
+Added sell prices for every held item you can dig up from the mining minigame too
+Added sprites for the isolation quintet legendary group: Perilyte, Hueduu, Faulette, Sasquotta, and Blohadel
+Made Core Enforcer not supress your ability if it happens on the switch-in
+Added Neutralizing Gas and gave it to Cluuz line and Cluuz-S line (second ability)
+Added IVs and omniboost information to the Trainer Excel sheet doc for static Pokemon
+Slightly changed the logic of which Pokemon is active so the battle UI can show Neutralizing Gas wearing off when a Cluuz line member switches out
+Reworked how Magic Room works in the backend so there's not weird visual bugs with Repels being held items for Pokemon in the calc
+REDID HOW THE **ENTIRE** TRAINER AI WORKS TO NOW USE A SCORING SYSTEM FOR BOTH SWITCHING OUT, SWITCHING IN, AND MOVE SELECTION. THERE IS SO MANY CHANGES THAT IT WOULD BE HELL TO COVER HERE, SO I WILL ATTACH A DOCUMENT THAT YOU CAN ALSO CREATE WHEN GENERATING `Trainer doc` in game!
+Fixed Star Piece description to say it's a collector item and not that it can be sold at a high price
+Fixed Poison Gas making contact (oops)
+Added secondary effect for Poison Tail (Poison chance wasn't implemented)
+Gave Staryu Teleport at lv 9
+For charging moves with a stat stage effect (Meteor Beam, Skull Bash, Black Hole Eclipse), removed the "100% to" text to make it more clear that it's not a secondary effect
+Made Rough Skin/Iron Barbs not announce the ability when the Pokemon taking the damage has Magic Guard/Scaly Skin
+Fixed Magic Guard/Scaly Skin Pokemon not taking damage from fainting to Perish Song
+Made Gravitation not announce the ability/effect if Gravity is already up
+Made Synchronize work with Sleep and Confusion too
+Changed the following ability descriptions to display the actual NUMBERS of the effects (e.g. Adaptability now says "Changes the STAB bonus from 1.5x to 2x"):
+- Adaptability, Ambush, Analytic, Anticipation, Berserk, Black Hole, Blaze, Chlorophyll, Competitive, Compound Eyes, Cursed Body, Defiant, Drizzle, Dry Skin, Drought, Electric Surge, Everglow, Filter, Flame Body, Flash Fire, Galvanize, Grassy Surge, Gravitation, Guts, Hydration...
+- Hyper Cutter, Ice Body, Icy Scales, Illusion, Insect Feeder, Iron Barbs, Iron Fist, Magic Bounce, Magical, Mold Breaker, Multiscale, Mystic Absorb, Normalize, Overgrow, Parasocial, Pixilate, Poison Heal, Poison Point, Poison Touch, Prankster, Protean, Psychic Surge, Rain Dish...
+- Rattled, Reckless, Regenerator, Refrigerate, Rough Skin, Sand Force, Sand Rush, Sand Stream, Sand Veil, Serene Grace, Shadow Tag, Shadow Veil, Sharp Tail, Sharpness, Shed Skin, Sheer Force, Shield Dust, Sleight of Hand, Slush Rush, Sniper, Snow Cloak, Snow Warning, Solar Power...
+- Solid Rock, Sparkly Surge, Speed Boost, Static, Steelworker, Strong Jaw, Sturdy, Super Luck, Swarm, Synchronize, Talented, Technician, Tinted Lens, Torrent, Tough Claws, Trace, Unerodible, Volt Absorb, Volt Vortex, Water Absorb, Thick Fat, Unwavering
+Fixed removing a status condition to use an Iterator for safe removals
+Finally added table/wall combo tiles to Sicab Office 1A
+Fixed Alchemy not being a `healing` move
+Made Vandalize fail if used against a Pokemon with `NULL` as their ability
+Made Rockfall Frenzy a Primary Effect so it can't be blocked by Covert Cloak/Shield Dust
+Added text blurbs for Abduct, Take Over, and Magic Reflect to tell the player that they can't be used on the first turn out if they try to
+Fixed Rayna saying "carve a path for you to success" instead of "succeed"
+Moved Euphorian Gem to the Resource Pool instead of the Evolution Stones pool so the player has better odds of getting an actual helpful evo item
+Fixed `Failed Sucker` and `Struggle` being callable by Metronome
+Fixed some loose ends bugs with `Sucker Punch` displaying `Failed Sucker` instead
+Fixed Protean not activating before the Protect check, so the type wouldn't change if the foe Protected
+Fixed hitting yourself due to Magic Reflect/Possession not triggering the Paralysis/Sleep/Confusion check twice (but if a Pokemon is asleep for example and the foe has a Magic Reflect up, staying asleep and not using your move will keep the Magic Reflect active)
+Fixed Sleep Talk/Snore logic not checking correctly if you were asleep, and made them failing (most notably Snore) reset your Metronome chain
+Gave Lafloo Stealth Rock at lv 65 and redistributed surrounding moves a bit
+Changed Athlete Gutierre's Lafloo's Rock Polish -> Stealth Rock
+Fixed the Technician check before all other BP multipliers (so a move like Incinerate will get the Technician boost before the Charcoal boost, so it'll be 108 BP instead of 72 BP previously (60 * 1.5 * 1.2))
