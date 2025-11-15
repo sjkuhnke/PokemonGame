@@ -78,7 +78,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public int offsetY;
 	
 	// CONSTANTS
-	public static final int MAX_MAP = 220;
+	public static final int MAX_MAP = 240;
 	public static final int MAX_FLAG = 25; // should not be >31
 	
 	// SYSTEM

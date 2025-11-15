@@ -37,6 +37,10 @@ public class GameTools {
 	}
 	
 	public static void load() {
+		Pokemon.readInfoFromCSV();
+		Pokemon.readMovebanksFromCSV();
+		Pokemon.readTMsFromCSV();
+		Pokemon.setEvolutionMaps();
 		Pokemon.readTrainersFromCSV();
 		new TileManager(gp);
 		setupAllPokemon();

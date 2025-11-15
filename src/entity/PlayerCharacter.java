@@ -116,7 +116,7 @@ public class PlayerCharacter extends Entity {
 					break;
 				}
 				
-				gp.cChecker.checkTallGrass(this);
+				if (!p.ghost) gp.cChecker.checkTallGrass(this);
 			} else if (speed == SPEED_2) {
 				speed = SPEED_1;
 				return;
@@ -585,6 +585,7 @@ public class PlayerCharacter extends Entity {
     	if (gp.currentMap == 111) p.locations[7] = true;
     	if (gp.currentMap == 125) p.locations[9] = true;
     	if (gp.currentMap == 153) p.locations[10] = true;
+    	if (gp.currentMap == 216) p.locations[11] = true;
     	
 		gp.gameState = GamePanel.NURSE_STATE;
 		npc.speak(-1);
@@ -1308,6 +1309,7 @@ public class PlayerCharacter extends Entity {
 				try {
 					int map = Integer.parseInt(parts[1]);
 					gp.eHandler.teleport(map, worldX / gp.tileSize, worldY / gp.tileSize, false);
+					gp.ui.subState = 0;
 					p.invalidateNuzlocke("Used " + code);
 		
 				} catch (NumberFormatException g) {
@@ -1319,6 +1321,8 @@ public class PlayerCharacter extends Entity {
 			p.current.setStats();
 			p.current.verifyHP();
 			p.invalidateNuzlocke("Used " + code);
+		} else {
+			ui.showMessage("Invalid code: \"" + code + "\"");
 		}
 	}
 

@@ -1,54 +1,39 @@
 ================================================================================
 Sprites (Prefered Order, can always be changed up) (* = has sketch from RAMM)
 ================================================================================
-173 Wormatron*
-217 Wormite-S*
-218 Wormbot-S*
-219 Wormatron-S*
-166 Rhypo*
-167 Rhynee*
-168 Rhypolar*
-213 Nightrex*
-214 Shadowsaur*
-240 Scraftagon*
-108 Sparkitten
-109 Fireblion
-110 Flamebless
-120 Magie*
-121 Cumin*
-122 Cinneroph*
 123 Vupp*
 124 Vinnie*
 125 Suvinero*
 126 Whiskie*
 127 Whiskers*
 128 Whiskeroar*
-134 Lilyray
-135 Daray
-136 Spinaquata
-143 Posho
-144 Shomp
-145 Poshorump
-160 Cluuz
-161 Zurrclu
-162 Zurroaratr
-220 Cluuz-S
-221 Zurrclu-S
-222 Zurroaratr-S
-148 Durfish
-149 Dompster
-215 Durfish-S
-216 Dompster-S
-132 Sheltor*
-133 Shelnado*
-141 Ali*
-142 Batorali*
+160 Cluuz*
+161 Zurrclu*
+162 Zurroaratr*
+220 Cluuz-S*
+221 Zurrclu-S*
+222 Zurroaratr-S*
+213 Nightrex*
+214 Shadowsaur*
+240 Scraftagon*
 181 Droid
 182 Armoid
 183 Soldrota
 199 Droid-E
 200 Armoid-E
 201 Soldrota-E
+148 Durfish
+149 Dompster
+215 Durfish-S
+216 Dompster-S
+143 Posho
+144 Shomp
+145 Poshorump
+134 Lilyray
+135 Daray
+136 Spinaquata
+141 Ali*
+142 Batorali*
 150 Kissyfishy
 218 Consodust*
 219 Cosmocrash*
@@ -63,18 +48,17 @@ Sprites (Prefered Order, can always be changed up) (* = has sketch from RAMM)
 187 Dragee
 188 Draga
 189 Drageye
-229 Diftery
-232 Triwandoliz
-231 Kleinyeti
-228 Soarwhell
-230 Vorsuitex
 236 Solaroxyous
 
 ================================================================================
 Overworld Pokemon Sprites (* are the ones that already have battle sprites, probably best to do that first)
 ================================================================================
 Whiskeroar
-Legendaries
+Hueduu
+Sasquotta
+Faulette
+Blohadel
+Solaroxyous
 
 ================================================================================
 Sketches
