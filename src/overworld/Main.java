@@ -445,28 +445,28 @@ public class Main {
 			StringBuilder header = new StringBuilder("====================================================================================\n");
 			header.append("ID   Name               ");
 			for (int hm = 1; hm <= 8; hm++) {
-	            header.append(String.format("HM%02d  ", hm));
-	        }
+				header.append(String.format("HM%02d  ", hm));
+			}
 			for (int tm = 1; tm <= 99; tm++) {
-	            header.append(String.format("TM%02d  ", tm));
-	        }
+				header.append(String.format("TM%02d  ", tm));
+			}
 			header.append("\n");
-	        header.append("====================================================================================\n");
-	        writer.write(header.toString());
+			header.append("====================================================================================\n");
+			writer.write(header.toString());
 			
 			for (boolean[] row : tms) {
 				if (id % 25 == 0) {
 					writer.write(header.toString());
 				}
 				StringBuilder rowBuilder = new StringBuilder();
-	            String pokemonName = Pokemon.getName(id);
-	            rowBuilder.append(String.format("#%03d %-20s", id, pokemonName));
-	            for (boolean canLearn : row) {
-	                rowBuilder.append(canLearn ? "Y     " : "N     ");
-	            }
-	            rowBuilder.append("\n");
-	            id++;
-	            writer.write(rowBuilder.toString());
+				String pokemonName = Pokemon.getName(id);
+				rowBuilder.append(String.format("#%03d %-20s", id, pokemonName));
+				for (boolean canLearn : row) {
+					rowBuilder.append(canLearn ? "Y     " : "N     ");
+				}
+				rowBuilder.append("\n");
+				id++;
+				writer.write(rowBuilder.toString());
 			}
 			writer.write("====================================================================================\n");
 			writer.close();
@@ -521,17 +521,17 @@ public class Main {
 	}
 
 	public static void printIntArray2D(int[][] array) {
-        // Iterate over each row of the 2D array
-        for (int i = 0; i < array.length; i++) {
-            // Iterate over each element in the current row
-            for (int j = 0; j < array[i].length; j++) {
-                // Print the current element followed by a space
-                System.out.print(array[i][j] + " ");
-            }
-            // Move to the next line after printing all elements in the current row
-            System.out.println();
-        }
-    }
+		// Iterate over each row of the 2D array
+		for (int i = 0; i < array.length; i++) {
+			// Iterate over each element in the current row
+			for (int j = 0; j < array[i].length; j++) {
+				// Print the current element followed by a space
+				System.out.print(array[i][j] + " ");
+			}
+			// Move to the next line after printing all elements in the current row
+			System.out.println();
+		}
+	}
 
 	@SuppressWarnings("unused")
 	private static void writeUnusedMoves(Path dir) {
@@ -635,8 +635,8 @@ public class Main {
 			}
 			writer.write("\nSignature Moves (3):\n");
 			sigThree.entrySet().stream()
-	        .sorted(Map.Entry.comparingByValue(Comparator.comparing(Move::toString)))
-	        .forEach(entry -> {
+			.sorted(Map.Entry.comparingByValue(Comparator.comparing(Move::toString)))
+			.forEach(entry -> {
 				try {
 					writer.write(entry.getValue().toString() + " : " + entry.getKey().name() + "\n");
 				} catch (IOException e) {

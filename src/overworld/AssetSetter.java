@@ -212,8 +212,8 @@ public class AssetSetter {
 	private static final int DISCIPLE_UP = 213;
 	private static final int DISCIPLE_LEFT = 214;
 	private static final int DISCIPLE_RIGHT = 215;
-//	private static final int T = 208;
-//	private static final int T = 209;
+	private static final int SCOTT_RIGHT = 216;
+	private static final int FRED_LEFT = 217;
 	
 	private static final int DOWN_3 = -1;
 	private static final int DOWN_2 = 0;
@@ -528,6 +528,28 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(61, 14, Item.RAWST_BERRY, mapNum, 15, 30);
 		gp.obj[mapNum][objIndex] = ObjSetup(50, 12, Item.FOCUS_SASH, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(52, 14, Item.POWER_HERB, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(26, 8, Item.BIG_NUGGET, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(38, 14, Item.POTION, mapNum);
+		gp.obj[mapNum][objIndex] = MintSetup(16, 26, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(16, 53, Item.TIMER_BALL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(22, 61, Item.RUSTY_BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(29, 63, Item.EJECT_PACK, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(37, 60, Item.FABLE_CHARGE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(42, 59, Item.WHITE_HERB, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(43, 75, Item.DAMAGED_MOSS, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(54, 62, Item.RELIC_GOLD, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(62, 62, Item.MAX_POTION, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(64, 63, Item.CHARCOAL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(69, 69, Item.REPEL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(63, 78, Item.CLEAR_AMULET, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(65, 84, Item.HEAL_BALL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(80, 88, Item.MAX_ELIXIR, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(85, 47, Item.EUPHORIAN_GEM, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(57, 41, Item.ABILITY_PATCH, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(53, 39, Item.SPARKLY_SEED, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(56, 37, Item.ELECTRIC_SEED, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(60, 43, Item.PSYCHIC_SEED, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(55, 44, Item.GRASSY_SEED, mapNum);
 		
 		mapNum = 24;
 		objIndex = 0;
@@ -1020,6 +1042,30 @@ public class AssetSetter {
 		mapNum = 117;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(80, 75, Item.TM07, mapNum); // focus blast
+		gp.obj[mapNum][objIndex] = ObjSetup(77, 66, Item.MIRROR_HERB, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(65, 68, Item.REPEL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(63, 77, Item.ADRENALINE_ORB, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(37, 59, Item.BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(23, 66, Item.RED_CARD, mapNum);
+		gp.obj[mapNum][objIndex] = MintSetup(10, 71, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(12, 57, Item.MENTAL_HERB, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(27, 56, Item.HYPER_POTION, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(46, 51, Item.NET_BALL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(29, 51, Item.ROOM_SERVICE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(44, 42, Item.DAMAGED_SNOWBALL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(71, 64, Item.POWER_HERB, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(75, 58, Item.PP_UP, mapNum);
+		gp.obj[mapNum][objIndex] = MintSetup(72, 53, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(67, 55, Item.RELIC_SILVER, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(60, 56, Item.DAMAGED_BATTERY, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(51, 57, Item.MYSTIC_WATER, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(53, 36, Item.NUGGET, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(49, 33, Item.RARE_CANDY, mapNum);
+		gp.obj[mapNum][objIndex] = MintSetup(56, 35, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(69, 37, Item.RUSTY_BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(72, 46, Item.ELIXIR, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(25, 47, Item.BIG_MUSHROOM, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(55, 64, Item.BIG_NUGGET, mapNum);
 		
 		mapNum = 119;
 		objIndex = 0;
@@ -1041,6 +1087,20 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(29, 87, Item.METRONOME, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(37, 79, Item.DAMAGED_BULB, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(37, 53, Item.DAMAGED_BULB, mapNum);
+		
+		gp.obj[mapNum][objIndex] = ObjSetup(44, 43, Item.REVIVE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(41, 85, Item.EJECT_BUTTON, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(53, 71, Item.HARD_STONE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(64, 69, Item.ULTRA_BALL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(62, 83, Item.ABILITY_CAPSULE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(52, 57, Item.TINY_MUSHROOM, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(57, 44, Item.FOCUS_SASH, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(52, 36, Item.ABSORB_BULB, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(54, 28, Item.DAMAGED_BATTERY, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(50, 18, Item.ELIXIR, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(9, 19, Item.ABILITY_PATCH, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(65, 15, Item.STICKY_BARB, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(65, 30, Item.FULL_HEAL, mapNum);
 		
 		mapNum = 121;
 		objIndex = 0;
@@ -1089,6 +1149,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(69, 57, Item.ELECTRIC_SEED, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(79, 59, Item.AIR_BALLOON, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(45, 60, Item.PETTICOAT_GEM, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(63, 47, Item.MAX_REVIVE, mapNum);
 		
 		mapNum = 138;
 		objIndex = 0;
@@ -1562,6 +1623,90 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(43, 84, Item.STAR_PIECE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(32, 75, Item.ABILITY_PATCH, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(71, 84, Item.BIG_NUGGET, mapNum);
+		
+		mapNum = 208;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(54, 64, Item.REVIVE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(42, 67, Item.DAMAGED_SNOWBALL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(62, 67, Item.BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(53, 71, Item.REPEL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(37, 73, Item.REPEAT_BALL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(40, 77, Item.RELIC_SILVER, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(27, 56, Item.SUPER_POTION, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(35, 56, Item.POKEBALL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(31, 58, Item.SNOWBALL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(40, 65, Item.RUSTY_BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(27, 80, Item.NUGGET, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(51, 74, Item.STAR_PIECE, mapNum);
+		gp.obj[mapNum][objIndex] = MintSetup(71, 68, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(71, 48, Item.ABILITY_PATCH, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(44, 56, Item.MAX_POTION, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(45, 44, Item.ICE_STONE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(52, 48, Item.BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(65, 39, Item.STAR_PIECE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(50, 43, Item.MAX_REVIVE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(48, 30, Item.BIG_NUGGET, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(56, 26, Item.SNOWBALL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(50, 25, Item.PP_MAX, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(52, 45, Item.ICE_CRYSTAL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(65, 35, Item.STAR_PIECE, mapNum);
+		
+		mapNum = 213;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = MintSetup(11, 68, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(15, 76, Item.DAMAGED_BULB, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(27, 68, Item.THROAT_SPRAY, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(20, 85, Item.MIRACLE_SEED, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(25, 80, Item.NUGGET, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(30, 93, Item.CELL_BATTERY, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(33, 71, Item.PP_UP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(43, 82, Item.SUPER_POTION, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(52, 79, Item.RUSTY_BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(42, 84, Item.RARE_CANDY, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(38, 90, Item.IRON_BALL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(59, 84, Item.BIG_MUSHROOM, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(54, 79, Item.SOFT_SAND, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(63, 76, Item.TINY_MUSHROOM, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(56, 70, Item.STAR_PIECE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(62, 71, Item.ABSORB_BULB, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(43, 68, Item.FULL_HEAL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(50, 79, Item.REVIVE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(67, 66, Item.BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(83, 73, Item.EUPHORIAN_GEM, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(90, 61, Item.BIG_MUSHROOM, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(75, 60, Item.ROOM_SERVICE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(80, 58, Item.TINY_MUSHROOM, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(50, 56, Item.RUSTY_BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(52, 45, Item.NUGGET, mapNum);
+		gp.obj[mapNum][objIndex] = MintSetup(48, 49, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(48, 58, Item.BRIGHT_POWDER, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(32, 59, Item.LAGGING_TAIL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(23, 38, Item.PP_MAX, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(36, 44, Item.LIGHT_CLAY, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(37, 38, Item.HYPER_POTION, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(44, 34, Item.LUXURY_BALL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(60, 35, Item.FOCUS_SASH, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(75, 36, Item.STAR_PIECE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(73, 26, Item.FLOAT_STONE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(41, 18, Item.AIR_BALLOON, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(66, 12, Item.QUICK_BALL, mapNum);
+		
+		mapNum = 215;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(45, 80, Item.REVIVE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(33, 82, Item.TINY_MUSHROOM, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(26, 79, Item.REPEL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(36, 74, Item.POTION, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(45, 65, Item.BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(56, 65, Item.BIG_NUGGET, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(63, 81, Item.EUPHORIAN_GEM, mapNum);
+		gp.obj[mapNum][objIndex] = MintSetup(69, 49, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(56, 44, Item.BIG_MUSHROOM, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(42, 51, Item.GOLD_BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = MintSetup(31, 50, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(29, 54, Item.FOCUS_SASH, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(27, 67, Item.RELIC_SILVER, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(76, 64, Item.ROCKY_HELMET, mapNum);
 	}
 
 	public void setNPC() {
@@ -2557,11 +2702,16 @@ public class AssetSetter {
 		// Nurses
 		gp.npc[153][index] = NPCSetup(NPC_NURSE, 31, 37, "", "", -1);
 		gp.npc[153][index] = NPCSetup(NPC_PC, 36, 35, "", "", -1);
+		gp.npc[216][index] = NPCSetup(NPC_NURSE, 31, 37, "", "", -1);
+		gp.npc[216][index] = NPCSetup(NPC_PC, 36, 35, "", "", -1);
 		
 		// Clerks
 		gp.npc[154][index] = NPCSetup(NPC_CLERK, 27, 39, "", "", -1);
 		gp.npc[154][index] = NPCSetup(NPC_BALL, 27, 38, "", "", -1);
 		gp.npc[155][index] = SetupClerk(NPC_MARKET, 31, 41, Item.ABILITY_CAPSULE, Item.TM66);
+		gp.npc[217][index] = NPCSetup(NPC_CLERK, 27, 39, "", "", -1);
+		gp.npc[217][index] = NPCSetup(NPC_BALL, 27, 38, "", "", -1);
+		gp.npc[218][index] = SetupClerk(NPC_MARKET, 31, 41, Item.RARE_CANDY, Item.PP_MAX, Item.ABILITY_PATCH);
 		
 		mapNum = 159;
 		index = 0;
@@ -2894,6 +3044,59 @@ public class AssetSetter {
 		mapNum = 211;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(MINING, "Miner", 50, 59, "", mapNum);
+		
+		mapNum = 213;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(LADY_LEFT, 37, 86, "", "", 513);
+		gp.npc[mapNum][index] = NPCSetup(HIKER_LEFT, 39, 68, "", "", 514);
+		gp.npc[mapNum][index] = NPCSetup(EXPLORER_UP, 40, 81, "", "", 515);
+		gp.npc[mapNum][index] = NPCSetup(ATHLETE_LEFT, 50, 86, "", "", 516);
+		gp.npc[mapNum][index] = NPCSetup(PICKNICKER_LEFT, 57, 73, "", "", 517);
+		gp.npc[mapNum][index] = NPCSetup(HIKER_LEFT, 59, 67, "", "", 518);
+		gp.npc[mapNum][index] = NPCSetup(GENTLEMAN_DOWN, 69, 76, "", "", 519);
+		gp.npc[mapNum][index] = NPCSetup(MAGICIAN_M_RIGHT, 76, 66, "", "", 520);
+		gp.npc[mapNum][index] = NPCSetup(ATHLETE_UP, 83, 63, "", "", 521);
+		gp.npc[mapNum][index] = NPCSetup(EXPLORER_RIGHT, 75, 57, "", "", 522);
+		gp.npc[mapNum][index] = NPCSetup(LADY_UP, 59, 60, "", "", 523);
+		gp.npc[mapNum][index] = NPCSetup(MANIAC_RIGHT, 38, 56, "", "", 524);
+		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_LEFT, 37, 53, "", "", 525);
+		gp.npc[mapNum][index] = NPCSetup(HIKER_DOWN, 29, 47, "", "", 526);
+		gp.npc[mapNum][index] = NPCSetup(GENTLEMAN_LEFT, 40, 45, "", "", 527);
+		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_M_DOWN, 44, 37, "", "", 528);
+		gp.npc[mapNum][index] = NPCSetup(FISHERMAN_RIGHT, 50, 35, "", "", 529);
+		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_DOWN, 66, 35, "", "", 530);
+		gp.npc[mapNum][index] = NPCSetup(HIKER_UP, 63, 30, "", "", 531);
+		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_DOWN, 48, 16, "", "", 532);
+		gp.npc[mapNum][index] = NPCSetup(NPC_NURSE_FULL, 29, 81, "", "", -1);
+		gp.npc[mapNum][index] = NPCSetup(NPC_PC, 45, 71, "", "", -1);
+		gp.npc[mapNum][index] = NPCSetup(NPC_PC, 59, 39, "", "", -1);
+		gp.npc[mapNum][index++] = ITileSetup(44, 19, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(52, 19, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(46, 23, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(50, 23, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(48, 11, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(54, 11, TORCH, mapNum, mapNum);
+		
+		mapNum = 215;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(SCOTT_RIGHT, 49, 83, "", "", 533);
+		gp.npc[mapNum][index] = NPCSetup(FRED_LEFT, 53, 83, "", "", 534);
+		gp.npc[mapNum][index++] = ITileSetup(48, 95, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(54, 95, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(49, 88, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(53, 88, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(48, 85, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(54, 85, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(49, 70, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(53, 70, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(49, 65, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(53, 65, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(49, 60, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(53, 60, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(49, 55, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(53, 55, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(48, 51, TORCH, mapNum, mapNum);
+		gp.npc[mapNum][index++] = ITileSetup(54, 51, TORCH, mapNum, mapNum);
 	}
 
 	public void setInteractiveTile(int map) {
@@ -3150,8 +3353,8 @@ public class AssetSetter {
 		
 		gp.iTile[mapNum][iIndex] = ITileSetup(27, 36, FUSE_1, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(31, 35, FUSE_2, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupBarrier(31, 38, 41, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupBarrier(31, 37, 44, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupBarrier(31, 37, 41, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupBarrier(31, 38, 44, mapNum, map);
 		
 		mapNum = 78;
 		iIndex = 0;
@@ -3602,9 +3805,9 @@ public class AssetSetter {
 		mapNum = 149;
 		iIndex = 0;
 		if (!gp.player.p.flag[7][5]) {
-			gp.iTile[mapNum][iIndex] = ITileSetup(49, 68, BARRIER, mapNum, map);
-			gp.iTile[mapNum][iIndex] = ITileSetup(49, 67, BARRIER, mapNum, map);
 			gp.iTile[mapNum][iIndex] = ITileSetup(49, 66, BARRIER, mapNum, map);
+			gp.iTile[mapNum][iIndex] = ITileSetup(49, 67, BARRIER, mapNum, map);
+			gp.iTile[mapNum][iIndex] = ITileSetup(49, 68, BARRIER, mapNum, map);
 			gp.iTile[mapNum][iIndex] = ITileSetup(49, 45, BEAM_1, mapNum, map);
 			gp.iTile[mapNum][iIndex] = ITileSetup(50, 45, BEAM_2, mapNum, map);
 			gp.iTile[mapNum][iIndex] = ITileSetup(49, 44, BEAM_1, mapNum, map);
@@ -3986,6 +4189,51 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(51, 41, UP, 1, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(48, 41, RIGHT, 1, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(67, 38, UP, 1, mapNum, map);
+		
+		mapNum = 213;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(42, 87, UP, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(42, 86, UP, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(57, 77, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(51, 73, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(67, 74, UP, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(67, 75, UP, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(71, 74, UP, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(71, 75, UP, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(82, 69, LEFT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(83, 69, LEFT, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(77, 62, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(83, 58, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(78, 58, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(69, 58, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(58, 58, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(42, 55, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(33, 52, RIGHT, 3, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(34, 52, RIGHT, 3, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(35, 52, RIGHT, 3, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(30, 43, RIGHT, 3, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(31, 43, RIGHT, 3, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(32, 43, RIGHT, 3, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(36, 47, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(39, 44, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(41, 40, RIGHT, 3, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(42, 40, RIGHT, 3, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(43, 40, RIGHT, 3, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(53, 34, LEFT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(62, 39, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(74, 32, UP, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(74, 31, UP, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(48, 29, UP, 6, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(48, 28, UP, 6, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(48, 27, UP, 6, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(48, 26, UP, 6, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(48, 25, UP, 6, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(48, 24, UP, 6, mapNum, map);
+		
+		mapNum = 215;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(32, 65, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(78, 75, LEFT, 1, mapNum, map);
 	}
 
 	public void updateNPC(int map) {
@@ -4799,6 +5047,9 @@ public class AssetSetter {
 		case SCOTT_UP:
 			result = new T_Scott(gp, "up", team, messages); // scott up
 			break;
+		case SCOTT_RIGHT:
+			result = new T_Scott(gp, "right", team, messages); // scott right
+			break;
 		case TN_DOWN:
 			result = new T_TN(gp, "down", team, messages);
 			break;
@@ -4816,6 +5067,9 @@ public class AssetSetter {
 			break;
 		case FRED_UP:
 			result = new T_Fred(gp, "up", team, messages); // fred up
+			break;
+		case FRED_LEFT:
+			result = new T_Fred(gp, "left", team, messages); // fred left
 			break;
 		case NPC_MARKET:
 			result = new NPC_Market(gp);
@@ -5643,6 +5897,15 @@ public class AssetSetter {
 		
 		result.worldX = gp.tileSize*x;
 		result.worldY = gp.tileSize*y;
+		
+		if (type == BARRIER) {
+			// avoid spawning in a gate
+			int playerX = (int) Math.round(gp.player.worldX * 1.0 / gp.tileSize);
+			int playerY = (int) Math.round(gp.player.worldY * 1.0 / gp.tileSize);
+			if (playerX == x && playerY <= y + 1 && playerY >= y - 1) {
+				gp.player.worldY = (y+1) * gp.tileSize;
+			}
+		}
 		
 		iIndex++;
 		

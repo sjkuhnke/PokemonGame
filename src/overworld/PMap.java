@@ -421,16 +421,29 @@ public class PMap extends JPanel {
 	    JButton CC = new JButton("");
 	    CC.setBounds(618, 323, 68, 44);
 	    CC.setToolTipText("Checkpoint Charlie");
+	    if (locations[2]) {
+	    	CC.setBackground(Color.red);
+	    	CC.addActionListener(e -> {
+	    		fly(CC.getToolTipText(), 215, 58, 72);
+	    	});
+	    }
 	    if (locations[11]) CC.setBackground(Color.red);
 	    if (loc == 46) CC.setBackground(Color.yellow);
 	    add(CC);
 	    
 	    JButton R43 = new JButton("");
-	    R43.setBounds(437, 338, 181, 15);
+	    R43.setBounds(437, 338, 70, 15);
 	    R43.setToolTipText("Route 43");
 	    R43.setBackground(new Color(153, 255, 102));
 	    if (loc == 45) R43.setBackground(Color.yellow);
 	    add(R43);
+	    
+	    JButton VR = new JButton("");
+	    VR.setBounds(507, 338, 111, 15);
+	    VR.setToolTipText("Victory Road");;
+	    VR.setBackground(new Color(153, 255, 102));
+	    if (loc == 48) VR.setBackground(Color.yellow);
+	    add(VR);
 	    
 	    JGradientButton MtJ = new JGradientButton("");
 	    MtJ.setBounds(120, 360, 74, 81);
@@ -1323,6 +1336,27 @@ public class PMap extends JPanel {
 		case 211:
 			PlayerCharacter.currentMapName = "Shadow Ravine (-2B)";
 			return 25;
+		case 212:
+			PlayerCharacter.currentMapName = "Route 43";
+			return 45;
+		case 213:
+			PlayerCharacter.currentMapName = "Victory Road";
+			return 48;
+		case 214:
+			PlayerCharacter.currentMapName = "Victory Road";
+			return 48;
+		case 215:
+			PlayerCharacter.currentMapName = "Checkpoint Charlie";
+			return 46;
+		case 216:
+			PlayerCharacter.currentMapName = "Checkpoint Charlie";
+			return 46;
+		case 217:
+			PlayerCharacter.currentMapName = "Checkpoint Charlie";
+			return 46;
+		case 218:
+			PlayerCharacter.currentMapName = "Checkpoint Charlie";
+			return 46;
 		}
 		
 		return -1;

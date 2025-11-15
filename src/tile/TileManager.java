@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.imageio.ImageIO;
 
@@ -23,7 +22,6 @@ public class TileManager {
 	
 	public static Rectangle[] collisionRectangles;
 	public static String[] mapNames = new String[GamePanel.MAX_MAP];
-	public List<Integer> lavaMaps = new ArrayList<>();
 	
 	private static final int OVER = -1;
 	
@@ -269,6 +267,15 @@ public class TileManager {
 		loadMap("/maps/mystery_peakB.txt", 209, false);
 		loadMap("/maps/mindagan0B.txt", 210, true);
 		loadMap("/maps/shadow-2B.txt", 211, true);
+		loadMap("/maps/gate02.txt", 212, true);
+		loadMap("/maps/map22.txt", 213, true);
+		loadMap("/maps/gate01.txt", 214, true);
+		loadMap("/maps/map23.txt", 215, true);
+		loadMap("/maps/pc.txt", 216, true);
+		loadMap("/maps/mart.txt", 217, true);
+		loadMap("/maps/house01.txt", 218, true);
+		loadMap("/maps/house01.txt", 219, true);
+		loadMap("/maps/house01.txt", 220, true);
 	}
 	
 	private void setupCollisionRectangles() {
@@ -1398,7 +1405,7 @@ public class TileManager {
 		setup(1133, true);
 		setup(1134, false, OVER);
 		setup(1135, false, OVER);
-//		setup(1136, true);
+		setup(1136, false);
 //		setup(1137, true);
 //		setup(1138, true);
 //		setup(1139, true);
@@ -1628,8 +1635,6 @@ public class TileManager {
 	public void loadMap(String filePath, int map, boolean canFly) {
 		addName(filePath, map);
 		boolean cave = false;
-		boolean lava = false;
-		List<Integer> lavaTiles = this.getLavaTiles();
 		try {
 			InputStream is = getClass().getResourceAsStream(filePath);
 			BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -1646,10 +1651,6 @@ public class TileManager {
 					
 					int num = Integer.parseInt(numbers[col]);
 					if (!cave && tile[num] instanceof CaveTile) cave = true;
-					if (!lava && lavaTiles.contains(num)) {
-						lava = true;
-						lavaMaps.add(map);
-					}
 					
 					mapTileNum[map][col][row] = num;
 					col++;

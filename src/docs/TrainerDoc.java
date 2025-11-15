@@ -375,6 +375,11 @@ public class TrainerDoc {
 					}
 					if (p.ability == Ability.NORMALIZE) mtype = PType.NORMAL;
 				}
+	            if (p.moveset[i] != null && p.moveset[i].getPPUps() > 0) {
+					for (int pp = 0; pp < p.moveset[i].getPPUps(); pp++) {
+						moveName += "+";
+					}
+				}
 
 	            Row moveRow;
 	            switch (i) {
@@ -517,6 +522,11 @@ public class TrainerDoc {
 							if (p.moveset[i] != null) {
 								Move move = p.moveset[i].move;
 								mName += move == Move.HIDDEN_POWER || move == Move.RETURN ? move.toString() + " " + p.determineHPType().toString() : move.toString();
+								if (p.moveset[i] != null && p.moveset[i].getPPUps() > 0) {
+									for (int pp = 0; pp < p.moveset[i].getPPUps(); pp++) {
+										mName += "\u2191";
+									}
+								}
 								if (i != 3) mName += ", ";
 							}
 						}

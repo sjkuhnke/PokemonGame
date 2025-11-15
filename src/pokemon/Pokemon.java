@@ -10778,28 +10778,39 @@ public class Pokemon implements Serializable {
 				PType type = null;
 				for (int j = 0; j < 4; j++) {
 					String moveString = j >= moveStrings.length ? "" : moveStrings[j];
-					if (moveString.equals("-")) {
+					String moveName = moveString.replace("+", "");
+					if (moveName.equals("-")) {
 						moves = null; // just use default level up moveset
 						break;
 					}
-					if (moveString.contains("HIDDEN_POWER")) {
-						if (moveString.length() > 12) {
-							type = PType.valueOf(moveString.substring(13));
+					if (moveName.contains("HIDDEN_POWER")) {
+						if (moveName.length() > 12) {
+							type = PType.valueOf(moveName.substring(13));
 						} else {
 							type = PType.GALACTIC;
 						}
 						moves[j] = new Moveslot(Move.HIDDEN_POWER);
-					} else if (moveString.contains("RETURN")) {
-						if (moveString.length() > 6) {
-							type = PType.valueOf(moveString.substring(7));
+					} else if (moveName.contains("RETURN")) {
+						if (moveName.length() > 6) {
+							type = PType.valueOf(moveName.substring(7));
 						} else {
 							type = PType.GALACTIC;
 						}
 						moves[j] = new Moveslot(Move.RETURN);
 					} else {
-						moves[j] = moveString.isEmpty() ? null : new Moveslot(Move.valueOf(moveString));
+						moves[j] = moveString.isEmpty() ? null : new Moveslot(Move.valueOf(moveName));
 					}
-					
+					// check for PP ups
+					int ppUp = (int) moveString.chars().filter(num -> num == '+').count();
+					while (ppUp > 0 && moves[j] != null) {
+						int beforePP = moves[j].maxPP;
+						moves[j].ppUp();
+						if (moves[j].maxPP <= beforePP) {
+							System.err.println("Warning: move " + moves[j].move + " at index " + index + " has an extra PP up: PP went from " + beforePP + " to " + moves[j].maxPP);
+						}
+						ppUp--;
+					}
+					if (moves[j] != null) moves[j].currentPP = moves[j].maxPP;
 				}
 				Pokemon pokemon = staticEnc ? new Pokemon(id, level, true) : new Pokemon(id, level, false, true);
 				if (moves != null) {
@@ -10808,7 +10819,7 @@ public class Pokemon implements Serializable {
 				if (pokemon.id != 235) { // dragowrath always has perfect iv's and a neutral nature
 					if (staticEnc) {
 						pokemon.setStaticIVs(catchable);
-					} else {
+					} else if (nature == null) {
 						long seed = pokemon.generateSeed(pokemon.id, pokemon.level, pokemon.moveset);
 						pokemon.setNature(seed);
 					}

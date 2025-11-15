@@ -1095,6 +1095,34 @@ public class EventHandler {
 			// Shadow Ravine -2 -> -2B
 			if (hit(102,46,31)) teleport(211, 50, 63, false);
 			if (hit(211,50,64)) teleport(102, 46, 32, false);
+			
+			// Route 43 -> Victory Road Gate
+			if (hit(119,74,21, false)) teleport(212, 23, 40,false);
+			if (hit(212,22,40)) teleport(119, 73, 21,false);
+			if (hit(212,37,40)) teleport(213, 10, 86,false);
+			if (hit(213,9,86, false)) teleport(212, 36, 40,false);
+			
+			// Victory Road -> Checkpoint Charlie
+			if (hit(213,51,11, false)) teleport(214, 31, 45,false);
+			if (hit(214,31,46)) teleport(213, 51, 12,false);
+			if (hit(214,31,33)) teleport(215, 51, 89,false);
+			if (hit(215,51,90, false)) teleport(214, 31, 34,false);
+			
+			// Checkpoint Charlie PC
+			if (hit(215,58,71)) teleport(216, 31, 45,false);
+			if (hit(216,31,46)) teleport(215, 58, 72,false);
+			
+			// Checkpoint Charlie Shop
+			if (hit(215,44,71)) teleport(217, 31, 45,false);
+			if (hit(217,31,46)) teleport(215, 44, 72,false);
+			
+			// Checkpoint Charlie Market + Houses
+			if (hit(215,60,53)) teleport(218, 31, 45,false);
+			if (hit(218,31,46)) teleport(215, 60, 54,false);
+			if (hit(215,65,53)) teleport(219, 31, 45,false);
+			if (hit(219,31,46)) teleport(215, 65, 54,false);
+			if (hit(215,66,63)) teleport(220, 31, 45,false);
+			if (hit(220,31,46)) teleport(215, 66, 64,false);
 		}
 		// Cutscene with Ryder/Arthra in front of Spaceship
 		if (!gp.player.p.flag[7][20] && hit(152,67,78,true)) gp.player.interactNPC(gp.npc[152][5], false);

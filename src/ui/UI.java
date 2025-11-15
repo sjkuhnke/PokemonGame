@@ -6523,7 +6523,7 @@ public class UI extends AbstractUI {
 		}
 	}
 	
-	private void drawDexNav() {		
+	private void drawDexNav() {
 		int x = gp.tileSize;
 		int y = 0;
 		int winX = x;
@@ -6531,15 +6531,24 @@ public class UI extends AbstractUI {
 		int width = gp.tileSize * 14;
 		int spriteWidth = 80;
 		int spriteHeight = 80;
+		int rowHeight = gp.tileSize;
 		
 		String[] labels = new String[] {"Standard", "Fishing", "Surfing", "Lava Surf"};
 		int index = 0;
 		int totalHeight = 0;
+		int maxPerRow = 8;
 		
 		for (ArrayList<Encounter> es : encounters) {
 			int size = es.size();
+			if (size > 48) {
+				x = 0;
+				winX = x;
+				width = gp.screenWidth;
+				maxPerRow = 9;
+				rowHeight = (int) (gp.tileSize * 0.9);
+			}
 			if (size > 0) {
-				int height = ((((size - 1) / 8) + 1) * 2) * gp.tileSize;
+				int height = ((((size - 1) / maxPerRow) + 1) * 2) * rowHeight;
 				height += gp.tileSize / 2;
 				totalHeight += height;
 			}
@@ -6562,7 +6571,7 @@ public class UI extends AbstractUI {
 				index++;
 				continue;
 			}
-			int height = ((((size - 1) / 8) + 1) * 2) * gp.tileSize;
+			int height = ((((size - 1) / maxPerRow) + 1) * 2) * rowHeight;
 			height += gp.tileSize / 2;
 			drawSubWindow(winX, y, width, height);
 			String label = labels[index];
@@ -6588,7 +6597,7 @@ public class UI extends AbstractUI {
 				
 				g2.setFont(g2.getFont().deriveFont(16F));
 				g2.drawString(String.format("%.0f%%", e.getEncounterChance() * 100), x + 60, y + 75);
-				if ((i + 1) % 8 == 0) {
+				if ((i + 1) % maxPerRow == 0) {
 					x = winX + gp.tileSize / 3;
 					y += spriteHeight;
 				} else {

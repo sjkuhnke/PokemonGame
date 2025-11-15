@@ -12,6 +12,7 @@ public class Moveslot implements Serializable {
 	
 	public int currentPP;
 	public int maxPP;
+	private int ppUps; // just here for docs
 	public Move move;
 
 	public Moveslot(Move m) {
@@ -49,6 +50,11 @@ public class Moveslot implements Serializable {
 
 	public void ppUp() {
 		this.maxPP += Math.max((this.move.pp / 5), 1);
+		this.ppUps++;
+	}
+	
+	public int getPPUps() {
+		return this.ppUps;
 	}
 	
 	public void maxPP() {
