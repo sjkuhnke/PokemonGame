@@ -4334,7 +4334,7 @@ public class UI extends AbstractUI {
 			g2.fillPolygon(new int[] {x2, (x2 + width2), (x2 + width2 / 2)}, new int[] {y2 + height2, y2 + height2, y2}, 3);
 		}
 		// Subwindow for item options
-		if (!showMoveOptions) {
+		if (!showMoveOptions && !showMessage) {
 			if (gp.keyH.aPressed) {
 				gp.keyH.aPressed = false;
 				if (bagState == 0 && gp.keyH.ctrlPressed) {
@@ -4384,30 +4384,32 @@ public class UI extends AbstractUI {
 			int regWidth = gp.tileSize * 3;
 			drawRegisterMenu(regX - gp.tileSize, regY, (int) (regWidth + gp.tileSize*1.25));
 		} else {
-			if (gp.keyH.sPressed) {
-				gp.keyH.sPressed = false;
-				subState = 0;
-				selectedBagNum = -1;
-				partyNum = 0;
-				commandNum = 0;
-			}
-			if (gp.keyH.leftPressed) {
-				gp.keyH.leftPressed = false;
-				currentPocket--;
-				if (currentPocket < Item.MEDICINE) {
-					currentPocket = Item.KEY_ITEM;
+			if (!showMessage) {
+				if (gp.keyH.sPressed) {
+					gp.keyH.sPressed = false;
+					subState = 0;
+					selectedBagNum = -1;
+					partyNum = 0;
+					commandNum = 0;
 				}
-				selectedBagNum = -1;
-				currentItems = gp.player.p.getItems(currentPocket);
-			}
-			if (gp.keyH.rightPressed) {
-				gp.keyH.rightPressed = false;
-				currentPocket++;
-				if (currentPocket > Item.KEY_ITEM) {
-					currentPocket = Item.MEDICINE;
+				if (gp.keyH.leftPressed) {
+					gp.keyH.leftPressed = false;
+					currentPocket--;
+					if (currentPocket < Item.MEDICINE) {
+						currentPocket = Item.KEY_ITEM;
+					}
+					selectedBagNum = -1;
+					currentItems = gp.player.p.getItems(currentPocket);
 				}
-				selectedBagNum = -1;
-				currentItems = gp.player.p.getItems(currentPocket);
+				if (gp.keyH.rightPressed) {
+					gp.keyH.rightPressed = false;
+					currentPocket++;
+					if (currentPocket > Item.KEY_ITEM) {
+						currentPocket = Item.MEDICINE;
+					}
+					selectedBagNum = -1;
+					currentItems = gp.player.p.getItems(currentPocket);
+				}
 			}
 			if (gp.keyH.shiftPressed && bagState == 0) {
 				int toolX = 0;

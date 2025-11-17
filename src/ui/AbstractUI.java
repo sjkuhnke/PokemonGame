@@ -717,8 +717,8 @@ public abstract class AbstractUI {
 								if (p.getAbility(Pokemon.field) == Ability.REFRIGERATE) mtype = PType.ICE;
 								if (p.getAbility(Pokemon.field) == Ability.PIXILATE) mtype = PType.LIGHT;
 							}
-							if (p.getAbility(Pokemon.field) == Ability.NORMALIZE) mtype = PType.NORMAL;
 						}
+						if (p.getAbility(Pokemon.field) == Ability.NORMALIZE) mtype = PType.NORMAL;
 						Color color = mtype.getColor();
 						g2.setColor(color);
 						g2.fillRoundRect(x, y, moveWidth, moveHeight, 10, 10);
@@ -886,8 +886,8 @@ public abstract class AbstractUI {
 					if (p.getAbility(Pokemon.field) == Ability.REFRIGERATE) type = PType.ICE;
 					if (p.getAbility(Pokemon.field) == Ability.PIXILATE) type = PType.LIGHT;
 				}
-				if (p.getAbility(Pokemon.field) == Ability.NORMALIZE) type = PType.NORMAL;
 			}
+			if (p.getAbility(Pokemon.field) == Ability.NORMALIZE) type = PType.NORMAL;
 		}
 		g2.drawImage(type.getImage2(), x, y, null);
 		
@@ -1121,8 +1121,8 @@ public abstract class AbstractUI {
 					if (p.getAbility(Pokemon.field) == Ability.REFRIGERATE) mtype = PType.ICE;
 					if (p.getAbility(Pokemon.field) == Ability.PIXILATE) mtype = PType.LIGHT;
 				}
-				if (p.getAbility(Pokemon.field) == Ability.NORMALIZE) mtype = PType.NORMAL;
 			}
+			if (p.getAbility(Pokemon.field) == Ability.NORMALIZE) mtype = PType.NORMAL;
 			Color color = mtype.getColor();
 			g2.setColor(color);
 			g2.fillRoundRect(x, y, moveWidth, moveHeight, 10, 10);
@@ -1154,10 +1154,9 @@ public abstract class AbstractUI {
 						if (p.getAbility(Pokemon.field) == Ability.GALVANIZE) mtype = PType.ELECTRIC;
 						if (p.getAbility(Pokemon.field) == Ability.REFRIGERATE) mtype = PType.ICE;
 						if (p.getAbility(Pokemon.field) == Ability.PIXILATE) mtype = PType.LIGHT;
-					} else {
-						if (p.getAbility(Pokemon.field) == Ability.NORMALIZE) mtype = PType.NORMAL;
 					}
 				}
+				if (p.getAbility(Pokemon.field) == Ability.NORMALIZE) mtype = PType.NORMAL;
 				Color color = mtype.getColor();
 				boolean canRelearn = Move.getMoveTutorMoves().contains(ms.move) || movebankList.contains(ms.move) ||
 						(gp.player.p.hasTM(ms.move) && Pokemon.getLearned(p.id - 1, Item.getTMMoves().indexOf(ms.move)));

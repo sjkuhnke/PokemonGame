@@ -1660,8 +1660,8 @@ public class BattleUI extends AbstractUI {
 						if (user.getAbility(Pokemon.field) == Ability.REFRIGERATE) mtype = PType.ICE;
 						if (user.getAbility(Pokemon.field) == Ability.PIXILATE) mtype = PType.LIGHT;
 					}
-					if (user.getAbility(Pokemon.field) == Ability.NORMALIZE) mtype = PType.NORMAL;
 				}
+				if (user.getAbility(Pokemon.field) == Ability.NORMALIZE) mtype = PType.NORMAL;
 		        Color color = mtype.getColor();
 		        if (!user.moveUsable(moves[i].move)) color = new Color(100, 100, 100, 200);
 		        g2.setColor(color);
