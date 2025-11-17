@@ -2703,28 +2703,28 @@ public class Pokemon implements Serializable {
 		if (move == Move.WEATHER_BALL) moveType = determineWBType(field);
 		if (move == Move.TERRAIN_PULSE) moveType = determineTPType(field);
 		
+		if (field.contains(field.fieldEffects, Effect.ION) && moveType == PType.NORMAL) {
+			moveType = PType.ELECTRIC;
+		}
+		
 		if (this.getAbility(field) == Ability.NORMALIZE) {
 			moveType = PType.NORMAL;
 			bp *= 1.2;
 		}
 		
-		if (this.getAbility(field) == Ability.PIXILATE && moveType == PType.NORMAL) {
+		if (this.getAbility(field) == Ability.PIXILATE && moveType == PType.NORMAL && move.isAttack()) {
 			moveType = PType.LIGHT;
 			bp *= 1.2;
 		}
 		
-		if (this.getAbility(field) == Ability.GALVANIZE && moveType == PType.NORMAL) {
+		if (this.getAbility(field) == Ability.GALVANIZE && moveType == PType.NORMAL && move.isAttack()) {
 			moveType = PType.ELECTRIC;
 			bp *= 1.2;
 		}
 		
-		if (this.getAbility(field) == Ability.REFRIGERATE && moveType == PType.NORMAL) {
+		if (this.getAbility(field) == Ability.REFRIGERATE && moveType == PType.NORMAL && move.isAttack()) {
 			moveType = PType.ICE;
 			bp *= 1.2;
-		}
-		
-		if (field.contains(field.fieldEffects, Effect.ION) && moveType == PType.NORMAL) {
-			moveType = PType.ELECTRIC;
 		}
 		
 		if (this.getAbility(field) == Ability.PROTEAN && moveType != PType.UNKNOWN) {
@@ -5673,6 +5673,9 @@ public class Pokemon implements Serializable {
 			break;
 		case FLOODLIGHT:
 			fail = field.setHazard(foe.getFieldEffects(), field.new FieldEffect(Effect.FLOODLIGHT));
+			if (!fail) {
+				stat(foe, 6, -1, this);
+			}
 			break;
 		case FOCUS_ENERGY:
 			int critChance = this.getStatusNum(Status.CRIT_CHANCE);
@@ -7204,28 +7207,28 @@ public class Pokemon implements Serializable {
 		if (move == Move.WEATHER_BALL) moveType = determineWBType(field);
 		if (move == Move.TERRAIN_PULSE) moveType = determineTPType(field);
 		
+		if (field.contains(field.fieldEffects, Effect.ION) && moveType == PType.NORMAL) {
+			moveType = PType.ELECTRIC;
+		}
+		
 		if (this.getAbility(field) == Ability.NORMALIZE) {
 			moveType = PType.NORMAL;
 			bp *= 1.2;
 		}
 		
-		if (this.getAbility(field) == Ability.PIXILATE && moveType == PType.NORMAL) {
+		if (this.getAbility(field) == Ability.PIXILATE && moveType == PType.NORMAL && move.isAttack()) {
 			moveType = PType.LIGHT;
 			bp *= 1.2;
 		}
 		
-		if (this.getAbility(field) == Ability.GALVANIZE && moveType == PType.NORMAL) {
+		if (this.getAbility(field) == Ability.GALVANIZE && moveType == PType.NORMAL && move.isAttack()) {
 			moveType = PType.ELECTRIC;
 			bp *= 1.2;
 		}
 		
-		if (this.getAbility(field) == Ability.REFRIGERATE && moveType == PType.NORMAL) {
+		if (this.getAbility(field) == Ability.REFRIGERATE && moveType == PType.NORMAL && move.isAttack()) {
 			moveType = PType.ICE;
 			bp *= 1.2;
-		}
-		
-		if (field.contains(field.fieldEffects, Effect.ION) && moveType == PType.NORMAL) {
-			moveType = PType.ELECTRIC;
 		}
 		
 		if (foe.hasStatus(Status.MAGIC_REFLECT) && (move != Move.BRICK_BREAK && move != Move.MAGIC_FANG && move != Move.PSYCHIC_FANGS)) {
@@ -8752,8 +8755,8 @@ public class Pokemon implements Serializable {
 							if (this.getAbility(field) == Ability.REFRIGERATE) mtype = PType.ICE;
 							if (this.getAbility(field) == Ability.PIXILATE) mtype = PType.LIGHT;
 						}
-						if (this.getAbility(field) == Ability.NORMALIZE) mtype = PType.NORMAL;
 					}
+					if (this.getAbility(field) == Ability.NORMALIZE) mtype = PType.NORMAL;
 			        Color color = mtype.getColor();
 	                moveButton.setBackground(color);
 	                moveButton.setForeground(moveset[i].getPPColor());

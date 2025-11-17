@@ -1520,8 +1520,8 @@ public enum Item {
 						if (current.getAbility(field) == Ability.REFRIGERATE) mtype = PType.ICE;
 						if (current.getAbility(field) == Ability.PIXILATE) mtype = PType.LIGHT;
 					}
-					if (current.getAbility(field) == Ability.NORMALIZE) mtype = PType.NORMAL;
 				}
+				if (current.getAbility(field) == Ability.NORMALIZE) mtype = PType.NORMAL;
 		        Color color = mtype.getColor();
 		        moves[k].setSolid(false);
         		moves[k].setBackground(color);

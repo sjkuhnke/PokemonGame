@@ -367,8 +367,8 @@ public class TrainerDoc {
 	                (m == Move.HIDDEN_POWER || m == Move.RETURN) ? m == Move.HIDDEN_POWER ? "HP " + p.determineHPType() : m + " " + p.determineHPType() : m.toString();
 	            PType mtype = m != null ? m.mtype : null;
 	            if (m == Move.HIDDEN_POWER || m == Move.RETURN) mtype = p.determineHPType();
-	            if (m != null && m.isAttack()) {
-					if (mtype == PType.NORMAL) {
+	            if (m != null) {
+					if (mtype == PType.NORMAL && m.isAttack()) {
 						if (p.ability == Ability.GALVANIZE) mtype = PType.ELECTRIC;
 						if (p.ability == Ability.REFRIGERATE) mtype = PType.ICE;
 						if (p.ability == Ability.PIXILATE) mtype = PType.LIGHT;

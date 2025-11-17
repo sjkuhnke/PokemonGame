@@ -195,7 +195,7 @@ public enum Move {
 	FLASH_DARTS(25,90,0,1,0,0,PType.LIGHT,"Hits 2-5 times, each hit has a boosted crit rate",false,15),
 	FLASH_RAY(40,100,50,0,1,0,PType.LIGHT,"% chance to lower foe's Accuracy by 1",false,25),
 	FLATTER(0,100,0,0,2,0,PType.DARK,"Confuses foe, and raises their Sp.Atk by 2",false,15),
-	FLOODLIGHT(0,1000,0,0,2,0,PType.LIGHT,"Sets a floodlight on opponents side. This will cause a foe switching in to have their Evasion lowered by 1 stage",false,10),
+	FLOODLIGHT(0,1000,0,0,2,0,PType.LIGHT,"Sets a floodlight on opponents side while lowering the current foe's Evasion by 1. Causing a foe switching in to have their Evasion lowered by 1 stage as well",false,10),
 	FLIP_TURN(60,100,0,0,0,0,PType.WATER,"Causes user to switch out after use",true,10),
 	FLY(100,100,0,0,0,0,PType.FLYING,"Goes into the air on the first turn, and attacks on the second",true,5),
 	FOCUS_BLAST(120,70,10,0,1,0,PType.FIGHTING,"% to lower foe's Sp.Def",false,5),
@@ -846,8 +846,8 @@ public enum Move {
 				if (user.getAbility(field) == Ability.REFRIGERATE) type = PType.ICE;
 				if (user.getAbility(field) == Ability.PIXILATE) type = PType.LIGHT;
 			}
-			if (user.getAbility(field) == Ability.NORMALIZE) type = PType.NORMAL;
 		}
+		if (user.getAbility(field) == Ability.NORMALIZE) type = PType.NORMAL;
         Color color = type.getColor();
 	    JGradientButton typeButton = new JGradientButton(type.toString());
 	    typeButton.setBackground(color);
