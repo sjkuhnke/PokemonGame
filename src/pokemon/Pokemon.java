@@ -1334,6 +1334,9 @@ public class Pokemon implements Serializable {
 			if (this.getItem(field) == Item.RED_CARD && foe.trainer != null && foe.trainer.hasValidMembers()) {
 				score += calcStatBoostScore(foe);
 			}
+			if (this.getItem(field) == Item.EJECT_BUTTON && foe.trainer != null && foe.trainer.hasValidMembers()) {
+				score += calcStatBoostScore(foe);
+			}
 		}
 		
 		if (this.status != Status.HEALTHY && this.getAbility(field) == Ability.NATURAL_CURE) {
@@ -1538,7 +1541,7 @@ public class Pokemon implements Serializable {
 				score += foeMaxDamage.getSecond() * 1.5;
 			}
 		}
-		if (foeCanKO) {
+		if (foeCanKO || this.getItem(field) == Item.EJECT_BUTTON || (this.getAbility(field) == Ability.SLIPSTREAM && this.currentHP - foeMaxDamage.getFirst() <= this.getStat(0))) {
 			// pick a last-ditch move
 			if (move.hasPriority(foe) && this.getFaster(foe, 0, 0, field) == foe && ((move.cat == 2 && howUseful == 1) || damagePercent > 0)) {
 				score += 55;

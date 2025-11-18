@@ -3079,8 +3079,8 @@ public class AssetSetter {
 		
 		mapNum = 215;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(SCOTT_RIGHT, 49, 83, "", "", 533);
-		gp.npc[mapNum][index] = NPCSetup(FRED_LEFT, 53, 83, "", "", 534);
+		gp.npc[mapNum][index] = NPCSetup(SCOTT_RIGHT, 49, 83, "", "Should never show", 533);
+		gp.npc[mapNum][index] = NPCSetup(FRED_LEFT, 53, 83, "", "Should never show", 534);
 		gp.npc[mapNum][index++] = ITileSetup(48, 95, TORCH, mapNum, mapNum);
 		gp.npc[mapNum][index++] = ITileSetup(54, 95, TORCH, mapNum, mapNum);
 		gp.npc[mapNum][index++] = ITileSetup(49, 88, TORCH, mapNum, mapNum);
@@ -5553,6 +5553,9 @@ public class AssetSetter {
 			case SCOTT_UP:
 				result.setupImages("/npc/scott", true);
 				result.setDirection("up");
+			case SCOTT_RIGHT:
+				result.setupImages("/npc/scott", true);
+				result.setDirection("right");
 				break;
 			case FRED_DOWN:
 				result.setupImages("/npc/fred", true);
@@ -5561,6 +5564,10 @@ public class AssetSetter {
 			case FRED_UP:
 				result.setupImages("/npc/fred", true);
 				result.setDirection("up");
+				break;
+			case FRED_LEFT:
+				result.setupImages("/npc/fred", true);
+				result.setDirection("left");
 				break;
 			case UP_XURKITREE:
 				result.setupImages("/npc/cage_critter");

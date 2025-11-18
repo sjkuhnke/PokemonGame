@@ -249,6 +249,14 @@ public class Script {
 			Task.addTask(Task.DIALOGUE, npc, "Oh, you're his son, and you're helping him research? Well, in that case, take this one as well. This should help your guys' study!");
 			p.flag[0][6] = true;
 			Item[] items = new Item[] {Item.MIRACLE_SEED, Item.CHARCOAL, Item.MYSTIC_WATER};
+			
+			Random rand = new Random(gp.aSetter.generateSeed(p.getID(), npc.worldX / gp.tileSize, npc.worldY / gp.tileSize, gp.currentMap));
+			int secondStarter = -1;
+			do {
+				secondStarter = rand.nextInt(3);
+			} while (secondStarter == p.starter);
+			p.secondStarter = secondStarter;
+			
 			Pokemon result = new Pokemon(((p.secondStarter + 1) * 3) - 2, 5, true, false);
 			Task.addTask(Task.TEXT, "You recieved " + result.name() + "!");
 			Task t = Task.addTask(Task.GIFT, "", result);
@@ -3670,6 +3678,46 @@ public class Script {
 			t.start = 152;
 			t.color = Color.BLACK;
 			t.wipe = true;
+		});
+		
+		scriptMap.put(215.1, (npc) -> { // scott 5
+			Task.addTask(Task.DIALOGUE, npc, "Here, we breed and house rare Pokemon to fight against their extinction.");
+			Task.addTask(Task.DIALOGUE, npc, "...What's that? You have a " + Pokemon.getName(((p.starter + 1) * 3) - 2) + "?? That's insanely rare. Did you get that from the professor?");
+			Task.addTask(Task.DIALOGUE, npc, "Oh, you're his son, and you're helping him research? Well, in that case, take this one as well. This should help your guys' study!");
+			p.flag[0][6] = true;
+			Item[] items = new Item[] {Item.MIRACLE_SEED, Item.CHARCOAL, Item.MYSTIC_WATER};
+			
+			Random rand = new Random(gp.aSetter.generateSeed(p.getID(), npc.worldX / gp.tileSize, npc.worldY / gp.tileSize, gp.currentMap));
+			int secondStarter = -1;
+			do {
+				secondStarter = rand.nextInt(3);
+			} while (secondStarter == p.starter);
+			p.secondStarter = secondStarter;
+			
+			Pokemon result = new Pokemon(((p.secondStarter + 1) * 3) - 2, 5, true, false);
+			Task.addTask(Task.TEXT, "You recieved " + result.name() + "!");
+			Task t = Task.addTask(Task.GIFT, "", result);
+			t.item = result.item = items[p.secondStarter];
+		});
+		
+		scriptMap.put(215.2, (npc) -> { // fred 5
+			Task.addTask(Task.DIALOGUE, npc, "...You win. Again.");
+			Task.addTask(Task.DIALOGUE, npc, "Funny thing is... this loss doesn't bother me. Not even a little.");
+			Task.addTask(Task.DIALOGUE, npc, "Oh, you're his son, and you're helping him research? Well, in that case, take this one as well. This should help your guys' study!");
+			p.flag[0][6] = true;
+			Item[] items = new Item[] {Item.MIRACLE_SEED, Item.CHARCOAL, Item.MYSTIC_WATER};
+			
+			Random rand = new Random(gp.aSetter.generateSeed(p.getID(), npc.worldX / gp.tileSize, npc.worldY / gp.tileSize, gp.currentMap));
+			int secondStarter = -1;
+			do {
+				secondStarter = rand.nextInt(3);
+			} while (secondStarter == p.starter);
+			p.secondStarter = secondStarter;
+			
+			Pokemon result = new Pokemon(((p.secondStarter + 1) * 3) - 2, 5, true, false);
+			Task.addTask(Task.TEXT, "You recieved " + result.name() + "!");
+			Task t = Task.addTask(Task.GIFT, "", result);
+			t.item = result.item = items[p.secondStarter];
 		});
 	}
 	
