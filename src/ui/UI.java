@@ -6822,12 +6822,6 @@ public class UI extends AbstractUI {
 						Task.addTask(Task.GIFT, "", starters[starter]);
 						starterConfirm = false;
 						
-						int secondStarter = -1;
-						do {
-							secondStarter = rand.nextInt(3);
-						} while (secondStarter == gp.player.p.starter);
-						gp.player.p.secondStarter = secondStarter;
-						
 						Pokemon.updateRivals();
 					} else {
 						starterConfirm = false;
