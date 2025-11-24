@@ -2,7 +2,7 @@
 setlocal enabledelayedexpansion
 
 :: Prompt for version
-set /p VERSION=Enter new version (e.g. v1.2.3): 
+set /p VERSION=Enter new version (e.g. 1.2.3): 
 
 echo.
 echo === Running InstallerPrep with version %VERSION% ===
@@ -14,11 +14,18 @@ if %errorlevel% neq 0 (
     exit /b %errorlevel%
 )
 
-echo.
-echo === Compiling Windows EXE with Launch4j ===
-"C:\Program Files (x86)\Launch4j\launch4jc.exe" tools\launch4j.xml
+echo === Building Windows EXE (GUI) ===
+"C:\Program Files (x86)\Launch4j\launch4jc.exe" tools\launch4j_gui.xml
 if %errorlevel% neq 0 (
-    echo [ERROR] Launch4j failed to create EXE. Aborting.
+    echo [ERROR] Launch4j GUI build failed. Aborting.
+    pause
+    exit /b %errorlevel%
+)
+
+echo === Building Windows EXE (Console) ===
+"C:\Program Files (x86)\Launch4j\launch4jc.exe" tools\launch4j_console.xml
+if %errorlevel% neq 0 (
+    echo [ERROR] Launch4j Console build failed. Aborting.
     pause
     exit /b %errorlevel%
 )

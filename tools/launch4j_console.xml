@@ -1,0 +1,39 @@
+<launch4jConfig>
+  <dontWrapJar>false</dontWrapJar>
+  <headerType>console</headerType>
+  <jar>dist\\PokemonXhenos-v0.8.2.jar</jar>
+  <outfile>prod/Pokemon_Xhenos_console.exe</outfile>
+  <cmdLine></cmdLine>
+  <chdir>.</chdir>
+  <priority>normal</priority>
+  <downloadUrl>https://www.shaekuhnke.com/xhenos</downloadUrl>
+  <supportUrl>https://www.shaekuhnke.com/xhenos</supportUrl>
+  <errTitle>Pokemon Xhenos Launcher Error</errTitle>
+  <stayAlive>true</stayAlive>
+  <restartOnCrash>false</restartOnCrash>
+  <manifest></manifest>
+  <icon>build/favicon.ico</icon>
+  <jre>
+    <path>jre</path>
+    <minVersion>1.8.0</minVersion>
+    <maxVersion></maxVersion>
+    <requiresJdk>false</requiresJdk>
+    <runtimeBits>64</runtimeBits>
+    <initialHeapSize>2048</initialHeapSize>
+    <maxHeapSize>16384</maxHeapSize>
+    <opt>-Dsun.java2d.d3d=false</opt>
+    <bundledJreAsFallback>true</bundledJreAsFallback>
+  </jre>
+  <versionInfo>
+    <fileVersion>0.8.2.0</fileVersion>
+    <txtFileVersion>0.8.2</txtFileVersion>
+    <productVersion>0.8.2.0</productVersion>
+    <txtProductVersion>0.8.2</txtProductVersion>
+    <fileDescription>Pokemon Xhenos</fileDescription>
+    <productName>Pokemon Xhenos</productName>
+    <companyName>Shae Kuhnke</companyName>
+    <internalName>Pokemon Xhenos</internalName>
+    <originalFilename>Pokemon_Xhenos.exe</originalFilename>
+    <copyright>© Shae Kuhnke</copyright>
+  </versionInfo>
+</launch4jConfig>

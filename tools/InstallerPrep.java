@@ -27,12 +27,68 @@ public class InstallerPrep {
             System.out.println("Renamed latest JAR to: " + jarName);
         }
 
-        Path launch4j = Paths.get("tools/launch4j.xml");
-        Path inno = Paths.get("tools/setup.iss");
-        Path plist = Paths.get("tools/mac_template/Info.plist");
+        // Update all Launch4j configs
+        Files.list(Paths.get("tools"))
+            .filter(p -> p.getFileName().toString().startsWith("launch4j_") && p.toString().endsWith(".xml"))
+            .forEach(p -> {
+                try {
+                    // Update JAR reference
+                    replaceInFile(p,
+                        "<jar>.*?</jar>",
+                        "<jar>dist\\\\" + jarName + "</jar>");
 
-        replaceInFile(launch4j, "<jar>.*?</jar>", "<jar>dist\\\\" + jarName + "</jar>");
+                    String exeVersion = version;
+                    if (version.chars().filter(ch -> ch == '.').count() == 2) {
+                        exeVersion = version + ".0"; // Add missing 4th segment
+                    }
+
+                    // Replace version metadata
+                    replaceInFile(p,
+                        "<fileVersion>.*?</fileVersion>",
+                        "<fileVersion>" + exeVersion + "</fileVersion>");
+
+                    replaceInFile(p,
+                        "<txtFileVersion>.*?</txtFileVersion>",
+                        "<txtFileVersion>" + version + "</txtFileVersion>");
+
+                    replaceInFile(p,
+                        "<productVersion>.*?</productVersion>",
+                        "<productVersion>" + exeVersion + "</productVersion>");
+
+                    replaceInFile(p,
+                        "<txtProductVersion>.*?</txtProductVersion>",
+                        "<txtProductVersion>" + version + "</txtProductVersion>");
+
+                    System.out.println("Patched version info in " + p.getFileName());
+                } catch (IOException e) {
+                    throw new UncheckedIOException(e);
+                }
+            });
+
+        
+        Path inno = Paths.get("tools/setup.iss");
+        if (Files.exists(inno)) {
+            replaceInFile(inno,
+                "AppVersion=.*",
+                "AppVersion=" + version);
+
+            replaceInFile(inno,
+                "VersionInfoVersion=.*",
+                "VersionInfoVersion=" + version);
+
+            replaceInFile(inno,
+                "VersionInfoProductVersion=.*",
+                "VersionInfoProductVersion=" + version);
+
+            replaceInFile(inno,
+                "VersionInfoFileVersion=.*",
+                "VersionInfoFileVersion=" + version);
+
+            System.out.println("Patched version in setup.iss");
+        }
         replaceInFile(inno, "Source: \".*?\\.jar\"", "Source: \"dist\\\\" + jarName + "\"");
+        
+        Path plist = Paths.get("tools/mac_template/Info.plist");
         replaceInFile(plist, "<string>.*?</string>", "<string>" + version + "</string>", 1); // Only replace the *first* <string>
 
         Path launcherScript = Paths.get("tools/mac_template/PokemonXhenos");

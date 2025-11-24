@@ -421,13 +421,12 @@ public class PMap extends JPanel {
 	    JButton CC = new JButton("");
 	    CC.setBounds(618, 323, 68, 44);
 	    CC.setToolTipText("Checkpoint Charlie");
-	    if (locations[2]) {
+	    if (locations[11]) {
 	    	CC.setBackground(Color.red);
 	    	CC.addActionListener(e -> {
 	    		fly(CC.getToolTipText(), 215, 58, 72);
 	    	});
 	    }
-	    if (locations[11]) CC.setBackground(Color.red);
 	    if (loc == 46) CC.setBackground(Color.yellow);
 	    add(CC);
 	    

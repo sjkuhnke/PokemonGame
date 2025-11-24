@@ -6,6 +6,8 @@ import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.StringWriter;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.nio.file.*;
 import java.util.ArrayList;
@@ -61,6 +63,9 @@ public class Main {
 		window.setLocationRelativeTo(null);
 		window.setVisible(true);
 		
+		long max = Runtime.getRuntime().maxMemory() / (1024 * 1024);
+		System.out.println("Max heap: " + max + " MB");
+		
 		performInitialLoad();
 	}
 	
@@ -95,7 +100,9 @@ public class Main {
 			gp.keyH.resetKeys(false);
 		} catch (Exception e) {
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(window, "Error during initial load: " + e.getMessage());
+		    StringWriter sw = new StringWriter();
+		    e.printStackTrace(new PrintWriter(sw));
+		    JOptionPane.showMessageDialog(null, "Error during initial load:\n" + sw.toString());
 		}
 	}
 

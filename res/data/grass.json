@@ -1623,6 +1623,55 @@
     ]
   },
 
+  "spiky_shield": {
+    "type": "status",
+    "frames": [
+      {
+        "type": "EFFECT",
+        "target": "ATTACKER",
+        "delay": 0,
+        "duration": 700,
+        "properties": {
+          "sprite": "barrier",
+          "startX": 0,
+          "startY": 0,
+          "endX": 0,
+          "endY": 0,
+          "towardsTarget": true,
+          "easing": "linear"
+        }
+      },
+      {
+        "type": "EFFECT",
+        "target": "ATTACKER",
+        "delay": 150,
+        "duration": 450,
+        "properties": {
+          "sprite": "stinger",
+          "startX": 0.2,
+          "startY": 0.2,
+          "endX": 0,
+          "endY": 0,
+          "towardsTarget": false,
+          "easing": "decel",
+          "count": 5,
+          "spreadX": 0.3,
+          "spreadY": 0.3,
+          "delayBetween": 60
+        }
+      },
+      {
+        "type": "SHAKE",
+        "target": "ATTACKER",
+        "delay": 200,
+        "duration": 200,
+        "properties": {
+          "intensity": 4
+        }
+      }
+    ]
+  },
+
   "strength_sap": {
     "type": "physical_contact",
     "frames": [

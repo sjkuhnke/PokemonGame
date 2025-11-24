@@ -150,6 +150,55 @@
     ]
   },
 
+  "lava_lair": {
+    "type": "status",
+    "frames": [
+      {
+        "type": "EFFECT",
+        "target": "ATTACKER",
+        "delay": 0,
+        "duration": 700,
+        "properties": {
+          "sprite": "barrier",
+          "startX": 0,
+          "startY": 0,
+          "endX": 0,
+          "endY": 0,
+          "towardsTarget": true,
+          "easing": "linear"
+        }
+      },
+      {
+        "type": "EFFECT",
+        "target": "ATTACKER",
+        "delay": 100,
+        "duration": 600,
+        "properties": {
+          "sprite": "flame",
+          "startX": 0.15,
+          "startY": 0.15,
+          "endX": 0.2,
+          "endY": -0.3,
+          "towardsTarget": false,
+          "easing": "decel",
+          "count": 6,
+          "spreadX": 0.25,
+          "spreadY": 0.2,
+          "delayBetween": 50
+        }
+      },
+      {
+        "type": "SHAKE",
+        "target": "ATTACKER",
+        "delay": 200,
+        "duration": 200,
+        "properties": {
+          "intensity": 4
+        }
+      }
+    ]
+  },
+
   "blaze_kick": {
     "type": "physical_contact",
     "frames": [

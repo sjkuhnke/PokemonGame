@@ -250,13 +250,6 @@ public class Script {
 			p.flag[0][6] = true;
 			Item[] items = new Item[] {Item.MIRACLE_SEED, Item.CHARCOAL, Item.MYSTIC_WATER};
 			
-			Random rand = new Random(gp.aSetter.generateSeed(p.getID(), npc.worldX / gp.tileSize, npc.worldY / gp.tileSize, gp.currentMap));
-			int secondStarter = -1;
-			do {
-				secondStarter = rand.nextInt(3);
-			} while (secondStarter == p.starter);
-			p.secondStarter = secondStarter;
-			
 			Pokemon result = new Pokemon(((p.secondStarter + 1) * 3) - 2, 5, true, false);
 			Task.addTask(Task.TEXT, "You recieved " + result.name() + "!");
 			Task t = Task.addTask(Task.GIFT, "", result);

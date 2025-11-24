@@ -101,5 +101,35 @@
         }
       }
     ]
+  },
+
+  "protect": {
+    "type": "status",
+    "frames": [
+      {
+        "type": "EFFECT",
+        "target": "ATTACKER",
+        "delay": 0,
+        "duration": 700,
+        "properties": {
+          "sprite": "barrier",
+          "startX": 0,
+          "startY": 0,
+          "endX": 0,
+          "endY": 0,
+          "towardsTarget": true,
+          "easing": "linear"
+        }
+      },
+      {
+        "type": "SHAKE",
+        "target": "ATTACKER",
+        "delay": 200,
+        "duration": 200,
+        "properties": {
+          "intensity": 3
+        }
+      }
+    ]
   }
 }

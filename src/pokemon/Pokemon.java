@@ -9406,6 +9406,34 @@ public class Pokemon implements Serializable {
 					this.incrementStatus(Status.CRIT_CHANCE, 2);
 					if (consume) this.consumeItem(foe);
 				}
+			} else if (berry == Item.SPELON_BERRY) { // just here for bug bite/pluck
+				Task.addTask(Task.TEXT, this.nickname + " ate its " + berry.toString() + "!");
+				stat(this, 0, 1, foe);
+				if (consume) this.consumeItem(foe);
+			} else if (berry == Item.BELUE_BERRY) { // just here for bug bite/pluck
+				Task.addTask(Task.TEXT, this.nickname + " ate its " + berry.toString() + "!");
+				stat(this, 1, 1, foe);
+				if (consume) this.consumeItem(foe);
+			} else if (berry == Item.PAMTRE_BERRY) { // just here for bug bite/pluck
+				Task.addTask(Task.TEXT, this.nickname + " ate its " + berry.toString() + "!");
+				stat(this, 2, 1, foe);
+				if (consume) this.consumeItem(foe);
+			} else if (berry == Item.DURIN_BERRY) { // just here for bug bite/pluck
+				Task.addTask(Task.TEXT, this.nickname + " ate its " + berry.toString() + "!");
+				stat(this, 3, 1, foe);
+				if (consume) this.consumeItem(foe);
+			} else if (berry == Item.WATMEL_BERRY) { // just here for bug bite/pluck
+				Task.addTask(Task.TEXT, this.nickname + " ate its " + berry.toString() + "!");
+				stat(this, 4, 1, foe);
+				if (consume) this.consumeItem(foe);
+			} else if (berry == Item.WEPEAR_BERRY) { // just here for bug bite/pluck
+				Task.addTask(Task.TEXT, this.nickname + " ate its " + berry.toString() + "!");
+				stat(this, 5, 1, foe);
+				if (consume) this.consumeItem(foe);
+			} else if (berry == Item.BLUK_BERRY) { // just here for bug bite/pluck
+				Task.addTask(Task.TEXT, this.nickname + " ate its " + berry.toString() + "!");
+				stat(this, 6, 1, foe);
+				if (consume) this.consumeItem(foe);
 			} else if (berry == Item.JABOCA_BERRY || berry == Item.ROWAP_BERRY) {
 				foe.damage(foe.getHPAmount(1.0/8), this, this.nickname + " ate its " + berry.toString() + " to damage " + foe.nickname + "!");
 				if (consume) this.consumeItem(foe);

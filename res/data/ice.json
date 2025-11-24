@@ -42,6 +42,21 @@
         "delay": 0,
         "duration": 700,
         "properties": {
+          "sprite": "barrier",
+          "startX": 0,
+          "startY": 0,
+          "endX": 0,
+          "endY": 0,
+          "towardsTarget": true,
+          "easing": "linear"
+        }
+      },
+      {
+        "type": "EFFECT",
+        "target": "ATTACKER",
+        "delay": 0,
+        "duration": 700,
+        "properties": {
           "sprite": "rainbow",
           "startX": 0.3,
           "startY": 0.3,

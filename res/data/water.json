@@ -89,6 +89,55 @@
     ]
   },
 
+  "aqua_veil": {
+    "type": "status",
+    "frames": [
+      {
+        "type": "EFFECT",
+        "target": "ATTACKER",
+        "delay": 0,
+        "duration": 700,
+        "properties": {
+          "sprite": "barrier",
+          "startX": 0,
+          "startY": 0,
+          "endX": 0,
+          "endY": 0,
+          "towardsTarget": true,
+          "easing": "linear"
+        }
+      },
+      {
+        "type": "EFFECT",
+        "target": "ATTACKER",
+        "delay": 100,
+        "duration": 600,
+        "properties": {
+          "sprite": "water_drop",
+          "startX": 0.2,
+          "startY": 0.3,
+          "endX": 0,
+          "endY": -0.2,
+          "towardsTarget": false,
+          "easing": "decel",
+          "count": 5,
+          "spreadX": 0.3,
+          "spreadY": 0.2,
+          "delayBetween": 70
+        }
+      },
+      {
+        "type": "SHAKE",
+        "target": "ATTACKER",
+        "delay": 200,
+        "duration": 200,
+        "properties": {
+          "intensity": 3
+        }
+      }
+    ]
+  },
+
   "physical_water": {
     "type": "physical_contact",
     "frames": [
