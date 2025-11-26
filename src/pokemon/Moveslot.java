@@ -14,6 +14,8 @@ public class Moveslot implements Serializable {
 	public int maxPP;
 	private int ppUps; // just here for docs
 	public Move move;
+	public boolean mimicked;
+	public int[] oldPP;
 
 	public Moveslot(Move m) {
 		currentPP = m.pp;

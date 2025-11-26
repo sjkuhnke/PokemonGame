@@ -1,9 +1,6 @@
 ================================================================================
 Sprites (Prefered Order, can always be changed up) (* = has sketch from RAMM)
 ================================================================================
-123 Vupp*
-124 Vinnie*
-125 Suvinero*
 126 Whiskie*
 127 Whiskers*
 128 Whiskeroar*
@@ -16,22 +13,22 @@ Sprites (Prefered Order, can always be changed up) (* = has sketch from RAMM)
 213 Nightrex*
 214 Shadowsaur*
 240 Scraftagon*
-181 Droid
-182 Armoid
-183 Soldrota
-199 Droid-E
-200 Armoid-E
-201 Soldrota-E
+181 Droid*
+182 Armoid*
+183 Soldrota*
+199 Droid-E*
+200 Armoid-E*
+201 Soldrota-E*
 148 Durfish
 149 Dompster
 215 Durfish-S
 216 Dompster-S
-143 Posho
-144 Shomp
-145 Poshorump
-134 Lilyray
-135 Daray
-136 Spinaquata
+143 Posho*
+144 Shomp*
+145 Poshorump*
+134 Lilyray*
+135 Daray*
+136 Spinaquata*
 141 Ali*
 142 Batorali*
 150 Kissyfishy
@@ -43,12 +40,12 @@ Sprites (Prefered Order, can always be changed up) (* = has sketch from RAMM)
 191 Nebulimb*
 192 Galactasolder*
 184 Tinkie*
-185 Shawar
+185 Shawar*
 186 Shaboom*
-187 Dragee
-188 Draga
-189 Drageye
-236 Solaroxyous
+187 Dragee*
+188 Draga*
+189 Drageye*
+236 Solaroxyous*
 
 ================================================================================
 Overworld Pokemon Sprites (* are the ones that already have battle sprites, probably best to do that first)

@@ -2684,6 +2684,7 @@ public class Pokemon implements Serializable {
 		
 		if (move == Move.MIRROR_MOVE || move == Move.MIMIC) {
 			useMove(move, foe, MoveType.REG);
+			Move userMove = move;
 			move = foe.lastMoveUsed;
 			if (move == null || move == Move.MIRROR_MOVE || move == Move.MIMIC) {
 				Task.addTask(Task.TEXT, "But it failed!");
@@ -2699,6 +2700,17 @@ public class Pokemon implements Serializable {
 			moveType = move.mtype;
 			critChance = move.critChance;
 			contact = move.contact;
+			if (userMove == Move.MIMIC) {
+				for (int i = 0; i < this.moveset.length; i++) {
+					Moveslot m = this.moveset[i];
+					if (m != null && m.move == Move.MIMIC) {
+						Moveslot newMove = new Moveslot(move);
+						newMove.mimicked = true;
+						newMove.oldPP = new int[] {m.currentPP, m.maxPP};
+						this.moveset[i] = newMove;
+					}
+				}
+			}
 		}
 		
 		if (move == Move.HIDDEN_POWER) moveType = determineHPType();
@@ -6069,6 +6081,11 @@ public class Pokemon implements Serializable {
 			} else {
 				fail = fail();
 			}
+			break;
+		case REFLECT_TYPE:
+			Task.addTypeTask(this.nickname + " changed its type to match the foe's!", foe);
+			this.type1 = foe.type1;
+			this.type2 = foe.type2;
 			break;
 		case REST:
 			if (this.currentHP == this.getStat(0)) {
@@ -11854,6 +11871,16 @@ public class Pokemon implements Serializable {
 		if (this.status == Status.ASLEEP) this.setSleepCounter();
 		this.vStatuses.clear();
 		this.abilityFlag = false;
+		
+		for (int i = 0; i < this.moveset.length; i++) {
+			Moveslot m = this.moveset[i];
+			if (m != null && m.mimicked) {
+				Moveslot mimic = new Moveslot(Move.MIMIC);
+				mimic.currentPP = m.oldPP[0];
+				mimic.maxPP = m.oldPP[1];
+				this.moveset[i] = mimic;
+			}
+		}
 		
 		if (this.loseItem) {
 			this.item = null;
