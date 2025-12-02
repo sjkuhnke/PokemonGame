@@ -399,7 +399,7 @@
           "endY": 0,
           "towardsTarget": false,
           "easing": "decel",
-          "count": 8,
+          "count": 2,
           "spreadX": 0.4,
           "spreadY": 0.4,
           "delayBetween": 50

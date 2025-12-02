@@ -869,7 +869,7 @@
           "endY": 0,
           "towardsTarget": false,
           "easing": "decel",
-          "count": 8,
+          "count": 2,
           "spreadX": 0.3,
           "spreadY": 0.3,
           "delayBetween": 50
