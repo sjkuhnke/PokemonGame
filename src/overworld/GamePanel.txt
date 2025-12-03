@@ -91,7 +91,6 @@ public class GamePanel extends JPanel implements Runnable {
 	public int FPS = 60;
 	public int ticks;
 	public Font marumonica;
-	public boolean screenshotRequested;
 	
 	Thread gameThread;
 	
@@ -255,11 +254,6 @@ public class GamePanel extends JPanel implements Runnable {
 					update();
 					drawToTempScreen(); // draw everything to the buffered image
 					drawToScreen(); // draw everything to the screen
-					
-					if (screenshotRequested) {
-						saveScreenshot();
-						screenshotRequested = false;
-					}
 				}
 				delta--;
 			}
@@ -1025,16 +1019,6 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	public boolean inSpace(int currentMap) {
 		return currentMap == 159 || currentMap == 160 || currentMap == 206 || currentMap == 207;
-	}
-	
-	private void saveScreenshot() {
-		BufferedImage copy = new BufferedImage(screen.getWidth(), screen.getHeight(), BufferedImage.TYPE_INT_ARGB);
-		Graphics2D g = copy.createGraphics();
-		g.drawImage(screen, 0, 0, null);
-		g.dispose();
-		
-		SaveManager.saveScreenshot(copy);
-		keyH.copyImageToClipboard(copy);
 	}
 
 }

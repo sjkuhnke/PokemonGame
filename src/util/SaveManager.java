@@ -98,27 +98,34 @@ public class SaveManager {
 		return oldFile.renameTo(newFile);
 	}
 	
-	public static void showInExplorer(String name) {
+	public static void showSaveInExplorer(String name) {
 		File file = getSaveFile(name);
-		if (file != null && file.exists()) {
-			try {
-				String os = System.getProperty("os.name").toLowerCase();
-				ProcessBuilder pb;
-				
-				if (os.contains("win")) {
-					pb = new ProcessBuilder("explorer", "/select,", file.getAbsolutePath());
-				} else if (os.contains("mac")) {
-					pb = new ProcessBuilder("open", "-R", file.getAbsolutePath());
-				} else {
-					System.err.println("Unsupported OS " + os);
-					return;
-				}
-				pb.start();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		} else {
-			System.err.println("File " + name + " not found.");
+		showInExplorer(file);
+	}
+	
+	public static void showInExplorer(File file) {
+		if (file == null || !file.exists()) {
+	        System.err.println("File not found: " + file);
+	        return;
+	    }
+		
+		String os = System.getProperty("os.name").toLowerCase();
+	    File folder = file.getParentFile();
+	    
+		try {
+			if (os.contains("win")) {
+	            Desktop.getDesktop().open(folder);
+	            return;
+	        }
+
+	        if (os.contains("mac")) {
+	            new ProcessBuilder("open", "-R", file.getAbsolutePath()).start();
+	            return;
+	        }
+
+	        new ProcessBuilder("xdg-open", folder.getAbsolutePath()).start();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -161,7 +168,7 @@ public class SaveManager {
 			
 			File screenshotFile = new File(screenshotsDir.toFile(), fileName);
 			ImageIO.write(image, "png", screenshotFile);
-			Desktop.getDesktop().open(screenshotsDir.toFile());
+			showInExplorer(screenshotFile);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

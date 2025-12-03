@@ -474,7 +474,7 @@ public class TitleScreen extends AbstractUI {
 			handleDeleteSave(selectedFile);
 			break;
 		case MANAGE_OPEN_LOCATION:
-			SaveManager.showInExplorer(selectedFile);
+			SaveManager.showSaveInExplorer(selectedFile);
 			break;
 		case MANAGE_CANCEL:
 			menuState = MAIN_MENU;

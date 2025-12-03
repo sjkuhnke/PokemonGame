@@ -4308,7 +4308,7 @@ public class UI extends AbstractUI {
 				if (currentPocket == Item.TMS && tmCheck == current.getItem()) {
 					int borderX = x - 8;
 					int borderY = y - gp.tileSize - 4;
-					int borderWidth = getTextWidth(itemString) + 4;
+					int borderWidth = getTextWidth(itemString) + gp.tileSize *5/6;
 					int borderHeight = (int) (gp.tileSize * 0.75);
 					g2.setPaint(new GradientPaint(borderX,borderY,new Color(255,215,0),borderX+borderWidth,borderY+borderWidth,new Color(255,255,210)));
 					g2.drawRoundRect(borderX, borderY, borderWidth, borderHeight, 25, 25);

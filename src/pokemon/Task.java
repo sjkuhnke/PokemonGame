@@ -106,6 +106,8 @@ public class Task {
 	public Item item;
 	public PType[] types;
 	public int ui; // used for drawing extra ui components for a task
+	
+	// animation fields
 	public BattleAnimation animation;
 	
 	public Entity e;
@@ -455,12 +457,37 @@ public class Task {
 		}
 	}
 	
-	public static Task addMoveAnimTask(Move move, String msg, Pokemon attacker, Pokemon defender) {
+	public static Task addMoveAnimTask(Move move, String msg, Pokemon attacker, Pokemon defender, String phase) {
 		Task t = addTask(USE_MOVE, msg);
 		t.move = move;
 		t.p = attacker;
 		t.foe = defender;
-		t.animation = BattleAnimationManager.getInstance().getAnimation(move);
+		//t.animPhase = phase;
+		
+		if (phase != null && (phase.equals("charging") || phase.equals("attacking"))) {
+			t.animation = BattleAnimationManager.getInstance().getAnimation(move, phase);
+		} else {
+			t.animation = BattleAnimationManager.getInstance().getAnimation(move);
+		}
+		
+		return t;
+	}
+	
+	public static Task addMoveAnimTask(Move move, String msg, Pokemon attacker, Pokemon defender, Pokemon.AnimPhase phase) {
+		String phaseStr = null;
+		if (phase == Pokemon.AnimPhase.CHARGING) {
+			phaseStr = "charging";
+		} else if (phase == Pokemon.AnimPhase.ATTACKING) {
+			phaseStr = "attacking";
+		}
+		return addMoveAnimTask(move, msg, attacker, defender, phaseStr);
+	}
+	
+	public static Task addProtectAnimTask(String msg, Pokemon attacker, Pokemon defender) {
+		Task t = addTask(USE_MOVE, msg, attacker);
+		t.foe = defender;
+		t.animation = BattleAnimationManager.getInstance().getProtectAnimation();
+		t.wipe = true;
 		return t;
 	}
 

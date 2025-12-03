@@ -18,12 +18,14 @@ public class BattleAnimationManager {
 	private Map<String, BattleAnimation> animations;
 	private Map<String, BufferedImage> spriteCache;
 	private BattleAnimation defaultAnimation;
+	private BattleAnimation protectAnimation;
 	
 	private BattleAnimationManager() {
 		animations = new HashMap<>();
 		spriteCache = new HashMap<>();
 		loadAnimations();
 		createDefaultAnimation();
+		createProtectAnimation();
 	}
 	
 	public static BattleAnimationManager getInstance() {
@@ -47,11 +49,29 @@ public class BattleAnimationManager {
 					
 					for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
 						String moveNames = entry.getKey();
-						BattleAnimation anim = parseAnimation(entry.getValue().getAsJsonObject());
+						JsonObject moveJson = entry.getValue().getAsJsonObject();
 						
-						String[] names = moveNames.split("/");
-						for (String name : names) {
-							animations.put(name.trim().toLowerCase(), anim);
+						// Check if this move has charging/attacking phases
+						if (moveJson.has("charging") && moveJson.has("attacking")) {
+							// Parse both phases
+							BattleAnimation chargingAnim = parseAnimation(moveJson.getAsJsonObject("charging"));
+							BattleAnimation attackingAnim = parseAnimation(moveJson.getAsJsonObject("attacking"));
+							
+							String[] names = moveNames.split("/");
+							for (String name : names) {
+								String baseName = name.trim().toLowerCase();
+								animations.put(baseName + "_charging", chargingAnim);
+								animations.put(baseName + "_attacking", attackingAnim);
+								// Also store the attacking as default for the move
+								animations.put(baseName, attackingAnim);
+							}
+						} else {
+							// Normal single-phase animation
+							BattleAnimation anim = parseAnimation(moveJson);
+							String[] names = moveNames.split("/");
+							for (String name : names) {
+								animations.put(name.trim().toLowerCase(), anim);
+							}
 						}
 					}
 					reader.close();
@@ -136,10 +156,51 @@ public class BattleAnimationManager {
 		defaultAnimation.addFrame(shake);
 	}
 	
+	private void createProtectAnimation() {
+		protectAnimation = new BattleAnimation("protect");
+		AnimationFrame barrier = new AnimationFrame(
+			AnimationFrame.Type.EFFECT,
+			AnimationFrame.Target.DEFENDER,
+			0, 500
+		);
+		barrier.setProperty("sprite", "barrier");
+		barrier.setProperty("startX", 0.0);
+		barrier.setProperty("startY", 0.0);
+		barrier.setProperty("endX", 0.0);
+		barrier.setProperty("endY", 0.0);
+		barrier.setProperty("towardsTarget", false);
+		barrier.setProperty("easing", "linear");
+		protectAnimation.addFrame(barrier);
+		
+		AnimationFrame shake = new AnimationFrame(
+			AnimationFrame.Type.SHAKE,
+			AnimationFrame.Target.DEFENDER,
+			100, 200
+		);
+		shake.setProperty("intensity", 2);
+		protectAnimation.addFrame(shake);
+	}
+	
+	public BattleAnimation getProtectAnimation() {
+		return protectAnimation;
+	}
+	
 	public BattleAnimation getAnimation(Move move) {
+		return getAnimation(move, null);
+	}
+
+	public BattleAnimation getAnimation(Move move, String phase) {
 		if (move == null) return defaultAnimation;
 		
 		String moveName = move.name().toLowerCase();
+		
+		// if phase is specified, try to get that specific phase
+		if (phase != null && !phase.isEmpty()) {
+			String phasedKey = moveName + "_" + phase.toLowerCase();
+			if (animations.containsKey(phasedKey)) {
+				return animations.get(phasedKey);
+			}
+		}
 		
 		// 1) specific move name
 		if (animations.containsKey(moveName)) {

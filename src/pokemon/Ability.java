@@ -63,7 +63,7 @@ public enum Ability {
 	IRON_FIST("Boosts the power of punching moves by 1.3x."),
 	JACKPOT("Rolls a dice with each attack corresponding to its power: 50% - 200% (Loaded Dice = 100% - 200%)."),
 	JUSTIFIED("Halves damage from DARK moves and sharply boosts Attack when hit by one."),
-	KEEN_EYE("Prevents the Pokemon from losing accuracy."),
+	KEEN_EYE("Prevents the Pokemon from losing accuracy and ignores opposing Pokemon's evasion stat changes."),
 	LEVITATE("Gives full immunity to all GROUND moves."),
 	LIGHTNING_ROD("Raises highest attack if hit by an ELECTRIC move."),
 	MAGIC_BOUNCE("Reflects status moves that target this Pokemon/Pokemon's side instead of getting hit by them."),

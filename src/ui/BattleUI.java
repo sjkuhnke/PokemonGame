@@ -609,6 +609,9 @@ public class BattleUI extends AbstractUI {
 		case Task.TEXT:
 			message = currentTask.message.contains("\n") ? currentTask.message : Item.breakString(currentTask.message, 63);
 			displayMessage(message);
+			if (currentTask.wipe) {
+				currentTask.p.spriteVisible = true;
+			}
 			break;
 		case Task.DAMAGE:
 			if (!currentTask.p.isVisible()) {
@@ -616,7 +619,10 @@ public class BattleUI extends AbstractUI {
 				return;
 			}
 			currentDialogue = currentTask.message;
-			if (currentTask.wipe) currentTask.foe.spriteVisible = true;
+			if (currentTask.wipe) {
+				currentTask.p.spriteVisible = true; // TODO: does this break anything? needed here for self-hit confusion damage
+				currentTask.foe.spriteVisible = true;
+			}
 			if (currentTask.p == user) {
 				if (userHP > currentTask.finish) userHP--;
 				if (userHP < currentTask.finish) userHP++;

@@ -11,8 +11,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 
-import util.SaveManager;
-
 public class KeyHandler implements KeyListener {
 
 	public boolean upPressed, downPressed, leftPressed, rightPressed, sPressed, wPressed, dPressed, aPressed, tabPressed, shiftPressed, ctrlPressed, calcPressed, escPressed, fullPressed, kUpPressed, kDownPressed, kLeftPressed, kRightPressed, kSPressed, kWPressed, kDPressed, kAPressed;
@@ -80,9 +78,9 @@ public class KeyHandler implements KeyListener {
 		}
 		
 		if (code == config.keys[config.screenshotKey]) {
-            takeScreenshot();
-            resetKeys(true);
-        }
+			gp.screenshotRequested = true;
+			resetKeys(true);
+		}
 		
 		if (code == gp.config.keys[gp.config.hotkey1]) hotkey1Pressed = true;
 		if (code == gp.config.keys[gp.config.hotkey2]) hotkey2Pressed = true;
@@ -235,69 +233,59 @@ public class KeyHandler implements KeyListener {
 				}
 			}
 		} else if (gp.ui != null && gp.ui.cheatCodeDialog != null && gp.ui.cheatCodeDialog.isNaming()) {
-            if (code == config.keys[config.backspaceKey]) {
-                gp.ui.cheatCodeDialog.handleBackspace();
-            } else {
-                char c = e.getKeyChar();
-                if (c != KeyEvent.CHAR_UNDEFINED && !Character.isISOControl(c)) {
-                    gp.ui.cheatCodeDialog.handleKeyInput(c);
-                    downPressed = false;
-                }
-            }
-        }
+			if (code == config.keys[config.backspaceKey]) {
+				gp.ui.cheatCodeDialog.handleBackspace();
+			} else {
+				char c = e.getKeyChar();
+				if (c != KeyEvent.CHAR_UNDEFINED && !Character.isISOControl(c)) {
+					gp.ui.cheatCodeDialog.handleKeyInput(c);
+					downPressed = false;
+				}
+			}
+		}
+	}
+
+	public void copyImageToClipboard(BufferedImage image) {
+		// Convert to a compatible format
+		BufferedImage compatibleImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
+		Graphics g = compatibleImage.createGraphics();
+		g.drawImage(image, 0, 0, null);
+		g.dispose();
+
+		// Copy to clipboard
+		TransferableImage transferableImage = new TransferableImage(compatibleImage);
+		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+		clipboard.setContents(transferableImage, null);
+	}
+
+	private static class TransferableImage implements Transferable {
+		private final Image image;
+
+		public TransferableImage(Image image) {
+			this.image = image;
+		}
+		
+		@Override
+		public DataFlavor[] getTransferDataFlavors() {
+			return new DataFlavor[]{DataFlavor.imageFlavor};
+		}
+
+		@Override
+		public boolean isDataFlavorSupported(DataFlavor flavor) {
+			return DataFlavor.imageFlavor.equals(flavor);
+		}
+
+		@Override
+		public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException {
+			if (!isDataFlavorSupported(flavor)) {
+				throw new UnsupportedFlavorException(flavor);
+			}
+			return image;
+		}
 	}
 	
-	 private void takeScreenshot() {
-        // Create a BufferedImage from the JPanel's graphics
-        BufferedImage screenshot = gp.screen;
-
-        SaveManager.saveScreenshot(screenshot);
-
-        // Copy to clipboard
-        copyImageToClipboard(screenshot);
-    }
-
-    private void copyImageToClipboard(BufferedImage image) {
-    	// Convert to a compatible format
-        BufferedImage compatibleImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
-        Graphics g = compatibleImage.createGraphics();
-        g.drawImage(image, 0, 0, null);
-        g.dispose();
-
-        // Copy to clipboard
-        TransferableImage transferableImage = new TransferableImage(compatibleImage);
-        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-        clipboard.setContents(transferableImage, null);
-    }
-
-    private static class TransferableImage implements Transferable {
-        private final Image image;
-
-        public TransferableImage(Image image) {
-            this.image = image;
-        }
-        
-        @Override
-        public DataFlavor[] getTransferDataFlavors() {
-            return new DataFlavor[]{DataFlavor.imageFlavor};
-        }
-
-        @Override
-        public boolean isDataFlavorSupported(DataFlavor flavor) {
-            return DataFlavor.imageFlavor.equals(flavor);
-        }
-
-        @Override
-        public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException {
-            if (!isDataFlavorSupported(flavor)) {
-                throw new UnsupportedFlavorException(flavor);
-            }
-            return image;
-        }
-    }
-    
-    private void handleKeyStrokes(int code) {
-    	if (code == config.keys[config.upKey]) {
+	private void handleKeyStrokes(int code) {
+		if (code == config.keys[config.upKey]) {
 			kUpPressed = true;
 		}
 		if (code == config.keys[config.downKey]) {
