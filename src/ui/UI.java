@@ -3706,6 +3706,10 @@ public class UI extends AbstractUI {
 			showMessage("It won't have any effect.");
 			return;
 		}
+		if ((pokemon.id == 233 || pokemon.id == 234) && !gp.player.p.flag[7][21]) {
+			gp.ui.showMessage(pokemon.nickname + " rejected the level!");
+			return;
+		}
 		boolean worked = gp.player.p.elevate(pokemon);
 		if (!worked) {
 			showMessage("It won't have any effect.");

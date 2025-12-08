@@ -51,7 +51,8 @@ public class Set {
 		}
 		
 		// DEBUGGING
-		throw new IllegalStateException("Set " + p.name() + " has an illegal ability: " + ability);
+		System.err.println("Set " + p.name() + " has an illegal ability: " + ability);
+		return 2;
 	}
 
 	public void setIVs(PType type) {

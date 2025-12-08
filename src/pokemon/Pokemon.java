@@ -2396,7 +2396,7 @@ public class Pokemon implements Serializable {
 		int[] fasterStages = faster.statStages.clone();
 		int[] slowerStages = slower.statStages.clone();
 		
-		move(foe, move, first);
+		move(foe, move, first, true, true);
 		
 		if (faster.getItem(field) == Item.WHITE_HERB) {
 			faster.handleWhiteHerb(fasterStages, slower);
@@ -2423,7 +2423,7 @@ public class Pokemon implements Serializable {
 		}
 	}
 
-	public void move(Pokemon foe, Move move, boolean first) {
+	public void move(Pokemon foe, Move move, boolean first, boolean consumePP, boolean checkAct) {
 		if (this.fainted || foe.fainted) return;
 		if (move == null) return;
 
@@ -2456,8 +2456,6 @@ public class Pokemon implements Serializable {
 		
 		Move prevMove = this.lastMoveUsed;
 		
-		consumeMovePP(move, foe);
-		
 		if (this.hasStatus(Status.TORMENTED) && move == this.lastMoveUsed) {
 			Task.addTask(Task.TEXT, this.nickname + " can't use " + move + " after the torment!");
 			this.lastMoveUsed = prevMove;
@@ -2479,101 +2477,103 @@ public class Pokemon implements Serializable {
 		
 		if (move == Move.FAILED_SUCKER) this.lastMoveUsed = Move.SUCKER_PUNCH;
 		
-		if (this.hasStatus(Status.ENCORED)) {
-			move = this.lastMoveUsed;
-			bp = move.basePower;
-			acc = move.accuracy;
-			secChance = move.secondary;
-			moveType = move.mtype;
-			critChance = move.critChance;
-			contact = move.contact;
-		}
-		
-		if (this.status == Status.ASLEEP && this != foe) {
-			if (this.sleepCounter > 0) {
-				Task t = Task.addTask(Task.TEXT, this.nickname + " is fast asleep.");
-				t.wipe = true;
-				this.sleepCounter--;
-				if (move == Move.SLEEP_TALK) {
-					announceMoveText(move, true);
-					ArrayList<Move> moves = new ArrayList<>();
-					for (Moveslot moveslot : this.moveset) {
-						if (moveslot != null) {
-							Move m = moveslot.move;
-							if (m != null && m != Move.SLEEP_TALK) moves.add(m);
+		if (checkAct) {
+			if (this.hasStatus(Status.ENCORED)) {
+				move = this.lastMoveUsed;
+				bp = move.basePower;
+				acc = move.accuracy;
+				secChance = move.secondary;
+				moveType = move.mtype;
+				critChance = move.critChance;
+				contact = move.contact;
+			}
+			
+			if (this.status == Status.ASLEEP && this != foe) {
+				if (this.sleepCounter > 0) {
+					Task t = Task.addTask(Task.TEXT, this.nickname + " is fast asleep.");
+					t.wipe = true;
+					this.sleepCounter--;
+					if (move == Move.SLEEP_TALK) {
+						announceMoveText(move, true);
+						ArrayList<Move> moves = new ArrayList<>();
+						for (Moveslot moveslot : this.moveset) {
+							if (moveslot != null) {
+								Move m = moveslot.move;
+								if (m != null && m != Move.SLEEP_TALK) moves.add(m);
+							}
 						}
+						move = moves.get(new Random().nextInt(moves.size()));
+						bp = move.basePower;
+						acc = move.accuracy;
+						secChance = move.secondary;
+						moveType = move.mtype;
+						critChance = move.critChance;
+						contact = move.contact;
+					} else if (move == Move.SNORE) {
+						
+					} else {
+						this.impressive = false;
+						this.lastMoveUsed = prevMove;
+						this.removeStatus(Status.LOCKED);
+						this.removeStatus(Status.CHARGING);
+						this.removeStatus(Status.SEMI_INV);
+						this.rollCount = 1;
+						this.moveMultiplier = 1;
+						this.metronome = 0;
+						return;
 					}
-					move = moves.get(new Random().nextInt(moves.size()));
-					bp = move.basePower;
-					acc = move.accuracy;
-					secChance = move.secondary;
-					moveType = move.mtype;
-					critChance = move.critChance;
-					contact = move.contact;
-				} else if (move == Move.SNORE) {
-					
 				} else {
-					this.impressive = false;
-					this.lastMoveUsed = prevMove;
-					this.removeStatus(Status.LOCKED);
-					this.removeStatus(Status.CHARGING);
-					this.removeStatus(Status.SEMI_INV);
-					this.rollCount = 1;
-					this.moveMultiplier = 1;
-					this.metronome = 0;
-					return;
-				}
-			} else {
-				Task.addTask(Task.STATUS, Status.HEALTHY, this.nickname + " woke up!", this);
-				this.status = Status.HEALTHY;
-			}
-		}
-		
-		if (this.hasStatus(Status.CONFUSED) && this != foe) {
-			if (this.confusionCounter == 0) {
-				this.removeStatus(Status.CONFUSED);
-				Task.addTask(Task.TEXT, this.nickname + " snapped out of confusion!");
-			} else {
-				Task.addTask(Task.TEXT, this.nickname + " is confused!");
-				if (Math.random() < 1.0/3.0) {
-			        // user hits themselves
-					attackStat = this.getStat(1);
-					defenseStat = this.getStat(2);
-					attackStat *= this.asModifier(0);
-					defenseStat *= this.asModifier(1);
-					damage = calc(attackStat, defenseStat, 40, this.level);
-					this.damage(damage, foe, Move.STRUGGLE, this.nickname + " hit itself in confusion!", -1);
-					if (this.currentHP <= 0) {
-						this.faint(true, foe);
-					}
-					confusionCounter--;
-					endMove();
-					this.removeStatus(Status.LOCKED);
-					this.removeStatus(Status.CHARGING);
-					this.removeStatus(Status.SEMI_INV);
-					this.lastMoveUsed = prevMove;
-					this.rollCount = 1;
-					this.metronome = 0;
-					this.moveMultiplier = 1;
-					this.impressive = false;
-					return;
-				} else {
-					confusionCounter--;
+					Task.addTask(Task.STATUS, Status.HEALTHY, this.nickname + " woke up!", this);
+					this.status = Status.HEALTHY;
 				}
 			}
-		}
-		if (this.status == Status.PARALYZED && Math.random() < 0.25 && this != foe) {
-			Task t = Task.addTask(Task.TEXT, this.nickname + " is paralyzed! It can't move!");
-			t.wipe = true;
-			this.moveMultiplier = 1;
-			this.impressive = false;
-			this.removeStatus(Status.LOCKED);
-			this.removeStatus(Status.CHARGING);
-			this.removeStatus(Status.SEMI_INV);
-			this.lastMoveUsed = prevMove;
-			this.rollCount = 1;
-			this.metronome = 0;
-			return;
+			
+			if (this.hasStatus(Status.CONFUSED) && this != foe) {
+				if (this.confusionCounter == 0) {
+					this.removeStatus(Status.CONFUSED);
+					Task.addTask(Task.TEXT, this.nickname + " snapped out of confusion!");
+				} else {
+					Task.addTask(Task.TEXT, this.nickname + " is confused!");
+					if (Math.random() < 1.0/3.0) {
+				        // user hits themselves
+						attackStat = this.getStat(1);
+						defenseStat = this.getStat(2);
+						attackStat *= this.asModifier(0);
+						defenseStat *= this.asModifier(1);
+						damage = calc(attackStat, defenseStat, 40, this.level);
+						this.damage(damage, foe, Move.STRUGGLE, this.nickname + " hit itself in confusion!", -1);
+						if (this.currentHP <= 0) {
+							this.faint(true, foe);
+						}
+						confusionCounter--;
+						endMove();
+						this.removeStatus(Status.LOCKED);
+						this.removeStatus(Status.CHARGING);
+						this.removeStatus(Status.SEMI_INV);
+						this.lastMoveUsed = prevMove;
+						this.rollCount = 1;
+						this.metronome = 0;
+						this.moveMultiplier = 1;
+						this.impressive = false;
+						return;
+					} else {
+						confusionCounter--;
+					}
+				}
+			}
+			if (this.status == Status.PARALYZED && Math.random() < 0.25 && this != foe) {
+				Task t = Task.addTask(Task.TEXT, this.nickname + " is paralyzed! It can't move!");
+				t.wipe = true;
+				this.moveMultiplier = 1;
+				this.impressive = false;
+				this.removeStatus(Status.LOCKED);
+				this.removeStatus(Status.CHARGING);
+				this.removeStatus(Status.SEMI_INV);
+				this.lastMoveUsed = prevMove;
+				this.rollCount = 1;
+				this.metronome = 0;
+				return;
+			}
 		}
 		
 		if (this.status != Status.TOXIC) toxic = 0;
@@ -2669,43 +2669,27 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (move == Move.METRONOME) {
+			consumeMovePP(move, foe);
 			announceMove(move, foe, ctx);
 			Move[] moves = Move.getAllMoves();
-			move = moves[new Random().nextInt(moves.length)];
-			bp = move.basePower;
-			acc = move.accuracy;
-			secChance = move.secondary;
-			moveType = move.mtype;
-			critChance = move.critChance;
-			contact = move.contact;
+			Random metronome = new Random();
+			Move m = null;
+			while (m == null || m == Move.METRONOME) {
+				m = moves[metronome.nextInt(moves.length)];
+			}
+			move(foe, m, first, false, false);
+			return; // recursively call the move method but not checking para and such so moves called can still be blocked by things like Taunt
 		}
 		
 		if (id == 237) {
-			Move oldMove = move;
+			consumeMovePP(move, foe);
 			move = get150Move(move);
-			if (move != oldMove) {
-				for (Moveslot m : this.moveset) {
-					if (m != null && m.move == oldMove) {
-						m.currentPP--;
-						if (m.currentPP == 0) {
-							if (this.getItem(field) == Item.LEPPA_BERRY) {
-								this.eatBerry(this.item, true, foe, m.move);
-							} else {
-								encoreCount = 0;
-							}
-						}
-					}
-				}
-			}
-			bp = move.basePower;
-			acc = move.accuracy;
-			secChance = move.secondary;
-			moveType = move.mtype;
-			critChance = move.critChance;
-			contact = move.contact;
+			move(foe, move, first, false, false);
+			return; // same logic as protect
 		}
 		
 		if (move == Move.MIRROR_MOVE || move == Move.MIMIC) {
+			consumeMovePP(move, foe);
 			announceMove(move, foe, ctx);
 			Move userMove = move;
 			move = foe.lastMoveUsed;
@@ -2717,12 +2701,6 @@ public class Pokemon implements Serializable {
 				this.metronome = 0;
 				return;
 			}
-			bp = move.basePower;
-			acc = move.accuracy;
-			secChance = move.secondary;
-			moveType = move.mtype;
-			critChance = move.critChance;
-			contact = move.contact;
 			if (userMove == Move.MIMIC) {
 				for (int i = 0; i < this.moveset.length; i++) {
 					Moveslot m = this.moveset[i];
@@ -2734,6 +2712,8 @@ public class Pokemon implements Serializable {
 					}
 				}
 			}
+			move(foe, move, first, false, false);
+			return; // same logic as metronome
 		}
 		
 		if (move == Move.HIDDEN_POWER) moveType = determineHPType();
@@ -2777,6 +2757,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (move == Move.FAILED_SUCKER) {
+			consumeMovePP(move, foe);
 			announceMoveText(Move.SUCKER_PUNCH, true);
 			fail();
 			this.impressive = false;
@@ -2867,6 +2848,8 @@ public class Pokemon implements Serializable {
 			}
 		}
 		
+		if (consumePP) consumeMovePP(move, foe);
+		
 		if (foe.hasStatus(Status.PROTECT) && (move.accuracy <= 100 || move.cat != 2) && move != Move.FEINT && move != Move.PHANTOM_FORCE
 				&& move != Move.VANISHING_ACT && move != Move.MIGHTY_CLEAVE && move != Move.FUTURE_SIGHT) {
 			ctx.moveType = MoveType.PROTECT;
@@ -2929,7 +2912,7 @@ public class Pokemon implements Serializable {
 		if (move.isMagicBounceEffected(this, foe, foeAbility, acc)) {
 			announceMove(move, foe, ctx);
 			Task.addAbilityTask(foe);
-			foe.move(this, move, true);
+			foe.move(this, move, false, false, false);
 			Task.addTask(Task.TEXT, foe.nickname + " bounced the " + move + " back!");
 			return;
 		}
@@ -2939,7 +2922,7 @@ public class Pokemon implements Serializable {
 				foe.removeStatus(Status.MAGIC_REFLECT);
 				Task.addTask(Task.TEXT, foe.nickname + " broke the Magic Reflect!");
 			} else {
-				this.move(this, move, false);
+				this.move(this, move, false, false, false);
 				Task.addTask(Task.TEXT, move + " was reflected on itself!");
 				foe.removeStatus(Status.MAGIC_REFLECT);
 				return;
@@ -2947,7 +2930,7 @@ public class Pokemon implements Serializable {
 		}
 		if (this.hasStatus(Status.POSSESSED)) {
 			this.removeStatus(Status.POSSESSED);
-			this.move(this, move, false);
+			this.move(this, move, false, false, false);
 			Task.addTask(Task.TEXT, move + " was used on itself!");
 			return;
 		}
@@ -3541,7 +3524,7 @@ public class Pokemon implements Serializable {
 			
 			if (foe.getItem(field) == Item.EVIOLITE && foe.canEvolve()) defenseMod *= 1.5;
 			
-			damage = calc(attackStat * attackMod, defenseStat * defenseMod, bp, this.level, this.script ? 1 : 0);
+			damage = calc(attackStat * attackMod, defenseStat * defenseMod, bp, this.level, this.script ? 1 : foe.script ? -1 : 0);
 			if (isCrit) {
 				damage *= 1.5;
 				if (this.getAbility(field) == Ability.SNIPER) damage *= 1.5;
@@ -4313,7 +4296,7 @@ public class Pokemon implements Serializable {
 	                expAwarded++;
 	                remainingExp--;
 	            }
-	            if (p.level < 100 && !p.isFainted()) {
+	            if (p.level < 100 && !p.isFainted() && !((p.id == 233 || p.id == 234) && !player.flag[7][21])) {
 	            	if (p.item == Item.LUCKY_EGG) expAwarded = (int) Math.ceil(expAwarded * 1.5);
 	            	
 	            	int totalExp = p.exp + expAwarded;
@@ -8247,6 +8230,7 @@ public class Pokemon implements Serializable {
 	
 	public void setSleepCounter() {
 		this.sleepCounter = (int)(Math.random() * 3) + 1;
+		if (this.script) this.sleepCounter = 1;
 	}
 
 	public void paralyze(boolean announce, Pokemon foe) {
@@ -10370,6 +10354,7 @@ public class Pokemon implements Serializable {
 	}
 
 	public int checkCustap(int priority, Pokemon foe) {
+		if (this.hasStatus(Status.SWAP)) return priority;
 		int result = priority;
 		if (item == Item.CUSTAP_BERRY && currentHP <= getStat(0) * 1.0 / 4) {
 			result++;
@@ -10575,6 +10560,9 @@ public class Pokemon implements Serializable {
 	public int canLearnMove(Move move) {
 		if (move == null) return -1;
 		boolean learnable = move == Move.ENDURE;
+		if ((this.id == 233 || this.id == 234) && !this.getPlayer().flag[7][21]) {
+			learnable = false;
+		}
 		boolean learned = this.knowsMove(move);
 		if (!learnable) {
 			return 0;
@@ -10930,8 +10918,6 @@ public class Pokemon implements Serializable {
 				if (nature != null) {
 					pokemon.nat = nature;
 				}
-				pokemon.setStats();
-				pokemon.currentHP = pokemon.getStat(0);
 				boolean[] movesValid = pokemon.validateMoveset();
 				for (int b = 0; b < movesValid.length; b++) {
 					if (!movesValid[b]) {
@@ -10955,6 +10941,9 @@ public class Pokemon implements Serializable {
 						break;
 					}
 				}
+				
+				pokemon.setStats();
+				pokemon.currentHP = pokemon.getStat(0);
 				
 				// DEBUGGING
 				if (!abilitySet) {
@@ -11795,7 +11784,11 @@ public class Pokemon implements Serializable {
 	}
 
 	public void takeWish(int stat) {
+		boolean fullHP = this.currentHP == this.getStat(0);
 		this.heal(stat, this.nickname + "'s wish came true!");
+		if (fullHP) {
+			Task.addTask(Task.TEXT, this.nickname + "'s HP is full!");
+		}
 	}
 
 	public void setCalcNickname() {

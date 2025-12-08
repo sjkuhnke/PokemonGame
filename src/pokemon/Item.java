@@ -1039,13 +1039,13 @@ public enum Item {
 	        }
 	        
 	        infoButton.addActionListener(e -> {
-	        	JOptionPane.showMessageDialog(null, ((Pokemon) userMons.getSelectedItem()).showSummary(field, null), "Pokemon details", JOptionPane.PLAIN_MESSAGE);
+	        	JOptionPane.showMessageDialog(calc, ((Pokemon) userMons.getSelectedItem()).showSummary(field, null), "Pokemon details", JOptionPane.PLAIN_MESSAGE);
 	        });
 	        
 	        fInfoButton.addActionListener(e -> {
 	        	Pokemon foe = (Pokemon) foeMons.getSelectedItem();
 	        	if (foe.getSprite() == null) foe.setSprites();
-	        	JOptionPane.showMessageDialog(null, ((Pokemon) foeMons.getSelectedItem()).showSummary(field, null), "Pokemon details", JOptionPane.PLAIN_MESSAGE);
+	        	JOptionPane.showMessageDialog(calc, ((Pokemon) foeMons.getSelectedItem()).showSummary(field, null), "Pokemon details", JOptionPane.PLAIN_MESSAGE);
 	        });
 	        
 	        JComboBox<Item> userItem = new JComboBox<>((Item[]) items.toArray(new Item[1]));
@@ -1556,7 +1556,7 @@ public enum Item {
 			    public void mouseClicked(MouseEvent e) {
 			    	if (SwingUtilities.isRightMouseButton(e)) {
 			    		if (current.moveset[kndex] != null) {
-	    	                JOptionPane.showMessageDialog(null, current.moveset[kndex].move.getMoveSummary(current, foe, field), "Move Description", JOptionPane.INFORMATION_MESSAGE);
+	    	                JOptionPane.showMessageDialog(calc, current.moveset[kndex].move.getMoveSummary(current, foe, field), "Move Description", JOptionPane.INFORMATION_MESSAGE);
 	        			}
 			    	} else {
 			    		Move[] allMoves = Move.values();
@@ -1568,7 +1568,7 @@ public enum Item {
 			    		setMovePanel.add(new JLabel("Select a move:"));
 			            setMovePanel.add(moveComboBox);
 			            
-			    		int result = JOptionPane.showConfirmDialog(null, setMovePanel, "Set Move", JOptionPane.OK_OPTION);
+			    		int result = JOptionPane.showConfirmDialog(calc, setMovePanel, "Set Move", JOptionPane.OK_OPTION);
 			    		if (result == JOptionPane.OK_OPTION) {
 			    			Move selectedMove = (Move) moveComboBox.getSelectedItem();
 			    			current.moveset[kndex] = new Moveslot(selectedMove);
@@ -1632,7 +1632,7 @@ public enum Item {
 	}
 	
 	private static void moreButton(Pokemon p, Field f) {        
-		JDialog dialog = new JDialog((Frame) null, "Edit Pokemon", true);
+		JDialog dialog = new JDialog((Frame) calcFrame, "Edit Pokemon", true);
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -2028,7 +2028,7 @@ public enum Item {
 
         dialog.getContentPane().add(panel);
         dialog.pack();
-        dialog.setLocationRelativeTo(null);
+        dialog.setLocationRelativeTo(calc);
         dialog.setVisible(true);
 	}
 
@@ -2220,7 +2220,7 @@ public enum Item {
 				generated.setStats();
 				int exp = generated.expMax - expRemaining;
 				if (exp < 0 || exp >= generated.expMax) {
-					JOptionPane.showMessageDialog(null, "Exp is not in the range [0, " + generated.expMax + "]");
+					JOptionPane.showMessageDialog(calc, "Exp is not in the range [0, " + generated.expMax + "]");
 					return;
 				} else {
 					generated.exp = exp;
@@ -2235,14 +2235,14 @@ public enum Item {
 				resultPokemon[0] = generated;
 				SwingUtilities.getWindowAncestor(result).dispose();
 			} catch (Exception ex) {
-				JOptionPane.showMessageDialog(null, "Invalid inputs: " + ex.getMessage());
+				JOptionPane.showMessageDialog(calc, "Invalid inputs: " + ex.getMessage());
 				ex.printStackTrace();
 			}
 			
 		});
 		result.add(generate);
 		
-		JOptionPane.showMessageDialog(null, result);
+		JOptionPane.showMessageDialog(calc, result);
 		
 		return resultPokemon[0];
 	}

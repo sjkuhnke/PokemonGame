@@ -627,7 +627,7 @@
     ]
   },
 
-  "mud_slap/sand_attack": {
+  "mud$slap/sand_attack": {
     "type": "ranged",
     "frames": [
       {

@@ -254,7 +254,7 @@ public class GamePanel extends JPanel implements Runnable {
 				if (this.isShowing() && this.isDisplayable()) { // to handle other JPanels being drawn
 					update();
 					drawToTempScreen(); // draw everything to the buffered image
-					drawToScreen(); // draw everything to the screen
+					repaint(); // draw everything to the screen
 					
 					if (screenshotRequested) {
 						saveScreenshot();
@@ -355,6 +355,8 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 	
 	public void drawToTempScreen() {
+		validateGraphicsContext();
+		
 		if (gameState == LOADING_STATE) {
 			loadingScreen.draw(g2);
 		} else if (gameState == TITLE_STATE) {
@@ -410,33 +412,30 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 	}
 	
-	public void drawToScreen() {
-		Graphics g = getGraphics();
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
 		
-		if (g != null) {
-			int windowWidth = getWidth();
-			int windowHeight = getHeight();
-			
-			double gameAspect = (double) screenWidth / screenHeight;
-			double windowAspect = (double) windowWidth / windowHeight;
-			
-			int renderWidth, renderHeight, xOffset, yOffset;
-			
-			if (windowAspect > gameAspect) { // window is wider
-				renderHeight = windowHeight;
-				renderWidth = (int) (windowHeight * gameAspect);
-				xOffset = (windowWidth - renderWidth) / 2;
-				yOffset = 0;
-			} else { // window is taller
-				renderWidth = windowWidth;
-				renderHeight = (int) (windowWidth / gameAspect);
-				xOffset = 0;
-				yOffset = (windowHeight - renderHeight) / 2;
-			}
-			
-			g.drawImage(screen, xOffset, yOffset, renderWidth, renderHeight, null);
-			g.dispose();
+		int windowWidth = getWidth();
+		int windowHeight = getHeight();
+		
+		double gameAspect = (double) screenWidth / screenHeight;
+		double windowAspect = (double) windowWidth / windowHeight;
+		
+		int renderWidth, renderHeight, xOffset, yOffset;
+		
+		if (windowAspect > gameAspect) { // window is wider
+			renderHeight = windowHeight;
+			renderWidth = (int) (windowHeight * gameAspect);
+			xOffset = (windowWidth - renderWidth) / 2;
+			yOffset = 0;
+		} else { // window is taller
+			renderWidth = windowWidth;
+			renderHeight = (int) (windowWidth / gameAspect);
+			xOffset = 0;
+			yOffset = (windowHeight - renderHeight) / 2;
 		}
+		
+		g.drawImage(screen, xOffset, yOffset, renderWidth, renderHeight, null);
 	}
 	
 	public void playMusic(int i) {
@@ -745,10 +744,7 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 	
 	public void setFullScreen() {
-		//GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-		
 		GraphicsDevice targetDevice = window.getGraphicsConfiguration().getDevice();
-		
 		lastScreenDevice = targetDevice;
 		
 		// dispose of the window to prepare for fullscreen
@@ -763,42 +759,55 @@ public class GamePanel extends JPanel implements Runnable {
 		// set fullscreen window on the monitor where the window currently is
 		targetDevice.setFullScreenWindow(window);
 		
+		fullScreenWidth = window.getWidth();
+		fullScreenHeight = window.getHeight();
+		
+		validateGraphicsContext();
+		
 		window.setVisible(true);
 		this.requestFocusInWindow();
+		
+		this.revalidate();
+		this.repaint();
 	}
 
 	public void setDefaultView() {
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		
 		// Exit fullscreen mode on whichever device it's on
-	    if (lastScreenDevice != null && lastScreenDevice.getFullScreenWindow() == window) {
-	        lastScreenDevice.setFullScreenWindow(null);
-	    } else {
-	        // Fallback: check all devices
-	        for (GraphicsDevice gd : ge.getScreenDevices()) {
-	            if (gd.getFullScreenWindow() == window) {
-	                gd.setFullScreenWindow(null);
-	                break;
-	            }
-	        }
-	    }
-	    
-	    // Dispose and reconfigure window
-	    window.dispose();
-	    window.setUndecorated(false);
-	    window.setResizable(true); // Enable resizing in windowed mode
-	    
-	    // Reset to default dimensions
-	    fullScreenWidth = screenWidth;
-	    fullScreenHeight = screenHeight;
-	    
-	    // Set window size and center it
-	    this.setPreferredSize(new Dimension(screenWidth, screenHeight));
-	    window.pack();
-	    window.setLocationRelativeTo(null);
-	    
-	    window.setVisible(true);
-	    this.requestFocusInWindow();
+		if (lastScreenDevice != null && lastScreenDevice.getFullScreenWindow() == window) {
+			lastScreenDevice.setFullScreenWindow(null);
+		} else {
+			// Fallback: check all devices
+			for (GraphicsDevice gd : ge.getScreenDevices()) {
+				if (gd.getFullScreenWindow() == window) {
+					gd.setFullScreenWindow(null);
+					break;
+				}
+			}
+		}
+		
+		// Dispose and reconfigure window
+		window.dispose();
+		window.setUndecorated(false);
+		window.setResizable(true); // Enable resizing in windowed mode
+		
+		// Reset to default dimensions
+		fullScreenWidth = screenWidth;
+		fullScreenHeight = screenHeight;
+		
+		// Set window size and center it
+		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
+		window.pack();
+		window.setLocationRelativeTo(null);
+		
+		validateGraphicsContext();
+		
+		window.setVisible(true);
+		this.requestFocusInWindow();
+		
+		this.revalidate();
+		this.repaint();
 	}
 	
 	public void toggleFullScreen() {
@@ -1035,6 +1044,16 @@ public class GamePanel extends JPanel implements Runnable {
 		
 		SaveManager.saveScreenshot(copy);
 		keyH.copyImageToClipboard(copy);
+	}
+	
+	private void validateGraphicsContext() {
+		if (screen == null) {
+			screen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
+		}
+		if (g2 != null) {
+			g2.dispose();
+		}
+		g2 = (Graphics2D) screen.getGraphics();
 	}
 
 }
