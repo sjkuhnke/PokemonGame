@@ -2441,8 +2441,6 @@ public class Pokemon implements Serializable {
 		
 		MoveContext ctx = new MoveContext();
 		
-		if (move != this.lastMoveUsed) this.moveMultiplier = 1;
-		
 		if (this.getItem(field) == Item.METRONOME) {
 			if (move == lastMoveUsed) {
 				this.metronome++;
@@ -2453,6 +2451,8 @@ public class Pokemon implements Serializable {
 		} else {
 			this.metronome = 0;
 		}
+		
+		if (move != this.lastMoveUsed) this.moveMultiplier = 1;
 		
 		Move prevMove = this.lastMoveUsed;
 		
@@ -2541,7 +2541,7 @@ public class Pokemon implements Serializable {
 						attackStat *= this.asModifier(0);
 						defenseStat *= this.asModifier(1);
 						damage = calc(attackStat, defenseStat, 40, this.level);
-						this.damage(damage, foe, Move.STRUGGLE, this.nickname + " hit itself in confusion!", -1);
+						this.damage(damage, foe, Move.STRUGGLE, this.nickname + " hit itself in confusion!", -1, false, this);
 						if (this.currentHP <= 0) {
 							this.faint(true, foe);
 						}
@@ -2791,7 +2791,7 @@ public class Pokemon implements Serializable {
 				this.moveMultiplier = 1;
 				this.impressive = false;
 				this.rollCount = 1;
-				this.metronome = -1;
+				this.metronome--;
 				this.lastMoveUsed = move;
 				return;
 			} else {
@@ -2834,6 +2834,7 @@ public class Pokemon implements Serializable {
 				this.impressive = false;
 				this.rollCount = 1;
 				this.lastMoveUsed = move;
+				this.metronome--;
 				return;
 			} else {
 				ctx.phase = AnimPhase.ATTACKING;
@@ -2849,6 +2850,11 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (consumePP) consumeMovePP(move, foe);
+		
+		// set the animation to charging for future sight use - the attacking animation will play when it actually hits
+		if (move == Move.FUTURE_SIGHT) {
+			ctx.phase = AnimPhase.CHARGING;
+		}
 		
 		if (foe.hasStatus(Status.PROTECT) && (move.accuracy <= 100 || move.cat != 2) && move != Move.FEINT && move != Move.PHANTOM_FORCE
 				&& move != Move.VANISHING_ACT && move != Move.MIGHTY_CLEAVE && move != Move.FUTURE_SIGHT) {
@@ -3637,6 +3643,7 @@ public class Pokemon implements Serializable {
 			}
 			
 			if (this.getAbility(field) == Ability.ILLUSION && this.illusion) damage *= 1.2;
+			if (this.getAbility(field) == Ability.ANALYTIC && !first) damage *= 1.3;
 			if (move == Move.NIGHT_SHADE || move == Move.SEISMIC_TOSS || move == Move.PSYWAVE) damage = this.level;
 			if (move == Move.ENDEAVOR) {
 				if (foe.currentHP > this.currentHP) {
@@ -3737,15 +3744,15 @@ public class Pokemon implements Serializable {
 			
 			if (damage > 0) {
 				if (numHits > 1) {
-					foe.damage(damage, this, move, damagePercentText, -1, sturdy);
+					foe.damage(damage, this, move, damagePercentText, -1, sturdy, this);
 				} else {
 					Task.addTask(Task.TEXT, damagePercentText);
-					foe.damage(damage, this, move, moveText, damageIndex, sturdy);
+					foe.damage(damage, this, move, moveText, damageIndex, sturdy, this);
 				}
 			}
 			
-			// set damage taken field
-			foe.damageTaken = new Pair<>(damage, move.isPhysical());
+			// set damage taken field, incrementing for multi-hit moves
+			foe.damageTaken = new Pair<>(hit == 1 || foe.damageTaken == null ? damage : foe.damageTaken.getFirst() + damage, move.isPhysical());
 			
 			if (!foe.isFainted() && (moveType == PType.WATER && (foe.getItem(field) == Item.DAMAGED_BULB || foe.getItem(field) == Item.DAMAGED_MOSS))
 					|| (moveType == PType.ELECTRIC && foe.getItem(field) == Item.DAMAGED_BATTERY)
@@ -9372,18 +9379,18 @@ public class Pokemon implements Serializable {
 	}
 	
 	private void damage(int amt, Pokemon foe, Move move, String message, int damageIndex) {
-		this.damage(amt, foe, move, message, damageIndex, false);
+		this.damage(amt, foe, move, message, damageIndex, false, foe);
 	}
 	
-	private void damage(int amt, Pokemon foe, Move move, String message, int damageIndex, boolean sturdy) {
+	private void damage(int amt, Pokemon foe, Move move, String message, int damageIndex, boolean sturdy, Pokemon visible) {
 		if ((this.getAbility(field) == Ability.MAGIC_GUARD || this.getAbility(field) == Ability.SCALY_SKIN) && move == null) return;
 		this.currentHP -= amt;
 		if (sturdy) this.currentHP = 1;
 		Task t;
 		if (damageIndex >= 0) {
 			t = Task.createTask(Task.DAMAGE, message, this);
-			t.wipe = true;
-			t.foe = foe;
+			if (visible != null) t.wipe = true;
+			t.foe = visible;
 			Task.insertTask(t, damageIndex);
 		} else {
 			t = Task.addTask(Task.DAMAGE, message, this);
@@ -11648,13 +11655,17 @@ public class Pokemon implements Serializable {
 
 	public int takeFutureSight(int bp, int stat, int level, boolean isCrit, Ability ability, int mode, Pokemon foe) {
 		if (this.isFainted() && mode == 0) return 0;
-		ArrayList<Task> tasks = mode == 0 ? gp.gameState == GamePanel.BATTLE_STATE ? gp.battleUI.tasks : gp.simBattleUI.tasks : null;
-		int damageIndex = tasks == null ? 0 : tasks.size();
 		boolean immune = false;
 		
-		if (mode == 0) Task.addTask(Task.TEXT, this.nickname + " took the Future Sight attack!");
-		Task msgTask = Task.getTask(damageIndex);
-		String message = msgTask == null ? "" : msgTask.message;
+		String message = this.nickname + " took the Future Sight attack!";
+		
+		if (mode == 0) {
+			Task t = Task.addMoveAnimTask(Move.FUTURE_SIGHT, message, this, this, AnimPhase.ATTACKING);
+			t.wipe = this.spriteVisible;
+		}
+		
+		ArrayList<Task> tasks = mode == 0 ? gp.gameState == GamePanel.BATTLE_STATE ? gp.battleUI.tasks : gp.simBattleUI.tasks : null;
+		int damageIndex = tasks == null ? 0 : tasks.size();
 		
 		double attackStat = stat;
 		double defenseStat = this.getStat(4);
@@ -11712,7 +11723,7 @@ public class Pokemon implements Serializable {
 			damage = 0;
 		} else {
 			if (multiplier > 1) {
-				message += multiplier > 2 ? "\nIt's extremely effective!" : "\nIt's super effective!";
+				Task.addTask(Task.TEXT, multiplier > 2 ? "It's extremely effective!" : "It's super effective!");
 				if (mode == 0) field.superEffective++;
 				if (this.getAbility(field) == Ability.SOLID_ROCK || this.getAbility(field) == Ability.FILTER) damage /= 2;
 				if (this.getItem(field) != null && this.checkTypeResistBerry(Move.FUTURE_SIGHT.mtype)) {
@@ -11724,7 +11735,7 @@ public class Pokemon implements Serializable {
 				}
 			}
 			if (multiplier < 1) {
-				message += multiplier < 0.5 ? "\nIt's mostly ineffective..." : "\nIt's not very effective...";
+				Task.addTask(Task.TEXT, multiplier < 0.5 ? "It's mostly ineffective..." : "It's not very effective...");
 				if (ability == Ability.TINTED_LENS) damage *= 2;
 			}
 			
@@ -11744,7 +11755,7 @@ public class Pokemon implements Serializable {
 				double percent = dividend * 100.0 / this.getStat(0); // change dividend to damage
 				String formattedPercent = String.format("%.1f", percent);
 				String damagePercentText = "(" + this.nickname + " lost " + formattedPercent + "% of its HP.)";
-				this.damage(damage, this, Move.FUTURE_SIGHT, message, damageIndex, sturdy);
+				this.damage(damage, foe, Move.FUTURE_SIGHT, message, damageIndex, sturdy, null);
 				Task.addTask(Task.TEXT, damagePercentText);
 				
 				if (this.getItem(field) == Item.AIR_BALLOON) {

@@ -5553,6 +5553,7 @@ public class AssetSetter {
 			case SCOTT_UP:
 				result.setupImages("/npc/scott", true);
 				result.setDirection("up");
+				break;
 			case SCOTT_RIGHT:
 				result.setupImages("/npc/scott", true);
 				result.setDirection("right");

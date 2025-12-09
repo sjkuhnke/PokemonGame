@@ -620,8 +620,8 @@ public class BattleUI extends AbstractUI {
 			}
 			currentDialogue = currentTask.message;
 			if (currentTask.wipe) {
-				currentTask.p.spriteVisible = true; // TODO: does this break anything? needed here for self-hit confusion damage
-				currentTask.foe.spriteVisible = true;
+				//currentTask.p.spriteVisible = true; // TODO: does this break anything? needed here for self-hit confusion damage
+				if (currentTask.foe != null) currentTask.foe.spriteVisible = true;
 			}
 			if (currentTask.p == user) {
 				if (userHP > currentTask.finish) userHP--;

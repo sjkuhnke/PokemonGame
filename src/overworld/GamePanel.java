@@ -173,6 +173,9 @@ public class GamePanel extends JPanel implements Runnable {
 		screen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
 		g2 = (Graphics2D) screen.getGraphics();
 		
+		this.setMinimumSize(getMinimumSize());
+		window.setMinimumSize(getMinimumSize());
+		
 		startGameThread();
 		
 		loadingScreen.setProgress(5, "Loading Title Screen...");
@@ -254,7 +257,7 @@ public class GamePanel extends JPanel implements Runnable {
 				if (this.isShowing() && this.isDisplayable()) { // to handle other JPanels being drawn
 					update();
 					drawToTempScreen(); // draw everything to the buffered image
-					repaint(); // draw everything to the screen
+					drawToScreen(); // draw everything to the screen
 					
 					if (screenshotRequested) {
 						saveScreenshot();
@@ -412,30 +415,33 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 	}
 	
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
+	public void drawToScreen() {
+		Graphics g = getGraphics();
 		
-		int windowWidth = getWidth();
-		int windowHeight = getHeight();
-		
-		double gameAspect = (double) screenWidth / screenHeight;
-		double windowAspect = (double) windowWidth / windowHeight;
-		
-		int renderWidth, renderHeight, xOffset, yOffset;
-		
-		if (windowAspect > gameAspect) { // window is wider
-			renderHeight = windowHeight;
-			renderWidth = (int) (windowHeight * gameAspect);
-			xOffset = (windowWidth - renderWidth) / 2;
-			yOffset = 0;
-		} else { // window is taller
-			renderWidth = windowWidth;
-			renderHeight = (int) (windowWidth / gameAspect);
-			xOffset = 0;
-			yOffset = (windowHeight - renderHeight) / 2;
+		if (g != null) {
+			int windowWidth = getWidth();
+			int windowHeight = getHeight();
+			
+			double gameAspect = (double) screenWidth / screenHeight;
+			double windowAspect = (double) windowWidth / windowHeight;
+			
+			int renderWidth, renderHeight, xOffset, yOffset;
+			
+			if (windowAspect > gameAspect) { // window is wider
+				renderHeight = windowHeight;
+				renderWidth = (int) (windowHeight * gameAspect);
+				xOffset = (windowWidth - renderWidth) / 2;
+				yOffset = 0;
+			} else { // window is taller
+				renderWidth = windowWidth;
+				renderHeight = (int) (windowWidth / gameAspect);
+				xOffset = 0;
+				yOffset = (windowHeight - renderHeight) / 2;
+			}
+			
+			g.drawImage(screen, xOffset, yOffset, renderWidth, renderHeight, null);
+			g.dispose();
 		}
-		
-		g.drawImage(screen, xOffset, yOffset, renderWidth, renderHeight, null);
 	}
 	
 	public void playMusic(int i) {
@@ -798,6 +804,8 @@ public class GamePanel extends JPanel implements Runnable {
 		
 		// Set window size and center it
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
+		this.setMinimumSize(getMinimumSize());
+		window.setMinimumSize(getMinimumSize());
 		window.pack();
 		window.setLocationRelativeTo(null);
 		
