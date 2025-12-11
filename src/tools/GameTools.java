@@ -3,6 +3,7 @@ package tools;
 import javax.swing.*;
 
 import overworld.GamePanel;
+import pokemon.Field;
 import pokemon.Pokemon;
 import tile.TileManager;
 
@@ -37,6 +38,7 @@ public class GameTools {
 	}
 	
 	public static void load() {
+		Pokemon.field = new Field();
 		Pokemon.readInfoFromCSV();
 		Pokemon.readMovebanksFromCSV();
 		Pokemon.readTMsFromCSV();

@@ -735,7 +735,7 @@ public class Script {
 			int counter = 0;
 			do {
 				counter++;
-				id = gift.nextInt(8); // Dualmoose, Sparkdust, Posho, Kissyfishy, Minishoo, Tinkie, Bronzor-X, Bluebunn
+				id = gift.nextInt(8); // Cervora, Sparkdust, Posho, Kissyfishy, Minishoo, Tinkie, Bronzor-X, Willolagos
 				switch (id) {
 				case 0:
 					id = 61;
