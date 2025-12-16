@@ -44,6 +44,9 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingUtilities;
 
+import org.json.JSONObject;
+import org.json.JSONArray;
+
 import overworld.GamePanel;
 import pokemon.Bag.Entry;
 import pokemon.Field.Effect;
@@ -2488,7 +2491,7 @@ public class Pokemon implements Serializable {
 				contact = move.contact;
 			}
 			
-			if (this.status == Status.ASLEEP && this != foe) {
+			if (this.status == Status.ASLEEP) {
 				if (this.sleepCounter > 0) {
 					Task t = Task.addTask(Task.TEXT, this.nickname + " is fast asleep.");
 					t.wipe = true;
@@ -2528,7 +2531,7 @@ public class Pokemon implements Serializable {
 				}
 			}
 			
-			if (this.hasStatus(Status.CONFUSED) && this != foe) {
+			if (this.hasStatus(Status.CONFUSED)) {
 				if (this.confusionCounter == 0) {
 					this.removeStatus(Status.CONFUSED);
 					Task.addTask(Task.TEXT, this.nickname + " snapped out of confusion!");
@@ -2561,7 +2564,7 @@ public class Pokemon implements Serializable {
 					}
 				}
 			}
-			if (this.status == Status.PARALYZED && Math.random() < 0.25 && this != foe) {
+			if (this.status == Status.PARALYZED && Math.random() < 0.25) {
 				Task t = Task.addTask(Task.TEXT, this.nickname + " is paralyzed! It can't move!");
 				t.wipe = true;
 				this.moveMultiplier = 1;
@@ -2683,9 +2686,12 @@ public class Pokemon implements Serializable {
 		
 		if (id == 237) {
 			consumeMovePP(move, foe);
+			Move m = move;
 			move = get150Move(move);
-			move(foe, move, first, false, false);
-			return; // same logic as protect
+			if (move != m) {
+				move(foe, move, first, false, false);
+				return; // same logic as metronome
+			}
 		}
 		
 		if (move == Move.MIRROR_MOVE || move == Move.MIMIC) {
@@ -11948,6 +11954,60 @@ public class Pokemon implements Serializable {
 			if (this.item == Item.POTION) this.item = null;
 		}
 		
+	}
+	
+	public JSONObject toJSON() {
+		JSONObject json = new JSONObject();
+		
+		// basic info
+		json.put("id", id);
+		json.put("name", name);
+		json.put("nickname", nickname);
+		json.put("level", level);
+		json.put("shiny", shiny);
+		
+		// stats
+		json.put("ivs", new JSONArray(ivs));
+		json.put("stats", new JSONArray(stats));
+		json.put("nature", nat.toString());
+		json.put("currentHP", currentHP);
+		
+		json.put("maxHP", getStat(0));
+		
+		// types
+		json.put("type1", type1.toString());
+		if (type2 != null) json.put("type2", type2.toString());
+		
+		// ability
+		json.put("ability", ability.toString());
+		json.put("abilitySlot", abilitySlot);
+		
+		// moves
+		JSONArray moves = new JSONArray();
+		for (Moveslot m : moveset) {
+			if (m != null && m.move != null) {
+				JSONObject move = new JSONObject();
+				move.put("name", m.move.toString());
+				move.put("pp", m.currentPP);
+				move.put("maxPP", m.maxPP);
+				moves.put(move);
+			}
+		}
+		json.put("moveset", moves);
+		
+		// item
+		if (item != null) json.put("item", item.toString());
+		if (ball != null) json.put("ball", ball.toString());
+		
+		// status
+		json.put("status", status.toString());
+		json.put("fainted", fainted);
+		
+		// misc
+		json.put("happiness", happiness);
+		json.put("metAt", metAt);
+		
+		return json;
 	}
 	
 }

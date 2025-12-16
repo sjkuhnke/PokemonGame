@@ -1425,6 +1425,10 @@ public class UI extends AbstractUI {
 			}
 		}
 		
+		if (foe.trainerOwned() && gp.player.p.nuzlocke && !gp.player.p.getTrainerDatabase().containsKey(foe.trainer.getName())) {
+			gp.player.p.addTrainerToDatabase(foe.trainer);
+		}
+		
 		gp.battleUI.user = gp.player.p.getCurrent();
 		gp.battleUI.foe = foe;
 		gp.battleUI.index = currentTask.counter;

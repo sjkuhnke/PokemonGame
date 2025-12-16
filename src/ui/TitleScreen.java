@@ -9,12 +9,18 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
@@ -110,9 +116,10 @@ public class TitleScreen extends AbstractUI {
 	
 	// MANAGE MENU OPTIONS
 	private static final int MANAGE_RENAME = 0;
-	private static final int MANAGE_DELETE = 1;
+	private static final int MANAGE_EXPORT = 1;
 	private static final int MANAGE_OPEN_LOCATION = 2;
-	private static final int MANAGE_CANCEL = 3;
+	private static final int MANAGE_DELETE = 3;
+	private static final int MANAGE_CANCEL = 4;
 	private int manageMenuNum = 0;
 	
 	public TitleScreen(GamePanel gp, boolean load) {
@@ -470,15 +477,43 @@ public class TitleScreen extends AbstractUI {
 		case MANAGE_RENAME:
 			handleRenameSave(selectedFile);
 			break;
-		case MANAGE_DELETE:
-			handleDeleteSave(selectedFile);
+		case MANAGE_EXPORT:
+			handleExportBattleHistory(selectedFile);
 			break;
 		case MANAGE_OPEN_LOCATION:
 			SaveManager.showSaveInExplorer(selectedFile);
 			break;
+		case MANAGE_DELETE:
+			handleDeleteSave(selectedFile);
+			break;
 		case MANAGE_CANCEL:
 			menuState = MAIN_MENU;
 			break;
+		}
+	}
+
+	private void handleExportBattleHistory(String selectedFile) {
+		HashMap<String, Pokemon[]> battleHistory = previewPlayer.getTrainerDatabase();
+		if (battleHistory.isEmpty()) {
+			showMessage("No history to export!");
+			return;
+		}
+		
+		try {
+			Path battleDir = SaveManager.getDocsDirectory().getParent().resolve("battle");
+			Files.createDirectories(battleDir);
+			String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
+			String fileName = "battle_history_" + timestamp + ".json";
+			
+			File battleFile = new File(battleDir.toFile(), fileName);
+			FileWriter writer = new FileWriter(battleFile);
+			writer.write(previewPlayer.exportBattleHistory().toString(2));
+			SaveManager.showInExplorer(battleFile);
+			showMessage("Battle data exported successfully!");
+			writer.close();
+		} catch (IOException e) {
+			showMessage("Error: " + e.getMessage());
+			e.printStackTrace();
 		}
 	}
 
@@ -1418,7 +1453,7 @@ public class TitleScreen extends AbstractUI {
 		int fileY = titleY + gp.tileSize * 2 / 3;
 		drawOutlinedText(fileName, fileX, fileY, new Color(200, 200, 200), Color.BLACK);
 		
-		String[] options = {"Rename", "Delete", "Open Location", "Cancel"};
+		String[] options = {"Rename", "Export Battle History", "Open Location", "Delete", "Cancel"};
 		int optionX = panelX + gp.tileSize / 2;
 		int optionY = (int) (panelY + gp.tileSize * 2.5);
 		int optionSpacing = (int)(gp.tileSize * 0.8);

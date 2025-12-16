@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -36,6 +37,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import entity.Entity;
 import entity.NPC_Prize_Shop;
@@ -122,6 +125,8 @@ public class Player extends Trainer implements Serializable {
 	public boolean allowRevives;
 	public boolean buyableRevives;
 	public int levelCapBonus;
+	
+	private HashMap<String, Pokemon[]> trainerDatabase;
 	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
@@ -2139,5 +2144,48 @@ public class Player extends Trainer implements Serializable {
 			new Color(150, 150, 150)   // Neutral Gray (for Cancel)
 		};
 		return colors[i];
+	}
+
+	public HashMap<String, Pokemon[]> getTrainerDatabase() {
+		if (trainerDatabase == null) {
+			trainerDatabase = new HashMap<>();
+		}
+		return trainerDatabase;
+	}
+
+	public void addTrainerToDatabase(Trainer t) {
+		Pokemon[] teamClone = new Pokemon[team.length];
+		int index = 0;
+		for (Pokemon p : team) {
+			if (p != null) teamClone[index] = team[index].clone();
+			index++;
+		}
+		this.getTrainerDatabase().put(t.getName(), teamClone);
+	}
+	
+	public JSONObject exportBattleHistory() {
+		JSONObject export = new JSONObject();
+		JSONArray battles = new JSONArray();
+		
+		for (Map.Entry<String, Pokemon[]> entry : getTrainerDatabase().entrySet()) {
+			JSONObject battle = new JSONObject();
+			battle.put("trainer", entry.getKey());
+			
+			JSONArray team = new JSONArray();
+			for (Pokemon p : entry.getValue()) {
+				if (p != null) {
+					team.put(p.toJSON());
+				}
+			}
+			battle.put("team", team);
+			battles.put(battle);
+		}
+		
+		export.put("battles", battles);
+		export.put("player_name", this.name);
+		export.put("game_version", GamePanel.GAME_VERSION);
+		export.put("export_date", System.currentTimeMillis());
+		
+		return export;
 	}
 }
