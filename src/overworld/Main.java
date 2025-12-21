@@ -139,7 +139,7 @@ public class Main {
 		}
 	}
 	
-	public static void loadGame(String fileName) {
+	public static void loadGame(String fileName, String playerName) {
 		gp.setGameState(GamePanel.LOADING_STATE);
 		gp.loadingScreen.reset();
 		
@@ -180,7 +180,7 @@ public class Main {
 					if (gp.player.p.visor) gp.player.setupPlayerImages(true);
 				} else {
 					loader.setProgress(5, "Creating new player...");
-					gp.player.p = new Player(gp);
+					gp.player.p = new Player(gp, playerName);
 					if (nuzlocke) gp.player.p.setupNuzlocke(banShedinja, banBatonPass, allowRevives, buyableRevives, levelCapBonus);
 					gp.player.p.difficulty = difficulty;
 				}
@@ -274,6 +274,7 @@ public class Main {
 				// final setup
 				SwingUtilities.invokeLater(() -> {
 					setupWindowCloseHandler();
+					gp.player.name = gp.player.p.getName();
 					gp.eHandler.p = gp.player.p;
 					gp.aSetter.updateNPC(gp.currentMap);
 					gp.player.p.setupPuzzles(gp, gp.currentMap);

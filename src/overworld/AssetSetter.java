@@ -2315,7 +2315,7 @@ public class AssetSetter {
 				+ "Gramps over there is the key to our plans, and I'm not letting you mess it up!",
 				"Impossible... How could this happen?\n"
 				+ "Go ahead, save the old man. It won't matter in the end!", 184);
-		gp.npc[mapNum][index] = NPCSetup(GRANDFATHER, "Grandpa", 31, 41, "Finn... is that you?", mapNum, 131, "I heard about what happened - thank you for stopping that alien Pokemon! It's good to see you safe.");
+		gp.npc[mapNum][index] = NPCSetup(GRANDFATHER, "Grandpa", 31, 41, "<@>... is that you?", mapNum, 131, "I heard about what happened - thank you for stopping that alien Pokemon! It's good to see you safe.");
 		
 		mapNum = 90;
 		index = 0;
@@ -2446,7 +2446,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(ACTOR_RIGHT, 62, 47, "Lights, camera, battle! Watch me shine!", "I guess even the best actors stumble sometimes...", 252);
 		gp.npc[mapNum][index] = NPCSetup(ACTRESS_DOWN, 63, 41, "Lights, action, battle! Time to put on a show you won't forget!", "The curtain falls... for now. I'll be back stronger!", 253);
 		gp.npc[mapNum][index] = NPCSetup(ACTOR_UP, 54, 43, "Every move, every attack - it's all part of my grand show!", "A little setback, that's all. The show must go on!", 254);
-		gp.npc[mapNum][index] = NPCSetup(RAYNA, 53, 30, "It's... you! You're Finn!\n"
+		gp.npc[mapNum][index] = NPCSetup(RAYNA, 53, 30, "It's... you! You're <@>!\n"
 				+ "I've been keeping an eye on you ever since you got in the way of Team Eclipse.\n"
 				+ "Have you let your light carve a path for you to succeed? You've come so far to my little neck in the woods.\n"
 				+ "But this battle? It's different. You'll be facing the strength and purity of Light Pokemon, which means you'll need more than just brute force to win.\n"
@@ -2548,7 +2548,7 @@ public class AssetSetter {
 				+ "Something big is coming. Something that won't be fooled by cheap tricks or clever illusions.\n"
 				+ "You've seen the pieces moving, haven't you? The fever, the mountain, the chaos left in its wake. That wasn't just chance.\n"
 				+ "And it won't stop here.\n"
-				+ "I'm old, Finn. My time for grand heroics is long past... but that doesn't mean I'm out of the game just yet.\n"
+				+ "I'm old, <@>. My time for grand heroics is long past... but that doesn't mean I'm out of the game just yet.\n"
 				+ "When the final act begins, you won't be standing alone. The curtain's rising, and I intend to play my part.\n"
 				+ "But for now? You've earned that badge.\n"
 				+ "Wear it well, and remember - true magic isn't about power. It's about knowing when to wield it, and when to trust in something greater.", 305);
@@ -2741,7 +2741,7 @@ public class AssetSetter {
 				+ "But I need to know if that was a fluke... or fate.\n"
 				+ "Show me you're worthy of rewriting the heavens. Show me why Earth deserves to be reclaimed.",
 				"...No tricks. No god-kid training wheels. Just grit.\n"
-				+ "You're the real deal, Finn. The kind of anomaly this universe doesn't get twice.\n"
+				+ "You're the real deal, <@>. The kind of anomaly this universe doesn't get twice.\n"
 				+ "I always thought Dragowrath was the ceiling - the peak of what cosmic power could be.\n"
 				+ "But watching you? I'm not so sure anymore.\n"
 				+ "You've proven yourself. And I don't go back on my word.\n"
@@ -2847,7 +2847,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_RIGHT, 48, 39, "One letter. One echo of the answer. Win, and you may hear it.", "", 411);
 		gp.npc[mapNum][index] = NPCSetup(DISCIPLE_UP, 55, 34, "This floor is painted in misdirection. I will reward your clarity... should you show it in battle.", "", 412);
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC, 46, 74, "", "", -1);
-		gp.npc[mapNum][index] = NPCSetup(MERLIN, "Merlin", 48, 47, "This is where the test begins, Finn.", 191.1);
+		gp.npc[mapNum][index] = NPCSetup(MERLIN, "Merlin", 48, 47, "This is where the test begins, <@>.", 191.1);
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 41, 46, "", "", -1);
 		gp.npc[mapNum][index++] = ITileSetup(47, 83, TORCH, mapNum, mapNum);
 		gp.npc[mapNum][index++] = ITileSetup(53, 83, TORCH, mapNum, mapNum);
@@ -4598,7 +4598,7 @@ public class AssetSetter {
 		}
 		
 		if (flag[5][8] && !flag[6][0]) {
-			if (gp.npc[109][5] == null) gp.npc[109][5] = NPCSetup(SCOTT_DOWN, "Scott", 10, 36, "FINN!!!", 109.1, 192, "Hurry, Finn! I'm counting on you. Head south through Gelb Forest to reach Rawwar City!");
+			if (gp.npc[109][5] == null) gp.npc[109][5] = NPCSetup(SCOTT_DOWN, "Scott", 10, 36, "FINN!!!", 109.1, 192, "Hurry, <@>! I'm counting on you. Head south through Gelb Forest to reach Rawwar City!");
 		} else {
 			gp.npc[109][5] = null;
 		}
@@ -4627,7 +4627,7 @@ public class AssetSetter {
 		 */
 		
 		if (flag[6][6] && !flag[7][0]) {
-			if (gp.npc[124][21] == null) gp.npc[124][21] = NPCSetup(ARTHRA_DOWN, "Arthra", 31, 78, "Finn! There you are - finally!", 124.1);
+			if (gp.npc[124][21] == null) gp.npc[124][21] = NPCSetup(ARTHRA_DOWN, "Arthra", 31, 78, "<@>! There you are - finally!", 124.1);
 		} else {
 			gp.npc[124][21] = null;
 		}

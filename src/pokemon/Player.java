@@ -126,7 +126,8 @@ public class Player extends Trainer implements Serializable {
 	public boolean buyableRevives;
 	public int levelCapBonus;
 	
-	private HashMap<String, Pokemon[]> trainerDatabase;
+	private HashMap<String, BattleRecord> trainersDatabase;
+	private transient BattleRecord currentBattle;
 	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
@@ -157,8 +158,8 @@ public class Player extends Trainer implements Serializable {
 		new int[] {160, 41, 15},
 	}; 
 	
-	public Player(GamePanel gp) {
-		super(true);
+	public Player(GamePanel gp, String name) {
+		super(true, name);
 		
 		setID(null);
 		
@@ -1894,7 +1895,7 @@ public class Player extends Trainer implements Serializable {
 	}
 	
 	public Player clone(GamePanel gp) {
-		Player newPlayer = new Player(gp);
+		Player newPlayer = new Player(gp, this.name);
 		Pokemon[] newTeam = new Pokemon[this.team.length];
 		for (int i = 0; i < this.team.length; i++) {
 			if (this.team[i] != null) newTeam[i] = this.team[i].clone();
@@ -1948,7 +1949,7 @@ public class Player extends Trainer implements Serializable {
 	}
 	
 	public Player shallowClone(GamePanel gp) {
-		Player newPlayer = new Player(gp);
+		Player newPlayer = new Player(gp, this.name);
 		newPlayer.team = this.team;
 		newPlayer.effects = this.effects == null ? new ArrayList<>() : DeepClonable.deepCloneList(this.effects);
 		newPlayer.cloned = true;
@@ -1998,6 +1999,8 @@ public class Player extends Trainer implements Serializable {
         		t.message = t.message.replace(oldNickname, p.nickname);
         	}
         }
+        
+        this.recordEvolution(p);
 	}
 	
 	public void setupPuzzles(GamePanel gp, int map) {
@@ -2146,39 +2149,49 @@ public class Player extends Trainer implements Serializable {
 		return colors[i];
 	}
 
-	public HashMap<String, Pokemon[]> getTrainerDatabase() {
-		if (trainerDatabase == null) {
-			trainerDatabase = new HashMap<>();
+	public HashMap<String, BattleRecord> getTrainerDatabase() {
+		if (trainersDatabase == null) {
+			trainersDatabase = new HashMap<>();
 		}
-		return trainerDatabase;
+		return trainersDatabase;
 	}
-
-	public void addTrainerToDatabase(Trainer t) {
-		Pokemon[] teamClone = new Pokemon[team.length];
-		int index = 0;
-		for (Pokemon p : team) {
-			if (p != null) teamClone[index] = team[index].clone();
-			index++;
+	
+	public void startBattleRecord(Trainer t) {
+		currentBattle = new BattleRecord(t.getName(), team);
+	}
+	
+	public void recordKill(Pokemon killer, Pokemon killed) {
+		if (currentBattle != null) {
+			currentBattle.recordKill(killer, killed);
 		}
-		this.getTrainerDatabase().put(t.getName(), teamClone);
+	}
+	
+	public void recordDeath(Pokemon deceased, Pokemon killer) {
+		if (currentBattle != null) {
+			currentBattle.recordDeath(deceased, killer);
+		}
+	}
+	
+	public void recordEvolution(Pokemon pokemon) {
+		if (currentBattle != null) {
+			currentBattle.recordEvolution(pokemon, pokemon.id, pokemon.name);
+		}
+	}
+	
+	public void endBattleRecord(boolean victory) {
+		if (currentBattle != null) {
+			currentBattle.endBattle(victory);
+			getTrainerDatabase().put(currentBattle.trainerName, currentBattle);
+			currentBattle = null;
+		}
 	}
 	
 	public JSONObject exportBattleHistory() {
 		JSONObject export = new JSONObject();
 		JSONArray battles = new JSONArray();
 		
-		for (Map.Entry<String, Pokemon[]> entry : getTrainerDatabase().entrySet()) {
-			JSONObject battle = new JSONObject();
-			battle.put("trainer", entry.getKey());
-			
-			JSONArray team = new JSONArray();
-			for (Pokemon p : entry.getValue()) {
-				if (p != null) {
-					team.put(p.toJSON());
-				}
-			}
-			battle.put("team", team);
-			battles.put(battle);
+		for (Map.Entry<String, BattleRecord> entry : getTrainerDatabase().entrySet()) {
+			battles.put(entry.getValue().toJSON());
 		}
 		
 		export.put("battles", battles);

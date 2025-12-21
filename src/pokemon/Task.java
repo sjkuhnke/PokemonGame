@@ -120,6 +120,9 @@ public class Task {
 	}
 
 	public Task(int type, String message, Pokemon p) {
+		if (message.contains("<@>")) {
+			message = message.replace("<@>", gp.player.p.name);
+		}
 		this.message = message;
 		this.type = type;
 		if (type == ITEM) {

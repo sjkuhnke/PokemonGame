@@ -208,6 +208,9 @@ public class UI extends AbstractUI {
 
 	@Override
 	public void showMessage(String text) {
+		if (text.contains("<@>")) {
+			text = text.replace("<@>", gp.player.p.getName());
+		}
 		above = true;
 		if (gp.gameState == GamePanel.PLAY_STATE) {
 			gp.gameState = GamePanel.DIALOGUE_STATE;
@@ -1425,8 +1428,8 @@ public class UI extends AbstractUI {
 			}
 		}
 		
-		if (foe.trainerOwned() && gp.player.p.nuzlocke && !gp.player.p.getTrainerDatabase().containsKey(foe.trainer.getName())) {
-			gp.player.p.addTrainerToDatabase(foe.trainer);
+		if (foe.trainerOwned() && gp.player.p.nuzlocke) {
+			gp.player.p.startBattleRecord(foe.trainer);
 		}
 		
 		gp.battleUI.user = gp.player.p.getCurrent();
@@ -1798,7 +1801,7 @@ public class UI extends AbstractUI {
 				gp.keyH.wPressed = false;
 				switch (type) {
 				case 0: // gauntlet at top of splinkty
-					Task.addTask(Task.DIALOGUE, gp.npc[146][1], "Don't screw this up, Finn.");
+					Task.addTask(Task.DIALOGUE, gp.npc[146][1], "Don't screw this up, <@>.");
 					currentTask = null;
 					Task t = Task.addTask(Task.TELEPORT, "");
 					t.counter = 149;
@@ -1951,7 +1954,7 @@ public class UI extends AbstractUI {
 				gp.keyH.wPressed = false;
 				switch (type) {
 				case 0:
-					showMessage("Hurry up Finn, This is urgent!");
+					showMessage("Hurry up <@>, This is urgent!");
 					tasks.clear();
 					currentTask = null;
 					gp.gameState = GamePanel.PLAY_STATE;
@@ -6693,6 +6696,9 @@ public class UI extends AbstractUI {
 		String[] message = letter[currentLetter][pageNum];
 		
 		for (String s : message) {
+			if (s.contains("<@>")) {
+				s = s.replace("<@>", gp.player.p.getName());
+			}
 			g2.drawString(s, textX, textY);
 			textY += lineHeight;
 		}

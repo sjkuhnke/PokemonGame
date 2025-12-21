@@ -50,7 +50,6 @@ public class PlayerCharacter extends Entity {
 		solidAreaDefaultX = solidArea.x;
 		solidAreaDefaultY = solidArea.y;
 		
-		name = "Finn";
 		walkable = true;
 		
 		setDefaultValues();

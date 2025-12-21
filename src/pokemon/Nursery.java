@@ -162,7 +162,7 @@ public class Nursery implements Serializable {
 	}
 	
 	public void interactOutside(Entity npc) {
-		Task.addTask(Task.DIALOGUE, npc, "Hello Finn!");
+		Task.addTask(Task.DIALOGUE, npc, "Hello <@>!");
 		if (state != EGG) {
 			Task.addTask(Task.DIALOGUE, npc, "Ah yes, about your Pokemon.");
 			Task.addTask(Task.DIALOGUE, npc, "...");
@@ -192,7 +192,7 @@ public class Nursery implements Serializable {
 	}
 	
 	public void interactInside(Entity npc) {
-		Task.addTask(Task.DIALOGUE, npc, "Good day, Finn.");
+		Task.addTask(Task.DIALOGUE, npc, "Good day, <@>.");
 		if (state != NOT_FULL && state != EGG) {
 			Task.addTask(Task.DIALOGUE, npc, "Ah yes, about your Pokemon.");
 			Task.addTask(Task.DIALOGUE, npc, "...");

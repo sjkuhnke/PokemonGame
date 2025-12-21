@@ -30,6 +30,7 @@ import overworld.GamePanel;
 import overworld.Main;
 import overworld.PMap;
 import overworld.Sound;
+import pokemon.BattleRecord;
 import pokemon.Player;
 import pokemon.Pokemon;
 import util.SaveManager;
@@ -53,6 +54,7 @@ public class TitleScreen extends AbstractUI {
 	
 	// NEW GAME
 	private String saveFileName = "";
+	private String playerName = "";
 	private int newGameMenuNum;
 	public boolean nuzlockeMode;
 	public int difficultyLevel;
@@ -88,14 +90,15 @@ public class TitleScreen extends AbstractUI {
 	
 	// NEW GAME MENU OPTIONS
 	private static final int NG_SAVE_NAME = 0;
-	private static final int NG_NUZLOCKE_TOGGLE = 1;
-	private static final int NG_DIFFICULTY = 2;
-	private static final int NG_BAN_SHEDINJA = 3;
-	private static final int NG_BAN_BATON_PASS = 4;
-	private static final int NG_ALLOW_REVIVES = 5;
-	private static final int NG_BUYABLE_REVIVES = 6;
-	private static final int NG_LEVEL_CAP = 7;
-	private static final int NG_START = 8;
+	private static final int NG_PLAYER_NAME = 1;
+	private static final int NG_NUZLOCKE_TOGGLE = 2;
+	private static final int NG_DIFFICULTY = 3;
+	private static final int NG_BAN_SHEDINJA = 4;
+	private static final int NG_BAN_BATON_PASS = 5;
+	private static final int NG_ALLOW_REVIVES = 6;
+	private static final int NG_BUYABLE_REVIVES = 7;
+	private static final int NG_LEVEL_CAP = 8;
+	private static final int NG_START = 9;
 	
 	// NEW GAME SCROLL
 	private int newGameMenuScroll = 0;
@@ -115,11 +118,12 @@ public class TitleScreen extends AbstractUI {
 	private int sortMenuNum = 0;
 	
 	// MANAGE MENU OPTIONS
-	private static final int MANAGE_RENAME = 0;
-	private static final int MANAGE_EXPORT = 1;
-	private static final int MANAGE_OPEN_LOCATION = 2;
-	private static final int MANAGE_DELETE = 3;
-	private static final int MANAGE_CANCEL = 4;
+	private static final int MANAGE_RENAME_SAVE = 0;
+	private static final int MANAGE_RENAME_PLAYER = 1;
+	private static final int MANAGE_EXPORT = 2;
+	private static final int MANAGE_OPEN_LOCATION = 3;
+	private static final int MANAGE_DELETE = 4;
+	private static final int MANAGE_CANCEL = 5;
 	private int manageMenuNum = 0;
 	
 	public TitleScreen(GamePanel gp, boolean load) {
@@ -144,8 +148,9 @@ public class TitleScreen extends AbstractUI {
 
 	private void loadSaveFiles() {
 		saveFiles = SaveManager.getSaveFiles();
+		selectedSaveIndex = 0;
 		if (!saveFiles.isEmpty()) {
-			loadPreviewPlayer(saveFiles.get(0));
+			loadPreviewPlayer(saveFiles.get(selectedSaveIndex));
 		}
 	}
 	
@@ -264,7 +269,7 @@ public class TitleScreen extends AbstractUI {
 			if (saveFiles.isEmpty()) {
 				showMessage("No save files found!");
 			} else {
-				Main.loadGame(saveFiles.get(selectedSaveIndex));
+				Main.loadGame(saveFiles.get(selectedSaveIndex), "Finn");
 			}
 			break;
 		case MAIN_NEW_GAME:
@@ -293,6 +298,7 @@ public class TitleScreen extends AbstractUI {
 	private void handleNewGame() {
 		menuState = NEW_GAME_MENU;
 		newGameMenuNum = 0;
+		playerName = "";
 		nuzlockeMode = false;
 		difficultyLevel = 1;
 		banShedinja = false;
@@ -358,7 +364,7 @@ public class TitleScreen extends AbstractUI {
 	}
 	
 	private void updateManageMenu() {
-		if (showDeleteConfirm || (textInputDialog != null && textInputDialog.isActive())) {
+		if (showMessage || showDeleteConfirm || (textInputDialog != null && textInputDialog.isActive())) {
 			return;
 		}
 		
@@ -474,8 +480,11 @@ public class TitleScreen extends AbstractUI {
 		String selectedFile = saveFiles.get(selectedSaveIndex);
 
 		switch (manageMenuNum) {
-		case MANAGE_RENAME:
+		case MANAGE_RENAME_SAVE:
 			handleRenameSave(selectedFile);
+			break;
+		case MANAGE_RENAME_PLAYER:
+			handleRenamePlayer(selectedFile);
 			break;
 		case MANAGE_EXPORT:
 			handleExportBattleHistory(selectedFile);
@@ -493,7 +502,7 @@ public class TitleScreen extends AbstractUI {
 	}
 
 	private void handleExportBattleHistory(String selectedFile) {
-		HashMap<String, Pokemon[]> battleHistory = previewPlayer.getTrainerDatabase();
+		HashMap<String, BattleRecord> battleHistory = previewPlayer.getTrainerDatabase();
 		if (battleHistory.isEmpty()) {
 			showMessage("No history to export!");
 			return;
@@ -547,6 +556,37 @@ public class TitleScreen extends AbstractUI {
 					e.printStackTrace();
 					showMessage("Error renaming file.");
 				}
+			}
+			
+			@Override
+			public void onCancel() {
+				// just return
+			}
+		});
+	}
+	
+	private void handleRenamePlayer(String selectedFile) {
+		String playerName = previewPlayer.getName();
+		
+		textInputDialog = new TextInputDialog(gp, "Rename Player", playerName, "Enter new name", 15, textColor);
+		
+		textInputDialog.show(new TextInputDialog.InputCallback() {
+			@Override
+			public void onConfirm(String newName) {
+				if (newName == null || newName.trim().isEmpty()) {
+					showMessage("Name cannot be empty!");
+					return;
+				}
+				
+				previewPlayer.setName(newName);
+				try {
+					SaveManager.savePlayer(previewPlayer, selectedFile);
+				} catch (IOException e) {
+					showMessage("An error occurred: " + e.getMessage());
+					e.printStackTrace();
+				}
+				loadSaveFiles();
+				showMessage("Player renamed successfully!");
 			}
 			
 			@Override
@@ -688,54 +728,57 @@ public class TitleScreen extends AbstractUI {
 		if (textInputDialog == null || !textInputDialog.isActive()) {
 			int maxOption = NG_START;
 			
-			if (gp.keyH.upPressed) {
-				gp.keyH.upPressed = false;
-				gp.playSFX(Sound.S_MENU_1);
-				newGameMenuNum--;
-				if (newGameMenuNum < 0) newGameMenuNum = maxOption;
-				
-				// skip disabled options
-				if (!nuzlockeMode && (newGameMenuNum >= NG_BAN_SHEDINJA && newGameMenuNum <= NG_LEVEL_CAP)) {
-					newGameMenuNum = NG_DIFFICULTY;
-				}
-				// skip buyable revives if allow revives is off
-				if (newGameMenuNum == NG_BUYABLE_REVIVES && !allowRevives) {
-					newGameMenuNum = NG_ALLOW_REVIVES;
-				}
-				// update scroll position
-				if (newGameMenuNum < newGameMenuScroll) {
-					newGameMenuScroll = newGameMenuNum;
-				}
-				// ensure start button is always reachable
-				if (newGameMenuNum == NG_LEVEL_CAP) {
-					newGameMenuScroll = NG_LEVEL_CAP - MAX_VISIBLE_NG_OPTIONS;
-				}
-			}
-			
-			if (gp.keyH.downPressed) {
-				gp.keyH.downPressed = false;
-				gp.playSFX(Sound.S_MENU_1);
-				newGameMenuNum++;
-				if (newGameMenuNum > maxOption) {
-					newGameMenuNum = 0;
-					newGameMenuScroll = 0;
+			if (!showMessage) {
+				if (gp.keyH.upPressed) {
+					gp.keyH.upPressed = false;
+					gp.playSFX(Sound.S_MENU_1);
+					newGameMenuNum--;
+					if (newGameMenuNum < 0) newGameMenuNum = maxOption;
+					
+					// skip disabled options
+					if (!nuzlockeMode && (newGameMenuNum >= NG_BAN_SHEDINJA && newGameMenuNum <= NG_LEVEL_CAP)) {
+						newGameMenuNum = NG_DIFFICULTY;
+					}
+					// skip buyable revives if allow revives is off
+					if (newGameMenuNum == NG_BUYABLE_REVIVES && !allowRevives) {
+						newGameMenuNum = NG_ALLOW_REVIVES;
+					}
+					// update scroll position
+					if (newGameMenuNum < newGameMenuScroll) {
+						newGameMenuScroll = newGameMenuNum;
+					}
+					// ensure start button is always reachable
+					if (newGameMenuNum == NG_LEVEL_CAP) {
+						newGameMenuScroll = NG_LEVEL_CAP - MAX_VISIBLE_NG_OPTIONS;
+					}
 				}
 				
-				// skip disabled options
-				if (!nuzlockeMode && (newGameMenuNum >= NG_BAN_SHEDINJA && newGameMenuNum <= NG_LEVEL_CAP)) {
-					newGameMenuNum = NG_START;
-				}
-				// skip buyable revives if allow revives is off
-				if (newGameMenuNum == NG_BUYABLE_REVIVES && !allowRevives) {
-					newGameMenuNum = NG_LEVEL_CAP;
-				}
-				// update scroll position
-				if (newGameMenuNum >= newGameMenuScroll + MAX_VISIBLE_NG_OPTIONS && newGameMenuNum <= NG_LEVEL_CAP) {
-					newGameMenuScroll = newGameMenuNum - MAX_VISIBLE_NG_OPTIONS;
-				}
-				// ensure start button is always reachable
-				if (newGameMenuNum != NG_START && isLastScrollableOption(newGameMenuNum)) {
-					newGameMenuNum = NG_START;
+				if (gp.keyH.downPressed) {
+					gp.keyH.downPressed = false;
+					gp.playSFX(Sound.S_MENU_1);
+					newGameMenuNum++;
+					if (newGameMenuNum > maxOption) {
+						newGameMenuNum = 0;
+						newGameMenuScroll = 0;
+					}
+					
+					// skip disabled options
+					if (!nuzlockeMode && (newGameMenuNum >= NG_BAN_SHEDINJA && newGameMenuNum <= NG_LEVEL_CAP)) {
+						newGameMenuNum = NG_START;
+					}
+					// skip buyable revives if allow revives is off
+					if (newGameMenuNum == NG_BUYABLE_REVIVES && !allowRevives) {
+						newGameMenuNum = NG_LEVEL_CAP;
+					}
+					// update scroll position
+					int maxVisibleOptions = getMaxVisibleOptions();
+					if (newGameMenuNum > newGameMenuScroll + maxVisibleOptions && newGameMenuNum <= NG_LEVEL_CAP) {
+						newGameMenuScroll = newGameMenuNum - maxVisibleOptions;
+					}
+					// ensure start button is always reachable
+					if (newGameMenuNum != NG_START && isLastScrollableOption(newGameMenuNum)) {
+						newGameMenuNum = NG_START;
+					}
 				}
 			}
 			
@@ -751,6 +794,27 @@ public class TitleScreen extends AbstractUI {
 						public void onConfirm(String newName) {			
 							newName = sanitizeFileName(newName.trim());
 							saveFileName = newName;
+						}
+						
+						@Override
+						public void onCancel() {
+							// just return
+						}
+					});
+				}
+				break;
+			case NG_PLAYER_NAME:
+				if (gp.keyH.wPressed) {
+					gp.keyH.wPressed = false;
+					gp.playSFX(Sound.S_MENU_1);
+					textInputDialog = new TextInputDialog(gp, "Player Name", playerName, "Enter your character name", 15, textColor);
+					
+					textInputDialog.show(new TextInputDialog.InputCallback() {
+						@Override
+						public void onConfirm(String newName) {			
+							if (newName != null) {
+								playerName = newName.trim();
+							}
 						}
 						
 						@Override
@@ -861,22 +925,34 @@ public class TitleScreen extends AbstractUI {
 			case NG_START:
 				if (gp.keyH.wPressed) {
 					gp.keyH.wPressed = false;
-					gp.playSFX(Sound.S_MENU_START);
-					handleNewGameStart();
+					boolean startable = !playerName.isEmpty();
+					if (startable) {
+						gp.playSFX(Sound.S_MENU_START);
+						handleNewGameStart();
+					} else {
+						gp.playSFX(Sound.S_MENU_CAN);
+						showMessage("Player name cannot be empty!");
+					}
 				}
 				break;
 			}
 			
-			if (gp.keyH.sPressed || gp.keyH.dPressed) {
-				gp.keyH.sPressed = false;
-				gp.keyH.dPressed = false;
-				gp.playSFX(Sound.S_MENU_CAN);
-				menuState = MAIN_MENU;
-				menuNum = MAIN_NEW_GAME;
+			if (!showMessage) {
+				if (gp.keyH.sPressed || gp.keyH.dPressed) {
+					gp.keyH.sPressed = false;
+					gp.keyH.dPressed = false;
+					gp.playSFX(Sound.S_MENU_CAN);
+					menuState = MAIN_MENU;
+					menuNum = MAIN_NEW_GAME;
+				}
 			}
 		}
 	}
 	
+	private int getMaxVisibleOptions() {
+		return newGameMenuNum > NG_BAN_BATON_PASS ? MAX_VISIBLE_NG_OPTIONS : MAX_VISIBLE_NG_OPTIONS - 2;
+	}
+
 	private boolean isLastScrollableOption(int option) {
 		for (int i = option; i < NG_START; i++) {
 			if (isOptionVisible(i)) {
@@ -914,7 +990,7 @@ public class TitleScreen extends AbstractUI {
 		fileName = getUniqueSaveFileName(fileName);
 		fileName += ".dat";
 		
-		Main.loadGame(fileName);
+		Main.loadGame(fileName, playerName.trim());
 	}
 
 	private String sanitizeFileName(String name) {
@@ -990,9 +1066,37 @@ public class TitleScreen extends AbstractUI {
 		
 		contentY += gp.tileSize;
 		
+		contentY += gp.tileSize * 2 / 3;
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
+		selected = newGameMenuNum == NG_PLAYER_NAME;
+		drawOutlinedText("Player Name:", contentX, contentY, selected ? textColor : new Color(200, 200, 200), Color.BLACK);
+		
+		contentY += gp.tileSize / 3;
+		
+		if (selected) {
+			drawPanelWithBorder(contentX, contentY, fieldWidth, fieldHeight, backgroundOpacity, textColor);
+		} else {
+			g2.setColor(new Color(30, 30, 30, 200));
+			g2.fillRect(contentX, contentY, fieldWidth, fieldHeight);
+			g2.setStroke(new BasicStroke(2));
+			g2.setColor(new Color(100, 100, 100));
+			g2.drawRect(contentX, contentY, fieldWidth, fieldHeight);
+		}
+
+		g2.setFont(g2.getFont().deriveFont(24F));
+		textX = contentX + gp.tileSize / 4;
+		textY = contentY + gp.tileSize * 3 / 4;
+
+		boolean startable = !playerName.isEmpty();
+		displayText = playerName.isEmpty() ? "*required" : playerName;
+		textCol = playerName.isEmpty() ? new Color(163, 31, 21) : (selected ? textColor : new Color(200, 200, 200));
+		drawOutlinedText(displayText, textX, textY, textCol, Color.BLACK);
+
+		contentY += gp.tileSize;
+		
 		contentY += gp.tileSize / 2;
 		g2.setColor(new Color(100, 100, 100));
-		g2.drawLine(contentX, contentY, contentX + panelWidth - gp.tileSize, contentY);		
+		g2.drawLine(contentX, contentY, contentX + panelWidth - gp.tileSize, contentY);
 		contentY += (int)(gp.tileSize * 0.75);
 		
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));
@@ -1152,9 +1256,8 @@ public class TitleScreen extends AbstractUI {
 		g2.setClip(null);
 		
 		int totalOptions = getTotalOptions();
-		int effectiveTotal = totalOptions;
 		
-		if (effectiveTotal > MAX_VISIBLE_NG_OPTIONS) {
+		if (totalOptions > MAX_VISIBLE_NG_OPTIONS) {
 			int scrollbarX = panelX + panelWidth - gp.tileSize / 4;
 			int scrollbarY = scrollableY;
 			int scrollbarWidth = 8;
@@ -1163,8 +1266,8 @@ public class TitleScreen extends AbstractUI {
 			g2.setColor(new Color(60, 60, 60));
 			g2.fillRect(scrollbarX, scrollbarY, scrollbarWidth, scrollbarHeight);
 			
-			float thumbHeight = scrollbarHeight * ((float)MAX_VISIBLE_NG_OPTIONS / effectiveTotal);
-			float maxScroll = effectiveTotal - MAX_VISIBLE_NG_OPTIONS;
+			float thumbHeight = scrollbarHeight * ((float)MAX_VISIBLE_NG_OPTIONS / totalOptions);
+			float maxScroll = totalOptions - getMaxVisibleOptions();
 			float thumbY = scrollbarY + (scrollbarHeight - thumbHeight) * (newGameMenuScroll / maxScroll);
 			
 			g2.setColor(textColor);
@@ -1178,22 +1281,23 @@ public class TitleScreen extends AbstractUI {
 		
 		selected = newGameMenuNum == NG_START;
 		if (selected) {
-			drawPanelWithBorder(buttonX, contentY, buttonWidth, buttonHeight, backgroundOpacity + 50, textColor);
+			drawPanelWithBorder(buttonX, contentY, buttonWidth, buttonHeight, backgroundOpacity + (startable ? 50 : 20), startable ? textColor : textColor.darker().darker());
 		} else {
-			drawPanelWithBorder(buttonX, contentY, buttonWidth, buttonHeight, backgroundOpacity - 30, new Color(100, 100, 100));
+			drawPanelWithBorder(buttonX, contentY, buttonWidth, buttonHeight, backgroundOpacity - (startable ? 30 : 60), startable ? new Color(100, 100, 100) : new Color (65, 65, 65));
 		}
 		
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 28F));
 		String startText = "Start";
 		int startX = getCenterAlignedTextX(startText, gp.screenWidth / 2);
 		int startY = contentY + (int)(gp.tileSize * 0.55);
-		drawOutlinedText(startText, startX, startY, selected ? textColor : new Color(200, 200, 200), Color.BLACK);
+		textCol = startable ? selected ? textColor : new Color(200, 200, 200) : new Color(125, 125, 125);
+		drawOutlinedText(startText, startX, startY, textCol, Color.BLACK);
 		
 		g2.setFont(g2.getFont().deriveFont(16F));
 		ArrayList<ToolTip> toolTips = new ArrayList<>();
 		
 		toolTips.add(new ToolTip(gp, "Navigate", "/", true, gp.config.upKey, gp.config.downKey));
-		if (newGameMenuNum == NG_SAVE_NAME) {
+		if (newGameMenuNum == NG_SAVE_NAME || newGameMenuNum == NG_PLAYER_NAME) {
 			toolTips.add(new ToolTip(gp, "Edit", "", true, gp.config.wKey));
 		} else if (newGameMenuNum == NG_START) {
 			toolTips.add(new ToolTip(gp, "Start", "", true, gp.config.wKey));
@@ -1215,7 +1319,7 @@ public class TitleScreen extends AbstractUI {
 		int offset = 0;
 		
 		for (int i = 0; i < newGameMenuScroll; i++) {
-			if (i == NG_SAVE_NAME) offset += (int)(gp.tileSize * 1.4);
+			if (i == NG_SAVE_NAME || i == NG_PLAYER_NAME) offset += (int)(gp.tileSize * 1.5);
 			else if (i == NG_NUZLOCKE_TOGGLE) offset += (int)(gp.tileSize * 0.5);
 			else if (i == NG_DIFFICULTY) offset += gp.tileSize;
 			else if (!nuzlockeMode && i >= NG_BAN_SHEDINJA && i <= NG_LEVEL_CAP) continue;
@@ -1435,7 +1539,7 @@ public class TitleScreen extends AbstractUI {
 		drawOverlay();
 		
 		int panelWidth = gp.tileSize * 6;
-		int panelHeight = gp.tileSize * 6;
+		int panelHeight = gp.tileSize * 9;
 		int panelX = (gp.screenWidth - panelWidth) / 2;
 		int panelY = (gp.screenHeight - panelHeight) / 2;
 		
@@ -1447,15 +1551,40 @@ public class TitleScreen extends AbstractUI {
 		int titleY = panelY + gp.tileSize;
 		drawOutlinedText(title, titleX, titleY, textColor, Color.BLACK);
 		
-		g2.setFont(g2.getFont().deriveFont(20F));
+		// ----- SAVE FILE -----
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 16F));
+		String saveLabel = "SAVE FILE";
+		int labelX = getCenterAlignedTextX(saveLabel, gp.screenWidth / 2);
+		int labelY = titleY + gp.tileSize * 3 / 4;
+		drawOutlinedText(saveLabel, labelX, labelY, new Color(160, 160, 160), Color.BLACK);
+
+		g2.setFont(g2.getFont().deriveFont(22F));
 		String fileName = saveFiles.get(selectedSaveIndex);
 		int fileX = getCenterAlignedTextX(fileName, gp.screenWidth / 2);
-		int fileY = titleY + gp.tileSize * 2 / 3;
-		drawOutlinedText(fileName, fileX, fileY, new Color(200, 200, 200), Color.BLACK);
+		int fileY = labelY + gp.tileSize / 2;
+		drawOutlinedText(fileName, fileX, fileY, new Color(200, 200, 220), Color.BLACK);
+
+		// Divider line
+		g2.setColor(new Color(255, 255, 255, 40));
+		g2.drawLine(panelX + gp.tileSize / 2, fileY + 10,
+		            panelX + panelWidth - gp.tileSize / 2, fileY + 10);
+
+		// ----- PLAYER NAME -----
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 16F));
+		String playerLabel = "PLAYER";
+		labelX = getCenterAlignedTextX(playerLabel, gp.screenWidth / 2);
+		labelY = fileY + gp.tileSize * 3 / 4;
+		drawOutlinedText(playerLabel, labelX, labelY, new Color(170, 170, 170), Color.BLACK);
+
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
+		String playerName = previewPlayer.getName();
+		int playerX = getCenterAlignedTextX(playerName, gp.screenWidth / 2);
+		int playerY = labelY + gp.tileSize / 2;
+		drawOutlinedText(playerName, playerX, playerY, textColor.darker(), Color.BLACK);
 		
-		String[] options = {"Rename", "Export Battle History", "Open Location", "Delete", "Cancel"};
+		String[] options = {"Rename Save", "Rename Player", "Export Battle History", "Open Location", "Delete", "Cancel"};
 		int optionX = panelX + gp.tileSize / 2;
-		int optionY = (int) (panelY + gp.tileSize * 2.5);
+		int optionY = (int) (panelY + gp.tileSize * 4.25);
 		int optionSpacing = (int)(gp.tileSize * 0.8);
 		
 		g2.setFont(g2.getFont().deriveFont(24F));

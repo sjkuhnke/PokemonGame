@@ -10,7 +10,7 @@ import overworld.GamePanel;
 import overworld.Sound;
 import util.ToolTip;
 
-public class TextInputDialog extends TitleScreen {
+public class TextInputDialog extends AbstractUI {
 	private StringBuilder text;
 	private String title;
 	private String placeholder;
@@ -30,9 +30,9 @@ public class TextInputDialog extends TitleScreen {
 	
 	private InputCallback callback;
 	
-	public TextInputDialog(GamePanel gp, String title, String initialText, 
-		String placeholder, int maxLength, Color textColor) {
-		super(gp, false);
+	public TextInputDialog(GamePanel gp, String title, String initialText, String placeholder, int maxLength, Color textColor) {
+		super();
+		this.gp = gp;
 		
 		this.title = title;
 		this.text = new StringBuilder(initialText != null ? initialText : "");
@@ -152,7 +152,7 @@ public class TextInputDialog extends TitleScreen {
 		drawOutlinedText(displayText, textX, textY, textCol, Color.BLACK);
 		
 		if (text.length() > 0 && naming) {
-			int cursorX = textX + getTextWidth(text.toString()) + gp.tileSize / 16;
+			int cursorX = textX + ((int) (getTextWidth(text.toString()) * 0.9)) + gp.tileSize / 10;
 			float alpha = 0.5f + (float)(Math.sin(pulseCounter * 0.15) * 0.5);
 			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
 			g2.setColor(textCol);

@@ -5735,7 +5735,7 @@ public class Pokemon implements Serializable {
 			foe.confuse(false, this);
 			break;
 		case FLOODLIGHT:
-			fail = field.setHazard(foe.getFieldEffects(), field.new FieldEffect(Effect.FLOODLIGHT));
+			fail = !field.setHazard(foe.getFieldEffects(), field.new FieldEffect(Effect.FLOODLIGHT));
 			if (!fail) {
 				stat(foe, 6, -1, this);
 			}
@@ -7093,6 +7093,11 @@ public class Pokemon implements Serializable {
 		
 		foe.awardExp(getxpReward());
 		if (!this.cloned) field.knockouts++;
+		if (foe != null && foe.playerOwned()) {
+			foe.getPlayer().recordKill(foe, this);
+		} else if (this.playerOwned()) {
+			this.getPlayer().recordDeath(this, foe);
+		}
 	}
 
 	public void clearVolatile(Pokemon foe) {
@@ -11729,7 +11734,7 @@ public class Pokemon implements Serializable {
 			damage = 0;
 		} else {
 			if (multiplier > 1) {
-				Task.addTask(Task.TEXT, multiplier > 2 ? "It's extremely effective!" : "It's super effective!");
+				if (mode == 0) Task.addTask(Task.TEXT, multiplier > 2 ? "It's extremely effective!" : "It's super effective!");
 				if (mode == 0) field.superEffective++;
 				if (this.getAbility(field) == Ability.SOLID_ROCK || this.getAbility(field) == Ability.FILTER) damage /= 2;
 				if (this.getItem(field) != null && this.checkTypeResistBerry(Move.FUTURE_SIGHT.mtype)) {
@@ -11741,7 +11746,7 @@ public class Pokemon implements Serializable {
 				}
 			}
 			if (multiplier < 1) {
-				Task.addTask(Task.TEXT, multiplier < 0.5 ? "It's mostly ineffective..." : "It's not very effective...");
+				if (mode == 0) Task.addTask(Task.TEXT, multiplier < 0.5 ? "It's mostly ineffective..." : "It's not very effective...");
 				if (ability == Ability.TINTED_LENS) damage *= 2;
 			}
 			
@@ -11986,8 +11991,9 @@ public class Pokemon implements Serializable {
 		JSONArray moves = new JSONArray();
 		for (Moveslot m : moveset) {
 			if (m != null && m.move != null) {
+				String moveName = m.move == Move.HIDDEN_POWER || m.move == Move.RETURN ? m.move.toString() + " " + this.determineHPType().toString() : m.move.toString();
 				JSONObject move = new JSONObject();
-				move.put("name", m.move.toString());
+				move.put("name", moveName);
 				move.put("pp", m.currentPP);
 				move.put("maxPP", m.maxPP);
 				moves.put(move);

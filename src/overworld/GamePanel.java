@@ -573,7 +573,7 @@ public class GamePanel extends JPanel implements Runnable {
 						player.p.flag[7][15] = false;
 						t.reset();
 						setTaskState();
-						Task.addTask(Task.DIALOGUE, npc[196][1], "Finn... you failed...");
+						Task.addTask(Task.DIALOGUE, npc[196][1], "<@>... you failed...");
 						Task.addTask(Task.DIALOGUE, npc[196][1], "Oh Arceus, what do we do?!");
 						int[] loc = puzzleM.FAITH_START;
 						Task task = Task.addTask(Task.TELEPORT, "");
@@ -596,7 +596,7 @@ public class GamePanel extends JPanel implements Runnable {
 						player.p.flag[7][14] = false;
 						t.reset();
 						setTaskState();
-						Task.addTask(Task.DIALOGUE, npc[202][1], "Finn... you failed...");
+						Task.addTask(Task.DIALOGUE, npc[202][1], "<@>... you failed...");
 						Task.addTask(Task.DIALOGUE, npc[202][1], "Oh Arceus, what do we do?!");
 						int[] loc = puzzleM.LOGIC_START;
 						Task task = Task.addTask(Task.TELEPORT, "");
@@ -632,6 +632,8 @@ public class GamePanel extends JPanel implements Runnable {
 
 		player.p.resetTeam();
 		player.p.amulet = false;
+		
+		player.p.endBattleRecord(!wiped);
 		
 		Pokemon.field = new Field();
 		battleUI.tasks = new ArrayList<>();

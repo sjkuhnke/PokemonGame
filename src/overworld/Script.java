@@ -78,7 +78,7 @@ public class Script {
 				Task.addNPCMoveTask('y', gp.tileSize * 37, player, false, 4);
 				Task.addTask(Task.TURN, gp.npc[52][2], "", Task.LEFT);
 				Task.addTask(Task.SLEEP, "", 20);
-				Task.addTask(Task.DIALOGUE, npc, "Finn! You're back! You're in one piece!");
+				Task.addTask(Task.DIALOGUE, npc, "<@>! You're back! You're in one piece!");
 				Task.addTask(Task.DIALOGUE, npc, "I mean - I knew you would be, but also I didn't, and I wrote two eulogies just in case.");
 				Task.addTask(Task.DIALOGUE, npc, "BUT! You're here!");
 				Task.addTask(Task.SLEEP, "", 10);
@@ -163,7 +163,7 @@ public class Script {
 				Task.addTask(Task.SLEEP, "", 15);
 				Task.addTask(Task.TURN, gp.npc[52][2], "", Task.LEFT);
 				Task.addTask(Task.SLEEP, "", 10);
-				Task.addTask(Task.DIALOGUE, gp.npc[52][2], "And Finn - you better not keep me waiting. I've got a score to settle.");
+				Task.addTask(Task.DIALOGUE, gp.npc[52][2], "And <@> - you better not keep me waiting. I've got a score to settle.");
 				Task.addTask(Task.FLASH_IN, "");
 				Task.addTask(Task.UPDATE, "");
 				Task.addTask(Task.FLASH_OUT, "");
@@ -204,7 +204,7 @@ public class Script {
 					p.flag[0][20] = true;
 				}
 				if (amt >= Pokemon.POKEDEX_METEOR_SIZE) {
-					Task.addTask(Task.DIALOGUE, npc, "Finn!! You did it! You finished the Shadow Pokedex I gave you!");
+					Task.addTask(Task.DIALOGUE, npc, "<@>!! You did it! You finished the Shadow Pokedex I gave you!");
 					Task.addTask(Task.DIALOGUE, npc, "This item is extremely rare, so please, use it wisely!");
 					Task t = Task.addTask(Task.ITEM, "");
 					t.item = Item.MASTER_BALL;
@@ -669,7 +669,7 @@ public class Script {
 					p.flag[1][22] = true;
 				}
 			} else {
-				Task.addTask(Task.DIALOGUE, npc, "How's life, Finn? You see your father recently?");
+				Task.addTask(Task.DIALOGUE, npc, "How's life, <@>? You see your father recently?");
 			}
 		});
 		
@@ -1127,7 +1127,7 @@ public class Script {
 				Task.addTask(Task.SLEEP, "", 45);
 				Task.addTask(Task.TURN, player, "", Task.UP);
 				Task.addTask(Task.SLEEP, "", 15);
-				Task.addTask(Task.DIALOGUE, npc, "Thank you Finn, I don't know what I would've done without you.");
+				Task.addTask(Task.DIALOGUE, npc, "Thank you <@>, I don't know what I would've done without you.");
 				Task.addTask(Task.DIALOGUE, npc, "They said something about summoning an Ultra Paradox Pokemon... I think it's some dangerous creature they're after.");
 				Task.addTask(Task.DIALOGUE, npc, "I heard they were headed for Peaceful Park next, something about unleashing that alien there, probably.");
 				Task.addTask(Task.DIALOGUE, npc, "You might want to stop them before they cause more chaos.");
@@ -1354,7 +1354,7 @@ public class Script {
 			Task.addTask(Task.DIALOGUE, npc, "I think they have an alien leader... and I think it wants to colonize this planet.");
 			Task.addTask(Task.SPEAK, player, "WHAT?! They want to... take over all of us??");
 			Task.addTask(Task.SPEAK, player, "Oh God, Scott! How do we stop them?!");
-			Task.addTask(Task.DIALOGUE, npc, "I don't know, Finn! It's going to be very dangerous. You'll need to go South through Gelb Forest to Rawwar City.");
+			Task.addTask(Task.DIALOGUE, npc, "I don't know, <@>! It's going to be very dangerous. You'll need to go South through Gelb Forest to Rawwar City.");
 			Task.addTask(Task.DIALOGUE, npc, "But there's a big problem, you will need to cross an intense vortex of water with Whirlpool.");
 			if (p.bag.contains(Item.HM06)) {
 				Task.addTask(Task.SPEAK, player, "I got the Whirlpool HM, I should be fine. Thanks Scott.");
@@ -1366,9 +1366,9 @@ public class Script {
 				Task.addTask(Task.SPEAK, player, "I must've missed it. Thanks for letting me know.");
 			}
 			Task.addTask(Task.DIALOGUE, npc, "Just... just be careful, alright? I didn't get all the details from Fred, but by the way he was talking...");
-			Task.addTask(Task.DIALOGUE, npc, "Things are much worse than we realize. Please, Finn... I can't lose another friend to Eclipse.");
+			Task.addTask(Task.DIALOGUE, npc, "Things are much worse than we realize. Please, <@>... I can't lose another friend to Eclipse.");
 			Task.addTask(Task.SPEAK, player, "Don't worry, Scott. I'll stop them. You just stay safe.");
-			Task.addTask(Task.DIALOGUE, npc, "Thanks, Finn... I know you can do it. Good luck.");
+			Task.addTask(Task.DIALOGUE, npc, "Thanks, <@>... I know you can do it. Good luck.");
 			Task.addTask(Task.DIALOGUE, npc, "Now, go and stop them before it's too late.");
 			p.flag[6][0] = true;
 		});
@@ -1569,7 +1569,7 @@ public class Script {
 			Task.addTask(Task.TURN, player, "", Task.DOWN);
 			Task.addTask(Task.DIALOGUE, npc, "Glad you're here, Grandpa. I was just about to head out myself.");
 			Task.addTask(Task.TURN, player, "", Task.LEFT);
-			Task.addTask(Task.DIALOGUE, gp.npc[124][22], "Then let's not waste another heartbeat. We'll meet you at the summit, Finn.");
+			Task.addTask(Task.DIALOGUE, gp.npc[124][22], "Then let's not waste another heartbeat. We'll meet you at the summit, <@>.");
 			Task t = Task.addTask(Task.FLAG, "");
 			t.start = 7;
 			t.finish = 0;
@@ -1609,7 +1609,7 @@ public class Script {
 		
 		scriptMap.put(146.1, (npc) -> { // merlin top of splinkty
 			if (!p.flag[7][6]) {
-				Task.addTask(Task.DIALOGUE, npc, "You've come a long way, Finn. Arthra may not say it, but she's impressed.");
+				Task.addTask(Task.DIALOGUE, npc, "You've come a long way, <@>. Arthra may not say it, but she's impressed.");
 				Task.addTask(Task.DIALOGUE, npc, "I'll be right here. Go on - show them why the mountain trembled.");
 			} else {
 				Task.addTask(Task.DIALOGUE, npc, "Hff... This old vessel's not what it used to be. The protection spell took more out of me than I thought.");
@@ -1648,7 +1648,7 @@ public class Script {
 			Task.addTask(Task.SLEEP, "", 30);
 			Task.addTask(Task.DIALOGUE, npc, "You just couldn't leave it alone, huh? I gave you a chance back at Shadow Path, but now you're charging into the heart of everything?");
 			Task.addNPCMoveTask('y', 57 * gp.tileSize, npc, false, 4);
-			Task.addTask(Task.DIALOGUE, npc, "This isn't just another mission, Finn. Maxwell's about to rewrite everything. And I'm not letting you stop that.");
+			Task.addTask(Task.DIALOGUE, npc, "This isn't just another mission, <@>. Maxwell's about to rewrite everything. And I'm not letting you stop that.");
 			Task.addTask(Task.DIALOGUE, npc, "You'll have to go through me. And this time? I'm not holding back.");
 			Task.addTask(Task.BATTLE, "", 344);
 		});
@@ -1659,7 +1659,7 @@ public class Script {
 				Task.addTask(Task.SLEEP, "", 30);
 				Task.addTask(Task.DIALOGUE, npc, "So... you've arrived. The little pest that keeps gnawing at the edges of greatness.");
 				Task.addTask(Task.DIALOGUE, npc, "Did you enjoy the show so far? The lights, the shadows, the chaos?");
-				Task.addTask(Task.DIALOGUE, npc, "Come, Finn. Don't be afraid.");
+				Task.addTask(Task.DIALOGUE, npc, "Come, <@>. Don't be afraid.");
 				Task.addTask(Task.TURN, player, "", Task.RIGHT);
 				Task.addNPCMoveTask('x', 50 * gp.tileSize, player, false, 4);
 				Task.addTask(Task.TURN, player, "", Task.UP);
@@ -1679,7 +1679,7 @@ public class Script {
 				Task.addCameraMoveTask('y', 0, 4);
 				Task.addTask(Task.SLEEP, "", 30);
 				Task.addTask(Task.TURN, player, "", Task.LEFT);
-				Task.addTask(Task.DIALOGUE, npc, "The Earth remembers, Finn. I've given it a voice. A will. A weapon.");
+				Task.addTask(Task.DIALOGUE, npc, "The Earth remembers, <@>. I've given it a voice. A will. A weapon.");
 				Task.addTask(Task.TURN, npc, "", Task.RIGHT);
 				Task.addTask(Task.DIALOGUE, npc, "And you, the one who's clawed your way through shadows and rubble... you want to silence it?");
 				Task.addTask(Task.DIALOGUE, npc, "Then go on. Let's see what you've learned after all this time.");
@@ -1717,7 +1717,7 @@ public class Script {
 				Task.addTask(Task.DIALOGUE, npc, "Whatever happens next... is no longer in my hands. Or yours.");
 				Task.addTask(Task.SLEEP, "", 15);
 				Task.addTask(Task.TURN, npc, "", Task.RIGHT);
-				Task.addTask(Task.DIALOGUE, npc, "So take your little victory, Finn. You earned it.");
+				Task.addTask(Task.DIALOGUE, npc, "So take your little victory, <@>. You earned it.");
 				Task.addTask(Task.DIALOGUE, npc, "But remember this - the Earth doesn't forget. And neither do I...");
 				Task t = Task.addTask(Task.FLAG, "");
 				t.start = 7;
@@ -1730,7 +1730,7 @@ public class Script {
 		
 		scriptMap.put(146.2, (npc) -> { // dragowrath cutscene
 			p.flag[7][6] = true;
-			Task.addTask(Task.DIALOGUE, gp.npc[146][1], "Finn! Finally! Are you okay -");
+			Task.addTask(Task.DIALOGUE, gp.npc[146][1], "<@>! Finally! Are you okay -");
 			Task.addTask(Task.SPOT, gp.npc[146][1], "");
 			Task.addTask(Task.SHAKE, "", 200);
 			Task.addTask(Task.DIALOGUE, npc, "...Pathetic. Every last one of them - pawns, weaklings, hollow shells.", 1);
@@ -1871,7 +1871,7 @@ public class Script {
 			Task.addTask(Task.SLEEP, "", 10);
 			Task.addTask(Task.TURN, gp.npc[146][2], "", Task.UP);
 			Task.addTask(Task.SLEEP, "", 10);
-			Task.addTask(Task.DIALOGUE, gp.npc[146][2], "But... I think with your strength, Finn, and your stubbornness, Arthra...");
+			Task.addTask(Task.DIALOGUE, gp.npc[146][2], "But... I think with your strength, <@>, and your stubbornness, Arthra...");
 			Task.addTask(Task.SLEEP, "", 30);
 			Task.addTask(Task.TURN, gp.npc[146][2], "", Task.DOWN);
 			Task.addTask(Task.SLEEP, "", 20);
@@ -1886,7 +1886,7 @@ public class Script {
 				Task.addTask(Task.FLASH_IN, "");
 				Task.addTask(Task.UPDATE, "");
 				Task.addTask(Task.FLASH_OUT, "");
-				Task.addTask(Task.DIALOGUE, npc, "Finn! There you are!");
+				Task.addTask(Task.DIALOGUE, npc, "<@>! There you are!");
 				Task.addNPCMoveTask('y', 63 * gp.tileSize, npc, false, 4);
 				Task.addTask(Task.SLEEP, "", 20);
 				Task.addTask(Task.INTERACTIVE, gp.iTile[107][0], "", 0);
@@ -1961,7 +1961,7 @@ public class Script {
 				Task.addTask(Task.SLEEP, "", 30);
 				Task.addTask(Task.DIALOGUE, gp.npc[107][14], "Both are powerful. Both could be the key to stopping Dragowrath.");
 				Task.addTask(Task.DIALOGUE, gp.npc[107][14], "But only one can be awakened.");
-				Task.addTask(Task.DIALOGUE, gp.npc[107][14], "Tell me, Finn. Which do you believe will triumph against the coming storm?");
+				Task.addTask(Task.DIALOGUE, gp.npc[107][14], "Tell me, <@>. Which do you believe will triumph against the coming storm?");
 				Task.addTask(Task.SLEEP, "", 10);
 				gp.ui.commandNum = -1; // set to -1 so the player has to arrow key first
 				Task.addTask(Task.CONFIRM, gp.npc[107][14], "Faith... or Logic?", 7);
@@ -2026,7 +2026,7 @@ public class Script {
 				Task.addTask(Task.TURN, gp.npc[107][14], "", Task.DOWN);
 				Task.addTask(Task.SLEEP, "", 20);
 				Task.addTask(Task.DIALOGUE, gp.npc[107][14], "You have your own path to walk, Arthra.");
-				Task.addTask(Task.DIALOGUE, gp.npc[107][14], "One not bound to Finn's choice... but born from your own spirit.");
+				Task.addTask(Task.DIALOGUE, gp.npc[107][14], "One not bound to <@>'s choice... but born from your own spirit.");
 				Task.addTask(Task.SLEEP, "", 15);
 				Task.addTask(Task.TURN, npc, "", Task.DOWN);
 				Task.addTask(Task.SLEEP, "", 30);
@@ -2048,7 +2048,7 @@ public class Script {
 				Task.addTask(Task.SLEEP, "", 20);
 				Task.addTask(Task.TURN, npc, "", Task.LEFT);
 				Task.addTask(Task.SLEEP, "", 15);
-				Task.addTask(Task.DIALOGUE, npc, "You and Finn go your way.");
+				Task.addTask(Task.DIALOGUE, npc, "You and <@> go your way.");
 				Task.addTask(Task.DIALOGUE, npc, "I'll figure out mine.");
 				if (faith) { // move towards abandoned tower
 					Task.addTask(Task.SLEEP, "", 15);
@@ -2085,7 +2085,7 @@ public class Script {
 				Task.addTask(Task.TURN, gp.npc[107][14], "", Task.UP);
 				Task.addTask(Task.SLEEP, "", 15);
 				Task.addTask(Task.DIALOGUE, gp.npc[107][14], "Then it's decided.");
-				Task.addTask(Task.DIALOGUE, gp.npc[107][14], "I'll walk with you, Finn - to the end of whatever road you have chosen.");
+				Task.addTask(Task.DIALOGUE, gp.npc[107][14], "I'll walk with you, <@> - to the end of whatever road you have chosen.");
 				Task.addTask(Task.SLEEP, "", 15);
 				Task.addTask(Task.TURN, gp.npc[107][14], "", Task.DOWN);
 				Task.addTask(Task.SLEEP, "", 30);
@@ -2097,7 +2097,7 @@ public class Script {
 			p.flag[7][11] = true;
 			boolean faith = p.flag[7][9];
 			if (faith) {
-				Task.addTask(Task.DIALOGUE, npc, "The road of faith lies ahead, Finn.");
+				Task.addTask(Task.DIALOGUE, npc, "The road of faith lies ahead, <@>.");
 				Task.addTask(Task.SLEEP, "", 15);
 				Task.addTask(Task.TURN, npc, "", Task.RIGHT);
 				Task.addTask(Task.SLEEP, "", 15);
@@ -2109,7 +2109,7 @@ public class Script {
 				Task.addTask(Task.UPDATE, "");
 				Task.addTask(Task.FLASH_OUT, "");
 			} else {
-				Task.addTask(Task.DIALOGUE, npc, "You have chosen the path of logic, Finn.");
+				Task.addTask(Task.DIALOGUE, npc, "You have chosen the path of logic, <@>.");
 				Task.addTask(Task.SLEEP, "", 15);
 				Task.addTask(Task.TURN, npc, "", Task.DOWN);
 				Task.addTask(Task.SLEEP, "", 15);
@@ -2132,7 +2132,7 @@ public class Script {
 			Task.addTask(Task.DIALOGUE, npc, "Remember... true faith does not mean blind hope.");
 			Task.addTask(Task.DIALOGUE, npc, "It means standing firm even when all else falls away.");
 			Task.addTask(Task.SLEEP, "", 25);
-			Task.addTask(Task.DIALOGUE, npc, "I cannot walk this trial for you, Finn.");
+			Task.addTask(Task.DIALOGUE, npc, "I cannot walk this trial for you, <@>.");
 			Task.addTask(Task.DIALOGUE, npc, "But I will walk beside you... to the end.");
 		});
 		
@@ -2144,7 +2144,7 @@ public class Script {
 			Task.addTask(Task.DIALOGUE, npc, "Logic will guide you, but it will also challenge you.");
 			Task.addTask(Task.DIALOGUE, npc, "Beware: reason without compassion can be as deadly as ignorance.");
 			Task.addTask(Task.SLEEP, "", 25);
-			Task.addTask(Task.DIALOGUE, npc, "This is your trial to bear, Finn.");
+			Task.addTask(Task.DIALOGUE, npc, "This is your trial to bear, <@>.");
 			Task.addTask(Task.DIALOGUE, npc, "I will follow where you lead... whatever end awaits.");
 		});
 		
@@ -2177,7 +2177,7 @@ public class Script {
 				gp.npc[191][1].direction = "up";
 				Task.addTask(Task.TURN, gp.player, "", Task.DOWN);
 				Task.addNPCMoveTask('y', 77 * gp.tileSize, gp.npc[191][1], false, 4);
-				Task.addTask(Task.DIALOGUE, gp.npc[191][1], "This is where your path truly begins, Finn.");
+				Task.addTask(Task.DIALOGUE, gp.npc[191][1], "This is where your path truly begins, <@>.");
 				Task.addTask(Task.SLEEP, "", 10);
 				Task.addTask(Task.TURN, gp.player, "", Task.RIGHT);
 				Task.addTask(Task.SLEEP, "", 5);
@@ -2413,7 +2413,7 @@ public class Script {
 				Task.addNPCMoveTask('y', 77 * gp.tileSize, gp.npc[197][1], false, 4);
 				Task.addTask(Task.TURN, gp.npc[197][1], "", Task.RIGHT);
 				Task.addNPCMoveTask('x', 47 * gp.tileSize, gp.npc[197][1], false, 4);
-				Task.addTask(Task.DIALOGUE, gp.npc[197][1], "This is where your path truly begins, Finn.");
+				Task.addTask(Task.DIALOGUE, gp.npc[197][1], "This is where your path truly begins, <@>.");
 				Task.addTask(Task.SLEEP, "", 10);
 				Task.addTask(Task.TURN, gp.player, "", Task.RIGHT);
 				Task.addTask(Task.SLEEP, "", 5);
@@ -2430,7 +2430,7 @@ public class Script {
 				Task.addTask(Task.TURN, gp.npc[197][1], "", Task.RIGHT);
 				Task.addTask(Task.DIALOGUE, gp.npc[197][1], "You and I, we're in this together.");
 				Task.addTask(Task.SLEEP, "", 15);
-				Task.addTask(Task.DIALOGUE, gp.npc[197][1], "The mind can be a weapon... or a prison, Finn. Trust in your wit - but trust in yourself more.");
+				Task.addTask(Task.DIALOGUE, gp.npc[197][1], "The mind can be a weapon... or a prison, <@>. Trust in your wit - but trust in yourself more.");
 				Task.addTask(Task.SLEEP, "", 15);
 				Task.addTask(Task.TURN, gp.npc[197][1], "", Task.UP);
 				Task.addTask(Task.SLEEP, "", 15);
@@ -2611,7 +2611,7 @@ public class Script {
 				Task.addTask(Task.SPOT, npc, "");
 				Task.addTask(Task.SLEEP, "", 10);
 				Task.addTask(Task.TURN, player, "", Task.RIGHT);
-				Task.addTask(Task.DIALOGUE, npc, "Finn! You're okay!");
+				Task.addTask(Task.DIALOGUE, npc, "<@>! You're okay!");
 				Task.addTask(Task.DIALOGUE, npc, "I - I wasn't sure if you'd made it...!");
 				Task.addTask(Task.SLEEP, "", 15);
 				Task.addTask(Task.TURN, npc, "", Task.DOWN);
@@ -2964,7 +2964,7 @@ public class Script {
 			Task.addTask(Task.SLEEP, "", 15);
 			Task.addTask(Task.DIALOGUE, gp.npc[160][0], "Oh - one more thing. Don't bother giving them items. Something about this place... they just vanish.");
 			Task.addTask(Task.DIALOGUE, gp.npc[160][0], "It's like space rejects them. You'll have to rely on their moves and your skill - as a trainer.");
-			Task.addTask(Task.DIALOGUE, gp.npc[160][0], "You got this, Finn. And remember what Merlin taught us: belief only matters when it's paired with action.");
+			Task.addTask(Task.DIALOGUE, gp.npc[160][0], "You got this, <@>. And remember what Merlin taught us: belief only matters when it's paired with action.");
 			Pokemon[] tempTeam = p.team;
 			p.team = p.tempTeam;
 			p.tempTeam = tempTeam;
@@ -3135,7 +3135,7 @@ public class Script {
 				Task.addTask(Task.DIALOGUE, gp.npc[160][0], "I'm going to search the land west of here. You try to head east.");
 				Task.addTask(Task.DIALOGUE, gp.npc[160][0], "If we split up, we'll cover more ground.");
 				Task.addTask(Task.SLEEP, "", 45);
-				Task.addTask(Task.DIALOGUE, gp.npc[160][0], "Until we meet again, Finn.");
+				Task.addTask(Task.DIALOGUE, gp.npc[160][0], "Until we meet again, <@>.");
 				Task.addTask(Task.SLEEP, "", 30);
 				Task t = Task.addTask(Task.FLAG, "");
 				t.start = 7;
@@ -3184,7 +3184,7 @@ public class Script {
 			Task.addNPCMoveTask('x', 66 * gp.tileSize, npc, true, 1);
 			Task.addTask(Task.SLEEP, "", 30);
 			Task.addTask(Task.TURN, npc, "", Task.RIGHT);
-			Task.addTask(Task.DIALOGUE, npc, "Come inside, Finn. Let's see if you've got more than just storybook luck.");
+			Task.addTask(Task.DIALOGUE, npc, "Come inside, <@>. Let's see if you've got more than just storybook luck.");
 			Task.addTask(Task.SLEEP, "", 30);
 			Task.addTask(Task.TURN, npc, "", Task.UP);
 			Task.addTask(Task.SLEEP, "", 45);
@@ -3259,7 +3259,7 @@ public class Script {
 			Task.addTask(Task.SLEEP, "", 15);
 			Task.addTask(Task.TURN, player, "", Task.UP);
 			Task.addTask(Task.SLEEP, "", 5);
-			Task.addTask(Task.DIALOGUE, npc, "Ship's boosted. Flight path locked. Was just waiting on you and Finn -");
+			Task.addTask(Task.DIALOGUE, npc, "Ship's boosted. Flight path locked. Was just waiting on you and <@> -");
 			Task.addTask(Task.SLEEP, "", 45);
 			Task.addTask(Task.DIALOGUE, npc, "...Hold on.");
 			Task.addTask(Task.SLEEP, "", 45);
@@ -3511,7 +3511,7 @@ public class Script {
 			Task.addTask(Task.SLEEP, "", 40);
 			Task.addTask(Task.TURN, gp.npc[152][8], "", Task.RIGHT);
 			Task.addTask(Task.SLEEP, "", 20);
-			Task.addTask(Task.DIALOGUE, gp.npc[152][8], "Stay weird, Finn.");
+			Task.addTask(Task.DIALOGUE, gp.npc[152][8], "Stay weird, <@>.");
 			Task.addTask(Task.SLEEP, "", 15);
 			Task.addTask(Task.FLASH_IN, "");
 			Task.addNPCMoveTask('y', 99 * gp.tileSize, gp.npc[152][8], false, 1144);

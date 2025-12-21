@@ -89,9 +89,9 @@ public class Trainer implements Serializable {
 		this.effects = new ArrayList<>();
 	}
 	
-	public Trainer(boolean player) {
+	public Trainer(boolean player, String name) {
 		if (player) {
-			name = "[SELECT]";
+			this.name = name;
 			team = new Pokemon[6];
 			this.money = 100;
 		}
@@ -251,6 +251,11 @@ public class Trainer implements Serializable {
 
 	public String getName() {
 		return name;
+	}
+	
+	// only for use in the manage menu on the title screen to rename a player's save
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public int getNumFainted() {
