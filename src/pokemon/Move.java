@@ -123,7 +123,7 @@ public enum Move {
 	DIAMOND_STORM(100,95,50,0,1,0,PType.ROCK,"% chance to raise user's Defense by 2",false,5),
 	DIG(80,100,0,0,0,0,PType.GROUND,"A two turn attack. Digs underground on the first, attacks on the second",true,15),
 	DIRE_CLAW(80,100,50,0,0,0,PType.POISON,"% chance to Paralyze, Poison, or Sleep foe",true,15),
-	DISABLE(0,100,0,0,2,0,PType.NORMAL,"Disabled the target's last used move for 4 turns",false,20),
+	DISABLE(0,100,0,0,2,0,PType.NORMAL,"Disables the target's last used move for 4 turns",false,20),
 	DISCHARGE(80,100,30,0,1,0,PType.ELECTRIC,"% chance to Paralyze foe",false,15),
 	DISENCHANT(70,100,0,0,1,0,PType.MAGIC,"Clears all stat changes on foe before attacking",false,15),
 	DIVE(80,100,0,0,0,0,PType.WATER,"A two turn attack. Dives underwater on the first, attacks on the second",true,15),
@@ -836,19 +836,7 @@ public enum Move {
 	    // Move Name
 	    JLabel nameLabel = new JLabel(toString());
 	    nameLabel.setFont(new Font("Helvetica", Font.BOLD, 16));
-	    PType type = mtype;
-	    if (this == Move.HIDDEN_POWER) type = user.determineHPType();
-		if (this == Move.RETURN) type = user.determineHPType();
-		if (this == Move.WEATHER_BALL) type = user.determineWBType(field);
-		if (this == Move.TERRAIN_PULSE) type = user.determineTPType(field);
-		if (this.isAttack()) {
-			if (type == PType.NORMAL) {
-				if (user.getAbility(field) == Ability.GALVANIZE) type = PType.ELECTRIC;
-				if (user.getAbility(field) == Ability.REFRIGERATE) type = PType.ICE;
-				if (user.getAbility(field) == Ability.PIXILATE) type = PType.LIGHT;
-			}
-		}
-		if (user.getAbility(field) == Ability.NORMALIZE) type = PType.NORMAL;
+	    PType type = getType(user, field);
         Color color = type.getColor();
 	    JGradientButton typeButton = new JGradientButton(type.toString());
 	    typeButton.setBackground(color);
@@ -1448,6 +1436,23 @@ public enum Move {
 			return true;
 		}
 		return false;
+	}
+
+	public PType getType(Pokemon user, Field field) {
+		PType type = this.mtype;
+		if (this == Move.HIDDEN_POWER) mtype = user.determineHPType();
+		if (this == Move.RETURN) mtype = user.determineHPType();
+		if (this == Move.WEATHER_BALL) mtype = user.determineWBType(field);
+		if (this == Move.TERRAIN_PULSE) mtype = user.determineTPType(field);
+		if (this.isAttack()) {
+			if (mtype == PType.NORMAL) {
+				if (user.getAbility(field) == Ability.GALVANIZE) mtype = PType.ELECTRIC;
+				if (user.getAbility(field) == Ability.REFRIGERATE) mtype = PType.ICE;
+				if (user.getAbility(field) == Ability.PIXILATE) mtype = PType.LIGHT;
+			}
+		}
+		if (user.getAbility(field) == Ability.NORMALIZE) mtype = PType.NORMAL;
+		return type;
 	}
 
 }

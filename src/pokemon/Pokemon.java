@@ -8818,19 +8818,7 @@ public class Pokemon implements Serializable {
 	            if (moveset[i] != null) {
 	                moveButton.setText(moveset[i].move.toString() + " " + moveset[i].showPP());
 	                Move move = moveset[i].move;
-	                PType mtype = move.mtype;
-	                if (move == Move.HIDDEN_POWER) mtype = this.determineHPType();
-					if (move == Move.RETURN) mtype = this.determineHPType();
-					if (move == Move.WEATHER_BALL) mtype = this.determineWBType(field);
-					if (move == Move.TERRAIN_PULSE) mtype = this.determineTPType(field);
-					if (move.isAttack()) {
-						if (mtype == PType.NORMAL) {
-							if (this.getAbility(field) == Ability.GALVANIZE) mtype = PType.ELECTRIC;
-							if (this.getAbility(field) == Ability.REFRIGERATE) mtype = PType.ICE;
-							if (this.getAbility(field) == Ability.PIXILATE) mtype = PType.LIGHT;
-						}
-					}
-					if (this.getAbility(field) == Ability.NORMALIZE) mtype = PType.NORMAL;
+	                PType mtype = move.getType(this, field);
 			        Color color = mtype.getColor();
 	                moveButton.setBackground(color);
 	                moveButton.setForeground(moveset[i].getPPColor());
@@ -10326,7 +10314,7 @@ public class Pokemon implements Serializable {
 	}
 	
 	public Image getFaintedSprite() {
-		if (AbstractUI.faintedSprites == null) AbstractUI.faintedSprites = new Image[Pokemon.MAX_POKEMON];
+		if (AbstractUI.faintedSprites == null) AbstractUI.faintedSprites = new Image[MAX_POKEMON];
 		if (AbstractUI.faintedSprites[id - 1] != null) return AbstractUI.faintedSprites[id - 1];
 		
 		ImageFilter grayFilter = new GrayFilter(true, 25);
@@ -11858,7 +11846,7 @@ public class Pokemon implements Serializable {
 	public boolean isSameSpeciesAs(Pokemon other) {
 		ArrayList<String> evoFamily = this.getEvolutionFamily();
 		for (String s : evoFamily) {
-			if (Pokemon.getIDFromName(s) == other.id) {
+			if (getIDFromName(s) == other.id) {
 				return true;
 			}
 		}
@@ -11989,6 +11977,7 @@ public class Pokemon implements Serializable {
 		
 		// moves
 		JSONArray moves = new JSONArray();
+		Field field = new Field();
 		for (Moveslot m : moveset) {
 			if (m != null && m.move != null) {
 				String moveName = m.move == Move.HIDDEN_POWER || m.move == Move.RETURN ? m.move.toString() + " " + this.determineHPType().toString() : m.move.toString();
@@ -11996,6 +11985,11 @@ public class Pokemon implements Serializable {
 				move.put("name", moveName);
 				move.put("pp", m.currentPP);
 				move.put("maxPP", m.maxPP);
+				move.put("desc", m.move.getDescription());
+				move.put("type", m.move.mtype);
+				move.put("cat", m.move.cat);
+				move.put("bp", m.move.getbp(this, null, field));
+				move.put("acc", m.move.getAccuracy(this, null, field));
 				moves.put(move);
 			}
 		}

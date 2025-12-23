@@ -152,7 +152,7 @@ public class TextInputDialog extends AbstractUI {
 		drawOutlinedText(displayText, textX, textY, textCol, Color.BLACK);
 		
 		if (text.length() > 0 && naming) {
-			int cursorX = textX + ((int) (getTextWidth(text.toString()) * 0.9)) + gp.tileSize / 10;
+			int cursorX = textX + ((int) (getTextWidth(text.toString()) * 1.0)) + gp.tileSize / 10;
 			float alpha = 0.5f + (float)(Math.sin(pulseCounter * 0.15) * 0.5);
 			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
 			g2.setColor(textCol);

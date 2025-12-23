@@ -39,7 +39,7 @@ public class NPC_Mine extends Entity {
 	}
 	
 	private void setupItems() {
-		items.add(new Pair<>(null, 15)); // FAIL 15%
+		items.add(new Pair<>(null, 16)); // FAIL
 	    items.add(new Pair<>(Item.STAR_PIECE, 15));
 	    items.add(new Pair<>(Item.STICKY_BARB, 1));
 	    items.add(new Pair<>(Item.LIGHT_CLAY, 2));
@@ -186,7 +186,7 @@ public class NPC_Mine extends Entity {
 		if (turns % 5 == 0) {
 			Pair<Item, Integer> fail = items.get(0);
 			fail.setSecond(fail.getSecond() + 2);
-			totalWeight++;
+			totalWeight += 2;
 			Task.addTask(Task.SLEEP, "", 15);
 			Task.addTask(Task.DIALOGUE, this, "Going deeper...");
 			Task.addTask(Task.SLEEP, "", 30);

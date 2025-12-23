@@ -1566,8 +1566,7 @@ public class TitleScreen extends AbstractUI {
 
 		// Divider line
 		g2.setColor(new Color(255, 255, 255, 40));
-		g2.drawLine(panelX + gp.tileSize / 2, fileY + 10,
-		            panelX + panelWidth - gp.tileSize / 2, fileY + 10);
+		g2.drawLine(panelX + gp.tileSize / 2, fileY + 10, panelX + panelWidth - gp.tileSize / 2, fileY + 10);
 
 		// ----- PLAYER NAME -----
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 16F));

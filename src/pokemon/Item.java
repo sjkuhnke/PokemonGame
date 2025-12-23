@@ -456,7 +456,7 @@ public enum Item {
 	FAITH_CORE(383,0,0,Color.BLACK,Item.KEY_ITEM,false,"A fragment of ancient energy, pulsing with quiet warmth. Said to embody the undying spirit of belief."),
 	LOGIC_CORE(384,0,0,Color.BLACK,Item.KEY_ITEM,false,"A shard of crystallized thought, sharp and cold to the touch. It hums with the relentless force of reason."),
 	LETTER_2(394,0,0,Color.BLACK,Item.KEY_ITEM,true,"A letter from your father delivered by Robin, it's notably urgent."),
-	FABLE_STONE(395,0,0,Color.BLACK,Item.KEY_ITEM,true,"A stone of fantastical luster and lapidary, humming with legendary energy. Its presence calls out to unknown forces beyond the veil, seemingly needing 5 Fable Charges to activate."),
+	FABLE_STONE(395,0,0,Color.BLACK,Item.KEY_ITEM,false,"A stone of fantastical luster and lapidary, humming with legendary energy. Its presence calls out to unknown forces beyond the veil, seemingly needing 5 Fable Charges to activate when the time is right."),
 	COIN(398,0,0,Color.BLACK,Item.OTHER,null,"Just here for the sprite"),
 	;
 	
@@ -1509,19 +1509,7 @@ public enum Item {
         	if (current.moveset[k] != null) {
         		moves[k].setText(current.moveset[k].move.toString());
         		Move move = current.moveset[k].move;
-        		PType mtype = move.mtype;
-        		if (move == Move.HIDDEN_POWER) mtype = current.determineHPType();
-				if (move == Move.RETURN) mtype = current.determineHPType();
-				if (move == Move.WEATHER_BALL) mtype = current.determineWBType(field);
-				if (move == Move.TERRAIN_PULSE) mtype = current.determineTPType(field);
-				if (move.isAttack()) {
-					if (mtype == PType.NORMAL) {
-						if (current.getAbility(field) == Ability.GALVANIZE) mtype = PType.ELECTRIC;
-						if (current.getAbility(field) == Ability.REFRIGERATE) mtype = PType.ICE;
-						if (current.getAbility(field) == Ability.PIXILATE) mtype = PType.LIGHT;
-					}
-				}
-				if (current.getAbility(field) == Ability.NORMALIZE) mtype = PType.NORMAL;
+        		PType mtype = move.getType(current, field);
 		        Color color = mtype.getColor();
 		        moves[k].setSolid(false);
         		moves[k].setBackground(color);
@@ -2303,7 +2291,7 @@ public enum Item {
 		if (isBall()) return false;
 		if (pocket == KEY_ITEM) return usable;
 		if (pocket != OTHER) return true;
-		if (isTreasure() || isFossil()) {
+		if (isTreasure() || isFossil() || this == Item.FABLE_CHARGE || this == Item.TEMPLE_ORB || this == Item.COIN) {
 			return false;
 		}
 		return true;

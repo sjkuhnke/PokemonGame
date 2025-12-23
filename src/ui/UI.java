@@ -1428,7 +1428,7 @@ public class UI extends AbstractUI {
 			}
 		}
 		
-		if (foe.trainerOwned() && gp.player.p.nuzlocke) {
+		if (foe.trainerOwned() && gp.player.p.trackBattleLogs) {
 			gp.player.p.startBattleRecord(foe.trainer);
 		}
 		
@@ -4610,7 +4610,7 @@ public class UI extends AbstractUI {
 
 	private void drawPlayerInfo(int panelX, int panelY) {
 		Player p = gp.player.p;
-		int contentX = panelX + gp.tileSize / 2;
+		int contentX = panelX + gp.tileSize * 3 / 4;
 		int contentY = panelY + gp.tileSize;
 		
 		// === LEFT COLUMN ===
@@ -4629,6 +4629,7 @@ public class UI extends AbstractUI {
 		int nameX = getCenterAlignedTextX(playerName, leftColX + 64);
 		drawOutlinedText(playerName, nameX, leftColY + 140, textColor, Color.BLACK);
 		
+		leftColX -= gp.tileSize / 4;
 		leftColY += 180; // Move down past sprite and name
 		
 		// Money section
@@ -4663,7 +4664,7 @@ public class UI extends AbstractUI {
 			Player.DIFFICULTY_COLORS[p.difficulty], Color.BLACK);
 		
 		// === RIGHT COLUMN ===
-		int rightColX = contentX + gp.tileSize * 4;
+		int rightColX = (int) (contentX + gp.tileSize * 3.75);
 		int rightColY = contentY + gp.tileSize;
 		
 		// Badge display box

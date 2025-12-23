@@ -128,10 +128,11 @@ public class Player extends Trainer implements Serializable {
 	
 	private HashMap<String, BattleRecord> trainersDatabase;
 	private transient BattleRecord currentBattle;
+	public boolean trackBattleLogs;
 	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 80;
+	public static final int VERSION = 81;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	public static final int BET_INC = 10;
@@ -208,8 +209,9 @@ public class Player extends Trainer implements Serializable {
 		this.nuzlocke = true;
 		this.nuzlockeStarted = false;
 		this.isValidNuzlocke = true;
+		this.trackBattleLogs = true;
 		this.nuzlockeEncounters = new ArrayList<>();
-		invalidReasons = new ArrayList<>();
+		this.invalidReasons = new ArrayList<>();
 		this.bag.add(Item.INFINITE_REPEL);
 		this.bag.add(Item.HEALING_PACK);
 		this.bag.add(Item.POCKET_PC);
@@ -1494,6 +1496,9 @@ public class Player extends Trainer implements Serializable {
 		if (!flag[0][23]) {
 			difficulty = HARD;
 			flag[0][23] = true;
+		}
+		if (nuzlocke) {
+			trackBattleLogs = true;
 		}
 		version = VERSION;
 	}

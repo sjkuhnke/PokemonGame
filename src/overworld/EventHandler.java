@@ -885,6 +885,10 @@ public class EventHandler {
 			if (hit(142,73,40)) teleport(143, 53, 49,false);
 			if (hit(143,53,48)) teleport(142, 73, 39,false);
 			
+			// Lava Lake - Joseph 1A
+			if (hit(22,17,23)) teleport(137, 90, 58,false);
+			if (hit(137,90,59)) teleport(22, 17, 24, false);
+			
 			// Gym 7 split Shakes
 			if (p.flag[5][8]) {
 				if (!p.flag[6][7] && (hit(11,18,81) || hit(11,19,81) || hit(11,20,81))) shake(6, 7, 25);

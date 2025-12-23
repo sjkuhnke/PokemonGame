@@ -1150,6 +1150,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(79, 59, Item.AIR_BALLOON, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(45, 60, Item.PETTICOAT_GEM, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(63, 47, Item.MAX_REVIVE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(85, 56, Item.COSMIC_CORE, mapNum);
 		
 		mapNum = 138;
 		objIndex = 0;
@@ -1648,7 +1649,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(48, 30, Item.BIG_NUGGET, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(56, 26, Item.SNOWBALL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(50, 25, Item.PP_MAX, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(52, 45, Item.ICE_CRYSTAL, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(49, 44, Item.ICE_CRYSTAL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(65, 35, Item.STAR_PIECE, mapNum);
 		
 		mapNum = 213;

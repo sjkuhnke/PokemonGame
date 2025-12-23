@@ -707,18 +707,7 @@ public abstract class AbstractUI {
 						g2.setColor(g2.getColor().darker());
 						g2.drawRoundRect(x, y, moveWidth, moveHeight, 10, 10);
 					} else {
-						PType mtype = m.move.mtype;
-						if (m.move == Move.HIDDEN_POWER || m.move == Move.RETURN) mtype = p.determineHPType();
-						if (m.move == Move.WEATHER_BALL) mtype = p.determineWBType(Pokemon.field);
-						if (m.move == Move.TERRAIN_PULSE) mtype = p.determineTPType(Pokemon.field);
-						if (m.move.isAttack()) {
-							if (mtype == PType.NORMAL) {
-								if (p.getAbility(Pokemon.field) == Ability.GALVANIZE) mtype = PType.ELECTRIC;
-								if (p.getAbility(Pokemon.field) == Ability.REFRIGERATE) mtype = PType.ICE;
-								if (p.getAbility(Pokemon.field) == Ability.PIXILATE) mtype = PType.LIGHT;
-							}
-						}
-						if (p.getAbility(Pokemon.field) == Ability.NORMALIZE) mtype = PType.NORMAL;
+						PType mtype = m.move.getType(p, Pokemon.field);
 						Color color = mtype.getColor();
 						g2.setColor(color);
 						g2.fillRoundRect(x, y, moveWidth, moveHeight, 10, 10);
@@ -877,17 +866,7 @@ public abstract class AbstractUI {
 		y -= gp.tileSize * 0.75;
 		PType type = move.mtype;
 		if (p != null && p.headbuttCrit >= 0) {
-			if (move == Move.HIDDEN_POWER || move == Move.RETURN) type = p.determineHPType();
-			if (move == Move.WEATHER_BALL) type = p.determineWBType(Pokemon.field);
-			if (move == Move.TERRAIN_PULSE) type = p.determineTPType(Pokemon.field);
-			if (move.isAttack()) {
-				if (type == PType.NORMAL) {
-					if (p.getAbility(Pokemon.field) == Ability.GALVANIZE) type = PType.ELECTRIC;
-					if (p.getAbility(Pokemon.field) == Ability.REFRIGERATE) type = PType.ICE;
-					if (p.getAbility(Pokemon.field) == Ability.PIXILATE) type = PType.LIGHT;
-				}
-			}
-			if (p.getAbility(Pokemon.field) == Ability.NORMALIZE) type = PType.NORMAL;
+			type = move.getType(p, Pokemon.field);
 		}
 		g2.drawImage(type.getImage2(), x, y, null);
 		
@@ -1111,18 +1090,7 @@ public abstract class AbstractUI {
 		
 		if (m != null) {
 			x += gp.tileSize * 11 / 6;
-			PType mtype = m.mtype;
-			if (m == Move.HIDDEN_POWER || m == Move.RETURN) mtype = p.determineHPType();
-			if (m == Move.WEATHER_BALL) mtype = p.determineWBType(Pokemon.field);
-			if (m == Move.TERRAIN_PULSE) mtype = p.determineTPType(Pokemon.field);
-			if (m.isAttack()) {
-				if (mtype == PType.NORMAL) {
-					if (p.getAbility(Pokemon.field) == Ability.GALVANIZE) mtype = PType.ELECTRIC;
-					if (p.getAbility(Pokemon.field) == Ability.REFRIGERATE) mtype = PType.ICE;
-					if (p.getAbility(Pokemon.field) == Ability.PIXILATE) mtype = PType.LIGHT;
-				}
-			}
-			if (p.getAbility(Pokemon.field) == Ability.NORMALIZE) mtype = PType.NORMAL;
+			PType mtype = m.getType(p, Pokemon.field);
 			Color color = mtype.getColor();
 			g2.setColor(color);
 			g2.fillRoundRect(x, y, moveWidth, moveHeight, 10, 10);
@@ -1145,18 +1113,7 @@ public abstract class AbstractUI {
 			Moveslot ms = p.moveset[i - 1];
 			if (ms != null) {
 				g2.setFont(g2.getFont().deriveFont(24F));
-				PType mtype = ms.move.mtype;
-				if (ms.move == Move.HIDDEN_POWER || ms.move == Move.RETURN) mtype = p.determineHPType();
-				if (ms.move == Move.WEATHER_BALL) mtype = p.determineWBType(Pokemon.field);
-				if (ms.move == Move.TERRAIN_PULSE) mtype = p.determineTPType(Pokemon.field);
-				if (ms.move.isAttack()) {
-					if (mtype == PType.NORMAL) {
-						if (p.getAbility(Pokemon.field) == Ability.GALVANIZE) mtype = PType.ELECTRIC;
-						if (p.getAbility(Pokemon.field) == Ability.REFRIGERATE) mtype = PType.ICE;
-						if (p.getAbility(Pokemon.field) == Ability.PIXILATE) mtype = PType.LIGHT;
-					}
-				}
-				if (p.getAbility(Pokemon.field) == Ability.NORMALIZE) mtype = PType.NORMAL;
+				PType mtype = ms.move.getType(p, Pokemon.field);
 				Color color = mtype.getColor();
 				boolean canRelearn = Move.getMoveTutorMoves().contains(ms.move) || movebankList.contains(ms.move) ||
 						(gp.player.p.hasTM(ms.move) && Pokemon.getLearned(p.id - 1, Item.getTMMoves().indexOf(ms.move)));
@@ -1609,9 +1566,9 @@ public abstract class AbstractUI {
 		g2.setFont(g2.getFont().deriveFont(32F));
 		
 		int frameX = gp.tileSize*4;
-		int frameY = gp.tileSize;
+		int frameY = gp.tileSize / 2;
 		int frameWidth = gp.tileSize*8;
-		int frameHeight = gp.tileSize*10;
+		int frameHeight = gp.tileSize*11;
 		
 		switch(settingsState) {
 		case 0: drawSettingsTop(frameX, frameY, frameWidth, frameHeight); break;
@@ -1809,9 +1766,50 @@ public abstract class AbstractUI {
 			gp.config.toggleRun = !gp.config.toggleRun;
 		}
 		
-		// DIFFICULTY SELECTOR
+		// BATTLE LOG TRACKING
 		contentY += itemHeight;
 		selected = commandNum == 4;
+		boolean inGameMenu = gp.gameState == GamePanel.MENU_STATE;
+		boolean battleLogChangeable = inGameMenu && !gp.player.p.nuzlocke;
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 28F));
+		drawOutlinedText("Battle Log", contentX, contentY, selected ? textColor : new Color(200, 200, 200), Color.BLACK);
+		
+		toggleY = contentY - gp.tileSize / 3;
+		
+		if (inGameMenu) {
+			drawToggleSwitch(toggleX, toggleY, gp.player.p.trackBattleLogs, selected);
+			
+			// Draw lock icon if nuzlocke mode is active
+			if (gp.player.p.nuzlocke) {
+				drawLockIcon(toggleX + (int)(gp.tileSize * 2.5), toggleY - gp.tileSize / 8, selected);
+			}
+		} else {
+			g2.setFont(g2.getFont().deriveFont(Font.ITALIC, 24F));
+			String naText = "N/A";
+			int naX = toggleX + gp.tileSize / 2;
+			drawOutlinedText(naText, naX, contentY, new Color(100, 100, 100), Color.BLACK);
+		}
+		
+		if (selected && battleLogChangeable && (gp.keyH.wPressed || gp.keyH.leftPressed || gp.keyH.rightPressed)) {
+			gp.keyH.wPressed = false;
+			gp.keyH.leftPressed = false;
+			gp.keyH.rightPressed = false;
+			if (gp.player.p.trackBattleLogs) {
+				gp.playSFX(Sound.S_MENU_CAN);
+			} else {
+				gp.playSFX(Sound.S_MENU_CON);
+			}
+			gp.player.p.trackBattleLogs = !gp.player.p.trackBattleLogs;
+		} else if (selected && !battleLogChangeable && (gp.keyH.wPressed || gp.keyH.leftPressed || gp.keyH.rightPressed)) {
+			gp.keyH.wPressed = false;
+			gp.keyH.leftPressed = false;
+			gp.keyH.rightPressed = false;
+			gp.playSFX(Sound.S_MENU_CAN);
+		}
+		
+		// DIFFICULTY SELECTOR
+		contentY += itemHeight;
+		selected = commandNum == 5;
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 28F));
 		drawOutlinedText("Difficulty", contentX, contentY, 
 			selected ? textColor : new Color(200, 200, 200), Color.BLACK);
@@ -1849,7 +1847,7 @@ public abstract class AbstractUI {
 		
 		// CONTROLS
 		contentY += gp.tileSize;
-		selected = commandNum == 5;
+		selected = commandNum == 6;
 		int buttonWidth = frameWidth - gp.tileSize * 2;
 		int buttonHeight = (int)(gp.tileSize * 0.8);
 		int buttonX = frameX + gp.tileSize;
@@ -1876,7 +1874,7 @@ public abstract class AbstractUI {
 			commandNum = 0;
 		}
 		
-		int MAX_OPTIONS = 5;
+		int MAX_OPTIONS = 6;
 		
 		// Navigation
 		if (gp.keyH.upPressed) {
@@ -1897,6 +1895,42 @@ public abstract class AbstractUI {
 		}
 		
 		drawToolTips("OK", null, "Back", "Back");
+	}
+	
+	private void drawLockIcon(int x, int y, boolean highlighted) {
+		int size = gp.tileSize / 3;
+		
+		// Lock body (rectangle)
+		int bodyX = x;
+		int bodyY = y + size / 2;
+		int bodyWidth = size;
+		int bodyHeight = (int)(size * 0.8);
+		
+		Color lockColor = highlighted ? new Color(220, 200, 100) : new Color(205, 205, 205);
+		
+		// Draw body
+		g2.setColor(lockColor.darker());
+		g2.fillRoundRect(bodyX, bodyY, bodyWidth, bodyHeight, 4, 4);
+		g2.setStroke(new BasicStroke(2));
+		g2.setColor(lockColor);
+		g2.drawRoundRect(bodyX, bodyY, bodyWidth, bodyHeight, 4, 4);
+		
+		// Lock shackle (arc)
+		int shackleX = bodyX + bodyWidth / 4;
+		int shackleY = bodyY - size / 3;
+		int shackleWidth = bodyWidth / 2;
+		int shackleHeight = (int)(size * 0.6);
+		
+		g2.setStroke(new BasicStroke(3));
+		g2.setColor(lockColor.darker());
+		g2.drawArc(shackleX, shackleY, shackleWidth, shackleHeight, 0, 180);
+		
+		// Keyhole
+		int keyholeX = bodyX + bodyWidth / 2;
+		int keyholeY = bodyY + bodyHeight / 2;
+		g2.setColor(new Color(45, 45, 45));
+		g2.fillOval(keyholeX - 2, keyholeY - 2, 4, 4);
+		g2.fillRect(keyholeX - 1, keyholeY, 2, bodyHeight / 4);
 	}
 	
 	private void drawControlsScreen(int frameX, int frameY, int frameWidth, int frameHeight) {

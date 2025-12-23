@@ -183,6 +183,7 @@ public class Main {
 					gp.player.p = new Player(gp, playerName);
 					if (nuzlocke) gp.player.p.setupNuzlocke(banShedinja, banBatonPass, allowRevives, buyableRevives, levelCapBonus);
 					gp.player.p.difficulty = difficulty;
+					gp.player.p.flag[0][23] = true;
 				}
 				loader.setProgress(6, "Saving Config...");
 				gp.config.excel = excel;

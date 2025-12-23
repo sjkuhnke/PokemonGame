@@ -32,6 +32,7 @@ public class TrainerDoc {
 	
 	private static BufferedImage[] sprites = new BufferedImage[Pokemon.MAX_POKEMON];
 	private static Path docsDirectory;
+	private static Field field = new Field();
 	
 	public static void writeTrainersToExcel(GamePanel gp, Path dir) {
 		docsDirectory = dir;
@@ -365,7 +366,7 @@ public class TrainerDoc {
 	            }
 	            String moveName = (m == null) ? "" :
 	                (m == Move.HIDDEN_POWER || m == Move.RETURN) ? m == Move.HIDDEN_POWER ? "HP " + p.determineHPType() : m + " " + p.determineHPType() : m.toString();
-	            PType mtype = m != null ? m.mtype : null;
+	            PType mtype = m != null ? m.getType(p, field) : null;
 	            if (m == Move.HIDDEN_POWER || m == Move.RETURN) mtype = p.determineHPType();
 	            if (m != null) {
 					if (mtype == PType.NORMAL && m.isAttack()) {
