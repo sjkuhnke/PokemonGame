@@ -1404,8 +1404,8 @@ public enum Move {
 		return result;
 	}
 
-	public String getMissString(Pokemon pokemon, Pokemon foe, double acc) {
-		if (acc < 1.0) {
+	public String getMissString(Pokemon pokemon, Pokemon foe) {
+		if (this.accuracy< 1.0) {
 			return pokemon.nickname + "'s attack missed!";
 		} else {
 			return foe.nickname + " avoided the attack!";

@@ -1,10 +1,11 @@
 ================================================================================
 Sprites (Prefered Order, can always be changed up) (* = has sketch from RAMM)
 ================================================================================
-162 Zurroaratr*
 220 Cluuz-S*
 221 Zurrclu-S*
 222 Zurroaratr-S*
+Dusk Scales Fossil
+Thunder Scales Fossil
 213 Nightrex*
 214 Shadowsaur*
 240 Scraftagon*

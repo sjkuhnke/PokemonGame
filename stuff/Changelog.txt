@@ -1182,3 +1182,79 @@ Changed the Pokedex controls to have 'A' be change section back and 'D' be chang
 Fixed Close Combat having a buy price since it's now an overworld TM instead of in a shop
 Buffed Pistol Pop to be 150 BP and have a drawback of can't be used twice in a row to make it stand out from Pop Pop
 Buffed Destiny Bond's incentive to make the AI more likely to click it
+Fixed bug with the in-game menu not letting you move up in the menu if you don't have Pokedex, Party or Map unlocked yet (start of game)
+Made the pokedex and map icons show in the unlock messages when unlocking them from your dad
+Added some SFX to the title screen, will add SFX to more in-game stuff in future updates
+Made some trainer AI updates based on whether or not the Pokemon was active to better figure out hard-switching penalties
+Added AI for when to use Healing Wish/Lunar Dance (will need to add switch-in AI for when they're actually active though)
+Added AI for Aromatherapy
+Fixed a bug with AI not thinking Arcane Spell, Toxic Spikes, Spikes are useful multiple times
+Gave Daray/Spinaquata Slow Fall since Daray is a Flying type
+Made the AI see Mouthwater as useful for blocking hazards (as well as Magic Bounce which already was)
+Created a Player menu with the player's money, coins, name, badges (with custom badge sprites!), a cheat code option and nuzlocke info with a button if applicable!
+Made a separate nuzlocke info UI showing the rules, level cap, valid/invalid, if the nuzlocke started, as well as a list of encounters and invalid reasons if applicable!
+Added custom badge sprites made by me!
+Added a coin sprite!
+Added custom keybind functionality accessible through the new Settings menu!
+Fixed Fisherman NPC that gives you the Fishing Rod to tell you to use the item in your bag instead of press 'A' like the old system
+Fixed bug with letters not having the right amount of pages
+Gave Inkay Trick Room at lv 20 and rearranged previous moves to make room
+Gave Malamar Stealth Rock at lv 44 and moved Psychic Noise to lv 42 to make room
+Changed Swimmer Salomon's Malamar Trick Tackle -> Stealth Rock
+Made Avery give you 5 Pokeballs at the start of the game in the Poppy Grove gate if you only have 1 or 2 starters (and haven't caught any other Pokemon) to force the nuzlocke to start
+Difficulty selection info:
+- Difficulty is set on game creation. You can change your difficulty any time in the Settings menu, but changing the difficulty in Nuzlocke mode will invalidate your nuzlocke
+- Normal difficulty will use the scoring algorithm for switch-in still, but the trainers will only withdraw their Pokemon in specific circumstances (all moves do nothing)
+- Hard difficulty is the default difficulty and uses the scoring algorithm for switch-in and switch-outs
+- Extreme difficulty has the switch-in and switch-out AI, but both you and the trainer will select your leads, they select them based on a algorithm I created using the scoring system
+Fixed the AI switching to the correct slot they wanted to when using a pivot move like U-Turn
+Added a custom calculator icon!
+Gave Inkay/Malamar Take Over at lv 28 and moved Psycho Cut down to 27 to make room
+Changed Eclipse Grunt 38's Malamar Field Flip -> Take Over
+Put Shedinja in the Undiscovered Egg Group so it can't breed and so that it isn't selected from the random egg gift
+Added toggle running (changable in settings)
+Added full screen (has a custom keybind, defaults to F11, and a setting in the settings menu!)
+Made the game resizable with the size saving to your config file upon saving your game!
+Added calc functionality to the party screen and the info screen (so you can calc before picking a team member from U-Turn or something)
+Added drawing the fainted sprite of a Pokemon in your box since it's now possible for a fainted Pokemon to be in your box (nuzlocke mode)
+Made trying to elevate a Pokemon via Rare Candy [Box] not work on a fainted Pokemon in nuzlocke mode and say accordingly (since it would revive them)
+Gave Grunswine Slack Off at lv 65 (you're welcome)
+Gave Hoghoncho Endeavor at lv 1 and Slack Off at lv 75
+Gave Gardevoir Vacuum Wave at lv 1
+Changed Hiker Reidar's Hoghoncho's Bulk Up -> Slack Off
+Added a way to get back from Deep Chasm to Route 44 other than having to teleport
+Made the teleport pad in Ghostly Woods when there are Grusts left to defeat say "<number> Ghost(s) remaining!" instead of "<number> Ghosts remaining!"
+Did some work to make the Rick cutscene work correctly from the teleport pad in Ghostly Woods after defeating all the Grusts
+Fixed Destiny Bond not working right since it would check if you had the Bonded status effect AFTER fainting (since fainting would remove your status effects this didn't work)
+Fixed bug with Bottle Capping something not letting you cancel when selecting which IV
+Added Aqua Cutter and gave to Iguaton/Dragave (lv 29, redistributed previous moves), Gallade at lv 1 and Spinaquata on evo
+Gave Nixnerva Agility at lv 1
+Gave Lutrineer Agility at lv 43 and Future Sight at lv 60 instead of 70
+Gave Osceloma Agility at lv 48 (instead of Psychic Terrain)
+Gave Psycorboratr Knock Off at lv 1
+Gave Gardevoir Agility at lv 36 and Gallade Agility at lv 52
+Made Daray/Spinaquata learn Defog at 29 instead of 30 to get flooded with less moves at 30 (evo)
+Moved Razor Shell down to lv 15 on Binacle and added Aqua Cutter at lv 25
+Gave Agility to Alakazam at lv 1
+Rebalanced Detonape's stats: [65 HP, 115 Atk, 55 Def, 106 SpA, 75 SpD, 100 Spe] -> [65 HP, 120 Atk, 70 Def, 60 SpA, 78 SpD, 123 Spe] to differentiate it from Infernape and buff it by making it less min-maxed (it never used its SpA)
+Rebalanced Kaboon's stats too: [43 HP, 88 Atk, 50 Def, 74 SpA, 52 SpD, 93 Spe] -> [45 HP, 88 Atk, 50 Def, 70 SpA, 54 SpD, 93 Spe]
+Swapped Intimidate/Scaly Skin and Shed Skin on the Scraggy line to match vanilla (making Intimidate/Scaly Skin hidden)
+Made Psycorboratr compatible with TM78 Swords Dance
+Made Kaboon/Detonape compatible with TM78 Swords Dance
+Changed Eclipse Grunt 34's Scraftagon's Scaly Skin -> Shed Skin and Hi Jump Kick -> Drain Punch
+Changed Black Belt Antonio's Scrafty's Intimidate -> Shed Skin
+Changed Ace Trainer Belinda's Scraftagon's Scaly Skin -> Shed Skin
+Fixed the AI to only check the foe's ability for scoring moves if Neutralizing Gas isn't up
+Added Psycho Boost and gave to Nixnerva (70), Lutrineer (70), Malamar (62, may regret this), Gardevoir (70, movesd Future Sight and Encore down a bit), and Alakazam (70, moved Future Sight and Dream Eather down a bit)
+Gave Malamr Stored Power at lv 1
+Buffed Contrary to make it have Brainwash's effect too (both sides have stat stages inverted), then removed Brainwash and made Malamar always have Contrary as regular ability, updated trainers accordingly
+Changed Warden Sileth's Lutrineer's Future Sight -> Psycho Boost
+Changed Disciple Fachtna's Alakazam's Expanding Force -> Psycho Boost
+Changed Disciple Elfgar's Reuniclus's Future Sight -> Psycho Boost
+Changed Disciple Rogatus's Lutrineer's Future Sight -> Psycho Boost
+Changed Disciple Leifr's Alakazam's Psyshock -> Psycho Boost
+Changed Disciple Festus's Nixnerva's Future Sight -> Psycho Boost
+New sprites for Wormite-S, Wormbot-S, and Wormatron-S!
+Revamped my battle logic to add unique custom move animations for all types and moves! Used Pokemon showdown's particles for a lot of them with some custom particles too!
+Added the "Crushing" move flag for moves that do double damage and never check accuracy against a Minimized target!
+Added "bonus evo" logic so the game knows that Shedinja's base form is technically Ninjask (so Sticky Web is a valid move on it, for example)

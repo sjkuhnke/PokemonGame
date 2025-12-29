@@ -2981,7 +2981,7 @@ public class Pokemon implements Serializable {
 			ctx.moveType = MoveType.MISS;
 			ctx.shouldAnimate = false;
 			announceMove(move, foe, ctx);
-			Task.addTask(Task.TEXT, move.getMissString(this, foe, effectiveAccuracy));
+			Task.addTask(Task.TEXT, move.getMissString(this, foe));
 			field.misses++;
 			if (move == Move.HI_JUMP_KICK) {
 				this.damage(this.getStat(0) / 2.0, foe, this.nickname + " kept going and crashed!");
@@ -3028,7 +3028,7 @@ public class Pokemon implements Serializable {
 			
 			if (move == Move.POP_POP) {
 				if (effectiveAccuracy <= 1.0 && (!hit(effectiveAccuracy) || foe.hasStatus(Status.SEMI_INV))) {
-					Task.addTask(Task.TEXT, move.getMissString(this, foe, effectiveAccuracy));
+					Task.addTask(Task.TEXT, move.getMissString(this, foe));
 					field.misses++;
 					if (this.getItem(field) == Item.BLUNDER_POLICY) {
 						stat(this, 4, 2, foe);
