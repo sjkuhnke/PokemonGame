@@ -2201,7 +2201,7 @@ public class Player extends Trainer implements Serializable {
 		
 		export.put("battles", battles);
 		export.put("player_name", this.name);
-		export.put("game_version", GamePanel.GAME_VERSION);
+		export.put("player_id", this.id);
 		export.put("export_date", System.currentTimeMillis());
 		
 		return export;

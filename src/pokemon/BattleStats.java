@@ -48,6 +48,7 @@ public class BattleStats implements Serializable {
 	public String getEvoName() { return evoName; }
 	
 	private String getPokemonString(Pokemon p) {
+		if (p == null) return null;
 		return p.getName() + " [" + (p.slot + 1) + "]";
 	}
 }

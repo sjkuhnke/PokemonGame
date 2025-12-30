@@ -7,6 +7,8 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import overworld.GamePanel;
+
 public class BattleRecord implements Serializable {
 
 	/**
@@ -20,10 +22,12 @@ public class BattleRecord implements Serializable {
 	private long battleStartTime;
 	private long battleEndTime;
 	private boolean victory;
+	private String gameVersion;
 	
 	public BattleRecord(String trainerName, Pokemon[] team) {
 		this.trainerName = trainerName;
 		this.battleStartTime = System.currentTimeMillis();
+		this.gameVersion = GamePanel.GAME_VERSION;
 		this.battleStats = new HashMap<>();
 		
 		this.startingTeam = new Pokemon[team.length];
@@ -66,6 +70,8 @@ public class BattleRecord implements Serializable {
 	
 	public JSONObject toJSON() {
 		JSONObject json = new JSONObject();
+		if (gameVersion == null) gameVersion = GamePanel.GAME_VERSION;
+		json.put("gameVersion", gameVersion);
 		json.put("trainer", trainerName);
 		json.put("victory", victory);
 		json.put("battleStartTime", battleStartTime);
