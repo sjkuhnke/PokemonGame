@@ -6384,7 +6384,7 @@ public class UI extends AbstractUI {
 		drawSubWindow(dFrameX,dFrameY,dFrameWidth,dFrameHeight);
 		g2.drawString(current.toString(), textX, textY);
 		
-		int priceX = getRightAlignedTextX("$	 ", dFrameX + dFrameWidth - gp.tileSize / 2);
+		int priceX = getRightAlignedTextX("", dFrameX + dFrameWidth - gp.tileSize / 2) - gp.tileSize * 5 / 4;
 		textY += gp.tileSize / 4;
 		g2.drawImage(Item.STAR_PIECE.getImage2(), priceX, (int) (textY - gp.tileSize * 0.75), null);
 		String price = String.valueOf(cost);

@@ -9963,6 +9963,7 @@ public class Pokemon implements Serializable {
 	    clonedPokemon.sprite = this.sprite;
 	    clonedPokemon.frontSprite = this.frontSprite;
 	    clonedPokemon.backSprite = this.backSprite;
+	    clonedPokemon.metAt = this.metAt;
 	    
 	    // Trainer
 	    clonedPokemon.trainer = this.trainer;

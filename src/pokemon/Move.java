@@ -1440,18 +1440,18 @@ public enum Move {
 
 	public PType getType(Pokemon user, Field field) {
 		PType type = this.mtype;
-		if (this == Move.HIDDEN_POWER) mtype = user.determineHPType();
-		if (this == Move.RETURN) mtype = user.determineHPType();
-		if (this == Move.WEATHER_BALL) mtype = user.determineWBType(field);
-		if (this == Move.TERRAIN_PULSE) mtype = user.determineTPType(field);
+		if (this == Move.HIDDEN_POWER) type = user.determineHPType();
+		if (this == Move.RETURN) type = user.determineHPType();
+		if (this == Move.WEATHER_BALL) type = user.determineWBType(field);
+		if (this == Move.TERRAIN_PULSE) type = user.determineTPType(field);
 		if (this.isAttack()) {
-			if (mtype == PType.NORMAL) {
-				if (user.getAbility(field) == Ability.GALVANIZE) mtype = PType.ELECTRIC;
-				if (user.getAbility(field) == Ability.REFRIGERATE) mtype = PType.ICE;
-				if (user.getAbility(field) == Ability.PIXILATE) mtype = PType.LIGHT;
+			if (type == PType.NORMAL) {
+				if (user.getAbility(field) == Ability.GALVANIZE) type = PType.ELECTRIC;
+				if (user.getAbility(field) == Ability.REFRIGERATE) type = PType.ICE;
+				if (user.getAbility(field) == Ability.PIXILATE) type = PType.LIGHT;
 			}
 		}
-		if (user.getAbility(field) == Ability.NORMALIZE) mtype = PType.NORMAL;
+		if (user.getAbility(field) == Ability.NORMALIZE) type = PType.NORMAL;
 		return type;
 	}
 

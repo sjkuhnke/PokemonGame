@@ -17,18 +17,20 @@ public class BattleRecord implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	public String trainerName;
-	private Pokemon[] startingTeam;
+	public Pokemon[] startingTeam;
 	private Map<Integer, BattleStats> battleStats;
 	private long battleStartTime;
 	private long battleEndTime;
 	private boolean victory;
 	private String gameVersion;
+	private int difficulty;
 	
-	public BattleRecord(String trainerName, Pokemon[] team) {
+	public BattleRecord(String trainerName, Pokemon[] team, int difficulty) {
 		this.trainerName = trainerName;
 		this.battleStartTime = System.currentTimeMillis();
 		this.gameVersion = GamePanel.GAME_VERSION;
 		this.battleStats = new HashMap<>();
+		this.difficulty = difficulty;
 		
 		this.startingTeam = new Pokemon[team.length];
 		for (int i = 0; i < team.length; i++) {
@@ -68,7 +70,7 @@ public class BattleRecord implements Serializable {
 		this.battleEndTime = System.currentTimeMillis();
 	}
 	
-	public JSONObject toJSON() {
+	public JSONObject toJSON(Player p) {
 		JSONObject json = new JSONObject();
 		if (gameVersion == null) gameVersion = GamePanel.GAME_VERSION;
 		json.put("gameVersion", gameVersion);
@@ -76,6 +78,8 @@ public class BattleRecord implements Serializable {
 		json.put("victory", victory);
 		json.put("battleStartTime", battleStartTime);
 		json.put("battleEndTime", battleEndTime);
+		if (difficulty == 0) difficulty = p.difficulty + 1;
+		json.put("difficulty", difficulty);
 		
 		JSONArray teamArray = new JSONArray();
 		for (int i = 0; i < startingTeam.length; i++) {

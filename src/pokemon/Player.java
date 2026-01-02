@@ -2162,7 +2162,7 @@ public class Player extends Trainer implements Serializable {
 	}
 	
 	public void startBattleRecord(Trainer t) {
-		currentBattle = new BattleRecord(t.getName(), team);
+		currentBattle = new BattleRecord(t.getName(), team, difficulty + 1);
 	}
 	
 	public void recordKill(Pokemon killer, Pokemon killed) {
@@ -2196,7 +2196,7 @@ public class Player extends Trainer implements Serializable {
 		JSONArray battles = new JSONArray();
 		
 		for (Map.Entry<String, BattleRecord> entry : getTrainerDatabase().entrySet()) {
-			battles.put(entry.getValue().toJSON());
+			battles.put(entry.getValue().toJSON(this));
 		}
 		
 		export.put("battles", battles);
