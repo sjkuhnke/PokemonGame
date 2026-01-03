@@ -1353,7 +1353,7 @@ public class Pokemon implements Serializable {
 //		Move move = ms.move;
 		double score = 0.0;
 		
-		boolean isFaster = this.getFaster(foe, move.hasPriority(this) ? 1 : move.priority, foeStrongestMove != null && foeStrongestMove.hasPriority(foe) ? 1 : 0, field) == this;
+		boolean isFaster = this.getFaster(foe, move.getPriority(this), foeStrongestMove != null ? foeStrongestMove.getPriority(foe) : 0, field) == this;
 		if (move == Move.MIMIC || move == Move.MIRROR_MOVE) {
 			move = isFaster ? foe.lastMoveUsed : foeStrongestMove;
 		}
@@ -1399,7 +1399,7 @@ public class Pokemon implements Serializable {
 			}
 			
 			if (move.hasPriority(this)) {
-				score += 12 + move.priority * 3;
+				score += 12 + move.getPriority(this) * 3;
 			}
 			
 			if (move == Move.FELL_STINGER || move == Move.COMET_PUNCH) {
@@ -4241,7 +4241,7 @@ public class Pokemon implements Serializable {
 				foeAbility = Ability.NULL;
 			}
 		}
-		boolean isFaster = this.getFaster(foe, move.hasPriority(this) ? 1 : move.priority, 0, field) == this;
+		boolean isFaster = this.getFaster(foe, move.getPriority(this), 0, field) == this;
 		return getEffectiveAccuracy(move, foe, field, foeAbility, isFaster);
 	}
 	
@@ -11372,11 +11372,6 @@ public class Pokemon implements Serializable {
 				int uP, fP;
 				uP = uMove == null ? 0 : uMove.getPriority(p1);
 				fP = fMove == null ? 0 : fMove.getPriority(p2);
-				if (uMove != null && p1.getAbility(field) == Ability.PRANKSTER && uMove.cat == 2) ++uP;
-				if (fMove != null && p2.getAbility(field) == Ability.PRANKSTER && fMove.cat == 2) ++fP;
-				
-				if (uMove != null && uMove.priority < 1 && uMove.hasPriority(p1)) ++uP;
-				if (fMove != null && fMove.priority < 1 && fMove.hasPriority(p2)) ++fP;
 				
 				if (uMove != null && fMove != null && !p1.hasStatus(Status.SWAP)
 						&& !p2.hasStatus(Status.SWAP)) {

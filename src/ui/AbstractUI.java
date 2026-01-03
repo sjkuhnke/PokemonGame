@@ -893,8 +893,9 @@ public abstract class AbstractUI {
 			g2.drawString(bullet + " Makes Contact", x, y);
 			y += gp.tileSize / 2;
 		}
-		if (move.priority != 0) {
-			g2.drawString(bullet + (move.priority > 0 ? " +" : " ") + move.priority + " Priority", x, y);
+		int priority = move.getPriority(p);
+		if (priority != 0) {
+			g2.drawString(bullet + (priority > 0 ? " +" : " ") + priority + " Priority", x, y);
 			y += gp.tileSize / 2;
 		}
 		if (move.critChance > 0) {

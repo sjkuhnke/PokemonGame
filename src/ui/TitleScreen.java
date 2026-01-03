@@ -512,7 +512,7 @@ public class TitleScreen extends AbstractUI {
 			Path battleDir = SaveManager.getDocsDirectory().getParent().resolve("battle");
 			Files.createDirectories(battleDir);
 			String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
-			String fileName = "battle_history_" + timestamp + ".json";
+			String fileName = "battle_history_" + previewPlayer.getName() + "_" + timestamp + ".json";
 			
 			File battleFile = new File(battleDir.toFile(), fileName);
 			FileWriter writer = new FileWriter(battleFile);

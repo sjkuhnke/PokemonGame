@@ -1742,11 +1742,6 @@ public class BattleUI extends AbstractUI {
 		int uP, fP;
 		uP = uMove == null ? 0 : uMove.getPriority(user);
 		fP = fMove == null ? 0 : fMove.getPriority(foe);
-		if (uMove != null && user.getAbility(Pokemon.field) == Ability.PRANKSTER && uMove.cat == 2) ++uP;
-		if (fMove != null && foe.getAbility(Pokemon.field) == Ability.PRANKSTER && fMove.cat == 2) ++fP;
-		
-		if (uMove != null && uMove.priority < 1 && uMove.hasPriority(user)) ++uP;
-		if (fMove != null && fMove.priority < 1 && fMove.hasPriority(foe)) ++fP;
 		
 		if (uMove != null && fMove != null && !foe.hasStatus(Status.SWAP)) {
 			uP = user.checkQuickClaw(uP);

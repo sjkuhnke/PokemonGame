@@ -688,7 +688,7 @@ public enum Move {
 	private String desc;
 	public PType mtype;
 	public int pp;
-	public int priority;
+	private int priority;
 	public int secondary;
 	
 	private static int globalID = 0;
@@ -1189,15 +1189,33 @@ public enum Move {
 		result.add(Move.WOOD_HAMMER);
 		return result;
 	}
+	
+	public int getPriority() {
+		return this.priority;
+	}
 
 	public boolean hasPriority(Pokemon p) {
-		return this.priority >= 1 || (this.cat == 2 && p.getAbility(Pokemon.field) == Ability.PRANKSTER) ||
-			((this.mtype == PType.MAGIC || p.lastMoveUsed == Move.VANISHING_ACT) && p.getAbility(Pokemon.field) == Ability.SLEIGHT_OF_HAND && p.currentHP == p.getStat(0)) ||
-			(p.impressive && p.getAbility(Pokemon.field) == Ability.AMBUSH);
+		return getPriority(p) > 0;
 	}
 	
 	public int getPriority(Pokemon p) {
-		return this.priority;
+		int pr = this.priority;
+		
+		if (this.cat == 2 && p.getAbility(Pokemon.field) == Ability.PRANKSTER) {
+			pr++;
+		}
+		
+		if ((this.mtype == PType.MAGIC || p.lastMoveUsed == Move.VANISHING_ACT)
+			&& p.getAbility(Pokemon.field) == Ability.SLEIGHT_OF_HAND
+			&& p.currentHP == p.getStat(0)) {
+			pr++;
+		}
+		
+		if (p.impressive && p.getAbility(Pokemon.field) == Ability.AMBUSH) {
+			pr++;
+		}
+		
+		return pr;
 	}
 	
 	public String superToString() {

@@ -221,7 +221,7 @@ public class Bag implements Serializable {
 		case PRIORITY:
 			comparator = Comparator.<Integer>comparingInt(id -> {
 				Move move = Item.getItem(id).getMove();
-				return move != null ? move.priority : Integer.MIN_VALUE;
+				return move != null ? move.getPriority() : Integer.MIN_VALUE;
 			}).reversed();
 			break;
 		case PP:

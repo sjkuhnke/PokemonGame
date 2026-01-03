@@ -1,8 +1,6 @@
 ================================================================================
 Sprites (Prefered Order, can always be changed up) (* = has sketch from RAMM)
 ================================================================================
-220 Cluuz-S*
-221 Zurrclu-S*
 222 Zurroaratr-S*
 Dusk Scales Fossil
 Thunder Scales Fossil
