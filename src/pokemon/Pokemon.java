@@ -31,6 +31,7 @@ import java.util.NoSuchElementException;
 import java.util.Queue;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.UUID;
 
 import javax.imageio.ImageIO;
 import javax.swing.Box;
@@ -102,6 +103,7 @@ public class Pokemon implements Serializable {
 	
 	// id fields
 	public int id;
+	public UUID uuid; // unique ID
 	public String name;
 	public String nickname;
 	
@@ -204,6 +206,7 @@ public class Pokemon implements Serializable {
 		if (gp != null && gp.player.p.random) i = new Random().nextInt(MAX_POKEMON) + 1;
 		
 		id = i;
+		uuid = setUUID();
 		name = getName();
 		nickname = name;
 		
@@ -314,6 +317,10 @@ public class Pokemon implements Serializable {
 		@SuppressWarnings("unused")
 		Random random = new Random();
 		return random.nextInt() % 512 == 0;
+	}
+	
+	private UUID setUUID() {
+        return UUID.randomUUID();
 	}
 	
 	public BufferedImage getSprite() {
@@ -9873,6 +9880,7 @@ public class Pokemon implements Serializable {
 	    
 	    // Clone id fields
 	    clonedPokemon.id = this.id;
+	    clonedPokemon.uuid = this.uuid;
 	    clonedPokemon.name = this.name;
 	    clonedPokemon.nickname = this.nickname;
 	    
@@ -10268,6 +10276,11 @@ public class Pokemon implements Serializable {
 	}
 	
 	public static int getBabyStage(int id) {
+		String base = getBabyStageName(id);
+		return getIDFromName(base);
+	}
+	
+	private static String getBabyStageName(int id) {
 		ArrayList<String> family = getEvolutionFamily(id);
 		String base = null;
 		
@@ -10279,7 +10292,7 @@ public class Pokemon implements Serializable {
 			}
 		}
 		if (base == null) base = family.get(0); // fallback
-		return getIDFromName(base);
+		return base;
 	}
 	
 	public int getFinalEvolution() {
@@ -10637,6 +10650,9 @@ public class Pokemon implements Serializable {
 		}
 		if (this.ball == null) {
 			this.ball = Item.POKEBALL;
+		}
+		if (this.uuid == null) {
+            this.uuid = setUUID();
 		}
 	}
 	
@@ -11950,10 +11966,12 @@ public class Pokemon implements Serializable {
 		
 		// basic info
 		json.put("id", id);
+		json.put("uuid", uuid.toString());
 		json.put("name", name);
 		json.put("nickname", nickname);
 		json.put("level", level);
 		json.put("shiny", shiny);
+		json.put("base", getBabyStageName(id));
 		
 		// stats
 		json.put("ivs", new JSONArray(ivs));
