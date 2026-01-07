@@ -24,6 +24,7 @@ public class BattleRecord implements Serializable {
 	private boolean victory;
 	private String gameVersion;
 	private int difficulty;
+	private int lead;
 	
 	public BattleRecord(String trainerName, Pokemon[] team, int difficulty) {
 		this.trainerName = trainerName;
@@ -31,6 +32,7 @@ public class BattleRecord implements Serializable {
 		this.gameVersion = GamePanel.GAME_VERSION;
 		this.battleStats = new HashMap<>();
 		this.difficulty = difficulty;
+		this.lead = -1;
 		
 		this.startingTeam = new Pokemon[team.length];
 		for (int i = 0; i < team.length; i++) {
@@ -65,6 +67,21 @@ public class BattleRecord implements Serializable {
 		}
 	}
 	
+	public void recordSwitchIn(Pokemon pokemon) {
+		BattleStats stats = battleStats.get(pokemon.slot);
+		if (stats != null) {
+			stats.incrementSwitchIns();
+			if (lead < 0) lead = pokemon.slot;
+		}
+	}
+	
+	public void recordTurn(Pokemon pokemon) {
+		BattleStats stats = battleStats.get(pokemon.slot);
+		if (stats != null) {
+			stats.incrementTurns();
+		}
+	}
+	
 	public void endBattle(boolean victory) {
 		this.victory = victory;
 		this.battleEndTime = System.currentTimeMillis();
@@ -80,6 +97,7 @@ public class BattleRecord implements Serializable {
 		json.put("battleEndTime", battleEndTime);
 		if (difficulty == 0) difficulty = p.difficulty + 1;
 		json.put("difficulty", difficulty);
+		if (lead >= 0) json.put("lead", lead);
 		
 		JSONArray teamArray = new JSONArray();
 		for (int i = 0; i < startingTeam.length; i++) {
@@ -105,6 +123,8 @@ public class BattleRecord implements Serializable {
 						pokemonJson.put("evoID", stats.getEvoID());
 						pokemonJson.put("evoName", stats.getEvoName());
 					}
+					pokemonJson.put("switchIns", stats.getSwitchIns());
+					pokemonJson.put("turns", stats.getTurns());
 				}
 				
 				teamArray.put(pokemonJson);

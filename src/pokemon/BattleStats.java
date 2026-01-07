@@ -17,6 +17,8 @@ public class BattleStats implements Serializable {
 	private boolean evolved;
 	private int evoID;
 	private String evoName;
+	private int switchIns;
+	private int turns;
 	
 	public BattleStats(Pokemon p) {
 		this.kills = 0;
@@ -46,6 +48,12 @@ public class BattleStats implements Serializable {
 	
 	public void setEvoName(String name) { this.evoName = name; }
 	public String getEvoName() { return evoName; }
+	
+	public void incrementSwitchIns() { switchIns++; }
+	public int getSwitchIns() { return this.switchIns; }
+	
+	public void incrementTurns() { turns++; }
+	public int getTurns() { return this.turns; }
 	
 	private String getPokemonString(Pokemon p) {
 		if (p == null) return null;

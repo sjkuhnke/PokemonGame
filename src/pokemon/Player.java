@@ -2183,6 +2183,18 @@ public class Player extends Trainer implements Serializable {
 		}
 	}
 	
+	public void recordSwitchIn(Pokemon pokemon) {
+		if (currentBattle != null) {
+			currentBattle.recordSwitchIn(pokemon);
+		}
+	}
+	
+	public void recordTurn(Pokemon pokemon) {
+		if (currentBattle != null) {
+			currentBattle.recordTurn(pokemon);
+		}
+	}
+	
 	public void endBattleRecord(boolean victory) {
 		if (currentBattle != null) {
 			currentBattle.endBattle(victory);

@@ -2406,7 +2406,7 @@ public class Pokemon implements Serializable {
 		int[] fasterStages = faster.statStages.clone();
 		int[] slowerStages = slower.statStages.clone();
 		
-		move(foe, move, first, true, true);
+		move(foe, move, first, true);
 		
 		if (faster.getItem(field) == Item.WHITE_HERB) {
 			faster.handleWhiteHerb(fasterStages, slower);
@@ -2433,7 +2433,7 @@ public class Pokemon implements Serializable {
 		}
 	}
 
-	public void move(Pokemon foe, Move move, boolean first, boolean consumePP, boolean checkAct) {
+	public void move(Pokemon foe, Move move, boolean first, boolean consumePP) {
 		if (this.fainted || foe.fainted) return;
 		if (move == null) return;
 
@@ -2448,6 +2448,10 @@ public class Pokemon implements Serializable {
 		Ability foeAbility = foe.getAbility(field);
 		boolean contact = move.contact;
 		boolean sheer = false;
+		
+		if (consumePP && this.playerOwned()) {
+			this.getPlayer().recordTurn(this);
+		}
 		
 		MoveContext ctx = new MoveContext();
 		
@@ -2487,7 +2491,7 @@ public class Pokemon implements Serializable {
 		
 		if (move == Move.FAILED_SUCKER) this.lastMoveUsed = Move.SUCKER_PUNCH;
 		
-		if (checkAct) {
+		if (consumePP) {
 			if (this.hasStatus(Status.ENCORED)) {
 				move = this.lastMoveUsed;
 				bp = move.basePower;
@@ -2687,7 +2691,7 @@ public class Pokemon implements Serializable {
 			while (m == null || m == Move.METRONOME) {
 				m = moves[metronome.nextInt(moves.length)];
 			}
-			move(foe, m, first, false, false);
+			move(foe, m, first, false);
 			return; // recursively call the move method but not checking para and such so moves called can still be blocked by things like Taunt
 		}
 		
@@ -2696,7 +2700,7 @@ public class Pokemon implements Serializable {
 			Move m = move;
 			move = get150Move(move);
 			if (move != m) {
-				move(foe, move, first, false, false);
+				move(foe, move, first, false);
 				return; // same logic as metronome
 			}
 		}
@@ -2725,7 +2729,7 @@ public class Pokemon implements Serializable {
 					}
 				}
 			}
-			move(foe, move, first, false, false);
+			move(foe, move, first, false);
 			return; // same logic as metronome
 		}
 		
@@ -2931,7 +2935,7 @@ public class Pokemon implements Serializable {
 		if (move.isMagicBounceEffected(this, foe, foeAbility, acc)) {
 			announceMove(move, foe, ctx);
 			Task.addAbilityTask(foe);
-			foe.move(this, move, false, false, false);
+			foe.move(this, move, false, false);
 			Task.addTask(Task.TEXT, foe.nickname + " bounced the " + move + " back!");
 			return;
 		}
@@ -2941,7 +2945,7 @@ public class Pokemon implements Serializable {
 				foe.removeStatus(Status.MAGIC_REFLECT);
 				Task.addTask(Task.TEXT, foe.nickname + " broke the Magic Reflect!");
 			} else {
-				this.move(this, move, false, false, false);
+				this.move(this, move, false, false);
 				Task.addTask(Task.TEXT, move + " was reflected on itself!");
 				foe.removeStatus(Status.MAGIC_REFLECT);
 				return;
@@ -2949,7 +2953,7 @@ public class Pokemon implements Serializable {
 		}
 		if (this.hasStatus(Status.POSSESSED)) {
 			this.removeStatus(Status.POSSESSED);
-			this.move(this, move, false, false, false);
+			this.move(this, move, false, false);
 			Task.addTask(Task.TEXT, move + " was used on itself!");
 			return;
 		}
@@ -9274,6 +9278,9 @@ public class Pokemon implements Serializable {
 			Task.addTask(Task.TEXT, this.nickname + " floated on its Air Balloon!");
 		}
 		if (hazards) {
+			if (this.playerOwned()) {
+				this.getPlayer().recordSwitchIn(this);
+			}
 			if (this.currentHP < this.getStat(0) && field.contains(this.getFieldEffects(), Effect.HEALING_CIRCLE)) {
 				this.heal(Math.max((this.getStat(0) - this.currentHP) * 1.0 / 2, 1), this.nickname + " restored HP from the Healing Circle!");
 			}
