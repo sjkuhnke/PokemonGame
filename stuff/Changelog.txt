@@ -1258,3 +1258,100 @@ New sprites for Wormite-S, Wormbot-S, and Wormatron-S!
 Revamped my battle logic to add unique custom move animations for all types and moves! Used Pokemon showdown's particles for a lot of them with some custom particles too!
 Added the "Crushing" move flag for moves that do double damage and never check accuracy against a Minimized target!
 Added "bonus evo" logic so the game knows that Shedinja's base form is technically Ninjask (so Sticky Web is a valid move on it, for example)
+Added an automatic "Sprite Center" calculation so the game knows where to center particle effects around per Pokemon
+Redid the battle dialogues to not pause for the user's input until the last message, so everything is automatic with animations and such until it's time for the user to select a move
+Gave Agility to Psycorboratr at lv 1
+Changed Eclipse Grunt 55's Beheeyem's Yache Berry -> Roseli Berry (oops)
+Made Struggle 50 BP instead of 40 to match vanilla mechanics
+Made Reboot remove Perish Song as well (it removes all bad status effects)
+Fixed text wrapping with Star Piece trader NPC
+Fixed Fusion Flare's description to say it "doubles in power if <Fusion Bolt> was used last turn" instead of "<Fusion Flare>" (oops)
+Tweaked the AI to check the field effects LAYERS in addition to checking the actual effects to see if using a move like Spikes multiple times is actually useful or not
+Finished Mindagan Cavern (0A) map, added Mindagan Cavern (0B) where Blohadel lives, and finished Lava Lake!
+Added encounters for Mindagan Cavern (0A/0B) Surfing/Fishing/Lava, added Ground encounters for Mindagan Cavern (0B), added Iron Town Fishing encounters
+Added Victory Road + Checkpoint Charlie maps and encounters for Victory Road!
+Gave Kaboon/Detonape Power-Up Punch at lv 20 and moved Fury Swipes to lv 18
+Gave Kaboon-S/Detonape-S Power-Up Punch at lv 23 and moved Feint Attack and Beat Up down to make room
+Gave Despenero Leaf Storm at lv 1
+Changed Leader Merlin 1's Hueduu to a Faulette and gave it a new set (to give Hueduu to the Poison E4 member instead)
+Fixed some tiles in Mt. St. Joseph 3A/4A
+New sprite for Cinneroph!
+Added PP up functionality for trainers, with `+` and `↑` per PP up for Excel and Txt Trainer Docs, respectively
+Made being in ghost mode not check tall grass at all for encounters
+Fixed using the teleport cheat resetting your menu depth (since there's now a submenu for cheat codes)
+Made a message pop up if you type an invalid cheat code
+Added floor items for virtually everywhere you can Lava Surf to!
+Flipped the barriers in Control Center (for the player spawning in check order), did the same with the first 2 in Mt. Splinkty (5A) (where Team Eclipse are)
+Added code for checking if the player spawns in a barrier to move them DOWN a tile
+Added a Victory Road segment on Route 43 on the map since they're separate areas now
+Made Rare Candies sell for $1500 (since you can't get infinite from Nuzlocking now, it's a separate key item)
+Made PP Max's buyable for $5000 in Checkpoint Charlie
+Made Dex Nav handle showing extra Pokemon than normal (to accomodate the huge encounter table that Victory Road has)
+Added sprites for Vupp, Vinnie and Suvinero!
+Fixed bug with move types not correctly showing for Galvanize/Pixilate/Refrigerate in the trainer Excel doc
+Made status moves also appear as Normal type in the calc/calc move summary/Pokemon UI summary etc. for Normalize Pokemon
+Buffed Floodlight to make it lower the current foe's evasion by 1 too (and updated its description accordingly)
+Made Galvanize/Pixilate/Refrigerate only work for attacking moves
+Gave Dragave Dragon Dance at lv 82
+Added AI for if a Pokemon has Red Card/Eject Button to switch into a foe based on how many stat boosts they have
+Added priority AI for a Pokemon with Eject Button or Slipstream (if they would get knocked below half HP) to click a priority move
+Gave Defog to Golbat on evo and changed Defog -> Giga Drain at lv 27, and Giga Drain -> Roost at lv 34
+Gave Defog to Crobat at lv 1, changed Defog -> Giga Drain at lv 27, Giga Drain -> Venoshock at lv 36, gave Roost at 41 and rebalanced the surrounding moves
+Gave Tiowoo line Defog by TM
+Changed Eclipse Grunt 18's Golbat's Leech Life -> Roost
+Changed Ace Trainer Lucinda's Crobat's Tailwind -> Roost
+Changed Disciple Dushyanta's Tailwind -> Roost
+Made Spelon, Belue, Pamtre, Durin, Watmel, Wepear and Bluk Berries give +1 to the foe of their respective stat when Bug Bite/Pluck is used on the holder
+Configured a console version of the game so it will auto open with the console for output, packaged in the EXE installer with a checkbox in the installer wizard!
+Added Reflect Type and gave it to Humbrill/Huminescense at lv 26, Prismodon, Frosmoth, Malamar, Poshorump, Shaboom and Starmie at lv 1, Staryu at lv 16, Posho at 4 (and moved Swift to 6), Metapod-X at 17, and Butterfree-X at 25
+Gave Suvinero Magnet Rise at lv 35
+Buffed Mimic to not only work like Mirror Move (immediately using the move) but also replacing Mimic in the user's moveset (until the end of the battle)
+New sprites for Whiskie, Whiskers and Whiskeroar!
+New sprites for Cluuz, Zurrclu and Zurroaratr!
+Removed TM compatibility for TM50 Toxic from Ceramber line
+Gave Toxic to Twigzap line by TM
+Gave Toxic to Sheltor line by TM
+Buffed Keen Eye to ignore opposing Pokemon's evasion stat changes (to match the Vanilla mechanical buff)
+Fixed bug with the Pokemon sprite staying invisible upon being fully paralyzed and such when semi-invulnerable (due to Fly or Dig etc.)
+Fixed spacing with the TM check feature where it'd outline the TM you're currently checking (not correctly)
+Tweaked the open folder functionality (of like taking a screenshot or opening your save file's location) to not highlight the file anymore but just open the directory (since highlighting the specific file is hard and bug-prone)
+Gave Incinerate to Houndoom on Evo and moved it from 22 -> 24 (since Houndour evolves at 24 not 22)
+Changed Ace Trainer Matre's Gyarados-E's Heavy-Duty Boots -> Air Balloon to help a bit with their ground weakness
+Made all of the submenus in the calc open over the calc (instead of the middle of your screen)
+Fixed a bug with the PP not always being consumed accurately when a move calls another move (Metronome calling another move you have in your moveset etc.), rewrote logic to be more consistent
+- Affected moves are Mirror Move, Mimic, Magic Bounce (not a move but still), Sleep Talk, Metronome, Magic Reflect/Abduct/Take Over
+Fixed the AI swapping out not consuming their Custap Berry
+Made scripted battles always have a sleep counter of 1 (to remove the randomness)
+Made Relomidel/Relopamil prior to beating Dragowrath not be able to gain XP, have their level elevated from Rare Candies or learn any TMs
+Made scripted battles always min roll each other (to remove the randomness)
+Made receiving a wish on full HP print a message accordingly
+Fixed Metronome to work correctly with 2-turn moves
+Made hitting yourself in confusion not proc Sturdy
+Fixed Analytic only showing up in the calc but not getting the damage boost in the actual battle!
+Made multi-hit moves interact with Counter/Mirror Coat/Metal Burst better by counting the damage total, not just the last hit
+Gave Roselia Mortal Spin at lv 30 (moved Sweet Scent to 32), Roserade Mortal Spin at lv 1 to match Legends ZA buffs
+Gave Crobat Knock Off at lv 1 (Legends ZA buff)
+Gave Scraftagon Outrage at lv 70
+Gave Flamigo Knock Off at 47 and moved Throat Chop down to compensate (Legends ZA buff)
+Changed Athlete Arsenio's Crobat's Crunch -> Knock Off
+Changed Disciple Vebjorn's Flamigo's Throat Chop -> Knock Off
+Gave Scovillain Nasty Plot at lv 38 and Despenero Nasty Plot at lv 40 (Legends ZA buff)
+Implemented a "Trainer Database" that your save file tracks information about trainer battles you do, including:
+- Your team composition
+- Your selected lead (only matters for Extreme difficulty)
+- Pokemon information (your stats, nature, item, met at loc, level, moveset, and so much more)
+- Pokemon stats (kills, deaths, evolutions)
+- Battle start time and battle end time
+- Won or lost
+- Game version the fight was done on
+- Turns your Pokemon participated in, amount of times they were switched in in a fight
+- All of this information is optional for casual players and will automatically record for nuzlockers!
+- This information can be easily exported from the start menu, where it will output a JSON file that can be easily uploaded to my public database for other players to see your teams you brought!
+Changed Astronomer Solari's Clefable [4]'s Magic Guard -> Unaware (to help with boost sweepers) and Clefable [5]'s Unaware and Wiki Berry to Magic Guard and Focus Sash (same reason)
+Changed Leader Nova 1's Stellarock's Diamond Storm -> Rock Wrecker
+Added functionality for naming your player (required on New Game) with the name you choose being reflected in dialogues in game! This can be done to existing save files by pressing "Manage Save" in the start menu to rename your player!
+Fixed critical bug with Future Sight showing the "Not Very Effective" or "Super Effective" messages when calcing
+Fixed Disable's description, now saying "<Disables> the target's last used move" instead of "<Disabled> the target's last used move"
+Fixed a critical bug with how priority is calculated, some moves counting twice (like a Prankster-boosted status move)
+New sprites for Cluuz-S and Zurrclu-S!
+Added UUID's for all Pokemon to have so the game can keep track the same Pokemon object across evolutionary lines (mostly for the trainer database)

@@ -636,6 +636,7 @@ public class GamePanel extends JPanel implements Runnable {
 		player.p.endBattleRecord(!wiped);
 		
 		Pokemon.field = new Field();
+		Item.field = new Field();
 		battleUI.tasks = new ArrayList<>();
 		battleUI.currentTask = null;
 		battleUI.selectedLead = false;

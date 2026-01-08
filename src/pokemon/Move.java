@@ -415,7 +415,7 @@ public enum Move {
 	RAPID_SPIN(50,100,100,0,0,0,PType.NORMAL,"% to raise user's Speed by 1, and frees user of being Spun, Leech Seed, and Hazards",true,35),
 	RAZOR_LEAF(55,95,0,1,0,0,PType.GRASS,"Boosted crit rate",false,25),
 	RAZOR_SHELL(75,95,50,0,0,0,PType.WATER,"% chance to lower foe's Defense by 1",true,10),
-	REBOOT(0,1000,0,0,2,0,PType.STEEL,"Clears user of any Status condition, and raises user's Speed by 1",false,10),
+	REBOOT(0,1000,0,0,2,0,PType.STEEL,"Clears user of any status condition and any negative status effect, and raises user's Speed by 1",false,10),
 	RECOVER(0,1000,0,0,2,0,PType.NORMAL,"Restores 1/2 of user's max HP",false,5),
 	REFLECT(0,1000,0,0,2,0,PType.PSYCHIC,"Creates a screen that halves physical damage on user's team for 5 turns",false,20),
 	REFLECT_TYPE(0,100,0,0,2,0,PType.NORMAL,"Changes the user's type to match the foe's",false,15),
@@ -1423,7 +1423,7 @@ public enum Move {
 	}
 
 	public String getMissString(Pokemon pokemon, Pokemon foe) {
-		if (this.accuracy< 1.0) {
+		if (this.accuracy < 100) {
 			return pokemon.nickname + "'s attack missed!";
 		} else {
 			return foe.nickname + " avoided the attack!";

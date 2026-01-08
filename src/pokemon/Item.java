@@ -496,7 +496,7 @@ public enum Item {
     private static JComboBox<Pokemon> userMons;
     private static JComboBox<Pokemon> foeMons;
     private static JSpinner userLevel;
-    private static Field field;
+    public static Field field;
     private static JButton okButton;
     
     private static int userGen;
@@ -1373,7 +1373,7 @@ public enum Item {
             calcFrame.add(contentPanel);
             calcFrame.pack();
             Main.loadIcon(calcFrame, 5);
-            if (!Pokemon.gp.config.fullscreen) calcFrame.setLocationRelativeTo(Pokemon.gp); // Center on screen
+            calcFrame.setLocationRelativeTo(Pokemon.gp); // Center on screen
 		}
 		
 		if (calc != null) {
@@ -1482,7 +1482,7 @@ public enum Item {
         }
         
         if (display) {
-        	if (!Pokemon.gp.config.fullscreen) calcFrame.setLocationRelativeTo(Pokemon.gp); // Center on screen
+        	//if (!Pokemon.gp.config.fullscreen) calcFrame.setLocationRelativeTo(Pokemon.gp); // Center on screen
         	// Make OK button the default button for Enter key
             JRootPane rootPane = calcFrame.getRootPane();
             rootPane.setDefaultButton(okButton);
