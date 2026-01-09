@@ -636,7 +636,7 @@ public class GamePanel extends JPanel implements Runnable {
 		player.p.endBattleRecord(!wiped);
 		
 		Pokemon.field = new Field();
-		Item.field = new Field();
+		player.p.getFieldEffectList().clear();
 		battleUI.tasks = new ArrayList<>();
 		battleUI.currentTask = null;
 		battleUI.selectedLead = false;
@@ -650,6 +650,7 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	public void endSim() {
 		Pokemon.field = new Field();
+		player.p.getFieldEffectList().clear();
 		simBattleUI.tasks = new ArrayList<>();
 		simBattleUI.currentTask = null;
 		simBattleUI.tempUser = null;

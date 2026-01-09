@@ -1355,3 +1355,8 @@ Fixed Disable's description, now saying "<Disables> the target's last used move"
 Fixed a critical bug with how priority is calculated, some moves counting twice (like a Prankster-boosted status move)
 New sprites for Cluuz-S and Zurrclu-S!
 Added UUID's for all Pokemon to have so the game can keep track the same Pokemon object across evolutionary lines (mostly for the trainer database)
+Gave Safeguard to Bushewe and Thunderzap at lv 1, Cervora at lv 3, Mosscelot/Osceloma at lv 30 (moved Psychic Noise down 1 level)
+Changed Grass Knot to lv 25 on Twigzap (was 30) and gave Aromatherapy to Shockbranch at lv 24 (moved Thunder Punch down 1 level)
+Made both the Cluuz line and the Cluuz-S line compatible with Bug Buzz TM
+Fixed a bug with the calc's field not getting reset after a battle like the normal field does (so effects like Light Screen will persist in the calc until entering a new battle)
+Updated Reboot's description to make it more clear what it does (about removing negative status effects too)
