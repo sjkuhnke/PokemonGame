@@ -80,7 +80,7 @@ public class GamePanel extends JPanel implements Runnable {
 	// CONSTANTS
 	public static final int MAX_MAP = 240;
 	public static final int MAX_FLAG = 25; // should not be >31
-	public static final String GAME_VERSION = "0.8.51";
+	public static final String GAME_VERSION = "0.8.7";
 	
 	// SYSTEM
 	public LoadingScreen loadingScreen;

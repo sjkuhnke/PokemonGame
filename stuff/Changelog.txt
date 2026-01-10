@@ -1344,6 +1344,9 @@ Implemented a "Trainer Database" that your save file tracks information about tr
 - Battle start time and battle end time
 - Won or lost
 - Game version the fight was done on
+- PP Used from moves
+- Damage dealt (%)
+- Damage taken (%)
 - Turns your Pokemon participated in, amount of times they were switched in in a fight
 - All of this information is optional for casual players and will automatically record for nuzlockers!
 - This information can be easily exported from the start menu, where it will output a JSON file that can be easily uploaded to my public database for other players to see your teams you brought!
@@ -1360,3 +1363,4 @@ Changed Grass Knot to lv 25 on Twigzap (was 30) and gave Aromatherapy to Shockbr
 Made both the Cluuz line and the Cluuz-S line compatible with Bug Buzz TM
 Fixed a bug with the calc's field not getting reset after a battle like the normal field does (so effects like Light Screen will persist in the calc until entering a new battle)
 Updated Reboot's description to make it more clear what it does (about removing negative status effects too)
+Gave Mach Punch to Whiskeroar at lv 1
