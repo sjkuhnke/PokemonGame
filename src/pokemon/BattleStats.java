@@ -2,6 +2,7 @@ package pokemon;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class BattleStats implements Serializable {
 
@@ -12,6 +13,7 @@ public class BattleStats implements Serializable {
 	
 	private int kills;
 	public ArrayList<String> killList;
+	private HashMap<Move, Integer> ppUsed;
 	private boolean died;
 	private String killer;
 	private boolean evolved;
@@ -19,10 +21,13 @@ public class BattleStats implements Serializable {
 	private String evoName;
 	private int switchIns;
 	private int turns;
+	private double damageDealt;
+	private double damageTaken;
 	
 	public BattleStats(Pokemon p) {
 		this.kills = 0;
 		this.killList = new ArrayList<>();
+		this.ppUsed = new HashMap<>();
 		this.died = false;
 		this.evolved = false;
 		this.evoID = -1;
@@ -54,6 +59,18 @@ public class BattleStats implements Serializable {
 	
 	public void incrementTurns() { turns++; }
 	public int getTurns() { return this.turns; }
+	
+	public void recordPPUse(Move move, int amt) {
+		if (move == null || amt <= 0) return;
+		ppUsed.merge(move, amt, Integer::sum);
+	}
+	public HashMap<Move, Integer> getPPUsed() { return ppUsed; }
+	
+	public void recordDamageDealt(double percent) { damageDealt += percent; }
+	public double getDamageDealt() { return this.damageDealt; }
+	
+	public void recordDamageTaken(double percent) { damageTaken += percent; }
+	public double getDamageTaken() { return this.damageTaken; }
 	
 	private String getPokemonString(Pokemon p) {
 		if (p == null) return null;

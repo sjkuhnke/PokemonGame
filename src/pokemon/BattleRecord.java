@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import overworld.GamePanel;
+import util.PokemonUtil;
 
 public class BattleRecord implements Serializable {
 
@@ -82,6 +83,27 @@ public class BattleRecord implements Serializable {
 		}
 	}
 	
+	public void recordPPUse(Pokemon pokemon, Move move, int amt) {
+		BattleStats stats = battleStats.get(pokemon.slot);
+		if (stats != null) {
+			stats.recordPPUse(move, amt);
+		}
+	}
+	
+	public void recordDamageDealt(Pokemon pokemon, double percent) {
+		BattleStats stats = battleStats.get(pokemon.slot);
+		if (stats != null) {
+			stats.recordDamageDealt(percent);
+		}
+	}
+	
+	public void recordDamageTaken(Pokemon pokemon, double percent) {
+		BattleStats stats = battleStats.get(pokemon.slot);
+		if (stats != null) {
+			stats.recordDamageTaken(percent);
+		}
+	}
+	
 	public void endBattle(boolean victory) {
 		this.victory = victory;
 		this.battleEndTime = System.currentTimeMillis();
@@ -125,6 +147,15 @@ public class BattleRecord implements Serializable {
 					}
 					pokemonJson.put("switchIns", stats.getSwitchIns());
 					pokemonJson.put("turns", stats.getTurns());
+					if (stats.getPPUsed() != null && !stats.getPPUsed().isEmpty()) {
+						JSONObject ppJson = new JSONObject();
+						for (Map.Entry<Move, Integer> entry : stats.getPPUsed().entrySet()) {
+							ppJson.put(entry.getKey().toString(), entry.getValue());
+						}
+						pokemonJson.put("ppUsed", ppJson);
+					}
+					pokemonJson.put("damageDealt", PokemonUtil.round(stats.getDamageDealt(), 2));
+					pokemonJson.put("damageTaken", PokemonUtil.round(stats.getDamageTaken(), 2));
 				}
 				
 				teamArray.put(pokemonJson);

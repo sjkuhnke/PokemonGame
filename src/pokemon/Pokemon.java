@@ -3756,6 +3756,9 @@ public class Pokemon implements Serializable {
 			int dividend = Math.min(damage, foe.currentHP);
 			if (sturdy) dividend--;
 			double percent = dividend * 100.0 / foe.getStat(0); // change dividend to damage
+			if (this.playerOwned()) {
+				this.getPlayer().recordDamageDealt(this, percent);
+			}
 			String formattedPercent = String.format("%.1f", percent);
 			String damagePercentText = "(" + foe.nickname + " lost " + formattedPercent + "% of its HP.)";
 			
@@ -4077,10 +4080,20 @@ public class Pokemon implements Serializable {
 	private void consumeMovePP(Move move, Pokemon foe) {
 		if (move == Move.FAILED_SUCKER) move = Move.SUCKER_PUNCH;
 		
+		int ppCost = foe.getAbility(field) == Ability.PRESSURE ? 2 : 1;
+		
 		for (Moveslot m : this.moveset) {
 			if (m != null && m.move == move) {
-				m.currentPP -= foe.getAbility(field) == Ability.PRESSURE ? 2 : 1;
-				m.currentPP = m.currentPP < 0 ? 0 : m.currentPP;
+				
+				int before = m.currentPP;
+				m.currentPP -= ppCost;
+				m.currentPP = Math.max(0,  m.currentPP);
+				
+				int consumed = before - m.currentPP;
+				
+				if (this.playerOwned()) {
+					this.getPlayer().recordPPUse(this, move, consumed);
+				}
 				
 				if (m.currentPP == 0) {
 					if (this.getItem(field) == Item.LEPPA_BERRY) {
@@ -9397,6 +9410,7 @@ public class Pokemon implements Serializable {
 	
 	private void damage(int amt, Pokemon foe, Move move, String message, int damageIndex, boolean sturdy, Pokemon visible) {
 		if ((this.getAbility(field) == Ability.MAGIC_GUARD || this.getAbility(field) == Ability.SCALY_SKIN) && move == null) return;
+		int start = this.currentHP;
 		this.currentHP -= amt;
 		if (sturdy) this.currentHP = 1;
 		Task t;
@@ -9420,6 +9434,12 @@ public class Pokemon implements Serializable {
 		
 		if (move != null && currentHP > 0 && (move != Move.INCINERATE && move != Move.KNOCK_OFF && move != Move.BUG_BITE && move != Move.PLUCK &&
 				move != Move.THIEF && move != Move.COVET) || thisAbility == Ability.STICKY_HOLD) this.checkBerry(foe);
+		
+		if (this.playerOwned()) {
+			int amount = start - Math.max(0, this.currentHP);
+			double percent = amount * 100.0 / this.getStat(0);
+			this.getPlayer().recordDamageTaken(this, percent);
+		}
 	}
 
 	private void checkBerry(Pokemon foe) {
@@ -11771,6 +11791,9 @@ public class Pokemon implements Serializable {
 				int dividend = Math.min(damage, this.currentHP);
 				if (sturdy) dividend--;
 				double percent = dividend * 100.0 / this.getStat(0); // change dividend to damage
+				if (foe.playerOwned()) {
+					foe.getPlayer().recordDamageDealt(foe, percent);
+				}
 				String formattedPercent = String.format("%.1f", percent);
 				String damagePercentText = "(" + this.nickname + " lost " + formattedPercent + "% of its HP.)";
 				this.damage(damage, foe, Move.FUTURE_SIGHT, message, damageIndex, sturdy, null);
