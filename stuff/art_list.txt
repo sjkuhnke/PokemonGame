@@ -1,7 +1,6 @@
 ================================================================================
 Sprites (Prefered Order, can always be changed up) (* = has sketch from RAMM)
 ================================================================================
-222 Zurroaratr-S*
 Dusk Scales Fossil
 Thunder Scales Fossil
 213 Nightrex*

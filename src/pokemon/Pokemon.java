@@ -5056,7 +5056,7 @@ public class Pokemon implements Serializable {
 			stat(foe, 5, -1, this);
 			break;
 		case MUDDY_WATER:
-			stat(this, 5, -1, foe);
+			stat(foe, 5, -1, this);
 			break;
 		case MYSTICAL_FIRE:
 			stat(foe, 2, -1, this);
