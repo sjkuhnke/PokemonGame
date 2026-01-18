@@ -1201,6 +1201,8 @@ public enum Move {
 	public int getPriority(Pokemon p) {
 		int pr = this.priority;
 		
+		if (p == null) return pr;
+		
 		if (this.cat == 2 && p.getAbility(Pokemon.field) == Ability.PRANKSTER) {
 			pr++;
 		}

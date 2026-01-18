@@ -29,7 +29,6 @@ import javax.swing.SwingUtilities;
 
 import entity.*;
 import object.*;
-import overworld.BlackjackPanel;
 import overworld.Fog;
 import overworld.GamePanel;
 import overworld.Main;
@@ -557,20 +556,7 @@ public class UI extends AbstractUI {
 		case Task.BLACKJACK:
 			gp.keyH.resetKeys();
 			if (!currentTask.wipe) Task.addTask(Task.TEXT, "Come play again soon, okay?");
-			// Remove all existing components from the JFrame
-			Main.window.getContentPane().removeAll();
-
-			// Create and add the BlackjackPanel
-			BlackjackPanel bjPanel = new BlackjackPanel(gp, currentTask.wipe);
-			Main.window.getContentPane().add(bjPanel);
-
-			// Set focus on the BlackjackPanel
-			bjPanel.requestFocusInWindow();
-
-			// Repaint the JFrame to reflect the changes
-			Main.window.revalidate();
-			Main.window.repaint();
-			
+			gp.gameState = GamePanel.BLACKJACK_STATE;			
 			currentTask = null;
 			break;
 		case Task.MUSHROOM:

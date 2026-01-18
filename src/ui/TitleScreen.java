@@ -1695,40 +1695,6 @@ public class TitleScreen extends AbstractUI {
 		g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
 	}
 	
-	private void drawControlsHint() {
-		int hintX = gp.tileSize / 2;
-		int hintY = gp.screenHeight - gp.tileSize * 3 / 4;
-		
-		float alpha = 0.5f + (float)(Math.sin(pulseCounter * 0.05) * 0.3);
-		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
-		
-		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));
-		
-		ToolTip tooltipKey = new ToolTip(gp, "", "", false, gp.config.tooltipsKey);
-		String hintText = "Hold " + tooltipKey.toString() + " to view controls";
-		
-		drawGlowingText(hintText, hintX, hintY, textColor, 2);
-		
-		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
-	}
-
-	private void drawGlowingText(String text, int x, int y, Color color, int glowSize) {
-		for (int i = glowSize; i > 0; i--) {
-			float alpha = 0.1f * (glowSize - i + 1) / glowSize;
-			g2.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(), (int)(alpha*255)));
-			for (int dx = -i; dx <= i; dx++) {
-				for (int dy = -i; dy <= i; dy++) {
-					if (dx * dx + dy * dy <= i * i) {
-						g2.drawString(text, x + dx, y + dy);
-					}
-				}
-			}
-		}
-		
-		g2.setColor(color);
-		drawOutlinedText(text, x, y, color, Color.BLACK);
-	}
-	
 	private void drawMenuButton(String text, int x, int y, boolean selected) {
 		drawMenuButton(text, x, y, selected, true);
 	}

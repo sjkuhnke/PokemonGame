@@ -4099,6 +4099,7 @@ public class Pokemon implements Serializable {
 					if (this.getItem(field) == Item.LEPPA_BERRY) {
 						this.eatBerry(this.item, true, foe, m.move);
 					} else {
+						this.removeStatus(Status.ENCORED);
 						this.encoreCount = 0;
 						this.disabledCount = 0;
 						this.disabledMove = null;
@@ -5037,9 +5038,14 @@ public class Pokemon implements Serializable {
 		case MORTAL_SPIN:
 			foe.poison(false, this);
 			if (this.hasStatus(Status.SPUN)) {
+				StatusEffect spin = this.getStatus(Status.SPUN);
 				this.removeStatus(Status.SPUN);
-				Task.addTask(Task.TEXT, this.nickname + " was freed!");
+				Task.addTask(Task.TEXT, this.nickname + " was freed from " +  spin.getSpunName() + "!");
 				this.spunCount = 0;
+			}
+			if (this.hasStatus(Status.LEECHED)) {
+				this.removeStatus(Status.LEECHED);
+				Task.addTask(Task.TEXT, this.nickname + " was freed from Leech Seed!");
 			}
 			for (FieldEffect fe : field.getHazards(this.getFieldEffects())) {
 				Task.addTask(Task.TEXT, fe.toString() + " disappeared from " + this.nickname + "'s side!");
@@ -5109,9 +5115,14 @@ public class Pokemon implements Serializable {
 		case RAPID_SPIN:
 			stat(this, 4, 1, foe);
 			if (this.hasStatus(Status.SPUN)) {
+				StatusEffect spin = this.getStatus(Status.SPUN);
 				this.removeStatus(Status.SPUN);
-				Task.addTask(Task.TEXT, this.nickname + " was freed!");
+				Task.addTask(Task.TEXT, this.nickname + " was freed from " +  spin.getSpunName() + "!");
 				this.spunCount = 0;
+			}
+			if (this.hasStatus(Status.LEECHED)) {
+				this.removeStatus(Status.LEECHED);
+				Task.addTask(Task.TEXT, this.nickname + " was freed from Leech Seed!");
 			}
 			for (FieldEffect fe : field.getHazards(this.getFieldEffects())) {
 				Task.addTask(Task.TEXT, fe.toString() + " disappeared from " + this.nickname + "'s side!");
@@ -5291,8 +5302,7 @@ public class Pokemon implements Serializable {
 				foe.burn(false, this);
 			} else if (randomNum == 1) {
 				foe.paralyze(false, this);
-			}
-			 else if (randomNum == 2) {
+			} else if (randomNum == 2) {
 				foe.freeze(false, this);
 			}
 			break;
@@ -5300,9 +5310,14 @@ public class Pokemon implements Serializable {
 			stat(this, 4, 1, foe);
 			stat(this, 5, 1, foe);
 			if (this.hasStatus(Status.SPUN)) {
+				StatusEffect spin = this.getStatus(Status.SPUN);
 				this.removeStatus(Status.SPUN);
-				Task.addTask(Task.TEXT, this.nickname + " was freed!");
+				Task.addTask(Task.TEXT, this.nickname + " was freed from " + spin.getSpunName() + "!");
 				this.spunCount = 0;
+			}
+			if (this.hasStatus(Status.LEECHED)) {
+				this.removeStatus(Status.LEECHED);
+				Task.addTask(Task.TEXT, this.nickname + " was freed from Leech Seed!");
 			}
 			break;
 		case MAGIC_TOMB:

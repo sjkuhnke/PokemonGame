@@ -29,14 +29,8 @@ import object.*;
 import pokemon.*;
 import puzzle.*;
 import tile.*;
-import ui.AbstractUI;
-import ui.BattleUI;
-import ui.LoadingScreen;
-import ui.SimBattleUI;
-import ui.TitleScreen;
-import ui.UI;
-import util.SaveManager;
-import util.ToolTip;
+import ui.*;
+import util.*;
 
 public class GamePanel extends JPanel implements Runnable {
 
@@ -80,7 +74,7 @@ public class GamePanel extends JPanel implements Runnable {
 	// CONSTANTS
 	public static final int MAX_MAP = 240;
 	public static final int MAX_FLAG = 25; // should not be >31
-	public static final String GAME_VERSION = "0.8.7";
+	public static final String GAME_VERSION = "0.8.8";
 	
 	// SYSTEM
 	public LoadingScreen loadingScreen;
@@ -120,6 +114,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public UI ui;
 	public BattleUI battleUI;
 	public SimBattleUI simBattleUI;
+	public BlackjackUI blackjackUI;
 	
 	public int gameState;
 	
@@ -146,6 +141,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public static final int SIM_START_BATTLE_STATE = 20;
 	public static final int COIN_STATE = 21;
 	public static final int STAR_SHOP_STATE = 22;
+	public static final int BLACKJACK_STATE = 23;
 
 	public GamePanel(JFrame window) {
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -368,6 +364,11 @@ public class GamePanel extends JPanel implements Runnable {
 		} else if (gameState == SIM_BATTLE_STATE) {
 			// Draw Sim Battle Screen
 			simBattleUI.draw(g2);
+		} else if (gameState == BLACKJACK_STATE) {
+			if (blackjackUI == null) {
+				blackjackUI = new BlackjackUI(this, false);
+			}
+			blackjackUI.draw(g2);
 		} else if (gameState == BATTLE_STATE) {
 			// Draw Battle Screen
 			battleUI.draw(g2);
