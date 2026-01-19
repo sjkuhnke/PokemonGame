@@ -136,6 +136,7 @@ public class Player extends Trainer implements Serializable {
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	public static final int BET_INC = 10;
+	public static final int MAX_BET = BET_INC * 100;
 	public static final int MAX_HOTKEYS = 5;
 	
 	// DIFFICULTY
@@ -1440,6 +1441,7 @@ public class Player extends Trainer implements Serializable {
 					gp.ui.showMessage(Item.breakString(p.nickname + "'s IVs were optimized to the " + type.toString() + " power!", UI.MAX_TEXTBOX));
 					p.ivs = optimalIVs;
 					p.setStats();
+					p.verifyHP();
 				}
 				break;
 			case DAMAGE_KIT:
@@ -1827,7 +1829,7 @@ public class Player extends Trainer implements Serializable {
 	public int getMaxBet(boolean gauntlet) {
 		int currentCurrency = getBetCurrency(gauntlet);
 		if (currentCurrency < BET_INC) return 0;
-		return Math.min(1000, (currentCurrency / BET_INC) * BET_INC);
+		return Math.min(MAX_BET, (currentCurrency / BET_INC) * BET_INC);
 	}
 	
 	public int getMaxParlayBet(boolean gauntlet, int activeBets) {

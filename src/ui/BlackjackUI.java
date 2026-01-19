@@ -15,6 +15,7 @@ import javax.imageio.ImageIO;
 
 import overworld.*;
 import pokemon.Player;
+import pokemon.Task;
 import puzzle.Puzzle;
 import util.ToolTip;
 
@@ -41,7 +42,8 @@ public class BlackjackUI extends AbstractUI {
 	private static final int STATE_INSURANCE = 2;
 	private static final int STATE_PLAYER_TURN = 3;
 	private static final int STATE_DEALER_TURN = 4;
-	private static final int STATE_GAME_OVER = 5;
+	private static final int STATE_PAYOUT = 5;
+	private static final int STATE_GAME_OVER = 6;
 	
 	private int gameState;
 	
@@ -58,7 +60,14 @@ public class BlackjackUI extends AbstractUI {
 	private String messageText;
 	private int messageTimer;
 	
-	private static final int MAX_HAND_SIZE = 7;
+	// Payout animation
+	private ArrayList<PayoutParticle> payoutParticles;
+	private int payoutAmount;
+	private int displayedPayout;
+	private int payoutCounter;
+	private String payoutText;
+	private boolean payoutComplete;
+	
 	private static final int DECK_SIZE = 104; // 2 decks
 	
 	// Layout constants
@@ -69,7 +78,7 @@ public class BlackjackUI extends AbstractUI {
 	public BlackjackUI(GamePanel gp, boolean gauntlet) {
 		this.gp = gp;
 		this.gauntlet = gauntlet;
-		this.currency = gauntlet ? "orbs" : "coins";
+		this.setCurrency();
 		this.p = gp.player.p;
 		deckImg = setup("/cards/deck", 1.0);
 		
@@ -79,14 +88,27 @@ public class BlackjackUI extends AbstractUI {
 		
 		playerHands = new ArrayList<>();
 		dealerHand = new Hand();
+		payoutParticles = new ArrayList<>();
 		
 		gameState = STATE_BETTING;
 		menuNum = 0;
-		bet = 10;
+		bet = Player.BET_INC;
 		
 		this.textColor = Color.WHITE;
 		
 		loadBackground();
+	}
+	
+	public void updateGauntlet(boolean gauntlet) {
+		if (this.gauntlet != gauntlet) {
+			this.gauntlet = gauntlet;
+			this.setCurrency();
+			bet = lastBet = Player.BET_INC;
+		}
+	}
+	
+	private void setCurrency() {
+		this.currency = gauntlet ? "orbs" : "coins";
 	}
 
 	private void loadBackground() {
@@ -135,6 +157,9 @@ public class BlackjackUI extends AbstractUI {
 		case STATE_DEALER_TURN:
 			updateDealerTurn();
 			break;
+		case STATE_PAYOUT:
+			updatePayout();
+			break;
 		case STATE_GAME_OVER:
 			updateGameOver();
 			break;
@@ -155,21 +180,44 @@ public class BlackjackUI extends AbstractUI {
 			}
 		}
 		
-		if (gp.keyH.leftPressed && bet > Player.BET_INC) {
+		int maxBet = p.getMaxBet(gauntlet);
+		
+		if (gp.keyH.leftPressed) {
 			gp.keyH.leftPressed = false;
 			gp.playSFX(Sound.S_MENU_1);
-			bet -= Player.BET_INC;
-			if (bet < Player.BET_INC) bet = Player.BET_INC;
+			
+			if (bet <= Player.BET_INC) {
+				bet = Math.max(maxBet, Player.BET_INC);
+			} else {
+				bet -= Player.BET_INC;
+				if (bet < Player.BET_INC) bet = Player.BET_INC;
+			}
 		}
 		
 		if (gp.keyH.rightPressed) {
 			gp.keyH.rightPressed = false;
-			int maxBet = p.getMaxBet(gauntlet);
-			if (bet < maxBet) {
-				gp.playSFX(Sound.S_MENU_1);
-				bet += Player.BET_INC;
-				if (bet > maxBet) bet = maxBet;
+			gp.playSFX(Sound.S_MENU_1);
+			bet += Player.BET_INC;
+			if (bet > maxBet) bet = Player.BET_INC;
+		}
+		
+		if (gp.keyH.upPressed) {
+			gp.keyH.upPressed = false;
+			gp.playSFX(Sound.S_MENU_1);
+			
+			bet += Player.BET_INC * 10;
+			if (bet > maxBet) {
+				bet = (maxBet / Player.BET_INC) * Player.BET_INC;
+				if (bet < Player.BET_INC) bet = Player.BET_INC;
 			}
+		}
+		
+		if (gp.keyH.downPressed) {
+			gp.keyH.downPressed = false;
+			gp.playSFX(Sound.S_MENU_1);
+			
+			bet -= Player.BET_INC * 10;
+			if (bet < Player.BET_INC) bet = Player.BET_INC;
 		}
 		
 		if (gp.keyH.sPressed || gp.keyH.dPressed) {
@@ -258,23 +306,25 @@ public class BlackjackUI extends AbstractUI {
 	private void checkInitialBlackjacks() {
 		Hand playerHand = playerHands.get(0);
 		boolean playerBJ = isBlackjack(playerHand);
+		playerHand.isBlackjack = playerBJ;
 		boolean dealerBJ = isBlackjack(dealerHand);
 		
 		if (playerBJ || dealerBJ) {
 			dealerHand.cards.get(1).setVisible(true);
 			
 			if (playerBJ && dealerBJ) {
-				showMessage("Both you and the dealer have Blackjack! It's a push.");
+				showMessage("Both of you have Blackjack!");
 				p.addBetCurrency(gauntlet, bet);
 				p.blackjackStats[2]++;
 				p.blackjackStats[5]++;
-				endGame();
+				startPayout(0, "PUSH!");
 				return;
 			} else if (playerBJ) {
 				showMessage("Blackjack! You win 3:2 payout!");
+				int winAmount = (int)(bet * 1.5);
 				winHand(playerHand, (int)(bet * 2.5));
 				p.blackjackStats[5]++;
-				endGame();
+				startPayout(winAmount, "BLACKJACK!");
 				return;
 			} else {
 				// Dealer blackjack
@@ -284,14 +334,15 @@ public class BlackjackUI extends AbstractUI {
 					winHand(playerHand, insuranceWin + bet);
 					p.blackjackStats[16]++;
 					p.blackjackStats[17] += insuranceWin;
+					startPayout(playerHand.insurance, "INSURANCE WIN!");
 				} else {
 					showMessage("Dealer has Blackjack, you lose.");
 					loseHand(playerHand);
 					if (p.blackjackStats[14] > p.blackjackStats[15]) {
 						p.blackjackStats[18]++;
 					}
+					startPayout(-bet, "DEALER BLACKJACK");
 				}
-				endGame();
 				return;
 			}
 		}
@@ -305,7 +356,11 @@ public class BlackjackUI extends AbstractUI {
 	private void updatePlayerTurn() {
 		Hand currentHand = playerHands.get(currentHandIndex);
 		
-		if (currentHand.isStanding || currentHand.isBusted) {
+		if (currentHand.isBlackjack) {
+			showMessage("Blackjack! You win 3:2 payout!");
+		}
+		
+		if (currentHand.isStanding || currentHand.isBusted || currentHand.isBlackjack) {
 			moveToNextHand();
 			return;
 		}
@@ -394,20 +449,18 @@ public class BlackjackUI extends AbstractUI {
 	}
 	
 	private void hit(Hand hand) {
-		if (hand.cards.size() < MAX_HAND_SIZE) {
-			hand.addCard(dealCard());
-			int handTotal = getHandTotal(hand);
-			
-			if (handTotal > 21) {
-				showMessage("Bust with " + handTotal + "!");
-				hand.isBusted = true;
-				p.blackjackStats[3]++;
-				loseHand(hand);
-				moveToNextHand();
-			} else {
-				waitingForInput = true;
-				menuNum = 0;
-			}
+		hand.addCard(dealCard());
+		int handTotal = getHandTotal(hand);
+		
+		if (handTotal > 21) {
+			showMessage("Bust with " + handTotal + "!");
+			hand.isBusted = true;
+			p.blackjackStats[3]++;
+			loseHand(hand);
+			moveToNextHand();
+		} else {
+			waitingForInput = true;
+			menuNum = 0;
 		}
 	}
 	
@@ -448,6 +501,7 @@ public class BlackjackUI extends AbstractUI {
 		
 		// Deal one card to the first hand
 		hand.addCard(dealCard());
+		hand.isBlackjack = isBlackjack(hand);
 		
 		// Insert new hand after current hand
 		playerHands.add(currentHandIndex + 1, newHand);
@@ -475,10 +529,16 @@ public class BlackjackUI extends AbstractUI {
 			
 			if (allBusted) {
 				showMessage("You busted!");
-				endGame();
+				int totalLoss = 0;
+				for (Hand hand : playerHands) {
+					totalLoss += hand.bet;
+				}
+				startPayout(-totalLoss, "BUST!");
 			}
 		} else {
-			playerHands.get(currentHandIndex).addCard(dealCard());
+			Hand currentHand = playerHands.get(currentHandIndex);
+			currentHand.addCard(dealCard());
+			currentHand.isBlackjack = isBlackjack(currentHand);
 			menuNum = 0;
 			waitingForInput = true;
 		}
@@ -492,7 +552,7 @@ public class BlackjackUI extends AbstractUI {
 		if (animationCounter > 0 && animationCounter % 30 == 0) {
 			int dealerTotal = getHandTotal(dealerHand);
 			
-			if ((dealerTotal < 17 || isSoft17(dealerHand)) && dealerHand.cards.size() < MAX_HAND_SIZE) {
+			if (dealerTotal < 17 || isSoft17(dealerHand)) {
 				Card newCard = dealCard();
 				dealerHand.addCard(newCard);
 				showMessage("Dealer drew " + newCard.getRankString() + " of " + newCard.getSuitString());
@@ -510,31 +570,122 @@ public class BlackjackUI extends AbstractUI {
 			p.blackjackStats[4]++;
 		}
 		
+		int netWinnings = 0;
 		for (Hand hand : playerHands) {
-			if (hand.isBusted) continue;
+			if (hand.isBusted) {
+				netWinnings -= hand.bet;
+				continue;
+			}
 			
 			int playerTotal = getHandTotal(hand);
 			
-			if (dealerBusted) {
+			if (hand.isBlackjack) {
+				int winAmount = (int)(bet * 1.5);
+				winHand(hand, (int)(bet * 2.5));
+				p.blackjackStats[5]++;
+				netWinnings += winAmount;
+			} else if (dealerBusted) {
 				winHand(hand, hand.bet * 2);
+				netWinnings += hand.bet;
 				if (hand.isDoubled) p.blackjackStats[7]++;
 			} else if (playerTotal > dealerTotal) {
 				winHand(hand, hand.bet * 2);
 				if (hand.isDoubled) p.blackjackStats[7]++;
+				netWinnings = hand.bet;
 			} else if (playerTotal == dealerTotal) {
 				p.addBetCurrency(gauntlet, hand.bet);
 				p.blackjackStats[2]++;
 				if (hand.isDoubled) p.blackjackStats[7]++;
 			} else {
 				loseHand(hand);
+				netWinnings -= hand.bet;
 			}
 		}
 		
-		String resultMsg = dealerBusted ? "Dealer busts with " + dealerTotal + "!" : 
-			"Dealer stands with " + dealerTotal;
+		String resultMsg = dealerBusted ? "Dealer busts with " + dealerTotal + "!" : "Dealer stands with " + dealerTotal;
 		showMessage(resultMsg);
 		
-		endGame();
+		String payoutLabel = netWinnings > 0 ? "YOU WIN!" : netWinnings < 0 ? "YOU LOSE" : "PUSH";
+		startPayout(netWinnings, payoutLabel);
+	}
+	
+	private void startPayout(int amount, String label) {
+		payoutAmount = amount;
+		displayedPayout = 0;
+		payoutCounter = 0;
+		payoutComplete = false;
+		payoutParticles.clear();
+		payoutText = label;
+		gameState = STATE_PAYOUT;
+		
+		// Play appropriate sound
+		if (amount > 0) {
+			//gp.playSFX(Sound.S_MAIN_GAME_SAVE);
+		} else if (amount < 0) {
+			//gp.playSFX(Sound.S_DEFEAT);
+		}
+	}
+	
+	private void updatePayout() {
+		payoutCounter++;
+		
+		// Increment displayed payout gradually
+		if (!payoutComplete) {
+			if (payoutAmount != 0) {
+				int increment = Math.max(1, Math.abs(payoutAmount) / 30);
+				if (payoutAmount > 0) {
+					displayedPayout += increment;
+					if (displayedPayout >= payoutAmount) {
+						displayedPayout = payoutAmount;
+						payoutComplete = true;
+					}
+				} else {
+					displayedPayout -= increment;
+					if (displayedPayout <= payoutAmount) {
+						displayedPayout = payoutAmount;
+						payoutComplete = true;
+					}
+				}
+				
+				// Spawn particles
+				if (payoutCounter % 3 == 0 && payoutAmount > 0) {
+					spawnPayoutParticles();
+				}
+				
+				// Play tick sound
+				if (payoutCounter % 2 == 0) {
+					gp.playSFX(Sound.S_MENU_1);
+				}
+			} else {
+				payoutComplete = true;
+			}
+		}
+		
+		// Update particles
+		for (int i = payoutParticles.size() - 1; i >= 0; i--) {
+			PayoutParticle particle = payoutParticles.get(i);
+			particle.update();
+			if (particle.isDead()) {
+				payoutParticles.remove(i);
+			}
+		}
+		
+		// Move to game over after animation
+		if (payoutComplete && payoutCounter > 120) {
+			endGame();
+		}
+	}
+	
+	private void spawnPayoutParticles() {
+		Random rand = new Random();
+		int centerX = gp.screenWidth / 2;
+		int centerY = gp.screenHeight / 2 - gp.tileSize * 2;
+		
+		for (int i = 0; i < 3; i++) {
+			float angle = rand.nextFloat() * (float)(Math.PI * 2);
+			float speed = 2 + rand.nextFloat() * 3;
+			payoutParticles.add(new PayoutParticle(centerX, centerY, angle, speed));
+		}
 	}
 	
 	private void updateGameOver() {
@@ -584,6 +735,9 @@ public class BlackjackUI extends AbstractUI {
 			break;
 		case STATE_PLAYER_TURN:
 			drawPlayerTurnUI();
+			break;
+		case STATE_PAYOUT:
+			drawPayoutAnimation();
 			break;
 		case STATE_GAME_OVER:
 			drawGameOverUI();
@@ -635,9 +789,9 @@ public class BlackjackUI extends AbstractUI {
 		
 		// Rules
 		int rulesX = gp.screenWidth - gp.tileSize * 3;
-		int rulesY = gp.screenHeight - gp.tileSize * 2;
+		int rulesY = gp.screenHeight - (int) (gp.tileSize * 1.5);
 		g2.setFont(gp.marumonica.deriveFont(16F));
-		drawOutlinedText("• Min bet: " + Player.BET_INC + " " + currency, rulesX, rulesY, new Color(170, 170, 170), Color.BLACK);
+		drawOutlinedText("• Bets: " + Player.BET_INC + " - " + Player.MAX_BET + " " + currency, rulesX, rulesY, new Color(170, 170, 170), Color.BLACK);
 		rulesY += gp.tileSize / 3;
 		drawOutlinedText("• Blackjack pays 3:2", rulesX, rulesY, new Color(170, 170, 170), Color.BLACK);
 		rulesY += gp.tileSize / 3;
@@ -763,7 +917,7 @@ public class BlackjackUI extends AbstractUI {
 				g2.setFont(gp.marumonica.deriveFont(Font.BOLD, 16F));
 				String handLabel = "Hand " + (h + 1);
 				if (h == currentHandIndex && gameState == STATE_PLAYER_TURN) {
-					handLabel += " ◄";
+					handLabel += " \u2193";
 				}
 				int labelX = handCenterX - getTextWidth(handLabel) / 2;
 				int labelY = playerY - 10;
@@ -804,7 +958,7 @@ public class BlackjackUI extends AbstractUI {
 	}
 	
 	private void drawBettingUI() {
-		int panelWidth = gp.tileSize * 8;
+		int panelWidth = gp.tileSize * 6;
 		int panelHeight = gp.tileSize * 4;
 		int panelX = (gp.screenWidth - panelWidth) / 2;
 		int panelY = (gp.screenHeight - panelHeight) / 2;
@@ -824,6 +978,25 @@ public class BlackjackUI extends AbstractUI {
 		int betY = panelY + (int)(gp.tileSize * 2.2);
 		drawOutlinedText(betText, betX, betY, Color.WHITE, Color.BLACK);
 		
+		// Arrows
+		int arrowSize = 20;
+		int leftArrowX = gp.screenWidth / 2 - gp.tileSize * 2;
+		int arrowCenterY = betY - gp.tileSize / 3;
+		
+		int[] leftXPoints = {leftArrowX + arrowSize, leftArrowX, leftArrowX + arrowSize};
+		int[] leftYPoints = {arrowCenterY - arrowSize / 2, arrowCenterY, arrowCenterY + arrowSize / 2};
+		
+		g2.setColor(Color.YELLOW);
+		g2.fillPolygon(leftXPoints, leftYPoints, 3);
+		
+		int rightArrowX = gp.screenWidth / 2 + gp.tileSize * 2 - arrowSize;
+		
+		int[] rightXPoints = {rightArrowX, rightArrowX + arrowSize, rightArrowX};
+		int[] rightYPoints = {arrowCenterY - arrowSize / 2, arrowCenterY, arrowCenterY + arrowSize / 2};
+		
+		g2.setColor(Color.YELLOW);
+		g2.fillPolygon(rightXPoints, rightYPoints, 3);
+		
 		// Currency label
 		g2.setFont(gp.marumonica.deriveFont(18F));
 		String currencyLabel = currency;
@@ -834,14 +1007,17 @@ public class BlackjackUI extends AbstractUI {
 		// Range
 		g2.setFont(gp.marumonica.deriveFont(14F));
 		int maxBet = p.getMaxBet(gauntlet);
-		String rangeText = "(" + Player.BET_INC + " - " + maxBet + ")";
-		int rangeX = getCenterAlignedTextX(rangeText, gp.screenWidth / 2);
-		int rangeY = currencyY + 25;
-		drawOutlinedText(rangeText, rangeX, rangeY, new Color(180, 180, 180), Color.BLACK);
+		if (maxBet >= Player.BET_INC) {
+			String rangeText = "(" + Player.BET_INC + " - " + maxBet + ")";
+			int rangeX = getCenterAlignedTextX(rangeText, gp.screenWidth / 2);
+			int rangeY = currencyY + 25;
+			drawOutlinedText(rangeText, rangeX, rangeY, new Color(180, 180, 180), Color.BLACK);
+		}
 		
 		// Tooltips
 		ArrayList<ToolTip> toolTips = new ArrayList<>();
 		toolTips.add(new ToolTip(gp, "Adjust", "/", true, gp.config.leftKey, gp.config.rightKey));
+		toolTips.add(new ToolTip(gp, "Fast Adjust", "/", true, gp.config.upKey, gp.config.downKey));
 		toolTips.add(new ToolTip(gp, "Deal", "", true, gp.config.wKey));
 		toolTips.add(new ToolTip(gp, "Leave", "/", true, gp.config.sKey, gp.config.dKey));
 		
@@ -851,7 +1027,7 @@ public class BlackjackUI extends AbstractUI {
 	}
 	
 	private void drawInsuranceUI() {
-		int panelWidth = gp.tileSize * 7;
+		int panelWidth = gp.tileSize * 6;
 		int panelHeight = gp.tileSize * 4;
 		int panelX = (gp.screenWidth - panelWidth) / 2;
 		int panelY = gp.tileSize * 3;
@@ -880,11 +1056,12 @@ public class BlackjackUI extends AbstractUI {
 		int optionY = text2Y + gp.tileSize;
 		String[] options = {"No", "Yes"};
 		int spacing = gp.tileSize * 2;
-		int startX = gp.screenWidth / 2 - spacing;
+		int startX = gp.screenWidth / 2 - spacing / 2;
 		
 		for (int i = 0; i < options.length; i++) {
 			boolean selected = menuNum == i;
 			int optionX = startX + i * spacing;
+			optionX -= gp.tileSize / 4;
 			
 			if (selected) {
 				g2.setColor(Color.YELLOW);
@@ -966,6 +1143,63 @@ public class BlackjackUI extends AbstractUI {
 		
 		if (gp.keyH.shiftPressed) {
 			drawToolTipBar(toolTips);
+		}
+	}
+	
+	private void drawPayoutAnimation() {
+		if (messageTimer > 0) {
+			return;
+		}
+		
+		// Draw payout panel
+		int panelWidth = gp.tileSize * 6;
+		int panelHeight = gp.tileSize * 4;
+		int panelX = (gp.screenWidth - panelWidth) / 2;
+		int panelY = (gp.screenHeight - panelHeight) / 2;
+		
+		Color panelColor = payoutAmount > 0 ? Color.GREEN : payoutAmount < 0 ? Color.RED : Color.BLUE;
+		drawPanelWithBorder(panelX, panelY, panelWidth, panelHeight, 230, panelColor);
+		
+		// Draw message label
+		g2.setFont(gp.marumonica.deriveFont(Font.BOLD, 40F));
+		int labelX = getCenterAlignedTextX(payoutText, gp.screenWidth / 2);
+		int labelY = panelY + gp.tileSize;
+		
+		// Pulse effect on label
+		float scale = 1.0f + (float)(Math.sin(payoutCounter * 0.15) * 0.1);
+		g2.setFont(gp.marumonica.deriveFont(Font.BOLD, 40F * scale));
+		labelX = getCenterAlignedTextX(payoutText, gp.screenWidth / 2);
+		
+		Color labelColor = payoutAmount > 0 ? Color.YELLOW : payoutAmount < 0 ? Color.ORANGE : Color.WHITE;
+		drawOutlinedText(payoutText, labelX, labelY, labelColor, Color.BLACK);
+		
+		// Draw payout amount with counting animation
+		g2.setFont(gp.marumonica.deriveFont(Font.BOLD, 60F));
+		String payoutText;
+		if (displayedPayout > 0) {
+			payoutText = "+" + displayedPayout;
+		} else if (displayedPayout < 0) {
+			payoutText = String.valueOf(displayedPayout);
+		} else {
+			payoutText = "0";
+		}
+		
+		int payoutX = getCenterAlignedTextX(payoutText, gp.screenWidth / 2);
+		int payoutY = panelY + (int)(gp.tileSize * 2.5);
+		
+		Color amountColor = displayedPayout > 0 ? new Color(0, 255, 0) : displayedPayout < 0 ? new Color(255, 50, 50) : Color.WHITE;
+		drawOutlinedText(payoutText, payoutX, payoutY, amountColor, Color.BLACK);
+		
+		// Draw currency label
+		g2.setFont(gp.marumonica.deriveFont(Font.BOLD, 24F));
+		String currLabel = currency.toUpperCase();
+		int currX = getCenterAlignedTextX(currLabel, gp.screenWidth / 2);
+		int currY = payoutY + gp.tileSize;
+		drawOutlinedText(currLabel, currX, currY, Color.LIGHT_GRAY, Color.BLACK);
+		
+		// Draw particles
+		for (PayoutParticle particle : payoutParticles) {
+			particle.draw(g2);
 		}
 	}
 	
@@ -1112,23 +1346,83 @@ public class BlackjackUI extends AbstractUI {
 	@Override
 	public void showMessage(String message) {
 		this.messageText = message;
-		this.messageTimer = 90; // 1.5 seconds at 60 FPS
+		this.messageTimer = 60;
 	}
 	
 	private void exitBlackjack() {
 		if (gauntlet) {
 			Puzzle puzzle = gp.puzzleM.getCurrentPuzzle(gp.currentMap);
 			puzzle.update(p.getBetCurrency(gauntlet));
+			gp.gameState = GamePanel.PLAY_STATE;
+		} else {
+			gp.setTaskState();
+			Task.addTask(Task.TEXT, "Come play again soon, okay?");
 		}
-		
-		// Return to normal game state
-		gp.gameState = GamePanel.PLAY_STATE;
 	}
 	
 	// Inner classes
+	private class PayoutParticle {
+		float x, y;
+		float vx, vy;
+		int life;
+		Color color;
+		int size;
+		
+		public PayoutParticle(int startX, int startY, float angle, float speed) {
+			this.x = startX;
+			this.y = startY;
+			this.vx = (float)(Math.cos(angle) * speed);
+			this.vy = (float)(Math.sin(angle) * speed);
+			this.life = 90;
+			
+			Random rand = new Random();
+			// Gold/yellow colors for coins
+			int colorChoice = rand.nextInt(3);
+			switch(colorChoice) {
+			case 0:
+			color = gauntlet ? new Color(209, 19, 203) : new Color(255, 215, 0); // Gold
+			break;
+			case 1:
+			color = gauntlet ? new Color(63, 26, 173) : new Color(255, 255, 0); // Yellow
+			break;
+			default:
+			color = gauntlet ? new Color(99, 23, 191) : new Color(255, 200, 50); // Orange-gold
+			}
+			
+			this.size = 8 + rand.nextInt(8);
+		}
+		
+		public void update() {
+			x += vx;
+			y += vy;
+			vy += 0.3f; // Gravity
+			life--;
+		}
+		
+		public boolean isDead() {
+			return life <= 0;
+		}
+		
+		public void draw(Graphics2D g2) {
+			float alpha = Math.min(1.0f, life / 30.0f);
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+			
+			// Draw coin-like circle
+			g2.setColor(color);
+			g2.fillOval((int)x - size/2, (int)y - size/2, size, size);
+			
+			// Draw shine/highlight
+			g2.setColor(new Color(255, 255, 255, (int)(200 * alpha)));
+			g2.fillOval((int)x - size/4, (int)y - size/2, size/3, size/3);
+			
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+		}
+	}
+	
 	private class Hand {
 		ArrayList<Card> cards;
 		int bet;
+		boolean isBlackjack;
 		boolean isStanding;
 		boolean isBusted;
 		boolean isDoubled;
@@ -1137,6 +1431,7 @@ public class BlackjackUI extends AbstractUI {
 		public Hand() {
 			cards = new ArrayList<>();
 			bet = BlackjackUI.this.bet;
+			isBlackjack = false;
 			isStanding = false;
 			isBusted = false;
 			isDoubled = false;

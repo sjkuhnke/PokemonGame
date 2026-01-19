@@ -365,9 +365,6 @@ public class GamePanel extends JPanel implements Runnable {
 			// Draw Sim Battle Screen
 			simBattleUI.draw(g2);
 		} else if (gameState == BLACKJACK_STATE) {
-			if (blackjackUI == null) {
-				blackjackUI = new BlackjackUI(this, false);
-			}
 			blackjackUI.draw(g2);
 		} else if (gameState == BATTLE_STATE) {
 			// Draw Battle Screen

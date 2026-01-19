@@ -555,8 +555,12 @@ public class UI extends AbstractUI {
 			break;
 		case Task.BLACKJACK:
 			gp.keyH.resetKeys();
-			if (!currentTask.wipe) Task.addTask(Task.TEXT, "Come play again soon, okay?");
-			gp.gameState = GamePanel.BLACKJACK_STATE;			
+			gauntlet = currentTask.wipe;
+			if (gp.blackjackUI == null) {
+				gp.blackjackUI = new BlackjackUI(gp, gauntlet);
+			}
+			gp.blackjackUI.updateGauntlet(gauntlet);
+			gp.gameState = GamePanel.BLACKJACK_STATE;
 			currentTask = null;
 			break;
 		case Task.MUSHROOM:
