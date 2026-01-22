@@ -44,6 +44,7 @@ public class BlackjackUI extends AbstractUI {
 	private static final int STATE_DEALER_TURN = 4;
 	private static final int STATE_PAYOUT = 5;
 	private static final int STATE_GAME_OVER = 6;
+	private static final int STATE_STATS = 7;
 	
 	private int gameState;
 	
@@ -67,6 +68,11 @@ public class BlackjackUI extends AbstractUI {
 	private int payoutCounter;
 	private String payoutText;
 	private boolean payoutComplete;
+	
+	// Stats display
+	private int statsScrollOffset;
+	private static final int STATS_LINE_HEIGHT = 24;
+	private static final int MAX_STATS_SCROLL = 42;
 	
 	private static final int DECK_SIZE = 104; // 2 decks
 	
@@ -163,6 +169,9 @@ public class BlackjackUI extends AbstractUI {
 		case STATE_GAME_OVER:
 			updateGameOver();
 			break;
+		case STATE_STATS:
+			updateStatsDisplay();
+			break;
 		}
 		
 		animationCounter++;
@@ -220,11 +229,17 @@ public class BlackjackUI extends AbstractUI {
 			if (bet < Player.BET_INC) bet = Player.BET_INC;
 		}
 		
-		if (gp.keyH.sPressed || gp.keyH.dPressed) {
+		if (gp.keyH.sPressed) {
 			gp.keyH.sPressed = false;
-			gp.keyH.dPressed = false;
 			gp.playSFX(Sound.S_MENU_CAN);
 			exitBlackjack();
+		}
+		
+		if (gp.keyH.dPressed) {
+			gp.keyH.dPressed = false;
+			gp.playSFX(Sound.S_MENU_CON);
+			gameState = STATE_STATS;
+			statsScrollOffset = 0;
 		}
 	}
 	
@@ -398,6 +413,33 @@ public class BlackjackUI extends AbstractUI {
 		}
 	}
 	
+	private void updateStatsDisplay() {
+		// Scroll with up/down
+		if (gp.keyH.upPressed) {
+			gp.keyH.upPressed = false;
+			gp.playSFX(Sound.S_MENU_1);
+			statsScrollOffset--;
+			if (statsScrollOffset < 0) statsScrollOffset = 0;
+		}
+		
+		if (gp.keyH.downPressed) {
+			gp.keyH.downPressed = false;
+			gp.playSFX(Sound.S_MENU_1);
+			statsScrollOffset++;
+			if (statsScrollOffset > MAX_STATS_SCROLL) statsScrollOffset = MAX_STATS_SCROLL;
+		}
+		
+		// Close stats with D, S, or W
+		if (gp.keyH.dPressed || gp.keyH.sPressed || gp.keyH.wPressed) {
+			gp.keyH.dPressed = false;
+			gp.keyH.sPressed = false;
+			gp.keyH.wPressed = false;
+			gp.playSFX(Sound.S_MENU_CAN);
+			gameState = STATE_BETTING;
+			statsScrollOffset = 0;
+		}
+	}
+	
 	private int getMaxMenuOption(Hand hand) {
 		if (canSplit(hand)) return MENU_SPLIT;
 		if (canDouble(hand)) return MENU_DOUBLE;
@@ -491,6 +533,11 @@ public class BlackjackUI extends AbstractUI {
 	}
 	
 	private void split(Hand hand) {
+		// Split stats
+		int rank = hand.cards.get(0).getRank();
+		p.blackjackStats[19]++;
+		p.blackjackStats[22 + rank]++;
+		
 		// Take second bet
 		p.addBetCurrency(gauntlet, -hand.bet);
 		
@@ -498,10 +545,12 @@ public class BlackjackUI extends AbstractUI {
 		Hand newHand = new Hand();
 		newHand.bet = hand.bet;
 		newHand.addCard(hand.cards.remove(1));
+		newHand.isSplit = true;
 		
 		// Deal one card to the first hand
 		hand.addCard(dealCard());
 		hand.isBlackjack = isBlackjack(hand);
+		hand.isSplit = true;
 		
 		// Insert new hand after current hand
 		playerHands.add(currentHandIndex + 1, newHand);
@@ -574,6 +623,7 @@ public class BlackjackUI extends AbstractUI {
 		for (Hand hand : playerHands) {
 			if (hand.isBusted) {
 				netWinnings -= hand.bet;
+				if (hand.isSplit) p.blackjackStats[21]++;
 				continue;
 			}
 			
@@ -584,21 +634,26 @@ public class BlackjackUI extends AbstractUI {
 				winHand(hand, (int)(bet * 2.5));
 				p.blackjackStats[5]++;
 				netWinnings += winAmount;
+				if (hand.isSplit) p.blackjackStats[20]++;
 			} else if (dealerBusted) {
 				winHand(hand, hand.bet * 2);
 				netWinnings += hand.bet;
 				if (hand.isDoubled) p.blackjackStats[7]++;
+				if (hand.isSplit) p.blackjackStats[20]++;
 			} else if (playerTotal > dealerTotal) {
 				winHand(hand, hand.bet * 2);
+				netWinnings += hand.bet;
 				if (hand.isDoubled) p.blackjackStats[7]++;
-				netWinnings = hand.bet;
+				if (hand.isSplit) p.blackjackStats[20]++;
 			} else if (playerTotal == dealerTotal) {
 				p.addBetCurrency(gauntlet, hand.bet);
 				p.blackjackStats[2]++;
 				if (hand.isDoubled) p.blackjackStats[7]++;
+				if (hand.isSplit) p.blackjackStats[22]++;
 			} else {
 				loseHand(hand);
 				netWinnings -= hand.bet;
+				if (hand.isSplit) p.blackjackStats[21]++;
 			}
 		}
 		
@@ -742,6 +797,9 @@ public class BlackjackUI extends AbstractUI {
 		case STATE_GAME_OVER:
 			drawGameOverUI();
 			break;
+		case STATE_STATS:
+			drawStatsOverlay();
+			break;
 		}
 		
 		// Draw message
@@ -750,7 +808,7 @@ public class BlackjackUI extends AbstractUI {
 		}
 		
 		// Draw controls hint
-		if (!gp.keyH.shiftPressed && gameState == STATE_BETTING) {
+		if (!gp.keyH.shiftPressed) {
 			drawControlsHint();
 		}
 		
@@ -758,6 +816,236 @@ public class BlackjackUI extends AbstractUI {
 		
 		// Draw tooltips
 		drawKeyStrokes();
+	}
+	
+	private void drawStatsOverlay() {
+		// Semi-transparent dark overlay
+		g2.setColor(new Color(0, 0, 0, 200));
+		g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+		
+		// Stats panel
+		int panelWidth = gp.tileSize * 14;
+		int panelHeight = gp.screenHeight - gp.tileSize * 2;
+		int panelX = (gp.screenWidth - panelWidth) / 2;
+		int panelY = gp.tileSize;
+		
+		drawPanelWithBorder(panelX, panelY, panelWidth, panelHeight, 240, new Color(70, 130, 180));
+		
+		// Title
+		g2.setFont(gp.marumonica.deriveFont(Font.BOLD, 36F));
+		String title = "Blackjack Statistics";
+		int titleX = getCenterAlignedTextX(title, gp.screenWidth / 2);
+		int titleY = panelY + gp.tileSize / 2 + 10;
+		drawOutlinedText(title, titleX, titleY, new Color(255, 215, 0), Color.BLACK);
+		
+		// Calculate stats
+		int games = p.blackjackStats[0];
+		int win = p.blackjackStats[1];
+		int push = p.blackjackStats[2];
+		int lose = games - win - push;
+		int busts = p.blackjackStats[3];
+		int bustWins = p.blackjackStats[4];
+		int blackjacks = p.blackjackStats[5];
+		int doubles = p.blackjackStats[6];
+		int doubleWins = p.blackjackStats[7];
+		int coinWin = p.blackjackStats[8];
+		int coinLost = p.blackjackStats[9];
+		int netCoin = coinWin - coinLost;
+		if (p.blackjackStats[10] < p.coins) p.blackjackStats[10] = p.coins;
+		int maxCoin = p.blackjackStats[10];
+		int winStreak = p.blackjackStats[11];
+		int loseStreak = p.blackjackStats[12];
+		int highLoseStreak = p.blackjackStats[13];
+		int insuranceOffered = p.blackjackStats[14];
+		int insuranceTaken = p.blackjackStats[15];
+		int insuranceDeclined = insuranceOffered - insuranceTaken;
+		int missedBJ = p.blackjackStats[18];
+		int correctDeclines = insuranceDeclined - missedBJ;
+		int insuranceWon = p.blackjackStats[16];
+		int insuranceProfit = p.blackjackStats[17];
+		int totalSplits = p.blackjackStats[19];
+		int splitWins = p.blackjackStats[20];
+		int splitLosses = p.blackjackStats[21];
+		int splitPushes = p.blackjackStats[22];
+		
+		// Start drawing stats
+		int statsX = panelX + gp.tileSize / 2;
+		int[] statsY = new int[1];
+		statsY[0] = titleY - (statsScrollOffset * STATS_LINE_HEIGHT);
+		
+		g2.setFont(gp.marumonica.deriveFont(Font.PLAIN, 16F));
+		
+		// Helper to draw a stat line
+		class StatLine {
+			void draw(String text, Color color) {
+				if (statsY[0] > panelY + gp.tileSize && statsY[0] < panelY + panelHeight - 20) {
+					drawOutlinedText(text, statsX, statsY[0], color, Color.BLACK);
+				}
+				statsY[0] += STATS_LINE_HEIGHT;
+			}
+		}
+		StatLine line = new StatLine();
+		
+		// Games section
+		line.draw("", Color.WHITE);
+		g2.setFont(gp.marumonica.deriveFont(Font.BOLD, 18F));
+		line.draw("GAMES PLAYED", new Color(255, 215, 0));
+		g2.setFont(gp.marumonica.deriveFont(Font.PLAIN, 16F));
+		line.draw("Total games: " + games, Color.WHITE);
+		if (games > 0) {
+			line.draw("Total wins: " + win + " (" + String.format("%.1f%%)", win * 100.0 / games), new Color(0, 255, 0));
+			line.draw("Total losses: " + lose + " (" + String.format("%.1f%%)", lose * 100.0 / games), new Color(255, 100, 100));
+			line.draw("Total pushes: " + push + " (" + String.format("%.1f%%)", push * 100.0 / games), new Color(200, 200, 255));
+		}
+		
+		// Streaks section
+		line.draw("", Color.WHITE);
+		g2.setFont(gp.marumonica.deriveFont(Font.BOLD, 18F));
+		line.draw("STREAKS", new Color(255, 215, 0));
+		g2.setFont(gp.marumonica.deriveFont(Font.PLAIN, 16F));
+		line.draw("Current win streak: " + p.winStreak, new Color(100, 255, 100));
+		line.draw("Highest win streak: " + winStreak, new Color(100, 255, 100));
+		line.draw("Current lose streak: " + loseStreak, new Color(255, 150, 150));
+		line.draw("Highest lose streak: " + highLoseStreak, new Color(255, 150, 150));
+		
+		// Busts section
+		if (games > 0) {
+			line.draw("", Color.WHITE);
+			g2.setFont(gp.marumonica.deriveFont(Font.BOLD, 18F));
+			line.draw("BUSTS", new Color(255, 215, 0));
+			g2.setFont(gp.marumonica.deriveFont(Font.PLAIN, 16F));
+			line.draw("Total busts: " + busts, Color.WHITE);
+			if (lose > 0) {
+				line.draw("% of losses from busts: " + String.format("%.1f%%", busts * 100.0 / lose), new Color(255, 200, 100));
+			}
+			line.draw("Bust rate: " + String.format("%.1f%%", busts * 100.0 / games), new Color(255, 200, 100));
+			if (win > 0) {
+				line.draw("% of wins on dealer bust: " + String.format("%.1f%%", bustWins * 100.0 / win), new Color(150, 255, 150));
+			}
+		}
+		
+		// Blackjacks section
+		if (games > 0) {
+			line.draw("", Color.WHITE);
+			g2.setFont(gp.marumonica.deriveFont(Font.BOLD, 18F));
+			line.draw("BLACKJACKS", new Color(255, 215, 0));
+			g2.setFont(gp.marumonica.deriveFont(Font.PLAIN, 16F));
+			line.draw("Total blackjacks: " + blackjacks, new Color(255, 215, 0));
+			line.draw("Blackjack rate: " + String.format("%.1f%%", blackjacks * 100.0 / games), new Color(255, 215, 0));
+		}
+		
+		// Doubles section
+		if (games > 0) {
+			line.draw("", Color.WHITE);
+			g2.setFont(gp.marumonica.deriveFont(Font.BOLD, 18F));
+			line.draw("DOUBLE DOWNS", new Color(255, 215, 0));
+			g2.setFont(gp.marumonica.deriveFont(Font.PLAIN, 16F));
+			line.draw("Total doubles: " + doubles, Color.WHITE);
+			line.draw("Double rate: " + String.format("%.1f%%", doubles * 100.0 / games), new Color(200, 200, 255));
+			if (doubles > 0) {
+				line.draw("Double wins: " + doubleWins, new Color(150, 255, 150));
+				line.draw("Double win rate: " + String.format("%.1f%%", doubleWins * 100.0 / doubles), new Color(150, 255, 150));
+			}
+		}
+		
+		// Splits section
+		if (totalSplits > 0) {
+			line.draw("", Color.WHITE);
+			g2.setFont(gp.marumonica.deriveFont(Font.BOLD, 18F));
+			line.draw("SPLITS", new Color(255, 215, 0));
+			g2.setFont(gp.marumonica.deriveFont(Font.PLAIN, 16F));
+			line.draw("Total splits: " + totalSplits, Color.WHITE);
+			if (games > 0) {
+				line.draw("Split rate: " + String.format("%.1f%%", totalSplits * 100.0 / games), new Color(200, 200, 255));
+			}
+			
+			int totalSplitHands = splitWins + splitLosses + splitPushes;
+			if (totalSplitHands > 0) {
+				line.draw("Split hand wins: " + splitWins + " (" + String.format("%.1f%%)", splitWins * 100.0 / totalSplitHands), new Color(150, 255, 150));
+				line.draw("Split hand losses: " + splitLosses + " (" + String.format("%.1f%%)", splitLosses * 100.0 / totalSplitHands), new Color(255, 150, 150));
+				line.draw("Split hand pushes: " + splitPushes + " (" + String.format("%.1f%%)", splitPushes * 100.0 / totalSplitHands), new Color(200, 200, 255));
+			}
+			
+			// Most split ranks
+			line.draw("", Color.WHITE);
+			line.draw("Splits by rank:", new Color(200, 200, 200));
+			
+			// Create array of rank counts with their indices
+			int[][] rankData = new int[13][2];
+			for (int i = 0; i < 13; i++) {
+				rankData[i][0] = i + 1; // rank
+				rankData[i][1] = p.blackjackStats[23 + i]; // count
+			}
+			
+			// Sort by count descending
+			java.util.Arrays.sort(rankData, (a, b) -> Integer.compare(b[1], a[1]));
+			
+			// Show top 5 ranks
+			int shown = 0;
+			for (int i = 0; i < 13 && shown < 5; i++) {
+				int rank = rankData[i][0];
+				int count = rankData[i][1];
+				if (count > 0) {
+					String rankName = getRankName(rank);
+					line.draw("  " + rankName + ": " + count + " (" + String.format("%.1f%%)", count * 100.0 / totalSplits), new Color(180, 220, 255));
+					shown++;
+				}
+			}
+		}
+		
+		// Currency section
+		line.draw("", Color.WHITE);
+		g2.setFont(gp.marumonica.deriveFont(Font.BOLD, 18F));
+		line.draw("CURRENCY", new Color(255, 215, 0));
+		g2.setFont(gp.marumonica.deriveFont(Font.PLAIN, 16F));
+		line.draw("Total " + currency + " won: " + coinWin, new Color(100, 255, 100));
+		line.draw("Total " + currency + " lost: " + coinLost, new Color(255, 100, 100));
+		String netSign = netCoin >= 0 ? "+" : "";
+		Color netColor = netCoin >= 0 ? new Color(100, 255, 100) : new Color(255, 100, 100);
+		line.draw("Net " + currency + ": " + netSign + netCoin, netColor);
+		line.draw("Highest wallet: " + maxCoin, new Color(255, 215, 0));
+		
+		// Insurance section
+		if (insuranceOffered > 0) {
+			line.draw("", Color.WHITE);
+			g2.setFont(gp.marumonica.deriveFont(Font.BOLD, 18F));
+			line.draw("INSURANCE", new Color(255, 215, 0));
+			g2.setFont(gp.marumonica.deriveFont(Font.PLAIN, 16F));
+			line.draw("Times offered: " + insuranceOffered, Color.WHITE);
+			line.draw("Times taken: " + insuranceTaken + " (" + String.format("%.1f%%)", insuranceTaken * 100.0 / insuranceOffered), new Color(200, 200, 255));
+			if (insuranceTaken > 0) {
+				line.draw("Insurance wins: " + insuranceWon, new Color(150, 255, 150));
+				line.draw("Insurance win rate: " + String.format("%.1f%%", insuranceWon * 100.0 / insuranceTaken), new Color(150, 255, 150));
+				String profitSign = insuranceProfit >= 0 ? "+" : "";
+				Color profitColor = insuranceProfit >= 0 ? new Color(100, 255, 100) : new Color(255, 100, 100);
+				line.draw("Insurance profit: " + profitSign + insuranceProfit + " " + currency, profitColor);
+			}
+			if (insuranceDeclined > 0) {
+				line.draw("Times declined: " + insuranceDeclined, new Color(200, 200, 255));
+				line.draw("Missed BJ opportunities: " + missedBJ + " (" + String.format("%.1f%%)", missedBJ * 100.0 / insuranceDeclined), new Color(255, 150, 150));
+				line.draw("Correct declines: " + correctDeclines + " (" + String.format("%.1f%%)", correctDeclines * 100.0 / insuranceDeclined), new Color(150, 255, 150));
+			}
+		}
+		
+		// Scroll indicator at bottom
+		if (statsScrollOffset < MAX_STATS_SCROLL) {
+			int arrowY = panelY + panelHeight - 30;
+			int arrowX = panelX + panelWidth / 2;
+			g2.setFont(gp.marumonica.deriveFont(Font.BOLD, 24F));
+			float alpha = 0.5f + (float)(Math.sin(animationCounter * 0.1) * 0.5);
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+			drawOutlinedText("▼", arrowX - 8, arrowY, Color.WHITE, Color.BLACK);
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+		}
+		
+		// Tooltips
+		ArrayList<ToolTip> toolTips = new ArrayList<>();
+		toolTips.add(new ToolTip(gp, "Scroll", "/", true, gp.config.upKey, gp.config.downKey));
+		toolTips.add(new ToolTip(gp, "Back", "/", true, gp.config.wKey, gp.config.sKey, gp.config.dKey));
+		
+		if (gp.keyH.shiftPressed) {
+			drawToolTipBar(toolTips);
+		}
 	}
 	
 	private void drawGameInfo() {
@@ -1019,7 +1307,8 @@ public class BlackjackUI extends AbstractUI {
 		toolTips.add(new ToolTip(gp, "Adjust", "/", true, gp.config.leftKey, gp.config.rightKey));
 		toolTips.add(new ToolTip(gp, "Fast Adjust", "/", true, gp.config.upKey, gp.config.downKey));
 		toolTips.add(new ToolTip(gp, "Deal", "", true, gp.config.wKey));
-		toolTips.add(new ToolTip(gp, "Leave", "/", true, gp.config.sKey, gp.config.dKey));
+		toolTips.add(new ToolTip(gp, "Leave", "", true, gp.config.sKey));
+		toolTips.add(new ToolTip(gp, "Stats", "", true, gp.config.dKey));
 		
 		if (gp.keyH.shiftPressed) {
 			drawToolTipBar(toolTips);
@@ -1426,6 +1715,7 @@ public class BlackjackUI extends AbstractUI {
 		boolean isStanding;
 		boolean isBusted;
 		boolean isDoubled;
+		boolean isSplit;
 		int insurance;
 		
 		public Hand() {
@@ -1503,6 +1793,25 @@ public class BlackjackUI extends AbstractUI {
 			case 4: return "Diamonds";
 			default: return "N/A";
 			}
+		}
+	}
+	
+	private String getRankName(int rank) {
+		switch(rank) {
+		case 1: return "Aces";
+		case 2: return "Twos";
+		case 3: return "Threes";
+		case 4: return "Fours";
+		case 5: return "Fives";
+		case 6: return "Sixes";
+		case 7: return "Sevens";
+		case 8: return "Eights";
+		case 9: return "Nines";
+		case 10: return "Tens";
+		case 11: return "Jacks";
+		case 12: return "Queens";
+		case 13: return "Kings";
+		default: return "Unknown";
 		}
 	}
 }

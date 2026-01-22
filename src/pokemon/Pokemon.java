@@ -6184,6 +6184,10 @@ public class Pokemon implements Serializable {
 				if (this.getAbility(field) == Ability.INSOMNIA) {
 					fail = fail();
 					return;
+				} else if (isGrounded() && field.equals(field.terrain, Effect.ELECTRIC)) {
+					Task.addTask(Task.TEXT, this.nickname + " is protected by the Electric Terrain!");
+					fail = fail();
+					return;
 				}
 				int healAmt = this.getStat(0) - this.currentHP;
 				this.status = Status.HEALTHY;

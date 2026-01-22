@@ -314,7 +314,6 @@ public class Main {
 				}
 			}
 		});
-		
 	}
 
 	private static boolean hasAnyChecked(boolean[] options) {
