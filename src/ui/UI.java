@@ -3914,6 +3914,9 @@ public class UI extends AbstractUI {
 		case 9:
 			showPlayer(); // nuzlocke info
 			break;
+		case 10:
+			exitToMainMenu();
+			break;
 		}
 	}
 
@@ -4136,7 +4139,7 @@ public class UI extends AbstractUI {
 		}
 		
 		// Back
-		text = "Back";
+		text = "Main Menu";
 		textY += gp.tileSize * 2;
 		g2.drawImage(menuIcons[7], textX - gp.tileSize, textY - gp.tileSize / 2, null);
 		g2.drawString(text, textX, textY);
@@ -4144,8 +4147,7 @@ public class UI extends AbstractUI {
 			g2.drawString(">", textX- (25 + gp.tileSize), textY);
 			if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
-				gp.gameState = GamePanel.PLAY_STATE;
-				subState = 0;
+				subState = 10;
 			}
 		}
 		
@@ -4985,6 +4987,58 @@ public class UI extends AbstractUI {
 				commandNum = 0;
 			}
 		}
+	}
+	
+	private void exitToMainMenu() {
+		currentDialogue = "Are you sure you would like to exit?\nAny unsaved progress will be lost!";
+		drawDialogueScreen(true);
+		
+		int x = gp.tileSize * 11;
+		int y = gp.tileSize * 4;
+		int width = gp.tileSize * 3;
+		int height = (int) (gp.tileSize * 2.5);
+		drawSubWindow(x, y, width, height);
+		x += gp.tileSize;
+		y += gp.tileSize;
+		g2.drawString("Yes", x, y);
+		if (commandNum == 0) {
+			g2.drawString(">", x-24, y);
+			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				gp.titleScreen.loadSaveFiles();
+				gp.setGameState(GamePanel.TITLE_STATE);
+				menuNum = 0;
+				subState = 0;
+				commandNum = 0;
+			}
+		}
+		y += gp.tileSize;
+		g2.drawString("No", x, y);
+		if (commandNum == 1) {
+			g2.drawString(">", x-24, y);
+			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				subState = 0;
+				commandNum = 0;
+			}
+		}
+		
+		if (!showMessage) {
+			if (gp.keyH.sPressed || gp.keyH.dPressed) {
+				gp.keyH.sPressed = false;
+				gp.keyH.dPressed = false;
+				subState = 0;
+				commandNum = 0;
+			}
+			
+			if (gp.keyH.upPressed || gp.keyH.downPressed) {
+				gp.keyH.upPressed = false;
+				gp.keyH.downPressed = false;
+				commandNum = 1 - commandNum;
+			}
+		}
+		
+		drawToolTips("OK", null, "Back", "Back");
 	}
 	
 	private int indexOf(int[] array, int target) {

@@ -257,9 +257,7 @@ public class Main {
 						loader.setProgress(98, "Generating offensive type docs...");
 						writeOffensiveTypes(docsDirectory);
 					}
-					
-					
-					
+
 					loader.setProgress(99, "Opening docs folder...");
 					try {
 						Desktop.getDesktop().open(docsDirectory.toFile());

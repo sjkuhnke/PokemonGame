@@ -146,7 +146,7 @@ public class TitleScreen extends AbstractUI {
 	}
 	
 
-	private void loadSaveFiles() {
+	public void loadSaveFiles() {
 		saveFiles = SaveManager.getSaveFiles();
 		selectedSaveIndex = 0;
 		if (!saveFiles.isEmpty()) {

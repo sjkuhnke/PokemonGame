@@ -2474,7 +2474,7 @@ public class Pokemon implements Serializable {
 			Task.addTask(Task.TEXT, this.nickname + " can't use " + move + " after the torment!");
 			this.lastMoveUsed = prevMove;
 			this.impressive = false;
-			this.removeStatus(Status.LOCKED);
+			this.outCount = 0;
 			this.removeStatus(Status.CHARGING);
 			this.removeStatus(Status.SEMI_INV);
 			this.rollCount = 1;
@@ -2528,7 +2528,7 @@ public class Pokemon implements Serializable {
 					} else {
 						this.impressive = false;
 						this.lastMoveUsed = prevMove;
-						this.removeStatus(Status.LOCKED);
+						this.outCount = 0;
 						this.removeStatus(Status.CHARGING);
 						this.removeStatus(Status.SEMI_INV);
 						this.rollCount = 1;
@@ -2561,7 +2561,7 @@ public class Pokemon implements Serializable {
 						}
 						confusionCounter--;
 						endMove();
-						this.removeStatus(Status.LOCKED);
+						this.outCount = 0;
 						this.removeStatus(Status.CHARGING);
 						this.removeStatus(Status.SEMI_INV);
 						this.lastMoveUsed = prevMove;
@@ -2580,7 +2580,7 @@ public class Pokemon implements Serializable {
 				t.wipe = true;
 				this.moveMultiplier = 1;
 				this.impressive = false;
-				this.removeStatus(Status.LOCKED);
+				this.outCount = 0;
 				this.removeStatus(Status.CHARGING);
 				this.removeStatus(Status.SEMI_INV);
 				this.lastMoveUsed = prevMove;
@@ -2604,7 +2604,7 @@ public class Pokemon implements Serializable {
 				this.removeStatus(Status.FLINCHED);
 				this.moveMultiplier = 1;
 				this.impressive = false;
-				this.removeStatus(Status.LOCKED);
+				this.outCount = 0;
 				this.removeStatus(Status.CHARGING);
 				this.removeStatus(Status.SEMI_INV);
 				this.lastMoveUsed = prevMove;
@@ -2626,7 +2626,7 @@ public class Pokemon implements Serializable {
 			this.moveMultiplier = 1;
 			this.removeStatus(Status.RECHARGE);
 			this.impressive = false;
-			this.removeStatus(Status.LOCKED);
+			this.outCount = 0;
 			this.removeStatus(Status.CHARGING);
 			this.removeStatus(Status.SEMI_INV);
 			this.rollCount = 1;
@@ -2638,7 +2638,7 @@ public class Pokemon implements Serializable {
 			Task.addTask(Task.TEXT, this.nickname + " can't use " + move + " after the taunt!");
 			this.lastMoveUsed = prevMove;
 			this.impressive = false;
-			this.removeStatus(Status.LOCKED);
+			this.outCount = 0;
 			this.removeStatus(Status.CHARGING);
 			this.removeStatus(Status.SEMI_INV);
 			this.rollCount = 1;
@@ -2650,7 +2650,7 @@ public class Pokemon implements Serializable {
 			Task.addTask(Task.TEXT, this.nickname + " can't use " + move + " after the Heal Block!");
 			this.lastMoveUsed = prevMove;
 			this.impressive = false;
-			this.removeStatus(Status.LOCKED);
+			this.outCount = 0;
 			this.removeStatus(Status.CHARGING);
 			this.removeStatus(Status.SEMI_INV);
 			this.rollCount = 1;
@@ -2662,7 +2662,7 @@ public class Pokemon implements Serializable {
 			Task.addTask(Task.TEXT, this.nickname + "'s " + move + " is disabled!");
 			this.lastMoveUsed = prevMove;
 			this.impressive = false;
-			this.removeStatus(Status.LOCKED);
+			this.outCount = 0;
 			this.removeStatus(Status.CHARGING);
 			this.removeStatus(Status.SEMI_INV);
 			this.rollCount = 1;
@@ -2674,7 +2674,7 @@ public class Pokemon implements Serializable {
 			Task.addTask(Task.TEXT, this.nickname + " can't use " + move + " after the throat chop!");
 			this.lastMoveUsed = prevMove;
 			this.impressive = false;
-			this.removeStatus(Status.LOCKED);
+			this.outCount = 0;
 			this.removeStatus(Status.CHARGING);
 			this.removeStatus(Status.SEMI_INV);
 			this.rollCount = 1;
@@ -2898,7 +2898,7 @@ public class Pokemon implements Serializable {
 					this.faint(true, foe);
 				}
 			}
-			this.removeStatus(Status.LOCKED);
+			this.outCount = 0;
 			this.impressive = false;
 			this.moveMultiplier = 1;
 			this.rollCount = 1;
@@ -3006,7 +3006,7 @@ public class Pokemon implements Serializable {
 				this.consumeItem(foe);
 			}
 			endMove();
-			this.removeStatus(Status.LOCKED);
+			this.outCount = 0;
 			this.moveMultiplier = 1;
 			this.rollCount = 1;
 			this.metronome = -1;
@@ -3046,7 +3046,7 @@ public class Pokemon implements Serializable {
 						this.consumeItem(foe);
 					}
 					endMove();
-					this.removeStatus(Status.LOCKED);
+					this.outCount = 0;
 					this.moveMultiplier = 1;
 					this.rollCount = 1;
 					this.metronome = -1;
@@ -12043,13 +12043,12 @@ public class Pokemon implements Serializable {
 		Field field = new Field();
 		for (Moveslot m : moveset) {
 			if (m != null && m.move != null) {
-				String moveName = m.move == Move.HIDDEN_POWER || m.move == Move.RETURN ? m.move.toString() + " " + this.determineHPType().toString() : m.move.toString();
 				JSONObject move = new JSONObject();
-				move.put("name", moveName);
+				move.put("name", m.move.toString());
 				move.put("pp", m.currentPP);
 				move.put("maxPP", m.maxPP);
 				move.put("desc", m.move.getDescription());
-				move.put("type", m.move.mtype);
+				move.put("type", m.move == Move.HIDDEN_POWER || m.move == Move.RETURN ? this.determineHPType() : m.move.mtype);
 				move.put("cat", m.move.cat);
 				move.put("bp", m.move.getbp(this, null, field));
 				move.put("acc", m.move.getAccuracy(this, null, field));

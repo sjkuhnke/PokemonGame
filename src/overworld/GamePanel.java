@@ -74,7 +74,7 @@ public class GamePanel extends JPanel implements Runnable {
 	// CONSTANTS
 	public static final int MAX_MAP = 240;
 	public static final int MAX_FLAG = 25; // should not be >31
-	public static final String GAME_VERSION = "0.8.8";
+	public static final String GAME_VERSION = "0.8.81";
 	public static final boolean DEBUG = false;
 	
 	// SYSTEM
@@ -86,6 +86,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public Sound sfx = new Sound(3);
 	public int FPS = 60;
 	public int ticks;
+	public boolean loaded;
 	public Font marumonica;
 	public boolean screenshotRequested;
 	
@@ -176,10 +177,10 @@ public class GamePanel extends JPanel implements Runnable {
 		
 		startGameThread();
 		
-		loadingScreen.setProgress(5, "Loading Title Screen...");
+		loadingScreen.setProgress(1, "Loading Title Screen...");
 		titleScreen = new TitleScreen(this, true); // important that this is loaded before the config is
 		
-		loadingScreen.setProgress(1, "Loading config...");
+		loadingScreen.setProgress(3, "Loading config...");
 		config = new Config(this);
 		config.loadConfig();
 		
@@ -724,6 +725,10 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 
 	public void setupGame() {
+		if (loaded) {
+			aSetter = new AssetSetter(this);
+		}
+		
 		loadingScreen.setProgress(10, "Loading tiles and maps...");
 		tileM = new TileManager(this);
 		loadingScreen.setProgress(19, "Setting up static legendaries...");
@@ -742,8 +747,10 @@ public class GamePanel extends JPanel implements Runnable {
 		Task.gp = this;
 		checkSpin = true;
 		
-		loadingScreen.setProgress(55, "Reading trainer data and setting up trainers...");
-		Pokemon.readTrainersFromCSV();
+		if (!loaded) {
+			loadingScreen.setProgress(55, "Reading trainer data and setting up trainers...");
+			Pokemon.readTrainersFromCSV();
+		}
 		
 		loadingScreen.setProgress(62, "Setting up calc...");
 		Pokemon test = new Pokemon(1, 1, true, false);
@@ -751,6 +758,7 @@ public class GamePanel extends JPanel implements Runnable {
 		test.trainer.team[0] = test;
 		test.trainer.current = test;
 		Item.useCalc(test, null, null, false);
+		loaded = true;
 	}
 	
 	public void setFullScreen() {

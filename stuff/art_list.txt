@@ -1,7 +1,6 @@
 ================================================================================
 Sprites (Prefered Order, can always be changed up) (* = has sketch from RAMM)
 ================================================================================
-240 Scraftagon*
 181 Droid*
 182 Armoid*
 183 Soldrota*
