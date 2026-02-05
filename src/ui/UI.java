@@ -5006,6 +5006,9 @@ public class UI extends AbstractUI {
 			if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
 				gp.titleScreen.loadSaveFiles();
+				gp.titleScreen.menuState = TitleScreen.MAIN_MENU;
+				gp.titleScreen.menuNum = TitleScreen.MAIN_CONTINUE;
+				gp.titleScreen.newGameMenuNum = TitleScreen.NG_SAVE_NAME;
 				gp.setGameState(GamePanel.TITLE_STATE);
 				menuNum = 0;
 				subState = 0;

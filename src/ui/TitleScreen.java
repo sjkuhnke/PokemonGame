@@ -41,21 +41,21 @@ public class TitleScreen extends AbstractUI {
 	public TextInputDialog textInputDialog;
 	
 	// MENU STATES
-	private static final int MAIN_MENU = 0;
-	private static final int SETTINGS_MENU = 1;
-	private static final int MANAGE_MENU = 2;
-	private static final int SAVES_MENU = 3;
-	private static final int SORT_SAVES_MENU = 4;
-	private static final int NEW_GAME_MENU = 5;
+	public static final int MAIN_MENU = 0;
+	public static final int SETTINGS_MENU = 1;
+	public static final int MANAGE_MENU = 2;
+	public static final int SAVES_MENU = 3;
+	public static final int SORT_SAVES_MENU = 4;
+	public static final int NEW_GAME_MENU = 5;
 	
 	private boolean showMessage;
-	private int menuState = MAIN_MENU;
-	private int menuNum;
+	public int menuState = MAIN_MENU;
+	public int menuNum;
 	
 	// NEW GAME
 	private String saveFileName = "";
 	private String playerName = "";
-	private int newGameMenuNum;
+	public int newGameMenuNum;
 	public boolean nuzlockeMode;
 	public int difficultyLevel;
 	public boolean banShedinja;
@@ -79,26 +79,26 @@ public class TitleScreen extends AbstractUI {
 	private int deleteConfirmNum;
 	
 	// MAIN MENU OPTIONS
-	private static final int MAIN_CONTINUE = 0;
-	private static final int MAIN_NEW_GAME = 1;
-	private static final int MAIN_MANAGE = 2;
-	private static final int MAIN_SETTINGS = 3;
-	private static final int MAIN_SAVE_SELECT = 4;
-	private static final int MAIN_DOC_START = 5;
-	private static final int MAIN_DOC_END = 12;
-	private static final int MAIN_EXCEL_TOGGLE = 13;
+	public static final int MAIN_CONTINUE = 0;
+	public static final int MAIN_NEW_GAME = 1;
+	public static final int MAIN_MANAGE = 2;
+	public static final int MAIN_SETTINGS = 3;
+	public static final int MAIN_SAVE_SELECT = 4;
+	public static final int MAIN_DOC_START = 5;
+	public static final int MAIN_DOC_END = 12;
+	public static final int MAIN_EXCEL_TOGGLE = 13;
 	
 	// NEW GAME MENU OPTIONS
-	private static final int NG_SAVE_NAME = 0;
-	private static final int NG_PLAYER_NAME = 1;
-	private static final int NG_NUZLOCKE_TOGGLE = 2;
-	private static final int NG_DIFFICULTY = 3;
-	private static final int NG_BAN_SHEDINJA = 4;
-	private static final int NG_BAN_BATON_PASS = 5;
-	private static final int NG_ALLOW_REVIVES = 6;
-	private static final int NG_BUYABLE_REVIVES = 7;
-	private static final int NG_LEVEL_CAP = 8;
-	private static final int NG_START = 9;
+	public static final int NG_SAVE_NAME = 0;
+	public static final int NG_PLAYER_NAME = 1;
+	public static final int NG_NUZLOCKE_TOGGLE = 2;
+	public static final int NG_DIFFICULTY = 3;
+	public static final int NG_BAN_SHEDINJA = 4;
+	public static final int NG_BAN_BATON_PASS = 5;
+	public static final int NG_ALLOW_REVIVES = 6;
+	public static final int NG_BUYABLE_REVIVES = 7;
+	public static final int NG_LEVEL_CAP = 8;
+	public static final int NG_START = 9;
 	
 	// NEW GAME SCROLL
 	private int newGameMenuScroll = 0;

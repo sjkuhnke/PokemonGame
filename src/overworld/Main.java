@@ -284,7 +284,7 @@ public class Main {
 			} catch (Exception e) {
 				e.printStackTrace();
 				SwingUtilities.invokeLater(() -> {
-					JOptionPane.showMessageDialog(window, "Error loading game: " + e.getMessage());
+					JOptionPane.showMessageDialog(window, "Error loading game: " + e.toString());
 					gp.setGameState(GamePanel.TITLE_STATE);
 				});
 			}

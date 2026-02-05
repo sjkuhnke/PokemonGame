@@ -9,20 +9,30 @@ Clefable Swalot-X Starmie Stellarock Beheeyem-E Geniova
 Items needed:
 Mt. St. Joseph 3A, 4A, Peak (140, 142, 143)
 
-118 fully evolved pokemon (non-legendary)
-Hatterene
-Arbok-S
-Drageye
-Starter
-Fever Dream
-Rhypolar
+Hatterene Calm/Relaxed
+Arbok-S Sassy/Bold
+Drageye Modest
+Tortugis Relaxed
+Magron Timid
+Dragave Relaxed/Relaxed/Jolly
+Fever Dream/Vikavolt Lax/Timid
+Rhypolar Naughty/Brave
 
-Stellarock Diamond Storm Body Press Lava Surf Stealth Rock
-Gyarados-E 
-Cage Critter
-Starter
-Blastflames
-Lutrineer
+Stellarock Diamond Storm Body Press Lava Surf Stealth Rock Adamant
+Gyarados-E Hasty/Jolly
+Cage Critter/Wormatron-S Adamant
+Tortugis Hardy/Hardy/Modest
+Magron Naughty/Hasty/Modest
+Dragave Careful/Impish
+Blastflames Jolly/Bold
+Lutrineer Quiet/Timid/Modest
+
+Topazatops Mild/Relaxed/Careful
+Zurroaratr Impish/Jolly
+Ludicolo Quiet/Timid
+Fearomoth Sassy/Jolly
+Blastflames-E Calm/Modest
+Megawatt Jolly
 
 Game2.72: Encounters and TN base stuff done 3/27
 Game2.721: Items for Mt Splinkty done 3/29

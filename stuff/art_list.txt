@@ -39,10 +39,6 @@ Sprites (Prefered Order, can always be changed up) (* = has sketch from RAMM)
 Overworld Pokemon Sprites (* are the ones that already have battle sprites, probably best to do that first)
 ================================================================================
 Whiskeroar*
-Hueduu*
-Sasquotta*
-Faulette*
-Blohadel*
 Solaroxyous
 
 ================================================================================

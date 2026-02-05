@@ -747,10 +747,10 @@ public class GamePanel extends JPanel implements Runnable {
 		Task.gp = this;
 		checkSpin = true;
 		
-		if (!loaded) {
-			loadingScreen.setProgress(55, "Reading trainer data and setting up trainers...");
-			Pokemon.readTrainersFromCSV();
-		}
+		loadingScreen.setProgress(55, "Reading trainer data and setting up trainers...");
+		Trainer.trainers = new Trainer[Trainer.MAX_TRAINERS];
+		Trainer.levelCapIndex = 0;
+		Pokemon.readTrainersFromCSV();
 		
 		loadingScreen.setProgress(62, "Setting up calc...");
 		Pokemon test = new Pokemon(1, 1, true, false);

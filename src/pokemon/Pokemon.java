@@ -1510,7 +1510,7 @@ public class Pokemon implements Serializable {
 							}
 						} else if (move == Move.DRAGON_TAIL || move == Move.CIRCLE_THROW || move == Move.WHIRLWIND || move == Move.ROAR) { // phasing
 							if (foe.trainer != null && foe.trainer.hasValidMembers()) score += calcStatBoostScore(foe);
-						} else if (move == Move.FIELD_FLIP || move == Move.RAPID_SPIN || move == Move.DEFOG) {
+						} else if (move == Move.FIELD_FLIP || move == Move.RAPID_SPIN || move == Move.DEFOG) { // TODO: make it use the same logic as using hazards (more incentivized for rocks-weak team)
 							int hazards = 0;
 							for (FieldEffect se : field.getHazards(this.getFieldEffects())) {
 								hazards += se.layers;
