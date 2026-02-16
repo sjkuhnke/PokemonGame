@@ -156,7 +156,7 @@ public enum Ability {
 	TORRENT("Powers up WATER moves by 20%, or 50% when at or below 1/3 of max HP."),
 	TOUGH_CLAWS("Powers up moves that make direct contact by 1.3x."),
 	TOXIC_DEBRIS("Puts toxic spikes on the opposing side when hit by physical moves."),
-	TRACE("The Pokemon copies the foe's Ability."),
+	TRACE("The Pokemon copies the foe's Ability on switch-in."),
 	TYPE_MASTER("Grants STAB on all moves."),
 	UNAWARE("Ignores the opposing Pokemon's stat changes."),
 	UNBURDEN("Doubles the Speed stat if the Pokemon's held item is used or lost."),

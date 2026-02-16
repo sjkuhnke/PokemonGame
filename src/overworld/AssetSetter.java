@@ -3080,8 +3080,37 @@ public class AssetSetter {
 		
 		mapNum = 215;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(SCOTT_RIGHT, 49, 83, "", "Should never show", 533);
-		gp.npc[mapNum][index] = NPCSetup(FRED_LEFT, 53, 83, "", "Should never show", 534);
+		gp.npc[mapNum][index] = NPCSetup(SCOTT_RIGHT, 49, 83, "Finn! There you are! We were starting to think you'd never make it up here.\n"
+				+ "...But of course you did. You always do.\n"
+				+ "I've been thinking a lot since the last time we battled. Every time I thought I'd closed the gap, you'd widen it again.\n"
+				+ "And I hated that. I felt... small. Like I was just Avery's kid, always one step behind the prodigy who keeps saving the region.\n"
+				+ "But that's not how I feel anymore. Not today.\n"
+				+ "Today, I'm not here to chase you or compare myself to you.\n"
+				+ "I'm here to prove - to myself - that all my training, my studying, my psychic discipline... has made me into a real trainer.\n"
+				+ "So this is it. My final test before the League.\n"
+				+ "And because you're the one who pushed me this far... you're the one I want to face here, at the summit of Victory Road.\n"
+				+ "No more doubts. No more panic headaches.\n"
+				+ "Just me, my Pokemon, and everything I've learned.\n"
+				+ "Prepare yourself, Finn - because this time, I'm not holding anything back.\n"
+				+ "Not even my mind.", "Should never show", 533);
+		gp.npc[mapNum][index] = NPCSetup(FRED_LEFT, 53, 83, "So. You made it. No surprise there.\n"
+				+ "I've been thinking too. A lot. About everything.\n"
+				+ "Team Eclipse... Dragowrath... the part of me that isn't human... and the part of me that never felt like it belonged anywhere.\n"
+				+ "When I met you, I thought you were just another obstacle.\n"
+				+ "Someone who'd never understand what it feels like to stand between two worlds.\n"
+				+ "So I pushed you away. Hard.\n"
+				+ "Joining Team Eclipse was supposed to give me direction. But all it really did was drag me further away from who I am.\n"
+				+ "You ruined their plans. You beat Dragowrath. You freed all of us - including me.\n"
+				+ "And now, for the first time... I'm fighting for my own sake.\n"
+				+ "Not for Eclipse.\n"
+				+ "Not for aliens.\n"
+				+ "Not for humanity.\n"
+				+ "Just for me.\n"
+				+ "This is the strongest I've ever been. The most honest I've ever been.\n"
+				+ "And I want to face you at your strongest too - no healing, no excuses.\n"
+				+ "Let's finish this rivalry the right way.\n"
+				+ "Here, at the top of Victory Road...\n"
+				+ "Show me the strength that saved the world.", "Should never show", 534);
 		gp.npc[mapNum][index++] = ITileSetup(48, 95, TORCH, mapNum, mapNum);
 		gp.npc[mapNum][index++] = ITileSetup(54, 95, TORCH, mapNum, mapNum);
 		gp.npc[mapNum][index++] = ITileSetup(49, 88, TORCH, mapNum, mapNum);
@@ -4936,6 +4965,18 @@ public class AssetSetter {
 		} else {
 			gp.npc[152][12] = null;
 			gp.npc[160][10] = null;
+		}
+		
+		if (flag[8][3] && !flag[8][14]) {
+			gp.npc[215][0] = NPCSetup(SCOTT_RIGHT, "Scott", 49, 83, "", 215.1);
+		}
+		if (flag[8][4] && !flag[8][14]) {
+			gp.npc[215][1] = NPCSetup(FRED_LEFT, "Fred", 53, 83, "", 215.2);
+		}
+		
+		if (flag[8][14]) {
+			gp.npc[215][0] = null;
+			gp.npc[215][1] = null;
 		}
 		
 		gp.setRenderableNPCs();

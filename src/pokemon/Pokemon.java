@@ -93,7 +93,7 @@ public class Pokemon implements Serializable {
 	private static EggGroup[][] egg_groups = new EggGroup[MAX_POKEMON][2];
 	private static int[][] sprite_center = new int[MAX_POKEMON][2];
 	
-	private static ArrayList<Integer> rivalIndices = new ArrayList<>();
+	public static ArrayList<Integer> rivalIndices = new ArrayList<>();
 	
 	// Competitive Sets
 	public static HashMap<Integer, ArrayList<Set>> sets = new HashMap<>();
@@ -1386,7 +1386,7 @@ public class Pokemon implements Serializable {
 		// --- Accuracy Factor ---
 		double accuracy = getEffectiveAccuracy(move, foe, field, foeAbility, isFaster);
 		score *= accuracy;
-		if (accuracy < 0.9) { // accuracy penalty
+		if (accuracy < 0.9 && this.getItem(field) != Item.BLUNDER_POLICY) { // accuracy penalty
 			score -= (1.0 - accuracy) * 40;
 		}
 		
@@ -7122,6 +7122,10 @@ public class Pokemon implements Serializable {
 		this.battled = false;
 		awardHappiness(-3, false);
 		this.status = Status.HEALTHY;
+		Pokemon[] pokemon = getActivePokemon();
+		for (Pokemon p : pokemon) {
+			if (p != this) foe = p;
+		}
 		foe.removeStatus(Status.SPUN);
 		foe.removeStatus(Status.SPELLBIND);
 		foe.removeStatus(Status.TRAPPED);
@@ -7141,6 +7145,22 @@ public class Pokemon implements Serializable {
 		} else if (this.playerOwned()) {
 			this.getPlayer().recordDeath(this, foe);
 		}
+	}
+
+	private Pokemon[] getActivePokemon() {
+		Pokemon[] result = new Pokemon[2];
+		switch (gp.gameState) {
+			case GamePanel.BATTLE_STATE:
+				result[0] = gp.battleUI.user;
+				result[1] = gp.battleUI.foe;
+				break;
+			case GamePanel.SIM_BATTLE_STATE:
+				result[0] = gp.simBattleUI.user;
+				result[1] = gp.simBattleUI.foe;
+				break;
+		}
+		
+		return result;
 	}
 
 	public void clearVolatile(Pokemon foe) {

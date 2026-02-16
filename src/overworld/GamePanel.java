@@ -749,6 +749,7 @@ public class GamePanel extends JPanel implements Runnable {
 		
 		loadingScreen.setProgress(55, "Reading trainer data and setting up trainers...");
 		Trainer.trainers = new Trainer[Trainer.MAX_TRAINERS];
+		Pokemon.rivalIndices = new ArrayList<>();
 		Trainer.levelCapIndex = 0;
 		Pokemon.readTrainersFromCSV();
 		

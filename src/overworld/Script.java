@@ -3677,43 +3677,55 @@ public class Script {
 		});
 		
 		scriptMap.put(215.1, (npc) -> { // scott 5
-			Task.addTask(Task.DIALOGUE, npc, "Here, we breed and house rare Pokemon to fight against their extinction.");
-			Task.addTask(Task.DIALOGUE, npc, "...What's that? You have a " + Pokemon.getName(((p.starter + 1) * 3) - 2) + "?? That's insanely rare. Did you get that from the professor?");
-			Task.addTask(Task.DIALOGUE, npc, "Oh, you're his son, and you're helping him research? Well, in that case, take this one as well. This should help your guys' study!");
-			p.flag[0][6] = true;
-			Item[] items = new Item[] {Item.MIRACLE_SEED, Item.CHARCOAL, Item.MYSTIC_WATER};
+			Task.addTask(Task.DIALOGUE, npc, "...I lost. Again.");
+			Task.addTask(Task.DIALOGUE, npc, "And it's okay. It really is.");
+			Task.addTask(Task.DIALOGUE, npc, "Because unlike every other time, this loss doesn't feel like proof that I'm behind you.");
+			Task.addTask(Task.DIALOGUE, npc, "It feels like proof that I've grown.");
+			Task.addTask(Task.DIALOGUE, npc, "My team fought their hearts out. I fought my heart out. And you still won.");
+			Task.addTask(Task.DIALOGUE, npc, "That just means there's still more for me to learn - and honestly?");
+			Task.addTask(Task.DIALOGUE, npc, "I'm excited for that.");
+			Task.addTask(Task.DIALOGUE, npc, "And Finn? No matter what happens next... I'm rooting for you.");
+			Task.addTask(Task.DIALOGUE, npc, "I think you're going to change the world. More than you already have.");
 			
-			Random rand = new Random(gp.aSetter.generateSeed(p.getID(), npc.worldX / gp.tileSize, npc.worldY / gp.tileSize, gp.currentMap));
-			int secondStarter = -1;
-			do {
-				secondStarter = rand.nextInt(3);
-			} while (secondStarter == p.starter);
-			p.secondStarter = secondStarter;
+			System.out.println(p.secondStarter);
 			
-			Pokemon result = new Pokemon(((p.secondStarter + 1) * 3) - 2, 5, true, false);
-			Task.addTask(Task.TEXT, "You recieved " + result.name() + "!");
-			Task t = Task.addTask(Task.GIFT, "", result);
-			t.item = result.item = items[p.secondStarter];
+			int third = 3 - p.starter - p.secondStarter;
+			boolean givesEgg = third == ((p.starter + 2) % 3);
+			
+			if (!p.flag[8][14] && givesEgg) {
+				Task.addTask(Task.DIALOGUE, npc, "Oh - before you go. I've been taking care of this Egg.");
+				Task.addTask(Task.DIALOGUE, npc, "The Pokemon inside... I think it's meant for you.");
+				Pokemon result = new Egg(((third + 1) * 3) - 2);
+				Task.addTask(Task.TEXT, "You recieved " + result.name() + "!");
+				Task.addTask(Task.GIFT, "", result);
+				p.flag[8][14] = true;
+			}
 		});
 		
 		scriptMap.put(215.2, (npc) -> { // fred 5
 			Task.addTask(Task.DIALOGUE, npc, "...You win. Again.");
 			Task.addTask(Task.DIALOGUE, npc, "Funny thing is... this loss doesn't bother me. Not even a little.");
-			Task.addTask(Task.DIALOGUE, npc, "Oh, you're his son, and you're helping him research? Well, in that case, take this one as well. This should help your guys' study!");
-			p.flag[0][6] = true;
-			Item[] items = new Item[] {Item.MIRACLE_SEED, Item.CHARCOAL, Item.MYSTIC_WATER};
+			Task.addTask(Task.DIALOGUE, npc, "Because for the first time, I feel like I'm standing in the right place.");
+			Task.addTask(Task.DIALOGUE, npc, "Not behind you.");
+			Task.addTask(Task.DIALOGUE, npc, "Not against you.");
+			Task.addTask(Task.DIALOGUE, npc, "Just... next to you.");
 			
-			Random rand = new Random(gp.aSetter.generateSeed(p.getID(), npc.worldX / gp.tileSize, npc.worldY / gp.tileSize, gp.currentMap));
-			int secondStarter = -1;
-			do {
-				secondStarter = rand.nextInt(3);
-			} while (secondStarter == p.starter);
-			p.secondStarter = secondStarter;
+			Task.addTask(Task.DIALOGUE, npc, "We're heading into the League together after this. And someday... we'll all battle again.");
+			Task.addTask(Task.DIALOGUE, npc, "As equals.");
+			Task.addTask(Task.DIALOGUE, npc, "Go on, Finn. Your road's still rising. Ours starts right behind you.");
+			Task.addTask(Task.DIALOGUE, npc, "And hey... don't lose before we get our rematch.");
 			
-			Pokemon result = new Pokemon(((p.secondStarter + 1) * 3) - 2, 5, true, false);
-			Task.addTask(Task.TEXT, "You recieved " + result.name() + "!");
-			Task t = Task.addTask(Task.GIFT, "", result);
-			t.item = result.item = items[p.secondStarter];
+			int third = 3 - p.starter - p.secondStarter;
+			boolean givesEgg = third == ((p.starter + 1) % 3);
+			
+			if (!p.flag[8][14] && givesEgg) {
+				Task.addTask(Task.DIALOGUE, npc, "Oh - and take this.");
+				Task.addTask(Task.DIALOGUE, npc, "I don't know why... but something tells me this Pokemon belongs with you.");
+				Pokemon result = new Egg(((third + 1) * 3) - 2);
+				Task.addTask(Task.TEXT, "You recieved " + result.name() + "!");
+				Task.addTask(Task.GIFT, "", result);
+				p.flag[8][14] = true;
+			}
 		});
 	}
 	
