@@ -1127,6 +1127,10 @@ public class EventHandler {
 			if (hit(219,31,46)) teleport(215, 65, 54,false);
 			if (hit(215,66,63)) teleport(220, 31, 45,false);
 			if (hit(220,31,46)) teleport(215, 66, 64,false);
+			
+			// Checkpoint Charlie -> E4
+			if (hit(215,51,36)) teleport(221, 49, 47,true);
+			if (hit(221,49,47)) teleport(215, 51, 36,true);
 		}
 		// Cutscene with Ryder/Arthra in front of Spaceship
 		if (!gp.player.p.flag[7][20] && hit(152,67,78,true)) gp.player.interactNPC(gp.npc[152][5], false);

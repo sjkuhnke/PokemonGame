@@ -3676,7 +3676,7 @@ public class Script {
 			t.wipe = true;
 		});
 		
-		scriptMap.put(215.1, (npc) -> { // scott 5
+		scriptMap.put(215.0, (npc) -> { // scott 5
 			Task.addTask(Task.DIALOGUE, npc, "...I lost. Again.");
 			Task.addTask(Task.DIALOGUE, npc, "And it's okay. It really is.");
 			Task.addTask(Task.DIALOGUE, npc, "Because unlike every other time, this loss doesn't feel like proof that I'm behind you.");
@@ -3684,7 +3684,7 @@ public class Script {
 			Task.addTask(Task.DIALOGUE, npc, "My team fought their hearts out. I fought my heart out. And you still won.");
 			Task.addTask(Task.DIALOGUE, npc, "That just means there's still more for me to learn - and honestly?");
 			Task.addTask(Task.DIALOGUE, npc, "I'm excited for that.");
-			Task.addTask(Task.DIALOGUE, npc, "And Finn? No matter what happens next... I'm rooting for you.");
+			Task.addTask(Task.DIALOGUE, npc, "And <@>? No matter what happens next... I'm rooting for you.");
 			Task.addTask(Task.DIALOGUE, npc, "I think you're going to change the world. More than you already have.");
 			
 			System.out.println(p.secondStarter);
@@ -3702,7 +3702,7 @@ public class Script {
 			}
 		});
 		
-		scriptMap.put(215.2, (npc) -> { // fred 5
+		scriptMap.put(215.1, (npc) -> { // fred 5
 			Task.addTask(Task.DIALOGUE, npc, "...You win. Again.");
 			Task.addTask(Task.DIALOGUE, npc, "Funny thing is... this loss doesn't bother me. Not even a little.");
 			Task.addTask(Task.DIALOGUE, npc, "Because for the first time, I feel like I'm standing in the right place.");
@@ -3712,7 +3712,7 @@ public class Script {
 			
 			Task.addTask(Task.DIALOGUE, npc, "We're heading into the League together after this. And someday... we'll all battle again.");
 			Task.addTask(Task.DIALOGUE, npc, "As equals.");
-			Task.addTask(Task.DIALOGUE, npc, "Go on, Finn. Your road's still rising. Ours starts right behind you.");
+			Task.addTask(Task.DIALOGUE, npc, "Go on, <@>. Your road's still rising. Ours starts right behind you.");
 			Task.addTask(Task.DIALOGUE, npc, "And hey... don't lose before we get our rematch.");
 			
 			int third = 3 - p.starter - p.secondStarter;
@@ -3725,6 +3725,28 @@ public class Script {
 				Task.addTask(Task.TEXT, "You recieved " + result.name() + "!");
 				Task.addTask(Task.GIFT, "", result);
 				p.flag[8][14] = true;
+			}
+		});
+		
+		scriptMap.put(221.0, (npc) -> { // elite four guard
+			if (npc.worldX != 49 * gp.tileSize) {
+				Task.addTask(Task.DIALOGUE, npc, "Stay sharp in there. You got this. Focus.");
+			} else {
+				Task.addTask(Task.DIALOGUE, npc, "Hold it right there, challenger.");
+				Task.addTask(Task.DIALOGUE, npc, "Beyond this door lies the Leviathan League.");
+				Task.addTask(Task.DIALOGUE, npc, "Once you enter, there's no turning back until you either claim victory... or black out.");
+				Task.addTask(Task.DIALOGUE, npc, "The Elite Four fight one after another, no healing trips or shopping breaks allowed.");
+				if (p.nuzlocke) {
+					Task.addTask(Task.DIALOGUE, npc, "And since you're competing under Nuzlocke rules...");
+					Task.addTask(Task.DIALOGUE, npc, "Your convenience items will NOT function inside.");
+					Task.addTask(Task.DIALOGUE, npc, "Your Healing Pack, Pocket PC, everything are all disabled.");
+				}
+				Task.addTask(Task.DIALOGUE, npc, "If you're not stocked up on healing items, now's your last chance.");
+				Task.addTask(Task.DIALOGUE, npc, "Potions, elixirs, revives, whatever you think you need - bring more.");
+				Task.addTask(Task.DIALOGUE, npc, "Once I step aside... the climb ends, and the real battle begins.");
+				
+				gp.ui.commandNum = 1;
+				Task.addTask(Task.CONFIRM, npc, "Are you ready to challenge the Leviathan League?", 19);
 			}
 		});
 	}

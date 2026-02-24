@@ -250,6 +250,7 @@ public class AssetSetter {
 	private static final int SPIKE_2 = 24;
 	private static final int ICE_CHUNK = 25;
 	private static final int CASINO_TABLE = 26;
+	private static final int E4_DOOR_1 = 27;
 	
 	public AssetSetter(GamePanel gp) {
 		this.gp = gp;
@@ -3127,6 +3128,10 @@ public class AssetSetter {
 		gp.npc[mapNum][index++] = ITileSetup(53, 55, TORCH, mapNum, mapNum);
 		gp.npc[mapNum][index++] = ITileSetup(48, 51, TORCH, mapNum, mapNum);
 		gp.npc[mapNum][index++] = ITileSetup(54, 51, TORCH, mapNum, mapNum);
+		
+		mapNum = 221;
+		gp.npc[mapNum][index++] = null; // guard - needs to be set to the same tile every map load
+		gp.npc[mapNum][index] = NPCSetup(NPC_PC, 53, 43, "", "", -1);
 	}
 
 	public void setInteractiveTile(int map) {
@@ -4264,6 +4269,10 @@ public class AssetSetter {
 		iIndex = 0;
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(32, 65, RIGHT, 1, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(78, 75, LEFT, 1, mapNum, map);
+		
+		mapNum = 221;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = ITileSetup(49, 41, E4_DOOR_1, mapNum, map);
 	}
 
 	public void updateNPC(int map) {
@@ -4968,15 +4977,19 @@ public class AssetSetter {
 		}
 		
 		if (flag[8][3] && !flag[8][14]) {
-			gp.npc[215][0] = NPCSetup(SCOTT_RIGHT, "Scott", 49, 83, "", 215.1);
+			gp.npc[215][0] = NPCSetup(SCOTT_RIGHT, "Scott", 49, 83, "", 215.0);
 		}
 		if (flag[8][4] && !flag[8][14]) {
-			gp.npc[215][1] = NPCSetup(FRED_LEFT, "Fred", 53, 83, "", 215.2);
+			gp.npc[215][1] = NPCSetup(FRED_LEFT, "Fred", 53, 83, "", 215.1);
 		}
 		
 		if (flag[8][14]) {
 			gp.npc[215][0] = null;
 			gp.npc[215][1] = null;
+		}
+		
+		if (map == 221) {
+			gp.npc[map][0] = NPCSetup(BLOCK_DOWN, "Guard", 49, 42, "", map);
 		}
 		
 		gp.setRenderableNPCs();
@@ -5942,6 +5955,9 @@ public class AssetSetter {
 			break;
 		case CASINO_TABLE:
 			result = new CasinoTable(gp, gp.npc[127][1]);
+			break;
+		case E4_DOOR_1:
+			result = new E4Door(gp, 1);
 			break;
 		}
 		

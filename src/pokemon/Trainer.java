@@ -28,6 +28,7 @@ public class Trainer implements Serializable {
 	public boolean catchable;
 	public boolean cloned;
 	public int boost;
+	public boolean eliteFour;
 	
 	transient ArrayList<FieldEffect> effects;
 	transient Item[] teamItems;
@@ -156,7 +157,7 @@ public class Trainer implements Serializable {
 				}
 			}
 		}
-		System.out.println(sb.toString() + "\n");
+		Print.debug(sb.toString() + "\n\n");
 		return next;
 	}
 	

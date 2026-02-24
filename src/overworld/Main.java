@@ -36,6 +36,7 @@ import pokemon.Move;
 import pokemon.PType;
 import pokemon.Player;
 import pokemon.Pokemon;
+import util.Print;
 import util.SaveManager;
 import pokemon.Node;
 import pokemon.Nursery.EggGroup;
@@ -307,6 +308,7 @@ public class Main {
 								gp.battleUI.foe.trainer.getName() :
 								"a wild " + gp.battleUI.foe.getName()));
 					}
+					Print.flush();
 					Sound.disposeAll();
 					System.exit(0);
 				}

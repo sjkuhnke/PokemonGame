@@ -10,6 +10,7 @@ import overworld.GamePanel;
 import pokemon.*;
 import puzzle.Puzzle;
 import util.Pair;
+import util.Print;
 import util.ToolTip;
 
 public class SimBattleUI extends BattleUI {
@@ -410,6 +411,7 @@ public class SimBattleUI extends BattleUI {
 					user.setVisible(false);
 					gp.saveGame(gp.player.p, true);
 					Pokemon.field = new Field();
+					Print.endBattleLog("Sim Battle");
 					gp.gameState = GamePanel.PLAY_STATE;
 				}
 				break;

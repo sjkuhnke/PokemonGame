@@ -58,6 +58,7 @@ import ui.AbstractUI;
 import ui.BattleUI;
 import util.DeepClonable;
 import util.Pair;
+import util.Print;
 
 public class Pokemon implements Serializable {
 	/**
@@ -818,8 +819,8 @@ public class Pokemon implements Serializable {
 		if (validMoves.isEmpty()) {
 			// 100% chance to swap in a partner if you can only struggle
 			if (canSwitch) {
-				String rsn = "[All valid moves have 0 PP : 100%]";
-				System.out.println(rsn);
+				String rsn = "[All valid moves have 0 PP : 100%]\n";
+				Print.debug(rsn);
 				if (switchRsn != null) {
 					switchRsn.setFirst(this);
 					switchRsn.setSecond(rsn);
@@ -850,7 +851,7 @@ public class Pokemon implements Serializable {
 			if (damage >= this.currentHP) {
 				foeCanKO = true;
 				strongestMove = m;
-				System.out.println("Enemy can KO me with " + strongestMove);
+				Print.debug("Enemy can KO me (" + this + ") with " + strongestMove + "\n");
 				break;
 			}
 		}
@@ -868,10 +869,14 @@ public class Pokemon implements Serializable {
 			moveScores.put(move, scoreMove(move, foe, field, foeCanKO, strongestMove, foeMaxDamagePair));
 		}
 		
-		System.out.println("-----------------------------------");
-		System.out.println("MOVE SCORES:");
+		StringBuilder brain = new StringBuilder();
+		brain.append("AI Turn Analysis for ").append(this).append("\n");
+
+		brain.append("MOVE SCORES:\n");
 		for (Move m : moveScores.keySet()) {
-			System.out.printf("%s: %d\n", m, moveScores.get(m));
+		    brain.append(m).append(": ")
+		         .append(moveScores.get(m))
+		         .append("\n");
 		}
 		
 		HashMap<Pokemon, Integer> scoreMap = new HashMap<>();
@@ -880,8 +885,8 @@ public class Pokemon implements Serializable {
 			int maxScore = Collections.max(moveScores.values());
 			// 100% chance to swap if perish counter == 1
 	        if (this.perishCount == 1) {
-	            String rsn = "[Perish in 1 : 100%]";
-	            System.out.println(rsn);
+	            String rsn = "[Perish in 1 : 100%]\n";
+	            Print.debug(rsn);
 	            if (switchRsn != null) {
 	                switchRsn.setFirst(this);
 	                switchRsn.setSecond(rsn);
@@ -897,8 +902,8 @@ public class Pokemon implements Serializable {
 	            double chance = 50;
 	            if (this.impressive) chance *= 0.75;
 	            if (checkSecondary((int) chance)) {
-	                String rsn = "[All moves do 0 damage : " + String.format("%.1f", chance) + "%]";
-	                System.out.println(rsn);
+	                String rsn = "[All moves do 0 damage : " + String.format("%.1f", chance) + "%]\n";
+	                Print.debug(rsn);
 	                if (switchRsn != null) {
 	                    switchRsn.setFirst(this);
 	                    switchRsn.setSecond(rsn);
@@ -927,7 +932,7 @@ public class Pokemon implements Serializable {
 			for (Map.Entry<Pokemon, Integer> e : scoreMap.entrySet()) {
 				sb.append("[" + e.getKey() + ": " + e.getValue() + "], ");
 			}
-			System.out.println(sb.toString());
+			Print.debug(sb.toString());
 			
 			HashMap<Pokemon, Double> weights = new HashMap<>();
 			double totalWeight = 0;
@@ -943,12 +948,13 @@ public class Pokemon implements Serializable {
 			
 			if (!weights.isEmpty()) {
 				// Debug: print switch chances
-				System.out.println("SWITCH CHANCES:");
+				StringBuilder switches = new StringBuilder("SWITCH CHANCES for " + this + ":\n");
 				for (Map.Entry<Pokemon, Integer> e : scoreMap.entrySet()) {
 					Pokemon p = e.getKey();
 					double chance = weights.containsKey(p) ? (weights.get(p) / totalWeight * 100.0) : 0.0;
-					System.out.printf("%s: %.1f%%\n", p, chance);
+					switches.append(String.format("%s: %.1f%%\n", p, chance));
 				}
+				Print.debug(switches.toString());
 				
 				double r = Math.random() * totalWeight;
 				Pokemon chosen = null;
@@ -971,11 +977,11 @@ public class Pokemon implements Serializable {
 					double diff = chosenScore - currentScore;
 					double chance = Math.min(95, Math.abs(diff) / 2);
 					chance = Math.max(0, chance);
-					System.out.printf("%.1f%% to switch\n", chance);
+					Print.debug(String.format("%.1f%% to switch\n", chance));
 					
 					if (Math.random() * 100 <= chance) {
-						String rsn = "[Score diff switch : " + String.format("%.1f", chance) + "%]";
-						System.out.println(rsn);
+						String rsn = "[Score diff switch : " + String.format("%.1f", chance) + "%]\n";
+						Print.debug(rsn);
 						if (switchRsn != null) {
 							switchRsn.setFirst(this);
 							switchRsn.setSecond(rsn);
@@ -1004,12 +1010,15 @@ public class Pokemon implements Serializable {
 			}
 		}
 		
+		Print.debug(brain.toString());
+		
 		if (!positiveWeights.isEmpty()) {
-			System.out.println("MOVE CHANCES:");
+			brain = new StringBuilder("MOVE CHANCES for " + this + ":\n");
 			for (Move m : validMoves) {
 				double chance = positiveWeights.containsKey(m) ? (positiveWeights.get(m) / totalPositiveWeight * 100.0) : 0.0;
-				System.out.printf("%s: %.1f%%\n", m, chance);
+				brain.append(String.format("%s: %.1f%%\n", m, chance));
 			}
+			Print.debug(brain.toString());
 			
 			double r = Math.random() * totalPositiveWeight;
 			Move chosenMove = null;
@@ -2615,7 +2624,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		// choice lock - AFTER full para/flinch/self hit confusion/asleep checks
-		if (this.choiceMove == null && this.item != null && this.item.isChoiceItem()) {
+		if (consumePP && this.choiceMove == null && this.item != null && this.item.isChoiceItem()) {
 			this.choiceMove = move;
 			if (move == Move.FAILED_SUCKER) this.choiceMove = Move.SUCKER_PUNCH;
 		}
@@ -2879,7 +2888,7 @@ public class Pokemon implements Serializable {
 			announceMove(move, foe, ctx);
 			Task.addProtectAnimTask(foe.nickname + " protected itself!", this, foe);
 			if (contact) {
-				if (foe.lastMoveUsed == Move.OBSTRUCT) stat(this, 1, -2, foe);
+				if (foe.lastMoveUsed == Move.OBSTRUCT) foe.stat(this, 1, -2, foe);
 				if (foe.lastMoveUsed == Move.LAVA_LAIR) burn(false, foe);
 				if (foe.lastMoveUsed == Move.SPIKY_SHIELD) {
 					this.damage(this.getHPAmount(1.0/8), foe);
@@ -2890,7 +2899,7 @@ public class Pokemon implements Serializable {
 				}
 			}
 			if (foe.lastMoveUsed == Move.AQUA_VEIL) {
-				stat(this, 2, -1, foe);
+				foe.stat(this, 2, -1, foe);
 			}
 			if (move == Move.HI_JUMP_KICK) {
 				this.damage(this.getStat(0) / 2.0, foe, this.nickname + " kept going and crashed!");
@@ -10904,6 +10913,7 @@ public class Pokemon implements Serializable {
 			boolean script = false;
 			boolean catchable = false;
 			int boost = 0;
+			boolean eliteFour = false;
 			if (indexS.contains("$")) {
 				staticEnc = true;
 				script = true;
@@ -10926,6 +10936,10 @@ public class Pokemon implements Serializable {
 				boost = (int) indexS.chars().filter(num -> num == '^').count();
 				indexS = indexS.replace("^", "");
 			}
+			if (indexS.contains("@")) {
+				eliteFour = true;
+				indexS = indexS.replace("@", "");
+			}
 			int index = Integer.parseInt(indexS);
 			String name = parts[1];
 			int money = Integer.parseInt(parts[2]);
@@ -10947,7 +10961,14 @@ public class Pokemon implements Serializable {
 				int level = Integer.parseInt(pokemonParts[1]);
 				if (level > maxLevel) maxLevel = level;
 				Ability ability = Ability.valueOf(pokemonParts[2]);
-				Item heldItem = pokemonParts[3].equals("null") ? null : Item.valueOf(pokemonParts[3]);
+				Item heldItem = null;
+				try {
+					heldItem = pokemonParts[3].equals("null") ? null : Item.valueOf(pokemonParts[3]);
+				} catch (IllegalArgumentException e) {
+					System.out.println(name + ", " + Pokemon.getName(id));
+					e.printStackTrace();
+				}
+				
 				Nature nature = null;
 				if (pokemonParts.length > 5) {
 					nature = Nature.valueOf(pokemonParts[4]);
@@ -11056,6 +11077,7 @@ public class Pokemon implements Serializable {
 			trainer.catchable = catchable;
 			trainer.current.script = script;
 			trainer.boost = boost;
+			trainer.eliteFour = eliteFour;
 			
 			if (name.contains("Scott") || name.contains("Fred")) {
 				rivalIndices.add(index);

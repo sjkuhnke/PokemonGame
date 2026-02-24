@@ -75,7 +75,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public static final int MAX_MAP = 240;
 	public static final int MAX_FLAG = 25; // should not be >31
 	public static final String GAME_VERSION = "0.8.81";
-	public static final boolean DEBUG = false;
+	public static boolean DEBUG = false;
 	
 	// SYSTEM
 	public LoadingScreen loadingScreen;
@@ -494,6 +494,9 @@ public class GamePanel extends JPanel implements Runnable {
 				foe.trainer.reset();
 			}
 		}
+		if (foe.trainer != null && foe.trainer.eliteFour) {
+			challengeE4Trainers();
+		}
 		setTaskState();
 		Task t = Task.addTask(Task.TELEPORT, "");
 		int spawnIndex = inSpace() ? 1 : 0; // in space or not
@@ -567,6 +570,10 @@ public class GamePanel extends JPanel implements Runnable {
 					aSetter.updateNPC(currentMap);
 				}
 				
+				if (trainer > -1 && t.eliteFour) {
+					openE4Door();
+				}
+				
 				if (id == 234 && !player.p.flag[7][16]) {
 					if (t.getCurrent().isFainted()) { // player killed the faith dragon
 						player.p.trainersBeat[trainer] = false;
@@ -634,6 +641,7 @@ public class GamePanel extends JPanel implements Runnable {
 		player.p.amulet = false;
 		
 		player.p.endBattleRecord(!wiped);
+		Print.endBattleLog(foe.trainerOwned() ? foe.trainer.getName() : foe.toString());
 		
 		Pokemon.field = new Field();
 		player.p.getFieldEffectList().clear();
@@ -754,6 +762,7 @@ public class GamePanel extends JPanel implements Runnable {
 		Pokemon.readTrainersFromCSV();
 		
 		loadingScreen.setProgress(62, "Setting up calc...");
+		if (loaded) Item.calc = null;
 		Pokemon test = new Pokemon(1, 1, true, false);
 		test.trainer = player.p.clone(this);
 		test.trainer.team[0] = test;
@@ -986,6 +995,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public void saveGame(Player p, boolean saveCoords) {
     	try {
     		config.saveConfig();
+    		Print.flush();
     		if (saveCoords) {
     			p.setPosX(player.worldX);
             	p.setPosY(player.worldY);
@@ -1055,6 +1065,20 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	public boolean inSpace(int currentMap) {
 		return currentMap == 159 || currentMap == 160 || currentMap == 206 || currentMap == 207;
+	}
+	
+	public void openE4Door() {
+		for (Entity e : iTile[currentMap]) {
+			if (e instanceof E4Door) {
+				((E4Door) e).open();
+			}
+		}
+	}
+	
+	public void challengeE4Trainers() {
+		for (int i = 535; i < 540; i++) {
+			player.p.trainersBeat[i] = false;
+		}
 	}
 	
 	private void saveScreenshot() {

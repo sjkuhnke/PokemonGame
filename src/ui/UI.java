@@ -38,6 +38,7 @@ import pokemon.*;
 import pokemon.Bag.SortType;
 import puzzle.Puzzle;
 import util.Pair;
+import util.Print;
 import util.ToolTip;
 
 public class UI extends AbstractUI {
@@ -480,6 +481,10 @@ public class UI extends AbstractUI {
 			case 3:
 				direction = "right";
 				break;
+			case 4:
+				target.facePlayer(gp.player.direction);
+				currentTask = null;
+				return;
 			default:
 				System.out.println(currentTask.counter + " isn't a direction for Task.TURN");
 				direction = "down";
@@ -1422,6 +1427,8 @@ public class UI extends AbstractUI {
 			gp.player.p.startBattleRecord(foe.trainer);
 		}
 		
+		Print.startBattleLog(foe.trainerOwned() ? foe.trainer.getName() : foe.toString());
+		
 		gp.battleUI.user = gp.player.p.getCurrent();
 		gp.battleUI.foe = foe;
 		gp.battleUI.index = currentTask.counter;
@@ -1441,6 +1448,8 @@ public class UI extends AbstractUI {
 		
 		transitionBuffer = new BufferedImage(gp.screenWidth, gp.screenHeight, BufferedImage.TYPE_INT_ARGB);
 		gp.gameState = GamePanel.SIM_START_BATTLE_STATE;
+		
+		Print.startBattleLog("Sim Battle");
 		
 		int choice = gp.simBattleUI.choice - 1;
 		
@@ -1932,6 +1941,20 @@ public class UI extends AbstractUI {
 					((NPC_Mine) currentTask.e).mine(currentTask.wipe);
 					currentTask = null;
 					break;
+				case 19: // elite four guard
+					gp.challengeE4Trainers();
+					gp.openE4Door();
+					boolean turnLeft = gp.player.worldX >= 49 * gp.tileSize;
+					Task.addTask(Task.SLEEP, "", 15);
+					Task.addTask(Task.TURN, npc, "", turnLeft ? Task.LEFT : Task.RIGHT);
+					Task.addTask(Task.SLEEP, "", 15);
+					Task.addNPCMoveTask('x', turnLeft ? 48 * gp.tileSize : 50 * gp.tileSize, npc, false, 4);
+					Task.addTask(Task.SLEEP, "", 15);
+					Task.addTask(Task.TURN, npc, "", Task.PLAYER);
+					Task.addTask(Task.SLEEP, "", 15);
+					Task.addTask(Task.DIALOGUE, npc, "Then go. Show them what it took to reach this peak.");
+					currentTask = null;
+					break;
 				}
 			}
 		}
@@ -1968,6 +1991,11 @@ public class UI extends AbstractUI {
 					break;
 				case 18: // mining minigame
 					((NPC_Mine) currentTask.e).endMine(currentTask.wipe);
+					currentTask = null;
+					break;
+				case 19:
+					Task.addTask(Task.DIALOGUE, npc, "Smart. The mountain tests strength. The League tests preparation.");
+					Task.addTask(Task.DIALOGUE, npc, "Come back when you're ready.");
 					currentTask = null;
 					break;
 				default:
@@ -5222,6 +5250,7 @@ public class UI extends AbstractUI {
 				gp.player.p.bag.sortPocket(currentPocket, sortOptions[commandNum]);
 				currentItems = gp.player.p.getItems(currentPocket);
 			}
+			selectedBagNum = -1;
 			commandNum = 0;
 			bagState = 0;
 		}

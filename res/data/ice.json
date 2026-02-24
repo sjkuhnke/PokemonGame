@@ -130,9 +130,9 @@
         "duration": 600,
         "properties": {
           "sprite": "icicle",
-          "startX": -0.4,
+          "startX": 0.4,
           "startY": -0.6,
-          "endX": 0.2,
+          "endX": -0.2,
           "endY": 0.3,
           "towardsTarget": false,
           "easing": "linear",

@@ -15,6 +15,7 @@ public class Task {
 	public static final int UP = 1;
 	public static final int LEFT = 2;
 	public static final int RIGHT = 3;
+	public static final int PLAYER = 4;
 	
 	public static final int TEXT = 0;
 	public static final int DAMAGE = 1;
