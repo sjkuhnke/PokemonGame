@@ -3081,7 +3081,7 @@ public class AssetSetter {
 		
 		mapNum = 215;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(SCOTT_RIGHT, 49, 83, "Finn! There you are! We were starting to think you'd never make it up here.\n"
+		gp.npc[mapNum][index] = NPCSetup(SCOTT_RIGHT, 49, 83, "<@>! There you are! We were starting to think you'd never make it up here.\n"
 				+ "...But of course you did. You always do.\n"
 				+ "I've been thinking a lot since the last time we battled. Every time I thought I'd closed the gap, you'd widen it again.\n"
 				+ "And I hated that. I felt... small. Like I was just Avery's kid, always one step behind the prodigy who keeps saving the region.\n"
@@ -3092,7 +3092,7 @@ public class AssetSetter {
 				+ "And because you're the one who pushed me this far... you're the one I want to face here, at the summit of Victory Road.\n"
 				+ "No more doubts. No more panic headaches.\n"
 				+ "Just me, my Pokemon, and everything I've learned.\n"
-				+ "Prepare yourself, Finn - because this time, I'm not holding anything back.\n"
+				+ "Prepare yourself, <@> - because this time, I'm not holding anything back.\n"
 				+ "Not even my mind.", "Should never show", 533);
 		gp.npc[mapNum][index] = NPCSetup(FRED_LEFT, 53, 83, "So. You made it. No surprise there.\n"
 				+ "I've been thinking too. A lot. About everything.\n"

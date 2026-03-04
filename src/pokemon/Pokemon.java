@@ -815,6 +815,30 @@ public class Pokemon implements Serializable {
 		Trainer tr = this.trainer;
 		boolean canSwitch = tr.canSwitch(foe);
 		
+		// Clone both teams once at the start
+		Pokemon[] trainerTeamClones = null;
+		Pokemon[] playerTeamClones = null;
+		Field fieldClone = field.clone();
+		
+		if (tr != null && foe.trainer != null) {
+			trainerTeamClones = new Pokemon[tr.team.length];
+			playerTeamClones = new Pokemon[foe.trainer.team.length];
+			
+			for (int i = 0; i < tr.team.length; i++) {
+				if (tr.team[i] != null) {
+					trainerTeamClones[i] = tr.team[i].clone();
+					trainerTeamClones[i].vStatuses = DeepClonable.deepCloneList(trainerTeamClones[i].vStatuses);
+				}
+			}
+			
+			for (int i = 0; i < foe.trainer.team.length; i++) {
+				if (foe.trainer.team[i] != null) {
+					playerTeamClones[i] = foe.trainer.team[i].clone();
+					playerTeamClones[i].vStatuses = DeepClonable.deepCloneList(playerTeamClones[i].vStatuses);
+				}
+			}
+		}
+		
 		// Check if there are no valid moves with non-zero PP
 		if (validMoves.isEmpty()) {
 			// 100% chance to swap in a partner if you can only struggle
@@ -860,6 +884,15 @@ public class Pokemon implements Serializable {
 		Ability foeAbility = foe.getAbility(field);
 		if (foe.getItem(field) != Item.ABILITY_SHIELD && this.getAbility(field) == Ability.MOLD_BREAKER) {
 			foeAbility = Ability.NULL;
+		}
+		
+		// Calculate aggression factor
+		double aggressionFactor = 1.0;
+		//double bestDefensiveResponse = 0.0;
+		if (difficulty != Player.NORMAL && playerTeamClones != null) {
+			Pair<Double, Double> aggressionData = calculateDefensiveResponse(foe, playerTeamClones, foeMaxDamagePair, fieldClone);
+			//bestDefensiveResponse = aggressionData.getFirst();
+			aggressionFactor = aggressionData.getSecond();
 		}
 		
 		// Filter moves based on conditions and max damage
@@ -922,7 +955,9 @@ public class Pokemon implements Serializable {
 			for (int i = 0; i < tr.team.length; i++) {
 				Pokemon ally = tr.team[i];
 				if (ally != null && ally != this) {
-					int allyScore = ally.scorePokemon(foe, strongestMove, foeMaxDamagePair, foeCanKO, field, null, false);
+					Pokemon allyClone = trainerTeamClones[i];
+					Pokemon simulatedAlly = simulateSwitchIn(ally, allyClone, foe, fieldClone);
+					int allyScore = simulatedAlly.scorePokemon(foe, strongestMove, foeMaxDamagePair, foeCanKO, fieldClone, null, false);
 					scoreMap.put(ally, allyScore);
 				}
 			}
@@ -999,14 +1034,15 @@ public class Pokemon implements Serializable {
 			}
 		}
 		
+		HashMap<Move, Double> aggressionWeights = applyAggression(moveScores, aggressionFactor);
+		
 		HashMap<Move, Double> positiveWeights = new HashMap<>();
-		for (Map.Entry<Move, Integer> e : moveScores.entrySet()) {
+		for (Map.Entry<Move, Double> e : aggressionWeights.entrySet()) {
 			Move m = e.getKey();
-			int s = e.getValue();
+			double s = e.getValue();
 			if (s > 0) {
-				double w = Math.max(0.0, s);
-				positiveWeights.put(m, w);
-				totalPositiveWeight += w;
+				positiveWeights.put(m, s);
+				totalPositiveWeight += s;
 			}
 		}
 		
@@ -1076,6 +1112,255 @@ public class Pokemon implements Serializable {
 		// Fallback 2: Just pick a random valid move
 		int randomIndex = (int) (Math.random() * validMoves.size());
 		return validMoves.get(randomIndex);
+	}
+	
+	/**
+	 * Calculate the best defensive response the opponent has and convert to aggression factor.
+	 * Uses continuous mathematical scaling.
+	 * 
+	 * Algorithm:
+	 * 1. Find AI's strongest damaging move against current foe
+	 * 2. Calculate survival ratio for each back Pokemon if they switch in
+	 * 3. Calculate survival ratio if current Pokemon stays in
+	 * 4. Take maximum survival (best defensive response)
+	 * 5. Convert to aggression: base + k * (1 - bestSurvival)^2
+	 * 
+	 * @param foe Current opponent Pokemon
+	 * @param playerTeamClones Cloned player team for simulation
+	 * @param foeMaxDamagePair Foe's max damage against AI
+	 * @param field The battle field
+	 * @return Pair of (bestDefensiveResponse, aggressionFactor)
+	 */
+	private Pair<Double, Double> calculateDefensiveResponse(Pokemon foe, Pokemon[] playerTeamClones, Pair<Integer, Double> foeMaxDamagePair, Field field) {
+		// Step 1: Find AI's strongest damaging move against current foe
+		Move ourStrongestMove = null;
+		double maxDamagePercent = 0;
+		int maxDamageRaw = 0;
+		
+		for (Move m : this.getValidMoveset()) {
+			if (m.isAttack()) {
+				boolean isFaster = this.getFaster(foe, m.getPriority(this), 0, field) == this;
+				Pair<Integer, Double> dmgPair = this.calcWithTypes(foe, m, isFaster, field, false);
+				double damagePercent = dmgPair.getSecond();
+				if (damagePercent > maxDamagePercent) {
+					maxDamagePercent = damagePercent;
+					maxDamageRaw = dmgPair.getFirst();
+					ourStrongestMove = m;
+				}
+			}
+		}
+		
+		// If we have no attacking moves, use moderate aggression
+		if (ourStrongestMove == null) {
+			Print.debug("[AI] " + this.nickname + " has no attacking moves, using default aggression 1.5\n");
+			return new Pair<>(0.5, 1.5);
+		}
+		
+		// Step 2: Calculate survival ratio if current foe stays in
+		double survivalIfStay = Math.max(0.0, 1.0 - (maxDamagePercent / 100.0));
+		
+		// Step 3: Calculate survival ratio for each back Pokemon
+		double bestSwitchSurvival = 0.0;
+		
+		StringBuilder backMonDebug = new StringBuilder();
+		backMonDebug.append("Back Pokemon Evaluation:\n");
+		
+		if (foe.trainer != null) {
+			for (int i = 0; i < playerTeamClones.length; i++) {
+				Pokemon backMon = playerTeamClones[i];
+				Pokemon realBackMon = foe.trainer.team[i];
+				
+				if (backMon == null || backMon.isFainted() || realBackMon == foe) {
+					continue;
+				}
+				
+				// Simulate switch-in to get accurate HP after hazards
+				Pokemon simulatedMon = simulateSwitchIn(realBackMon, backMon, foe, field);
+				
+				// Calculate damage our strongest move would do to this switch-in
+				boolean isFaster = this.getFaster(simulatedMon, ourStrongestMove.getPriority(this), 0, field) == this;
+				Pair<Integer, Double> dmgPair = this.calcWithTypes(simulatedMon, ourStrongestMove, isFaster, field, false);
+				int damageToSwitchIn = dmgPair.getFirst();
+				
+				// Calculate survival ratio: 1.0 = no damage, 0.0 = OHKO
+				double survivalRatio = 1.0 - ((double) damageToSwitchIn / simulatedMon.getStat(0));
+				survivalRatio = Math.max(0.0, Math.min(1.0, survivalRatio));
+				
+				bestSwitchSurvival = Math.max(bestSwitchSurvival, survivalRatio);
+				
+				backMonDebug.append(String.format("  %s: HP %d/%d (%.1f%%) | Damage from %s: %d (%.1f%%) | Survival: %.3f%s\n",
+					simulatedMon.nickname,
+					simulatedMon.currentHP,
+					simulatedMon.getStat(0),
+					simulatedMon.currentHP * 100.0 / simulatedMon.getStat(0),
+					ourStrongestMove,
+					damageToSwitchIn,
+					dmgPair.getSecond(),
+					survivalRatio,
+					survivalRatio == bestSwitchSurvival ? " [BEST]" : ""
+				));
+			}
+		}
+		
+		// Step 4: Best defensive response is the maximum of staying in or switching
+		double bestDefensiveResponse = Math.max(survivalIfStay, bestSwitchSurvival);
+		
+		// Step 5: Convert survival to aggression using quadratic formula
+		// aggression = baseAggression + k * (1 - survival)^2
+		double baseAggression = 1.2;
+		double k = 1.8;
+		
+		double vulnerabilityFactor = 1.0 - bestDefensiveResponse;
+		double aggression = baseAggression + k * Math.pow(vulnerabilityFactor, 2.0);
+		
+		// Clamp aggression to reasonable bounds
+		aggression = Math.max(1.0, Math.min(3.0, aggression));
+		
+		StringBuilder aggrDebug = new StringBuilder();
+		aggrDebug.append("=== AGGRESSION CALCULATION for ").append(this.nickname).append(" ===\n");
+		aggrDebug.append("Strongest Move vs ").append(foe.nickname).append(": ").append(ourStrongestMove).append("\n");
+		aggrDebug.append("Damage to Current Foe: ").append(maxDamageRaw).append(" HP (")
+		         .append(String.format("%.1f%%", maxDamagePercent)).append(")\n");
+		aggrDebug.append("Survival if Foe Stays: ").append(String.format("%.3f", survivalIfStay)).append("\n");
+		aggrDebug.append(backMonDebug.toString());
+		aggrDebug.append("Best Switch Survival: ").append(String.format("%.3f", bestSwitchSurvival)).append("\n");
+		aggrDebug.append("Best Defensive Response: ").append(String.format("%.3f", bestDefensiveResponse));
+		aggrDebug.append(bestDefensiveResponse == survivalIfStay ? " [STAYING IN]\n" : " [SWITCHING]\n");
+		aggrDebug.append("Vulnerability Factor: ").append(String.format("%.3f", vulnerabilityFactor)).append("\n");
+		aggrDebug.append("Formula: ").append(String.format("%.2f + %.2f * (%.3f)^2 = %.3f", 
+		    baseAggression, k, vulnerabilityFactor, aggression)).append("\n");
+		aggrDebug.append("Aggression Factor: ").append(String.format("%.3f", aggression)).append("\n");
+		Print.debug(aggrDebug.toString());
+		
+		return new Pair<>(bestDefensiveResponse, aggression);
+	}
+	
+	/**
+	 * Simulate a Pokemon switching in to accurately account for entry hazards, abilities, and field effects.
+	 * This is called on a CLONE to avoid modifying the real Pokemon.
+	 * 
+	 * @param original The original Pokemon (for reference)
+	 * @param clone The cloned Pokemon to simulate on
+	 * @param foe The opposing Pokemon
+	 * @param field The battle field
+	 * @return The modified clone with accurate post-switch state
+	 */
+	private Pokemon simulateSwitchIn(Pokemon original, Pokemon clone, Pokemon foe, Field field) {
+		// Make sure we're working with a clone to avoid side effects
+		if (clone == original) {
+			System.out.println("Additional clone");
+			clone = original.clone();
+			clone.vStatuses = DeepClonable.deepCloneList(clone.vStatuses);
+		}
+		
+		// Track state before switch-in
+		int hpBefore = clone.currentHP;
+		int[] statsBefore = clone.statStages.clone();
+		
+		// Simulate the swap in with hazards=true to trigger entry hazards
+		createTask = false;
+		try {
+			clone.swapIn(foe, true, field);
+		} finally {
+			createTask = true;
+		}
+		
+		// Calculate changes
+		int hpAfter = clone.currentHP;
+		int hpLost = hpBefore - hpAfter;
+		
+		// Debug output for switch-in simulation
+		if (hpLost > 0 || !Arrays.equals(statsBefore, clone.statStages)) {
+			StringBuilder switchDebug = new StringBuilder();
+			switchDebug.append("    Switch-in Effects for ").append(original.nickname).append(":\n");
+			
+			if (hpLost > 0) {
+				switchDebug.append(String.format("      HP: %d -> %d (-%d from hazards/abilities, %.1f%% remaining)\n",
+					hpBefore, hpAfter, hpLost, hpAfter * 100.0 / clone.getStat(0)));
+			}
+			
+			// Check for stat changes (Intimidate, etc.)
+			String[] statNames = {"Atk", "Def", "SpA", "SpD", "Spe", "Acc", "Eva"};
+			for (int i = 0; i < 7; i++) {
+				if (statsBefore[i] != clone.statStages[i]) {
+					int change = clone.statStages[i] - statsBefore[i];
+					switchDebug.append(String.format("      %s: %+d\n", statNames[i], change));
+				}
+			}
+			
+			Print.debug(switchDebug.toString());
+		}
+		
+		return clone;
+	}
+
+	/**
+	 * Apply the aggression factor to move scores using normalized approach.
+	 * This prevents explosive scaling and ensures consistent behavior.
+	 * 
+	 * Algorithm:
+	 * 1. Find the maximum score
+	 * 2. Normalize all scores (divide by max)
+	 * 3. Raise normalized scores to aggression power
+	 * 4. Return weighted scores
+	 * 
+	 * @param moveScores Raw move scores
+	 * @param aggression Aggression factor (1.0 to 3.0)
+	 * @return Weighted scores after applying aggression
+	 */
+	private HashMap<Move, Double> applyAggression(HashMap<Move, Integer> moveScores, double aggression) {
+		HashMap<Move, Double> result = new HashMap<>();
+		
+		// Find maximum score for normalization
+		int maxScore = Integer.MIN_VALUE;
+		for (int score : moveScores.values()) {
+			if (score > maxScore) {
+				maxScore = score;
+			}
+		}
+		
+		// Handle edge case: all scores are non-positive
+		if (maxScore <= 0) {
+			// Don't apply aggression to negative scores
+			Print.debug("[AI] All move scores non-positive, skipping aggression scaling\n");
+			for (Map.Entry<Move, Integer> entry : moveScores.entrySet()) {
+				result.put(entry.getKey(), (double) entry.getValue());
+			}
+			return result;
+		}
+		
+		// Debug output for aggression application
+		StringBuilder aggrApplyDebug = new StringBuilder();
+		aggrApplyDebug.append("=== AGGRESSION APPLICATION ===\n");
+		aggrApplyDebug.append(String.format("Max Score: %d | Aggression: %.3f\n", maxScore, aggression));
+		aggrApplyDebug.append("Move -> Raw -> Normalized -> After ^Aggr -> Scaled:\n");
+		
+		// Normalize and apply aggression
+		for (Map.Entry<Move, Integer> entry : moveScores.entrySet()) {
+			Move m = entry.getKey();
+			int score = entry.getValue();
+			
+			if (score > 0) {
+				// Normalize: score / maxScore gives value in [0, 1]
+				double normalized = (double) score / maxScore;
+				// Raise to aggression power
+				double weighted = Math.pow(normalized, aggression);
+				// Scale back up to maintain relative magnitudes
+				double scaled = weighted * maxScore;
+				result.put(m, scaled);
+				
+				aggrApplyDebug.append(String.format("  %s: %d -> %.3f -> %.3f -> %.2f\n",
+					m, score, normalized, weighted, scaled));
+			} else {
+				// Keep non-positive scores as-is
+				result.put(m, (double) score);
+				aggrApplyDebug.append(String.format("  %s: %d (not positive, no aggression)\n", m, score));
+			}
+		}
+		
+		Print.debug(aggrApplyDebug.toString());
+		
+		return result;
 	}
 
 	private ArrayList<Move> modifyStatus(ArrayList<Move> bestMoves, Pokemon foe, boolean moveKills) {
@@ -1616,7 +1901,7 @@ public class Pokemon implements Serializable {
 			for (int attempt = 0; attempt < 2; attempt++) {
 				boolean isBackCheck = (attempt > 0);
 				if (isBackCheck) { // check someone in the back now if it exists
-					if (move.cat == 2 && foe.trainer != null && foe.trainer.canSwitch(this, foe)) {
+					if (move.cat == 2 && foe.trainer != null && foe.trainer.canSwitch(this, foe) && this != foe) {
 						Random rand = new Random();
 						Pokemon back;
 						do {
@@ -2882,6 +3167,9 @@ public class Pokemon implements Serializable {
 			ctx.phase = AnimPhase.CHARGING;
 		}
 		
+		if (this.getItem(field) == Item.PROTECTIVE_PADS) contact = false;
+		if (this.getItem(field) == Item.PUNCHING_GLOVE && move.isPunching()) contact = false;
+		
 		if (foe.hasStatus(Status.PROTECT) && (move.accuracy <= 100 || move.cat != 2) && move != Move.FEINT && move != Move.PHANTOM_FORCE
 				&& move != Move.VANISHING_ACT && move != Move.MIGHTY_CLEAVE && move != Move.FUTURE_SIGHT) {
 			ctx.moveType = MoveType.PROTECT;
@@ -3301,11 +3589,7 @@ public class Pokemon implements Serializable {
 			
 			if (this.getItem(field) == Item.METRONOME) bp *= (1 + (this.metronome * 0.2));
 			
-			if (this.getItem(field) == Item.PROTECTIVE_PADS) contact = false;
-			if (this.getItem(field) == Item.PUNCHING_GLOVE && move.isPunching()) {
-				bp *= 1.1;
-				contact = false;
-			}
+			if (this.getItem(field) == Item.PUNCHING_GLOVE && move.isPunching()) bp *= 1.1;
 			
 			if (moveType == PType.FIRE && this.hasStatus(Status.FLASH_FIRE)) bp *= 1.5;
 			
@@ -3329,7 +3613,7 @@ public class Pokemon implements Serializable {
 				this.lastMoveUsed = move;
 			}
 			
-			if (this.getAbility(field) == Ability.TOUGH_CLAWS && contact) {
+			if (this.getAbility(field) == Ability.TOUGH_CLAWS && move.contact) {
 				bp *= 1.3;
 			}
 			
@@ -9123,8 +9407,12 @@ public class Pokemon implements Serializable {
 		
 		return result;
 	}
-
+	
 	public void swapIn(Pokemon foe, boolean hazards) {
+		swapIn(foe, hazards, field);
+	}
+
+	public void swapIn(Pokemon foe, boolean hazards, Field field) {
 		int[] userStages = this.statStages.clone();
 		int[] foeStages = foe.statStages.clone();
 		

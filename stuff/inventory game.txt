@@ -34,6 +34,11 @@ Fearomoth Sassy/Jolly
 Blastflames-E Calm/Modest
 Megawatt Jolly
 
+Necrozma: Dark/Galactic, ability is Black Hole + goes Ultra form on death + removes stat changes on the field
+Ultra Necrozma: Dark/Light, ability is Neuroforce, gets a signature move (Light that burns the sky) that is either Galactic type or Light type depending on which would be stronger. Could also make him go ultra mode
+Moveset would be Light that burns the sky, Power Gem, Aura Sphere/Iron Blast/Dark Pulse, needs something for steel types
+Give it a signature Dark move that is super effective on Light, or is a draining move, or sets Floodlight, or all of the above
+
 Game2.72: Encounters and TN base stuff done 3/27
 Game2.721: Items for Mt Splinkty done 3/29
 Game2.725: Ghostly woods stuff done 4/2

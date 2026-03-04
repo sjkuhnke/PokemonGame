@@ -198,7 +198,7 @@ public class Player extends Trainer implements Serializable {
 		version = VERSION;
 	}
 
-	private void setID(String saveName) {
+	public void setID(String saveName) {
 		Random rand = saveName == null ? new Random() : new Random(saveName.hashCode());
 		id = rand.nextInt();
 	}
