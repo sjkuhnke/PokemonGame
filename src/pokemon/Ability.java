@@ -33,6 +33,7 @@ public enum Ability {
 	EMPATHIC_LINK("The Pokemon gets a boost in their highest attack after the foe raises any stat."),
 	ENCHANTED_DUST("Changes the foe's type to MAGIC upon entry."),
 	EVERGLOW("Sets up Aurora Glow for 5 turns when the Pokemon enters battle, healing all ally LIGHT, ICE and GALACTIC types."),
+	EVENT_HORIZON("Restores 1/3 of max HP when hit by a LIGHT move, Ultra Bursts when fainting (which resets stat changes for the field)."),
 	ILLUMINATION("Grants the user all the resistances from the LIGHT type."),
 	FILTER("Halves damage from supereffective attacks."),
 	FLAME_BODY("Contact with the Pokemon can cause a burn 30% of the time."),

@@ -37,7 +37,7 @@ public class Trainer implements Serializable {
 	public static Trainer[] trainers = new Trainer[MAX_TRAINERS];
 	
 	public static int levelCapIndex = 0;
-	public static int[] levelCaps = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 100};
+	public static int[] levelCaps = new int[9];
 	
 	public Trainer(String name, Pokemon[] team, int money) {
 		this(name, team, money, null, 0, true);
@@ -565,7 +565,8 @@ public class Trainer implements Serializable {
 	}
 	
 	public static void addLevelCap(int cap) {
-		levelCaps[levelCapIndex++] = cap;
+		levelCaps[levelCapIndex] = cap;
+		levelCapIndex = Math.min(levelCapIndex + 1, levelCaps.length - 1);
 	}
 	
 	public static int getLevelCap(int badges, Player player) {

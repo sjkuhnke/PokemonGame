@@ -472,6 +472,7 @@ public enum Move {
 	SKULL_BASH(100,100,0,0,0,0,PType.NORMAL,"Raises the user's Defense by 1, user must charge on the first turn",true,10),
 	SKY_ATTACK(140,90,30,1,0,0,PType.FLYING,"% chance to flinch. User must charge up on the first turn, attacks on the second. Boosted crit rate",false,5),
 	SKY_UPPERCUT(85,90,0,0,0,0,PType.FIGHTING,"Super effective against FLYING types too",true,15),
+	SKYBURN(120,100,0,0,1,0,PType.LIGHT,"Will be either LIGHT or GALACTIC type, whichever deals more damage",true,10),
 	SLACK_OFF(0,1000,0,0,2,0,PType.NORMAL,"Restores 1/2 of user's total HP",false,5),
 	SLAM(80,75,0,0,0,0,PType.NORMAL,"A normal attack",true,25),
 	SLASH(70,100,0,1,0,0,PType.NORMAL,"Boosted crit rate",true,20),

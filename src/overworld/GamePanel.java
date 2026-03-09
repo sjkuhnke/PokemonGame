@@ -762,6 +762,9 @@ public class GamePanel extends JPanel implements Runnable {
 		Pokemon.readTrainersFromCSV();
 		
 		loadingScreen.setProgress(62, "Setting up calc...");
+		if (Item.calcFrame != null) {
+			Item.calcFrame.dispose();
+		}
 		if (loaded) Item.calc = null;
 		Pokemon test = new Pokemon(1, 1, true, false);
 		test.trainer = player.p.clone(this);

@@ -3365,7 +3365,7 @@ public class Pokemon implements Serializable {
 			
 			if (((moveType == PType.WATER && (foeAbility == Ability.WATER_ABSORB || foeAbility == Ability.DRY_SKIN)) || (moveType == PType.ELECTRIC && foeAbility == Ability.VOLT_ABSORB)
 					|| (moveType == PType.BUG && foeAbility == Ability.INSECT_FEEDER) || ((moveType == PType.LIGHT || moveType == PType.GALACTIC) && foeAbility == Ability.BLACK_HOLE)
-					|| (moveType == PType.MAGIC && foeAbility == Ability.MYSTIC_ABSORB))
+					|| (moveType == PType.MAGIC && foeAbility == Ability.MYSTIC_ABSORB) || (moveType == PType.LIGHT && foeAbility == Ability.EVENT_HORIZON))
 					&& !(move.cat == 2 && acc > 100)) {
 				if (foe.getItem(field) == Item.RING_TARGET) {
 					// nothing
@@ -11231,7 +11231,7 @@ public class Pokemon implements Serializable {
 			int index = Integer.parseInt(indexS);
 			String name = parts[1];
 			int money = Integer.parseInt(parts[2]);
-			boolean gymLeader = money == 500;
+			boolean gymLeader = money == 500 || eliteFour;
 			int flagIndex = Integer.parseInt(parts[3]);
 			Item item = parts[4].equals("null") ? null : Item.valueOf(parts[4]);
 			
@@ -11367,11 +11367,10 @@ public class Pokemon implements Serializable {
 			trainer.boost = boost;
 			trainer.eliteFour = eliteFour;
 			
-			if (name.contains("Scott") || name.contains("Fred")) {
+			if (name.contains("Scott") || name.contains("Fred") || name.contains("Arthra")) {
 				rivalIndices.add(index);
 			}
-			
-			if (gymLeader) Trainer.addLevelCap(maxLevel);
+			if (gymLeader && money < 5000) Trainer.addLevelCap(maxLevel);
 		}
 		
 		updateRivals();
@@ -11556,16 +11555,24 @@ public class Pokemon implements Serializable {
 		for (Integer i : rivalIndices) {
 			Trainer t = Trainer.trainers[i];
 			int newLength = t.team.length - 2;
+			boolean arthra = false;
+			int starterIndex = t.getName().contains("Scott") ? ((gp.player.p.starter - 1) + 3) % 3 : t.getName().contains("Fred") ? (gp.player.p.starter + 1) % 3 : -1;
+			if (starterIndex == -1) { // arthra
+				// if already done arthra scene (only after beating champion), she uses bronzong, if not she uses opposite dragon as player
+				starterIndex = gp.player.p.flag[8][9] && gp.player.p.flag[8][10] ? 2 : gp.player.p.flag[7][9] ? 0 : gp.player.p.flag[7][10] ? 1 : -1;
+				arthra = true;
+			}
+			
 			int twigleIndex = -1;
 			int index = 0;
 			for (Pokemon p : t.team) {
-				if (p.id >= 1 && p.id <= 3) {
+				if (arthra ? (p.id == 233) : (p.id >= 1 && p.id <= 3)) { // for arthra, find relomidel, for scott/fred, find twigle line
 					twigleIndex = index;
 				}
 				index++;
 			}
-			int starterIndex = t.getName().contains("Scott") ? ((gp.player.p.starter - 1) + 3) % 3 : t.getName().contains("Fred") ? (gp.player.p.starter + 1) % 3 : -1;
-			if (starterIndex == -1) System.err.println("Something went wrong with updating the rivals");
+			if (twigleIndex == -1) continue;
+			
 			Pokemon[] team = new Pokemon[newLength];
 			
 			int j;
