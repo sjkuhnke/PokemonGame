@@ -47,6 +47,8 @@ public class Main {
 	public static GamePanel gp;
 	public static final String gameTitle = "Pokemon Xhenos";
 	public static final BufferedImage[] icons = new BufferedImage[5];
+	
+	public static HashMap<String, Integer> species = new HashMap<>();
 
 	public static void main(String[] args) {
 		window = new JFrame();
@@ -173,7 +175,7 @@ public class Main {
 						}
 					}
 					
-					loader.setProgress(4, "Settign up world state...");
+					loader.setProgress(4, "Setting up world state...");
 					gp.player.worldX = gp.player.p.getPosX();
 					gp.player.worldY = gp.player.p.getPosY();
 					gp.currentMap = gp.player.p.currentMap;
@@ -280,6 +282,17 @@ public class Main {
 					gp.player.p.setupPuzzles(gp, gp.currentMap);
 					gp.player.currentSave = fileName;
 					gp.setGameState(GamePanel.PLAY_STATE);
+					
+					for (int i = 0; i < 3; i++) {
+						Pokemon[] box = gp.player.p.boxes[i];
+						for (Pokemon p : box) {
+							if (p != null) {
+								int babyStage = p.getBabyStage();
+								String speciesName = Pokemon.getName(babyStage);
+								species.put(speciesName, species.getOrDefault(speciesName, 0) + 1);
+							}
+						}
+					}
 				});
 				
 			} catch (Exception e) {

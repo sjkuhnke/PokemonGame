@@ -1170,16 +1170,18 @@ public class Pokemon implements Serializable {
 				Pokemon backMon = playerTeamClones[i];
 				Pokemon realBackMon = foe.trainer.team[i];
 				
-				if (backMon == null || backMon.isFainted() || realBackMon == foe) {
+				if (backMon == null || !backMon.isValid(backMon.getPlayer()) || realBackMon == foe) {
 					continue;
 				}
 				
 				// Simulate switch-in to get accurate HP after hazards
-				Pokemon simulatedMon = simulateSwitchIn(realBackMon, backMon, foe, field);
+				Pokemon userClone = this.clone();
+				userClone.vStatuses = DeepClonable.deepCloneList(this.vStatuses);
+				Pokemon simulatedMon = simulateSwitchIn(realBackMon, backMon, userClone, field);
 				
 				// Calculate damage our strongest move would do to this switch-in
-				boolean isFaster = this.getFaster(simulatedMon, ourStrongestMove.getPriority(this), 0, field) == this;
-				Pair<Integer, Double> dmgPair = this.calcWithTypes(simulatedMon, ourStrongestMove, isFaster, field, false);
+				boolean isFaster = userClone.getFaster(simulatedMon, ourStrongestMove.getPriority(userClone), 0, field) == userClone;
+				Pair<Integer, Double> dmgPair = userClone.calcWithTypes(simulatedMon, ourStrongestMove, isFaster, field, false);
 				int damageToSwitchIn = dmgPair.getFirst();
 				
 				// Calculate survival ratio: 1.0 = no damage, 0.0 = OHKO
@@ -8316,7 +8318,7 @@ public class Pokemon implements Serializable {
 		}
 		if (field.equals(field.weather, Effect.SANDSTORM, this) && !this.isType(PType.ROCK) && !this.isType(PType.STEEL) && !this.isType(PType.GROUND)
 				&& this.getAbility(field) != Ability.SAND_FORCE && this.getAbility(field) != Ability.SAND_RUSH && this.getAbility(field) != Ability.SAND_VEIL
-				&& this.getItem(field) != Item.SAFETY_GOGGLES) {
+				&& this.getAbility(field) != Ability.SAND_STREAM && this.getItem(field) != Item.SAFETY_GOGGLES) {
 			this.damage(getHPAmount(1.0/16), f, this.nickname + " was buffeted by the sandstorm!");
 			if (this.currentHP <= 0) { // Check for kill
 				this.faint(true, f);
@@ -12407,6 +12409,10 @@ public class Pokemon implements Serializable {
 		json.put("metAt", metAt);
 		
 		return json;
+	}
+
+	public boolean isValid(Player player) {
+		return !this.isFainted() && !this.isOverLevelCap(player.badges, player);
 	}
 	
 }

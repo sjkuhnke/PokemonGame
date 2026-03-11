@@ -3132,6 +3132,11 @@ public class AssetSetter {
 		mapNum = 221;
 		gp.npc[mapNum][index++] = null; // guard - needs to be set to the same tile every map load
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC, 53, 43, "", "", -1);
+		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_M_DOWN, 1, 1, "", "", 535);
+		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_DOWN, 2, 1, "", "", 536);
+		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_DOWN, 3, 1, "", "", 537);
+		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_DOWN, 4, 1, "", "", 538);
+		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_M_DOWN, 5, 1, "", "", 539);
 	}
 
 	public void setInteractiveTile(int map) {

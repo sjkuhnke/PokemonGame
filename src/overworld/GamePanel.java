@@ -198,7 +198,7 @@ public class GamePanel extends JPanel implements Runnable {
 		cChecker = new CollisionChecker(this);
 		
 		loadingScreen.setProgress(11, "Loading PlayerCharacter entity...");
-		player = new PlayerCharacter(this, keyH);
+		player = new PlayerCharacter(this);
 		
 		loadingScreen.setProgress(13, "Loading Puzzle Manager...");
 		puzzleM = new PuzzleManager(this);
@@ -870,7 +870,7 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 
 	public Pokemon encounterPokemon(String area, char type, boolean banShedinja) {
-		if (currentMap == 149) return null;
+		if (currentMap == 149 || currentMap == 209) return null;
 	    ArrayList<Encounter> encounters = Encounter.getEncounters(area, type, banShedinja);
 
 	    // Calculate the total encounter chance for the route
@@ -952,6 +952,19 @@ public class GamePanel extends JPanel implements Runnable {
 		g2.setFont(g2.getFont().deriveFont(ui.getFontSize(mapName, width)));
 		
 		g2.drawString(mapName, x, y);
+		
+		width = tileSize * 6;
+		x = (screenWidth / 2) - (width / 2);
+		y = 0;
+		ui.drawSubWindow(x, y, width, height);
+		String saveName = player.currentSave;
+		if (saveName.length() > 28) {
+			saveName = saveName.substring(0, 28);
+			saveName += "...";
+		}
+		x = ui.getCenterAlignedTextX(saveName, screenWidth / 2);
+		y += tileSize;
+		g2.drawString(saveName, x, y);
 	}
 	
 	public boolean determineLightOverlay() {

@@ -39,9 +39,9 @@ public class PlayerCharacter extends Entity {
 	private int SPEED_1 = gp.tileSize / 12;
 	private int SPEED_2 = gp.tileSize / 6;
 	
-	public PlayerCharacter(GamePanel gp, KeyHandler keyH) {
+	public PlayerCharacter(GamePanel gp) {
 		super(gp, null);
-		this.keyH = keyH;
+		this.keyH = gp.keyH;
 		
 		screenX = gp.screenWidth / 2 - (gp.tileSize/2);
 		screenY = gp.screenHeight / 2 - (gp.tileSize/2);
@@ -1320,6 +1320,18 @@ public class PlayerCharacter extends Entity {
 			p.current.setStats();
 			p.current.verifyHP();
 			p.invalidateNuzlocke("Used " + code);
+		} else if (code.equals("SPECIES")) {
+			StringBuilder result = new StringBuilder();
+			for (Map.Entry<String, Integer> e : Main.species.entrySet()) {
+				result.append(e.getKey()).append(",").append(e.getValue()).append("\n");
+			}
+			try {
+				FileWriter writer = new FileWriter("./species.txt");
+				writer.write(result.toString());
+				writer.close();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		} else {
 			ui.showMessage("Invalid code: \"" + code + "\"");
 		}

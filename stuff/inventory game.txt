@@ -39,6 +39,8 @@ Ultra Necrozma: Dark/Light, ability is Neuroforce, gets a signature move (Light 
 Moveset would be Light that burns the sky, Power Gem, Aura Sphere/Iron Blast/Dark Pulse, needs something for steel types
 Give it a signature Dark move that is super effective on Light, or is a draining move, or sets Floodlight, or all of the above
 
+Pressing A in Nuzlocke Info to scroll Invalid Reasons
+
 Game2.72: Encounters and TN base stuff done 3/27
 Game2.721: Items for Mt Splinkty done 3/29
 Game2.725: Ghostly woods stuff done 4/2

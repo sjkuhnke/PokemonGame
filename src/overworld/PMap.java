@@ -1134,14 +1134,26 @@ public class PMap extends JPanel {
 			PlayerCharacter.currentMapName = "Rawwar City";
 			return 35;
 		case 152:
-			if (y <= 61) {
-				PlayerCharacter.currentMapName = "Route 39";
-				return 38;
+			if (x <= 55) {
+				if (y <= 61) {
+					PlayerCharacter.currentMapName = "Route 39";
+					return 38;
+				}
+				if (y > 61) {
+					PlayerCharacter.currentMapName = "Iron Town";
+					return 39;
+				}
+			} else {
+				if (y <= 53) {
+					PlayerCharacter.currentMapName = "Route 39";
+					return 38;
+				}
+				if (y > 53) {
+					PlayerCharacter.currentMapName = "Iron Town";
+					return 39;
+				}
 			}
-			if (y > 61) {
-				PlayerCharacter.currentMapName = "Iron Town";
-				return 39;
-			}
+			
 		case 153:
 			PlayerCharacter.currentMapName = "Iron Town";
 			return 39;

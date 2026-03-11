@@ -972,11 +972,7 @@ public class Player extends Trainer implements Serializable {
 	}
 
 	public ArrayList<Entry> getBalls() {
-		ArrayList<Entry> result = new ArrayList<>();
-		for (Item i : Item.balls) {
-			if (bag.count[i.getID()] > 0) result.add(bag.new Entry(i, bag.count[i.getID()]));
-		}
-		return result;
+		return getItems(Item.BALLS);
 	}
 
 	public void moveItem(int moveIndex, int moveAboveIndex) {
@@ -2043,6 +2039,25 @@ public class Player extends Trainer implements Serializable {
 		} else {
 			coins += amt;
 		}
+	}
+	
+	@Override
+	public boolean hasValidMembers() {
+		return this.hasValidMembers(current);
+	}
+	
+	@Override
+	public boolean hasValidMembers(Pokemon current) {
+		boolean result = false;
+		for (int i = 0; i < team.length; i++) {
+			if (this.team[i] != null) {
+				if (this.team[i] != current && this.team[i].isValid(this)) {
+					result = true;
+					break;
+				}
+			}
+		}
+		return result;
 	}
 
 	public boolean hasPokemonOverLevelCap() {

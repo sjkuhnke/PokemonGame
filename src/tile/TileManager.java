@@ -310,6 +310,7 @@ public class TileManager {
 		setup(4, false);
 		setup(5, true);
 		setup(6, false);
+		setup(7, false, FULL, FULL, new GrassTile());
 		setup(8, false);
 		setup(9, false);
 		setup(10, false);
@@ -527,7 +528,7 @@ public class TileManager {
 		setup(232, true);
 		setup(233, true);
 		setup(234, true);
-		
+		setup(235, false, FULL, FULL, new CaveTile());
 		setup(236, true);
 		setup(237, true);
 		setup(238, true);
@@ -558,7 +559,7 @@ public class TileManager {
 		setup(263, true);
 		setup(264, true);
 		setup(265, true);
-
+		setup(266, false, FULL, FULL, new CaveTile());
 		setup(267, true);
 		setup(268, true);
 		setup(269, true);
@@ -577,17 +578,17 @@ public class TileManager {
 		setup(282, true);
 		setup(283, false);
 		setup(284, true);
-		setup(285, true, TOP_FOURTH);
-		setup(286, true, TOP_FOURTH);
-		setup(287, true, TOP_FOURTH);
+		setup(285, true, TOP_FOURTH, FULL, new CaveTile());
+		setup(286, true, TOP_FOURTH, FULL, new CaveTile());
+		setup(287, true, TOP_FOURTH, FULL, new CaveTile());
 		setup(288, true);
 		setup(289, true);
-		setup(290, false);
-		setup(291, false);
+		setup(290, false, FULL, FULL, new CaveTile());
+		setup(291, false, FULL, FULL, new CaveTile());
 		setup(292, true);
-		setup(293, false);
-		setup(294, false);
-		setup(295, false);
+		setup(293, false, FULL, FULL, new CaveTile());
+		setup(294, false, FULL, FULL, new CaveTile());
+		setup(295, false, FULL, FULL, new CaveTile());
 		setup(296, true);
 		setup(297, true);
 		setup(298, false);
@@ -646,7 +647,7 @@ public class TileManager {
 		setup(360, false);
 		setup(361, false);
 		setup(362, false);
-
+		setup(363, false, FULL, FULL, new GrassTile());
 		setup(364, false);
 		setup(365, false);
 		setup(366, false);
@@ -799,6 +800,7 @@ public class TileManager {
 		setup(508, false);
 		setup(509, true);
 		setup(510, true);
+		setup(511, false, FULL, FULL, new GrassTile());
 		setup(512, true);
 		setup(513, false);
 		setup(514, true, TOP_FOURTH);
@@ -1229,7 +1231,7 @@ public class TileManager {
 		setup(933, true);
 		setup(934, true);
 		setup(935, true, TOP_HALF);
-
+		setup(936, false, FULL, FULL, new CaveTile());
 		setup(937, true, TOP_HALF);
 		setup(938, true);
 		setup(939, true);
@@ -1247,15 +1249,15 @@ public class TileManager {
 		setup(953, false);
 		setup(954, false);
 		setup(955, false);
-
+		setup(956, false, FULL, FULL, new IceTile());
 		setup(957, true);
-
+		setup(958, false, FULL, FULL, new CaveTile());
 		setup(959, true);
 		setup(960, true);
 		setup(961, true, TOP_FOURTH);
 		setup(962, true);
 		setup(963, true);
-
+		setup(964, false, FULL, FULL, new CaveTile());
 		setup(965, true);
 		setup(966, true);
 		setup(967, true);
@@ -1267,7 +1269,8 @@ public class TileManager {
 		setup(973, false);
 
 		setup(986, false);
-
+		setup(987, false, FULL, FULL, new CaveTile());
+		setup(988, false, FULL, FULL, new CaveTile());
 		setup(989, true);
 		setup(990, true);
 		setup(991, true);
@@ -1471,44 +1474,6 @@ public class TileManager {
 //		setup(1198, true);
 //		setup(1199, true);
 //		setup(1200, true);
-
-		try {
-			tile[7] = new GrassTile();
-			tile[7].image = ImageIO.read(getClass().getResourceAsStream("/tiles/0007.png"));
-			
-			tile[235] = new CaveTile();
-			tile[235].image = ImageIO.read(getClass().getResourceAsStream("/tiles/0235.png"));
-			
-			tile[266] = new CaveTile();
-			tile[266].image = ImageIO.read(getClass().getResourceAsStream("/tiles/0266.png"));
-			
-			tile[363] = new GrassTile();
-			tile[363].image = ImageIO.read(getClass().getResourceAsStream("/tiles/0363.png"));
-			
-			tile[511] = new GrassTile();
-			tile[511].image = ImageIO.read(getClass().getResourceAsStream("/tiles/0511.png"));
-			
-			tile[936] = new CaveTile();
-			tile[936].image = ImageIO.read(getClass().getResourceAsStream("/tiles/0936.png"));
-			
-			tile[956] = new IceTile();
-			tile[956].image = ImageIO.read(getClass().getResourceAsStream("/tiles/0956.png"));
-			
-			tile[958] = new CaveTile();
-			tile[958].image = ImageIO.read(getClass().getResourceAsStream("/tiles/0958.png"));
-			
-			tile[964] = new CaveTile();
-			tile[964].image = ImageIO.read(getClass().getResourceAsStream("/tiles/0964.png"));
-			
-			tile[987] = new CaveTile();
-			tile[987].image = ImageIO.read(getClass().getResourceAsStream("/tiles/0987.png"));
-			
-			tile[988] = new CaveTile();
-			tile[988].image = ImageIO.read(getClass().getResourceAsStream("/tiles/0988.png"));
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		
 		setupCliff(37, 2, new Tile());
 		setupCliff(38, 2, new Tile());
@@ -1610,7 +1575,11 @@ public class TileManager {
 	}
 	
 	public void setup(int index, boolean collision, int collisionType, int over) {
-		tile[index] = new Tile();
+		setup(index, collision, collisionType, over, new Tile());
+	}
+	
+	public void setup(int index, boolean collision, int collisionType, int over, Tile gen) {
+		tile[index] = gen;
 		String imageName = index + "";
 		while (imageName.length() < 4) imageName = "0" + imageName;
 		try {

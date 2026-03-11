@@ -86,6 +86,9 @@ public class UI extends AbstractUI {
 	public Item tmCheck;
 	public boolean wasAPressed;
 	public final int maxMenuNum = 8;
+	
+	// PLAYER
+	public int nuzlockeSection;
 
 	// MOVE REMINDER
 	public int remindNum;
@@ -133,7 +136,7 @@ public class UI extends AbstractUI {
 	public int pageNum = 0;
 
 	// PLAYER INFO
-	private int playerScroll = 0;
+	private int[] playerScroll = new int[2];
 	public TextInputDialog cheatCodeDialog;
 
 	// FOG/LIGHT
@@ -4498,11 +4501,12 @@ public class UI extends AbstractUI {
 		int PLAYER_INFO = 5;
 		int NUZLOCKE_INFO = 9;
 		int MAX_VISIBLE_ENCOUNTERS = 6;
+		int MAX_VISIBLE_REASONS = 4;
 
 		drawPanelWithBorder(panelX, panelY, panelWidth, panelHeight, 220, textColor);
 
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 36F));
-		String title = "Player Info";
+		String title = subState == PLAYER_INFO ? "Player Info" : "Nuzlocke Info";
 		int titleX = getCenterAlignedTextX(title, gp.screenWidth / 2);
 		int titleY = panelY + gp.tileSize;
 		drawOutlinedText(title, titleX, titleY, textColor, Color.BLACK);
@@ -4510,7 +4514,7 @@ public class UI extends AbstractUI {
 		if (subState == PLAYER_INFO) {
 			drawPlayerInfo(panelX, panelY);
 		} else if (subState == NUZLOCKE_INFO) {
-			drawNuzlockeInfo(panelX, panelY, panelWidth, panelHeight, MAX_VISIBLE_ENCOUNTERS);
+			drawNuzlockeInfo(panelX, panelY, panelWidth, panelHeight, MAX_VISIBLE_ENCOUNTERS, MAX_VISIBLE_REASONS);
 		}
 
 		if (cheatCodeDialog != null && cheatCodeDialog.isActive()) {
@@ -4546,7 +4550,6 @@ public class UI extends AbstractUI {
 					case 0: // nuzlocke info
 						gp.playSFX(Sound.S_MENU_CON);
 						subState = NUZLOCKE_INFO;
-						playerScroll = 0;
 						break;
 					case 1: // cheat code
 						gp.playSFX(Sound.S_MENU_CON);
@@ -4584,19 +4587,41 @@ public class UI extends AbstractUI {
 			if (!showMessage) {
 				if (gp.keyH.upPressed) {
 					gp.keyH.upPressed = false;
-					gp.playSFX(Sound.S_MENU_1);
-					if (gp.player.p.nuzlockeEncounters != null && playerScroll > 0) {
-						playerScroll--;
+					if (nuzlockeSection == 0) { // encounters
+						if (gp.player.p.nuzlockeEncounters != null && playerScroll[nuzlockeSection] > 0) {
+							gp.playSFX(Sound.S_MENU_1);
+							playerScroll[nuzlockeSection]--;
+						}
+					} else { // invalid reasons
+						if (gp.player.p.invalidReasons != null && playerScroll[nuzlockeSection] > 0) {
+							gp.playSFX(Sound.S_MENU_1);
+							playerScroll[nuzlockeSection]--;
+						}
 					}
 				}
 
 				if (gp.keyH.downPressed) {
 					gp.keyH.downPressed = false;
-					gp.playSFX(Sound.S_MENU_1);
-					if (gp.player.p.nuzlockeEncounters != null &&
-							playerScroll < gp.player.p.nuzlockeEncounters.size() - MAX_VISIBLE_ENCOUNTERS) {
-						playerScroll++;
+					if (nuzlockeSection == 0) { // encounters
+						if (gp.player.p.nuzlockeEncounters != null &&
+								playerScroll[nuzlockeSection] < gp.player.p.nuzlockeEncounters.size() - MAX_VISIBLE_ENCOUNTERS) {
+							gp.playSFX(Sound.S_MENU_1);
+							playerScroll[nuzlockeSection]++;
+						}
+					} else { // invalid reasons
+						if (gp.player.p.invalidReasons != null &&
+								playerScroll[nuzlockeSection] < gp.player.p.invalidReasons.size() - MAX_VISIBLE_REASONS) {
+							gp.playSFX(Sound.S_MENU_1);
+							playerScroll[nuzlockeSection]++;
+						}
 					}
+				}
+				
+				if (gp.keyH.leftPressed || gp.keyH.rightPressed) {
+					gp.keyH.leftPressed = false;
+					gp.keyH.rightPressed = false;
+					gp.playSFX(Sound.S_MENU_1);
+					nuzlockeSection = 1 - nuzlockeSection;
 				}
 
 				if (gp.keyH.wPressed || gp.keyH.sPressed || gp.keyH.dPressed) {
@@ -4606,7 +4631,6 @@ public class UI extends AbstractUI {
 					gp.playSFX(Sound.S_MENU_CAN);
 					subState = PLAYER_INFO;
 					commandNum = 0;
-					playerScroll = 0;
 				}
 			}
 		}
@@ -4620,7 +4644,8 @@ public class UI extends AbstractUI {
 			if (gp.player.p.nuzlockeEncounters != null && gp.player.p.nuzlockeEncounters.size() > MAX_VISIBLE_ENCOUNTERS) {
 				toolTips.add(new ToolTip(gp, "Scroll", "/", true, gp.config.upKey, gp.config.downKey));
 			}
-			toolTips.add(new ToolTip(gp, "Back", "//", true, gp.config.wKey, gp.config.sKey, gp.config.dKey));
+			toolTips.add(new ToolTip(gp, "Switch", "/", true, gp.config.leftKey, gp.config.rightKey));
+			toolTips.add(new ToolTip(gp, "Back", "/", true, gp.config.wKey, gp.config.sKey, gp.config.dKey));
 		}
 
 		if (gp.keyH.shiftPressed && !toolTips.isEmpty()) {
@@ -4824,7 +4849,7 @@ public class UI extends AbstractUI {
 			backSelected ? textColor : new Color(200, 200, 200), Color.BLACK);
 	}
 
-	private void drawNuzlockeInfo(int panelX, int panelY, int panelWidth, int panelHeight, int MAX_VISIBLE_ENCOUNTERS) {
+	private void drawNuzlockeInfo(int panelX, int panelY, int panelWidth, int panelHeight, int MAX_VISIBLE_ENCOUNTERS, int MAX_VISIBLE_REASONS) {
 		Player p = gp.player.p;
 		int contentX = panelX + gp.tileSize / 2;
 		int contentY = panelY + (int)(gp.tileSize * 1.75);
@@ -4871,79 +4896,94 @@ public class UI extends AbstractUI {
 
 		drawOutlinedText("Level Cap Bonus: +" + p.levelCapBonus, labelX, contentY, new Color(200, 200, 200), Color.BLACK);
 		contentX -= gp.tileSize * 4;
-		contentY = startY + gp.tileSize * 3;
-
-		// invalid reasons
-		if (!p.isValidNuzlocke && !p.invalidReasons.isEmpty()) {
-			g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
-			drawOutlinedText("Invalid Reasons:", contentX, contentY, new Color(255, 100, 100), Color.BLACK);
-			contentY += gp.tileSize / 4;
-
-			int scrollableX = contentX;
-			int scrollableY = contentY + 2;
-			int scrollableWidth = panelWidth - gp.tileSize;
-			int scrollableHeight = (int)(gp.tileSize * 1.5) + 4;
-
-			drawPanelWithBorder(scrollableX, scrollableY, scrollableWidth, scrollableHeight, 50, new Color(100, 100, 100));
-
-			g2.setClip(scrollableX, scrollableY + 2, scrollableWidth, scrollableHeight - 4);
-
-			int reasonY = scrollableY + gp.tileSize / 3;
-			g2.setFont(g2.getFont().deriveFont(16F));
-
-			for (String reason : p.invalidReasons) {
-				drawOutlinedText("• " + reason, scrollableX + gp.tileSize / 4, reasonY, new Color(255, 150, 150), Color.BLACK);
-				reasonY += gp.tileSize / 3;
-			}
-
-			g2.setClip(null);
-			contentY += scrollableHeight + gp.tileSize / 2;
-		}
+		contentY = startY + (int) (gp.tileSize * 2.75);
 
 		// encounters
-		if (p.nuzlockeEncounters != null && !p.nuzlockeEncounters.isEmpty()) {
-			g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
-			drawOutlinedText("Encounters (" + p.nuzlockeEncounters.size() + "):", contentX, contentY, textColor, Color.BLACK);
-			contentY += gp.tileSize / 4;
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
+		drawOutlinedText("Encounters (" + p.nuzlockeEncounters.size() + "):", contentX, contentY, textColor, Color.BLACK);
+		contentY += gp.tileSize / 4;
 
-			int scrollableX = contentX;
-			int scrollableY = contentY + 2;
-			int scrollableWidth = panelWidth - gp.tileSize;
-			int scrollableHeight = gp.tileSize * 2 + 4;
+		int scrollableX = contentX;
+		int scrollableY = contentY + 2;
+		int scrollableWidth = panelWidth - gp.tileSize;
+		int scrollableHeight = gp.tileSize * 2 + 4;
 
-			drawPanelWithBorder(scrollableX, scrollableY, scrollableWidth, scrollableHeight, 50, new Color(100, 100, 100));
+		drawPanelWithBorder(scrollableX, scrollableY, scrollableWidth, scrollableHeight, 50, nuzlockeSection == 0 ? new Color(87, 230, 255) : new Color(100, 100, 100));
 
-			g2.setClip(scrollableX, scrollableY + 2, scrollableWidth, scrollableHeight - 4);
+		g2.setClip(scrollableX, scrollableY + 2, scrollableWidth, scrollableHeight - 4);
 
-			int encounterY = scrollableY + gp.tileSize / 3 - (playerScroll * (gp.tileSize / 3));
-			g2.setFont(g2.getFont().deriveFont(18F));
+		int encounterY = scrollableY + gp.tileSize / 3 - (playerScroll[0] * (gp.tileSize / 3));
+		g2.setFont(g2.getFont().deriveFont(18F));
 
-			for (int i = 0; i < p.nuzlockeEncounters.size(); i++) {
-				String encounter = p.nuzlockeEncounters.get(i);
-				Color encounterColor = (i >= playerScroll && i < playerScroll + MAX_VISIBLE_ENCOUNTERS) ? new Color(200, 200, 200) : new Color(120, 120, 120);
-				drawOutlinedText((i+1) + ") " + encounter, scrollableX + gp.tileSize / 4, encounterY, encounterColor, Color.BLACK);
-				encounterY += gp.tileSize / 3;
-			}
+		for (int i = 0; i < p.nuzlockeEncounters.size(); i++) {
+			String encounter = p.nuzlockeEncounters.get(i);
+			Color encounterColor = (i >= playerScroll[0] && i < playerScroll[0] + MAX_VISIBLE_ENCOUNTERS) ? new Color(200, 200, 200) : new Color(120, 120, 120);
+			drawOutlinedText((i+1) + ") " + encounter, scrollableX + gp.tileSize / 4, encounterY, encounterColor, Color.BLACK);
+			encounterY += gp.tileSize / 3;
+		}
 
-			g2.setClip(null);
+		g2.setClip(null);
 
-			// scrollbar
-			if (p.nuzlockeEncounters.size() > MAX_VISIBLE_ENCOUNTERS) {
-				int scrollbarX = scrollableX + scrollableWidth - 12;
-				int scrollbarY = scrollableY + 4;
-				int scrollbarWidth = 8;
-				int scrollbarHeight = scrollableHeight - 8;
+		// scrollbar
+		if (p.nuzlockeEncounters.size() > MAX_VISIBLE_ENCOUNTERS) {
+			int scrollbarX = scrollableX + scrollableWidth - 12;
+			int scrollbarY = scrollableY + 4;
+			int scrollbarWidth = 8;
+			int scrollbarHeight = scrollableHeight - 8;
 
-				g2.setColor(new Color(60, 60, 60));
-				g2.fillRect(scrollbarX, scrollbarY, scrollbarWidth, scrollbarHeight);
+			g2.setColor(new Color(60, 60, 60));
+			g2.fillRect(scrollbarX, scrollbarY, scrollbarWidth, scrollbarHeight);
 
-				float thumbHeight = scrollbarHeight * ((float)MAX_VISIBLE_ENCOUNTERS / p.nuzlockeEncounters.size());
-				float maxScroll = p.nuzlockeEncounters.size() - MAX_VISIBLE_ENCOUNTERS;
-				float thumbY = scrollbarY + (scrollbarHeight - thumbHeight) * (playerScroll / maxScroll);
+			float thumbHeight = scrollbarHeight * ((float)MAX_VISIBLE_ENCOUNTERS / p.nuzlockeEncounters.size());
+			float maxScroll = p.nuzlockeEncounters.size() - MAX_VISIBLE_ENCOUNTERS;
+			float thumbY = scrollbarY + (scrollbarHeight - thumbHeight) * (playerScroll[0] / maxScroll);
 
-				g2.setColor(textColor);
-				g2.fillRect(scrollbarX, (int)thumbY, scrollbarWidth, (int)thumbHeight);
-			}
+			g2.setColor(textColor);
+			g2.fillRect(scrollbarX, (int)thumbY, scrollbarWidth, (int)thumbHeight);
+		}
+		
+		contentY += gp.tileSize * 2.75;
+		
+		// invalid reasons
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
+		drawOutlinedText("Invalid Reasons:", contentX, contentY, new Color(255, 100, 100), Color.BLACK);
+		contentY += gp.tileSize / 4;
+
+		scrollableX = contentX;
+		scrollableY = contentY + 2;
+		scrollableWidth = panelWidth - gp.tileSize;
+		scrollableHeight = (int)(gp.tileSize * 1.5) + 4;
+
+		drawPanelWithBorder(scrollableX, scrollableY, scrollableWidth, scrollableHeight, 50, nuzlockeSection == 1 ? new Color(87, 230, 255) : new Color(100, 100, 100));
+
+		g2.setClip(scrollableX, scrollableY + 2, scrollableWidth, scrollableHeight - 4);
+
+		int reasonY = scrollableY + gp.tileSize / 3 - (playerScroll[1] * (gp.tileSize / 3));
+		g2.setFont(g2.getFont().deriveFont(16F));
+
+		for (String reason : p.invalidReasons) {
+			drawOutlinedText("• " + reason, scrollableX + gp.tileSize / 4, reasonY, new Color(255, 150, 150), Color.BLACK);
+			reasonY += gp.tileSize / 3;
+		}
+
+		g2.setClip(null);
+		
+		// scrollbar
+		if (p.invalidReasons.size() > MAX_VISIBLE_REASONS) {
+			int scrollbarX = scrollableX + scrollableWidth - 12;
+			int scrollbarY = scrollableY + 4;
+			int scrollbarWidth = 8;
+			int scrollbarHeight = scrollableHeight - 8;
+
+			g2.setColor(new Color(60, 60, 60));
+			g2.fillRect(scrollbarX, scrollbarY, scrollbarWidth, scrollbarHeight);
+
+			float thumbHeight = scrollbarHeight * ((float)MAX_VISIBLE_REASONS / p.invalidReasons.size());
+			float maxScroll = p.invalidReasons.size() - MAX_VISIBLE_REASONS;
+			float thumbY = scrollbarY + (scrollbarHeight - thumbHeight) * (playerScroll[1] / maxScroll);
+
+			g2.setColor(textColor);
+			g2.fillRect(scrollbarX, (int)thumbY, scrollbarWidth, (int)thumbHeight);
 		}
 
 		// back
@@ -5037,6 +5077,7 @@ public class UI extends AbstractUI {
 				gp.titleScreen.menuState = TitleScreen.MAIN_MENU;
 				gp.titleScreen.menuNum = TitleScreen.MAIN_CONTINUE;
 				gp.titleScreen.newGameMenuNum = TitleScreen.NG_SAVE_NAME;
+				gp.player = new PlayerCharacter(gp);
 				gp.setGameState(GamePanel.TITLE_STATE);
 				menuNum = 0;
 				subState = 0;
@@ -6686,7 +6727,7 @@ public class UI extends AbstractUI {
 				}
 				
 				g2.setFont(g2.getFont().deriveFont(16F));
-				g2.drawString(String.format("%.0f%%", e.getEncounterChance() * 100), x + 60, y + 75);
+				drawOutlinedText(String.format("%.0f%%", e.getEncounterChance() * 100), x + 60, y + 75, Color.WHITE, Color.BLACK);
 				if ((i + 1) % maxPerRow == 0) {
 					x = winX + gp.tileSize / 3;
 					y += spriteHeight;
