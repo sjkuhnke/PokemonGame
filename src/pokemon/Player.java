@@ -132,7 +132,7 @@ public class Player extends Trainer implements Serializable {
 	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 83;
+	public static final int VERSION = 84;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	public static final int BET_INC = 10;
@@ -1609,12 +1609,13 @@ public class Player extends Trainer implements Serializable {
 	public static void setupPokedex() {
 		for (int i = 1; i <= Pokemon.MAX_POKEMON; i++) {
 			int dexNo = Math.abs(Pokemon.getDexNo(i));
-			if (dexNo == 0) continue;
 			int dexSec = Pokemon.getDexSection(i);
 			
 			Pokemon test = new Pokemon(i, 5, true, false);
 			test.abilitySlot = 0;
 			test.setAbility(test.abilitySlot);
+			
+			if (dexNo == 0) continue;
 			
 			Pokemon[] dex = null;
 			if (dexSec == 0) {

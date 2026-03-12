@@ -956,7 +956,9 @@ public class Pokemon implements Serializable {
 				Pokemon ally = tr.team[i];
 				if (ally != null && ally != this) {
 					Pokemon allyClone = trainerTeamClones[i];
-					Pokemon simulatedAlly = simulateSwitchIn(ally, allyClone, foe, fieldClone);
+					Pokemon foeClone = foe.clone();
+					foeClone.vStatuses = DeepClonable.deepCloneList(foe.vStatuses);
+					Pokemon simulatedAlly = simulateSwitchIn(ally, allyClone, foeClone, fieldClone);
 					int allyScore = simulatedAlly.scorePokemon(foe, strongestMove, foeMaxDamagePair, foeCanKO, fieldClone, null, false);
 					scoreMap.put(ally, allyScore);
 				}
@@ -2979,7 +2981,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (move == Move.METRONOME) {
-			consumeMovePP(move, foe);
+			if (consumePP) consumeMovePP(move, foe);
 			announceMove(move, foe, ctx);
 			Move[] moves = Move.getAllMoves();
 			Random metronome = new Random();
@@ -2992,17 +2994,17 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (id == 237) {
-			consumeMovePP(move, foe);
 			Move m = move;
 			move = get150Move(move);
 			if (move != m) {
+				consumeMovePP(m, foe);
 				move(foe, move, first, false);
 				return; // same logic as metronome
 			}
 		}
 		
 		if (move == Move.MIRROR_MOVE || move == Move.MIMIC) {
-			consumeMovePP(move, foe);
+			if (consumePP) consumeMovePP(move, foe);
 			announceMove(move, foe, ctx);
 			Move userMove = move;
 			move = foe.lastMoveUsed;
@@ -3058,6 +3060,15 @@ public class Pokemon implements Serializable {
 			bp *= 1.2;
 		}
 		
+		if (move == Move.SKYBURN) {
+			PType skyType = Move.SKYBURN.mtype;
+			double lightMul = Trainer.getEffective(foe, this, skyType, Move.SKYBURN, false);
+			skyType = PType.GALACTIC;
+			double galMul = Trainer.getEffective(foe, this, skyType, Move.SKYBURN, false);
+			moveType = galMul > lightMul ? PType.GALACTIC : PType.LIGHT;
+			System.out.printf("Light Mul: %.1f, Gal Mul: %.1f\n", lightMul, galMul);
+		}
+		
 		if (this.getAbility(field) == Ability.PROTEAN && moveType != PType.UNKNOWN) {
 			if (this.type1 == moveType && this.type2 == null) {
 				
@@ -3070,7 +3081,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (move == Move.FAILED_SUCKER) {
-			consumeMovePP(move, foe);
+			if (consumePP) consumeMovePP(move, foe);
 			announceMoveText(Move.SUCKER_PUNCH, true);
 			fail();
 			this.impressive = false;
@@ -3857,13 +3868,14 @@ public class Pokemon implements Serializable {
 			double multiplier = 1;
 			// Check type effectiveness
 			PType[] resist = getResistances(moveType);
-			if (move == Move.FREEZE$DRY || move == Move.SKY_UPPERCUT) {
+			if (move == Move.FREEZE$DRY || move == Move.SKY_UPPERCUT || move == Move.PHOTON_DRAIN) {
 				ArrayList<PType> types = new ArrayList<>();
 				for (PType type : resist) {
 					types.add(type);
 				}
 				if (move == Move.FREEZE$DRY) types.remove(PType.WATER);
 				if (move == Move.SKY_UPPERCUT) types.remove(PType.FLYING);
+				if (move == Move.PHOTON_DRAIN) types.remove(PType.LIGHT);
 				resist = types.toArray(new PType[0]);
 			}
 			
@@ -3881,13 +3893,14 @@ public class Pokemon implements Serializable {
 			
 			// Check type effectiveness
 			PType[] weak = getWeaknesses(moveType);
-			if (move == Move.FREEZE$DRY || move == Move.SKY_UPPERCUT) {
+			if (move == Move.FREEZE$DRY || move == Move.SKY_UPPERCUT || move == Move.PHOTON_DRAIN) {
 				PType[] temp = new PType[weak.length + 1];
 				for (int i = 0; i < weak.length; i++) {
 					temp[i] = weak[i];
 				}
 				if (move == Move.FREEZE$DRY) temp[weak.length] = PType.WATER;
 				if (move == Move.SKY_UPPERCUT) temp[weak.length] = PType.FLYING;
+				if (move == Move.PHOTON_DRAIN) temp[weak.length] = PType.LIGHT;
 				weak = temp;
 			}
 			for (PType type : weak) {
@@ -3943,6 +3956,7 @@ public class Pokemon implements Serializable {
 					foe.illusion = false;
 				}
 				if (item == Item.EXPERT_BELT) damage *= 1.2;
+				if (this.getAbility(field) == Ability.NEUROFORCE) damage *= 1.5;
 				if (foe.getItem(field) != null && foe.checkTypeResistBerry(moveType)) {
 					Task.addTask(Task.TEXT, foe.nickname + " ate its " + foe.item.toString() + " to weaken the attack!");
 					foe.consumeItem(this);
@@ -7415,8 +7429,35 @@ public class Pokemon implements Serializable {
 		this.currentHP = 0;
 		this.fainted = true;
 		this.battled = false;
-		awardHappiness(-3, false);
 		this.status = Status.HEALTHY;
+		this.clearVolatile(foe);
+		if (this.ability == Ability.EVENT_HORIZON && id == 290) {
+			Task.addTask(Task.TEXT, this.nickname + " fainted..?", this);
+			Task.addTask(Task.TEXT, "...");
+			Task.addAbilityTask(this);
+			Task t = Task.addMoveAnimTask(Move.AURORA_GLOW, "", this, this, "attacking");
+			t.wipe = true;
+			id = 291;
+			this.fainted = false;
+			baseStats = getBaseStats();
+			setStats();
+			weight = getWeight();
+			int nHP = this.getStat(0);
+			t = Task.addTask(Task.SPRITE, "", this);
+			heal(nHP, nickname + " transformed into " + getName(id) + "!");
+			if (nickname.equals(name())) nickname = getName();
+			name = getName();
+			setTypes();
+			t.types = new PType[] {this.type1, this.type2};
+			setAbility();
+			if (this.playerOwned()) this.getPlayer().pokedex[291] = 2;
+			this.statStages = new int[7];
+			foe.statStages = new int[7];
+			Task.addTask(Task.TEXT, "All stat changes were eliminated!");
+			this.swapIn(foe, false);
+			return;
+		}
+		awardHappiness(-3, false);
 		Pokemon[] pokemon = getActivePokemon();
 		for (Pokemon p : pokemon) {
 			if (p != this) foe = p;
@@ -7429,7 +7470,6 @@ public class Pokemon implements Serializable {
 			player.setBattled(player.getBattled() - 1);
 		}
 		if (announce) Task.addTask(Task.FAINT, this.nickname + " fainted!", this);
-		this.clearVolatile(foe);
 		
 		if (this.playerOwned() && this.getPlayer().nuzlocke) gp.saveScum(this.toString() + " died to " + foe.toString() + (foe.trainerOwned() ? " (" + foe.trainer.getName() + ")": "" + " (Save Scum)"));
 		
@@ -7694,7 +7734,7 @@ public class Pokemon implements Serializable {
 		
 		if ((moveType == PType.WATER && (foeAbility == Ability.WATER_ABSORB || foeAbility == Ability.DRY_SKIN)) || (moveType == PType.ELECTRIC && foeAbility == Ability.VOLT_ABSORB) ||
 				(moveType == PType.BUG && foeAbility == Ability.INSECT_FEEDER) || ((moveType == PType.LIGHT || moveType == PType.GALACTIC) && foeAbility == Ability.BLACK_HOLE) ||
-				(moveType == PType.MAGIC && foeAbility == Ability.MYSTIC_ABSORB)) {
+				(moveType == PType.MAGIC && foeAbility == Ability.MYSTIC_ABSORB) || (moveType == PType.LIGHT && (foeAbility == Ability.EVENT_HORIZON || foeAbility == Ability.NEUROFORCE))) {
 			if (foe.getItem(field) != Item.RING_TARGET) return new Pair<>(0, 0.0);
 		}
 		
@@ -7987,13 +8027,14 @@ public class Pokemon implements Serializable {
 		double multiplier = 1;
 		// Check type effectiveness
 		PType[] resist = getResistances(moveType);
-		if (move == Move.FREEZE$DRY || move == Move.SKY_UPPERCUT) {
+		if (move == Move.FREEZE$DRY || move == Move.SKY_UPPERCUT || move == Move.PHOTON_DRAIN) {
 			ArrayList<PType> types = new ArrayList<>();
 			for (PType type : resist) {
 				types.add(type);
 			}
 			if (move == Move.FREEZE$DRY) types.remove(PType.WATER);
 			if (move == Move.SKY_UPPERCUT) types.remove(PType.FLYING);
+			if (move == Move.PHOTON_DRAIN) types.remove(PType.LIGHT);
 			resist = types.toArray(new PType[0]);
 		}
 		
@@ -8011,13 +8052,14 @@ public class Pokemon implements Serializable {
 		
 		// Check type effectiveness
 		PType[] weak = getWeaknesses(moveType);
-		if (move == Move.FREEZE$DRY || move == Move.SKY_UPPERCUT) {
+		if (move == Move.FREEZE$DRY || move == Move.SKY_UPPERCUT || move == Move.PHOTON_DRAIN) {
 			PType[] temp = new PType[weak.length + 1];
 			for (int i = 0; i < weak.length; i++) {
 				temp[i] = weak[i];
 			}
 			if (move == Move.FREEZE$DRY) temp[weak.length] = PType.WATER;
 			if (move == Move.SKY_UPPERCUT) temp[weak.length] = PType.FLYING;
+			if (move == Move.PHOTON_DRAIN) temp[weak.length] = PType.LIGHT;
 			weak = temp;
 		}
 		for (PType type : weak) {
@@ -8051,6 +8093,7 @@ public class Pokemon implements Serializable {
 			if (foeAbility == Ability.SOLID_ROCK || foeAbility == Ability.FILTER) damage /= 2;
 			if (mode != 0 && foeAbility == Ability.ANTICIPATION && foe.illusion) damage /= 2;
 			if (item == Item.EXPERT_BELT) damage *= 1.2;
+			if (this.getAbility(field) == Ability.NEUROFORCE) damage *= 1.5;
 			if (mode != 0 && foe.getItem(field) != null && foe.checkTypeResistBerry(moveType)) damage /= 2;
 		}
 		
@@ -9714,6 +9757,7 @@ public class Pokemon implements Serializable {
 	}
 	
 	public void checkTerraforge(Pokemon foe) {
+		if (this.isFainted()) return;
 		if (this.getAbility(field) == Ability.TERRAFORGE) {
 			boolean hasTerrain = field.terrain != null;
 			
@@ -9723,7 +9767,7 @@ public class Pokemon implements Serializable {
 				Task.addAbilityTask(this);
 				Task.addTask(Task.TEXT, hasTerrain ? this.nickname + " is harnesing the terrain's power!" : this.nickname + "'s terrain power faded!");
 				for (int i = 0; i < 5; ++i) {
-					stat(this, i, direction, foe);
+					if (statStages[i] > 0 || direction > 0) stat(this, i, direction, foe); // only remove stat stages if it's above 0
 				}
 				this.illusion = hasTerrain;
 			}
@@ -9972,13 +10016,14 @@ public class Pokemon implements Serializable {
 		}
 		
 		PType[] resistances = getResistances(mtype);
-		if (m == Move.FREEZE$DRY || m == Move.SKY_UPPERCUT) {
+		if (m == Move.FREEZE$DRY || m == Move.SKY_UPPERCUT || m == Move.PHOTON_DRAIN) {
 			ArrayList<PType> types = new ArrayList<>();
 			for (PType type : resistances) {
 				types.add(type);
 			}
 			if (m == Move.FREEZE$DRY) types.remove(PType.WATER);
 			if (m == Move.SKY_UPPERCUT) types.remove(PType.FLYING);
+			if (m == Move.PHOTON_DRAIN) types.remove(PType.LIGHT);
 			resistances = types.toArray(new PType[0]);
 		}
         for (PType resistance : resistances) {
@@ -9988,13 +10033,14 @@ public class Pokemon implements Serializable {
         }
         
         PType[] weaknesses = getWeaknesses(mtype);
-        if (m == Move.FREEZE$DRY || m == Move.SKY_UPPERCUT) {
+        if (m == Move.FREEZE$DRY || m == Move.SKY_UPPERCUT || m == Move.PHOTON_DRAIN) {
 			PType[] temp = new PType[weaknesses.length + 1];
 			for (int i = 0; i < weaknesses.length; i++) {
 				temp[i] = weaknesses[i];
 			}
 			if (m == Move.FREEZE$DRY) temp[weaknesses.length] = PType.WATER;
 			if (m == Move.SKY_UPPERCUT) temp[weaknesses.length] = PType.FLYING;
+			if (m == Move.PHOTON_DRAIN) temp[weaknesses.length] = PType.LIGHT;
 			weaknesses = temp;
 		}
         for (PType weakness : weaknesses) {
@@ -12309,6 +12355,19 @@ public class Pokemon implements Serializable {
 	public void reset() {
 		if (this.id == 237) {
 			this.id = 150;
+			this.setSprites();
+			if (this.nickname.equals(this.name())) this.nickname = this.getName();
+			this.setName(this.getName());
+			
+			this.baseStats = this.getBaseStats();
+			this.setStats();
+			this.weight = this.getWeight();
+			this.setTypes();
+			this.setAbility(this.abilitySlot);
+			this.currentHP = this.currentHP > this.getStat(0) ? this.getStat(0) : this.currentHP;
+		}
+		if (this.id == 291) {
+			this.id = 290;
 			this.setSprites();
 			if (this.nickname.equals(this.name())) this.nickname = this.getName();
 			this.setName(this.getName());

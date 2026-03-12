@@ -18,7 +18,7 @@
 18 |Hoghoncho    |NORMAL  |ROCK    |ROUGH_SKIN        |ROCK_HEAD         |SOLID_ROCK        |[150, 105, 110, 40, 85, 45]   |785.5 |100|FIELD       |HUMAN$LIKE  |
 41 |Teddull      |NORMAL  |null    |ADAPTABILITY      |ANGER_POINT       |SCRAPPY           |[55, 55, 55, 55, 55, 55]      |65.7  |125|FIELD       |HUMAN$LIKE  |
 42 |Teddician    |NORMAL  |MAGIC   |ADAPTABILITY      |SHIELD_DUST       |SCRAPPY           |[75, 75, 75, 75, 75, 75]      |65.8  |100|FIELD       |HUMAN$LIKE  |
-43 |Teddinaut    |NORMAL  |GALACTIC|ADAPTABILITY      |LEVITATE          |SCRAPPY           |[80, 60, 75, 135, 85, 80]     |90.9  |50 |FIELD       |HUMAN$LIKE  |
+43 |Teddinaut    |NORMAL  |GALACTIC|ADAPTABILITY      |LEVITATE          |SCRAPPY           |[80, 55, 75, 135, 85, 90]     |90.9  |50 |FIELD       |HUMAN$LIKE  |
 19 |Minipede     |BUG     |null    |SWARM             |COMPOUND_EYES     |SHIELD_DUST       |[33, 44, 29, 23, 33, 38]      |0.9   |255|BUG         |MINERAL     |
 20 |Centinel     |BUG     |null    |SWARM             |COMPOUND_EYES     |SHIELD_DUST       |[52, 66, 61, 41, 75, 80]      |2.0   |200|BUG         |MINERAL     |
 21 |Milimace     |BUG     |null    |POISON_HEAL       |COMPOUND_EYES     |THREATENING       |[80, 70, 80, 55, 120, 100]    |50.7  |125|BUG         |MINERAL     |
@@ -287,8 +287,8 @@
 237|Dust Sorcerer|GROUND  |FLYING  |BEAST_BOOST       |BEAST_BOOST       |BEAST_BOOST       |[79, 61, 79, 127, 131, 113]   |101.1 |5  |ALIEN       |ALIEN       |
 238|Fever Dream  |FIRE    |ICE     |BEAST_BOOST       |BEAST_BOOST       |BEAST_BOOST       |[103, 131, 101, 79, 97, 79]   |495.3 |5  |ALIEN       |ALIEN       |
 239|Dusk Skater  |DARK    |STEEL   |BEAST_BOOST       |BEAST_BOOST       |BEAST_BOOST       |[67, 113, 59, 131, 71, 149]   |256.3 |5  |ALIEN       |ALIEN       |
-248|Necrozma     |GALACTIC|DARK    |SCRAPPY           |UNBURDEN          |TALENTED          |[97, 107, 111, 147, 99, 119]  |507.1 |3  |UNDISCOVERED|UNDISCOVERED|
-0  |Necrozma-Ult |LIGHT   |DARK    |SCRAPPY           |UNBURDEN          |TALENTED          |[97, 147, 97, 187, 97, 129]   |507.1 |3  |UNDISCOVERED|UNDISCOVERED|
+248|Necrozma     |GALACTIC|DARK    |EVENT_HORIZON     |EVENT_HORIZON     |NULL              |[97, 107, 111, 147, 99, 119]  |507.1 |3  |UNDISCOVERED|UNDISCOVERED|
+0  |Necrozma-Ult |LIGHT   |DARK    |NEUROFORCE        |NEUROFORCE        |NULL              |[97, 147, 97, 187, 97, 129]   |507.1 |3  |UNDISCOVERED|UNDISCOVERED|
 104|Azurill      |WATER   |NORMAL  |THICK_FAT         |HUGE_POWER        |SAP_SIPPER        |[50, 20, 40, 20, 40, 20]      |4.4   |150|WATER_1     |FAIRY       |
 105|Marill       |WATER   |NORMAL  |THICK_FAT         |HUGE_POWER        |SAP_SIPPER        |[70, 20, 50, 20, 50, 40]      |18.7  |190|WATER_1     |FAIRY       |
 106|Azumarill    |WATER   |NORMAL  |THICK_FAT         |HUGE_POWER        |SAP_SIPPER        |[100, 50, 80, 60, 80, 50]     |62.8  |75 |WATER_1     |FAIRY       |

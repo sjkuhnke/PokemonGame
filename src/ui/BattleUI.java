@@ -904,7 +904,7 @@ public class BattleUI extends AbstractUI {
 		if (draw.spriteVisible) drawUserSprite(draw);
 		drawHPImage(draw);
 		drawHPBar(draw, userHP, maxUserHP);
-		drawNameLabel(draw, userLevel);
+		drawNameLabel(draw, userName, userLevel);
 		drawUserHP();
 		drawStatus(draw);
 		drawTypes(draw);
@@ -917,7 +917,7 @@ public class BattleUI extends AbstractUI {
 		if (draw == null || !draw.isVisible()) return;
 		drawHPImage(draw);
 		drawHPBar(draw, foeHP, maxFoeHP);
-		drawNameLabel(draw, foeLevel);
+		drawNameLabel(draw, foeName, foeLevel);
 		if (draw.spriteVisible) drawFoeSprite(draw);
 		drawStatus(draw);
 		drawTypes(draw);
@@ -1215,7 +1215,7 @@ public class BattleUI extends AbstractUI {
 		
 	}
 	
-	protected void drawNameLabel(Pokemon p, int level) {
+	protected void drawNameLabel(Pokemon p, String name, int level) {
 		g2.setColor(Color.BLACK);
 		g2.setFont(g2.getFont().deriveFont(24F));
 		
@@ -1223,7 +1223,6 @@ public class BattleUI extends AbstractUI {
 		int y;
 		int levelX;
 		int levelY;
-		String name = p.nickname;
 		g2.setFont(g2.getFont().deriveFont(getFontSize(name, gp.tileSize * 2.5F)));
 		
 		if (p.playerOwned()) {

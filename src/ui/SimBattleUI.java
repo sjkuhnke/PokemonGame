@@ -498,7 +498,7 @@ public class SimBattleUI extends BattleUI {
 	}
 	
 	@Override
-	protected void drawNameLabel(Pokemon p, int level) {
+	protected void drawNameLabel(Pokemon p, String name, int level) {
 		g2.setColor(Color.BLACK);
 		g2.setFont(g2.getFont().deriveFont(24F));
 		
@@ -506,7 +506,6 @@ public class SimBattleUI extends BattleUI {
 		int y;
 		int levelX;
 		int levelY;
-		String name = p.trainer == user.trainer ? userName : foeName;
 		g2.setFont(g2.getFont().deriveFont(getFontSize(name, gp.tileSize * 2.5F)));
 		
 		if (p.trainer == user.trainer) { // same as above

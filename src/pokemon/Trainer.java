@@ -373,6 +373,8 @@ public class Trainer implements Serializable {
 		if (foe.getAbility(Pokemon.field) == Ability.TINTED_LENS && multiplier < 1) multiplier *= 2;
 		if (pAbility == Ability.DRY_SKIN && type == PType.WATER) multiplier = 0;
 		if (pAbility == Ability.BLACK_HOLE && (type == PType.LIGHT || type == PType.GALACTIC)) multiplier = 0;
+		if (pAbility == Ability.EVENT_HORIZON && type == PType.LIGHT) multiplier = 0;
+		if (pAbility == Ability.NEUROFORCE && type == PType.LIGHT) multiplier = 0;
 		if (pAbility == Ability.ILLUMINATION && (type == PType.GHOST || type == PType.DARK || type == PType.LIGHT || type == PType.GALACTIC)) multiplier *= 0.5;
 		if (pAbility == Ability.UNERODIBLE && (type == PType.GRASS || type == PType.WATER || type == PType.GROUND)) multiplier *= 0.25;
 		if (pAbility == Ability.FLASH_FIRE && type == PType.FIRE) multiplier = 0;

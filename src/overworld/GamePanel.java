@@ -74,7 +74,7 @@ public class GamePanel extends JPanel implements Runnable {
 	// CONSTANTS
 	public static final int MAX_MAP = 240;
 	public static final int MAX_FLAG = 25; // should not be >31
-	public static final String GAME_VERSION = "0.8.81";
+	public static final String GAME_VERSION = "0.8.85";
 	public static boolean DEBUG = true;
 	
 	// SYSTEM
@@ -735,6 +735,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public void setupGame() {
 		if (loaded) {
 			aSetter = new AssetSetter(this);
+			ui = new UI(this);
 		}
 		
 		loadingScreen.setProgress(10, "Loading tiles and maps...");

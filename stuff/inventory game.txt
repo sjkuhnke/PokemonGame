@@ -40,6 +40,7 @@ Moveset would be Light that burns the sky, Power Gem, Aura Sphere/Iron Blast/Dar
 Give it a signature Dark move that is super effective on Light, or is a draining move, or sets Floodlight, or all of the above
 
 Pressing A in Nuzlocke Info to scroll Invalid Reasons
+Tooltip shows pressing D will show the foe but it doesn't for static Pokemon
 
 Game2.72: Encounters and TN base stuff done 3/27
 Game2.721: Items for Mt Splinkty done 3/29
