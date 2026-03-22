@@ -1380,6 +1380,18 @@ public class PMap extends JPanel {
 		case 222:
 			PlayerCharacter.currentMapName = "Leviathan League";
 			return 46;
+		case 223:
+			PlayerCharacter.currentMapName = "Leviathan League";
+			return 46;
+		case 224:
+			PlayerCharacter.currentMapName = "Leviathan League";
+			return 46;
+		case 225:
+			PlayerCharacter.currentMapName = "Leviathan League";
+			return 46;
+		case 226:
+			PlayerCharacter.currentMapName = "Leviathan League";
+			return 46;
 		}
 		
 		return -1;

@@ -1076,15 +1076,7 @@ public class BattleUI extends AbstractUI {
 			Task.addSwapInTask(foe, false);
 			foeFainted = foe.trainer.getNumFainted();
 		}
-		if (foe.trainerOwned() && foe.trainer.boost > 0) {
-			String auraMessage = staticID == 205 || staticID == 210 || staticID == 197 || staticID == 202
-				? " is surrounded by immense electricity!"
-				: "'s aura flared to life!";
-			Task.addTask(Task.TEXT, foe.nickname + auraMessage);
-			for (int i = 0; i < 5; i++) {
-	    		foe.stat(foe, i, foe.trainer.boost, null);
-	    	}
-		}
+		foe.checkOmniBoost();
 		Task.addSwapInTask(user, true);
 		if (staticID == 235) { // dragowrath
 			for (Pokemon p : user.getPlayer().team) {
@@ -1110,13 +1102,13 @@ public class BattleUI extends AbstractUI {
 		Pokemon slowerInit = fasterInit == user ? foe : user;
 		fasterInit.swapIn(slowerInit, true);
 		if (slowerInit.playerOwned()) {
-			if (slowerInit.trainer.hasValidMembers() && hasAlive() && slowerInit.hasStatus(Status.SWITCHING)) {
+			if (slowerInit.trainer.hasValidMembers(foe) && hasAlive() && slowerInit.hasStatus(Status.SWITCHING)) {
 				Task.addTask(Task.PARTY, "");
 				subState = TASK_STATE;
 	        	return;
 			}
 		} else {
-			if (slowerInit.trainer != null && slowerInit.trainer.hasValidMembers() && slowerInit.hasStatus(Status.SWITCHING)) {
+			if (slowerInit.trainer != null && slowerInit.trainer.hasValidMembers(foe) && slowerInit.hasStatus(Status.SWITCHING)) {
 				slowerInit = foe.trainer.swapOut2(fasterInit, FREE_SWITCH, false, false);
 				if (slowerInit == user) { user = slowerInit; }
 				else { foe = slowerInit; }
@@ -1125,13 +1117,13 @@ public class BattleUI extends AbstractUI {
 		
 		slowerInit.swapIn(fasterInit, true);
 		if (fasterInit.playerOwned()) {
-			if (fasterInit.trainer.hasValidMembers() && hasAlive() && fasterInit.hasStatus(Status.SWITCHING)) {
+			if (fasterInit.trainer.hasValidMembers(foe) && hasAlive() && fasterInit.hasStatus(Status.SWITCHING)) {
 				Task.addTask(Task.PARTY, "");
 				subState = TASK_STATE;
 	        	return;
 			}
 		} else {
-			if (fasterInit.trainer != null && fasterInit.trainer.hasValidMembers() && fasterInit.hasStatus(Status.SWITCHING)) {
+			if (fasterInit.trainer != null && fasterInit.trainer.hasValidMembers(foe) && fasterInit.hasStatus(Status.SWITCHING)) {
 				fasterInit = foe.trainer.swapOut2(slowerInit, FREE_SWITCH, false, false);
 				if (fasterInit == user) { user = fasterInit; }
 				else { foe = fasterInit; }
@@ -1674,7 +1666,7 @@ public class BattleUI extends AbstractUI {
 		}
 		if (gp.keyH.wPressed) {
 			gp.keyH.wPressed = false;
-			if (gp.player.p.nuzlocke && user.level > Trainer.getLevelCap(gp.getEffectiveBadges(foe), gp.player.p)) {
+			if (gp.player.p.nuzlocke && user.level > Trainer.getLevelCap(gp.player.p.getEffectiveBadges(foe), gp.player.p)) {
 				if (user.getPlayer().canSwitch(foe)) {
 					subState = MOVE_MESSAGE_STATE;
 					showMessage(user.nickname + " is over the level cap: switch it out!");
@@ -1697,7 +1689,7 @@ public class BattleUI extends AbstractUI {
         	Move move = moves[moveNum].move;
     		if (user.movesetEmpty()) move = Move.STRUGGLE;
 			
-        	foeMove = foe.trainerOwned() ? foe.bestMove2(user, user.getFaster(foe, 0, 0, field) == foe, difficulty) : foe.randomMove();
+    		foeMove = foe.trainerOwned() ? foe.bestMove2(user, user.getFaster(foe, 0, 0, field) == foe, difficulty) : foe.randomMove();
         	
         	showMoveSummary = false;
         	turn(move, foeMove);
@@ -1779,13 +1771,13 @@ public class BattleUI extends AbstractUI {
 			}
 			
 			// Check for swap (AI)
-			if (foe.trainer != null && foe.trainer.hasValidMembers() && slower.hasStatus(Status.SWITCHING)) {
+			if (foe.trainer != null && foe.trainer.hasValidMembers(foe) && slower.hasStatus(Status.SWITCHING)) {
 				slower = foe.trainer.swapOut2(faster, FREE_SWITCH, false, false);
 				foeMove = null;
 				foeCanMove = false;
 			}
 			// Check for swap (player)
-			if (user.trainer.hasValidMembers() && hasAlive() && faster.hasStatus(Status.SWITCHING)) {
+			if (user.trainer.hasValidMembers(foe) && hasAlive() && faster.hasStatus(Status.SWITCHING)) {
 				Task t = Task.addTask(Task.PARTY, "");
 				t.wipe = faster.lastMoveUsed == Move.BATON_PASS;
 				subState = TASK_STATE;
@@ -1799,11 +1791,11 @@ public class BattleUI extends AbstractUI {
 	        	foeMove = null;
 	        }
 	        // Check for swap (AI)
-	        if (foe.trainer != null && foe.trainer.hasValidMembers() && foeCanMove && slower.hasStatus(Status.SWITCHING)) {
+	        if (foe.trainer != null && foe.trainer.hasValidMembers(foe) && foeCanMove && slower.hasStatus(Status.SWITCHING)) {
 	        	slower = foe.trainer.swapOut2(faster, FREE_SWITCH, slower.lastMoveUsed == Move.BATON_PASS, false);
 	        }
 	        // Check for swap (player)
- 			if (user.trainer.hasValidMembers() && hasAlive() && faster.hasStatus(Status.SWITCHING)) {
+ 			if (user.trainer.hasValidMembers(foe) && hasAlive() && faster.hasStatus(Status.SWITCHING)) {
  				Task.addTask(Task.PARTY, "");
  				subState = TASK_STATE;
  	        	return;
@@ -1823,13 +1815,13 @@ public class BattleUI extends AbstractUI {
 				foeMove = null;
 			}
 	        // Check for swap (player)
- 			if (user.trainer.hasValidMembers() && hasAlive() && slower.hasStatus(Status.SWITCHING)) {
+ 			if (user.trainer.hasValidMembers(foe) && hasAlive() && slower.hasStatus(Status.SWITCHING)) {
  				Task.addTask(Task.PARTY, "");
  				subState = TASK_STATE;
  	        	return;
  			}
  			// Check for swap (AI)
-	        if (foe.trainer != null && foe.trainer.hasValidMembers() && faster.hasStatus(Status.SWITCHING)) {
+	        if (foe.trainer != null && foe.trainer.hasValidMembers(foe) && faster.hasStatus(Status.SWITCHING)) {
 	        	faster = foe.trainer.swapOut2(slower, faster.getStatusNum(Status.SWITCHING), faster.lastMoveUsed == Move.BATON_PASS, false);
 	        	foeCanMove = false;
 	        	foeMove = null;
@@ -1841,11 +1833,11 @@ public class BattleUI extends AbstractUI {
 				slower = slower.trainer.getCurrent();
 	        }
 	        // Check for swap (AI)
-	        if (foe.trainer != null && foe.trainer.hasValidMembers() && faster.hasStatus(Status.SWITCHING)) {
+	        if (foe.trainer != null && foe.trainer.hasValidMembers(foe) && faster.hasStatus(Status.SWITCHING)) {
 	        	faster = foe.trainer.swapOut2(slower, FREE_SWITCH, false, false);
 	        }
 	        // Check for swap
-	        if (user.trainer.hasValidMembers() && hasAlive() && slower.hasStatus(Status.SWITCHING)) {
+	        if (user.trainer.hasValidMembers(foe) && hasAlive() && slower.hasStatus(Status.SWITCHING)) {
 	        	Task t = Task.addTask(Task.PARTY, "");
 	        	t.wipe = slower.lastMoveUsed == Move.BATON_PASS;
 	        	subState = TASK_STATE;
@@ -1936,10 +1928,10 @@ public class BattleUI extends AbstractUI {
 				currentDialogue = select.getNickname() + " is already out!";
 			} else if (cancellableParty && user.isTrapped(foe)) {
         		currentDialogue = "You are trapped and cannot switch!";
-			} else if (gp.player.p.nuzlocke && select.level > Trainer.getLevelCap(gp.getEffectiveBadges(foe), gp.player.p)) {
+			} else if (gp.player.p.nuzlocke && select.level > Trainer.getLevelCap(gp.player.p.getEffectiveBadges(foe), gp.player.p)) {
 				Pokemon current = user.getPlayer().getCurrent();
 				user.getPlayer().setCurrent(select);
-				boolean hasValid = user.getPlayer().hasValidMembers();
+				boolean hasValid = user.getPlayer().hasValidMembers(foe);
 				user.getPlayer().setCurrent(current);
 				if (hasValid) {
 					currentDialogue = select.nickname + " is over the level cap!";

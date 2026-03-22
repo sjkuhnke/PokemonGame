@@ -27,7 +27,7 @@ public class Trainer implements Serializable {
 	public boolean staticEnc;
 	public boolean catchable;
 	public boolean cloned;
-	public int boost;
+	public int[] boosts; // index 0: boost amt, index 1: boost index, index 2: boost happened
 	public boolean eliteFour;
 	
 	transient ArrayList<FieldEffect> effects;
@@ -193,7 +193,7 @@ public class Trainer implements Serializable {
 	}
 	
 	public boolean swapRandom(Pokemon foe) {
-		if (!hasValidMembers()) return false;
+		if (!hasValidMembers(foe)) return false;
 		Random rand = new Random();
 		boolean oldCloned = current.cloned;
 		int index = rand.nextInt(team.length);
@@ -214,11 +214,11 @@ public class Trainer implements Serializable {
 		
 	}
 	
-	public boolean hasValidMembers() {
-		return hasValidMembers(current);
+	public boolean hasValidMembers(Pokemon foe) {
+		return hasValidMembers(current, foe);
 	}
 	
-	public boolean hasValidMembers(Pokemon current) {
+	public boolean hasValidMembers(Pokemon current, Pokemon foe) {
 		boolean result = false;
 		for (int i = 0; i < team.length; i++) {
 			if (this.team[i] != null) {
@@ -545,6 +545,7 @@ public class Trainer implements Serializable {
 		for (int i = 0; i < team.length; i++) {
 			this.team[i].item = this.teamItems[i];
 		}
+		this.boosts[2] = 0;
 	}
 	
 	public void resetTeam() {
@@ -572,7 +573,8 @@ public class Trainer implements Serializable {
 	}
 	
 	public static int getLevelCap(int badges, Player player) {
-		return Math.min(levelCaps[badges] + player.levelCapBonus, 100);
+		// if the badge index is outside of our level caps (while fighting E4) then just go with 100
+		return Math.min((badges >= levelCaps.length ? 100 : levelCaps[badges]) + player.levelCapBonus, 100);
 	}
 	
 	public Pokemon[] getSlotOrderedTeam() {
@@ -602,7 +604,7 @@ public class Trainer implements Serializable {
 	}
 
 	public String getBoostString() {
-		return "Gets a +" + boost + " omniboost at the start of battle!";
+		return (boosts[1] > 0 ? (team[boosts[1]].name + " g") : "G") + "ets a +" + boosts[0] + " omniboost " + (boosts[1] > 0 ? "every time it enters battle!" : "at the start of battle!");
 	}
 
 	public String getBattleName() {
@@ -744,5 +746,9 @@ public class Trainer implements Serializable {
 	    }
 	    
 	    return best != null ? best : current;
+	}
+
+	public boolean isGymOrE4() {
+		return money == 500 || eliteFour;
 	}
 }

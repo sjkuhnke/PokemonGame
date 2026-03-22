@@ -466,7 +466,7 @@ public class PlayerCharacter extends Entity {
 		if (p.wiped()) return;
 		Pokemon foe = Trainer.getTrainer(trainer).getCurrent();
 		int money = Trainer.getTrainer(trainer).getMoney();
-		if (p.nuzlocke && (money == 500 ? p.hasPokemonOverLevelCap() : p.wholeTeamOverLevelCap())) {
+		if (p.nuzlocke && !Trainer.getTrainer(trainer).eliteFour && (money == 500 ? p.hasPokemonOverLevelCap() : p.wholeTeamOverLevelCap())) {
 			gp.wipe(true, p.current, foe, false);
 			return;
 		}
@@ -482,8 +482,8 @@ public class PlayerCharacter extends Entity {
 			
 			Task.addTrainerTask(entity, id, foe, !(entity instanceof NPC_GymLeader));
 			
-			// Heal if Gym Leader
-			if (Trainer.getTrainer(trainer).getMoney() == 500) {
+			// Heal if Gym Leader/E4
+			if (Trainer.getTrainer(trainer).isGymOrE4()) {
 				p.heal();
 			}
 		} else if (entity.altDialogue != null) {

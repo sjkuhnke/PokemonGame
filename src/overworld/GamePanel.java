@@ -1071,10 +1071,6 @@ public class GamePanel extends JPanel implements Runnable {
 		if (currentMap == 128 && player.p.flag[6][6] && !player.p.flag[7][0]) canFly = false; // After beating Merlin but still needing to do Arthra cutscene
 		return canFly;
 	}
-
-	public int getEffectiveBadges(Pokemon foe) {
-		return foe.trainerOwned() && foe.trainer.getMoney() == 500 ? player.p.badges + 1 : player.p.badges;
-	}
 	
 	public boolean inSpace() {
 		return inSpace(currentMap);
@@ -1096,6 +1092,10 @@ public class GamePanel extends JPanel implements Runnable {
 		for (int i = 535; i < 540; i++) {
 			player.p.trainersBeat[i] = false;
 		}
+	}
+	
+	public boolean inE4() {
+		return currentMap >= 222 && currentMap <= 226;
 	}
 	
 	private void saveScreenshot() {

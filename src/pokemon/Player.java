@@ -484,7 +484,7 @@ public class Player extends Trainer implements Serializable {
 	}
 	
 	public boolean swapRandom(Pokemon foe) {
-		if (!hasValidMembers()) return false;
+		if (!hasValidMembers(foe)) return false;
 		Random rand = new Random();
 		int index = rand.nextInt(team.length);
 		while (team[index] == null || team[index].isFainted() || team[index] == current) {
@@ -2043,22 +2043,26 @@ public class Player extends Trainer implements Serializable {
 	}
 	
 	@Override
-	public boolean hasValidMembers() {
-		return this.hasValidMembers(current);
+	public boolean hasValidMembers(Pokemon foe) {
+		return this.hasValidMembers(current, foe);
 	}
 	
 	@Override
-	public boolean hasValidMembers(Pokemon current) {
+	public boolean hasValidMembers(Pokemon current, Pokemon foe) {
 		boolean result = false;
 		for (int i = 0; i < team.length; i++) {
 			if (this.team[i] != null) {
-				if (this.team[i] != current && this.team[i].isValid(this)) {
+				if (this.team[i] != current && this.team[i].isValid(this, foe)) {
 					result = true;
 					break;
 				}
 			}
 		}
 		return result;
+	}
+	
+	public int getEffectiveBadges(Pokemon foe) {
+		return foe != null && foe.trainerOwned() && foe.trainer.isGymOrE4() ? badges + 1 : badges;
 	}
 
 	public boolean hasPokemonOverLevelCap() {

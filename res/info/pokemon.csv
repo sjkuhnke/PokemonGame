@@ -184,9 +184,9 @@
 228|Tinkie       |MAGIC   |GALACTIC|SPARKLY_SURGE     |SKILL_LINK        |SUPER_LUCK        |[55, 76, 55, 54, 90, 60]      |10.0  |45 |FAIRY       |ALIEN       |
 229|Shawar       |MAGIC   |GALACTIC|SPARKLY_SURGE     |SKILL_LINK        |SUPER_LUCK        |[75, 80, 75, 60, 90, 75]      |100.0 |35 |FAIRY       |ALIEN       |
 230|Shaboom      |MAGIC   |GALACTIC|SPARKLY_SURGE     |SKILL_LINK        |SUPER_LUCK        |[100, 100, 100, 100, 100, 100]|292.3 |25 |FAIRY       |ALIEN       |
-231|Dragee       |DRAGON  |LIGHT   |MULTISCALE        |MULTISCALE        |ILLUMINATION      |[80, 40, 57, 63, 59, 51]      |50.2  |45 |WATER_1     |DRAGON      |
-232|Draga        |DRAGON  |LIGHT   |MULTISCALE        |MULTISCALE        |ILLUMINATION      |[85, 75, 80, 90, 75, 60]      |103.4 |35 |WATER_1     |DRAGON      |
-233|Drageye      |DRAGON  |LIGHT   |MULTISCALE        |MULTISCALE        |ILLUMINATION      |[95, 85, 90, 115, 125, 90]    |247.2 |25 |WATER_1     |DRAGON      |
+231|Dragee       |DRAGON  |LIGHT   |MULTISCALE        |ILLUMINATION      |COMPOUND_EYES     |[80, 40, 57, 63, 59, 51]      |50.2  |45 |WATER_1     |DRAGON      |
+232|Draga        |DRAGON  |LIGHT   |MULTISCALE        |ILLUMINATION      |COMPOUND_EYES     |[85, 75, 80, 90, 75, 60]      |103.4 |35 |WATER_1     |DRAGON      |
+233|Drageye      |DRAGON  |LIGHT   |MULTISCALE        |ILLUMINATION      |COMPOUND_EYES     |[95, 85, 90, 115, 125, 90]    |247.2 |25 |WATER_1     |DRAGON      |
 225|Blobmo       |GALACTIC|null    |SHIELD_DUST       |REGENERATOR       |LEVITATE          |[90, 30, 30, 30, 100, 30]     |100.2 |85 |ALIEN       |AMORPHOUS   |
 226|Nebulimb     |GALACTIC|null    |SHIELD_DUST       |REGENERATOR       |GRAVITATION       |[125, 45, 50, 45, 115, 40]    |759.2 |65 |ALIEN       |AMORPHOUS   |
 227|Galactasolder|GALACTIC|FIGHTING|SNIPER            |SHEER_FORCE       |GRAVITATION       |[170, 135, 70, 55, 115, 50]   |1000.5|35 |ALIEN       |AMORPHOUS   |
@@ -287,7 +287,7 @@
 237|Dust Sorcerer|GROUND  |FLYING  |BEAST_BOOST       |BEAST_BOOST       |BEAST_BOOST       |[79, 61, 79, 127, 131, 113]   |101.1 |5  |ALIEN       |ALIEN       |
 238|Fever Dream  |FIRE    |ICE     |BEAST_BOOST       |BEAST_BOOST       |BEAST_BOOST       |[103, 131, 101, 79, 97, 79]   |495.3 |5  |ALIEN       |ALIEN       |
 239|Dusk Skater  |DARK    |STEEL   |BEAST_BOOST       |BEAST_BOOST       |BEAST_BOOST       |[67, 113, 59, 131, 71, 149]   |256.3 |5  |ALIEN       |ALIEN       |
-248|Necrozma     |GALACTIC|DARK    |EVENT_HORIZON     |EVENT_HORIZON     |NULL              |[97, 107, 111, 147, 99, 119]  |507.1 |3  |UNDISCOVERED|UNDISCOVERED|
+248|Necrozma     |GALACTIC|DARK    |EVENT_HORIZON     |EVENT_HORIZON     |NULL              |[97, 107, 101, 137, 89, 109]  |507.1 |3  |UNDISCOVERED|UNDISCOVERED|
 0  |Necrozma-Ult |LIGHT   |DARK    |NEUROFORCE        |NEUROFORCE        |NULL              |[97, 147, 97, 187, 97, 129]   |507.1 |3  |UNDISCOVERED|UNDISCOVERED|
 104|Azurill      |WATER   |NORMAL  |THICK_FAT         |HUGE_POWER        |SAP_SIPPER        |[50, 20, 40, 20, 40, 20]      |4.4   |150|WATER_1     |FAIRY       |
 105|Marill       |WATER   |NORMAL  |THICK_FAT         |HUGE_POWER        |SAP_SIPPER        |[70, 20, 50, 20, 50, 40]      |18.7  |190|WATER_1     |FAIRY       |

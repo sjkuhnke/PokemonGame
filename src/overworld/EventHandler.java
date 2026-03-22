@@ -1131,6 +1131,13 @@ public class EventHandler {
 			// Checkpoint Charlie -> E4
 			if (hit(215,51,36)) teleport(221, 49, 47,true);
 			if (hit(221,49,47)) teleport(215, 51, 36,true);
+			
+			// E4
+			if (hit(221,49,41)) teleport(222, 50, 57,false); // enter first room
+			if (hit(222,50,46)) teleport(223, 50, 57,false); // enter second room
+			if (hit(223,50,46)) teleport(224, 50, 57,false); // enter third room
+			if (hit(224,50,46)) teleport(225, 50, 57,false); // enter fourth room
+			if (hit(225,50,46)) teleport(226, 50, 57,false); // enter champ room
 		}
 		// Cutscene with Ryder/Arthra in front of Spaceship
 		if (!gp.player.p.flag[7][20] && hit(152,67,78,true)) gp.player.interactNPC(gp.npc[152][5], false);

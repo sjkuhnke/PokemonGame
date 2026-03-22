@@ -3779,6 +3779,7 @@ public class UI extends AbstractUI {
 	public void useItem(Item item, boolean wasAPressed) {
 		this.wasAPressed = wasAPressed;
 		boolean inGauntlet = !gp.canFly();
+		boolean inE4 = gp.inE4();
 		if (item == Item.REPEL) {
 			if (!gp.player.p.repel) {
 				gp.player.useRepel();
@@ -3821,7 +3822,7 @@ public class UI extends AbstractUI {
 			currentLetter = 1;
 			gp.gameState = GamePanel.LETTER_STATE;
 		} else if (item == Item.HEALING_PACK) {
-			if (inGauntlet) {
+			if (inGauntlet || inE4) {
 				boolean flag = gp.player.p.flag[1][2];
 				showMessage("Can't use this " + (flag ? "now!" : "yet!"));
 			} else {
@@ -3830,13 +3831,20 @@ public class UI extends AbstractUI {
 			}
 			bagState = 0;
 		} else if (item == Item.POCKET_PC) {
-			if (inGauntlet) {
+			if (inGauntlet || inE4) {
 				boolean flag = gp.player.p.flag[1][2];
 				showMessage("Can't use this " + (flag ? "now!" : "yet!"));
 			} else {
 				bagState = 0;
 				NPC_PC pc = new NPC_PC(gp);
 				gp.openBox(pc);
+			}
+		} else if ((gp.player.p.nuzlocke && item == Item.RARE_CANDY) || item == Item.RARE_CANDY_BOX || item == Item.EDGE_KIT || item == Item.STATUS_KIT || item == Item.DAMAGE_KIT) {
+			if (inE4) {
+				showMessage("Can't use this now!");
+			} else {
+				currentItem = item;
+				gp.gameState = GamePanel.USE_ITEM_STATE;
 			}
 		} else if (item == Item.INFINITE_REPEL) {
 			gp.player.p.steps = gp.player.p.repel ? 1 : 5000;
@@ -3845,7 +3853,7 @@ public class UI extends AbstractUI {
 			showMessage("Repel mode was turned " + onoff);
 			bagState = 0;
 		} else if (item == Item.MOVE_ENCYCLOPEDIA) {
-			if (inGauntlet) {
+			if (inGauntlet || inE4) {
 				showMessage("Can't use this now!");
 			} else {
 				gp.setTaskState();

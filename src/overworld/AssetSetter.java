@@ -214,6 +214,11 @@ public class AssetSetter {
 	private static final int DISCIPLE_RIGHT = 215;
 	private static final int SCOTT_RIGHT = 216;
 	private static final int FRED_LEFT = 217;
+	private static final int WHISKEROAR_E4 = 218;
+	private static final int CHLORIE_E4 = 219;
+	private static final int ASTRID_E4 = 220;
+	private static final int ARTHRA_E4 = 221;
+	private static final int RYDER_E4 = 222;
 	
 	private static final int DOWN_3 = -1;
 	private static final int DOWN_2 = 0;
@@ -251,6 +256,7 @@ public class AssetSetter {
 	private static final int ICE_CHUNK = 25;
 	private static final int CASINO_TABLE = 26;
 	private static final int E4_DOOR_1 = 27;
+	private static final int E4_DOOR_2 = 28;
 	
 	public AssetSetter(GamePanel gp) {
 		this.gp = gp;
@@ -3130,13 +3136,29 @@ public class AssetSetter {
 		gp.npc[mapNum][index++] = ITileSetup(54, 51, TORCH, mapNum, mapNum);
 		
 		mapNum = 221;
+		index = 0;
 		gp.npc[mapNum][index++] = null; // guard - needs to be set to the same tile every map load
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC, 53, 43, "", "", -1);
-		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_M_DOWN, 1, 1, "", "", 535);
-		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_DOWN, 2, 1, "", "", 536);
-		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_DOWN, 3, 1, "", "", 537);
-		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_F_DOWN, 4, 1, "", "", 538);
-		gp.npc[mapNum][index] = NPCSetup(ACE_TRAINER_M_DOWN, 5, 1, "", "", 539);
+		
+		mapNum = 222;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(WHISKEROAR_E4, 50, 49, "", "", 535);
+		
+		mapNum = 223;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(CHLORIE_E4, 50, 49, "", "", 536);
+		
+		mapNum = 224;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(ASTRID_E4, 50, 49, "", "", 537);
+		
+		mapNum = 225;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(ARTHRA_E4, 50, 49, "", "", 538);
+		
+		mapNum = 226;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(RYDER_E4, 50, 49, "", "", 539);
 	}
 
 	public void setInteractiveTile(int map) {
@@ -4278,6 +4300,26 @@ public class AssetSetter {
 		mapNum = 221;
 		iIndex = 0;
 		gp.iTile[mapNum][iIndex] = ITileSetup(49, 41, E4_DOOR_1, mapNum, map);
+		
+		mapNum = 222;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 46, E4_DOOR_2, mapNum, map);
+		
+		mapNum = 223;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 46, E4_DOOR_2, mapNum, map);
+		
+		mapNum = 224;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 46, E4_DOOR_2, mapNum, map);
+		
+		mapNum = 225;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 46, E4_DOOR_2, mapNum, map);
+		
+		mapNum = 226;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 46, E4_DOOR_2, mapNum, map);
 	}
 
 	public void updateNPC(int map) {
@@ -5503,6 +5545,21 @@ public class AssetSetter {
 		case DISCIPLE_RIGHT:
 			result = new T_Disciple(gp, "right", team, messages);
 			break;
+		case WHISKEROAR_E4:
+			result = new GL_Whiskeroar(gp, "down", team, messages);
+			break;
+		case CHLORIE_E4:
+			result = new GL_Chlorie(gp, "down", team, messages);
+			break;
+		case ASTRID_E4:
+			result = new GL_Astrid(gp, "down", team, messages);
+			break;
+		case ARTHRA_E4:
+			result = new GL_Arthra(gp, "down", team, messages);
+			break;
+		case RYDER_E4:
+			result = new GL_Ryder(gp, "down", team, messages);
+			break;
 		}
 		
 		result.worldX = gp.tileSize*x;
@@ -5777,6 +5834,7 @@ public class AssetSetter {
 			case MAGICIAN_F_DOWN:
 				result.setupImages("/npc/magician_f");
 				result.setDirection("down");
+				break;
 		}
 		
 		result.worldX = gp.tileSize*x;
@@ -5963,6 +6021,9 @@ public class AssetSetter {
 			break;
 		case E4_DOOR_1:
 			result = new E4Door(gp, 1);
+			break;
+		case E4_DOOR_2:
+			result = new E4Door(gp, 3);
 			break;
 		}
 		

@@ -3737,6 +3737,12 @@ public class Script {
 				Task.addTask(Task.DIALOGUE, npc, "Once you enter, there's no turning back until you either claim victory... or black out.");
 				Task.addTask(Task.DIALOGUE, npc, "The Elite Four fight one after another, no healing trips or shopping breaks allowed.");
 				if (p.nuzlocke) {
+					if (p.hasPokemonOverLevelCap()) {
+						Task.addTask(Task.DIALOGUE, npc, "Wait - hold it!");
+						Task.addTask(Task.DIALOGUE, npc, "You have at least 1 Pokemon over the level cap of " + Player.getLevelCap(p.badges, p) + ".");
+						Task.addTask(Task.DIALOGUE, npc, "I can't let you in until all of your Pokemon are within the cap!");
+						return;
+					}
 					Task.addTask(Task.DIALOGUE, npc, "And since you're competing under Nuzlocke rules...");
 					Task.addTask(Task.DIALOGUE, npc, "Your convenience items will NOT function inside.");
 					Task.addTask(Task.DIALOGUE, npc, "Your Healing Pack, Pocket PC, everything are all disabled.");

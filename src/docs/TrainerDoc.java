@@ -212,25 +212,27 @@ public class TrainerDoc {
 	    sheet.addMergedRegion(new CellRangeAddress(nameRow.getRowNum(), nameRow.getRowNum(), 5, 6));
 	    
 	    Row ivRow = null;
-	    if (tr.staticEnc && !tr.catchable) {
+	    if ((tr.staticEnc && !tr.catchable) || tr.boosts[0] > 0) {
 	    	ivRow = sheet.createRow(startRow++);
-	    	Cell ivTitleCell = ivRow.createCell(colStart);
-	    	ivTitleCell.setCellValue("IVs:");
+	    	if (tr.staticEnc && !tr.catchable) {
+	    		Cell ivTitleCell = ivRow.createCell(colStart);
+		    	ivTitleCell.setCellValue("IVs:");
+		    	
+		    	Cell ivCell = ivRow.createCell(1);
+		    	ivCell.setCellValue(Arrays.toString(tr.getCurrent().ivs));
+		    	
+		    	sheet.addMergedRegion(new CellRangeAddress(ivRow.getRowNum(), ivRow.getRowNum(), 1, 4));
+		    	
+		    	XSSFCellStyle ivStyle = (XSSFCellStyle) makeStyle(sheet.getWorkbook(), false, false, 12, IndexedColors.GREY_80_PERCENT.getIndex());
+		    	ivTitleCell.setCellStyle(ivStyle);
+		    	ivCell.setCellStyle(ivStyle);
+	    	}
 	    	
-	    	Cell ivCell = ivRow.createCell(1);
-	    	ivCell.setCellValue(Arrays.toString(tr.getCurrent().ivs));
-	    	
-	    	sheet.addMergedRegion(new CellRangeAddress(ivRow.getRowNum(), ivRow.getRowNum(), 1, 4));
-	    	
-	    	XSSFCellStyle ivStyle = (XSSFCellStyle) makeStyle(sheet.getWorkbook(), false, false, 12, IndexedColors.GREY_80_PERCENT.getIndex());
-	    	ivTitleCell.setCellStyle(ivStyle);
-	    	ivCell.setCellStyle(ivStyle);
-	    	
-	    	if (tr.boost > 0) {
+	    	if (tr.boosts[0] > 0) {
 	    		Cell omniCell = ivRow.createCell(5);
 		    	omniCell.setCellValue(tr.getBoostString());
 		    	omniCell.setCellStyle(makeStyle(sheet.getWorkbook(), true, false, 12, IndexedColors.BLACK.getIndex()));
-		    	sheet.addMergedRegion(new CellRangeAddress(ivRow.getRowNum(), ivRow.getRowNum(), 5, 11));
+		    	sheet.addMergedRegion(new CellRangeAddress(ivRow.getRowNum(), ivRow.getRowNum(), 5, 13));
 	    	}
 	    }
 	    Row rewardRow = sheet.createRow(startRow++);
@@ -483,7 +485,7 @@ public class TrainerDoc {
 					trainerName.append(corresponding.isSpin() ? "*" : "");
 					
 					trainerName.append("\n");
-					if (tr.boost > 0) {
+					if (tr.boosts[0] > 0) {
 						trainerName.append("**");
 						trainerName.append(tr.getBoostString());
 						trainerName.append("**\n");

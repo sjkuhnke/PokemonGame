@@ -863,11 +863,11 @@ public class SimBattleUI extends BattleUI {
 		}
 		
 		// Check for swap
-		if (faster.trainer.hasValidMembers() && fastCanMove && !slower.trainer.wiped() && faster.hasStatus(Status.SWITCHING)) {
+		if (faster.trainer.hasValidMembers(slower) && fastCanMove && !slower.trainer.wiped() && faster.hasStatus(Status.SWITCHING)) {
 			faster = faster.trainer.swapOut2(slower, fasterSwitchSlot, faster.lastMoveUsed == Move.BATON_PASS, faster.trainer.hasUser(user));
 		}
 		// Check for swap
-		if (slower.trainer.hasValidMembers() && !faster.trainer.wiped() && slower.hasStatus(Status.SWITCHING)) {
+		if (slower.trainer.hasValidMembers(faster) && !faster.trainer.wiped() && slower.hasStatus(Status.SWITCHING)) {
 			slower = slower.trainer.swapOut2(faster, FREE_SWITCH, false, slower.trainer.hasUser(user));
 			slowCanMove = false;
 		}
@@ -879,11 +879,11 @@ public class SimBattleUI extends BattleUI {
         }
         
         // Check for swap
-        if (slower.trainer.hasValidMembers() && slowCanMove && !faster.trainer.wiped() && slower.hasStatus(Status.SWITCHING)) {
+        if (slower.trainer.hasValidMembers(faster) && slowCanMove && !faster.trainer.wiped() && slower.hasStatus(Status.SWITCHING)) {
         	slower = slower.trainer.swapOut2(faster, FREE_SWITCH, slower.lastMoveUsed == Move.BATON_PASS, slower.trainer.hasUser(user));
         }
     	// Check for swap
- 		if (faster.trainer.hasValidMembers() && !slower.trainer.wiped() && faster.hasStatus(Status.SWITCHING)) {
+ 		if (faster.trainer.hasValidMembers(slower) && !slower.trainer.wiped() && faster.hasStatus(Status.SWITCHING)) {
  			faster = faster.trainer.swapOut2(slower, FREE_SWITCH, false, faster.trainer.hasUser(user));
  		}
 		
