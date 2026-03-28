@@ -610,16 +610,22 @@ public class PMap extends JPanel {
 			PlayerCharacter.currentMapName = "Route 24 (pt. 2)";
 			return 6;
 		case 11:
-			if (x > 43) {
-				PlayerCharacter.currentMapName = "Route 24 (pt. 2)";
-				return 6;
-			}
-			if (x <= 43) {
-				if (y <= 52) {
+			if (y <= 47) {
+				if (x > 49) {
+					PlayerCharacter.currentMapName = "Route 24 (pt. 2)";
+					return 6;
+				}
+				if (x <= 49) {
 					PlayerCharacter.currentMapName = "Route 25";
 					return 8;
 				}
-				if (y > 52) {
+			}
+			if (y > 47) {
+				if (x > 43) {
+					PlayerCharacter.currentMapName = "Route 24 (pt. 2)";
+					return 6;
+				}
+				if (x <= 43) {
 					PlayerCharacter.currentMapName = "Gelb Forest (1A)";
 					return 7;
 				}

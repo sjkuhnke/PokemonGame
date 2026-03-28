@@ -647,10 +647,10 @@ public class UI extends AbstractUI {
 				
 				int winStreak = gp.player.p.winStreak;
 				gp.player.p.winStreak = 0;
-				gp.player.p.addBetCurrency(gauntlet, -1);
+				gp.player.p.addBetCurrency(gauntlet, -Player.BET_INC);
 				gp.saveGame(gp.player.p, true);
 				gp.player.p.winStreak = winStreak;
-				gp.player.p.addBetCurrency(gauntlet, 1);
+				gp.player.p.addBetCurrency(gauntlet, Player.BET_INC);
 				
 				parlays = new int[MAX_PARLAYS];
 				sheetFilled = false;
@@ -823,6 +823,12 @@ public class UI extends AbstractUI {
 			return;
 		}
 		
+		if (commandNum < 0) {
+			drawForefitScreen();
+			drawToolTips("OK", null, "Back", null);
+			return;
+		}
+		
 		if (gp.keyH.wPressed) {
 			gp.keyH.wPressed = false;
 			if (commandNum > 0) {
@@ -877,7 +883,7 @@ public class UI extends AbstractUI {
 		
 		if (gp.keyH.sPressed) {
 			gp.keyH.sPressed = false;
-			commandNum = 0;
+			commandNum = commandNum == 0 ? -2 : 0;
 		}
 		
 		if (gp.keyH.aPressed) {
@@ -885,6 +891,66 @@ public class UI extends AbstractUI {
 			showParlays = true;
 		}
 		drawToolTips(commandNum > 0 ? "Bet" : null, "Parlay", commandNum > 0 ? "Back" : null, null);
+	}
+
+	private void drawForefitScreen() {
+		int x = gp.tileSize*2;
+		int y = gp.tileSize/2;
+		int width = gp.screenWidth - (gp.tileSize*4);
+		int height = gp.tileSize * 4;
+		
+		drawSubWindow(x, y, width, height);
+		g2.setColor(Color.WHITE);
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,28F));
+		x += gp.tileSize;
+		y += gp.tileSize;
+		
+		String dialogue = "Are you sure you want to forefit?\nYou will lose 10 coins and your winstreak!";
+		
+		for (String line : dialogue.split("\n")) {
+			g2.drawString(line, x, y);
+			y += 40;
+		}
+		
+		x = gp.tileSize * 11;
+		y = gp.tileSize * 4;
+		width = gp.tileSize * 3;
+		height = (int) (gp.tileSize * 2.5);
+		drawSubWindow(x, y, width, height);
+		x += gp.tileSize;
+		y += gp.tileSize;
+		g2.drawString("Yes", x, y);
+		if (commandNum == -1) {
+			g2.drawString(">", x-24, y);
+			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				commandNum = 0;
+				currentTask = null;
+				gp.player.p.winStreak = 0;
+				gp.player.p.addBetCurrency(gauntlet, -Player.BET_INC);
+				gp.saveGame(gp.player.p, true);
+			}
+		}
+		y += gp.tileSize;
+		g2.drawString("No", x, y);
+		if (commandNum == -2) {
+			g2.drawString(">", x-24, y);
+			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				commandNum = 0;
+			}
+		}
+		
+		if (gp.keyH.sPressed) {
+			gp.keyH.sPressed = false;
+			commandNum = 0;
+		}
+		
+		if (gp.keyH.upPressed || gp.keyH.downPressed) {
+			gp.keyH.upPressed = false;
+			gp.keyH.downPressed = false;
+			commandNum = -(1 - (Math.abs(commandNum) - 1) + 1);
+		}
 	}
 
 	private int getActiveBets() {
@@ -1682,7 +1748,7 @@ public class UI extends AbstractUI {
 					break;
 				}
 			}
-			if (trade >= 0) {
+			if (trade >= 0 && !p.isFainted()) {
 				Pokemon tr = new Pokemon(tradeIndices[trade], p.level, true, false);
 				Task t = Task.addTask(Task.CONFIRM, "Would you like to trade " + p.nickname + " for my " + tr.name() + "?", tr);
 				t.counter = 1;
@@ -3431,7 +3497,7 @@ public class UI extends AbstractUI {
 				currentItems = gp.player.p.getItems(currentPocket);
 				bagState = 0;
 				return;
-			} else if (gp.keyH.wPressed) {
+			} else if (gp.keyH.wPressed && !showMessage) {
 				gp.keyH.wPressed = false;
 				useRareCandy(gp.player.p.team[partyNum]);
 			}
@@ -3735,7 +3801,11 @@ public class UI extends AbstractUI {
 			return;
 		}
 		if ((pokemon.id == 233 || pokemon.id == 234) && !gp.player.p.flag[7][21]) {
-			gp.ui.showMessage(pokemon.nickname + " rejected the level!");
+			showMessage(pokemon.nickname + " rejected the level!");
+			return;
+		}
+		if (gp.player.p.nuzlocke && gp.inE4()) {
+			showMessage("The Leviathan League's energy stopped the effects!");
 			return;
 		}
 		boolean worked = gp.player.p.elevate(pokemon);
@@ -3839,7 +3909,7 @@ public class UI extends AbstractUI {
 				NPC_PC pc = new NPC_PC(gp);
 				gp.openBox(pc);
 			}
-		} else if ((gp.player.p.nuzlocke && item == Item.RARE_CANDY) || item == Item.RARE_CANDY_BOX || item == Item.EDGE_KIT || item == Item.STATUS_KIT || item == Item.DAMAGE_KIT) {
+		} else if (item == Item.RARE_CANDY_BOX || item == Item.EDGE_KIT || item == Item.STATUS_KIT || item == Item.DAMAGE_KIT) {
 			if (inE4) {
 				showMessage("Can't use this now!");
 			} else {

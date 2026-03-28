@@ -226,48 +226,48 @@ public class GamePanel extends JPanel implements Runnable {
 		long timer = 0;
 		
 		while (gameThread != null) {
-			if (!window.isVisible() || (window.getExtendedState() & JFrame.ICONIFIED) != 0) {
-				try {
+			try {
+				if (!window.isVisible() || (window.getExtendedState() & JFrame.ICONIFIED) != 0) {
 					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+					lastTime = System.nanoTime();
+					delta = 0;
+					continue;
 				}
-				lastTime = System.nanoTime();
-				delta = 0;
-				continue;
-			}
-			
-			double drawInterval = 1000000000/FPS;
-			currentTime = System.nanoTime();
-			
-			long elapsed = currentTime - lastTime;
-			
-			if (elapsed > 1000000000L) {
-				elapsed = (long) drawInterval;
-			}
-			
-			delta += elapsed / drawInterval;
-			timer += elapsed;
-			lastTime = currentTime;
-			
-			if (delta >= 1) {
-				if (delta > 5) delta = 1; // cap delta
 				
-				if (this.isShowing() && this.isDisplayable()) { // to handle other JPanels being drawn
-					update();
-					drawToTempScreen(); // draw everything to the buffered image
-					drawToScreen(); // draw everything to the screen
-					
-					if (screenshotRequested) {
-						saveScreenshot();
-						screenshotRequested = false;
-					}
+				double drawInterval = 1000000000/FPS;
+				currentTime = System.nanoTime();
+				
+				long elapsed = currentTime - lastTime;
+				
+				if (elapsed > 1000000000L) {
+					elapsed = (long) drawInterval;
 				}
-				delta--;
-			}
-			
-			if (timer >= 1000000000) {
-				timer = 0;
+				
+				delta += elapsed / drawInterval;
+				timer += elapsed;
+				lastTime = currentTime;
+				
+				if (delta >= 1) {
+					if (delta > 5) delta = 1; // cap delta
+					
+					if (this.isShowing() && this.isDisplayable()) { // to handle other JPanels being drawn
+						update();
+						drawToTempScreen(); // draw everything to the buffered image
+						drawToScreen(); // draw everything to the screen
+						
+						if (screenshotRequested) {
+							saveScreenshot();
+							screenshotRequested = false;
+						}
+					}
+					delta--;
+				}
+				
+				if (timer >= 1000000000) {
+					timer = 0;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 	}

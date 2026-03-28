@@ -122,7 +122,7 @@ public enum Ability {
 	SHADOW_VEIL("The Pokemon is protected from an attack once per battle, at the cost of 1/8 max HP."),
 	SHARP_TAIL("Boosts the power of Tail-using moves by 1.5x."),
 	SHARPNESS("Boosts the power of Slicing moves by 1.5x."),
-	SHED_SKIN("The Pokemon may heal its own status conditions 33% of the time at the end of each turn."),
+	SHED_SKIN("The Pokemon may heal its own status conditions 50% of the time at the end of each turn."),
 	SHEER_FORCE("Removes secondary effects to increase the power of moves by 1.3x when attacking, ignores Life Orb recoil."),
 	SHELL_ARMOR("This Pokemon cannot be Critical hit."),
 	SHIELD_DUST("Blocks the secondary effects of attacks taken and is immune to entry hazards."),

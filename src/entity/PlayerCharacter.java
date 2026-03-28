@@ -1320,18 +1320,6 @@ public class PlayerCharacter extends Entity {
 			p.current.setStats();
 			p.current.verifyHP();
 			p.invalidateNuzlocke("Used " + code);
-		} else if (code.equals("SPECIES")) {
-			StringBuilder result = new StringBuilder();
-			for (Map.Entry<String, Integer> e : Main.species.entrySet()) {
-				result.append(e.getKey()).append(",").append(e.getValue()).append("\n");
-			}
-			try {
-				FileWriter writer = new FileWriter("./species.txt");
-				writer.write(result.toString());
-				writer.close();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
 		} else {
 			ui.showMessage("Invalid code: \"" + code + "\"");
 		}

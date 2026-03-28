@@ -228,7 +228,7 @@ public enum Move {
 	GRASS_WHISTLE(0,55,0,0,2,0,PType.GRASS,"Foe falls asleep",false,15),
 	GRASSY_TERRAIN(0,1000,0,0,2,0,PType.GRASS,"Sets the terrain to GRASSY for 5 turns",false,10),
 	GRAVITY(0,1000,0,0,2,0,PType.GALACTIC,"Sets GRAVITY for 6 turns, in which the accuracy of all Pokemon is increased",false,10),
-	GRAVITY_PUNCH(40,100,0,0,0,2,PType.PSYCHIC,"Increased priority with extra priority. Still works in PSYCHIC TERRAIN.",true,5),
+	GRAVITY_PUNCH(40,100,0,0,0,2,PType.PSYCHIC,"Increased priority with extra priority. Still works in PSYCHIC TERRAIN.",true,10),
 	GROWL(0,100,0,0,2,0,PType.NORMAL,"Lowers foe's Attack by 1",false,35),
 	GROWTH(0,1000,0,0,2,0,PType.GRASS,"Raises user's Attack and Sp.Atk by 1, 2 each in the SUN",false,15),
 	GUILLOTINE(0,30,0,-999,0,0,PType.NORMAL,"If this move hits, it always K.Os foe",true,5),

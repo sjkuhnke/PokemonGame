@@ -204,7 +204,7 @@ public class Pokemon implements Serializable {
 	public String metAt;
 	
 	public Pokemon(int i, int l, boolean o, boolean t) {
-		if (gp != null && gp.player.p.random) i = new Random().nextInt(MAX_POKEMON) + 1;
+		if (gp != null && gp.player.p != null && gp.player.p.random) i = new Random().nextInt(MAX_POKEMON) + 1;
 		
 		id = i;
 		uuid = setUUID();
@@ -1836,6 +1836,13 @@ public class Pokemon implements Serializable {
 					}
 				}
 			} else if (move.cat == 2) {
+				if (move == Move.METRONOME) {
+					score += 25;
+				} else if (move == Move.SLEEP_TALK || move == Move.SNORE) {
+					if (status == Status.ASLEEP && sleepCounter != 0) {
+						score += 250;
+					}
+				}
 				score -= 10;
 			} // don't decrease any score for damaging moves
 		}
@@ -1868,6 +1875,11 @@ public class Pokemon implements Serializable {
 				}
 			}
 			score += statusCount * 20;
+		} else if (move == Move.SKULL_BASH || move == Move.SKY_ATTACK || ((move == Move.SOLAR_BEAM || move == Move.SOLAR_BLADE) && !field.equals(field.weather, Effect.SUN, this))
+				|| move == Move.BLACK_HOLE_ECLIPSE || move == Move.GEOMANCY || move == Move.METEOR_BEAM || move == Move.HYPER_BEAM
+				|| move == Move.BLAST_BURN || move == Move.FRENZY_PLANT || move == Move.GIGA_IMPACT
+				|| move == Move.HYDRO_CANNON || move == Move.MAGICAL_CRASH) {
+			if (this.getItem(field) != Item.POWER_HERB) score -= 30;
 		}
 		
 		if (foe.getItem(field) == Item.EJECT_BUTTON && move.hasPriority(foe) && this.getFaster(foe, 0, 0, field) == foe && damagePercent > 0) {
@@ -7466,7 +7478,7 @@ public class Pokemon implements Serializable {
 		awardHappiness(-3, false);
 		Pokemon[] pokemon = getActivePokemon();
 		for (Pokemon p : pokemon) {
-			if (p != this) foe = p;
+			if (p != this && p != null) foe = p;
 		}
 		foe.removeStatus(Status.SPUN);
 		foe.removeStatus(Status.SPELLBIND);
@@ -7597,14 +7609,6 @@ public class Pokemon implements Serializable {
 			contact = move.contact;
 		}
 		
-		if (mode == 0 && (move == Move.SLEEP_TALK || move == Move.SNORE)) {
-			if (status != Status.ASLEEP || sleepCounter == 0) {
-				return new Pair<>(0, 0.0);
-			} else {
-				return new Pair<>(999999, 0.0);
-			}
-		}
-		
 		if (mode == 0 && (move == Move.FIRST_IMPRESSION || move == Move.BELCH)) {
 			if (!this.impressive) {
 				return new Pair<>(-1, 0.0);
@@ -7636,13 +7640,6 @@ public class Pokemon implements Serializable {
 		
 		if (move == this.disabledMove) {
 			return new Pair<>(0, 0.0);
-		}
-		
-		if (move == Move.SKULL_BASH || move == Move.SKY_ATTACK || ((move == Move.SOLAR_BEAM || move == Move.SOLAR_BLADE) && !field.equals(field.weather, Effect.SUN, this))
-				|| move == Move.BLACK_HOLE_ECLIPSE || move == Move.GEOMANCY || move == Move.METEOR_BEAM || move == Move.HYPER_BEAM
-				|| move == Move.BLAST_BURN || move == Move.FRENZY_PLANT || move == Move.GIGA_IMPACT
-				|| move == Move.HYDRO_CANNON || move == Move.MAGICAL_CRASH) {
-			if (mode == 0 && this.getItem(field) != Item.POWER_HERB) bp *= 0.5;
 		}
 		
 		if (this.getAbility(field) == Ability.COMPOUND_EYES) acc *= 1.3;
@@ -8186,8 +8183,8 @@ public class Pokemon implements Serializable {
 		int[] userStages = this.statStages.clone();
 		
 		if (this.getAbility(field) == Ability.SHED_SKIN && this.status != Status.HEALTHY) {
-			int r = (int)(Math.random() * 3);
-			if (r == 0) {
+			boolean r = (int)(Math.random()) % 2 == 0;
+			if (r) {
 				Task.addAbilityTask(this);
 				this.status = Status.HEALTHY;
 				this.toxic = 0;
@@ -8262,9 +8259,9 @@ public class Pokemon implements Serializable {
 		if (this.hasStatus(Status.LEECHED) && !f.isFainted()) {
 			int hp = (int) getHPAmount(1.0/8);
 			if (hp >= this.currentHP) hp = this.currentHP;
-			this.damage(hp, f, f.nickname + " sucked health from " + this.nickname + "!");
+			int damage = this.damage(hp, f, f.nickname + " sucked health from " + this.nickname + "!");
 			if (f.getItem(field) == Item.BIG_ROOT) hp *= 1.3;
-			f.heal(hp, "");
+			f.heal(damage, "");
 			if (this.currentHP <= 0) {
 				this.faint(true, f);
 				return;
@@ -9690,7 +9687,7 @@ public class Pokemon implements Serializable {
 			Task.addTask(Task.TEXT, this.nickname + " floated on its Air Balloon!");
 		}
 		if (hazards) {
-			if (this.playerOwned()) {
+			if (this.playerOwned() && !this.cloned) {
 				this.getPlayer().recordSwitchIn(this);
 			}
 			if (this.currentHP < this.getStat(0) && field.contains(this.getFieldEffects(), Effect.HEALING_CIRCLE)) {
@@ -9792,24 +9789,24 @@ public class Pokemon implements Serializable {
 		}
 	}
 
-	private void damage(double amt, Pokemon foe) {
-		this.damage((int) amt, foe);
+	private int damage(double amt, Pokemon foe) {
+		return this.damage((int) amt, foe);
 	}
 	
-	private void damage(int amt, Pokemon foe) {
-		this.damage(amt, foe, null, "", -1);
+	private int damage(int amt, Pokemon foe) {
+		return this.damage(amt, foe, null, "", -1);
 	}
 	
-	private void damage(double amt, Pokemon foe, String message) {
-		this.damage((int) amt, foe, null, message, -1);
+	private int damage(double amt, Pokemon foe, String message) {
+		return this.damage((int) amt, foe, null, message, -1);
 	}
 	
-	private void damage(int amt, Pokemon foe, Move move, String message, int damageIndex) {
-		this.damage(amt, foe, move, message, damageIndex, false, foe);
+	private int damage(int amt, Pokemon foe, Move move, String message, int damageIndex) {
+		return this.damage(amt, foe, move, message, damageIndex, false, foe);
 	}
 	
-	private void damage(int amt, Pokemon foe, Move move, String message, int damageIndex, boolean sturdy, Pokemon visible) {
-		if ((this.getAbility(field) == Ability.MAGIC_GUARD || this.getAbility(field) == Ability.SCALY_SKIN) && move == null) return;
+	private int damage(int amt, Pokemon foe, Move move, String message, int damageIndex, boolean sturdy, Pokemon visible) {
+		if ((this.getAbility(field) == Ability.MAGIC_GUARD || this.getAbility(field) == Ability.SCALY_SKIN) && move == null) return 0;
 		int start = this.currentHP;
 		this.currentHP -= amt;
 		if (sturdy) this.currentHP = 1;
@@ -9835,11 +9832,12 @@ public class Pokemon implements Serializable {
 		if (move != null && currentHP > 0 && (move != Move.INCINERATE && move != Move.KNOCK_OFF && move != Move.BUG_BITE && move != Move.PLUCK &&
 				move != Move.THIEF && move != Move.COVET) || thisAbility == Ability.STICKY_HOLD) this.checkBerry(foe);
 		
+		int amount = start - Math.max(0, this.currentHP);
 		if (this.playerOwned()) {
-			int amount = start - Math.max(0, this.currentHP);
 			double percent = amount * 100.0 / this.getStat(0);
 			this.getPlayer().recordDamageTaken(this, percent);
 		}
+		return amount;
 	}
 
 	private void checkBerry(Pokemon foe) {
@@ -10001,6 +9999,7 @@ public class Pokemon implements Serializable {
 	private void heal(double amt, String message) {
 		if (this.isFainted()) return;
 		if (this.hasStatus(Status.HEAL_BLOCK)) return;
+		if (amt == 0) return;
 		Task t = Task.createTask(Task.DAMAGE, message, this);
 		currentHP += amt;
 		verifyHP();
@@ -12500,7 +12499,7 @@ public class Pokemon implements Serializable {
 	}
 	
 	public boolean checkOmniBoost() {
-		if (this.trainerOwned() && this.trainer.boosts[0] > 0 && this.trainer.boosts[2] == 0 && this.slot == this.trainer.boosts[1]) {
+		if (this.trainerOwned() && this.trainer.boosts != null && this.trainer.boosts[0] > 0 && this.trainer.boosts[2] == 0 && this.slot == this.trainer.boosts[1]) {
 			String auraMessage = id == 205 || id == 210 || id == 197 || id == 202
 				? " is surrounded by immense electricity!"
 				: "'s aura flared to life!";

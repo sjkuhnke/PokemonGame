@@ -132,7 +132,7 @@ public class Player extends Trainer implements Serializable {
 	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 84;
+	public static final int VERSION = 85;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	public static final int BET_INC = 10;
@@ -186,7 +186,7 @@ public class Player extends Trainer implements Serializable {
 		locations[0] = true;
 		effects = new ArrayList<>();
 		
-		blackjackStats = new int[20];
+		blackjackStats = new int[MAX_BLACKJACK_STATS];
 		coinBadges = new boolean[12];
 		puzzlesLocked = new HashMap<>();
 		registeredItems = new Item[MAX_HOTKEYS];
@@ -1486,13 +1486,12 @@ public class Player extends Trainer implements Serializable {
 		updateBerries();
 		updateNames();
 		if (id == null) setID(gp.player.currentSave);
-		if (blackjackStats == null) blackjackStats = new int[20];
+		if (blackjackStats == null) blackjackStats = new int[MAX_BLACKJACK_STATS];
 		if (blackjackStats.length != MAX_BLACKJACK_STATS) updateBlackjackStats();
 		if (coinBadges == null) coinBadges = new boolean[12];
 		if (puzzlesLocked == null) puzzlesLocked = new HashMap<>();
 		if (registeredItems == null) registeredItems = new Item[MAX_HOTKEYS];
 		updateRegisteredItems();
-		if (!flag[4][6]) updateCoins();
 		if (!flag[0][23]) {
 			difficulty = HARD;
 			flag[0][23] = true;
@@ -1525,13 +1524,6 @@ public class Player extends Trainer implements Serializable {
 			}
 		}
 		boxLabels = setupBoxLabels();
-	}
-	
-	// multiplies old coins and orbs by 10
-	private void updateCoins() {
-		flag[4][6] = true;
-		coins *= 10;
-		bag.count[Item.TEMPLE_ORB.getID()] *= 10;
 	}
 	
 	private void updateRegisteredItems() {
@@ -2037,8 +2029,10 @@ public class Player extends Trainer implements Serializable {
 	public void addBetCurrency(boolean gauntlet, int amt) {
 		if (gauntlet) {
 			bag.add(Item.TEMPLE_ORB, amt);
+			bag.count[Item.TEMPLE_ORB.getID()] = Math.max(0, bag.getCount(Item.TEMPLE_ORB));
 		} else {
 			coins += amt;
+			coins = Math.max(0, coins);
 		}
 	}
 	
