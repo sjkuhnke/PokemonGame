@@ -502,7 +502,7 @@ public enum Move {
 	SPARKLING_TERRAIN(0,1000,0,0,2,0,PType.MAGIC,"Sets the terrain to SPARKLY for 5 turns",false,10),
 	SPARKLING_WATER(0,1000,0,0,2,0,PType.WATER,"Raises Sp.Def by 2. Turns into Sparkling Aria when used by Kissyfishy-D",false,15),
 	SPECTRAL_THIEF(90,100,100,0,0,0,PType.GHOST,"% to steal any stat boosts foe has",true,10),
-	SPELLBIND(0,100,0,0,2,0,PType.MAGIC,"Traps non-MAGIC foe for 4-5 turns, lowers foe's Def and SpD by 1 every turn, 2 if Binding Band was held",false,10),
+	SPELLBIND(0,100,0,0,2,0,PType.MAGIC,"Traps foe for 4-5 turns, lowers foe's Def and SpD by 1 every turn, 2 if Binding Band was held",false,10),
 	SPIKE_CANNON(25,100,0,0,0,0,PType.NORMAL,"Hits 2-5 times",false,15),
 	SPIKES(0,1000,0,0,2,0,PType.GROUND,"Lays spikes on the opponents side. Depending on the layers laid (1-3) will damage any grounded foe (1/8, 1/6, 1/4) upon switch-in",false,20),
 	SPIKY_SHIELD(0,1000,0,0,2,4,PType.GRASS,"User protects itself, can't be used in succession. Damages foe if they make contact",false,10),

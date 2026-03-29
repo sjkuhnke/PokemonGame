@@ -257,6 +257,8 @@ public class AssetSetter {
 	private static final int CASINO_TABLE = 26;
 	private static final int E4_DOOR_1 = 27;
 	private static final int E4_DOOR_2 = 28;
+	private static final int E4_DOOR_3 = 29;
+	private static final int HOF_MACHINE = 30;
 	
 	public AssetSetter(GamePanel gp) {
 		this.gp = gp;
@@ -3158,7 +3160,7 @@ public class AssetSetter {
 		
 		mapNum = 226;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(RYDER_E4, 50, 49, "", "", 539);
+		gp.npc[mapNum][index] = NPCSetup(RYDER_E4, 50, 50, "", "", 539);
 	}
 
 	public void setInteractiveTile(int map) {
@@ -4319,7 +4321,11 @@ public class AssetSetter {
 		
 		mapNum = 226;
 		iIndex = 0;
-		gp.iTile[mapNum][iIndex] = ITileSetup(50, 46, E4_DOOR_2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 47, E4_DOOR_3, mapNum, map);
+		
+		mapNum = 227;
+		iIndex = 0;
+		gp.iTile[mapNum][iIndex] = ITileSetup(50, 50, HOF_MACHINE, mapNum, map);
 	}
 
 	public void updateNPC(int map) {
@@ -6024,6 +6030,12 @@ public class AssetSetter {
 			break;
 		case E4_DOOR_2:
 			result = new E4Door(gp, 3);
+			break;
+		case E4_DOOR_3:
+			result = new E4Door(gp, 5);
+			break;
+		case HOF_MACHINE:
+			result = new HOFMachine(gp);
 			break;
 		}
 		

@@ -1095,7 +1095,7 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 	
 	public boolean inE4() {
-		return currentMap >= 222 && currentMap <= 226;
+		return currentMap >= 222 && currentMap <= 227;
 	}
 	
 	private void saveScreenshot() {

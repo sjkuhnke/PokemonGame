@@ -42,12 +42,16 @@ public class TileManager {
 	public static final int BOTTOM_FOURTH = 14;
 	public static final int LEFT_FOURTH = 15;
 	public static final int RIGHT_FOURTH = 16;
-	public static final int TOP_RIGHT_SKINNY_CORNER = 17;
-	public static final int TOP_LEFT_SKINNY_CORNER = 18;
+	public static final int TOP_RIGHT_FOURTH_CORNER = 17;
+	public static final int TOP_LEFT_FOURTH_CORNER = 18;
+	public static final int TOP_LEFT_CORNER = 19;
+	public static final int TOP_RIGHT_CORNER = 20;
+	public static final int BOTTOM_LEFT_BIG_CORNER = 21;
+	public static final int BOTTOM_RIGHT_BIG_CORNER = 22;
 	
 	public TileManager(GamePanel gp) {
 		this.gp = gp;
-		tile = new Tile[1400];
+		tile = new Tile[1600];
 		mapTileNum = new int[GamePanel.MAX_MAP][gp.maxWorldCol][gp.maxWorldRow];
 		canFly = new boolean[GamePanel.MAX_MAP];
 		isCave = new boolean[GamePanel.MAX_MAP];
@@ -282,10 +286,11 @@ public class TileManager {
 		loadMap("/maps/e4_3.txt", 224, false);
 		loadMap("/maps/e4_4.txt", 225, false);
 		loadMap("/maps/e4_5.txt", 226, false);
+		loadMap("/maps/e4_6.txt", 227, false);
 	}
 	
 	private void setupCollisionRectangles() {
-		collisionRectangles = new Rectangle[19];
+		collisionRectangles = new Rectangle[23];
 		collisionRectangles[FULL] = new Rectangle(0, 0, gp.tileSize, gp.tileSize); // full tile
 		collisionRectangles[TOP_HALF] = new Rectangle(0, 0, gp.tileSize, gp.tileSize / 2); // top half
 		collisionRectangles[BOTTOM_HALF] = new Rectangle(0, gp.tileSize / 2, gp.tileSize, gp.tileSize / 2); // bottom half
@@ -301,10 +306,14 @@ public class TileManager {
 		collisionRectangles[BOTTOM_THREE_FOURTHS] = new Rectangle(0, gp.tileSize / 4, gp.tileSize, gp.tileSize * 3 / 4); // bottom 3/4
 		collisionRectangles[TOP_FOURTH] = new Rectangle(0, 0, gp.tileSize, gp.tileSize / 4); // top fourth
 		collisionRectangles[BOTTOM_FOURTH] = new Rectangle(0, gp.tileSize * 3 / 4, gp.tileSize, gp.tileSize / 4); // bottom fourth
-		collisionRectangles[LEFT_FOURTH] = new Rectangle(0, 0, gp.tileSize / 4, gp.tileSize); // top fourth
-		collisionRectangles[RIGHT_FOURTH] = new Rectangle(gp.tileSize * 3 / 4, 0, gp.tileSize / 4, gp.tileSize); // bottom fourth
-		collisionRectangles[TOP_RIGHT_SKINNY_CORNER] = new Rectangle(gp.tileSize * 3 / 4, 0, gp.tileSize / 4, gp.tileSize / 2); // bottom left corner
-		collisionRectangles[TOP_LEFT_SKINNY_CORNER] = new Rectangle(0, 0, gp.tileSize / 4, gp.tileSize / 2); // bottom right corner
+		collisionRectangles[LEFT_FOURTH] = new Rectangle(0, 0, gp.tileSize / 4, gp.tileSize); // left fourth
+		collisionRectangles[RIGHT_FOURTH] = new Rectangle(gp.tileSize * 3 / 4, 0, gp.tileSize / 4, gp.tileSize); // right fourth
+		collisionRectangles[TOP_RIGHT_FOURTH_CORNER] = new Rectangle(gp.tileSize * 3 / 4, 0, gp.tileSize / 4, gp.tileSize / 2); // bottom left corner
+		collisionRectangles[TOP_LEFT_FOURTH_CORNER] = new Rectangle(0, 0, gp.tileSize / 4, gp.tileSize / 2); // bottom right corner
+		collisionRectangles[TOP_LEFT_CORNER] = new Rectangle(0, 0, gp.tileSize / 2, gp.tileSize / 2); // bottom left corner
+		collisionRectangles[TOP_RIGHT_CORNER] = new Rectangle(gp.tileSize / 2, 0, gp.tileSize / 2, gp.tileSize / 2); // bottom right corner
+		collisionRectangles[BOTTOM_LEFT_BIG_CORNER] = new Rectangle(0, gp.tileSize / 4, gp.tileSize * 3 / 4, gp.tileSize * 3 / 4); // left fourth
+		collisionRectangles[BOTTOM_RIGHT_BIG_CORNER] = new Rectangle(gp.tileSize / 4, gp.tileSize / 4, gp.tileSize * 3 / 4, gp.tileSize * 3 / 4); // right fourth
 	}
 
 	public void getTileImage() {
@@ -315,7 +324,7 @@ public class TileManager {
 		setup(4, false);
 		setup(5, true);
 		setup(6, false);
-		setup(7, false, FULL, FULL, new GrassTile());
+		setup(7, false, FULL, FULL, new GrassTile(), false);
 		setup(8, false);
 		setup(9, false);
 		setup(10, false);
@@ -533,7 +542,7 @@ public class TileManager {
 		setup(232, true);
 		setup(233, true);
 		setup(234, true);
-		setup(235, false, FULL, FULL, new CaveTile());
+		setup(235, false, FULL, FULL, new CaveTile(), false);
 		setup(236, true);
 		setup(237, true);
 		setup(238, true);
@@ -564,7 +573,7 @@ public class TileManager {
 		setup(263, true);
 		setup(264, true);
 		setup(265, true);
-		setup(266, false, FULL, FULL, new CaveTile());
+		setup(266, false, FULL, FULL, new CaveTile(), false);
 		setup(267, true);
 		setup(268, true);
 		setup(269, true);
@@ -583,17 +592,17 @@ public class TileManager {
 		setup(282, true);
 		setup(283, false);
 		setup(284, true);
-		setup(285, true, TOP_FOURTH, FULL, new CaveTile());
-		setup(286, true, TOP_FOURTH, FULL, new CaveTile());
-		setup(287, true, TOP_FOURTH, FULL, new CaveTile());
+		setup(285, true, TOP_FOURTH, FULL, new CaveTile(), false);
+		setup(286, true, TOP_FOURTH, FULL, new CaveTile(), false);
+		setup(287, true, TOP_FOURTH, FULL, new CaveTile(), false);
 		setup(288, true);
 		setup(289, true);
-		setup(290, false, FULL, FULL, new CaveTile());
-		setup(291, false, FULL, FULL, new CaveTile());
+		setup(290, false, FULL, FULL, new CaveTile(), false);
+		setup(291, false, FULL, FULL, new CaveTile(), false);
 		setup(292, true);
-		setup(293, false, FULL, FULL, new CaveTile());
-		setup(294, false, FULL, FULL, new CaveTile());
-		setup(295, false, FULL, FULL, new CaveTile());
+		setup(293, false, FULL, FULL, new CaveTile(), false);
+		setup(294, false, FULL, FULL, new CaveTile(), false);
+		setup(295, false, FULL, FULL, new CaveTile(), false);
 		setup(296, true);
 		setup(297, true);
 		setup(298, false);
@@ -652,7 +661,7 @@ public class TileManager {
 		setup(360, false);
 		setup(361, false);
 		setup(362, false);
-		setup(363, false, FULL, FULL, new GrassTile());
+		setup(363, false, FULL, FULL, new GrassTile(), false);
 		setup(364, false);
 		setup(365, false);
 		setup(366, false);
@@ -805,7 +814,7 @@ public class TileManager {
 		setup(508, false);
 		setup(509, true);
 		setup(510, true);
-		setup(511, false, FULL, FULL, new GrassTile());
+		setup(511, false, FULL, FULL, new GrassTile(), false);
 		setup(512, true);
 		setup(513, false);
 		setup(514, true, TOP_FOURTH);
@@ -1222,13 +1231,13 @@ public class TileManager {
 		setup(919, true);
 		setup(920, true);
 		setup(921, true, LEFT_FOURTH, OVER);
-		setup(922, true, TOP_RIGHT_SKINNY_CORNER);
+		setup(922, true, TOP_RIGHT_FOURTH_CORNER);
 		setup(923, true, TOP_HALF);
 		setup(924, true, TOP_HALF);
 		setup(925, false);
 		setup(926, true, TOP_HALF);
 		setup(927, true, TOP_HALF);
-		setup(928, true, TOP_LEFT_SKINNY_CORNER);
+		setup(928, true, TOP_LEFT_FOURTH_CORNER);
 		setup(929, true);
 		setup(930, true);
 		setup(931, true);
@@ -1236,7 +1245,7 @@ public class TileManager {
 		setup(933, true);
 		setup(934, true);
 		setup(935, true, TOP_HALF);
-		setup(936, false, FULL, FULL, new CaveTile());
+		setup(936, false, FULL, FULL, new CaveTile(), false);
 		setup(937, true, TOP_HALF);
 		setup(938, true);
 		setup(939, true);
@@ -1254,15 +1263,15 @@ public class TileManager {
 		setup(953, false);
 		setup(954, false);
 		setup(955, false);
-		setup(956, false, FULL, FULL, new IceTile());
+		setup(956, false, FULL, FULL, new IceTile(), false);
 		setup(957, true);
-		setup(958, false, FULL, FULL, new CaveTile());
+		setup(958, false, FULL, FULL, new CaveTile(), false);
 		setup(959, true);
 		setup(960, true);
 		setup(961, true, TOP_FOURTH);
 		setup(962, true);
 		setup(963, true);
-		setup(964, false, FULL, FULL, new CaveTile());
+		setup(964, false, FULL, FULL, new CaveTile(), false);
 		setup(965, true);
 		setup(966, true);
 		setup(967, true);
@@ -1274,8 +1283,8 @@ public class TileManager {
 		setup(973, false);
 
 		setup(986, false);
-		setup(987, false, FULL, FULL, new CaveTile());
-		setup(988, false, FULL, FULL, new CaveTile());
+		setup(987, false, FULL, FULL, new CaveTile(), false);
+		setup(988, false, FULL, FULL, new CaveTile(), false);
 		setup(989, true);
 		setup(990, true);
 		setup(991, true);
@@ -1629,19 +1638,155 @@ public class TileManager {
 		setup(1348, false);
 		setup(1349, false);
 		setup(1350, true, TOP_FOURTH);
-//		setup(1351, false);
-//		setup(1352, false);
-//		setup(1353, false);
-//		setup(1354, false);
-//		setup(1355, false);
-//		setup(1356, false);
-//		setup(1357, false);
-//		setup(1358, false);
-//		setup(1359, false);
-//		setup(1360, false);
-//		setup(1361, false);
-//		setup(1362, false);
-//		setup(1363, false);
+		setup(1351, true);
+		setup(1352, true);
+		setup(1353, true);
+		setup(1354, true);
+		setup(1355, true);
+		setup(1356, true);
+		setup(1357, true);
+		setup(1358, true);
+		setup(1359, true);
+		setup(1360, true);
+		setup(1361, true);
+		setup(1362, true);
+		setup(1363, true);
+		setup(1364, true);
+		setup(1365, true, LEFT_FOURTH);
+		setup(1366, false);
+		setup(1367, true, RIGHT_FOURTH);
+		setup(1368, true);
+		setup(1369, true);
+		setup(1370, true, TOP_LEFT_CORNER, FULL, new Tile(), true);
+		setup(1371, false, FULL, FULL, new Tile(), true);
+		setup(1372, true, LEFT_FOURTH);
+		setup(1373, false);
+		setup(1374, true, TOP_RIGHT_CORNER, FULL, new Tile(), true);
+		setup(1375, true);
+		setup(1376, true, TOP_LEFT_CORNER, FULL, new Tile(), true);
+		setup(1377, false, FULL, FULL, new Tile(), true);
+		setup(1378, false, FULL, FULL, new Tile(), true);
+		setup(1379, false, FULL, FULL, new Tile(), true);
+		setup(1380, true, TOP_RIGHT_CORNER, FULL, new Tile(), true);
+		setup(1381, true);
+		setup(1382, true, LEFT_FOURTH, FULL, new Tile(), true);
+		setup(1383, true, RIGHT_FOURTH, FULL, new Tile(), true);
+		setup(1384, true);
+		setup(1385, true);
+		setup(1386, true);
+		setup(1387, true);
+		setup(1388, true, BOTTOM_LEFT_BIG_CORNER, FULL, new Tile(), true);
+		setup(1389, true, BOTTOM_LEFT_CORNER, FULL, new Tile(), true);
+		setup(1390, true, BOTTOM_RIGHT_CORNER, FULL, new Tile(), true);
+		setup(1391, true, BOTTOM_RIGHT_BIG_CORNER, FULL, new Tile(), true);
+		setup(1392, true);
+		setup(1393, true);
+		setup(1394, true);
+		setup(1395, true);
+		setup(1396, true, BOTTOM_LEFT_BIG_CORNER, FULL, new Tile(), true);
+		setup(1397, false, FULL, FULL, new Tile(), true);
+		setup(1398, true, BOTTOM_RIGHT_BIG_CORNER, FULL, new Tile(), true);
+		setup(1399, true);
+		setup(1400, true);
+		setup(1401, true);
+		setup(1402, true);
+		setup(1403, true);
+		setup(1404, true);
+		setup(1405, true);
+		setup(1406, true);
+		setup(1407, true);
+		setup(1408, true);
+		setup(1409, true);
+		setup(1410, true);
+		setup(1411, true);
+		setup(1412, true);
+		setup(1413, true);
+		setup(1414, true);
+		setup(1415, true);
+		setup(1416, true);
+		setup(1417, true);
+		setup(1418, true);
+		setup(1419, true);
+		setup(1420, true);
+		setup(1421, true);
+		setup(1422, true, RIGHT_FOURTH);
+		setup(1423, true, BOTTOM_HALF, FULL, new Tile(), true);
+		setup(1424, true);
+		setup(1425, true);
+		setup(1426, true);
+		setup(1427, true);
+		setup(1428, true);
+		setup(1429, true);
+		setup(1430, true);
+		setup(1431, true);
+		setup(1432, true);
+		setup(1433, true);
+		setup(1434, true);
+		setup(1435, true);
+		setup(1436, true);
+		setup(1437, true);
+		setup(1438, true);
+		setup(1439, true);
+		setup(1440, true);
+		setup(1441, true);
+		setup(1442, true, FULL, FULL, new Tile(), true);
+		setup(1443, true, TOP_HALF, FULL, new Tile(), true);
+		setup(1444, true, TOP_HALF, FULL, new Tile(), true);
+		setup(1445, true, RIGHT_HALF, FULL, new Tile(), true);
+		setup(1446, true);
+		setup(1447, true, LEFT_HALF, FULL, new Tile(), true);
+		setup(1448, true, TOP_HALF, FULL, new Tile(), true);
+		setup(1449, true, FULL, FULL, new Tile(), true);
+		setup(1450, true, LEFT_HALF, FULL, new Tile(), true);
+		setup(1451, false, FULL, FULL, new Tile(), true);
+		setup(1452, false, FULL, FULL, new Tile(), true);
+		setup(1453, true, TOP_FOURTH, FULL, new Tile(), true);
+		setup(1454, true, TOP_FOURTH, FULL, new Tile(), true);
+		setup(1455, true, TOP_FOURTH, FULL, new Tile(), true);
+		setup(1456, true, TOP_FOURTH, FULL, new Tile(), true);
+		setup(1457, true, TOP_FOURTH, FULL, new Tile(), true);
+		setup(1458, false, FULL, FULL, new Tile(), true);
+		setup(1459, true, RIGHT_HALF, FULL, new Tile(), true);
+		setup(1460, true, LEFT_HALF, FULL, new Tile(), true);
+		setup(1461, false, FULL, FULL, new Tile(), true);
+		setup(1462, false, FULL, FULL, new Tile(), true);
+		setup(1463, true, RIGHT_HALF, FULL, new Tile(), true);
+		setup(1464, true, BOTTOM_HALF, FULL, new Tile(), true);
+		setup(1465, false, FULL, FULL, new Tile(), true);
+		setup(1466, true, BOTTOM_HALF, FULL, new Tile(), true);
+//		setup(1467, false);
+//		setup(1468, false);
+//		setup(1469, false);
+//		setup(1470, false);
+//		setup(1471, false);
+//		setup(1472, false);
+//		setup(1473, false);
+//		setup(1474, false);
+//		setup(1475, false);
+//		setup(1476, false);
+//		setup(1477, false);
+//		setup(1478, false);
+//		setup(1479, false);
+//		setup(1480, false);
+//		setup(1481, false);
+//		setup(1482, false);
+//		setup(1483, false);
+//		setup(1484, false);
+//		setup(1485, false);
+//		setup(1486, false);
+//		setup(1487, false);
+//		setup(1488, false);
+//		setup(1489, false);
+//		setup(1490, false);
+//		setup(1491, false);
+//		setup(1492, false);
+//		setup(1493, false);
+//		setup(1494, false);
+//		setup(1495, false);
+//		setup(1496, false);
+//		setup(1497, false);
+//		setup(1498, false);
+//		setup(1499, false);
 		
 		setupCliff(37, 2, new Tile());
 		setupCliff(38, 2, new Tile());
@@ -1743,10 +1888,10 @@ public class TileManager {
 	}
 	
 	public void setup(int index, boolean collision, int collisionType, int over) {
-		setup(index, collision, collisionType, over, new Tile());
+		setup(index, collision, collisionType, over, new Tile(), false);
 	}
 	
-	public void setup(int index, boolean collision, int collisionType, int over, Tile gen) {
+	public void setup(int index, boolean collision, int collisionType, int over, Tile gen, boolean reflect) {
 		tile[index] = gen;
 		String imageName = index + "";
 		while (imageName.length() < 4) imageName = "0" + imageName;
@@ -1757,8 +1902,9 @@ public class TileManager {
 				tile[index].collisionDirection = "all";
 				tile[index].collisionArea = collisionRectangles[collisionType == OVER ? FULL : collisionType];
 			}
-			if (collisionType == OVER || over == OVER) {
-				tile[index].drawAbove = true;
+			if (reflect || collisionType == OVER || over == OVER) {
+				tile[index].drawAbove = collisionType == OVER || over == OVER;
+				tile[index].reflective = reflect;
 				try {
 					tile[index].mask = ImageIO.read(getClass().getResourceAsStream("/masks/" + imageName + ".png"));
 				} catch (IllegalArgumentException e) {
@@ -1825,7 +1971,7 @@ public class TileManager {
 				worldY + gp.tileSize + gp.offsetY > gp.player.worldY - gp.player.screenY &&
 				worldY - gp.tileSize + gp.offsetY < gp.player.worldY + gp.player.screenY) {
 				
-				if (tile[tileNum].mask == null) {
+				if (tile[tileNum].mask == null || !tile[tileNum].drawAbove) {
 					if (tile[tileNum].drawAbove == drawAbove) {
 						g2.drawImage(tile[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
 					}

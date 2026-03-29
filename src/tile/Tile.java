@@ -11,5 +11,6 @@ public class Tile {
 	public String collisionDirection;
 	public Rectangle collisionArea;
 	public boolean drawAbove;
+	public boolean reflective;
 
 }

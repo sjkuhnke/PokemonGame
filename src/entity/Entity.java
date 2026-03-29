@@ -1,8 +1,11 @@
 package entity;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Composite;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.Shape;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,6 +17,7 @@ import javax.imageio.ImageIO;
 
 import overworld.GamePanel;
 import pokemon.*;
+import tile.Tile;
 
 public class Entity {
 	
@@ -85,51 +89,133 @@ public class Entity {
 	}
 
 	public void draw(Graphics2D g2) {
-		BufferedImage image = null;
-		int screenX = worldX - gp.player.worldX + gp.player.screenX + gp.offsetX;
-		int screenY = worldY - gp.player.worldY + gp.player.screenY + gp.offsetY;
+	    BufferedImage image = null;
+	    int screenX = worldX - gp.player.worldX + gp.player.screenX + gp.offsetX;
+	    int screenY = worldY - gp.player.worldY + gp.player.screenY + gp.offsetY;
 
-		if (worldX + gp.tileSize*2 + gp.offsetX > gp.player.worldX - gp.player.screenX &&
-			worldX - gp.tileSize*2 + gp.offsetX < gp.player.worldX + gp.player.screenX &&
-			worldY + gp.tileSize*2 + gp.offsetY > gp.player.worldY - gp.player.screenY &&
-			worldY - gp.tileSize*2 + gp.offsetY < gp.player.worldY + gp.player.screenY) {
-			
-			switch(direction) {
-			case "up":
-				if (spriteNum == 1) image = up1;
-				if (spriteNum == 2) image = up2;
-				if (spriteNum == 3) image = up3;
-				if (spriteNum == 4) image = up4;
-				break;
-			case "down":
-				if (spriteNum == 1) image = down1;
-				if (spriteNum == 2) image = down2;
-				if (spriteNum == 3) image = down3;
-				if (spriteNum == 4) image = down4;
-				break;
-			case "left":
-				if (spriteNum == 1) image = left1;
-				if (spriteNum == 2) image = left2;
-				if (spriteNum == 3) image = left3;
-				if (spriteNum == 4) image = left4;
-				break;
-			case "right":
-				if (spriteNum == 1) image = right1;
-				if (spriteNum == 2) image = right2;
-				if (spriteNum == 3) image = right3;
-				if (spriteNum == 4) image = right4;
-				break;
-			}
-			
-			int width = image.getWidth() * gp.scale;
-			int wOffset = (width - gp.tileSize) / 2;
-			
-			int height = image.getHeight() * gp.scale;
-			int hOffset = height - gp.tileSize;
-			
-			g2.drawImage(image, screenX - wOffset, screenY - hOffset, width, height, null);
-		}
-		
+	    if (worldX + gp.tileSize*2 + gp.offsetX > gp.player.worldX - gp.player.screenX &&
+	        worldX - gp.tileSize*2 + gp.offsetX < gp.player.worldX + gp.player.screenX &&
+	        worldY + gp.tileSize*2 + gp.offsetY > gp.player.worldY - gp.player.screenY &&
+	        worldY - gp.tileSize*2 + gp.offsetY < gp.player.worldY + gp.player.screenY) {
+
+	        switch(direction) {
+	        case "up":
+	            if (spriteNum == 1) image = up1;
+	            if (spriteNum == 2) image = up2;
+	            if (spriteNum == 3) image = up3;
+	            if (spriteNum == 4) image = up4;
+	            break;
+	        case "down":
+	            if (spriteNum == 1) image = down1;
+	            if (spriteNum == 2) image = down2;
+	            if (spriteNum == 3) image = down3;
+	            if (spriteNum == 4) image = down4;
+	            break;
+	        case "left":
+	            if (spriteNum == 1) image = left1;
+	            if (spriteNum == 2) image = left2;
+	            if (spriteNum == 3) image = left3;
+	            if (spriteNum == 4) image = left4;
+	            break;
+	        case "right":
+	            if (spriteNum == 1) image = right1;
+	            if (spriteNum == 2) image = right2;
+	            if (spriteNum == 3) image = right3;
+	            if (spriteNum == 4) image = right4;
+	            break;
+	        }
+
+	        int width = image.getWidth() * gp.scale;
+	        int wOffset = (width - gp.tileSize) / 2;
+	        int height = image.getHeight() * gp.scale;
+	        int hOffset = height - gp.tileSize;
+	        int drawX = screenX - wOffset;
+	        int drawY = screenY - hOffset;
+
+	        drawReflection(g2, image, drawX, drawY, width, height);
+	        g2.drawImage(image, drawX, drawY, width, height, null);
+	    }
+	}
+
+	protected void drawReflection(Graphics2D g2, BufferedImage image, int drawX, int drawY, int width, int height) {
+	    Composite originalComposite = g2.getComposite();
+	    Shape originalClip = g2.getClip();
+
+	    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.18f));
+
+	    // Snap draw position to scale grid (prevents subpixel jitter)
+	    drawX = (drawX / gp.scale) * gp.scale;
+	    drawY = (drawY / gp.scale) * gp.scale;
+
+	    int reflectStartY = drawY + height;
+	    int reflectEndY   = reflectStartY + height;
+
+	    // Stable entity world-space anchors
+	    int entityLeft   = worldX - (width - gp.tileSize) / 2;
+	    int entityBottom = worldY + gp.tileSize;
+
+	    int startRow = (worldY + gp.tileSize) / gp.tileSize;
+	    int endRow   = (worldY + gp.tileSize + height - 1) / gp.tileSize;
+	    int startCol = (worldX - (width - gp.tileSize) / 2) / gp.tileSize;
+	    int endCol   = (worldX + (width + gp.tileSize) / 2 - 1) / gp.tileSize;
+
+	    for (int row = startRow; row <= endRow; row++) {
+	        for (int col = startCol; col <= endCol; col++) {
+
+	            if (row < 0 || row >= gp.maxWorldRow || col < 0 || col >= gp.maxWorldCol) continue;
+
+	            int tileNum = gp.tileM.mapTileNum[gp.currentMap][col][row];
+	            Tile t = gp.tileM.tile[tileNum];
+	            if (!t.reflective || t.mask == null) continue;
+
+	            for (int my = 0; my < t.mask.getHeight(); my++) {
+	                for (int mx = 0; mx < t.mask.getWidth(); mx++) {
+
+	                    if (t.mask.getRGB(mx, my) != Color.white.getRGB()) continue;
+
+	                    // World-space pixel position (KEY FIX)
+	                    int worldPixelX = col * gp.tileSize + mx * gp.scale;
+	                    int worldPixelY = row * gp.tileSize + my * gp.scale;
+
+	                    // Convert to screen-space
+	                    int pixelScreenX = worldPixelX - gp.player.worldX + gp.player.screenX + gp.offsetX;
+	                    int pixelScreenY = worldPixelY - gp.player.worldY + gp.player.screenY + gp.offsetY;
+
+	                    // Snap to grid (prevents jitter)
+	                    pixelScreenX = (pixelScreenX / gp.scale) * gp.scale;
+	                    pixelScreenY = (pixelScreenY / gp.scale) * gp.scale;
+
+	                    // Bounds check
+	                    if (pixelScreenX < drawX || pixelScreenX >= drawX + width) continue;
+	                    if (pixelScreenY < reflectStartY || pixelScreenY >= reflectEndY) continue;
+
+	                    // Relative position to entity (world-anchored)
+	                    int relativeX = worldPixelX - entityLeft;
+	                    int relativeY = worldPixelY - entityBottom;
+
+	                    int srcX1 = relativeX / gp.scale;
+	                    int srcX2 = srcX1 + 1;
+
+	                    // Flip vertically
+	                    int srcY1 = image.getHeight() - (relativeY / gp.scale);
+	                    int srcY2 = srcY1 - 1;
+
+	                    // Safety clamp (prevents rare edge flicker)
+	                    if (srcX1 < 0 || srcX2 > image.getWidth() || srcY2 < 0 || srcY1 > image.getHeight()) continue;
+
+	                    g2.drawImage(image,
+	                        pixelScreenX, pixelScreenY,
+	                        pixelScreenX + gp.scale, pixelScreenY + gp.scale,
+	                        srcX1, srcY1,
+	                        srcX2, srcY2,
+	                        null);
+	                }
+	            }
+	        }
+	    }
+
+	    g2.setClip(originalClip);
+	    g2.setComposite(originalComposite);
 	}
 	
 	public void speak(int mode) {

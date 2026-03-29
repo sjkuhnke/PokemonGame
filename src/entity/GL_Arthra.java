@@ -11,10 +11,10 @@ public class GL_Arthra extends NPC_GymLeader {
 	}
 	
 	public void getImage() {
-		down1 = setup("/npc/robin1");
-		up1 = setup("/npc/robin2");
-		left1 = setup("/npc/robin3");
-		right1 = setup("/npc/robin4");
+		down1 = setup("/npc/arthra1");
+		up1 = setup("/npc/arthra2");
+		left1 = setup("/npc/arthra3");
+		right1 = setup("/npc/arthra4");
 	}
 
 }

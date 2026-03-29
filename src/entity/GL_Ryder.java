@@ -11,10 +11,10 @@ public class GL_Ryder extends NPC_GymLeader {
 	}
 	
 	public void getImage() {
-		down1 = setup("/npc/robin1");
-		up1 = setup("/npc/robin2");
-		left1 = setup("/npc/robin3");
-		right1 = setup("/npc/robin4");
+		down1 = setup("/npc/ryder1");
+		up1 = setup("/npc/ryder2");
+		left1 = setup("/npc/ryder3");
+		right1 = setup("/npc/ryder4");
 	}
 
 }
