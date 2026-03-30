@@ -3755,6 +3755,49 @@ public class Script {
 				Task.addTask(Task.CONFIRM, npc, "Are you ready to challenge the Leviathan League?", 19);
 			}
 		});
+		
+		scriptMap.put(222.0, (npc) -> { // e4 whiskeroar
+			Task.addTask(Task.DIALOGUE, npc, "What a wondrous day!");
+			Task.addTask(Task.DIALOGUE, npc, "For my challenger to be the hero of Xhenos, who led Zlichaste and Emonaste to usurp their father and restore peace of the region...");
+			Task.addTask(Task.DIALOGUE, npc, "...is a great honor.");
+			Task.addNPCMoveTask('y', gp.tileSize * 40, gp.npc[222][1], false, 48);
+			Task.addTask(Task.DIALOGUE, npc, "Oh, do not think your good deeds went unpunished all this time! My peers from the temples have weaved great tales about you and Artrha...");
+			Task.addTask(Task.DIALOGUE, npc, "Yes, I commend for your tenacity and strength in such times.");
+			Task.addTask(Task.SLEEP, "", 30);
+			Task.addTask(Task.DIALOGUE, npc, "But... I am not the person you seek. For you do not seek a person at all.");
+			Task.addTask(Task.SLEEP, "", 45);
+			Task.addTask(Task.DIALOGUE, npc, "<@>, it has been decades since I was in my prime, and I would be a disservice to both of us if I tried to face you now.");
+			Task.addTask(Task.SLEEP, "", 40);
+			Task.addTask(Task.TURN, npc, "", Task.UP);
+			Task.addTask(Task.SLEEP, "", 30);
+			Task.addTask(Task.DIALOGUE, npc, "Fido! You have a challenger!");
+			Task.addNPCMoveTask('y', gp.tileSize * 48, gp.npc[222][1], false, 16);
+			Task.addTask(Task.SHAKE, "", 100);
+			Task.addTask(Task.SLEEP, "", 30);
+			Task.addTask(Task.TURN, npc, "", Task.DOWN);
+			Task.addTask(Task.SLEEP, "", 40);
+			Task.addTask(Task.DIALOGUE, npc, "Behold, my most loyal disciple. He has been with me through thick and thin, honed by years of training and battle...");
+			Task.addTask(Task.DIALOGUE, npc, "And he shall be your first opponent in these hallowed halls.");
+			Task.addTask(Task.SLEEP, "", 30);
+			Task.addTask(Task.TURN, npc, "", Task.UP);
+			Task.addTask(Task.SLEEP, "", 20);
+			Task.addTask(Task.DIALOGUE, gp.npc[222][1], "Grroaaaghh!!");
+			Task.addTask(Task.SLEEP, "", 30);
+			Task.addTask(Task.TURN, npc, "", Task.LEFT);
+			Task.addTask(Task.SLEEP, "", 50);
+			Task.addNPCMoveTask('x', gp.tileSize * 48, npc, false, 2);
+			Task.addTask(Task.SLEEP, "", 40);
+			Task.addTask(Task.TURN, npc, "", Task.DOWN);
+			Task.addTask(Task.SLEEP, "", 45);
+			Task.addNPCMoveTask('y', gp.tileSize * 49, gp.npc[222][1], false, 4);
+			Task.addTask(Task.SLEEP, "", 30);
+			Task.addTask(Task.TURN, npc, "", Task.RIGHT);
+			Task.addTask(Task.SLEEP, "", 70);
+			Task.addTask(Task.TURN, npc, "", Task.DOWN);
+			Task.addTask(Task.SLEEP, "", 50);
+			Task.addTask(Task.DIALOGUE, npc, "May both of you learn something from one another, and let the battle commence!");
+			Task.addTask(Task.BATTLE, "", 535);
+		});
 	}
 	
 	public int getUnregisteredBasePokemon(Random random) {

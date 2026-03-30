@@ -219,6 +219,8 @@ public class AssetSetter {
 	private static final int ASTRID_E4 = 220;
 	private static final int ARTHRA_E4 = 221;
 	private static final int RYDER_E4 = 222;
+	private static final int SENSEI_E4 = 223;
+	private static final int SHAE_E4 = 224;
 	
 	private static final int DOWN_3 = -1;
 	private static final int DOWN_2 = 0;
@@ -3144,7 +3146,8 @@ public class AssetSetter {
 		
 		mapNum = 222;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(WHISKEROAR_E4, 50, 49, "", "", 535);
+		gp.npc[mapNum][index] = NPCSetup(SENSEI_E4, "Sensei", 50, 49, "", mapNum);
+		gp.npc[mapNum][index] = NPCSetup(WHISKEROAR_E4, "Whiskeroar", 50, 1, "", -1, -1, "", 535);
 		
 		mapNum = 223;
 		index = 0;
@@ -5840,6 +5843,21 @@ public class AssetSetter {
 			case MAGICIAN_F_DOWN:
 				result.setupImages("/npc/magician_f");
 				result.setDirection("down");
+				break;
+			case SENSEI_E4:
+				result.setupImages("/npc/sensei", true);
+				break;
+			case WHISKEROAR_E4:
+				result.down1 = result.setup("/overworlds/128");
+				break;
+			case CHLORIE_E4:
+				result.setupImages("/npc/chlorie");
+				break;
+			case ASTRID_E4:
+				result.setupImages("/npc/astrid");
+				break;
+			case SHAE_E4:
+				result.setupImages("/npc/shae", true);
 				break;
 		}
 		

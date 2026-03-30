@@ -5348,7 +5348,7 @@ public class Pokemon implements Serializable {
 			stat(this, 0, 1, foe);
 			break;
 		case MIRROR_SHOT:
-			stat(this, 5, -1, foe);
+			stat(foe, 5, -1, foe);
 			break;
 		case MIST_BALL:
 			stat(foe, 2, -1, this);
@@ -9955,6 +9955,7 @@ public class Pokemon implements Serializable {
 					this.moveset[index].currentPP += 10;
 					if (this.moveset[index].currentPP > this.moveset[index].maxPP) this.moveset[index].currentPP = this.moveset[index].maxPP;
 					Task.addTask(Task.TEXT, this.nickname + " ate its " + this.item.toString() + " to restore PP to " + m.toString() + "!");
+					if (consume) this.consumeItem(foe);
 				}
 			}
 			
@@ -9962,7 +9963,7 @@ public class Pokemon implements Serializable {
 				if ((this.status == Status.POISONED || this.status == Status.TOXIC) && (berry == Item.PECHA_BERRY || berry == Item.LUM_BERRY)) {
 					Task.addTask(Task.STATUS, Status.HEALTHY, this.nickname + " ate its " + berry.toString() + " to cure its poison!", this);
 					this.status = Status.HEALTHY;
-					this.consumeItem(foe);
+					if (consume) this.consumeItem(foe);
 				}
 				if (this.status == Status.BURNED && (berry == Item.RAWST_BERRY || berry == Item.LUM_BERRY)) {
 					Task.addTask(Task.STATUS, Status.HEALTHY, this.nickname + " ate its " + berry.toString() + " to cure its burn!", this);
