@@ -3757,6 +3757,7 @@ public class Script {
 		});
 		
 		scriptMap.put(222.0, (npc) -> { // e4 whiskeroar
+			p.heal();
 			Task.addTask(Task.DIALOGUE, npc, "What a wondrous day!");
 			Task.addTask(Task.DIALOGUE, npc, "For my challenger to be the hero of Xhenos, who led Zlichaste and Emonaste to usurp their father and restore peace of the region...");
 			Task.addTask(Task.DIALOGUE, npc, "...is a great honor.");
@@ -3797,6 +3798,26 @@ public class Script {
 			Task.addTask(Task.SLEEP, "", 50);
 			Task.addTask(Task.DIALOGUE, npc, "May both of you learn something from one another, and let the battle commence!");
 			Task.addTask(Task.BATTLE, "", 535);
+		});
+		
+		scriptMap.put(223.0, (npc) -> { // e4 chlorie
+			p.heal();
+			Task.addTask(Task.BATTLE, "", 536);
+		});
+		
+		scriptMap.put(224.0, (npc) -> { // e4 astrid
+			p.heal();
+			Task.addTask(Task.BATTLE, "", 537);
+		});
+		
+		scriptMap.put(225.0, (npc) -> { // e4 arthra
+			p.heal();
+			Task.addTask(Task.BATTLE, "", 538);
+		});
+		
+		scriptMap.put(226.0, (npc) -> { // e4 ryder
+			p.heal();
+			Task.addTask(Task.BATTLE, "", 539);
 		});
 	}
 	

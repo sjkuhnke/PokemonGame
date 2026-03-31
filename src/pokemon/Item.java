@@ -1014,7 +1014,7 @@ public enum Item {
 	            		foeMons.addItem(add);
 	            		newTeam[j] = add;
 	            	}
-	        		Trainer newT = tr.shallowClone();
+	        		Trainer newT = tr.shallowClone(Pokemon.gp);
 	        		for (Pokemon po : newTeam) {
 	        			po.trainer = newT;
 	        		}
@@ -1429,7 +1429,7 @@ public enum Item {
 	    			}
 	        	}
 	        }
-	        Trainer newT = pl.shallowClone();
+	        Trainer newT = pl.shallowClone(Pokemon.gp);
 	        for (Pokemon po : addList) {
 	        	po.trainer = newT;
 	        	userMons.addItem(po);
@@ -1468,7 +1468,7 @@ public enum Item {
             		}
             		newTeam[i] = updatedMon;
             	}
-            	Trainer newT = f.trainer.shallowClone();
+            	Trainer newT = f.trainer.shallowClone(Pokemon.gp);
         		for (Pokemon po : newTeam) {
         			po.trainer = newT;
         		}

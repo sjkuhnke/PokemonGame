@@ -826,15 +826,13 @@ public class Pokemon implements Serializable {
 			
 			for (int i = 0; i < tr.team.length; i++) {
 				if (tr.team[i] != null) {
-					trainerTeamClones[i] = tr.team[i].clone();
-					trainerTeamClones[i].vStatuses = DeepClonable.deepCloneList(trainerTeamClones[i].vStatuses);
+					trainerTeamClones[i] = tr.team[i].fullClone();
 				}
 			}
 			
 			for (int i = 0; i < foe.trainer.team.length; i++) {
 				if (foe.trainer.team[i] != null) {
-					playerTeamClones[i] = foe.trainer.team[i].clone();
-					playerTeamClones[i].vStatuses = DeepClonable.deepCloneList(playerTeamClones[i].vStatuses);
+					playerTeamClones[i] = foe.trainer.team[i].fullClone();
 				}
 			}
 		}
@@ -956,8 +954,7 @@ public class Pokemon implements Serializable {
 				Pokemon ally = tr.team[i];
 				if (ally != null && ally != this) {
 					Pokemon allyClone = trainerTeamClones[i];
-					Pokemon foeClone = foe.clone();
-					foeClone.vStatuses = DeepClonable.deepCloneList(foe.vStatuses);
+					Pokemon foeClone = foe.fullClone();
 					Pokemon simulatedAlly = simulateSwitchIn(ally, allyClone, foeClone, fieldClone);
 					int allyScore = simulatedAlly.scorePokemon(foe, strongestMove, foeMaxDamagePair, foeCanKO, fieldClone, null, false);
 					scoreMap.put(ally, allyScore);
@@ -1177,8 +1174,7 @@ public class Pokemon implements Serializable {
 				}
 				
 				// Simulate switch-in to get accurate HP after hazards
-				Pokemon userClone = this.clone();
-				userClone.vStatuses = DeepClonable.deepCloneList(this.vStatuses);
+				Pokemon userClone = this.fullClone();
 				Pokemon simulatedMon = simulateSwitchIn(realBackMon, backMon, userClone, field);
 				
 				// Calculate damage our strongest move would do to this switch-in
@@ -1253,13 +1249,13 @@ public class Pokemon implements Serializable {
 		// Make sure we're working with a clone to avoid side effects
 		if (clone == original) {
 			System.out.println("Additional clone");
-			clone = original.clone();
-			clone.vStatuses = DeepClonable.deepCloneList(clone.vStatuses);
+			clone = original.fullClone();
 		}
 		
 		// Track state before switch-in
 		int hpBefore = clone.currentHP;
 		int[] statsBefore = clone.statStages.clone();
+		System.out.println(Pokemon.field.toString() + " | " + field.toString());
 		
 		// Simulate the swap in with hazards=true to trigger entry hazards
 		createTask = false;
@@ -1932,18 +1928,10 @@ public class Pokemon implements Serializable {
 				}
 				numChecked++;
 				
-				Pokemon youClone = this.clone();
-				Pokemon foeClone = foe.clone();
+				Pokemon youClone = this.fullClone();
+				Pokemon foeClone = foe.fullClone();
 				foeClone.visible = true; // assume foe is active
-				Trainer youTrainerClone = this.trainer == null ? null : this.trainer.shallowClone();
-				Trainer foeTrainerClone = foe.trainer == null ? null : foe.trainer.shallowClone();
-				youClone.trainer = youTrainerClone;
-				foeClone.trainer = foeTrainerClone;
-				if (youTrainerClone != null) youTrainerClone.setCurrent(youClone);
-				if (foeTrainerClone != null) foeTrainerClone.setCurrent(foeClone);
 				Field fieldClone = field.clone();
-				youClone.vStatuses = DeepClonable.deepCloneList(youClone.vStatuses);
-				foeClone.vStatuses = DeepClonable.deepCloneList(foeClone.vStatuses);
 				
 				int youBeforeID = youClone.id;
 				int[] youBeforeStages = youClone.statStages.clone();
@@ -1964,7 +1952,7 @@ public class Pokemon implements Serializable {
 				Effect beforeTerrain = fieldClone.terrain == null ? null : fieldClone.terrain.effect;
 				PType foeBeforeType1 = foeClone.type1, foeBeforeType2 = foeClone.type2;
 				Move foeBeforeDisabled = foeClone.disabledMove;
-				Pokemon oldCurrent = foeTrainerClone == null ? null : foeTrainerClone.current;
+				Pokemon oldCurrent = foeClone.trainer == null ? null : foeClone.trainer.current;
 				
 				if (move.cat != 2) { // attacking move, check for primary/secondary effect
 					if (damage == 0) return 0; // foe is immune to the move, can't proc secondary effect
@@ -2019,7 +2007,7 @@ public class Pokemon implements Serializable {
 					|| foeClone.perishCount > foeBeforePerish
 					|| afterWeather != beforeWeather
 					|| afterTerrain != beforeTerrain
-					|| (foeTrainerClone != null && oldCurrent != null && foeTrainerClone.current != oldCurrent); // for force switching moves
+					|| (foeClone.trainer != null && oldCurrent != null && foeClone.trainer.current != oldCurrent); // for force switching moves
 					
 					if (useful) {
 						return numChecked;
@@ -10420,6 +10408,15 @@ public class Pokemon implements Serializable {
 			return false;
 		Pokemon other = (Pokemon) obj;
 		return id == other.id && level == other.level && slot == other.slot && toString().equals(other.toString());
+	}
+	
+	public Pokemon fullClone() {
+		Pokemon clonedPokemon = this.clone();
+		clonedPokemon.vStatuses = DeepClonable.deepCloneList(this.vStatuses);
+		Trainer trainerClone = this.trainer == null ? null : this.trainer.shallowClone(gp);
+		clonedPokemon.trainer = trainerClone;
+		if (trainerClone != null) trainerClone.setCurrent(clonedPokemon);
+		return clonedPokemon;
 	}
 	
 

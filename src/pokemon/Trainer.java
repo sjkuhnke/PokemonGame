@@ -500,7 +500,7 @@ public class Trainer implements Serializable {
 		return result;
 	}
 	
-	public Trainer shallowClone() {
+	public Trainer shallowClone(GamePanel gp) {
 		Trainer result = new Trainer(this.name, this.team, this.money, this.item, this.flagIndex, false);
 		result.update = this.update;
 		if (this.effects != null) result.effects = DeepClonable.deepCloneList(this.effects);

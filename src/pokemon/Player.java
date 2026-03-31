@@ -1954,6 +1954,7 @@ public class Player extends Trainer implements Serializable {
 		return newPlayer;
 	}
 	
+	@Override
 	public Player shallowClone(GamePanel gp) {
 		Player newPlayer = new Player(gp, this.name);
 		newPlayer.team = this.team;

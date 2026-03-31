@@ -3151,19 +3151,19 @@ public class AssetSetter {
 		
 		mapNum = 223;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(CHLORIE_E4, 50, 49, "", "", 536);
+		gp.npc[mapNum][index] = NPCSetup(CHLORIE_E4, "Chlorie", 50, 49, "", mapNum, -1, "", 536);
 		
 		mapNum = 224;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(ASTRID_E4, 50, 49, "", "", 537);
+		gp.npc[mapNum][index] = NPCSetup(ASTRID_E4, "Astrid", 50, 49, "", mapNum, -1, "", 537);
 		
 		mapNum = 225;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(ARTHRA_E4, 50, 49, "", "", 538);
+		gp.npc[mapNum][index] = NPCSetup(ARTHRA_DOWN, "Arthra", 50, 49, "", mapNum, -1, "", 538);
 		
 		mapNum = 226;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(RYDER_E4, 50, 50, "", "", 539);
+		gp.npc[mapNum][index] = NPCSetup(RYDER_DOWN, "Ryder", 50, 49, "", mapNum, -1, "", 539);
 	}
 
 	public void setInteractiveTile(int map) {
