@@ -1930,7 +1930,6 @@ public class Pokemon implements Serializable {
 				
 				Pokemon youClone = this.fullClone();
 				Pokemon foeClone = foe.fullClone();
-				foeClone.visible = true; // assume foe is active
 				Field fieldClone = field.clone();
 				
 				int youBeforeID = youClone.id;
@@ -4210,9 +4209,8 @@ public class Pokemon implements Serializable {
 				}
 				if (foeAbility == Ability.PERISH_BODY && this.perishCount == 0 && foe.perishCount == 0) {
 					Task.addAbilityTask(foe);
-					Task.addTask(Task.TEXT, "Both Pokemon will perish in 3 turns!");
+					Task.addTask(Task.TEXT, this.nickname + " will perish in 3 turns!");
 					this.perishCount = 4;
-					foe.perishCount = 4;
 				}
 				if (this.item == null && foe.getItem(field) == Item.STICKY_BARB) {
 					Task.addTask(Task.TEXT, "The Sticky Barb clinged to " + this.nickname + "!");
@@ -4227,7 +4225,6 @@ public class Pokemon implements Serializable {
 				Task.addAbilityTask(foe);
 				stat(this, 4, -1, foe);
 			}
-			
 			
 			if (move.isPhysical()) {
 				if (foeAbility == Ability.WEAK_ARMOR && !foe.isFainted()) {

@@ -89,7 +89,7 @@ public enum Ability {
 	NORMALIZE("All the Pokemon's moves become Normal type. The power of their moves are boosted by 1.2x."),
 	OVERGROW("Powers up GRASS moves by 20%, or 50% when at or below 1/3 of max HP."),
 	PARASOCIAL("The Pokemon steals 1/8 HP from an opposing confused, abducted, or asleep Pokemon."),
-	PERISH_BODY("When hit by a contact move, the Pokemon and the attacker will faint after three turns."),
+	PERISH_BODY("When hit by a contact move, the attacker will faint after three turns."),
 	PICKPOCKET("Steals an item from the foe on switch-in if this Pokemon is not holding an item."),
 	PIXILATE("NORMAL moves become LIGHT moves. The power of those moves is boosted by 1.2x."),
 	POISON_HEAL("Restores 1/8 max HP if the Pokemon is poisoned instead of losing HP."),

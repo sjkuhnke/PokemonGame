@@ -505,7 +505,7 @@ public class Trainer implements Serializable {
 		result.update = this.update;
 		if (this.effects != null) result.effects = DeepClonable.deepCloneList(this.effects);
 		result.cloned = true;
-		
+		result.team = this.team.clone();
 		return result;
 	}
 	

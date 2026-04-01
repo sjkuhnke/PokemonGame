@@ -1752,6 +1752,7 @@ public class BattleUI extends AbstractUI {
 		
 		slower = faster == user ? foe : user;
 		
+		boolean userCanMove = true;
 		boolean foeCanMove = true;
 		int switchSlot = foe.hasStatus(Status.SWAP) ? foe.getStatusNum(Status.SWAP) : FREE_SWITCH;
 		
@@ -1811,7 +1812,10 @@ public class BattleUI extends AbstractUI {
 			if (foeCanMove) {
 				faster.moveInit(slower, fMove, true);
 				if (faster.trainer != null) faster = faster.trainer.getCurrent();
-				slower = slower.trainer.getCurrent();
+				if (slower.trainer != null && slower != slower.trainer.getCurrent()) {
+					slower = slower.trainer.getCurrent();
+					userCanMove = false;
+				}
 				foeMove = null;
 			}
 	        // Check for swap (player)
@@ -1827,7 +1831,7 @@ public class BattleUI extends AbstractUI {
 	        	foeMove = null;
 	        }
 			
-	        if (slower == user.trainer.getCurrent()) {
+	        if (userCanMove) {
 	        	slower.moveInit(faster, uMove, false);
 	        	if (faster.trainer != null) faster = faster.trainer.getCurrent();
 				slower = slower.trainer.getCurrent();

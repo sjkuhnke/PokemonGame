@@ -1434,4 +1434,18 @@ public class PlayerCharacter extends Entity {
 			gp.ui.useItem(item, true);
 		}
 	}
+
+	public int getDirectionToFace() {
+		switch(this.direction) {
+			case "up":
+				return Task.DOWN;
+			case "down":
+				return Task.UP;
+			case "left":
+				return Task.RIGHT;
+			case "right":
+				return Task.LEFT;
+		}
+		return Task.DOWN;
+	}
 }

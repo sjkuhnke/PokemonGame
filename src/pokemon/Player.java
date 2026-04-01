@@ -1960,7 +1960,7 @@ public class Player extends Trainer implements Serializable {
 		newPlayer.team = this.team;
 		newPlayer.effects = this.effects == null ? new ArrayList<>() : DeepClonable.deepCloneList(this.effects);
 		newPlayer.cloned = true;
-		
+		newPlayer.team = this.team.clone();
 		return newPlayer;
 	}
 	

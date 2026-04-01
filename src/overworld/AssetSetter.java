@@ -3147,7 +3147,7 @@ public class AssetSetter {
 		mapNum = 222;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(SENSEI_E4, "Sensei", 50, 49, "", mapNum);
-		gp.npc[mapNum][index] = NPCSetup(WHISKEROAR_E4, "Whiskeroar", 50, 1, "", -1, -1, "", 535);
+		gp.npc[mapNum][index] = NPCSetup(WHISKEROAR_E4, "Whiskeroar", 50, 1, "", -1, 261, "Yip...", 535);
 		
 		mapNum = 223;
 		index = 0;
@@ -5048,6 +5048,26 @@ public class AssetSetter {
 			gp.npc[map][0] = NPCSetup(BLOCK_DOWN, "Guard", 49, 42, "", map);
 		}
 		
+		// elite four
+		if (flag[8][5]) {
+			if (map == 222) gp.openE4Door();
+			gp.npc[222][0].worldX = 48 * gp.tileSize;
+			gp.npc[222][1].worldY = 49 * gp.tileSize;
+		}
+		if (flag[8][6]) {
+			if (map == 223) gp.openE4Door();
+			gp.npc[223][0].setDirection("down");
+		}
+		if (flag[8][7]) {
+			if (map == 224) gp.openE4Door();
+		}
+		if (flag[8][8]) {
+			if (map == 225) gp.openE4Door();
+		}
+		if (flag[8][10]) {
+			if (map == 226) gp.openE4Door();
+		}
+		
 		gp.setRenderableNPCs();
 	}
 	
@@ -5849,9 +5869,13 @@ public class AssetSetter {
 				break;
 			case WHISKEROAR_E4:
 				result.down1 = result.setup("/overworlds/128");
+				result.up1 = result.setup("/overworlds/128");
+				result.left1 = result.setup("/overworlds/128");
+				result.right1 = result.setup("/overworlds/128");
 				break;
 			case CHLORIE_E4:
 				result.setupImages("/npc/chlorie");
+				result.setDirection("up");
 				break;
 			case ASTRID_E4:
 				result.setupImages("/npc/astrid");

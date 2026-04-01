@@ -1,5 +1,7 @@
 package overworld;
 
+import java.awt.Rectangle;
+
 import entity.Entity;
 import object.Spike;
 import pokemon.*;
@@ -1138,6 +1140,12 @@ public class EventHandler {
 			if (hit(223,50,46)) teleport(224, 50, 57,false); // enter third room
 			if (hit(224,50,46)) teleport(225, 50, 57,false); // enter fourth room
 			if (hit(225,50,46)) teleport(226, 50, 57,false); // enter champ room
+			
+			// E4 cutscenes
+			if (!gp.player.p.flag[8][5] && hitRect(222,45,52,11,1)) gp.player.interactNPC(gp.npc[222][0], false);
+			if (!gp.player.p.flag[8][6] && hitRect(223,45,52,11,1)) gp.player.interactNPC(gp.npc[223][0], false);
+			if (!gp.player.p.flag[8][7] && hitRect(224,45,52,11,1)) gp.player.interactNPC(gp.npc[224][0], false);
+			if (!gp.player.p.flag[8][8] && hitRect(225,45,52,11,1)) gp.player.interactNPC(gp.npc[225][0], false);
 		}
 		// Cutscene with Ryder/Arthra in front of Spaceship
 		if (!gp.player.p.flag[7][20] && hit(152,67,78,true)) gp.player.interactNPC(gp.npc[152][5], false);
@@ -1181,8 +1189,38 @@ public class EventHandler {
 			eventRect[map][col][row].y = eventRect[map][col][row].eventRectDefaultY;
 		}
 		
-		
 		return hit;
+	}
+	
+	public boolean hitRect(int map, int startCol, int startRow, int width, int height) {
+	    if (map != gp.currentMap) return false;
+	    if (!canTouchEvent) return false;
+
+	    boolean hit = false;
+
+	    // Player hitbox (world coords)
+	    Rectangle playerArea = new Rectangle(
+	        gp.player.worldX + gp.player.solidArea.x,
+	        gp.player.worldY + gp.player.solidArea.y,
+	        gp.player.solidArea.width,
+	        gp.player.solidArea.height
+	    );
+
+	    // Event rectangle (world coords)
+	    Rectangle eventArea = new Rectangle(
+	        startCol * gp.tileSize,
+	        startRow * gp.tileSize,
+	        width * gp.tileSize,
+	        height * gp.tileSize
+	    );
+
+	    if (playerArea.intersects(eventArea)) {
+	        previousEventX = gp.player.worldX;
+	        previousEventY = gp.player.worldY;
+	        hit = true;
+	    }
+
+	    return hit;
 	}
 	
 	public void teleport(int map, int col, int row, boolean cooldown) {
