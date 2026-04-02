@@ -5821,7 +5821,6 @@ public class Pokemon implements Serializable {
 				this.getFieldEffects().add(field.new FieldEffect(Effect.AURORA_GLOW));
 				Task.addTask(Task.TEXT, "A glowing Aurora surrounded " + this.nickname + "'s team!");
 				this.checkStarborn(foe);
-				foe.checkStarborn(this);
 			} else {
 				fail = fail();
 			}
@@ -6993,7 +6992,7 @@ public class Pokemon implements Serializable {
 		}
 		if (foe != null && foe.getAbility(field) == Ability.EMPATHIC_LINK && a > 0) {
 			Task.addAbilityTask(foe);
-			foe.stat(foe, foe.getHighestAttackingStat(), 1, this);
+			foe.stat(foe, foe.getHighestAttackingStat(), a, this);
 		}
 		p.statStages[i] += a;
 		p.statStages[i] = p.statStages[i] < -6 ? -6 : p.statStages[i];
@@ -9532,7 +9531,6 @@ public class Pokemon implements Serializable {
 				Task.addAbilityTask(this);
 				this.getFieldEffects().add(field.new FieldEffect(Effect.AURORA_GLOW));
 				Task.addTask(Task.TEXT, "A glowing Aurora surrounded " + this.nickname + "'s team!");
-				foe.checkStarborn(this);
 			}
 		} else if (this.getAbility(field) == Ability.INTIMIDATE || this.getAbility(field) == Ability.SCALY_SKIN) {
 			Task.addAbilityTask(this);

@@ -572,6 +572,7 @@ public class GamePanel extends JPanel implements Runnable {
 				
 				if (trainer > -1 && t.eliteFour) {
 					openE4Door();
+					player.interactNPC(npc[currentMap][0], false);
 				}
 				
 				if (id == 234 && !player.p.flag[7][16]) {

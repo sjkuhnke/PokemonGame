@@ -3862,8 +3862,50 @@ public class Script {
 		});
 		
 		scriptMap.put(225.0, (npc) -> { // e4 arthra
-			p.heal();
-			Task.addTask(Task.BATTLE, "", 538);
+			String herLegend = p.flag[7][9] ? Pokemon.getName(233) : Pokemon.getName(234);
+			String herAdjective = p.flag[7][9] ? "Logic" : "Faith";
+			String yourLegend = p.flag[7][9] ? Pokemon.getName(234) : Pokemon.getName(233);
+			if (!p.flag[8][8]) {
+				p.heal();
+				addE4CutsceneTasks();
+				Task.addTask(Task.DIALOGUE, npc, "Well... it's just me and you, yeah?");
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.TURN, npc, "", Task.UP);
+				Task.addTask(Task.SLEEP, "", 45);
+				Task.addTask(Task.DIALOGUE, npc, "You know, when we first met back in those woods, I thought you were just playing hero.");
+				Task.addTask(Task.DIALOGUE, npc, "Well, I guess you weren't playing at all...");
+				Task.addTask(Task.SLEEP, "", 50);
+				Task.addTask(Task.TURN, npc, "", Task.DOWN);
+				Task.addTask(Task.SLEEP, "", 20);
+				Task.addTask(Task.DIALOGUE, npc, "...and neither was I.");
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.DIALOGUE, npc, "Heh, between all the ghosts, grunts, and even gods... lesser trainers would have tucked tail and ran.");
+				Task.addTask(Task.DIALOGUE, npc, "Yet, we're still here. Why do you think that's the case?");
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.SPEAK, player, "...Magic?");
+				Task.addTask(Task.SLEEP, "", 20);
+				Task.addTask(Task.DIALOGUE, npc, "No, you absolute dolt. Sure, my grandpa talked a big game about spellbooks and wands and what not, but the real magic is inside us all along.");
+				Task.addTask(Task.DIALOGUE, npc, "Like a well-worn suit of armor, we did not falter to the dangers of the world, but kept others safe from harm.");
+				Task.addTask(Task.DIALOGUE, npc, "And like the sharpest sword, we... well mostly me, will cut through anything that stands in my way...");
+				Task.addTask(Task.DIALOGUE, npc, "And now " + herLegend + " stands by my side, ready to continue the fight once more.");
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.DIALOGUE, npc, "So ready yourself, <@>... and test your mettle against Arthra, last of the Elite Four, blade of " + herAdjective + "!");
+				Task.addTask(Task.BATTLE, "", 538);
+			} else {
+				Task.addTask(Task.DIALOGUE, npc, "Dumbass... you still got it, haven't you?");
+				Task.addTask(Task.DIALOGUE, npc, "Heh, no wonder we were the ones who saved Xhenos... I haven't been pushed to my limits since my dad was in his prime.");
+				Task.addTask(Task.DIALOGUE, npc, "Speaking of limits, while it was fun to use a god, no deity deserves to be shackled to a mortal for eternity.");
+				Task.addTask(Task.DIALOGUE, npc, "To restore balance to this region means that I must give up divinity... which feels fitting.");
+				Task.addTask(Task.SLEEP, "", 120);
+				Task.addTask(Task.DIALOGUE, npc, "You... aren't going to release " + yourLegend + "? Don't worry, I'm not... that mad, at you.");
+				Task.addTask(Task.DIALOGUE, npc, "Really stealing my thunder, but that's beside the point. It seems like it entrusts you with its power, and who am I to defy it?");
+				Task.addTask(Task.DIALOGUE, npc, "Still, you'd better be responsible for its actions and keep the balance... you don't want monks up your ass, do you?");
+				Task.addTask(Task.DIALOGUE, npc, "Ah, who am I kidding, I know that you can handle it.");
+			}
+		});
+		
+		scriptMap.put(225.1, (npc) -> { // nova arthra's room
+			
 		});
 		
 		scriptMap.put(226.0, (npc) -> { // e4 ryder

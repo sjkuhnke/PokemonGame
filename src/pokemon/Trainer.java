@@ -751,4 +751,7 @@ public class Trainer implements Serializable {
 	public boolean isGymOrE4() {
 		return money == 500 || eliteFour;
 	}
+	public boolean isE4() {
+		return eliteFour;
+	}
 }

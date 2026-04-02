@@ -30,7 +30,7 @@ public enum Ability {
 	DRY_SKIN("Restores 1/8 HP in RAIN or 1/4 HP when hit by WATER moves, but loses 1/8 HP in SUN and is 1.25x weaker to FIRE."),
 	DROUGHT("Turns the sunlight HARSH for 5 turns when it enters a battle."),
 	ELECTRIC_SURGE("Turns the ground into ELECTRIC TERRAIN for 5 turns when the Pokemon enters a battle."),
-	EMPATHIC_LINK("The Pokemon gets a boost in their highest attack after the foe raises any stat."),
+	EMPATHIC_LINK("The Pokemon gains a boost to its highest attacking stat for each stat stage the foe raises."),
 	ENCHANTED_DUST("Changes the foe's type to MAGIC upon entry."),
 	EVERGLOW("Sets up Aurora Glow for 5 turns when the Pokemon enters battle, healing all ally LIGHT, ICE and GALACTIC types."),
 	EVENT_HORIZON("Restores 1/3 of max HP when hit by a LIGHT move, Ultra Bursts when fainting (resetting stat changes for the field)."),
