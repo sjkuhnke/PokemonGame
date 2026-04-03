@@ -91,6 +91,8 @@ public abstract class AbstractUI {
 
 	// ANIMATION
 	public int pulseCounter = 0;
+	public int leftPressTimer = 0;
+	public int rightPressTimer = 0;
 
 	// NPC REFERENCE
 	public Entity npc;
@@ -733,6 +735,44 @@ public abstract class AbstractUI {
 			drawMoveSummary(moveX, moveY, p, foe, p.moveset[moveSummaryNum], null);
 		}
 		
+		boolean arrowKeyPressable = moveSummaryNum < 0 && nicknaming < 0 && !gp.ui.showMessage && !gp.battleUI.showFoeSummary && !gp.simBattleUI.showFoeSummary;
+		if (arrowKeyPressable) {
+			if (arrowKeyPressable) {
+			    // Decay timers each frame
+			    if (leftPressTimer > 0) leftPressTimer--;
+			    if (rightPressTimer > 0) rightPressTimer--;
+
+			    int arrowSize = gp.tileSize / 3;
+			    int arrowY = windowY + height / 2;
+
+			    // Left arrow
+			    int leftArrowX = windowX - arrowSize * 2;
+			    float leftT = leftPressTimer / 10f; // 0.0 - 1.0
+			    Color leftFill = blendColor(Color.WHITE, new Color(180, 220, 255), leftT);
+			    Color leftBorder = blendColor(Color.DARK_GRAY, new Color(100, 160, 255), leftT);
+			    int leftOffset = (int)(leftT * 3); // nudge left when pressed
+			    int[] leftXPoints = {leftArrowX - leftOffset, leftArrowX + arrowSize - leftOffset, leftArrowX + arrowSize - leftOffset};
+			    int[] leftYPoints = {arrowY, arrowY - arrowSize, arrowY + arrowSize};
+			    g2.setColor(leftFill);
+			    g2.fillPolygon(leftXPoints, leftYPoints, 3);
+			    g2.setColor(leftBorder);
+			    g2.drawPolygon(leftXPoints, leftYPoints, 3);
+
+			    // Right arrow
+			    int rightArrowX = windowX + width + arrowSize * 2;
+			    float rightT = rightPressTimer / 10f;
+			    Color rightFill = blendColor(Color.WHITE, new Color(180, 220, 255), rightT);
+			    Color rightBorder = blendColor(Color.DARK_GRAY, new Color(100, 160, 255), rightT);
+			    int rightOffset = (int)(rightT * 3); // nudge right when pressed
+			    int[] rightXPoints = {rightArrowX + rightOffset, rightArrowX - arrowSize + rightOffset, rightArrowX - arrowSize + rightOffset};
+			    int[] rightYPoints = {arrowY, arrowY - arrowSize, arrowY + arrowSize};
+			    g2.setColor(rightFill);
+			    g2.fillPolygon(rightXPoints, rightYPoints, 3);
+			    g2.setColor(rightBorder);
+			    g2.drawPolygon(rightXPoints, rightYPoints, 3);
+			}
+		}
+		
 		if (nicknaming < 0) {
 			if (!egg && gp.keyH.wPressed && moveSummaryNum == -1) {
 				gp.keyH.wPressed = false;
@@ -760,26 +800,60 @@ public abstract class AbstractUI {
 				}
 			}
 			
-			if (moveSummaryNum < 0 && !showBoxSummary && !gp.battleUI.showFoeSummary && !gp.simBattleUI.showFoeSummary) {
+			if (arrowKeyPressable) {
 				if (gp.keyH.leftPressed) {
 					gp.keyH.leftPressed = false;
-					if (partyNum > 0) {
-						partyNum--;
-					} else {
-						int index = 5;
-						while (gp.player.p.team[index] == null) {
-							index--;
+					leftPressTimer = 10;
+					if (showBoxSummary && !showBoxParty) { // box
+						int cBoxIndex = gauntlet ? -1 : gp.player.p.currentBox;
+						Pokemon[] cBox = gauntlet ? gp.player.p.gauntletBox : gp.player.p.boxes[cBoxIndex];
+						int next = gp.ui.boxNum - 1;
+						while (next >= 0 && cBox[next] == null) next--;
+						if (next < 0) { // wrapped: find the last non-null from the end
+							next = cBox.length - 1;
+							while (next > gp.ui.boxNum && cBox[next] == null) next--;
 						}
-						partyNum = index;
+						if (cBox[next] != null) {
+							gp.ui.boxNum = next;
+							gp.ui.currentBoxP = cBox[next];
+						}
+					} else { // party
+						if (partyNum > 0) {
+							partyNum--;
+						} else {
+							int index = 5;
+							while (gp.player.p.team[index] == null) {
+								index--;
+							}
+							partyNum = index;
+						}
+						if (showBoxParty) gp.ui.currentBoxP = gp.player.p.team[partyNum];
 					}
 				}
 				
 				if (gp.keyH.rightPressed) {
 					gp.keyH.rightPressed = false;
-					if (partyNum < 5 && gp.player.p.team[partyNum + 1] != null) {
-						partyNum++;
-					} else {
-						partyNum = 0;
+					rightPressTimer = 10;
+					if (showBoxSummary && !showBoxParty) { // box
+						int cBoxIndex = gauntlet ? -1 : gp.player.p.currentBox;
+						Pokemon[] cBox = gauntlet ? gp.player.p.gauntletBox : gp.player.p.boxes[cBoxIndex];
+						int next = gp.ui.boxNum + 1;
+						while (next < cBox.length && cBox[next] == null) next++;
+						if (next >= cBox.length) { // wrapped: find the first non-null from the start
+							next = 0;
+							while (next < gp.ui.boxNum && cBox[next] == null) next++;
+						}
+						if (cBox[next] != null) {
+							gp.ui.boxNum = next;
+							gp.ui.currentBoxP = cBox[next];
+						}
+					} else { // party
+						if (partyNum < 5 && gp.player.p.team[partyNum + 1] != null) {
+							partyNum++;
+						} else {
+							partyNum = 0;
+						}
+						if (showBoxParty) gp.ui.currentBoxP = gp.player.p.team[partyNum];
 					}
 				}
 			}
@@ -2551,5 +2625,14 @@ public abstract class AbstractUI {
 		
 		g2.setColor(color);
 		drawOutlinedText(text, x, y, color, Color.BLACK);
+	}
+	
+	public Color blendColor(Color a, Color b, float t) {
+	    t = Math.max(0f, Math.min(1f, t));
+	    return new Color(
+	        (int)(a.getRed()   + (b.getRed()   - a.getRed())   * t),
+	        (int)(a.getGreen() + (b.getGreen() - a.getGreen()) * t),
+	        (int)(a.getBlue()  + (b.getBlue()  - a.getBlue())  * t)
+	    );
 	}
 }

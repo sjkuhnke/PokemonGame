@@ -262,7 +262,7 @@ public class Pokemon implements Serializable {
 		
 		if (t) {
 			happiness = 255;
-		} else if (gp != null) {
+		} else if (gp != null && gp.player.p != null) {
 			happiness = determineHappiness(gp.player.p);
 		}
 		catchRate = getCatchRate();

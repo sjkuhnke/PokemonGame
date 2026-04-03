@@ -513,7 +513,6 @@ public class TitleScreen extends AbstractUI {
 			Files.createDirectories(battleDir);
 			String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
 			String fileName = "battle_history_" + previewPlayer.getName() + "_" + timestamp + ".json";
-			
 			File battleFile = new File(battleDir.toFile(), fileName);
 			FileWriter writer = new FileWriter(battleFile);
 			writer.write(previewPlayer.exportBattleHistory().toString(2));
