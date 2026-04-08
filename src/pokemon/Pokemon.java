@@ -2731,7 +2731,8 @@ public class Pokemon implements Serializable {
 	}
 
 	public void move(Pokemon foe, Move move, boolean first, boolean consumePP) {
-		if (this.fainted || foe.fainted) return;
+		if (this.fainted) return;
+		boolean noTarget = foe == null || foe.fainted;
 		if (move == null) return;
 
 		double attackStat;
@@ -3326,6 +3327,7 @@ public class Pokemon implements Serializable {
 		
 		int numHits = move.getNumHits(this, this.trainer == null ? null : this.trainer.team);
 		
+		if (noTarget && !(move.cat == 2 && acc > 100)) ctx.shouldAnimate = false;
 		String moveText = announceMove(move, foe, ctx);
 		
 		ArrayList<Task> tasks = gp.gameState == GamePanel.BATTLE_STATE ? gp.battleUI.tasks : gp.simBattleUI.tasks;
@@ -3338,7 +3340,7 @@ public class Pokemon implements Serializable {
 		for (int hit = 1; hit <= numHits; hit++) {
 			if (hit > 1) bp = move.basePower;
 			if (move == Move.POP_POP) hits++;
-			if (foe.isFainted() || this.isFainted()) {
+			if ((foe.isFainted() || this.isFainted()) && !noTarget) {
 				Task.addTask(Task.TEXT, "Hit " + (hit - 1) + " time(s)!");
 				break;
 			}
@@ -3525,6 +3527,13 @@ public class Pokemon implements Serializable {
 				Task t = Task.createTask(Task.TEXT, foe.nickname + " stat changes were eliminated!");
 				Task.insertTask(Task.createTask(Task.TEXT, this.nickname + " used " + move.toString() + "!"), damageIndex++);
 				Task.insertTask(t, damageIndex++);
+			}
+			
+			if (noTarget && !(move.cat == 2 && acc > 100)) {
+				ctx.shouldAnimate = false;
+				Task.addTask(Task.TEXT, "But there was no target...");
+				endMove();
+				return;
 			}
 			
 			if (move.cat == 2) {
@@ -4274,7 +4283,7 @@ public class Pokemon implements Serializable {
 			if (first && this.getItem(field) == Item.KING1S_ROCK && checkSecondary(10)) {
 				foe.flinch();
 			}
-		}
+		} // end multi hit move TODO: make Red Card/Eject Button activate after the first hit not the last
 		if (move.secondary < 0) {
 			primaryEffect(foe, move, foeEject, field);
 		}
@@ -9697,8 +9706,8 @@ public class Pokemon implements Serializable {
 			
 			if (field.contains(this.getFieldEffects(), Effect.TOXIC_SPIKES) && this.isGrounded()) {
 				int layers = field.getLayers(this.getFieldEffects(), Effect.TOXIC_SPIKES);
-				if (layers == 1) this.poison(false, null);
-				if (layers == 2) this.toxic(false, null);
+				if (layers == 1) this.poison(false, new Pokemon(1, 1, false, true));
+				if (layers == 2) this.toxic(false, new Pokemon(1, 1, false, true));
 				
 				if (this.isType(PType.POISON)) {
 					field.remove(this.getFieldEffects(), Effect.TOXIC_SPIKES);

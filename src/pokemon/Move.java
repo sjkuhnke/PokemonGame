@@ -386,7 +386,7 @@ public enum Move {
 	POISON_JAB(80,100,30,0,0,0,PType.POISON,"% to Poison foe",true,20),
 	POISON_POWDER(0,75,0,0,2,0,PType.POISON,"Poisons foe",false,35),
 	POISON_STING(15,100,30,0,0,0,PType.POISON,"% chance to Poison foe",false,35),
-	POISON_TAIL(85,100,10,1,0,0,PType.POISON,"% chance to Poison foe. Boosted crit rate",true,15),
+	POISON_TAIL(85,100,10,1,0,0,PType.POISON,"% chance to Poison foe, boosted crit rate",true,15),
 	POLTERGEIST(110,90,0,0,0,0,PType.GHOST,"Fails if the target isn't holding an item",false,5),
 	POP_POP(70,80,0,0,0,0,PType.STEEL,"Attacks twice, seperate accuracy checks for each hit",false,5),
 	POUND(40,100,0,0,0,0,PType.NORMAL,"A normal attack",true,30),

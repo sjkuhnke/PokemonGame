@@ -1099,8 +1099,9 @@ public class UI extends AbstractUI {
 			y += gp.tileSize / 2;
 			g2.setFont(g2.getFont().deriveFont(16F));
 			for (Moveslot m : p.moveset) {
-				String moveString = m == null ? "" : "- " + m.move.toString();
-				g2.drawString(moveString, x, y);
+				String moveName = (m == null) ? "" :
+	                (m.move == Move.HIDDEN_POWER || m.move == Move.RETURN) ? m.move == Move.HIDDEN_POWER ? m.move + " " + p.determineHPType() : m.move + " " + p.determineHPType() : m.move.toString();
+				g2.drawString(moveName, x, y);
 				y += gp.tileSize / 3;
 			}
 			
