@@ -3419,7 +3419,7 @@ public class UI extends AbstractUI {
 			}
 		}
 		
-		if (gp.keyH.calcPressed) {
+		if (nicknaming < 0 && gp.keyH.calcPressed) {
 			gp.keyH.calcPressed = false;
 			Item.useCalc(gp.player.p.getCurrent(), cBox, null, true);
 		}
