@@ -814,6 +814,7 @@ public class Pokemon implements Serializable {
 		
 		Trainer tr = this.trainer;
 		boolean canSwitch = tr.canSwitch(foe);
+		//this.addStatus(Status.SWAP, BattleUI.NORMAL_SWITCH); // TODO: debug
 		
 		// Clone both teams once at the start
 		Pokemon[] trainerTeamClones = null;
@@ -1255,7 +1256,6 @@ public class Pokemon implements Serializable {
 		// Track state before switch-in
 		int hpBefore = clone.currentHP;
 		int[] statsBefore = clone.statStages.clone();
-		System.out.println(Pokemon.field.toString() + " | " + field.toString());
 		
 		// Simulate the swap in with hazards=true to trigger entry hazards
 		createTask = false;
@@ -4418,6 +4418,7 @@ public class Pokemon implements Serializable {
 						this.eatBerry(this.item, true, foe, m.move);
 					} else {
 						this.removeStatus(Status.ENCORED);
+						Task.addTask(Task.TEXT, this.nickname + "'s encore ended!");
 						this.encoreCount = 0;
 						this.disabledCount = 0;
 						this.disabledMove = null;
