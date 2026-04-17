@@ -1142,6 +1142,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(24, 25, Item.RED_CARD, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(74, 79, Item.ADRENALINE_ORB, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(77, 70, Item.LEAF_STONE, mapNum);
+		gp.obj[mapNum][objIndex] = SetupChest(9, 29, mapNum);
 		
 		mapNum = 137;
 		objIndex = 0;
@@ -1177,6 +1178,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(64, 71, Item.RED_CARD, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(46, 58, Item.THROAT_SPRAY, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(62, 74, Item.BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = SetupChest(40, 74, mapNum);
 		
 		mapNum = 139;
 		objIndex = 0;
@@ -1216,6 +1218,10 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(40, 77, Item.HYPER_POTION, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(66, 80, Item.WEAKNESS_POLICY, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(65, 71, Item.WHITE_HERB, mapNum);
+		
+		mapNum = 142;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = SetupChest(52, 44, mapNum);
 		
 		mapNum = 144;
 		objIndex = 0;

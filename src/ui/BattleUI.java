@@ -576,6 +576,7 @@ public class BattleUI extends AbstractUI {
 		}
 		
 		if (tasks.isEmpty() && currentTask == null) {
+			System.out.println("Tasks was detected to be empty");
 			subState = IDLE_STATE;
 		}
 	}
@@ -1943,7 +1944,6 @@ public class BattleUI extends AbstractUI {
 					wipe();
 				}
 			} else {
-				subState = TASK_STATE;
 				boolean fainted = user.isFainted();
 				if (fainted) foeMove = null;
 				if (cancellableParty && !fainted){
@@ -1967,6 +1967,7 @@ public class BattleUI extends AbstractUI {
 				commandNum = 0;
 				dialogueCounter = 0;
 				baton = false;
+				subState = TASK_STATE;
 				if (!fainted) turn(null, foeMove);
 				//foeMove = null;
 			}

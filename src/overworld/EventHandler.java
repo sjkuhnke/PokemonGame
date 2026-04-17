@@ -1140,6 +1140,7 @@ public class EventHandler {
 			if (hit(223,50,46)) teleport(224, 50, 57,false); // enter third room
 			if (hit(224,50,46)) teleport(225, 50, 57,false); // enter fourth room
 			if (hit(225,50,46)) teleport(226, 50, 57,false); // enter champ room
+			if (hit(226,50,47)) teleport(227, 50, 62,false); // enter hof room
 			
 			// E4 cutscenes
 			if (!gp.player.p.flag[8][5] && hitRect(222,45,52,11,1)) gp.player.interactNPC(gp.npc[222][0], false);

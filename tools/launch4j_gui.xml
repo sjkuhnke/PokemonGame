@@ -1,7 +1,7 @@
 <launch4jConfig>
   <dontWrapJar>false</dontWrapJar>
   <headerType>gui</headerType>
-  <jar>dist\\PokemonXhenos-v0.8.8.jar</jar>
+  <jar>dist\\PokemonXhenos-v0.8.81.jar</jar>
   <outfile>prod/Pokemon_Xhenos.exe</outfile>
   <cmdLine></cmdLine>
   <chdir>.</chdir>
@@ -25,10 +25,10 @@
     <bundledJreAsFallback>true</bundledJreAsFallback>
   </jre>
   <versionInfo>
-    <fileVersion>0.8.8.0</fileVersion>
-    <txtFileVersion>0.8.8</txtFileVersion>
-    <productVersion>0.8.8.0</productVersion>
-    <txtProductVersion>0.8.8</txtProductVersion>
+    <fileVersion>0.8.81.0</fileVersion>
+    <txtFileVersion>0.8.81</txtFileVersion>
+    <productVersion>0.8.81.0</productVersion>
+    <txtProductVersion>0.8.81</txtProductVersion>
     <fileDescription>Pokemon Xhenos</fileDescription>
     <productName>Pokemon Xhenos</productName>
     <companyName>Shae Kuhnke</companyName>

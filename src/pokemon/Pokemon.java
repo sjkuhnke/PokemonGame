@@ -192,6 +192,7 @@ public class Pokemon implements Serializable {
 	public Move choiceMove;
 	public Move disabledMove;
 	public int slot;
+	public transient Pokemon realFoe;
 	
 	// trainer field
 	public Trainer trainer;
@@ -814,7 +815,6 @@ public class Pokemon implements Serializable {
 		
 		Trainer tr = this.trainer;
 		boolean canSwitch = tr.canSwitch(foe);
-		//this.addStatus(Status.SWAP, BattleUI.NORMAL_SWITCH); // TODO: debug
 		
 		// Clone both teams once at the start
 		Pokemon[] trainerTeamClones = null;
@@ -2728,10 +2728,12 @@ public class Pokemon implements Serializable {
 		if (slower.getItem(field) == Item.EJECT_PACK) {
 			slower.handleEjectPack(slowerStages, faster);
 		}
+		this.realFoe = null;
 	}
 
 	public void move(Pokemon foe, Move move, boolean first, boolean consumePP) {
 		if (this.fainted) return;
+		if (this.realFoe == null) this.realFoe = foe;
 		boolean noTarget = foe == null || foe.fainted;
 		if (move == null) return;
 
@@ -2785,10 +2787,6 @@ public class Pokemon implements Serializable {
 				!Move.getNoComboMoves().contains(move) && move != Move.STRUGGLE
 				&& move != Move.FUSION_BOLT && move != Move.FUSION_FLARE) this.lastMoveUsed = move;
 		
-		if (move == Move.SUCKER_PUNCH && !first) move = Move.FAILED_SUCKER;
-		
-		if (move == Move.FAILED_SUCKER) this.lastMoveUsed = Move.SUCKER_PUNCH;
-		
 		if (consumePP) {
 			if (this.hasStatus(Status.ENCORED)) {
 				move = this.lastMoveUsed;
@@ -2799,7 +2797,13 @@ public class Pokemon implements Serializable {
 				critChance = move.critChance;
 				contact = move.contact;
 			}
-			
+		}
+		
+		if (move == Move.SUCKER_PUNCH && !first) move = Move.FAILED_SUCKER;
+		
+		if (move == Move.FAILED_SUCKER) this.lastMoveUsed = Move.SUCKER_PUNCH;
+		
+		if (consumePP) {
 			if (this.status == Status.ASLEEP) {
 				if (this.sleepCounter > 0) {
 					Task t = Task.addTask(Task.TEXT, this.nickname + " is fast asleep.");
@@ -3569,6 +3573,11 @@ public class Pokemon implements Serializable {
 				bp = determineBasePower(foe, move, first, this.trainer == null ? null : this.trainer.team, foeAbility, field, true);
 			}
 			
+			int arcane = this.getStatusNum(Status.ARCANE_SPELL);
+			if (arcane != 0 && bp > 20) {
+				bp = Math.max(bp - arcane, 20);
+			}
+			
 			if (this.getAbility(field) == Ability.TECHNICIAN && bp <= 60) {
 				bp *= 1.5;
 			}
@@ -3698,11 +3707,6 @@ public class Pokemon implements Serializable {
 			
 			if (move.isCrushing() && foe.hasStatus(Status.MINIMIZED)) {
 				bp *= 2;
-			}
-			
-			int arcane = this.getStatusNum(Status.ARCANE_SPELL);
-			if (arcane != 0 && bp > 20) {
-				bp = Math.max(bp - arcane, 20);
 			}
 			
 			if (field.equals(field.weather, Effect.SUN, foe)) {
@@ -4218,8 +4222,8 @@ public class Pokemon implements Serializable {
 				}
 				if (foeAbility == Ability.PERISH_BODY && this.perishCount == 0 && foe.perishCount == 0) {
 					Task.addAbilityTask(foe);
-					Task.addTask(Task.TEXT, this.nickname + " will perish in 3 turns!");
-					this.perishCount = 4;
+					Task.addTask(Task.TEXT, foe.nickname + " will perish in 3 turns!");
+					foe.perishCount = 4;
 				}
 				if (this.item == null && foe.getItem(field) == Item.STICKY_BARB) {
 					Task.addTask(Task.TEXT, "The Sticky Barb clinged to " + this.nickname + "!");
@@ -4417,11 +4421,16 @@ public class Pokemon implements Serializable {
 					if (this.getItem(field) == Item.LEPPA_BERRY) {
 						this.eatBerry(this.item, true, foe, m.move);
 					} else {
-						this.removeStatus(Status.ENCORED);
-						Task.addTask(Task.TEXT, this.nickname + "'s encore ended!");
+						if (this.hasStatus(Status.ENCORED)) {
+							this.removeStatus(Status.ENCORED);
+							Task.addTask(Task.TEXT, this.nickname + "'s encore ended!");
+						}
 						this.encoreCount = 0;
+						if (this.disabledMove != null) {
+							Task.addTask(Task.TEXT, this.nickname + "'s " + disabledMove.toString() + " is no longer disabled!");
+							this.disabledMove = null;
+						}
 						this.disabledCount = 0;
-						this.disabledMove = null;
 					}
 				}
 			}
@@ -7470,9 +7479,8 @@ public class Pokemon implements Serializable {
 			return;
 		}
 		awardHappiness(-3, false);
-		Pokemon[] pokemon = getActivePokemon();
-		for (Pokemon p : pokemon) {
-			if (p != this && p != null) foe = p;
+		if (this.realFoe != null && this.realFoe != this) {
+			foe = this.realFoe;
 		}
 		foe.removeStatus(Status.SPUN);
 		foe.removeStatus(Status.SPELLBIND);
@@ -7494,21 +7502,21 @@ public class Pokemon implements Serializable {
 		}
 	}
 
-	private Pokemon[] getActivePokemon() {
-		Pokemon[] result = new Pokemon[2];
-		switch (gp.gameState) {
-			case GamePanel.BATTLE_STATE:
-				result[0] = gp.battleUI.user;
-				result[1] = gp.battleUI.foe;
-				break;
-			case GamePanel.SIM_BATTLE_STATE:
-				result[0] = gp.simBattleUI.user;
-				result[1] = gp.simBattleUI.foe;
-				break;
-		}
-		
-		return result;
-	}
+//	private Pokemon[] getActivePokemon() {
+//		Pokemon[] result = new Pokemon[2];
+//		switch (gp.gameState) {
+//			case GamePanel.BATTLE_STATE:
+//				result[0] = gp.battleUI.user;
+//				result[1] = gp.battleUI.foe;
+//				break;
+//			case GamePanel.SIM_BATTLE_STATE:
+//				result[0] = gp.simBattleUI.user;
+//				result[1] = gp.simBattleUI.foe;
+//				break;
+//		}
+//		
+//		return result;
+//	}
 
 	public void clearVolatile(Pokemon foe) {
 		if (field != null && this.ability == Ability.NEUTRALIZING_GAS && field.contains(field.fieldEffects, Effect.NEUTRALIZING_GAS) && (foe == null || foe.ability != Ability.NEUTRALIZING_GAS)) {
@@ -7800,6 +7808,11 @@ public class Pokemon implements Serializable {
 			bp = determineBasePower(foe, move, first, null, foeAbility, field, false);
 		}
 		
+		int arcane = this.getStatusNum(Status.ARCANE_SPELL);
+		if (arcane != 0 && bp > 20) {
+			bp = Math.max(bp - arcane, 20);
+		}
+		
 		if (this.getAbility(field) == Ability.TECHNICIAN && bp <= 60) {
 			bp *= 1.5;
 		}
@@ -7891,11 +7904,6 @@ public class Pokemon implements Serializable {
 		
 		if (move.isCrushing() && foe.hasStatus(Status.MINIMIZED)) {
 			bp *= 2;
-		}
-		
-		int arcane = this.getStatusNum(Status.ARCANE_SPELL);
-		if (arcane != 0 && bp > 20) {
-			bp = Math.max(bp - arcane, 20);
 		}
 		
 		if (field.equals(field.weather, Effect.SUN, foe)) {
@@ -11032,6 +11040,9 @@ public class Pokemon implements Serializable {
 			if (s.num != 0) add += " " + s.num;
 			result.add(add);
 		}
+		if (toxic > 0) {
+			result.add("Toxic counter: " + toxic);
+		}
 		if (perishCount > 0) {
 			result.add("Perish in " + perishCount);
 		}
@@ -11636,7 +11647,7 @@ public class Pokemon implements Serializable {
 				starterIndex = gp.player.p.flag[8][9] && gp.player.p.flag[8][10] ? 2 : gp.player.p.flag[7][9] ? 0 : gp.player.p.flag[7][10] ? 1 : -1;
 				arthra = true;
 			}
-			
+			if (starterIndex == -1) continue; // if the player hasn't done anything to determine arthra's team yet
 			int twigleIndex = -1;
 			int index = 0;
 			for (Pokemon p : t.team) {

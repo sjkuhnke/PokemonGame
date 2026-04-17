@@ -24,13 +24,13 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
+import docs.EncounterDoc;
 import docs.TrainerDoc;
 import entity.PlayerCharacter;
 import object.ItemObj;
 import object.TreasureChest;
 import pokemon.Ability;
 import pokemon.Egg;
-import pokemon.Encounter;
 import pokemon.Item;
 import pokemon.Move;
 import pokemon.PType;
@@ -236,7 +236,7 @@ public class Main {
 					}
 					if (selectedOptions[2]) {
 						loader.setProgress(88, "Generating encounter docs...");
-						writeEncounters(docsDirectory);
+						EncounterDoc.writeEncounters(gp, docsDirectory);
 					}
 					if (selectedOptions[3]) {
 						loader.setProgress(91, "Generating move docs...");
@@ -680,85 +680,7 @@ public class Main {
 		
 	}
 
-	private static void writeEncounters(Path dir) {
-		try {
-			Path outPath = dir.resolve("WildPokemon.txt");
-			FileWriter writer = new FileWriter(outPath.toFile());
-			
-			ArrayList<Encounter> allEncounters = new ArrayList<>();
-			int[] amounts = new int[Pokemon.MAX_POKEMON + 1];
-			double[] chances = new double[Pokemon.MAX_POKEMON + 1];
-			
-			for (Map.Entry<String, ArrayList<Encounter>> e : Encounter.encounters.entrySet()) {
-				String[] parts = e.getKey().split("\\|");
-				String area = parts[0];
-				String type = parts[1];
-				
-				String typeName;
-				switch (type) {
-				case "G":
-					typeName = "Standard";
-					break;
-				case "F":
-					typeName = "Fish";
-					break;
-				case "S":
-					typeName = "Surf";
-					break;
-				case "L":
-					typeName = "Lava";
-					break;
-				default:
-					typeName = "Unknown";
-				}
-				
-				writer.write(area + " (" + typeName + ")\n");
-				writer.write(writeEncounter(e.getValue()));
-				allEncounters.addAll(e.getValue());
-			}
-			
-			for (Encounter e : allEncounters) {
-				int index = e.getId();
-				amounts[index]++;
-				chances[index] += e.getEncounterChance();
-			}
-			
-			for (int i = 1; i <= Pokemon.MAX_POKEMON; i++) {
-				double average = amounts[i] == 0 ? 0.0 : chances[i] / amounts[i] * 100;
-				writer.write(i + "," + Pokemon.getName(i) + "," + amounts[i] + "," + String.format("%.2f", average) + "%\n");
-			}
-			
-			writer.close();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		
-	}
-
-
-
-	private static String writeEncounter(ArrayList<Encounter> encounters) {
-		String result = "===================================================================\n";
-		for (Encounter e : encounters) {
-			Pokemon ep = new Pokemon(e.getId(), 5, false, false);
-			String percent = String.format("%.0f", e.getEncounterChance() * 100);
-			boolean sameLv = e.getMinLevel() == e.getMaxLevel();
-			result += percent;
-			result += "% ";
-			result += ep.name();
-			result += " (Lv. ";
-			if (sameLv) {
-				result += e.getMinLevel();
-			} else {
-				result += e.getMinLevel();
-				result += " - ";
-				result += e.getMaxLevel();
-			}
-			result += ")\n";
-		}
-		result += "===================================================================\n";
-		return result;
-	}
+	
 	
 	private static void writeMoves(Path dir) {
 		try {

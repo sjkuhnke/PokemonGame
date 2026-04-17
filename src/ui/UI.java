@@ -173,8 +173,7 @@ public class UI extends AbstractUI {
 		letter[1] = splitMessage(message);
 		
 		try {
-			InputStream is = getClass().getResourceAsStream("/font/marumonica.ttf");
-			is = getClass().getResourceAsStream("/font/creattion.ttf");
+			InputStream is = getClass().getResourceAsStream("/font/creattion.ttf");
 			creattion = Font.createFont(Font.TRUETYPE_FONT, is);
 			is = getClass().getResourceAsStream("/font/monsier-la-doulaise.ttf");
 			monsier = Font.createFont(Font.TRUETYPE_FONT, is);

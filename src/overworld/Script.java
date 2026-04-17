@@ -1,10 +1,12 @@
 package overworld;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.function.Consumer;
 
+import docs.GiftEncounter;
 import entity.*;
 import pokemon.*;
 import puzzle.Puzzle;
@@ -15,6 +17,7 @@ public class Script {
 	private PlayerCharacter player;
 	private Player p;
 	private HashMap<Double, Consumer<Entity>> scriptMap;
+	public static final ArrayList<GiftEncounter> giftEncounters = new ArrayList<>();
 	
 	public Script(GamePanel gp) {
 		this.gp = gp;
@@ -243,6 +246,13 @@ public class Script {
 			p.flag[0][4] = true;
 		});
 		
+		giftEncounters.add(new GiftEncounter(
+			new int[] {47, gp.npc[47][0].worldX / gp.tileSize, gp.npc[47][0].worldY / gp.tileSize},
+			GiftEncounter.GiftType.TABLE,
+			new int[] {1,4,7},
+			5,
+			"Dupes clause applies. Comes holding corresponding type boosting item (Miracle Seed, Charcoal, Mystic Water)."
+		));
 		scriptMap.put(47.0, (npc) -> { // second starter
 			Task.addTask(Task.DIALOGUE, npc, "Here, we breed and house rare Pokemon to fight against their extinction.");
 			Task.addTask(Task.DIALOGUE, npc, "...What's that? You have a " + Pokemon.getName(((p.starter + 1) * 3) - 2) + "?? That's insanely rare. Did you get that from the professor?");
@@ -356,6 +366,13 @@ public class Script {
 			}
 		});
 		
+		giftEncounters.add(new GiftEncounter(
+			new int[] {48, gp.npc[48][0].worldX / gp.tileSize, gp.npc[48][0].worldY / gp.tileSize},
+			GiftEncounter.GiftType.TABLE,
+			new int[] {120,123,126},
+			5,
+			"Requires delivering Package C. Comes holding Silk Scarf."
+		));
 		scriptMap.put(48.0, (npc) -> { // pound town
 			if (!p.flag[0][7]) {
 				Task.addTask(Task.DIALOGUE, npc, "Feel free to look around!");
@@ -394,10 +411,18 @@ public class Script {
 			}
 		});
 		
+		giftEncounters.add(new GiftEncounter(
+			new int[] {10, 29, 38},
+			GiftEncounter.GiftType.FIXED,
+			new int[] {243},
+			15,
+			"40% chance for hidden ability. Comes holding an Air Balloon."
+		));
 		scriptMap.put(10.0, (npc) -> { // ryder 1
 			Task.addTask(Task.DIALOGUE, npc, "That's hello where I come from. I'm Ryder, adventurer extraordinaire at the ripe old age of 16.");
 			Task.addTask(Task.DIALOGUE, npc, "Say, you look like a competent Pokemon trainer. Mind taking care of something for me?");
 			Pokemon abra = new Pokemon(243, 15, true, false);
+			abra.item = Item.AIR_BALLOON;
 			Random gift = new Random(gp.aSetter.generateSeed(p.getID(), npc.worldX / gp.tileSize, npc.worldY / gp.tileSize, gp.currentMap));
 			if (gift.nextDouble() < 0.4 && abra.getAbility(2) != Ability.NULL) {
 				abra.abilitySlot = 2;
@@ -577,6 +602,13 @@ public class Script {
 			}
 		});
 		
+		giftEncounters.add(new GiftEncounter(
+			new int[] {162, 31, 38},
+			GiftEncounter.GiftType.TABLE,
+			new int[] {48,137,181,156,265,98},
+			20,
+			"Has hidden ability if one exists. Dupes clause applies."
+		));
 		scriptMap.put(162.0, (npc) -> { // photon
 			if (!p.flag[1][2]) {
 				Task.addTask(Task.DIALOGUE, npc, "You're just in time, I almost have the energy prepared.");
@@ -728,6 +760,13 @@ public class Script {
 			}
 		});
 		
+		giftEncounters.add(new GiftEncounter(
+			new int[] {18, gp.npc[18][4].worldX / gp.tileSize, gp.npc[18][4].worldY / gp.tileSize},
+			GiftEncounter.GiftType.TABLE,
+			new int[] {61,106,143,150,177,184,276,47},
+			15,
+			"Has hidden ability if one exists. Dupes clause applies."
+		));
 		scriptMap.put(18.1, (npc) -> { // gift magic
 			p.flag[2][2] = true;
 			Random gift = new Random(gp.aSetter.generateSeed(p.getID(), npc.worldX / gp.tileSize, npc.worldY / gp.tileSize, gp.currentMap));
@@ -935,6 +974,13 @@ public class Script {
 			Task.addTask(Task.FLASH_OUT, "");
 		});
 		
+		giftEncounters.add(new GiftEncounter(
+			new int[] {49, gp.npc[49][0].worldX / gp.tileSize, gp.npc[49][0].worldY / gp.tileSize},
+			GiftEncounter.GiftType.TABLE,
+			new int[] {55,57,66,211,213},
+			25,
+			"Has hidden ability if one exists. Dupes clause applies."
+		));
 		scriptMap.put(49.0, (npc) -> { // strong deep pokemon
 			p.flag[2][14] = true;
 			Task.addTask(Task.DIALOGUE, npc, "I encountered this very strong Pokemon, and I don't think I'm strong enough to train it. Here!");
@@ -971,6 +1017,13 @@ public class Script {
 			Task.addTask(Task.GIFT, "", result);
 		});
 		
+		giftEncounters.add(new GiftEncounter(
+			new int[] {50, gp.npc[50][0].worldX / gp.tileSize, gp.npc[50][0].worldY / gp.tileSize},
+			GiftEncounter.GiftType.TABLE,
+			new int[] {78,80,92,108,190},
+			30,
+			"Picks one of the first 3, and if you already have that species registered, then picks one of the last 2. 40% chance for hidden ability."
+		));
 		scriptMap.put(50.0, (npc) -> { // gift "starter"
 			p.flag[3][9] = true;
 			Task.addTask(Task.DIALOGUE, npc, "Great choice young cracka!!!!");
@@ -1004,7 +1057,14 @@ public class Script {
 			Task.addTask(Task.TEXT, "You recieved " + result.name() + "!");
 			Task.addTask(Task.GIFT, "", result);
 		});
-
+		
+		giftEncounters.add(new GiftEncounter(
+			new int[] {39, 28, 41},
+			GiftEncounter.GiftType.FIXED,
+			new int[] {246},
+			35,
+			"40% chance for hidden ability. Comes holding a Yache Berry."
+		));
 		scriptMap.put(39.0, (npc) -> { // ryder 3
 			p.flag[3][0] = true;
 			Task.addTask(Task.DIALOGUE, npc, "Well, I say it's weather, more like the atmospheric nonsense going outside.");
@@ -1023,6 +1083,7 @@ public class Script {
 			Task.addTask(Task.DIALOGUE, npc, "I brought a couple Flamigo as travel buddies from my home region, and I'm entrusting one to help you out with the Ice-types!");
 			Task.addTask(Task.TEXT, "You received Flamigo!");
 			Pokemon p = new Pokemon(246, 35, true, false);
+			p.item = Item.YACHE_BERRY;
 			Random gift = new Random(gp.aSetter.generateSeed(p.getID(), npc.worldX / gp.tileSize, npc.worldY / gp.tileSize, gp.currentMap));
 			if (gift.nextDouble() < 0.4) {
 				p.abilitySlot = 2;
@@ -1156,6 +1217,13 @@ public class Script {
 			}
 		});
 		
+		giftEncounters.add(new GiftEncounter(
+			new int[] {94, gp.npc[94][0].worldX / gp.tileSize, gp.npc[94][0].worldY / gp.tileSize},
+			GiftEncounter.GiftType.TABLE,
+			new int[] {197, 199, 202, 205, 209, 267, 215, 217, 220, 223, 226, 281},
+			30,
+			"Has hidden ability if one exists. Dupes clause applies."
+		));
 		scriptMap.put(94.0, (npc) -> { // gift e/s
 			p.flag[4][4] = true;
 			Task.addTask(Task.TEXT, "They struck like lightning and silence - two meteorites, one from brilliance, one from void.");
@@ -1293,6 +1361,13 @@ public class Script {
 			}
 		});
 		
+		giftEncounters.add(new GiftEncounter(
+			new int[] {109, gp.npc[109][4].worldX / gp.tileSize, gp.npc[109][4].worldY / gp.tileSize},
+			GiftEncounter.GiftType.TABLE,
+			new int[] {179, 98, 238, 254, 257, 261, 292},
+			1,
+			"Given as an Egg. Has hidden ability if one exists."
+		));
 		scriptMap.put(109.0, (npc) -> { // breeder
 			p.flag[5][7] = true;
 			Task.addTask(Task.DIALOGUE, npc, "It was just sitting there in the dirt... no nest, no parents, nothing.");
@@ -1462,6 +1537,13 @@ public class Script {
 			}
 		});
 		
+		giftEncounters.add(new GiftEncounter(
+			new int[] {130, gp.npc[130][0].worldX / gp.tileSize, gp.npc[130][0].worldY / gp.tileSize},
+			GiftEncounter.GiftType.FIXED,
+			new int[] {97},
+			50,
+			""
+		));
 		scriptMap.put(130.0, (npc) -> { // guy eddie in restaurant
 			if (p.flag[5][8] && !p.flag[6][3]) {
 				p.flag[6][3] = true;
@@ -1495,7 +1577,14 @@ public class Script {
 		scriptMap.put(168.0, (npc) -> { // shroom guy
 			Task.addTask(Task.MUSHROOM, npc, "Gimmie, gimmie, GIMMIE!");
 		});
-
+		
+		giftEncounters.add(new GiftEncounter(
+			new int[]{178, gp.npc[178][0].worldX / gp.tileSize, gp.npc[178][0].worldY / gp.tileSize},
+		    GiftEncounter.GiftType.UNREGISTERED_BASE,
+		    new int[]{},
+		    1,
+		    "Given as an Egg. Has hidden ability if one exists."
+		));
 		scriptMap.put(178.0, (npc) -> { // research a
 			Task.addTask(Task.DIALOGUE, npc, "I specialize in checking those strange evolution methods for your Pokemon.");
 			if (!p.flag[1][20]) {
@@ -3676,6 +3765,13 @@ public class Script {
 			t.wipe = true;
 		});
 		
+		giftEncounters.add(new GiftEncounter(
+			new int[] {215,49,83},
+			GiftEncounter.GiftType.FIXED,
+			new int[] {1,4,7},
+			1,
+			"Only given if Scott has the last starter species you're missing. Given as an Egg."
+		));
 		scriptMap.put(215.0, (npc) -> { // scott 5
 			Task.addTask(Task.DIALOGUE, npc, "...I lost. Again.");
 			Task.addTask(Task.DIALOGUE, npc, "And it's okay. It really is.");
@@ -3702,6 +3798,13 @@ public class Script {
 			}
 		});
 		
+		giftEncounters.add(new GiftEncounter(
+			new int[] {215,53,83},
+			GiftEncounter.GiftType.FIXED,
+			new int[] {1,4,7},
+			1,
+			"Only given if Fred has the last starter species you're missing. Given as an Egg."
+		));
 		scriptMap.put(215.1, (npc) -> { // fred 5
 			Task.addTask(Task.DIALOGUE, npc, "...You win. Again.");
 			Task.addTask(Task.DIALOGUE, npc, "Funny thing is... this loss doesn't bother me. Not even a little.");
