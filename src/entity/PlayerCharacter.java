@@ -404,6 +404,7 @@ public class PlayerCharacter extends Entity {
 						gp.tileM.tile[i].collision = false;
 					}
 				} else {
+					gp.keyH.wPressed = false;
 					String surfaceType = isSurf ? "water" : "lava";
 					String moveName = move.toString();
 					String badgeWord = badgeReq == 1 ? "badge" : "badges";

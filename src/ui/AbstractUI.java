@@ -309,7 +309,7 @@ public abstract class AbstractUI {
 		
 		drawSubWindow(x, y, width, height);
 		
-		if (!showMoveOptions && !showIVOptions && !showBoxSummary && !showStatusOptions &&
+		if (!showMoveOptions && !showIVOptions && !showBoxSummary && !showStatusOptions && !gp.ui.showMessage &&
 				(currentTask == null || currentTask.type == Task.PARTY || currentTask.type == Task.REGIONAL_TRADE || currentTask.type == Task.EVO_INFO ||
 				currentTask.type == Task.NURSERY_DEPOSIT)) {
 			int maxPartyIndex = 0;
