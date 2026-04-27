@@ -148,6 +148,15 @@ public class UI extends AbstractUI {
 
 	// RANDOM
 	private final Random rand = new Random();
+	
+	// HALL OF FAME STATE
+	private int hofPhase = 0; // 0 = pokemon showcase, 1 = credits scroll
+	private int hofPokemonIndex = 0; // which team member is showing
+	private int hofCounter = 0; // general timer within a phase
+	private float hofCreditsY = 0; // y-offset for credits scroll (starts at screenHeight)
+	private static final int HOF_POKEMON_DISPLAY_TIME = 300; // 5 seconds at 60fps
+	private static final Color HOF_GOLD  = new Color(255, 215, 0);
+	private static final Color HOF_CREAM = new Color(255, 248, 200);
 
 	// CONSTANTS
 	public static final int MAX_SHOP_COL = 11;
@@ -323,6 +332,10 @@ public class UI extends AbstractUI {
 		
 		if (gp.gameState == GamePanel.BOX_STATE) {
 			drawBoxScreen();
+		}
+		
+		if (gp.gameState == GamePanel.HALL_OF_FAME) {
+			drawHallOfFame();
 		}
 		
 		if (gp.gameState == GamePanel.TASK_STATE) {
@@ -709,6 +722,10 @@ public class UI extends AbstractUI {
 			break;
 		case Task.DELETE_MOVE:
 			drawDeleteMove();
+			break;
+		case Task.SAVE:
+			gp.saveGame(gp.player.p, true);
+			currentTask = null;
 			break;
 		}
 	}
@@ -7293,5 +7310,248 @@ public class UI extends AbstractUI {
 			spaceFrameCounter = 0;
 			spaceFrameIndex = (spaceFrameIndex + 1) % spaceFrames.size();
 		}
+	}
+	
+	private void drawHallOfFame() {
+		// Black background
+		g2.setColor(Color.BLACK);
+		g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+		
+		if (hofPhase == 0) {
+			drawHofPokemonShowcase();
+		} else {
+			drawHofCredits();
+		}
+	}
+
+	/** Phase 0 - show each team member one at a time. */
+	private void drawHofPokemonShowcase() {
+		Pokemon[] team = gp.player.p.team;
+		
+		// Skip null slots to find current valid Pokémon
+		while (hofPokemonIndex < team.length && team[hofPokemonIndex] == null) {
+			hofPokemonIndex++;
+		}
+		
+		// All shown → move to credits
+		if (hofPokemonIndex >= team.length) {
+			hofPhase = 1;
+			hofCreditsY = gp.screenHeight;
+			hofCounter = 0;
+			return;
+		}
+		
+		Pokemon p = team[hofPokemonIndex];
+		
+		// Animated gold header
+		float pulse = 0.5f + 0.5f * (float) Math.sin(pulseCounter * 0.08f);
+		Color headerColor = new Color((int)(HOF_GOLD.getRed()), (int)(HOF_GOLD.getGreen() * (0.8f + 0.2f * pulse)), 0);
+		
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 42F));
+		String header = "★  Hall of Fame  ★";
+		drawOutlinedText(header,getCenterAlignedTextX(header, gp.screenWidth / 2), gp.tileSize, headerColor, Color.BLACK);
+		
+		// Pokemon sprite
+		BufferedImage sprite = p.getSprite();
+		int spriteScale = 3;
+		int spriteW = sprite.getWidth()  * spriteScale;
+		int spriteH = sprite.getHeight() * spriteScale;
+		int spriteX = gp.screenWidth / 2 - spriteW / 2;
+		int spriteY = gp.tileSize * 2;
+		g2.drawImage(sprite, spriteX, spriteY, spriteW, spriteH, null);
+		
+		// Info card
+		int cardX = gp.tileSize;
+		int cardY = spriteY + spriteH + gp.tileSize / 4;
+		int cardW = gp.screenWidth - gp.tileSize * 2;
+		int cardH = (int) (gp.tileSize * 4.5);
+		drawSubWindow(cardX, cardY, cardW, cardH);
+		
+		int tx = cardX + gp.tileSize / 2;
+		int ty = cardY + gp.tileSize;
+		
+		// Name / nickname
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 34F));
+		String displayName = p.getNickname();
+		if (!p.getNickname().equals(p.name())) {
+			displayName = p.getNickname() + "  (" + p.name() + ")";
+		}
+		drawOutlinedText(displayName, tx, ty, HOF_CREAM, Color.BLACK);
+		
+		// Level & type
+		ty += gp.tileSize * 0.85f;
+		g2.setFont(g2.getFont().deriveFont(24F));
+		String levelType = "Lv. " + p.level + "   " + p.type1.toString() + (p.type2 != null ? " / " + p.type2.toString() : "");
+		drawOutlinedText(levelType, tx, ty, Color.WHITE, Color.BLACK);
+		
+		// Moves
+		ty += gp.tileSize * 0.75f;
+		g2.setFont(g2.getFont().deriveFont(20F));
+		StringBuilder moveLine = new StringBuilder("Moves: ");
+		for (int m = 0; m < p.moveset.length; m++) {
+			Move mv = p.moveset[m].move;
+			if (mv == null) break;
+			if (m > 0) moveLine.append(" / ");
+			moveLine.append(mv.toString());
+		}
+		drawOutlinedText(moveLine.toString(), tx, ty, new Color(200, 230, 255), Color.BLACK);
+		
+		// HP bar
+		ty += gp.tileSize * 0.5;
+		int barW = (int)(cardW * 0.5);
+		int barH = gp.tileSize / 3;
+		double hpRatio = p.currentHP * 1.0 / p.getStat(0);
+		g2.setColor(Color.DARK_GRAY);
+		g2.fillRoundRect(tx, ty, barW, barH, 8, 8);
+		g2.setColor(getHPBarColor(hpRatio));
+		g2.fillRoundRect(tx, ty, (int)(hpRatio * barW), barH, 8, 8);
+		g2.setFont(g2.getFont().deriveFont(18F));
+		String hpText = "HP  " + p.currentHP + " / " + p.getStat(0);
+		drawOutlinedText(hpText, tx + barW + gp.tileSize / 4, ty + barH - 2, Color.WHITE, Color.BLACK);
+		
+		// Progress indicator
+		int dotY = gp.screenHeight - gp.tileSize;
+		int dotSpacing = gp.tileSize * 3 / 4;
+		int teamCount = 0;
+		for (Pokemon t : team) if (t != null) teamCount++;
+		int totalDotsW = (teamCount - 1) * dotSpacing + 12;
+		int dotStartX = gp.screenWidth / 2 - totalDotsW / 2;
+		int shown = 0;
+		for (int i = 0; i < team.length; i++) {
+			if (team[i] == null) continue;
+			int dotX = dotStartX + shown * dotSpacing;
+			if (i == hofPokemonIndex) {
+				g2.setColor(HOF_GOLD);
+				g2.fillOval(dotX - 2, dotY - 2, 16, 16);
+			} else if (i < hofPokemonIndex) {
+				g2.setColor(new Color(180, 180, 180));
+				g2.fillOval(dotX, dotY, 12, 12);
+			} else {
+				g2.setColor(new Color(60, 60, 60));
+				g2.fillOval(dotX, dotY, 12, 12);
+			}
+			shown++;
+		}
+		
+		// Advance to next Pokemon
+		hofCounter++;
+		boolean skipPressed = gp.keyH.wPressed || gp.keyH.sPressed || gp.keyH.dPressed;
+		if (hofCounter >= HOF_POKEMON_DISPLAY_TIME || skipPressed) {
+			if (skipPressed) {
+				gp.keyH.wPressed = false;
+				gp.keyH.sPressed = false;
+				gp.keyH.dPressed = false;
+			}
+			hofCounter = 0;
+			hofPokemonIndex++;
+		}
+		
+		drawToolTips("Next", null, "Next", null);
+	}
+
+	/** Phase 1 – scrolling credits. */
+	private void drawHofCredits() {
+		// Build the credits lines (done lazily so the array is always fresh)
+		String[] lines = buildCreditsLines();
+		
+		int lineHeight = gp.tileSize * 3 / 4;
+		float scrollSpeed = 1.0f;  // pixels per frame – tweak to taste
+		
+		// Draw each line
+		for (int i = 0; i < lines.length; i++) {
+			float lineY = hofCreditsY + i * lineHeight;
+			if (lineY < -lineHeight || lineY > gp.screenHeight + lineHeight) continue;
+			
+			String line = lines[i];
+			if (line == null || line.isEmpty()) continue;
+			
+			// Section headers start with "##"
+			if (line.startsWith("##")) {
+				String text = line.substring(2).trim();
+				g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30F));
+				float pulse = 0.6f + 0.4f * (float) Math.sin(pulseCounter * 0.08f);
+				Color c = new Color((int)(HOF_GOLD.getRed()), (int)(HOF_GOLD.getGreen() * pulse), 0);
+				drawOutlinedText(text, getCenterAlignedTextX(text, gp.screenWidth / 2), (int) lineY, c, Color.BLACK);
+			} else {
+				g2.setFont(g2.getFont().deriveFont(22F));
+				drawOutlinedText(line, getCenterAlignedTextX(line, gp.screenWidth / 2), (int) lineY, Color.WHITE, Color.BLACK);
+			}
+		}
+
+	    hofCreditsY -= scrollSpeed;
+
+	    // Done when last line has fully scrolled off screen
+	    float lastLineY = hofCreditsY + (lines.length - 1) * lineHeight;
+	    if (lastLineY < 0) {
+	        finishHallOfFame();
+	    }
+	}
+
+	/** Returns the lines to display in the credits roll. */
+	private String[] buildCreditsLines() {
+		// Gather team nicknames for a personalised line
+		StringBuilder teamNames = new StringBuilder();
+		for (Pokemon p : gp.player.p.team) {
+			if (p == null) break;
+			if (teamNames.length() > 0) teamNames.append(" · ");
+			teamNames.append(p.getNickname());
+		}
+
+		return new String[] {
+				"",
+				"",
+				"##" + gp.player.p.getName() + " has entered the Hall of Fame!",
+				"",
+				"Your team:",
+				teamNames.toString(),
+				"",
+				"",
+				"",
+				"##--- Credits ---",
+				"",
+				"##Game Design & Development",
+				"Shae Kuhnke",
+				"",
+				"##Sound Design",
+				"Connor Zemke",
+				"",
+				"##Sprite Art & Misc Art",
+				"Alyssa \"The Yellow Dart\" Poland",
+				"Mariuso",
+				"",
+				"##Writing & Design",
+				"[RAMM] from a Parallel Universe",
+				"",
+				"##Additional Coding",
+				"Dsajuni",
+				"",
+				"##Special Thanks",
+				"To all our playtesters -",
+				"thank you for your time and feedback!",
+				"",
+				"",
+				"",
+				"##Thank you for playing!",
+				"",
+				"",
+				"",
+		};
+	}
+
+	/** Called when credits finish – teleport the player back to the start. */
+	private void finishHallOfFame() {
+		// Reset HOF state for a potential future visit
+		hofPhase = 0;
+		hofPokemonIndex = 0;
+		hofCounter = 0;
+		
+		// Leave the HOF game state, then queue a task-based teleport
+		gp.setTaskState();
+		Task t = Task.addTask(Task.TELEPORT, "");
+		t.counter = Player.spawn[0][0];
+		t.start = Player.spawn[0][1];
+		t.finish = Player.spawn[0][2];
+		t.wipe = false;
+		//Task.addTask(Task.SAVE, "");
 	}
 }

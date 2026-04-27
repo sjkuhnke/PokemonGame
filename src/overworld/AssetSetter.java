@@ -3166,10 +3166,17 @@ public class AssetSetter {
 		mapNum = 225;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(ARTHRA_DOWN, "Arthra", 50, 49, "", mapNum, -1, "", 538);
+		gp.npc[mapNum][index++] = null; // dragon
+		gp.npc[mapNum][index] = NPCSetup(NOVA_UP, "Nova", 50, 99, "");
 		
 		mapNum = 226;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(RYDER_DOWN, "Ryder", 50, 49, "", mapNum, -1, "", 539);
+		gp.npc[mapNum][index] = NPCSetup(RYDER_UP, "Ryder", 50, 52, "", mapNum, -1, "", 539);
+		gp.npc[mapNum][index] = NPCSetup(SHAE_E4, "???", 50, 50, "", 226.1);
+		gp.npc[mapNum][index] = NPCSetup(NOVA_RIGHT, "Nova", 49, 57, "", 226.2);
+		gp.npc[mapNum][index] = NPCSetup(ARTHRA_UP, "Arthra", 50, 99, "", 226.3);
+		gp.npc[mapNum][index] = NPCSetup(ALAKAZAM_UP, "Alakazam", 51, 52, "", 226.4);
+		gp.npc[mapNum][index] = NPCSetup(NECROZMA, "Necrozma", 1, 52, "", 226.5);
 	}
 
 	public void setInteractiveTile(int map) {
@@ -5069,9 +5076,30 @@ public class AssetSetter {
 		}
 		if (flag[8][8]) {
 			if (map == 225) gp.openE4Door();
+			if (!flag[8][9]) {
+				String herLegend = flag[7][9] ? Pokemon.getName(233) : Pokemon.getName(234);
+				int herLegendInt = flag[7][9] ? LOGIC_DRAGON : FAITH_DRAGON;
+				gp.npc[225][1] = NPCSetup(herLegendInt, herLegend, 48, 49, "");
+				((NPC_Dragon) gp.npc[225][1]).awake();
+			} else {
+				gp.npc[225][1] = null;
+			}
 		}
 		if (flag[8][10]) {
 			if (map == 226) gp.openE4Door();
+		}
+		
+		if (flag[8][15] && !flag[8][10]) {
+			// setup npcs to their pre-battle positions
+			gp.npc[226][0].setDirection("down");
+			gp.npc[226][1].worldX = 49*gp.tileSize;
+			gp.npc[226][2].worldY = 54*gp.tileSize+gp.tileSize/2;
+			gp.npc[226][2].setDirection("up");
+			gp.npc[226][3].worldX = 51*gp.tileSize;
+			gp.npc[226][3].worldY = 54*gp.tileSize+gp.tileSize/2;
+			gp.npc[226][3].setDirection("up");
+			gp.npc[226][4].setDirection("down");
+			gp.npc[226][5].worldX = 48*gp.tileSize+gp.tileSize/2;
 		}
 		
 		gp.setRenderableNPCs();

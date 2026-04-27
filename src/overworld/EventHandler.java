@@ -1147,6 +1147,8 @@ public class EventHandler {
 			if (!gp.player.p.flag[8][6] && hitRect(223,45,52,11,1)) gp.player.interactNPC(gp.npc[223][0], false);
 			if (!gp.player.p.flag[8][7] && hitRect(224,45,52,11,1)) gp.player.interactNPC(gp.npc[224][0], false);
 			if (!gp.player.p.flag[8][8] && hitRect(225,45,52,11,1)) gp.player.interactNPC(gp.npc[225][0], false);
+			if (gp.player.p.flag[8][8] && !gp.player.p.flag[8][9] && hit(225,50,51)) gp.player.interactNPC(gp.npc[225][0], false);
+			if (!gp.player.p.flag[8][10] && hit(226,50,57)) gp.player.interactNPC(gp.npc[226][1], false);
 		}
 		// Cutscene with Ryder/Arthra in front of Spaceship
 		if (!gp.player.p.flag[7][20] && hit(152,67,78,true)) gp.player.interactNPC(gp.npc[152][5], false);

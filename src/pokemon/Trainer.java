@@ -414,13 +414,13 @@ public class Trainer implements Serializable {
 	}
 	
 	private void swap(Pokemon oldP, Pokemon newP, boolean playerSide, Pokemon foe) {
-		oldP.clearVolatile(foe);
 		Task.addSwapOutTask(oldP, playerSide);
 		if (oldP.getAbility(Pokemon.field) == Ability.REGENERATOR && !oldP.isFainted()) {
 			oldP.currentHP += current.getStat(0) / 3;
 			oldP.verifyHP();
 		}
 		if (oldP.ability == Ability.ILLUSION) oldP.illusion = true; // just here for calc
+		oldP.clearVolatile(foe);
 		this.current = newP;
 		Task.addSwapInTask(newP, playerSide);
 		if (!oldP.cloned) Pokemon.field.switches++;

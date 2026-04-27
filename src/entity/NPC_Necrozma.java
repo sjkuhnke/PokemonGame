@@ -47,11 +47,13 @@ public class NPC_Necrozma extends NPC_Dragowrath {
 			image = images[index];
 			
 			int width = image.getWidth() * gp.scale;
-			int wOffset = (width - gp.tileSize) / 2;
-			
-			int height = image.getHeight() * gp.scale;
-			int hOffset = height - gp.tileSize;
-			
+	        int wOffset = (width - gp.tileSize) / 2;
+	        int height = image.getHeight() * gp.scale;
+	        int hOffset = height - gp.tileSize;
+	        int drawX = screenX - wOffset;
+	        int drawY = screenY - hOffset;
+	        
+	        drawReflection(g2, image, drawX, drawY, width, height);
 			g2.drawImage(image, screenX - wOffset, screenY - hOffset, width, height, null);
 		}
 		

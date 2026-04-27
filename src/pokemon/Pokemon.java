@@ -7525,6 +7525,8 @@ public class Pokemon implements Serializable {
 			field.remove(field.fieldEffects, Effect.NEUTRALIZING_GAS);
 			if (foe != null) foe.swapIn(this, false);
 		}
+		if (this.getAbility(field) == Ability.NATURAL_CURE) this.status = Status.HEALTHY;
+		if (this.getAbility(field) == Ability.TERRAFORGE) this.illusion = false;
 		confusionCounter = 0;
 		toxic = 0;
 		perishCount = 0;
@@ -7554,8 +7556,6 @@ public class Pokemon implements Serializable {
 		if (this.trainerOwned() && this.trainer.boosts != null) {
 			this.trainer.boosts[2] = 0;
 		}
-		if (this.getAbility(field) == Ability.NATURAL_CURE) this.status = Status.HEALTHY;
-		if (this.getAbility(field) == Ability.TERRAFORGE) this.illusion = false;
 	}
 	
 	public int calc(double attackStat, double defenseStat, double bp, int level) {
