@@ -4061,7 +4061,7 @@ public class Pokemon implements Serializable {
 			
 			int recoil = 0;
 			if (Move.getRecoil().contains(move) && ability != Ability.ROCK_HEAD && damage > 0) {
-				int denom = move == Move.HEAD_SMASH ? 2 : move == Move.SUBMISSION || move == Move.TAKE_DOWN ? 4 : 3;
+				int denom = move == Move.HEAD_SMASH || move == Move.LIGHT_OF_RUIN ? 2 : move == Move.SUBMISSION || move == Move.TAKE_DOWN ? 4 : 3;
 				recoil = Math.max(Math.floorDiv(damage, denom), 1);
 				if (damage >= foe.currentHP) recoil = Math.max(Math.floorDiv(foe.currentHP, 3), 1);
 				if (move == Move.STEEL_BEAM) recoil = Math.max(Math.floorDiv(this.getStat(0), 2), 1);

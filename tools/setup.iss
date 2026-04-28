@@ -1,7 +1,7 @@
 [Setup]
 AppName=Pokemon Xhenos
-AppVersion=0.8.81
-VersionInfoVersion=0.8.81
+AppVersion=0.8.82
+VersionInfoVersion=0.8.82
 DefaultDirName={pf}\Pokemon Xhenos
 DefaultGroupName=Pokemon Xhenos
 OutputBaseFilename=PokemonXhenosInstaller
@@ -17,7 +17,7 @@ PrivilegesRequired=admin
 [Files]
 Source: "prod\Pokemon_Xhenos.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "prod\Pokemon_Xhenos_console.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "dist\\PokemonXhenos-v0.8.81.jar"; DestDir: "{app}"; Flags: ignoreversion
+Source: "dist\\PokemonXhenos-v0.8.82.jar"; DestDir: "{app}"; Flags: ignoreversion
 Source: "build\jre\*"; DestDir: "{app}\jre"; Flags: recursesubdirs createallsubdirs
 
 [Icons]

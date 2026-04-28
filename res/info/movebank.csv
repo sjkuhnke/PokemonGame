@@ -6774,10 +6774,12 @@
 270
 ===================
 0  |HARDEN
+1  |TACKLE
 1  |HARDEN
 9  |IRON_DEFENSE
 11 |ELECTROWEB
 15 |STICKY_WEB
+18 |BUG_BITE
 
 ===================
 271

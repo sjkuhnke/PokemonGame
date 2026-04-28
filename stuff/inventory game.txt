@@ -516,7 +516,7 @@ Before
 After
 
 "Darn, I failed the test... but I'll study harder for next time!"
-"You're really good... I'll take some notes from this battle!"
+""
 "Even if I lose, it's all part of the learning experience!"
 "That was tough. Maybe I'll ask you for tutoring?"
 "I lost, but at least I'm still learning!"

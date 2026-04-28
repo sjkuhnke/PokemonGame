@@ -298,7 +298,7 @@ public enum Move {
 	LIFE_DEW(0,1000,0,0,2,0,PType.WATER,"Restores 25% HP",false,15),
 	LIGHT_BEAM(60,100,20,0,1,0,PType.LIGHT,"% chance to raise user's Sp.Atk by 1",false,15),
 	LIGHT_DRAIN(75,100,0,0,1,0,PType.LIGHT,"Heals 50% of damage dealt",false,10),
-	LIGHT_OF_RUIN(140,90,0,0,1,0,PType.LIGHT,"User takes 1/3 of damage dealt as recoil",false,5),
+	LIGHT_OF_RUIN(140,90,0,0,1,0,PType.LIGHT,"User takes 1/2 of damage dealt as recoil",false,5),
 	LIGHT_SCREEN(0,1000,0,0,2,0,PType.PSYCHIC,"Creates a screen that halves special damage on user's team for 5 turns",false,15),
 	LIGHT_SPEED(80,100,0,0,0,2,PType.LIGHT,"Increased priority",true,5),
 	LIQUIDATION(85,100,20,0,0,0,PType.WATER,"% chance to lower foe's Defense by 1",true,10),

@@ -4142,7 +4142,7 @@ public class Script {
 			if (!p.flag[8][10]) {
 				p.heal();
 				Task.addTask(Task.DIALOGUE, npc, "Heh...");
-				Task.addTask(Task.DIALOGUE, npc, "Let's go out with a BIG BANG!.");
+				Task.addTask(Task.DIALOGUE, npc, "Let's go out with a BIG BANG!");
 				Task.addTask(Task.BATTLE, "", 539);
 			} else {
 				gp.gameState = GamePanel.HALL_OF_FAME;

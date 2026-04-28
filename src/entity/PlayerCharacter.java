@@ -1203,7 +1203,10 @@ public class PlayerCharacter extends Entity {
 			gp.aSetter.setObject();
 			p.invalidateNuzlocke("Used " + code);
 		} else if (code.equals("Ben")) {
+			gp.setTaskState();
+			gp.ui.setNicknaming(true);
 			p.catchPokemon(new Pokemon(238, 5, true, false));
+			Task.addTask(Task.GAME_STATE, "", GamePanel.MENU_STATE);
 			p.invalidateNuzlocke("Used " + code);
 		} else if (code.startsWith("dex")) {
 			String[] parts = code.split(" ");

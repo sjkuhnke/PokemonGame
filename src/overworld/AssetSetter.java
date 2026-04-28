@@ -2109,6 +2109,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(PICKNICKER_RIGHT, 32, 41, "Let's see if you can handle my Bug and Grass Pokemon!", "Well, that battle didn't go as planned, but I won't give up!", 200, ALL);
 		gp.npc[mapNum][index] = NPCSetup(PICKNICKER_LEFT, 41, 44, "A sunny day, a perfect picnic, and a battle with you - let's go!", "Looks like I'll have to plan a new strategy for next time!", 201, ALL);
 		
+		gp.npc[mapNum][index] = NPCSetup(STUDENT_M_LEFT, 54, 16, "I've been studying other regions, check out what I just traded for!", "You're really good... I'll take some notes from this battle!", 540, LEFT + UP + DOWN);
 		gp.npc[mapNum][index] = NPCSetup(ASTRONOMER_LEFT, 71, 18, "You're about to be eclipsed by the brilliance of the universe!", "You've won this time, but the cosmos never stays the same for long.", 269);
 		
 		mapNum = 36;
