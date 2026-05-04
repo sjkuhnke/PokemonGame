@@ -3178,6 +3178,14 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(ARTHRA_UP, "Arthra", 50, 99, "", 226.3);
 		gp.npc[mapNum][index] = NPCSetup(ALAKAZAM_UP, "Alakazam", 51, 52, "", 226.4);
 		gp.npc[mapNum][index] = NPCSetup(NECROZMA, "Necrozma", 1, 52, "", 226.5);
+		
+		mapNum = 227;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(RYDER_DOWN, "Ryder", 51, 51, "");
+		gp.npc[mapNum][index] = NPCSetup(ALAKAZAM_DOWN, "Alakazam", 52, 51, "");
+		gp.npc[mapNum][index] = NPCSetup(NOVA_DOWN, "Nova", 49, 51, "");
+		gp.npc[mapNum][index] = NPCSetup(ARTHRA_DOWN, "Arthra", 48, 52, "");
+		gp.npc[mapNum][index] = NPCSetup(ASTRID_E4, "Astrid", 52, 52, "");
 	}
 
 	public void setInteractiveTile(int map) {

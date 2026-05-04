@@ -727,6 +727,10 @@ public class UI extends AbstractUI {
 			gp.saveGame(gp.player.p, true);
 			currentTask = null;
 			break;
+		case Task.LOAD:
+			gp.iTile[currentTask.start][currentTask.finish].spriteNum++;
+			currentTask = null;
+			break;
 		}
 	}
 
@@ -4179,6 +4183,11 @@ public class UI extends AbstractUI {
 				if (gp.keyH.wPressed) {
 					gp.keyH.wPressed = false;
 					gp.keyH.downPressed = false;
+					if (gp.currentMap == 227) {
+						gp.gameState = GamePanel.PLAY_STATE;
+						showMessage("Can't open that right now!");
+						return;
+					}
 					partyNum = 0;
 					subState = 2;
 				}
@@ -4196,7 +4205,7 @@ public class UI extends AbstractUI {
 			g2.drawString(">", textX- (25 + gp.tileSize), textY);
 			if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
-				if (gp.player.p.flag[7][20] && !gp.player.p.flag[7][21]) {
+				if ((gp.player.p.flag[7][20] && !gp.player.p.flag[7][21]) || gp.currentMap == 227) {
 					gp.gameState = GamePanel.PLAY_STATE;
 					showMessage("Can't open that right now!");
 					return;
@@ -5173,6 +5182,7 @@ public class UI extends AbstractUI {
 				gp.titleScreen.menuNum = TitleScreen.MAIN_CONTINUE;
 				gp.titleScreen.newGameMenuNum = TitleScreen.NG_SAVE_NAME;
 				gp.player = new PlayerCharacter(gp);
+				Main.window.setTitle(Main.gameTitle);
 				gp.setGameState(GamePanel.TITLE_STATE);
 				menuNum = 0;
 				subState = 0;
@@ -7473,7 +7483,7 @@ public class UI extends AbstractUI {
 				Color c = new Color((int)(HOF_GOLD.getRed()), (int)(HOF_GOLD.getGreen() * pulse), 0);
 				drawOutlinedText(text, getCenterAlignedTextX(text, gp.screenWidth / 2), (int) lineY, c, Color.BLACK);
 			} else {
-				g2.setFont(g2.getFont().deriveFont(22F));
+				g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 22F));
 				drawOutlinedText(line, getCenterAlignedTextX(line, gp.screenWidth / 2), (int) lineY, Color.WHITE, Color.BLACK);
 			}
 		}
@@ -7522,6 +7532,9 @@ public class UI extends AbstractUI {
 				"##Writing & Design",
 				"[RAMM] from a Parallel Universe",
 				"",
+				"##Theorycrafting & Balancing",
+				"Elijah Martin",
+				"",
 				"##Additional Coding",
 				"Dsajuni",
 				"",
@@ -7547,11 +7560,29 @@ public class UI extends AbstractUI {
 		
 		// Leave the HOF game state, then queue a task-based teleport
 		gp.setTaskState();
+		Task.addTask(Task.FLASH_OUT, "");
+		Task.addTask(Task.SLEEP, "", 150);
+		Task.addTask(Task.TURN, gp.player, "", Task.RIGHT);
+		Task.addTask(Task.DIALOGUE, gp.npc[227][0], "Right... I've gotta go return some beakers.");
+		Task.addTask(Task.DIALOGUE, gp.npc[227][0], "Catch you around, champ.");
+		Task.addTask(Task.SLEEP, "", 50);
+		Task.addTask(Task.DIALOGUE, gp.npc[227][0], "Next time?");
+		Task.addTask(Task.DIALOGUE, gp.npc[227][0], "I'm bringing something even crazier.");
+		Task.addTask(Task.SLEEP, "", 20);
+		Task.addTask(Task.DIALOGUE, gp.npc[227][0], "Heh... it's been an honor.");
+		Task.addTask(Task.SLEEP, "", 60);
 		Task t = Task.addTask(Task.TELEPORT, "");
 		t.counter = Player.spawn[0][0];
 		t.start = Player.spawn[0][1];
 		t.finish = Player.spawn[0][2];
 		t.wipe = false;
-		//Task.addTask(Task.SAVE, "");
+		if (gp.player.p.hofTeams == null) gp.player.p.hofTeams = new ArrayList<>();
+		Pokemon[] snapshot = new Pokemon[6];
+		for (int i = 0; i < gp.player.p.team.length; i++) {
+			if (gp.player.p.team[i] != null) snapshot[i] = gp.player.p.team[i].clone();
+		}
+		Task.addTask(Task.TURN, gp.player, "", Task.DOWN);
+		gp.player.p.hofTeams.add(snapshot);
+		Task.addTask(Task.SAVE, "");
 	}
 }

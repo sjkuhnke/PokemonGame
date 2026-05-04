@@ -1969,6 +1969,7 @@ public class BattleUI extends AbstractUI {
 				baton = false;
 				subState = TASK_STATE;
 				if (!fainted) turn(null, foeMove);
+				subState = TASK_STATE;
 				//foeMove = null;
 			}
 		}

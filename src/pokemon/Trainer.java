@@ -200,6 +200,10 @@ public class Trainer implements Serializable {
 		while (team[index] == null || team[index].isFainted() || team[index] == current) {
 			index = rand.nextInt(team.length);
 		}
+		if (oldCloned) { // for AI seeing if Whirlwind/Roar work
+			this.current = team[index];
+			return true;
+		}
 		
 		Pokemon user = Pokemon.gp != null ? Pokemon.gp.gameState == GamePanel.BATTLE_STATE ? Pokemon.gp.battleUI.user :
 			Pokemon.gp.gameState == GamePanel.SIM_BATTLE_STATE ? Pokemon.gp.simBattleUI.user : null : null;
@@ -209,7 +213,7 @@ public class Trainer implements Serializable {
 		foe.removeStatus(Status.TRAPPED);
 		foe.removeStatus(Status.SPUN);
 		foe.removeStatus(Status.SPELLBIND);
-		if (!oldCloned) current.swapIn(foe, true);
+		current.swapIn(foe, true);
 		return true;
 		
 	}

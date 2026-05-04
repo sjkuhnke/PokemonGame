@@ -79,6 +79,12 @@ public class TextInputDialog extends AbstractUI {
 			naming = commandNum == NAMING;
 		}
 		
+		if (gp.keyH.enterPressed && commandNum == NAMING) {
+			gp.keyH.enterPressed = false;
+			commandNum = CONFIRM;
+			naming = false;
+		}
+		
 		if (gp.keyH.leftPressed || gp.keyH.rightPressed) {
 			gp.keyH.leftPressed = false;
 			gp.keyH.rightPressed = false;
@@ -160,7 +166,15 @@ public class TextInputDialog extends AbstractUI {
 			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
 		}
 		
-		g2.setFont(g2.getFont().deriveFont(14F));
+		if (commandNum == NAMING) {
+		    g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 13F));
+		    String enterHint = "[Enter]";
+		    int hintX = fieldX + fieldWidth - getTextWidth(enterHint) - 2;
+		    int hintY = fieldY + fieldHeight - 6;
+		    drawOutlinedText(enterHint, hintX, hintY, new Color(180, 180, 180, 180), Color.BLACK);
+		}
+		
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 14F));
 		String countText = text.length() + " / " + maxLength;
 		int countX = fieldX + fieldWidth - getTextWidth(countText) - 10;
 		int countY = fieldY + fieldHeight + gp.tileSize / 3;

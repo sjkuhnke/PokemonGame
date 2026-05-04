@@ -88,6 +88,7 @@ public class Task {
 	public static final int MENU_ICON = 68; // counter: which icon index in menuIcons
 	public static final int USE_MOVE = 69;
 	public static final int SAVE = 70;
+	public static final int LOAD = 71; // for loading pokemon machines
 	
 	public static GamePanel gp;
 	

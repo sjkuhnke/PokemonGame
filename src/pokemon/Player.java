@@ -112,6 +112,7 @@ public class Player extends Trainer implements Serializable {
 	public boolean spike;
 
  	public int difficulty;
+ 	public ArrayList<Pokemon[]> hofTeams = new ArrayList<>();
 
  	// NUZLOCKE
 	public boolean nuzlocke;
@@ -486,9 +487,17 @@ public class Player extends Trainer implements Serializable {
 	public boolean swapRandom(Pokemon foe) {
 		if (!hasValidMembers(foe)) return false;
 		Random rand = new Random();
+		boolean oldCloned = current.cloned;
 		int index = rand.nextInt(team.length);
 		while (team[index] == null || team[index].isFainted() || team[index] == current) {
 			index = rand.nextInt(team.length);
+		}
+		if (oldCloned) { // for AI seeing if Whirlwind/Roar work
+			Pokemon lead = current;
+			this.team[0] = this.team[index];
+			this.team[index] = lead;
+			this.current = this.team[0];
+			return true;
 		}
 		
 		swapToFront(team[index], index, foe);
@@ -2262,5 +2271,13 @@ public class Player extends Trainer implements Serializable {
 		export.put("export_date", System.currentTimeMillis());
 		
 		return export;
+	}
+
+	/**
+	 * Method only for testing purposes
+	 */
+	public void validateNuzlocke() {
+		this.isValidNuzlocke = true;
+		this.invalidReasons = new ArrayList<>();
 	}
 }

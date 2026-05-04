@@ -38,7 +38,7 @@ public enum Ability {
 	FILTER("Halves damage from supereffective attacks."),
 	FLAME_BODY("Contact with the Pokemon can cause a burn 30% of the time; immune to burn."),
 	FLASH_FIRE("It powers up FIRE moves by 1.5x if it's hit by one."),
-	FLUFFY("Halves the damage from moves that make direct contact, but doubles that of FIRE moves."),
+	FLUFFY("Halves the damage from moves that make direct contact, but is 2x weaker to FIRE moves."),
 	FORTIFY("If this Pokemon doesn't take direct damage for the turn and doesn't protect itself, it gains +1 Defense (max 2 stacks)."),
 	FRIENDLY_GHOST("Gives full immunity to all GHOST moves."),
 	FULL_FORCE("Boosts the Attack stat by 2 stages if the Pokemon's held item is used or lost."),

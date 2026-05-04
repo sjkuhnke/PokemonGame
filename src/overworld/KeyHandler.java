@@ -13,7 +13,7 @@ import java.awt.image.BufferedImage;
 
 public class KeyHandler implements KeyListener {
 
-	public boolean upPressed, downPressed, leftPressed, rightPressed, sPressed, wPressed, dPressed, aPressed, tabPressed, shiftPressed, ctrlPressed, calcPressed, escPressed, fullPressed, kUpPressed, kDownPressed, kLeftPressed, kRightPressed, kSPressed, kWPressed, kDPressed, kAPressed;
+	public boolean upPressed, downPressed, leftPressed, rightPressed, sPressed, wPressed, dPressed, aPressed, tabPressed, shiftPressed, ctrlPressed, calcPressed, escPressed, fullPressed, enterPressed, kUpPressed, kDownPressed, kLeftPressed, kRightPressed, kSPressed, kWPressed, kDPressed, kAPressed;
 	public boolean hotkey1Pressed, hotkey2Pressed, hotkey3Pressed, hotkey4Pressed, hotkey5Pressed;
 	
 	GamePanel gp;
@@ -80,6 +80,10 @@ public class KeyHandler implements KeyListener {
 		if (code == config.keys[config.screenshotKey]) {
 			gp.screenshotRequested = true;
 			resetKeys(true);
+		}
+		
+		if (code == KeyEvent.VK_ENTER) {
+			enterPressed = true;
 		}
 		
 		if (code == gp.config.keys[gp.config.hotkey1]) hotkey1Pressed = true;
@@ -162,6 +166,9 @@ public class KeyHandler implements KeyListener {
 		if (code == config.keys[config.fullKey]) {
 			fullPressed = false;
 		}
+		if (code == KeyEvent.VK_ENTER) {
+			enterPressed = false;
+		}
 		
 		if (code == gp.config.keys[gp.config.hotkey1]) hotkey1Pressed = false;
 		if (code == gp.config.keys[gp.config.hotkey2]) hotkey2Pressed = false;
@@ -207,7 +214,7 @@ public class KeyHandler implements KeyListener {
 				gp.battleUI.handleBackspace();
 			} else {
 				char c = e.getKeyChar();
-				if (c != KeyEvent.CHAR_UNDEFINED) {
+				if (c != KeyEvent.CHAR_UNDEFINED && !Character.isISOControl(c)) {
 					gp.battleUI.handleKeyInput(c);
 					downPressed = false;
 				}
@@ -217,7 +224,7 @@ public class KeyHandler implements KeyListener {
 				gp.ui.handleBackspace();
 			} else {
 				char c = e.getKeyChar();
-				if (c != KeyEvent.CHAR_UNDEFINED) {
+				if (c != KeyEvent.CHAR_UNDEFINED && !Character.isISOControl(c)) {
 					gp.ui.handleKeyInput(c);
 					downPressed = false;
 				}

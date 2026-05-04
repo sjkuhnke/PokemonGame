@@ -9,7 +9,6 @@ public class HOFMachine extends InteractiveTile {
 	
 	BufferedImage[] images;
 	static final int SIZE = 7;
-	int phase;
 	
 	public HOFMachine(GamePanel gp) {
 		super(gp);

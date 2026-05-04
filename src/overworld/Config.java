@@ -60,7 +60,7 @@ public class Config {
 		keys = new int[] {KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_W,
 				KeyEvent.VK_S, KeyEvent.VK_D, KeyEvent.VK_A, KeyEvent.VK_C,
 				KeyEvent.VK_1, KeyEvent.VK_2, KeyEvent.VK_3, KeyEvent.VK_4, KeyEvent.VK_5,
-				KeyEvent.VK_ENTER, KeyEvent.VK_TAB, KeyEvent.VK_CONTROL, KeyEvent.VK_SHIFT, KeyEvent.VK_BACK_SPACE,
+				KeyEvent.VK_F2, KeyEvent.VK_TAB, KeyEvent.VK_CONTROL, KeyEvent.VK_SHIFT, KeyEvent.VK_BACK_SPACE,
 				KeyEvent.VK_ESCAPE, KeyEvent.VK_F11
 				};
 		defaultKeys = Arrays.copyOf(keys, keys.length);

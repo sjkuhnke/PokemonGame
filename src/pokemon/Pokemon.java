@@ -6500,9 +6500,9 @@ public class Pokemon implements Serializable {
 			}
 			break;
 		case REFLECT_TYPE:
-			Task.addTypeTask(this.nickname + " changed its type to match the foe's!", foe);
 			this.type1 = foe.type1;
 			this.type2 = foe.type2;
+			Task.addTypeTask(this.nickname + " changed its type to match the foe's!", foe);
 			break;
 		case REST:
 			if (this.currentHP == this.getStat(0)) {

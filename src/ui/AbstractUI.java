@@ -1096,11 +1096,21 @@ public abstract class AbstractUI {
 	        x += charWidth;
 	    }
 		g2.setStroke(new BasicStroke(3));
+		
 		y += gp.tileSize * 1.5;
 		x = getCenterAlignedTextX("Confirm", gp.tileSize * 3 + width / 2);
 		g2.drawString("Confirm", x, y);
 		if (nicknaming == 0) {
 			g2.drawRoundRect(x - 8, (int) (y - gp.tileSize * 0.65), (int) (gp.tileSize * 2.3), (int) (gp.tileSize * 0.8), 12, 12);
+		}
+		
+		if (nicknaming == 1) {
+		    g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 13F));
+		    String enterHint = "[Enter]";
+		    // position it beneath the character row, right-aligned to the window
+		    int hintX = (gp.tileSize * 3 + gp.tileSize * 10) - g2.getFontMetrics().stringWidth(enterHint) - 12;
+		    int hintY = y - (int)(gp.tileSize * 0.7); // just above the Confirm text
+		    drawOutlinedText(enterHint, hintX, hintY, new Color(180, 180, 180, 180), Color.BLACK);
 		}
 		
 		if (gp.keyH.upPressed && nicknaming == 0) {
@@ -1110,6 +1120,11 @@ public abstract class AbstractUI {
 		
 		if (gp.keyH.downPressed && nicknaming == 1) {
 			gp.keyH.downPressed = false;
+			nicknaming = 0;
+		}
+		
+		if (gp.keyH.enterPressed && nicknaming == 1) {
+			gp.keyH.enterPressed = false;
 			nicknaming = 0;
 		}
 	}
