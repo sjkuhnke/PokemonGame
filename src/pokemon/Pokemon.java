@@ -2742,7 +2742,7 @@ public class Pokemon implements Serializable {
 		int damage = 0;
 		double bp = move.basePower;
 		int acc = move.accuracy;
-		int secChance = move.secondary;
+		int secChance = getSecondaryChance(move.secondary);
 		PType moveType = move.mtype;
 		int critChance = move.critChance;
 		Ability foeAbility = foe.getAbility(field);
@@ -2792,7 +2792,7 @@ public class Pokemon implements Serializable {
 				move = this.lastMoveUsed;
 				bp = move.basePower;
 				acc = move.accuracy;
-				secChance = move.secondary;
+				secChance = getSecondaryChance(move.secondary);
 				moveType = move.mtype;
 				critChance = move.critChance;
 				contact = move.contact;
@@ -2823,7 +2823,7 @@ public class Pokemon implements Serializable {
 						move = moves.get(new Random().nextInt(moves.size()));
 						bp = move.basePower;
 						acc = move.accuracy;
-						secChance = move.secondary;
+						secChance = getSecondaryChance(move.secondary);
 						moveType = move.mtype;
 						critChance = move.critChance;
 						contact = move.contact;
@@ -3129,7 +3129,7 @@ public class Pokemon implements Serializable {
 				move = this.lastMoveUsed;
 				bp = move.basePower;
 				acc = move.accuracy;
-				secChance = move.secondary;
+				secChance = getSecondaryChance(move.secondary);
 				moveType = move.mtype;
 				critChance = move.critChance;
 				contact = move.contact;
@@ -3171,7 +3171,7 @@ public class Pokemon implements Serializable {
 				move = this.lastMoveUsed;
 				bp = move.basePower;
 				acc = move.accuracy;
-				secChance = move.secondary;
+				secChance = getSecondaryChance(move.secondary);
 				moveType = move.mtype;
 				critChance = move.critChance;
 				contact = move.contact;
@@ -3227,7 +3227,7 @@ public class Pokemon implements Serializable {
 			move = this.lastMoveUsed;
 			bp = move.basePower;
 			acc = move.accuracy;
-			secChance = move.secondary;
+			secChance = getSecondaryChance(move.secondary);
 			moveType = move.mtype;
 			critChance = move.critChance;
 			contact = move.contact;
@@ -3339,9 +3339,11 @@ public class Pokemon implements Serializable {
 
 		int hits = 0;
 		boolean foeEject = false;
-		boolean aboveHalfHP = foe.currentHP >= foe.getStat(0) / 2;
+		boolean redCard = false;
+		boolean slipstream = false;
 		
 		for (int hit = 1; hit <= numHits; hit++) {
+			boolean aboveHalfHP = foe.currentHP >= foe.getStat(0) / 2;
 			if (hit > 1) bp = move.basePower;
 			if (move == Move.POP_POP) hits++;
 			if ((foe.isFainted() || this.isFainted()) && !noTarget) {
@@ -3732,7 +3734,6 @@ public class Pokemon implements Serializable {
 			
 			if (field.equals(field.terrain, Effect.SPARKLY) && isGrounded()) {
 				if (moveType == PType.MAGIC) bp *= 1.5;
-				secChance *= 2;
 			}
 			
 			if (field.equals(field.terrain, Effect.PSYCHIC) && isGrounded()) {
@@ -4057,8 +4058,6 @@ public class Pokemon implements Serializable {
 				heal(healAmount, this.nickname + " recovered a little HP using its Shell Bell!");
 			}
 			
-			if (this.getAbility(field) == Ability.SERENE_GRACE) secChance *= 2;
-			
 			int recoil = 0;
 			if (Move.getRecoil().contains(move) && ability != Ability.ROCK_HEAD && damage > 0) {
 				int denom = move == Move.HEAD_SMASH || move == Move.LIGHT_OF_RUIN ? 2 : move == Move.SUBMISSION || move == Move.TAKE_DOWN ? 4 : 3;
@@ -4222,8 +4221,8 @@ public class Pokemon implements Serializable {
 				}
 				if (foeAbility == Ability.PERISH_BODY && this.perishCount == 0 && foe.perishCount == 0) {
 					Task.addAbilityTask(foe);
-					Task.addTask(Task.TEXT, foe.nickname + " will perish in 3 turns!");
-					foe.perishCount = 4;
+					Task.addTask(Task.TEXT, this.nickname + " will perish in 3 turns!");
+					this.perishCount = 4;
 				}
 				if (this.item == null && foe.getItem(field) == Item.STICKY_BARB) {
 					Task.addTask(Task.TEXT, "The Sticky Barb clinged to " + this.nickname + "!");
@@ -4262,6 +4261,9 @@ public class Pokemon implements Serializable {
 				Task.addAbilityTask(foe);
 				stat(foe, 0, 2, this);
 			}
+			if (first && this.getItem(field) == Item.KING1S_ROCK && checkSecondary(10)) {
+				foe.flinch();
+			}
 			if (!sheer && !foe.isFainted()) {
 				if ((foe.getItem(field) == Item.JABOCA_BERRY && move.isPhysical()) || (foe.getItem(field) == Item.ROWAP_BERRY && move.isSpecial())) {
 					foe.eatBerry(foe.item, true, this);
@@ -4272,23 +4274,43 @@ public class Pokemon implements Serializable {
 				if (foe.getItem(field) == Item.EJECT_BUTTON) {
 					if (foe.trainer != null && foe.trainer.hasValidMembers(foe)) {
 						foeEject = true;
-						hit = numHits;
+						numHits = hit;
+					}
+				}
+				if (foe.getItem(field) == Item.RED_CARD && !redCard) {
+					if (this.trainer != null && this.trainer.hasValidMembers(foe) && !this.hasStatus(Status.ROOTED)) {
+						redCard = true;
+						numHits = hit;
+					}
+				}
+				if (!foeEject && aboveHalfHP && foe.currentHP < foe.getStat(0) / 2) {
+					if (foeAbility == Ability.BERSERK) {
+						Task.addAbilityTask(foe);
+						stat(foe, foe.getHighestAttackingStat(), 2, this);
+					}
+					if (foeAbility == Ability.SLIPSTREAM) {
+						if (foe.trainer != null && foe.trainer.hasValidMembers(this)) {
+							slipstream = true;
+							numHits = hit;
+						}
 					}
 				}
 			}
-			if (!foeEject) {
-				if (move == Move.POP_POP && hit == numHits) {
-					Task.addTask(Task.TEXT, "Hit " + hits + " time(s)!");
-				} else if ((hit == numHits && hit > 1) || (move == Move.BEAT_UP && numHits == 1)) {
-					Task.addTask(Task.TEXT, "Hit " + hit + " time(s)!");
-				}
-			}
 			
-			if (first && this.getItem(field) == Item.KING1S_ROCK && checkSecondary(10)) {
-				foe.flinch();
+			if (move == Move.POP_POP && hit == numHits) {
+				Task.addTask(Task.TEXT, "Hit " + hits + " time(s)!");
+			} else if ((hit == numHits && hit > 1) || (move == Move.BEAT_UP && numHits == 1)) {
+				Task.addTask(Task.TEXT, "Hit " + hit + " time(s)!");
 			}
-		} // end multi hit move TODO: make Red Card/Eject Button activate after the first hit not the last
-		if (move.secondary < 0) {
+		}
+		
+		if (this.getAbility(field) == Ability.SERENE_GRACE) secChance *= 2;
+		
+		if (field.equals(field.terrain, Effect.SPARKLY) && isGrounded()) {
+			secChance *= 2;
+		}
+		
+		if (hasPrimary(move.secondary)) {
 			primaryEffect(foe, move, foeEject, field);
 		}
 		if (checkSecondary(secChance)) {
@@ -4355,19 +4377,26 @@ public class Pokemon implements Serializable {
 			foe.addStatus(Status.SWITCHING);
 		}
 		
-		if (!foeEject && !sheer && aboveHalfHP && foe.currentHP < foe.getStat(0) / 2 && !foe.isFainted()) {
-			if (foeAbility == Ability.BERSERK) {
-				Task.addAbilityTask(foe);
-				stat(foe, foe.getHighestAttackingStat(), 2, this);
-			}
-			if (foeAbility == Ability.SLIPSTREAM) {
-				if (foe.trainer != null && foe.trainer.hasValidMembers(foe)) {
-					Task.addAbilityTask(foe);
-					Task.addTask(Task.TEXT, foe.nickname + " went back to " + (foe.trainerOwned() ? foe.trainer.toString() : "you") + "!");
-					foe.addStatus(Status.SWITCHING);
-				}
+		if (redCard) {
+			int index = tasks.size();
+			boolean result = this.trainer.swapRandom(foe);
+			if (result) {
+				Task t = Task.createTask(Task.TEXT, foe.nickname + " held up its Red Card!");
+				Task.insertTask(t, index);
+				foe.consumeItem(this);
+				endMove();
+				this.rollCount = 1;
+				this.metronome = 0;
+				return;
 			}
 		}
+		
+		if (slipstream) {
+			Task.addAbilityTask(foe);
+			Task.addTask(Task.TEXT, foe.nickname + " went back to " + (foe.trainerOwned() ? foe.trainer.toString() : "you") + "!");
+			foe.addStatus(Status.SWITCHING);
+		}
+		
 		endMove();
 		return;
 	}
@@ -4935,6 +4964,7 @@ public class Pokemon implements Serializable {
 			break;
 		case CORE_ENFORCER:
 			if (!first && foe.lastMoveUsed != null && !foe.isFainted() && foe.getItem(field) != Item.ABILITY_SHIELD) {
+				foe.onAbilityChanged(field, this);
 				foe.ability = Ability.NULL;
 				Task.addTask(Task.TEXT, foe.nickname + "'s Ability was suppressed!");	
 			}
@@ -5218,12 +5248,7 @@ public class Pokemon implements Serializable {
 			}
 			break;
 		case ICE_SPINNER:
-			if (field.terrain != null) {
-				field.terrain = null;
-				field.terrainTurns = 0;
-				Task t = Task.addTask(Task.TERRAIN, "The terrain returned to normal!");
-				t.setEffect(null);
-			}
+			field.clearTerrain(this, foe);
 			break;
 		case ICY_WIND:
 			stat(foe, 4, -1, this);
@@ -5263,6 +5288,7 @@ public class Pokemon implements Serializable {
 			break;
 		case LAVA_SURF:
 			if (foe.getItem(field) != Item.ABILITY_SHIELD && !foe.isFainted()) {
+				foe.onAbilityChanged(field, this);
 				foe.ability = Ability.NULL;
 				Task.addTask(Task.TEXT, foe.nickname + "'s Ability was suppressed!");	
 			}
@@ -5519,10 +5545,6 @@ public class Pokemon implements Serializable {
 			break;
 		case SUMMIT_STRIKE:
 		    stat(foe, 1, -1, this);
-		    double r = Math.random();
-		    if (r < 0.3 && first) {
-		        foe.flinch();
-		    }
 		    break;
 		case SUNNY_BURST:
 			boolean success = field.setWeather(field.new FieldEffect(Effect.SUN), this, foe);
@@ -5538,6 +5560,7 @@ public class Pokemon implements Serializable {
 			break;
 		case SLOW_FALL:
 			if (foe.getItem(field) != Item.ABILITY_SHIELD) {
+				foe.onAbilityChanged(field, this);
 				foe.ability = Ability.LEVITATE;
 				Task.addTask(Task.TEXT, foe.nickname + "'s ability was changed to Levitate!");
 			}
@@ -5733,15 +5756,20 @@ public class Pokemon implements Serializable {
 			break;
 		}
 	}
+	
+	private boolean hasPrimary(int secondary) {
+		return secondary < 0;
+	}
+	
+	private int getSecondaryChance(int secondary) {
+		if (secondary >= 0) return secondary;
+		if (secondary == -1) return 0;
+		return Math.abs(secondary) - 1;
+	}
 
 	private boolean checkSecondary(int secondary) {
 		if (this.script) return secondary > 50;
-		double chance = (int) (Math.random()*100 + 1);
-		if (chance <= secondary) {
-			return true;
-		} else {
-			return false;
-		}
+		return (int)(Math.random() * 100 + 1) <= secondary;
 	}
 	
 	private void statusEffect(Pokemon foe, Move move, Field field) {
@@ -6001,13 +6029,7 @@ public class Pokemon implements Serializable {
 				Task.addTask(Task.TEXT, fe.toString() + " disappeared from " + this.nickname + "'s side!");
 				foe.getFieldEffects().remove(fe);
 			}
-			if (field.terrain != null) {
-				{
-					Task t = Task.addTask(Task.TERRAIN, "The " + field.terrain.toString() + " terrain disappeared!");
-					t.setEffect(null);
-				}
-				field.terrain = null;
-			}
+			field.clearTerrain(this, foe);
 			break;
 		case DESTINY_BOND:
 			if (!(Move.getNoComboMoves().contains(lastMoveUsed) && success)) {
@@ -6075,6 +6097,7 @@ public class Pokemon implements Serializable {
 			break;
 		case ENTRAINMENT:
 			if (foe.getItem(field) != Item.ABILITY_SHIELD) {
+				foe.onAbilityChanged(field, this);
 				foe.ability = this.ability;
 				Task.addTask(Task.TEXT, foe.nickname + "'s ability became " + foe.ability.toString() + "!");
 				foe.swapIn(this, false);
@@ -6135,6 +6158,7 @@ public class Pokemon implements Serializable {
 			break;
 		case GASTRO_ACID:
 			if (foe.getItem(field) != Item.ABILITY_SHIELD) {
+				foe.onAbilityChanged(field, this);
 				foe.ability = Ability.NULL;
 				Task.addTask(Task.TEXT, foe.nickname + "'s ability was suppressed!");
 			} else {
@@ -6601,6 +6625,7 @@ public class Pokemon implements Serializable {
 			break;
 		case SIMPLE_BEAM:
 			if (foe.getItem(field) != Item.ABILITY_SHIELD) {
+				foe.onAbilityChanged(field, this);
 				foe.ability = Ability.SIMPLE;
 				Task.addTask(Task.TEXT, foe.nickname + "'s ability became Simple!");
 			} else {
@@ -6828,14 +6853,17 @@ public class Pokemon implements Serializable {
 				Task.addTask(Task.TEXT, foe.nickname + "'s Ability Shield blocked the ability change!");
 			} else if (this.getItem(field) == Item.ABILITY_SHIELD) {
 				Task.addTask(Task.TEXT, this.nickname + "'s Ability Shield blocked the ability change!");
+				foe.onAbilityChanged(field, this);
 				foe.ability = Ability.NULL;
 			} else {
 				if (foe.ability == Ability.NULL) {
 					fail = fail();
 				} else {
+					this.onAbilityChanged(field, foe);
 					this.ability = foe.ability;
 					Task.addTask(Task.TEXT, this.nickname + "'s ability became " + this.ability.toString() + "!");
 					this.swapIn(this, false);
+					foe.onAbilityChanged(field, this);
 					foe.ability = Ability.NULL;
 				}
 			}
@@ -6870,6 +6898,7 @@ public class Pokemon implements Serializable {
 			break;
 		case WORRY_SEED:
 			if (foe.getItem(field) != Item.ABILITY_SHIELD) {
+				foe.onAbilityChanged(field, this);
 				foe.ability = Ability.INSOMNIA;
 				Task.addTask(Task.TEXT, foe.nickname + "'s ability became Insomnia!");
 			} else {
@@ -7197,6 +7226,17 @@ public class Pokemon implements Serializable {
 		this.status = Status.HEALTHY;
 		for (Moveslot m : moveset) {
 			if (m != null) m.currentPP = m.maxPP;
+		}
+	}
+	
+	public void onAbilityChanged(Field field, Pokemon foe) {
+		if (field != null && field.contains(field.fieldEffects, Effect.NEUTRALIZING_GAS)) {
+			if (foe == null || foe.ability != Ability.NEUTRALIZING_GAS) {
+				Task.addAbilityTask(this);
+				Task.addTask(Task.TEXT, "The Neutralizing Gas wore off!");
+				field.remove(field.fieldEffects, Effect.NEUTRALIZING_GAS);
+				if (foe != null) foe.swapIn(foe, false);
+			}
 		}
 	}
 	
@@ -7592,7 +7632,7 @@ public class Pokemon implements Serializable {
 		int damage = 0;
 		double bp = move.basePower;
 		int acc = move.accuracy;
-		int secChance = move.secondary;
+		int secChance = getSecondaryChance(move.secondary);
 		PType moveType = move.mtype;
 		int critChance = move.critChance;
 		Ability foeAbility = foe.getAbility(field);
@@ -9658,6 +9698,7 @@ public class Pokemon implements Serializable {
 		} else if (this.getAbility(field) == Ability.TRACE) {
 			if (this.getItem(field) != Item.ABILITY_SHIELD) {
 				Task.addAbilityTask(this);
+				this.onAbilityChanged(field, foe);
 				this.ability = foe.ability;
 				Task.addTask(Task.TEXT, this.nickname + "'s ability became " + this.ability + "!");
 				this.swapIn(foe, false);
@@ -9855,7 +9896,7 @@ public class Pokemon implements Serializable {
 	}
 	
 	private void eatBerry(Item berry, boolean consume, Pokemon foe) {
-		eatBerry(berry, consume, foe, this.lastMoveUsed);
+		eatBerry(berry, consume, foe, null);
 	}
 	
 	private void eatBerry(Item berry, boolean consume, Pokemon foe, Move m) {
@@ -9947,7 +9988,7 @@ public class Pokemon implements Serializable {
 			} else if (berry == Item.LEPPA_BERRY) {
 				int index = -1;
 				for (int i = 0; i < this.moveset.length; i++) {
-					if (this.moveset[i].move == m) {
+					if (m != null ? this.moveset[i].move == m : this.moveset[i].currentPP < this.moveset[i].maxPP) {
 						index = i;
 						break;
 					}

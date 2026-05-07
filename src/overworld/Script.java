@@ -4180,11 +4180,11 @@ public class Script {
 				Task.addNPCMoveTask('x', gp.tileSize * 51, gp.npc[226][4], false, 192);
 				Task.addTask(Task.TURN, gp.npc[226][4], "", player.getDirectionToFace());
 				Task.addTask(Task.FLASH_OUT, "");
-				Task.addTask(Task.SLEEP, "", 35);
+				Task.addTask(Task.SLEEP, "", 45);
 				Task.addTask(Task.TURN, gp.npc[226][5], "", player.getDirectionToFace());
-				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.SLEEP, "", 35);
 				Task.addTask(Task.TURN, npc, "", player.getDirectionToFace());
-				Task.addTask(Task.SLEEP, "", 60);
+				Task.addTask(Task.SLEEP, "", 120);
 				Task.addTask(Task.DIALOGUE, npc, "Y'know, before Necrozma, I never got people who wanted to catch legendary Pokemon.");
 				Task.addTask(Task.DIALOGUE, npc, "It was always the evil team, or some narcissistic psychopath who wanted to achieve divinity...");
 				Task.addTask(Task.DIALOGUE, npc, "But seeing how you and Arthra handled those dragons... I might hold onto this prismatic lug for a bit.");
@@ -4201,6 +4201,12 @@ public class Script {
 				Task.addNPCMoveTask('y', gp.tileSize, gp.npc[226][5], false, 2448);
 				Task.addTask(Task.FLASH_OUT, "");
 				Task.addTask(Task.SLEEP, "", 25);
+				Task.addTask(Task.TURN, player, "", player.worldX > 50 * gp.tileSize ? Task.LEFT : player.worldX < 50 * gp.tileSize ? Task.RIGHT : Task.UP);
+				Task.addTask(Task.SLEEP, "", 5);
+				Task.addNPCMoveTask('x', 50 * gp.tileSize, player, false, 2);
+				Task.addTask(Task.SLEEP, "", 10);
+				Task.addTask(Task.TURN, player, "", Task.UP);
+				Task.addTask(Task.SLEEP, "", 15);
 				Task.addNPCMoveTask('y', 47 * gp.tileSize + gp.tileSize/4, player, false, 2);
 				Task t = Task.addTask(Task.TELEPORT, "");
 				t.counter = 227;

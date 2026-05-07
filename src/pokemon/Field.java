@@ -460,12 +460,11 @@ public class Field {
 	    if (terrain != null) {
 	        terrainTurns--;
 	        if (terrainTurns == 0) {
-	            Task t = Task.addTask(Task.TERRAIN, "The terrain returned to normal!");
-	            t.setEffect(null);
-	            terrain = null;
+	            clearTerrain(faster, slower);
+	        } else {
+	        	faster.checkTerraforge(slower);
+	            slower.checkTerraforge(faster);
 	        }
-	        faster.checkTerraforge(slower);
-            slower.checkTerraforge(faster);
 	    }
 	    
 	    Iterator<FieldEffect> iterator = fieldEffects.iterator();
@@ -507,6 +506,16 @@ public class Field {
 	    }
 	    
 	    turns++;
+	}
+	
+	public void clearTerrain(Pokemon faster, Pokemon slower) {
+		if (terrain == null) return;
+		Task t = Task.addTask(Task.TERRAIN, "The terrain returned to normal!");
+		t.setEffect(null);
+		terrain = null;
+		terrainTurns = 0;
+		faster.checkTerraforge(slower);
+		slower.checkTerraforge(faster);
 	}
 
 	public ArrayList<FieldEffect> getHazards(ArrayList<FieldEffect> side) {

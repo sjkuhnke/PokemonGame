@@ -1260,6 +1260,7 @@ public class Player extends Trainer implements Serializable {
 		        		gp.ui.showMessage(p.nickname + "'s PP was restored!");
 	        		} else {
 	        			gp.ui.showMessage(p.nickname + "'s PP is already full!");
+	        			return;
 	        		}
 	        		break;
 	        	} else {

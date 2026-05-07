@@ -74,7 +74,7 @@ public class GamePanel extends JPanel implements Runnable {
 	// CONSTANTS
 	public static final int MAX_MAP = 240;
 	public static final int MAX_FLAG = 25; // should not be >31
-	public static final String GAME_VERSION = "0.8.88";
+	public static final String GAME_VERSION = "0.8.89";
 	public static boolean DEBUG = true;
 	
 	// SYSTEM
@@ -532,6 +532,10 @@ public class GamePanel extends JPanel implements Runnable {
 	public void endBattle(int trainer, int id, Pokemon foe) {
 		player.resetSpriteNum();
 		boolean wiped = player.p.wiped();
+		
+		player.p.resetTeam();
+		player.p.amulet = false;
+		
 		if (!wiped) {
 			if (trainer > -1 && trainer != 256) {
 				player.p.trainersBeat[trainer] = true;
@@ -638,9 +642,6 @@ public class GamePanel extends JPanel implements Runnable {
 				player.interactNPC(npc[currentMap][2], false);
 			}
 		}
-
-		player.p.resetTeam();
-		player.p.amulet = false;
 		
 		player.p.endBattleRecord(!wiped);
 		Print.endBattleLog(foe.trainerOwned() ? foe.trainer.getName() : foe.toString());
