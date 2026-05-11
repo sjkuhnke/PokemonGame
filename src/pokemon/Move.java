@@ -346,7 +346,7 @@ public enum Move {
 	MOLTEN_STEELSPIKE(100,90,30,0,1,0,PType.STEEL,"% chance to Burn foe",false,10),
 	MOONLIGHT(0,1000,0,0,2,0,PType.LIGHT,"Restores 1/2 of user's max HP, 2/3 in SUN, 1/4 in any other weather",false,5),
 	MORNING_SUN(0,1000,0,0,2,0,PType.LIGHT,"Restores 1/2 of user's max HP, 2/3 in SUN, 1/4 in any other weather",false,5),
-	MORTAL_SPIN(30,100,100,0,0,0,PType.POISON,"% to poison foe, and frees user of being Spun, Leech Seed, and Hazards",true,15),
+	MORTAL_SPIN(30,100,-101,0,0,0,PType.POISON,"% to poison foe, and frees user of being Spun, Leech Seed, and Hazards",true,15),
 	MUD_BOMB(65,85,30,0,1,0,PType.GROUND,"% to lower foe's Accuracy by 1",false,10),
 	MUD_SHOT(55,95,100,0,1,0,PType.GROUND,"% chance to lower foe's Speed by 1",false,15),
 	MUD_SPORT(0,1000,0,0,2,0,PType.GROUND,"Makes ELECTRIC moves deal 1/3 damage for 8 turns",false,15),
@@ -413,7 +413,7 @@ public enum Move {
 	RAGE(-1,100,0,0,0,0,PType.NORMAL,"Power increases the more times this move is used in succession",true,20),
 	RAIN_DANCE(0,1000,0,0,2,0,PType.WATER,"Changes the weather to RAIN for 5 turns",false,5),
 	RAINBOW_FLASH(50,100,0,0,1,1,PType.LIGHT,"Increased priority",false,10),
-	RAPID_SPIN(50,100,100,0,0,0,PType.NORMAL,"% to raise user's Speed by 1, and frees user of being Spun, Leech Seed, and Hazards",true,35),
+	RAPID_SPIN(50,100,-101,0,0,0,PType.NORMAL,"% to raise user's Speed by 1, and frees user of being Spun, Leech Seed, and Hazards",true,35),
 	RAZOR_LEAF(55,95,0,1,0,0,PType.GRASS,"Boosted crit rate",false,25),
 	RAZOR_SHELL(75,95,50,0,0,0,PType.WATER,"% chance to lower foe's Defense by 1",true,10),
 	REBOOT(0,1000,0,0,2,0,PType.STEEL,"Clears user of any status condition and any negative status effect, and raises user's Speed by 1",false,10),
@@ -568,7 +568,7 @@ public enum Move {
 	TICKLE(0,100,0,0,2,0,PType.NORMAL,"Lowers foe's Attack and Defense by 1",false,20),
 	TOPSY$TURVY(0,1000,0,0,2,0,PType.DARK,"Inverses every stat change the foe has",false,20),
 	TORMENT(0,100,0,0,2,0,PType.DARK,"Causes foe to not be able to use the same move in succession for 4 turns, block works mid-turn as well",false,15),
-	TORNADO_SPIN(60,95,100,0,0,0,PType.FIGHTING,"% to raise user's Speed and Accuracy by 1, and frees user of being Spun, Leech Seed, and Hazards",true,15),
+	TORNADO_SPIN(60,95,-101,0,0,0,PType.FIGHTING,"% to raise user's Speed and Accuracy by 1, and frees user of being Spun, Leech Seed, and Hazards",true,15),
 	TOXIC(0,90,0,0,2,0,PType.POISON,"Badly poisons foe, POISON Pokemon can't miss this move",false,5),
 	TOXIC_SPIKES(0,1000,0,0,2,0,PType.POISON,"Lays poisonous spikes on opponents side. 1 layer will cause any non-grounded foe switching in to be Poisoned, 2 = Toxic. POISON-types swtiching in removes them",false,10),
 	TRI$ATTACK(80,100,20,0,1,0,PType.NORMAL,"% chance to either Burn, Paralyze or Frostbite foe",false,10),
@@ -823,12 +823,19 @@ public enum Move {
 	}
 	
 	public String getDescription() {
-		if (this.secondary > 0) {
-            return secondary + desc;
+		int secChance = getSecondaryChance();
+		if (secChance > 0) {
+            return secChance + desc;
         } else {
         	return desc;
         }
 		
+	}
+	
+	public int getSecondaryChance() {
+		if (secondary >= 0) return secondary;
+		if (secondary == -1) return 0;
+		return Math.abs(secondary) - 1;
 	}
 	
 	public JPanel getMoveSummary(Pokemon user, Pokemon foe, Field field) {

@@ -17,7 +17,7 @@ public class Script {
 	private PlayerCharacter player;
 	private Player p;
 	private HashMap<Double, Consumer<Entity>> scriptMap;
-	public static final ArrayList<GiftEncounter> giftEncounters = new ArrayList<>();
+	public static ArrayList<GiftEncounter> giftEncounters;
 	
 	public Script(GamePanel gp) {
 		this.gp = gp;
@@ -28,6 +28,7 @@ public class Script {
 	}
 	
 	private void initializeScripts() {
+		giftEncounters = new ArrayList<>();
 		scriptMap.put(52.0, (npc) -> { // professor dad
 			if (!p.flag[0][0]) {
 				p.flag[0][0] = true;
