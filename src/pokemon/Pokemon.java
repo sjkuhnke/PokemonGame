@@ -5825,7 +5825,8 @@ public class Pokemon implements Serializable {
 			stat(this, 3, 2, foe);
 			break;
 		case AROMATHERAPY:
-			Task.addTask(Task.TEXT, "A soothing aroma wafted through the air!");
+		case HEAL_BELL:
+			Task.addTask(Task.TEXT, move == Move.AROMATHERAPY ? "A soothing aroma wafted through the air!" : "A bell chimed!");
 			Pokemon[] team = this.trainer == null ? null : this.trainer.getTeam();
 			if (team == null) {
 				if (this.status != Status.HEALTHY) {

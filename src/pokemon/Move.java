@@ -240,6 +240,7 @@ public enum Move {
 	HAZE(0,1000,0,0,2,0,PType.ICE,"Clears all stat changes on the field",false,25),
 	HEAD_SMASH(150,80,0,0,0,0,PType.ROCK,"User takes 1/2 of damage inflicted",true,5),
 	HEADBUTT(70,100,30,0,0,0,PType.NORMAL,"% chance of causing foe to flinch",true,15),
+	HEAL_BELL(0,1000,0,0,2,0,PType.NORMAL,"Cures team of any status conditions",false,5),
 	HEAL_PULSE(0,1000,0,0,2,0,PType.PSYCHIC,"Heals 1/2 of foe's max HP",false,10),
 	HEALING_CIRCLE(0,1000,0,0,2,0,PType.MAGIC,"Creates a circle on the user's side that heals incoming Pokemon for 50% of their missing HP, lasts 10 turns",false,10),
 	HEALING_WISH(0,1000,0,0,2,0,PType.PSYCHIC,"User faints. The next Pokemon sent in will be fully healed",false,5),
@@ -1126,6 +1127,7 @@ public enum Move {
 		result.add(Move.SPARKLING_WATER);
 		result.add(Move.SUPERSONIC);
 		result.add(Move.HYPER_VOICE);
+		result.add(Move.HEAL_BELL);
 		result.add(Move.PARTING_SHOT);
 		result.add(Move.SING);
 		result.add(Move.BELCH);
