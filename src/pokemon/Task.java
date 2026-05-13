@@ -463,7 +463,7 @@ public class Task {
 		}
 	}
 	
-	public static Task addMoveAnimTask(Move move, String msg, Pokemon attacker, Pokemon defender, String phase) {
+	public static Task addMoveAnimTask(Move move, String msg, Pokemon attacker, Pokemon defender, String phase, PType resolvedType) {
 		Task t = addTask(USE_MOVE, msg);
 		t.move = move;
 		t.p = attacker;
@@ -471,22 +471,22 @@ public class Task {
 		//t.animPhase = phase;
 		
 		if (phase != null && (phase.equals("charging") || phase.equals("attacking"))) {
-			t.animation = BattleAnimationManager.getInstance().getAnimation(move, phase);
+			t.animation = BattleAnimationManager.getInstance().getAnimation(move, phase, resolvedType);
 		} else {
-			t.animation = BattleAnimationManager.getInstance().getAnimation(move);
+			t.animation = BattleAnimationManager.getInstance().getAnimation(move, null, resolvedType);
 		}
 		
 		return t;
 	}
 	
-	public static Task addMoveAnimTask(Move move, String msg, Pokemon attacker, Pokemon defender, Pokemon.AnimPhase phase) {
+	public static Task addMoveAnimTask(Move move, String msg, Pokemon attacker, Pokemon defender, Pokemon.AnimPhase phase, PType resolvedType) {
 		String phaseStr = null;
 		if (phase == Pokemon.AnimPhase.CHARGING) {
 			phaseStr = "charging";
 		} else if (phase == Pokemon.AnimPhase.ATTACKING) {
 			phaseStr = "attacking";
 		}
-		return addMoveAnimTask(move, msg, attacker, defender, phaseStr);
+		return addMoveAnimTask(move, msg, attacker, defender, phaseStr, resolvedType);
 	}
 	
 	public static Task addProtectAnimTask(String msg, Pokemon attacker, Pokemon defender) {

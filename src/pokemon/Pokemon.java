@@ -2688,6 +2688,7 @@ public class Pokemon implements Serializable {
 		boolean isFirstHit;
 		AnimPhase phase;
 		MoveType moveType;
+		PType resolvedType;
 		
 		MoveContext() {
 			shouldAnimate = true;
@@ -3051,6 +3052,7 @@ public class Pokemon implements Serializable {
 		if (move == Move.RETURN) moveType = determineHPType();
 		if (move == Move.WEATHER_BALL) moveType = determineWBType(field);
 		if (move == Move.TERRAIN_PULSE) moveType = determineTPType(field);
+		ctx.resolvedType = moveType;
 		
 		if (field.contains(field.fieldEffects, Effect.ION) && moveType == PType.NORMAL) {
 			moveType = PType.ELECTRIC;
@@ -3363,7 +3365,7 @@ public class Pokemon implements Serializable {
 			}
 			
 			if (hit > 1 && move.cat != 2) {
-				Task t = Task.addMoveAnimTask(move, "", this, foe, ctx.phase);
+				Task t = Task.addMoveAnimTask(move, "", this, foe, ctx.phase, ctx.resolvedType);
 				t.wipe = true;
 			}
 			
@@ -4365,23 +4367,6 @@ public class Pokemon implements Serializable {
 			}
 		}
 		
-		if (!sheer && foe.getItem(field) == Item.RED_CARD) {
-			int index = tasks.size();
-			boolean result = false;
-			if (this.trainer != null && !foe.hasStatus(Status.ROOTED)) {
-				result = this.trainer.swapRandom(foe);
-			}
-			if (result) {
-				Task t = Task.createTask(Task.TEXT, foe.nickname + " held up its Red Card!");
-				Task.insertTask(t, index);
-				foe.consumeItem(this);
-				endMove();
-				this.rollCount = 1;
-				this.metronome = 0;
-				return;
-			}
-		}
-		
 		if (foeEject) {
 			Task.addTask(Task.TEXT, foe.nickname + " switched out using its Eject Button!");
 			foe.consumeItem(this);
@@ -4429,7 +4414,7 @@ public class Pokemon implements Serializable {
 		boolean showAnim = ctx.shouldAnimate && ctx.moveType != MoveType.IMMUNE && ctx.moveType != MoveType.MISS && ctx.isFirstHit && ctx.moveType != MoveType.PROTECT;
 		
 		if (showAnim) {
-			Task t = Task.addMoveAnimTask(move, msg, this, foe, ctx.phase);
+			Task t = Task.addMoveAnimTask(move, msg, this, foe, ctx.phase, ctx.resolvedType);
 			t.wipe = true;
 		} else {
 			Task t = Task.addTask(Task.TEXT, msg, this);
@@ -6513,7 +6498,7 @@ public class Pokemon implements Serializable {
 		case REFLECT_TYPE:
 			this.type1 = foe.type1;
 			this.type2 = foe.type2;
-			Task.addTypeTask(this.nickname + " changed its type to match the foe's!", foe);
+			Task.addTypeTask(this.nickname + " changed its type to match the foe's!", this);
 			break;
 		case REST:
 			if (this.currentHP == this.getStat(0)) {
@@ -6848,6 +6833,7 @@ public class Pokemon implements Serializable {
 				} else {
 					this.onAbilityChanged(field, foe);
 					this.ability = foe.ability;
+					Task.addTask(Task.TEXT, this.nickname + " stole " + foe.nickname + "'s ability!");
 					Task.addTask(Task.TEXT, this.nickname + "'s ability became " + this.ability.toString() + "!");
 					this.swapIn(this, false);
 					foe.onAbilityChanged(field, this);
@@ -7483,7 +7469,7 @@ public class Pokemon implements Serializable {
 			Task.addTask(Task.TEXT, this.nickname + " fainted..?", this);
 			Task.addTask(Task.STATUS, Status.HEALTHY, "...", this);
 			Task.addAbilityTask(this.clone());
-			Task t = Task.addMoveAnimTask(Move.AURORA_GLOW, "", this, this, "attacking");
+			Task t = Task.addMoveAnimTask(Move.AURORA_GLOW, "", this, this, "attacking", null);
 			t.wipe = true;
 			id = 291;
 			this.fainted = false;
@@ -12171,7 +12157,7 @@ public class Pokemon implements Serializable {
 		String message = this.nickname + " took the Future Sight attack!";
 		
 		if (mode == 0) {
-			Task t = Task.addMoveAnimTask(Move.FUTURE_SIGHT, message, this, this, AnimPhase.ATTACKING);
+			Task t = Task.addMoveAnimTask(Move.FUTURE_SIGHT, message, this, this, AnimPhase.ATTACKING, null);
 			t.wipe = this.spriteVisible;
 		}
 		

@@ -188,13 +188,17 @@ public class BattleAnimationManager {
 	public BattleAnimation getAnimation(Move move) {
 		return getAnimation(move, null);
 	}
-
+	
 	public BattleAnimation getAnimation(Move move, String phase) {
+		return getAnimation(move, phase, null);
+	}
+
+	public BattleAnimation getAnimation(Move move, String phase, PType resolvedType) {
 		if (move == null) return defaultAnimation;
 		
 		String moveName = move.name().toLowerCase();
 		
-		// if phase is specified, try to get that specific phase
+		// 1) phased lookup
 		if (phase != null && !phase.isEmpty()) {
 			String phasedKey = moveName + "_" + phase.toLowerCase();
 			if (animations.containsKey(phasedKey)) {
@@ -202,18 +206,24 @@ public class BattleAnimationManager {
 			}
 		}
 		
-		// 1) specific move name
+		// 2) move name + resolved type
+		if (resolvedType != null) {
+			String typeKey = moveName + "_" + resolvedType.name().toLowerCase();
+			if (animations.containsKey(typeKey)) return animations.get(typeKey);
+		}
+		
+		// 3) specific move name
 		if (animations.containsKey(moveName)) {
 			return animations.get(moveName);
 		}
 		
-		// 2) category + type
+		// 4) category + type
 		String categoryType = move.getCategory().toLowerCase() + "_" + move.mtype.name().toLowerCase();
 		if (animations.containsKey(categoryType)) {
 			return animations.get(categoryType);
 		}
 		
-		// 3) category only
+		// 5) category only
 		String category = move.getCategory().toLowerCase();
 		if (animations.containsKey(category)) {
 			return animations.get(category);
