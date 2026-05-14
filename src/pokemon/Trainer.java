@@ -577,6 +577,7 @@ public class Trainer implements Serializable {
 	}
 	
 	public static int getLevelCap(int badges, Player player) {
+		if (player.champion) return 100;
 		// if the badge index is outside of our level caps (while fighting E4) then just go with 100
 		return Math.min((badges >= levelCaps.length ? 100 : levelCaps[badges]) + player.levelCapBonus, 100);
 	}

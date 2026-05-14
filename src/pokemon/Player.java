@@ -67,6 +67,7 @@ public class Player extends Trainer implements Serializable {
 	public int starter;
 	public int[] pokedex;
 	public int currentMap;
+	public boolean champion;
 	public boolean[] trainersBeat;
 	public boolean[][] itemsCollected;
 	public boolean[][] flag;
@@ -582,6 +583,7 @@ public class Player extends Trainer implements Serializable {
 		JTextField coins = new JTextField(this.coins + "");
 		JComboBox<Integer> badges = new JComboBox<>();
 		JComboBox<String> starter = new JComboBox<>();
+		JCheckBox championBox = new JCheckBox("Champion");
 		JButton nuzlockeInfo = new JButton("Nuzlocke Info");
 		JButton pokedexButton = new JButton("Pokedex");
 		JButton bagButton = new JButton("Bag");
@@ -606,6 +608,9 @@ public class Player extends Trainer implements Serializable {
 		}
 		starter.setSelectedIndex(this.starter);
 		result.add(starter);
+		
+		championBox.setSelected(this.champion);
+		result.add(championBox);
 		
 		nuzlockeInfo.addActionListener(e -> {
 			showNuzlockeInfo();
@@ -730,6 +735,7 @@ public class Player extends Trainer implements Serializable {
 			this.badges = (int) badges.getSelectedItem();
 			if (oldBadges != this.badges) Pokemon.gp.player.setClerkItems();
 			this.starter = starter.getSelectedIndex();
+			this.champion = championBox.isSelected();
 			for (int i = 0; i < flagDesc.length; i++) {
 				for (int j = 0; j < flagDesc[i].length; j++) {
 					this.flag[i][j] = ((JCheckBox) ((JPanel) ((JScrollPane) mainTabbedPane.getComponentAt(i)).getViewport().getView()).getComponent(j)).isSelected();
@@ -2022,10 +2028,10 @@ public class Player extends Trainer implements Serializable {
 	
 	public void setupPuzzles(GamePanel gp, int map) {
 		if (map >= 191 && map <= 196 && !flag[7][15]) {
-			gp.puzzleM.setup(true);
+			gp.puzzleM.setup(true, true);
 		}
 		if (map >= 197 && map <= 202 && !flag[7][14]) {
-			gp.puzzleM.setup(false);
+			gp.puzzleM.setup(false, true);
 			if (spike) {
 				gp.eHandler.toggleSpikes(map);
 				spike = true;
@@ -2080,7 +2086,7 @@ public class Player extends Trainer implements Serializable {
 	public boolean wholeTeamOverLevelCap() {
 		for (Pokemon p : team) {
 			if (p != null) {
-				if (!p.isOverLevelCap(badges, this)) return false;
+				if (!p.isFainted() && !p.isOverLevelCap(badges, this)) return false;
 			}
 		}
 		return true;

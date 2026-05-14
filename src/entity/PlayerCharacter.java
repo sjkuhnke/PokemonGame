@@ -324,6 +324,8 @@ public class PlayerCharacter extends Entity {
 				ItemObj item = (ItemObj) gp.obj[gp.currentMap][objIndex];
 				if (item instanceof TreasureChest) {
 					openChest((TreasureChest) item, objIndex);
+				} else if (item instanceof Staff) {
+					interactStaff(objIndex);
 				} else {
 					pickUpObject(objIndex);
 				}
@@ -1451,5 +1453,17 @@ public class PlayerCharacter extends Entity {
 				return Task.LEFT;
 		}
 		return Task.DOWN;
+	}
+	
+	private void interactStaff(int objIndex) {
+		gp.keyH.wPressed = false;
+		Staff staff = (Staff) gp.obj[gp.currentMap][objIndex];
+		if (staff.direction.equals("down")) {
+			pickUpObject(objIndex);
+		} else {
+			gp.setTaskState();
+			Task.addTask(Task.TEXT, "An ancient staff rests here, half-buried. Something about it feels unfinished - like it's still waiting for its owner to come back.");
+			Task.addTask(Task.TEXT, "You can't bring yourself to take it. Not yet.");
+		}
 	}
 }

@@ -3111,7 +3111,9 @@ public class Script {
 				Task.addTask(Task.SLEEP, "", 20);
 				
 				p.team[0].fainted = false;
+				p.team[0].script = false;
 				p.team[1].fainted = false;
+				p.team[1].script = false;
 				p.heal();
 				int id = p.flag[7][14] ? 233 : 234;
 				int removeIndex = p.team[0].id == id ? 0 : p.team[1].id == id ? 1 : -1;
@@ -3836,27 +3838,31 @@ public class Script {
 			if (npc.worldX != 49 * gp.tileSize) {
 				Task.addTask(Task.DIALOGUE, npc, "Stay sharp in there. You got this. Focus.");
 			} else {
-				Task.addTask(Task.DIALOGUE, npc, "Hold it right there, challenger.");
-				Task.addTask(Task.DIALOGUE, npc, "Beyond this door lies the Leviathan League.");
-				Task.addTask(Task.DIALOGUE, npc, "Once you enter, there's no turning back until you either claim victory... or black out.");
-				Task.addTask(Task.DIALOGUE, npc, "The Elite Four fight one after another, no healing trips or shopping breaks allowed.");
-				if (p.nuzlocke) {
-					if (p.hasPokemonOverLevelCap()) {
-						Task.addTask(Task.DIALOGUE, npc, "Wait - hold it!");
-						Task.addTask(Task.DIALOGUE, npc, "You have at least 1 Pokemon over the level cap of " + Player.getLevelCap(p.badges, p) + ".");
-						Task.addTask(Task.DIALOGUE, npc, "I can't let you in until all of your Pokemon are within the cap!");
-						return;
+				if (p.champion) {
+					Task.addTask(Task.DIALOGUE, npc, "The ability to rematch the league is coming soon! Stay tuned!");
+				} else {
+					Task.addTask(Task.DIALOGUE, npc, "Hold it right there, challenger.");
+					Task.addTask(Task.DIALOGUE, npc, "Beyond this door lies the Leviathan League.");
+					Task.addTask(Task.DIALOGUE, npc, "Once you enter, there's no turning back until you either claim victory... or black out.");
+					Task.addTask(Task.DIALOGUE, npc, "The Elite Four fight one after another, no healing trips or shopping breaks allowed.");
+					if (p.nuzlocke) {
+						if (p.hasPokemonOverLevelCap()) {
+							Task.addTask(Task.DIALOGUE, npc, "Wait - hold it!");
+							Task.addTask(Task.DIALOGUE, npc, "You have at least 1 Pokemon over the level cap of " + Player.getLevelCap(p.badges, p) + ".");
+							Task.addTask(Task.DIALOGUE, npc, "I can't let you in until all of your Pokemon are within the cap!");
+							return;
+						}
+						Task.addTask(Task.DIALOGUE, npc, "And since you're competing under Nuzlocke rules...");
+						Task.addTask(Task.DIALOGUE, npc, "Your convenience items will NOT function inside.");
+						Task.addTask(Task.DIALOGUE, npc, "Your Healing Pack, Pocket PC, everything are all disabled.");
 					}
-					Task.addTask(Task.DIALOGUE, npc, "And since you're competing under Nuzlocke rules...");
-					Task.addTask(Task.DIALOGUE, npc, "Your convenience items will NOT function inside.");
-					Task.addTask(Task.DIALOGUE, npc, "Your Healing Pack, Pocket PC, everything are all disabled.");
+					Task.addTask(Task.DIALOGUE, npc, "If you're not stocked up on healing items, now's your last chance.");
+					Task.addTask(Task.DIALOGUE, npc, "Potions, elixirs, revives, whatever you think you need - bring more.");
+					Task.addTask(Task.DIALOGUE, npc, "Once I step aside... the climb ends, and the real battle begins.");
+					
+					gp.ui.commandNum = 1;
+					Task.addTask(Task.CONFIRM, npc, "Are you ready to challenge the Leviathan League?", 19);
 				}
-				Task.addTask(Task.DIALOGUE, npc, "If you're not stocked up on healing items, now's your last chance.");
-				Task.addTask(Task.DIALOGUE, npc, "Potions, elixirs, revives, whatever you think you need - bring more.");
-				Task.addTask(Task.DIALOGUE, npc, "Once I step aside... the climb ends, and the real battle begins.");
-				
-				gp.ui.commandNum = 1;
-				Task.addTask(Task.CONFIRM, npc, "Are you ready to challenge the Leviathan League?", 19);
 			}
 		});
 		

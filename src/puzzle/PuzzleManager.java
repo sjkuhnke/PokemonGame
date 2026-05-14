@@ -30,12 +30,12 @@ public class PuzzleManager {
 		puzzles[i] = puzzle;
 	}
 
-	public void setup(boolean faith) {
+	public void setup(boolean faith, boolean setup) {
 		Puzzle[] puzzles = faith ? faithPuzzles : logicPuzzles;
 		for (Puzzle p : puzzles) {
 			if (p != null) {
 				p.reset();
-				p.setup();
+				if (setup) p.setup();
 			}
 		}
 	}
@@ -43,7 +43,7 @@ public class PuzzleManager {
 	public void reset(boolean faith) {
 		gp.player.p.bag.removeAll(Item.TEMPLE_BALL);
 		gp.player.p.puzzlesLocked = new HashMap<>();
-		setup(faith);
+		setup(faith, true);
 	}
 
 	public Puzzle getCurrentPuzzle(int currentMap) {

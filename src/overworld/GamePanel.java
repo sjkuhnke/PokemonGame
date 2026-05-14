@@ -600,6 +600,7 @@ public class GamePanel extends JPanel implements Runnable {
 						player.p.team = new Pokemon[6];
 						player.p.team[0] = t.getCurrent();
 						player.p.setCurrent();
+						puzzleM.setup(true, false); // reset puzzles without setting them up
 						player.interactNPC(npc[196][2], false);
 					}
 				}
@@ -625,6 +626,7 @@ public class GamePanel extends JPanel implements Runnable {
 						t.getCurrent().heal();
 						player.p.team[0] = t.getCurrent();
 						player.p.setCurrent();
+						puzzleM.setup(false, false); // reset puzzles without setting them up
 						player.interactNPC(npc[202][2], false);
 					}
 				}

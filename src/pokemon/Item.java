@@ -458,6 +458,7 @@ public enum Item {
 	LETTER_2(394,0,0,Color.BLACK,Item.KEY_ITEM,true,"A letter from your father delivered by Robin, it's notably urgent."),
 	FABLE_STONE(395,0,0,Color.BLACK,Item.KEY_ITEM,false,"A stone of fantastical luster and lapidary, humming with legendary energy. Its presence calls out to unknown forces beyond the veil, seemingly needing 5 Fable Charges to activate when the time is right."),
 	COIN(398,0,0,Color.BLACK,Item.OTHER,null,"Just here for the sprite"),
+	STAFF(399,0,0,Color.BLACK,Item.KEY_ITEM,false,"The worn staff of a great magician. It hums faintly when held near things that are old and powerful - as if it recognizes them."),
 	;
 	
 	private int id;

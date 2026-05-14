@@ -7583,6 +7583,7 @@ public class UI extends AbstractUI {
 		}
 		Task.addTask(Task.TURN, gp.player, "", Task.DOWN);
 		gp.player.p.hofTeams.add(snapshot);
+		gp.player.p.champion = true;
 		Task.addTask(Task.SAVE, "");
 	}
 }

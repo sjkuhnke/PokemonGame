@@ -1462,6 +1462,7 @@ public class AssetSetter {
 		mapNum = 196;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(48, 49, Item.PP_MAX, mapNum);
+		gp.obj[mapNum][objIndex] = SetupStaff(50, 47, mapNum);
 		
 		mapNum = 197;
 		objIndex = 0;
@@ -1537,6 +1538,7 @@ public class AssetSetter {
 		mapNum = 202;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(47, 48, Item.PP_MAX, mapNum);
+		gp.obj[mapNum][objIndex] = SetupStaff(50, 47, mapNum);
 		
 		mapNum = 206;
 		objIndex = 0;
@@ -4855,7 +4857,7 @@ public class AssetSetter {
 			gp.npc[107][14] = null;
 		}
 		
-		if (flag[7][9]) {
+		if (flag[7][9] && !flag[7][15]) {
 			if (map == 190 && gp.npc[190][1] == null) {
 				gp.npc[190][1] = NPCSetup(DISCIPLE_RIGHT, 56, 85, "Do you carry faith, or merely the hope of it?", "Doubt is not defeat... but it is the first crack in your resolve.", 396);
 				gp.npc[190][2] = NPCSetup(DISCIPLE_LEFT, 59, 85, "The Spirit does not guide those who hesitate.", "You walk, though your steps still falter. Let your soul steady.", 397);
@@ -4872,7 +4874,7 @@ public class AssetSetter {
 			}
 		}
 		
-		if (flag[7][10]) {
+		if (flag[7][10] && !flag[7][14]) {
 			if (map == 144 && gp.npc[144][3] == null) {
 				gp.npc[144][3] = NPCSetup(WARDEN_RIGHT, 40, 40, "Emotion clouds judgment. Let's see how clear your mind is.", "You parsed the problem. I'll admit that.", 318);
 				gp.npc[144][4] = NPCSetup(WARDEN_LEFT, 50, 42, "This descent isn't physical. It's conceptual. Can you grasp that?", "You saw past the surface. Not bad.", 319);
@@ -5109,6 +5111,19 @@ public class AssetSetter {
 			gp.npc[226][3].setDirection("up");
 			gp.npc[226][4].setDirection("down");
 			gp.npc[226][5].worldX = 48*gp.tileSize+gp.tileSize/2;
+		}
+		
+		/**
+		 * Post Game!
+		 */
+		if (map == 196 || map == 202) {
+			objIndex = 1;
+			gp.obj[map][objIndex] = SetupStaff(50, 47, map);
+		}
+		
+		if (flag[7][13]) {
+			if (gp.npc[196][0] != null) ((NPC_Dragon)gp.npc[196][0]).awake();
+			if (gp.npc[202][0] != null) ((NPC_Dragon)gp.npc[202][0]).awake();
 		}
 		
 		gp.setRenderableNPCs();
@@ -6297,5 +6312,27 @@ public class AssetSetter {
 			}
 		}
 		
+	}
+	
+	private ItemObj SetupStaff(int x, int y, int mapNum) {
+		//                                                           flag for merlin dying          map is AT6 and player didn't catch Relopamil            map is DC6 and player didn't catch Relomidel
+		if (gp.player.p.itemsCollected[mapNum][objIndex] == true || !gp.player.p.flag[7][16] || (mapNum == 196 && gp.player.p.tempTeam[0].id != 234) || (mapNum == 202 && gp.player.p.tempTeam[0].id != 233)) {
+			objIndex++;
+			return null;
+		}
+		
+		Staff result = new Staff(gp);
+		
+		result.worldX = gp.tileSize*x;
+		result.worldY = gp.tileSize*y;
+		result.item = Item.STAFF;
+		result.count = 1;
+		result.setDirection(gp.player.p.champion ? "down" : "up");
+		
+		objIndex++;
+		
+		itemMap.put(Item.STAFF, itemMap.getOrDefault(Item.STAFF, 0) + 1);
+		
+		return result;
 	}
 }

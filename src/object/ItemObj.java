@@ -61,4 +61,8 @@ public class ItemObj extends Entity {
 			}
 		}
 	}
+	
+	public void entityDraw(Graphics2D g2) {
+		super.draw(g2);
+	}
 }
