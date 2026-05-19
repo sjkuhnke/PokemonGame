@@ -1,0 +1,21 @@
+Pokemon Changes
+
+Caterpie: +Rattled as normal ability, Swarm as hidden ability over Run Away
+Metapod-X: a new Magic-type regional variant of Metapod to breathe new life into this classic Gen 1 line
+Butterfree-X: 2 signature abilities; Mosaic Wings which lets it pick up a bunch of keen resistances and play like a support, and Enchanted Dust which lets it take away an opponent's offensive firepower while also potentially setting up for a teammate. Serene Grace as a hidden ability is interesting too, with access to Silver Wind, Air Slash, and a sleu of useful Magic moves like Hocus Pocus (40% random status), Magic Tomb (20% to lower both offensive stats on the foe), Magic Fang (guaranteed flinch if super effective)
+Metapod: +Shield Dust as normal ability, +Swarm as hidden ability
+Butterfree: +Shield Dust as normal ability which is buffed to be a built-in Heavy-Duty Boots on top of its additional effect, both Butterfrees get access to Sticky Web
+
+Budew: Corrosion as hidden ability which is buffed to work like Scrappy on Poison moves to Steel types on top of its additional effect
+Roselia/Roserade now get Mortal Spin like in Legends Z-A
+Roserade: Mud Shot to take advantage of Technician sets
+
+Sewaddle/Swadloon: Technician as Hidden Ability
+Swadloon/Leavanny: Spiky Shield/First Impression by level up
+Leavanny: gets Sharpness instead of Swarm, Unburden as Hidden Ability with a bunch of new moves to take advantage of it, like Psycho Cut, Solar Blade, Night Slash, Cross Poison (which is buffed) and the new move Solstice Blade which gets 1.5x power in sun
+
+Ekans/Arbok: is now part Dragon and gets buffed Corrosion as a hidden ability, Shed Skin is buffed to 50% to match Healer's Champions buff
+Arbok: gets a signature move Venom Spit which is priority and always paralyzes the foe
+
+Abra line: gets a new ability Magical which gives it STAB on Magic moves, which gives it the offensive power without the weakness to common priority Normal moves like Fake Out and Extreme Speed that would be a death sentence for it
+Alakazam: gets a sleu of Magic moves like Arcane Spell which permanently lowers the BP of all opponents moves by 10, and Magic Reflect which reflects the foe's next attack back at them, and Psycho Boost

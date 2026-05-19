@@ -11115,6 +11115,7 @@ public class Pokemon implements Serializable {
 		if (this.uuid == null) {
             this.uuid = setUUID();
 		}
+		this.cloned = false;
 	}
 	
 	public void setSprites() {

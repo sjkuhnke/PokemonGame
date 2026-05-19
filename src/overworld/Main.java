@@ -191,9 +191,7 @@ public class Main {
 				gp.config.saveConfig();
 				
 				loader.setProgress(7, "Loading map data...");
-				PMap.getLoc(gp.currentMap,
-					(int) Math.round(gp.player.worldX * 1.0 / gp.tileSize),
-					(int) Math.round(gp.player.worldY * 1.0 / gp.tileSize));
+				PMap.getLoc(gp.currentMap, (int) Math.round(gp.player.worldX * 1.0 / gp.tileSize), (int) Math.round(gp.player.worldY * 1.0 / gp.tileSize));
 				window.setTitle(Main.gameTitle + " - " + PlayerCharacter.currentMapName);
 				
 				loader.setProgress(8, "Updating player version...");

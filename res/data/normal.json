@@ -5571,7 +5571,7 @@
           "endY": -0.2,
           "towardsTarget": false,
           "easing": "linear",
-          "count": 5,
+          "count": 2,
           "spreadX": 0.15,
           "spreadY": 0.15,
           "delayBetween": 60
@@ -5590,7 +5590,7 @@
           "endY": -0.2,
           "towardsTarget": false,
           "easing": "linear",
-          "count": 4,
+          "count": 2,
           "spreadX": 0.15,
           "spreadY": 0.15,
           "delayBetween": 70
