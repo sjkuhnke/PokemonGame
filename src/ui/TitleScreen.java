@@ -1787,7 +1787,7 @@ public class TitleScreen extends AbstractUI {
 			"Abilities", "Items", "Defensive Types", "Offensive Types"
 		};
 		boolean[] docCanBeExcel = {
-			true, false, false, false,
+			true, true, false, false,
 			false, false, false, false
 		};
 		

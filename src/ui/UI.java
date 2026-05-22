@@ -6470,41 +6470,44 @@ public class UI extends AbstractUI {
 			textY += 32;
 		}
 		
-		if (gp.keyH.wPressed) {
-			gp.keyH.wPressed = false;
-			if (gp.player.p.bag.count[Item.STAR_PIECE.getID()] >= current.getCost()) {
-				showMessage("Thank you! Here's 1 " + current.toString() + "!");
-				gp.player.p.bag.add(current);
-				gp.player.p.bag.remove(Item.STAR_PIECE, current.getCost());
-			} else {
-				showMessage("You don't have enough Star Pieces!");
+		if (!showMessage) {
+			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				if (gp.player.p.bag.count[Item.STAR_PIECE.getID()] >= current.getCost()) {
+					showMessage("Thank you! Here's 1 " + current.toString() + "!");
+					gp.player.p.bag.add(current);
+					gp.player.p.bag.remove(Item.STAR_PIECE, current.getCost());
+				} else {
+					showMessage("You don't have enough Star Pieces!");
+				}
+			}
+			
+			if (gp.keyH.upPressed) {
+				gp.keyH.upPressed = false;
+				if (remindNum - maxCol >= 0) {
+					remindNum -= maxCol;
+				}
+			}
+			if (gp.keyH.downPressed) {
+				if (remindNum + maxCol < e.inventory.size()) {
+					remindNum += maxCol;
+				}
+				gp.keyH.downPressed = false;
+			}
+			if (gp.keyH.leftPressed) {
+				gp.keyH.leftPressed = false;
+				if (remindNum % maxCol != 0) {
+					remindNum--;
+				}
+			}
+			if (gp.keyH.rightPressed) {
+				gp.keyH.rightPressed = false;
+				if (remindNum % maxCol + 1 != maxCol && remindNum + 1 < e.inventory.size()) {
+					remindNum++;
+				}
 			}
 		}
 		
-		if (gp.keyH.upPressed) {
-			gp.keyH.upPressed = false;
-			if (remindNum - maxCol >= 0) {
-				remindNum -= maxCol;
-			}
-		}
-		if (gp.keyH.downPressed) {
-			if (remindNum + maxCol < e.inventory.size()) {
-				remindNum += maxCol;
-			}
-			gp.keyH.downPressed = false;
-		}
-		if (gp.keyH.leftPressed) {
-			gp.keyH.leftPressed = false;
-			if (remindNum % maxCol != 0) {
-				remindNum--;
-			}
-		}
-		if (gp.keyH.rightPressed) {
-			gp.keyH.rightPressed = false;
-			if (remindNum % maxCol + 1 != maxCol && remindNum + 1 < e.inventory.size()) {
-				remindNum++;
-			}
-		}
 		drawToolTips("Buy", null, "Back", "Back");
 	}
 	
@@ -6638,40 +6641,43 @@ public class UI extends AbstractUI {
 			textY += 32;
 		}
 		
-		if (gp.keyH.wPressed) {
-			gp.keyH.wPressed = false;
-			if (gp.player.p.bag.contains(costItem)) {
-				if (gp.player.p.bag.count[Item.STAR_PIECE.getID()] >= cost) {
-					showMessage(Item.breakString("Thank you! Here's your " + costItem.toString() + " repaired into a " + current.toString() + "!", MAX_TEXTBOX));
-					gp.player.p.bag.add(current);
-					gp.player.p.bag.remove(Item.STAR_PIECE, cost);
-					gp.player.p.bag.remove(costItem);
+		if (!showMessage) {
+			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				if (gp.player.p.bag.contains(costItem)) {
+					if (gp.player.p.bag.count[Item.STAR_PIECE.getID()] >= cost) {
+						showMessage(Item.breakString("Thank you! Here's your " + costItem.toString() + " repaired into a " + current.toString() + "!", MAX_TEXTBOX));
+						gp.player.p.bag.add(current);
+						gp.player.p.bag.remove(Item.STAR_PIECE, cost);
+						gp.player.p.bag.remove(costItem);
+					} else {
+						showMessage(Item.breakString("You don't have enough Star Pieces to repair your " + costItem.toString() + "!", MAX_TEXTBOX));
+					}
 				} else {
-					showMessage(Item.breakString("You don't have enough Star Pieces to repair your " + costItem.toString() + "!", MAX_TEXTBOX));
+					showMessage(Item.breakString("You don't have a " + costItem.toString() + " to repair!", MAX_TEXTBOX));
 				}
-			} else {
-				showMessage(Item.breakString("You don't have a " + costItem.toString() + " to repair!", MAX_TEXTBOX));
+			}
+			
+			if (gp.keyH.upPressed) {
+				gp.keyH.upPressed = false;
+			}
+			if (gp.keyH.downPressed) {
+				gp.keyH.downPressed = false;
+			}
+			if (gp.keyH.leftPressed) {
+				gp.keyH.leftPressed = false;
+				if (remindNum != 0) {
+					remindNum--;
+				}
+			}
+			if (gp.keyH.rightPressed) {
+				gp.keyH.rightPressed = false;
+				if (remindNum + 1 < inventory.length) {
+					remindNum++;
+				}
 			}
 		}
 		
-		if (gp.keyH.upPressed) {
-			gp.keyH.upPressed = false;
-		}
-		if (gp.keyH.downPressed) {
-			gp.keyH.downPressed = false;
-		}
-		if (gp.keyH.leftPressed) {
-			gp.keyH.leftPressed = false;
-			if (remindNum != 0) {
-				remindNum--;
-			}
-		}
-		if (gp.keyH.rightPressed) {
-			gp.keyH.rightPressed = false;
-			if (remindNum + 1 < inventory.length) {
-				remindNum++;
-			}
-		}
 		drawToolTips("Repair", null, "Back", "Back");
 	}
 	

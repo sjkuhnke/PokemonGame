@@ -1068,6 +1068,7 @@ public enum Move {
 		result.add(SUCKER_PUNCH);
 		result.add(DYNAMIC_PUNCH);
 		result.add(MANA_PUNCH);
+		result.add(CLOSE_COMBAT);
 		
 		if (result.contains(this)) {
 			return true;

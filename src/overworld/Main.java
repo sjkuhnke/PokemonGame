@@ -25,6 +25,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import docs.EncounterDoc;
+import docs.PokemonDoc;
 import docs.TrainerDoc;
 import entity.PlayerCharacter;
 import object.ItemObj;
@@ -230,7 +231,11 @@ public class Main {
 					}
 					if (selectedOptions[1]) {
 						loader.setProgress(85, "Generating Pokemon docs...");
-						writePokemon(docsDirectory);
+						if (excel) {
+							PokemonDoc.writePokemonToExcel(docsDirectory);
+						} else {
+							writePokemon(docsDirectory);
+						}
 					}
 					if (selectedOptions[2]) {
 						loader.setProgress(88, "Generating encounter docs...");
