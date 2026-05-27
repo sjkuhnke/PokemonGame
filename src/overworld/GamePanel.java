@@ -418,32 +418,35 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 	
 	public void drawToScreen() {
-		Graphics g = getGraphics();
-		
-		if (g != null) {
-			int windowWidth = getWidth();
-			int windowHeight = getHeight();
-			
-			double gameAspect = (double) screenWidth / screenHeight;
-			double windowAspect = (double) windowWidth / windowHeight;
-			
-			int renderWidth, renderHeight, xOffset, yOffset;
-			
-			if (windowAspect > gameAspect) { // window is wider
-				renderHeight = windowHeight;
-				renderWidth = (int) (windowHeight * gameAspect);
-				xOffset = (windowWidth - renderWidth) / 2;
-				yOffset = 0;
-			} else { // window is taller
-				renderWidth = windowWidth;
-				renderHeight = (int) (windowWidth / gameAspect);
-				xOffset = 0;
-				yOffset = (windowHeight - renderHeight) / 2;
-			}
-			
-			g.drawImage(screen, xOffset, yOffset, renderWidth, renderHeight, null);
-			g.dispose();
-		}
+		repaint();
+	}
+	
+	@Override
+	protected void paintComponent(Graphics g) {
+	    super.paintComponent(g);
+	    if (screen == null) return;
+
+	    int windowWidth = getWidth();
+	    int windowHeight = getHeight();
+
+	    double gameAspect = (double) screenWidth / screenHeight;
+	    double windowAspect = (double) windowWidth / windowHeight;
+
+	    int renderWidth, renderHeight, xOffset, yOffset;
+
+	    if (windowAspect > gameAspect) {
+	        renderHeight = windowHeight;
+	        renderWidth = (int) (windowHeight * gameAspect);
+	        xOffset = (windowWidth - renderWidth) / 2;
+	        yOffset = 0;
+	    } else {
+	        renderWidth = windowWidth;
+	        renderHeight = (int) (windowWidth / gameAspect);
+	        xOffset = 0;
+	        yOffset = (windowHeight - renderHeight) / 2;
+	    }
+
+	    g.drawImage(screen, xOffset, yOffset, renderWidth, renderHeight, null);
 	}
 	
 	public void playMusic(int i) {

@@ -9648,30 +9648,7 @@ public class Pokemon implements Serializable {
 				Task.addTypeTask(foe.nickname + "'s type changed to MAGIC!", foe);
 			}
 		} else if (this.getAbility(field) == Ability.ANTICIPATION) {
-			boolean shuddered = false;
-			for (Moveslot moveslot : foe.moveset) {
-				if (moveslot != null) {
-					Move move = moveslot.move;
-					if (move != null && move.isAttack()) {
-						PType mtype = move.mtype;
-						if (move == Move.HIDDEN_POWER) mtype = foe.determineHPType();
-						if (move == Move.RETURN) mtype = foe.determineHPType();
-						if (move == Move.WEATHER_BALL) mtype = foe.determineWBType(field);
-						if (move == Move.TERRAIN_PULSE) mtype = foe.determineTPType(field);
-						double multiplier = getEffectiveMultiplier(mtype, move, foe);
-						
-						if (multiplier > 1) shuddered = true;
-					}
-				}
-				if (shuddered) break;
-			}
-			if (shuddered) {
-				Task.addAbilityTask(this);
-				Task.addTask(Task.TEXT, nickname + " shuddered!");
-				this.illusion = true;
-			} else {
-				this.illusion = false;
-			}
+			this.checkAnticipation(foe, field);
 		} else if (this.getAbility(field) == Ability.TRACE) {
 			if (this.getItem(field) != Item.ABILITY_SHIELD) {
 				Task.addAbilityTask(this);
@@ -9754,6 +9731,9 @@ public class Pokemon implements Serializable {
 				this.faint(true, foe);
 			}
 		}
+		if (foe.getAbility(field) == Ability.ANTICIPATION) {
+			foe.checkAnticipation(this, field);
+		}
 		
 		if (this.getItem(field) == Item.WHITE_HERB) {
 			this.handleWhiteHerb(userStages, foe);
@@ -9783,6 +9763,33 @@ public class Pokemon implements Serializable {
 		
 	}
 	
+	private void checkAnticipation(Pokemon foe, Field field) {
+		boolean shuddered = false;
+		for (Moveslot moveslot : foe.moveset) {
+			if (moveslot != null) {
+				Move move = moveslot.move;
+				if (move != null && move.isAttack()) {
+					PType mtype = move.mtype;
+					if (move == Move.HIDDEN_POWER) mtype = foe.determineHPType();
+					if (move == Move.RETURN) mtype = foe.determineHPType();
+					if (move == Move.WEATHER_BALL) mtype = foe.determineWBType(field);
+					if (move == Move.TERRAIN_PULSE) mtype = foe.determineTPType(field);
+					double multiplier = getEffectiveMultiplier(mtype, move, foe);
+					
+					if (multiplier > 1) shuddered = true;
+				}
+			}
+			if (shuddered) break;
+		}
+		if (shuddered) {
+			Task.addAbilityTask(this);
+			Task.addTask(Task.TEXT, nickname + " shuddered!");
+			this.illusion = true;
+		} else {
+			this.illusion = false;
+		}
+	}
+
 	private void checkStarborn(Pokemon foe) {
 		if (this.getAbility(field) == Ability.STARBORN && field.contains(this.getFieldEffects(), Effect.AURORA_GLOW)) {
 			Task.addAbilityTask(this);
