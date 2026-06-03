@@ -56,7 +56,8 @@ public class GamePanel extends JPanel implements Runnable {
 	// FULLSCREEN
 	public int fullScreenWidth = screenWidth;
 	public int fullScreenHeight = screenHeight;
-	BufferedImage screen;
+	private BufferedImage screen;
+	private volatile BufferedImage displayScreen;
 	Graphics2D g2;
 	public int lastWindowWidth;
 	public int lastWindowHeight;
@@ -418,13 +419,17 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 	
 	public void drawToScreen() {
+		Graphics2D dg = displayScreen.createGraphics();
+		dg.drawImage(screen, 0, 0, null);
+		dg.dispose();
 		repaint();
 	}
 	
 	@Override
 	protected void paintComponent(Graphics g) {
 	    super.paintComponent(g);
-	    if (screen == null) return;
+	    BufferedImage frame = displayScreen;
+	    if (frame == null) return;
 
 	    int windowWidth = getWidth();
 	    int windowHeight = getHeight();
@@ -446,7 +451,7 @@ public class GamePanel extends JPanel implements Runnable {
 	        yOffset = (windowHeight - renderHeight) / 2;
 	    }
 
-	    g.drawImage(screen, xOffset, yOffset, renderWidth, renderHeight, null);
+	    g.drawImage(frame, xOffset, yOffset, renderWidth, renderHeight, null);
 	}
 	
 	public void playMusic(int i) {
@@ -1118,12 +1123,13 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	private void validateGraphicsContext() {
 		if (screen == null) {
-			screen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
-		}
-		if (g2 != null) {
-			g2.dispose();
-		}
-		g2 = (Graphics2D) screen.getGraphics();
+	        screen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
+	        if (g2 != null) g2.dispose();
+	        g2 = screen.createGraphics();
+	    }
+	    if (displayScreen == null) {
+	        displayScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
+	    }
 	}
 
 }
