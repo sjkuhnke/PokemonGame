@@ -128,7 +128,7 @@ public class Player extends Trainer implements Serializable {
 	public boolean buyableRevives;
 	public int levelCapBonus;
 	
-	private HashMap<String, BattleRecord> trainersDatabase;
+	public HashMap<String, BattleRecord> trainersDatabase;
 	private transient BattleRecord currentBattle;
 	public boolean trackBattleLogs;
 	

@@ -4290,12 +4290,6 @@ public class Pokemon implements Serializable {
 						numHits = hit;
 					}
 				}
-				if (foe.getItem(field) == Item.RED_CARD && !redCard) {
-					if (this.trainer != null && this.trainer.hasValidMembers(foe) && !this.hasStatus(Status.ROOTED)) {
-						redCard = true;
-						numHits = hit;
-					}
-				}
 				if (!foeEject && aboveHalfHP && foe.currentHP < foe.getStat(0) / 2) {
 					if (foeAbility == Ability.BERSERK) {
 						Task.addAbilityTask(foe);
@@ -4307,6 +4301,13 @@ public class Pokemon implements Serializable {
 							numHits = hit;
 						}
 					}
+				}
+			}
+			
+			if (!sheer && foe.getItem(field) == Item.RED_CARD && !redCard) {
+				if (this.trainer != null && this.trainer.hasValidMembers(foe) && !this.hasStatus(Status.ROOTED)) {
+					redCard = true;
+					numHits = hit;
 				}
 			}
 			
@@ -6503,9 +6504,6 @@ public class Pokemon implements Serializable {
 		case REST:
 			if (this.currentHP == this.getStat(0)) {
 				Task.addTask(Task.TEXT, this.nickname + "'s HP is full!");
-			} else if (this.status == Status.ASLEEP) {
-				fail = fail();
-				return;
 			} else {
 				if (this.getAbility(field) == Ability.INSOMNIA) {
 					fail = fail();
@@ -8642,7 +8640,7 @@ public class Pokemon implements Serializable {
 	
 	public void sleep(boolean announce, Pokemon foe, Move move, Pokemon ability) {
 		if (this.isFainted()) return;
-		if (field.contains(this.getFieldEffects(), Effect.SAFEGUARD)) {
+		if (move != Move.REST && field.contains(this.getFieldEffects(), Effect.SAFEGUARD)) {
 			if (announce) Task.addTask(Task.TEXT, this.nickname + " is protected by the Safeguard!");
 			return;
 		}

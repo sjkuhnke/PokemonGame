@@ -890,7 +890,11 @@ public class SimBattleUI extends BattleUI {
 		if (fastMove != null || slowMove != null) {
 			if (!faster.trainer.wiped() && !slower.trainer.wiped()) faster.endOfTurn(slower);
 			if (!faster.trainer.wiped() && !slower.trainer.wiped()) slower.endOfTurn(faster);
-			if (!faster.trainer.wiped() && !slower.trainer.wiped()) field.endOfTurn(faster, slower);
+			if (!faster.trainer.wiped() && !slower.trainer.wiped()) {
+				field.endOfTurn(faster, slower);
+			} else {
+				field.turns++;
+			}
 		}
 		
 		for (int j = 0; j < 2; j++) {

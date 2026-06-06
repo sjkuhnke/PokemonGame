@@ -16,6 +16,7 @@ public class BattleStats implements Serializable {
 	private HashMap<Move, Integer> ppUsed;
 	private boolean died;
 	private String killer;
+
 	private boolean evolved;
 	private int evoID;
 	private String evoName;
@@ -75,5 +76,13 @@ public class BattleStats implements Serializable {
 	private String getPokemonString(Pokemon p) {
 		if (p == null) return null;
 		return p.getName() + " [" + (p.slot + 1) + "]";
+	}
+	
+	@Override
+	public String toString() {
+		return "BattleStats [kills=" + kills + ", killList=" + killList + ", ppUsed=" + ppUsed + ", died=" + died
+				+ ", killer=" + killer + ", evolved=" + evolved + ", evoID=" + evoID + ", evoName=" + evoName
+				+ ", switchIns=" + switchIns + ", turns=" + turns + ", damageDealt=" + damageDealt + ", damageTaken="
+				+ damageTaken + "]";
 	}
 }
