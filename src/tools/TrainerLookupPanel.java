@@ -211,10 +211,12 @@ public class TrainerLookupPanel extends JPanel {
 		String idDexNo = "[" + p.id + "] " + Pokemon.getFormattedDexNo(p.getDexNo());
 		String pokemonName = p.name() + " Lv. " + p.level + " @ " + p.item;
 		String abilityName = "Ability: " + p.ability;
+		String natureName = "Nature: " + p.nat;
 		
 		JLabel idLabel = new JLabel(idDexNo);
 		JLabel nameLabel = new JLabel(pokemonName);
 		JLabel abilityLabel = new JLabel(abilityName);
+		JLabel natureLabel = new JLabel(natureName);
 
 		JPanel idPanel = new JPanel(new BorderLayout());
 		idPanel.add(idLabel, BorderLayout.WEST);
@@ -227,6 +229,10 @@ public class TrainerLookupPanel extends JPanel {
 		JPanel abilityPanel = new JPanel(new BorderLayout());
 		abilityPanel.add(abilityLabel, BorderLayout.WEST);
 		pokemonPanel.add(abilityPanel);
+		
+		JPanel naturePanel = new JPanel(new BorderLayout());
+		naturePanel.add(natureLabel, BorderLayout.WEST);
+		pokemonPanel.add(naturePanel);
 		
 		JPanel movesPanel = new JPanel();
 		movesPanel.setLayout(new GridLayout(2, 2));

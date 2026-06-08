@@ -1,11 +1,6 @@
 ================================================================================
 Sprites (Prefered Order, can always be changed up) (* = has sketch from RAMM)
 ================================================================================
-143 Posho*
-144 Shomp*
-145 Poshorump*
-134 Lilyray*
-135 Daray*
 136 Spinaquata*
 141 Ali*
 142 Batorali*
