@@ -241,6 +241,10 @@ public class Task {
 		case SUMMON: return "SUMMON";
 		case MONEY: return "MONEY";
 		case DELETE_MOVE: return "DELETE_MOVE";
+		case MENU_ICON: return "MENU_ICON";
+		case USE_MOVE: return "USE_MOVE";
+		case SAVE: return "SAVE";
+		case LOAD: return "LOAD";
 		default:
 			return "getTypeString() doesn't have a case for this type";
 		}

@@ -1101,11 +1101,13 @@ public class BattleUI extends AbstractUI {
 		
 	    Pokemon fasterInit = user.getFaster(foe, 0, 0, field);
 		Pokemon slowerInit = fasterInit == user ? foe : user;
+		boolean slowerSwapIn = true;
 		fasterInit.swapIn(slowerInit, true);
 		if (slowerInit.playerOwned()) {
 			if (slowerInit.trainer.hasValidMembers(foe) && hasAlive() && slowerInit.hasStatus(Status.SWITCHING)) {
 				Task.addTask(Task.PARTY, "");
 				subState = TASK_STATE;
+				slowerSwapIn = false;
 	        	return;
 			}
 		} else {
@@ -1113,10 +1115,11 @@ public class BattleUI extends AbstractUI {
 				slowerInit = foe.trainer.swapOut2(fasterInit, FREE_SWITCH, false, false);
 				if (slowerInit == user) { user = slowerInit; }
 				else { foe = slowerInit; }
+				slowerSwapIn = false;
 			}
 		}
 		
-		slowerInit.swapIn(fasterInit, true);
+		if (slowerSwapIn) slowerInit.swapIn(fasterInit, true);
 		if (fasterInit.playerOwned()) {
 			if (fasterInit.trainer.hasValidMembers(foe) && hasAlive() && fasterInit.hasStatus(Status.SWITCHING)) {
 				Task.addTask(Task.PARTY, "");

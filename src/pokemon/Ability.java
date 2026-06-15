@@ -131,6 +131,7 @@ public enum Ability {
 	SLEIGHT_OF_HAND("Gives +1 priority to MAGIC moves when at full HP."),
 	SLIPSTREAM("Switches the Pokemon out when its HP becomes half or less."),
 	SLUSH_RUSH("Doubles the Pokemon's Speed stat in SNOW."),
+	SMOKE_SESSION("Lowers the foe's Evasion stat on switch-in and on contact."),
 	SNIPER("Powers up moves by 1.5x if they become critical hits."),
 	SNOW_CLOAK("Opposing moves are 0.8x accurate while SNOW is active."),
 	SNOW_WARNING("The Pokemon makes it SNOW for 5 turns when it enters a battle."),

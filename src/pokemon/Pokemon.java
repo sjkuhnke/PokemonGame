@@ -2292,6 +2292,7 @@ public class Pokemon implements Serializable {
 
 	private void checkEvo(Player player, int index) {
 		if (this.item == Item.EVERSTONE) return;
+		if (this.getEvolveString() == null) return;
 		int result = -1;
 		int area = player.currentMap;
 		boolean heart = (area == 99 || area == 100);
@@ -3789,6 +3790,7 @@ public class Pokemon implements Serializable {
 			
 			double attackMod = 1.0;
 			double defenseMod = 1.0;
+			double attackStatMod = 1.0;
 			boolean isCrit = false;
 			boolean critAnnounce = move != Move.FUTURE_SIGHT;
 			
@@ -3821,9 +3823,9 @@ public class Pokemon implements Serializable {
 			
 			if (move.isPhysical()) {
 				attackStat = move == Move.BODY_PRESS ? this.getStat(2) : move == Move.FOUL_PLAY ? foe.getStat(1) : attackStat;
-				double attackModifier = move == Move.BODY_PRESS ? this.asModifier(1) : move == Move.FOUL_PLAY ? foe.asModifier(0) : this.asModifier(0);
-				if ((!isCrit || attackModifier > 1) && foeAbility != Ability.UNAWARE)
-					attackMod *= attackModifier;
+				attackStatMod = move == Move.BODY_PRESS ? this.asModifier(1) : move == Move.FOUL_PLAY ? foe.asModifier(0) : this.asModifier(0);
+				if ((!isCrit || attackStatMod > 1) && foeAbility != Ability.UNAWARE)
+					attackMod *= attackStatMod;
 				
 				if (this.getItem(field) == Item.CHOICE_BAND) attackMod *= 1.5;
 				if (this.status == Status.BURNED && this.ability != Ability.GUTS && move != Move.FACADE) attackMod /= 2;
@@ -3837,8 +3839,10 @@ public class Pokemon implements Serializable {
 				if (field.equals(field.weather, Effect.SNOW, this) && foe.isType(PType.ICE)) defenseMod *= 1.5;
 				if (!isCrit && (field.contains(foe.getFieldEffects(), Effect.REFLECT) || field.contains(foe.getFieldEffects(), Effect.AURORA_VEIL))) defenseMod *= 2;
 			} else {
-				if ((!isCrit || this.asModifier(2) > 1) && foeAbility != Ability.UNAWARE)
-					attackMod *= this.asModifier(2);
+				attackStatMod = this.asModifier(2);
+				if ((!isCrit || this.asModifier(2) > 1) && foeAbility != Ability.UNAWARE) {
+					attackMod *= attackStatMod;
+				}
 				if (this.getItem(field) == Item.CHOICE_SPECS) attackMod *= 1.5;
 				if (this.status == Status.FROSTBITE) attackMod /= 2;
 				if (this.getAbility(field) == Ability.SOLAR_POWER && field.equals(field.weather, Effect.SUN, this)) attackMod *= 1.5;
@@ -3869,7 +3873,9 @@ public class Pokemon implements Serializable {
 				} else {
 					Task.addTask(Task.TEXT, this.nickname + " foresaw an attack!");
 					FieldEffect effect = field.new FieldEffect(Effect.FUTURE_SIGHT);
-					effect.stat = (int) (attackStat * attackMod);
+					double otherAttackMods = attackMod / attackStatMod;
+					effect.stat = (int) (attackStat * otherAttackMods);
+					effect.mod = attackStatMod;
 					effect.level = this.level;
 					effect.bp = (int) bp;
 					effect.crit = isCrit;
@@ -4243,6 +4249,10 @@ public class Pokemon implements Serializable {
 					if (!foe.loseItem) foe.lostItem = foe.item;
 					foe.consumeItem(this);
 					this.loseItem = true;
+				}
+				if (foeAbility == Ability.SMOKE_SESSION) {
+					Task.addAbilityTask(foe);
+					stat(this, 6, -1, foe);
 				}
 			}
 			
@@ -4677,6 +4687,7 @@ public class Pokemon implements Serializable {
 	public void awardExp(int amt) {
 	    if (this.fainted) return;
 	    if (!this.playerOwned()) return;
+	    if (this.cloned) return;
 	    Player player = this.getPlayer();
 
 	    player.handleExpShare();
@@ -8179,13 +8190,6 @@ public class Pokemon implements Serializable {
 					return new Random().nextInt(4) == 1 ? new Pair<>(0, 0.0) : new Pair<>(damage, damagePercent);
 				}
 			}
-			attackStat = this.getStat(3);
-			if (this.getItem(field) == Item.CHOICE_SPECS) attackStat *= 1.5;
-			if (this.status == Status.FROSTBITE) attackStat /= 2;
-			if (this.getAbility(field) == Ability.SOLAR_POWER && field.equals(field.weather, Effect.SUN, this)) attackStat *= 1.5;
-			if (this.isType(moveType)) attackStat *= 1.5;
-			damage = foe.takeFutureSight((int) bp, (int) attackStat, this.level, isCrit, this.getAbility(field), mode, this);
-			damagePercent = damage * 100.0 / foe.getStat(0);
 		}
 		return new Pair<>(damage, damagePercent);
 	}
@@ -9598,6 +9602,19 @@ public class Pokemon implements Serializable {
 				Task.addTask(Task.TEXT, foe.nickname + "'s Defense was not lowered!");
 			} else {
 				stat(foe, 1, -1, this);
+			}
+			if (foe.getItem(field) == Item.ADRENALINE_ORB) {
+				Task.addTask(Task.TEXT, foe.nickname + " used its " + foe.item.toString() + " to boost its Speed!");
+				stat(foe, 4, 1, this);
+				foe.consumeItem(this);
+			}
+		} else if (this.getAbility(field) == Ability.SMOKE_SESSION) {
+			Task.addAbilityTask(this);
+			if (foe.getAbility(field) == Ability.INNER_FOCUS || foe.getAbility(field) == Ability.SCRAPPY || foe.getAbility(field) == Ability.UNWAVERING) {
+				Task.addAbilityTask(foe);
+				Task.addTask(Task.TEXT, foe.nickname + "'s Evasion was not lowered!");
+			} else {
+				stat(foe, 6, -1, this);
 			}
 			if (foe.getItem(field) == Item.ADRENALINE_ORB) {
 				Task.addTask(Task.TEXT, foe.nickname + " used its " + foe.item.toString() + " to boost its Speed!");
@@ -12156,7 +12173,7 @@ public class Pokemon implements Serializable {
 		}		
 	}
 
-	public int takeFutureSight(int bp, int stat, int level, boolean isCrit, Ability ability, int mode, Pokemon foe) {
+	public int takeFutureSight(int bp, double stat, double mod, int level, boolean isCrit, Ability ability, int mode, Pokemon foe) {
 		if (this.isFainted() && mode == 0) return 0;
 		boolean immune = false;
 		
@@ -12171,6 +12188,9 @@ public class Pokemon implements Serializable {
 		int damageIndex = tasks == null ? 0 : tasks.size();
 		
 		double attackStat = stat;
+		if (this.getAbility(field) != Ability.UNAWARE) {
+			attackStat *= mod;
+		}
 		double defenseStat = this.getStat(4);
 		defenseStat *= this.asModifier(3);
 		if (this.getItem(field) == Item.ASSAULT_VEST) defenseStat *= 1.5;

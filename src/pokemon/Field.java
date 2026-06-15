@@ -148,7 +148,8 @@ public class Field {
 		public int turns;
 		public Effect effect;
 		public int layers;
-		public int stat;
+		public double stat;
+		public double mod;
 		public int level;
 		public int bp;
 		public boolean crit;
@@ -268,7 +269,7 @@ public class Field {
 		public void handleFutureSight(Pokemon reciever, Pokemon foe) {
 			if (this.turns > 0) return;
 			if (this.effect == Effect.FUTURE_SIGHT) {
-				reciever.takeFutureSight(bp, stat, level, crit, ability, 0, foe);
+				reciever.takeFutureSight(bp, stat, mod, level, crit, ability, 0, foe);
 			}
 			
 		}
@@ -276,7 +277,7 @@ public class Field {
 		public void handleWish(Pokemon reciever) {
 			if (this.turns > 0) return;
 			if (this.effect == Effect.WISH) {
-				reciever.takeWish(stat);
+				reciever.takeWish((int) stat);
 			}
 			
 		}
@@ -549,15 +550,6 @@ public class Field {
 		for (FieldEffect e : side) {
 			if (e.effect == effect) {
 				return e.layers;
-			}
-		}
-		return 0;
-	}
-	
-	public int getStat(ArrayList<FieldEffect> side, Effect effect) {
-		for (FieldEffect e : side) {
-			if (e.effect == effect) {
-				return e.stat;
 			}
 		}
 		return 0;

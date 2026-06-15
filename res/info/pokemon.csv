@@ -114,9 +114,9 @@
 139|Elelamb      |ELECTRIC|GROUND  |STATIC            |FLUFFY            |UNERODIBLE        |[54, 32, 53, 65, 58, 33]      |40.1  |255|FIELD       |FIELD       |
 140|Electroram   |ELECTRIC|GROUND  |STATIC            |FLUFFY            |UNERODIBLE        |[65, 80, 55, 45, 60, 50]      |76.0  |120|FIELD       |FIELD       |
 141|Superchargo  |ELECTRIC|GROUND  |SPEED_BOOST       |FLUFFY            |UNERODIBLE        |[85, 128, 72, 60, 77, 98]     |91.3  |45 |FIELD       |FIELD       |
-151|Twigzap      |GRASS   |ELECTRIC|SAP_SIPPER        |VOLT_ABSORB       |CHLOROPHYLL       |[34, 62, 43, 58, 44, 59]      |3.6   |255|GRASS       |GRASS       |
-152|Shockbranch  |GRASS   |ELECTRIC|SAP_SIPPER        |VOLT_ABSORB       |CHLOROPHYLL       |[65, 94, 49, 60, 54, 73]      |13.4  |120|GRASS       |GRASS       |
-153|Thunderzap   |GRASS   |ELECTRIC|SAP_SIPPER        |VOLT_ABSORB       |CHLOROPHYLL       |[90, 70, 100, 85, 100, 55]    |245.9 |45 |GRASS       |GRASS       |
+151|Twigzap      |GRASS   |ELECTRIC|SAP_SIPPER        |VOLT_ABSORB       |SMOKE_SESSION     |[34, 62, 43, 58, 44, 59]      |3.6   |255|GRASS       |GRASS       |
+152|Shockbranch  |GRASS   |ELECTRIC|SAP_SIPPER        |VOLT_ABSORB       |SMOKE_SESSION     |[65, 94, 49, 60, 54, 73]      |13.4  |120|GRASS       |GRASS       |
+153|Thunderzap   |GRASS   |ELECTRIC|SAP_SIPPER        |VOLT_ABSORB       |SMOKE_SESSION     |[90, 70, 100, 85, 100, 55]    |245.9 |45 |GRASS       |GRASS       |
 142|Magie        |STEEL   |NORMAL  |TOUGH_CLAWS       |IRON_BARBS        |WEAK_ARMOR        |[30, 60, 73, 30, 65, 58]      |50.5  |100|FIELD       |MINERAL     |
 143|Cumin        |STEEL   |LIGHT   |TOUGH_CLAWS       |IRON_BARBS        |WEAK_ARMOR        |[60, 80, 95, 65, 95, 95]      |125.7 |65 |FIELD       |MINERAL     |
 144|Cinneroph    |STEEL   |MAGIC   |TOUGH_CLAWS       |IRON_BARBS        |WEAK_ARMOR        |[69, 95, 97, 70, 95, 104]     |130.6 |35 |FIELD       |MINERAL     |
