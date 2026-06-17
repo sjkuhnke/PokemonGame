@@ -364,16 +364,15 @@ public class Player extends Trainer implements Serializable {
 
 	public void swapToFront(Pokemon pokemon, int index, Pokemon foe) {
 		Pokemon lead = current;
-		lead.clearVolatile(foe);
 		if (!lead.isFainted()) {
 			Task.addSwapOutTask(lead, true);
 		}
-		
 		if (lead.getAbility(Pokemon.field) == Ability.REGENERATOR && !lead.isFainted()) {
 			lead.currentHP += current.getStat(0) / 3;
 			lead.verifyHP();
 		}
 		if (lead.ability == Ability.ILLUSION) lead.illusion = true; // just here for calc
+		lead.clearVolatile(foe);
 		this.current = pokemon;
 		
 		this.team[0] = pokemon;
