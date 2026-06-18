@@ -283,6 +283,7 @@ public class Main {
 					gp.player.p.setupPuzzles(gp, gp.currentMap);
 					gp.player.currentSave = fileName;
 					gp.setGameState(GamePanel.PLAY_STATE);
+					gp.player.p.validateNuzlocke();
 				});
 				
 			} catch (Exception e) {

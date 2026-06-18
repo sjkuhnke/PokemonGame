@@ -5092,9 +5092,9 @@ public class Pokemon implements Serializable {
 			foe.burn(false, this);
 			break;
 		case FATAL_BIND:
-			if (!foe.isFainted()) {
+			if (!foe.isFainted() && foe.perishCount == 0) {
 				Task.addTask(Task.TEXT, foe.nickname + " will perish in 3 turns!");
-				foe.perishCount = (foe.perishCount == 0) ? 4 : foe.perishCount;
+				foe.perishCount = 4;
 			}
 			break;
 		case FIRE_FANG:
@@ -6897,6 +6897,8 @@ public class Pokemon implements Serializable {
 			break;
 		case ROCK_POLISH:
 			stat(this, 4, 2, foe);
+			break;
+		case METRONOME:
 			break;
 		default:
 			System.err.println(move + " doesn't have a statusEffect!");
@@ -9670,7 +9672,7 @@ public class Pokemon implements Serializable {
 				this.onAbilityChanged(field, foe);
 				this.ability = foe.ability;
 				Task.addTask(Task.TEXT, this.nickname + "'s ability became " + this.ability + "!");
-				this.swapIn(foe, false);
+				this.swapIn(foe, false, field);
 			}
 		} else if (this.getAbility(field) == Ability.TALENTED) {
 			if (hasBoosts(foe.statStages)) {

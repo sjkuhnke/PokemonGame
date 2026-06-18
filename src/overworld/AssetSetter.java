@@ -2609,6 +2609,8 @@ public class AssetSetter {
 				"You broke the rhythm... but you won't be able to stop it. It's too late.\n"
 				+ "It will silence you in an instant. You have no idea what power it's capable of.", 311);
 		gp.npc[mapNum][index] = SetupStaticEncounter(288, 52, 73, 394, "Azchoozlooagh!");
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 32, 61, "There are 4 old trainers down this pit that will fight you all at once.\n"
+				+ "I saw some good rewards down there, but if you're going to brave the fall, make sure you're prepared!");
 		
 		mapNum = 139;
 		index = 0;
