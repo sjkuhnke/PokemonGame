@@ -1097,6 +1097,14 @@ public class Script {
 			Task.addTask(Task.FLASH_OUT, "");
 		});
 		
+		scriptMap.put(65.0, npc -> { // happiness tweaker
+			if (gp.player.p.bag.count[Item.EUPHORIAN_GEM.getID()] >= 1) {
+				Task.addTask(Task.PARTY, "Edit #'s friendship (0 - $)?\nCosts 1 Euphorian Gem", Task.HAPPINESS);
+			} else {
+				Task.addTask(Task.DIALOGUE, npc, "You don't have any Euphorian Gems!");
+			}
+		});
+		
 		scriptMap.put(38.0, (npc) -> { // ice master
 			Task.addTask(Task.DIALOGUE, npc, "It may help you in your journey, maybe even in ways you don't expect. Consider it a token of my thanks for your help with the school.");
 			p.flag[3][10] = true;

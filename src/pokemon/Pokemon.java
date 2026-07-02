@@ -9058,7 +9058,7 @@ public class Pokemon implements Serializable {
 			break;
 		case RETURN:
 			f = this.happiness;
-			bp = (int) (-3.0 / 14450 * f * f + 11.0 / 34 * f + 1);
+			bp = determineReturnBP(f);
 			break;
 		case REVENGE:
 			if (first || this.headbuttCrit < 0) {
@@ -9111,6 +9111,10 @@ public class Pokemon implements Serializable {
 		return bp;
 	}
 	
+	public int determineReturnBP(int f) {
+		return (int) (-3.0 / 14450 * f * f + 11.0 / 34 * f + 1);
+	}
+
 	private void removeBad() {
 		this.removeStatus(Status.CONFUSED);
 		this.removeStatus(Status.CURSED);

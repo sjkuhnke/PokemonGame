@@ -2258,6 +2258,10 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(MANIAC_UP, 38, 42, "Do you hear that? The ghosts are calling for your defeat!", "This was not foreseen in the shadows...", 148);
 		gp.npc[mapNum][index] = SetupStaticEncounter(210, 31, 36, 369, "Graagzyaraa!!");
 		
+		mapNum = 65;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(BLOCK_DOWN, null, 31, 41, "Hello! For a Euphorian Gem, I can change your Pokemon's friendship value!", mapNum);
+		
 		mapNum = 77;
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(SWIMMER_M_RIGHT, 38, 18, "Dude, I'm about to ride the wave of victory!", "Wiped out, huh? Well, that's the life of a surfer!", 149, ALL);

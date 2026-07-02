@@ -444,9 +444,9 @@ public class UI extends AbstractUI {
 			drawPartyTask();
 			break;
 		case Task.REMIND:
+			if (currentTask != null) currentDialogue = currentTask.message;
 			drawDialogueScreen(true);
 			drawMoveReminder(currentTask.p);
-			if (currentTask != null) currentDialogue = currentTask.message;
 			break;
 		case Task.HP:
 			currentDialogue = currentTask.message;
@@ -731,6 +731,14 @@ public class UI extends AbstractUI {
 			gp.iTile[currentTask.start][currentTask.finish].spriteNum++;
 			currentTask = null;
 			break;
+		case Task.HAPPINESS:
+			if (currentTask != null) currentDialogue = currentTask.message;
+			if (currentTask.p.happiness == commandNum) {
+				currentDialogue = currentDialogue.split("\n")[0];
+			}
+			drawDialogueScreen(true);
+			drawHappinessTweaker(currentTask.p);
+			break;
 		}
 	}
 
@@ -925,7 +933,7 @@ public class UI extends AbstractUI {
 		x += gp.tileSize;
 		y += gp.tileSize;
 		
-		String dialogue = "Are you sure you want to forefit?\nYou will lose 10 coins and your winstreak!";
+		String dialogue = "Are you sure you want to forefit?\nYou will lose 10 " + getBetCurrencyName(gauntlet) + " and your winstreak!";
 		
 		for (String line : dialogue.split("\n")) {
 			g2.drawString(line, x, y);
@@ -2411,10 +2419,11 @@ public class UI extends AbstractUI {
 					}
 				}
 				if (!skip) {
-					String message = currentTask.message.replace("#", p.nickname);
+					String message = currentTask.message.replace("#", p.nickname).replace("$", Math.min(255, p.happiness + 100) + "");
 					Task t = Task.addTask(currentTask.counter, message, p); // pass in the Task type and Message in the Task.PARTY creation
 					t.setMove(currentTask.move);
 					moveOption = -1;
+					if (currentTask.counter == Task.HAPPINESS) commandNum = p.happiness;
 				}
 				remindNum = 0;
 				currentTask = null;
@@ -5562,7 +5571,7 @@ public class UI extends AbstractUI {
 				sellAmt += max > 10 ? 10 : 1;
 				if (sellAmt > max) sellAmt -= max;
 			}
-		}		
+		}
 	}
 	
 	public void drawTransition() {
@@ -7325,6 +7334,110 @@ public class UI extends AbstractUI {
 		if (spaceFrameCounter >= 6) {
 			spaceFrameCounter = 0;
 			spaceFrameIndex = (spaceFrameIndex + 1) % spaceFrames.size();
+		}
+	}
+	
+	private void drawHappinessTweaker(Pokemon p) {
+		int min = 0;
+		int max = Math.min(255, p.happiness + 100);
+		
+		int x = gp.tileSize * 12;
+		int y = (int) (gp.tileSize * 4.5);
+		int width = gp.tileSize * 3;
+		int height = (int) (gp.tileSize * 3.5);
+		drawSubWindow(x, y, width, height);
+		
+		x += gp.tileSize * 1.5;
+		y += gp.tileSize * 2;
+		g2.setColor(Color.WHITE);
+		g2.setFont(g2.getFont().deriveFont(32F));
+		g2.drawString(commandNum + "", getCenterAlignedTextX(commandNum + "", x), y);
+		
+		x -= gp.tileSize / 4;
+		int y2 = y += gp.tileSize / 4;
+		int width2 = gp.tileSize / 2;
+		int height2 = gp.tileSize / 2;
+		g2.fillPolygon(new int[] {x, (x + width2), (x + width2 / 2)}, new int[] {y2, y2, y2 + height2}, 3);
+		
+		y2 = y -= gp.tileSize * 1.5;
+		g2.fillPolygon(new int[] {x, (x + width2), (x + width2 / 2)}, new int[] {y2 + height2, y2 + height2, y2}, 3);
+		
+		x -= gp.tileSize;
+		y += gp.tileSize * 2.5;
+		g2.setFont(g2.getFont().deriveFont(24F));
+		
+		g2.drawString("(" + min + " - " + max + ")", x, y);
+
+		x = gp.tileSize*2;
+		y = (int) (gp.tileSize * 4.5);
+		width = gp.tileSize*4;
+		height = (int) (gp.tileSize * 1.5);
+		
+		String name = "Return BP: " + p.determineReturnBP(commandNum);
+		
+		drawSubWindow(x, y, width, height);
+		y += gp.tileSize;
+		g2.setFont(g2.getFont().deriveFont(32F));
+		g2.drawString(name, getCenterAlignedTextX(name, x + width / 2), y);
+		
+		int moneyX = gp.tileSize * 2;
+		int moneyY = gp.tileSize * 6;
+		int moneyWidth = gp.tileSize * 3;
+		int moneyHeight = gp.tileSize;
+		
+		drawSubWindow(moneyX, moneyY, moneyWidth, moneyHeight);
+		moneyX += 8;
+		g2.drawImage(Item.EUPHORIAN_GEM.getImage2(), moneyX, moneyY, null);
+		moneyX += gp.tileSize;
+		moneyY += gp.tileSize * 0.75;
+		g2.setColor(Color.WHITE);
+		g2.setFont(g2.getFont().deriveFont(32F));
+		g2.drawString("" + gp.player.p.bag.count[Item.EUPHORIAN_GEM.getID()], moneyX, moneyY);
+		
+		if (gp.keyH.wPressed) {
+			gp.keyH.wPressed = false;
+			if (p.happiness != commandNum) {
+				gp.gameState = GamePanel.PLAY_STATE;
+				showMessage("Changed " + p.nickname + "'s friendship to " + commandNum + "!");
+				p.happiness = commandNum;
+				gp.player.p.bag.remove(Item.EUPHORIAN_GEM);
+			} else {
+				showMessage(Item.breakString("Come back if you need someone's friendship changed!", UI.MAX_TEXTBOX));
+			}
+			currentTask = null;
+			commandNum = 0;
+		}
+		if (!showMessage) {
+			if (gp.keyH.sPressed) {
+				gp.keyH.sPressed = false;
+				gp.gameState = GamePanel.PLAY_STATE;
+				currentTask = null;
+				commandNum = 0;
+			}
+			
+			if (gp.keyH.upPressed) {
+				gp.keyH.upPressed = false;
+				commandNum++;
+				if (commandNum > max) commandNum = min;
+			}
+			
+			if (gp.keyH.downPressed) {
+				gp.keyH.downPressed = false;
+				commandNum--;
+				if (commandNum < min) commandNum = max;
+			}
+			
+			if (gp.keyH.leftPressed) {
+				gp.keyH.leftPressed = false;
+				commandNum -= max > 10 ? 10 : 1;
+				if (commandNum < 0) commandNum += max;
+			}
+			
+			if (gp.keyH.rightPressed) {
+				gp.keyH.rightPressed = false;
+				commandNum += max > 10 ? 10 : 1;
+				if (commandNum > max) commandNum -= max;
+			}
 		}
 	}
 	

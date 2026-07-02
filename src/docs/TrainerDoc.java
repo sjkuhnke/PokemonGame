@@ -246,7 +246,7 @@ public class TrainerDoc {
 	    currencyStyle.setFont(makeFont(sheet.getWorkbook(), true, false, 12, IndexedColors.BLACK.getIndex()));
 	    moneyCell.setCellStyle(currencyStyle);
 	    
-	    if (tr.getItem() != null) rewardCell.setCellValue("Gives: " + tr.getItem().toString());
+	    if (tr.getItem() != null) rewardCell.setCellValue("Gives: " + tr.getItem().toString() + (tr.getItem() == Item.TEMPLE_ORB ? " (x100)" : tr.getItem() == Item.FABLE_CHARGE ? " (x3)" : ""));
 	    rewardCell.setCellStyle(makeStyle(sheet.getWorkbook(), false, true, 12, IndexedColors.BLACK.getIndex()));
 	    
 	    sheet.addMergedRegion(new CellRangeAddress(rewardRow.getRowNum(), rewardRow.getRowNum(), 1, 4));
