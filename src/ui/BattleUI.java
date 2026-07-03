@@ -1859,13 +1859,17 @@ public class BattleUI extends AbstractUI {
 		if (hasAlive()) field.endOfTurn(faster, slower);
 		
 		Pokemon next = foe.trainer == null ? foe : foe.trainer.getCurrent();
-		while (next.isFainted()) {
+		while (next.isFainted() || next.hasStatus(Status.SWITCHING)) {
 			if (foe.trainer != null) {
 				if (foe.trainer.hasNext()) {
 					boolean userSide = foe.trainer.hasUser(user);
-					next = foe.trainer.next(user, userSide);
-					Task.addSwapInTask(next, false);
-					next.swapIn(user, true);
+					if (!next.isFainted()) {
+						next = foe.trainer.swapOut2(user, FREE_SWITCH, false, false);
+					} else {
+						next = foe.trainer.next(user, userSide);
+						Task.addSwapInTask(next, false);
+						next.swapIn(user, true);
+					}
 					user.getPlayer().clearBattled();
 					user.battled = true;
 				} else {

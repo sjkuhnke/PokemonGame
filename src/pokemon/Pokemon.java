@@ -1861,7 +1861,7 @@ public class Pokemon implements Serializable {
 
 		if (move.isPivotMove() && isUsefulPivot(foe, foeAbility, move)) {
 			score += 25;
-		} else if (move == Move.AROMATHERAPY) {
+		} else if (move == Move.AROMATHERAPY || move == Move.HEAL_BELL) {
 			int statusCount = 0;
 			if (this.trainer != null) {
 				for (Pokemon p : this.trainer.team) {
@@ -1870,7 +1870,8 @@ public class Pokemon implements Serializable {
 					}
 				}
 			}
-			score += statusCount * 20;
+			if (statusCount > 0) score += 10; // cancel out negative incentive
+			score += statusCount * 50;
 		} else if (move == Move.SKULL_BASH || move == Move.SKY_ATTACK || ((move == Move.SOLAR_BEAM || move == Move.SOLAR_BLADE) && !field.equals(field.weather, Effect.SUN, this))
 				|| move == Move.BLACK_HOLE_ECLIPSE || move == Move.GEOMANCY || move == Move.METEOR_BEAM || move == Move.HYPER_BEAM
 				|| move == Move.BLAST_BURN || move == Move.FRENZY_PLANT || move == Move.GIGA_IMPACT
@@ -4355,9 +4356,9 @@ public class Pokemon implements Serializable {
 		if (!foeEject && (move == Move.VOLT_SWITCH || move == Move.FLIP_TURN || move == Move.U$TURN) && !this.isFainted()) {
 			if (this.trainer != null && this.trainer.hasValidMembers(foe)) {
 				Task.addTask(Task.TEXT, this.nickname + " went back to " + this.trainer.getBattleName() + "!");
+				int switchSlot = this.getStatusNum(Status.TEMP_SWITCHING);
+				this.addStatus(Status.SWITCHING, switchSlot);
 			}
-			int switchSlot = this.getStatusNum(Status.TEMP_SWITCHING);
-			this.addStatus(Status.SWITCHING, switchSlot);
 		}
 		
 		if (move == Move.SELF$DESTRUCT || move == Move.EXPLOSION || move == Move.SUPERNOVA_EXPLOSION) {
@@ -5823,6 +5824,7 @@ public class Pokemon implements Serializable {
 			break;
 		case AROMATHERAPY:
 		case HEAL_BELL:
+			if (this.cloned) return;
 			Task.addTask(Task.TEXT, move == Move.AROMATHERAPY ? "A soothing aroma wafted through the air!" : "A bell chimed!");
 			Pokemon[] team = this.trainer == null ? null : this.trainer.getTeam();
 			if (team == null) {
@@ -8538,7 +8540,7 @@ public class Pokemon implements Serializable {
 		this.removeStatus(Status.FLINCHED);
 		this.removeStatus(Status.PROTECT);
 		this.removeStatus(Status.ENDURE);
-		this.removeStatus(Status.SWITCHING);
+		//this.removeStatus(Status.SWITCHING);
 		this.removeStatus(Status.TEMP_SWITCHING);
 		if (this.hasStatus(Status.LANDED)) {
 			if (this.type1 == PType.UNKNOWN) {
