@@ -63,8 +63,8 @@
 163|Frosmoth     |ICE     |BUG     |ICY_SCALES        |SHIELD_DUST       |TINTED_LENS       |[70, 65, 60, 125, 90, 65]     |92.6  |75 |BUG         |BUG         |
 205|Grislush     |GROUND  |ICE     |STURDY            |TECHNICIAN        |REFRIGERATE       |[80, 74, 87, 25, 96, 33]      |135.6 |135|FIELD       |FIELD       |
 206|Thalarctic   |FIGHTING|ICE     |GUTS              |SLUSH_RUSH        |REFRIGERATE       |[95, 130, 90, 45, 85, 40]     |208.1 |30 |FIELD       |FIELD       |
-207|Ceramber     |ROCK    |FIGHTING|FORTIFY           |SAND_FORCE        |ROUGH_SKIN        |[65, 90, 120, 20, 65, 20]     |95.4  |100|MONSTER     |MINERAL     |
-208|Topazatops   |ROCK    |FIGHTING|FORTIFY           |SAND_FORCE        |ROUGH_SKIN        |[114, 124, 130, 20, 130, 20]  |900.9 |30 |MONSTER     |MINERAL     |
+207|Ceramber     |ROCK    |FIGHTING|FORTIFY           |SAND_FORCE        |BULLETPROOF       |[65, 90, 120, 20, 65, 20]     |95.4  |100|MONSTER     |MINERAL     |
+208|Topazatops   |ROCK    |FIGHTING|FORTIFY           |SAND_FORCE        |BULLETPROOF       |[114, 124, 130, 20, 130, 20]  |900.9 |30 |MONSTER     |MINERAL     |
 186|Spheal       |ICE     |WATER   |UNAWARE           |THICK_FAT         |ICE_BODY          |[70, 40, 50, 55, 50, 25]      |87.1  |255|WATER_1     |FIELD       |
 187|Sealeo       |ICE     |WATER   |UNAWARE           |THICK_FAT         |ICE_BODY          |[90, 60, 70, 75, 70, 45]      |193.1 |120|WATER_1     |FIELD       |
 188|Walrein      |ICE     |WATER   |UNAWARE           |THICK_FAT         |ICE_BODY          |[110, 80, 90, 95, 90, 65]     |332.0 |45 |WATER_1     |FIELD       |
@@ -87,8 +87,8 @@
 65 |Gardevoir    |PSYCHIC |LIGHT   |EMPATHIC_LINK     |TRACE             |PIXILATE          |[68, 65, 65, 125, 115, 80]    |106.7 |45 |HUMAN$LIKE  |FAIRY       |
 66 |Gallade      |PSYCHIC |FIGHTING|SHARPNESS         |JUSTIFIED         |INNER_FOCUS       |[68, 125, 65, 65, 115, 80]    |114.6 |45 |HUMAN$LIKE  |FAIRY       |
 83 |Benglow      |LIGHT   |NORMAL  |SIMPLE            |NORMALIZE         |PIXILATE          |[65, 79, 67, 103, 72, 69]     |250.4 |65 |FIELD       |FIELD       |
-137|Inkay        |PSYCHIC |DARK    |CONTRARY          |CONTRARY          |ILLUMINATION      |[53, 54, 53, 37, 46, 45]      |7.7   |190|WATER_1     |WATER_2     |
-138|Malamar      |PSYCHIC |DARK    |CONTRARY          |CONTRARY          |ILLUMINATION      |[86, 92, 88, 68, 75, 73]      |103.6 |80 |WATER_1     |WATER_2     |
+137|Inkay        |PSYCHIC |DARK    |BRAINWASH         |BRAINWASH         |ILLUMINATION      |[53, 54, 53, 37, 46, 45]      |7.7   |190|WATER_1     |WATER_2     |
+138|Malamar      |PSYCHIC |DARK    |BRAINWASH         |BRAINWASH         |ILLUMINATION      |[86, 92, 88, 68, 75, 73]      |103.6 |80 |WATER_1     |WATER_2     |
 52 |Flameruff    |FIRE    |NORMAL  |INTIMIDATE        |FLASH_FIRE        |RECKLESS          |[46, 74, 68, 48, 58, 81]      |21.0  |75 |FIELD       |FIELD       |
 53 |Barkflare    |FIRE    |NORMAL  |INTIMIDATE        |FLASH_FIRE        |RECKLESS          |[65, 103, 82, 66, 79, 100]    |93.6  |50 |FIELD       |FIELD       |
 54 |Sember       |FIRE    |null    |FLAME_BODY        |FLASH_FIRE        |UNBURDEN          |[30, 20, 40, 103, 30, 83]     |10.0  |195|FIELD       |HUMAN$LIKE  |
@@ -165,7 +165,7 @@
 74 |Conkeldurr   |FIGHTING|null    |GUTS              |IRON_FIST         |SCRAPPY           |[105, 140, 95, 55, 65, 45]    |191.8 |45 |HUMAN$LIKE  |HUMAN$LIKE  |
 75 |Rhypo        |GROUND  |null    |RATTLED           |SAND_FORCE        |ROUGH_SKIN        |[51, 65, 89, 30, 66, 15]      |49.5  |235|FIELD       |MINERAL     |
 76 |Rhynee       |GROUND  |null    |SAND_STREAM       |SAND_FORCE        |ROUGH_SKIN        |[57, 73, 112, 55, 95, 20]     |295.1 |175|FIELD       |MINERAL     |
-77 |Rhypolar     |GROUND  |FIGHTING|SAND_STREAM       |SAND_FORCE        |ROUGH_SKIN        |[75, 100, 145, 70, 95, 25]    |889.1 |45 |FIELD       |MINERAL     |
+77 |Rhypolar     |GROUND  |FIGHTING|SAND_STREAM       |SAND_FORCE        |CONTRARY          |[75, 100, 145, 70, 95, 25]    |889.1 |45 |FIELD       |MINERAL     |
 115|Diggie       |GROUND  |null    |SAND_RUSH         |TOUGH_CLAWS       |MOLD_BREAKER      |[37, 85, 47, 23, 63, 78]      |29.0  |200|FIELD       |FIELD       |
 116|Drillatron   |GROUND  |LIGHT   |SAND_FORCE        |TOUGH_CLAWS       |MOLD_BREAKER      |[65, 128, 55, 80, 55, 120]    |55.1  |45 |FIELD       |FIELD       |
 69 |Wormite      |GROUND  |null    |SAND_VEIL         |RATTLED           |REGENERATOR       |[45, 60, 55, 35, 25, 55]      |40.3  |255|FIELD       |MINERAL     |

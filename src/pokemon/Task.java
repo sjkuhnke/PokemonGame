@@ -90,6 +90,8 @@ public class Task {
 	public static final int SAVE = 70;
 	public static final int LOAD = 71; // for loading pokemon machines
 	public static final int HAPPINESS = 72; // for lowering happiness
+	public static final int MINE = 73;
+	public static final int MINING_CHANCES = 74;
 	
 	public static GamePanel gp;
 	

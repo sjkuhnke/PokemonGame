@@ -316,7 +316,7 @@ public enum Move {
 	MAGIC_POWDER(0,100,0,0,2,0,PType.MAGIC,"Changes foe's type to MAGIC",false,15),
 	MAGIC_REFLECT(0,1000,0,0,2,0,PType.MAGIC,"Foe's next attack will be reflected against them. Can be used every other turn, and not on the first turn out.",false,5),
 	MAGIC_ROOM(0,1000,0,0,2,0,PType.MAGIC,"Removes the effects of held items for 8 turns",false,10),
-	MAGIC_TOMB(85,100,10,0,1,0,PType.MAGIC,"% chance to lower foe's Attack and Sp.Atk by 1",true,10),
+	MAGIC_TOMB(85,100,10,0,1,0,PType.MAGIC,"% chance to lower foe's Attack and Sp.Atk by 1",false,10),
 	MAGICAL_LEAF(60,1000,0,0,1,0,PType.GRASS,"This move will never miss",false,20),
 	MAGICAL_CRASH(110,95,100,0,0,0,PType.MAGIC,"% to inflict foe with a random Status condition. User must rest after using",true,5),
 	MAGMA_STORM(100,75,100,0,1,0,PType.FIRE,"% to spin the foe for 4-5 turns. While foe is spun, it takes 1/8 HP in damage, and cannot switch",false,5),
@@ -1464,6 +1464,47 @@ public enum Move {
 		result.add(HEAT_CRASH);
 		result.add(HEAVY_SLAM);
 		result.add(PHANTOM_FORCE);
+		if (result.contains(this)) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isBallOrBomb() {
+		ArrayList<Move> result = new ArrayList<>();
+		// ball or bomb
+		result.add(ACID_SPRAY);
+		result.add(AURA_SPHERE);
+		result.add(BULLET_SEED);
+		result.add(ELECTRO_BALL);
+		result.add(ENERGY_BALL);
+		result.add(FOCUS_BLAST);
+		result.add(GYRO_BALL);
+		result.add(ICE_BALL);
+		result.add(MAGNET_BOMB);
+		result.add(MIST_BALL);
+		result.add(MUD_BOMB);
+		result.add(ROCK_BLAST);
+		result.add(ROCK_WRECKER);
+		result.add(SEED_BOMB);
+		result.add(SHADOW_BALL);
+		result.add(SLUDGE_BOMB);
+		result.add(WEATHER_BALL);
+		result.add(ZAP_CANNON);
+		result.add(MAGIC_MISSILES);
+		
+		// pulse or cannon
+		result.add(FLASH_CANNON);
+		result.add(DARK_PULSE);
+		result.add(DRAGON_PULSE);
+		result.add(HEAL_PULSE);
+		result.add(TERRAIN_PULSE);
+		result.add(WATER_PULSE);
+		result.add(FIRE_BLAST);
+		result.add(HYDRO_CANNON);
+		result.add(SPIKE_CANNON);
+		result.add(HYDRO_PUMP);
+		
 		if (result.contains(this)) {
 			return true;
 		}

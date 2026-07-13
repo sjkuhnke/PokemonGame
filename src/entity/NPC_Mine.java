@@ -2,6 +2,7 @@ package entity;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Random;
 
 import overworld.GamePanel;
@@ -19,6 +20,14 @@ public class NPC_Mine extends Entity {
 	private int totalWeight;
 	private final int defaultTotal;
 	private int turns;
+	
+	private static final int MAX_VIEW_DEPTH = 40;
+	private int viewDepth = 0;
+	private boolean viewPerilyte;
+	private boolean chancesDirty;
+	
+	private LinkedHashMap<Item, Double> chanceBuffer = new LinkedHashMap<>();
+	private double failChanceBuffer;
 	
 	public NPC_Mine(GamePanel gp, String name) {
 		super(gp, name);
@@ -247,6 +256,96 @@ public class NPC_Mine extends Entity {
 		this.totalWeight = this.defaultTotal;
 		Pair<Item, Integer> fail = items.get(0);
 		fail.setSecond(FAIL_CHANCE);
+	}
+
+	public void handleChanceViewerInput() {
+		if (gp.keyH.wPressed) {
+			viewPerilyte = !viewPerilyte;
+			chancesDirty = true;
+			gp.keyH.wPressed = false;
+		}
+		if (gp.keyH.leftPressed) {
+			if (viewDepth > 0) {
+				viewDepth--;
+				chancesDirty = true;
+			}
+			gp.keyH.leftPressed = false;
+		}
+		if (gp.keyH.rightPressed) {
+			if (viewDepth < MAX_VIEW_DEPTH) {
+				viewDepth++;
+				chancesDirty = true;
+			}
+			gp.keyH.rightPressed = false;
+		}
+		if (gp.keyH.sPressed) {
+			gp.keyH.sPressed = false;
+			Task t = Task.addTask(Task.MINE, this, "Hi there! If you pay me $" + this.PRICE + ", I'll head into my mine and see what I can dig up for you!\n(Warning: Will Auto-Save)");
+			t.ui = Task.MONEY;
+			gp.ui.currentTask = null;
+		}
+	}
+
+	public int getViewDepth() {
+		return viewDepth;
+	}
+
+	public boolean isViewPerilyte() {
+		return viewPerilyte;
+	}
+
+	public static int getMaxViewDepth() {
+		return MAX_VIEW_DEPTH;
+	}
+
+	/** Cached per-item probabilities at the current viewDepth/viewPerilyte. Recomputed only when dirty. */
+	public LinkedHashMap<Item, Double> getChanceBuffer() {
+		if (chancesDirty) recomputeChances();
+		return chanceBuffer;
+	}
+
+	/** Cached probability of the "wipe everything" fail result. */
+	public double getFailChance() {
+		if (chancesDirty) recomputeChances();
+		return failChanceBuffer;
+	}
+
+	public void recomputeChances() {
+		// NOTE on the +1: items.get(0) (the fail entry) is stored at weight
+		// FAIL_CHANCE (15), but setupItems() originally summed defaultTotal
+		// with that entry at 16. The extra 1 of "total" weight is never
+		// claimed by any entry, so random.nextInt(totalWeight) can roll a
+		// value the for-loop in mineItem() never subtracts below 0 for,
+		// falling through to the implicit `return null` at the end -- i.e.
+		// it's a second, hidden way to fail. So the *effective* fail weight
+		// is FAIL_CHANCE + 1 (=16), which is also exactly why your starting
+		// fail weight "feels like" 16 even though FAIL_CHANCE is 15. Each
+		// depth level then adds 2 to both the explicit fail weight and to
+		// totalWeight, so this hidden +1 stays constant at every depth.
+		int effectiveFailWeight = (FAIL_CHANCE + 1) + (viewDepth * 2);
+		int total = defaultTotal + (viewDepth * 2);
+
+		double f = effectiveFailWeight / (double) total;
+
+		chanceBuffer.clear();
+		for (Pair<Item, Integer> entry : items) {
+			Item item = entry.getFirst();
+			if (item == null) continue; // fail handled separately via failChanceBuffer
+			double base = entry.getSecond() / (double) total;
+			// Perilyte reroll math: on a fail, there's a 50% chance to reroll once.
+			// A non-fail item can now be reached two ways: the first roll hit it
+			// directly, OR the first roll failed, you got the 50% reroll, and the
+			// reroll hit it. That's base * (1 + 0.5f).
+			chanceBuffer.put(item, viewPerilyte ? base * (1 + 0.5 * f) : base);
+		}
+
+		// Fail can now only happen if the first roll fails AND you either don't
+		// get the reroll (50%) or you do reroll and fail again (0.5f * f).
+		// This is NOT simply "half the fail chance" -- it's f * (0.5 + 0.5f),
+		// which approaches half of f only as f gets small.
+		failChanceBuffer = viewPerilyte ? f * (0.5 + 0.5 * f) : f;
+
+		chancesDirty = false;
 	}
 	
 }

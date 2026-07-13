@@ -2851,6 +2851,7 @@ public class Pokemon implements Serializable {
 						this.rollCount = 1;
 						this.moveMultiplier = 1;
 						this.metronome = 0;
+						success = false;
 						return;
 					}
 				} else {
@@ -2886,6 +2887,7 @@ public class Pokemon implements Serializable {
 						this.metronome = 0;
 						this.moveMultiplier = 1;
 						this.impressive = false;
+						success = false;
 						return;
 					} else {
 						confusionCounter--;
@@ -2903,6 +2905,7 @@ public class Pokemon implements Serializable {
 				this.lastMoveUsed = prevMove;
 				this.rollCount = 1;
 				this.metronome = 0;
+				success = false;
 				return;
 			}
 		}
@@ -2927,6 +2930,7 @@ public class Pokemon implements Serializable {
 				this.lastMoveUsed = prevMove;
 				this.rollCount = 1;
 				this.metronome = -1;
+				success = false;
 				return;
 			}
 		}
@@ -2948,6 +2952,7 @@ public class Pokemon implements Serializable {
 			this.removeStatus(Status.SEMI_INV);
 			this.rollCount = 1;
 			this.metronome = -1;
+			success = false;
 			return;
 		}
 		
@@ -2960,6 +2965,7 @@ public class Pokemon implements Serializable {
 			this.removeStatus(Status.SEMI_INV);
 			this.rollCount = 1;
 			this.metronome = 0;
+			success = false;
 			return;
 		}
 		
@@ -2972,6 +2978,7 @@ public class Pokemon implements Serializable {
 			this.removeStatus(Status.SEMI_INV);
 			this.rollCount = 1;
 			this.metronome = 0;
+			success = false;
 			return;
 		}
 		
@@ -2984,6 +2991,7 @@ public class Pokemon implements Serializable {
 			this.removeStatus(Status.SEMI_INV);
 			this.rollCount = 1;
 			this.metronome = -1;
+			success = false;
 			return;
 		}
 		
@@ -2996,6 +3004,7 @@ public class Pokemon implements Serializable {
 			this.removeStatus(Status.SEMI_INV);
 			this.rollCount = 1;
 			this.metronome = 0;
+			success = false;
 			return;
 		}
 		
@@ -3033,6 +3042,7 @@ public class Pokemon implements Serializable {
 				this.moveMultiplier = 1;
 				this.rollCount = 1;
 				this.metronome = 0;
+				success = false;
 				return;
 			}
 			if (userMove == Move.MIMIC) {
@@ -3393,6 +3403,16 @@ public class Pokemon implements Serializable {
 				Task.addAbilityTask(foe);
 				Task.addTask(Task.TEXT, foe.nickname + "'s Fire-Type move's are boosted!");
 				if (!foe.hasStatus(Status.FLASH_FIRE)) foe.addStatus(Status.FLASH_FIRE);
+				endMove();
+				this.moveMultiplier = 1;
+				this.rollCount = 1;
+				this.metronome = -1;
+				return;
+			}
+			
+			if (move.isBallOrBomb() && foeAbility == Ability.BULLETPROOF) {
+				Task.addAbilityTask(foe);
+				Task.addTask(Task.TEXT, "It doesn't effect " + foe.nickname + "...");
 				endMove();
 				this.moveMultiplier = 1;
 				this.rollCount = 1;
@@ -4296,7 +4316,7 @@ public class Pokemon implements Serializable {
 					foe.eatBerry(foe.item, true, this);
 				}
 				if (foe.getItem(field) == Item.EJECT_BUTTON) {
-					if (foe.trainer != null && foe.trainer.hasValidMembers(foe)) {
+					if (foe.trainer != null && foe.trainer.hasValidMembers(this)) {
 						foeEject = true;
 						numHits = hit;
 					}
@@ -6970,8 +6990,8 @@ public class Pokemon implements Serializable {
 		if (p.isFainted()) return;
 		int a = amt;
 		if (p.getAbility(field) == Ability.SIMPLE) a *= 2;
-		if (p.getAbility(field) == Ability.CONTRARY) a *= -1;
-		if (foe != null && foe.getAbility(field) == Ability.CONTRARY) a *= -1;
+		if (p.getAbility(field) == Ability.CONTRARY || p.getAbility(field) == Ability.BRAINWASH) a *= -1;
+		if (foe != null && foe.getAbility(field) == Ability.BRAINWASH) a *= -1;
 		String type = "";
 		if (i == 0) type = "Attack";
 		if (i == 1) type = "Defense";
@@ -7765,6 +7785,10 @@ public class Pokemon implements Serializable {
 		
 		if (moveType == PType.FIRE && foeAbility == Ability.FLASH_FIRE) {
 			if (foe.getItem(field) != Item.RING_TARGET) return new Pair<>(0, 0.0);
+		}
+		
+		if (move.isBallOrBomb() && foeAbility == Ability.BULLETPROOF) {
+			return new Pair<>(0, 0.0);
 		}
 		
 		if ((moveType == PType.GHOST && foeAbility == Ability.FRIENDLY_GHOST) ||

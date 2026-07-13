@@ -1018,7 +1018,9 @@ public abstract class AbstractUI {
 			new Pair<>(Move.getNoComboMoves().contains(move), "No Combo"),
 			new Pair<>(Move.getSound().contains(move), "Sound"),
 			new Pair<>(move.isBiting(), "Biting"),
-			new Pair<>(move.isHealing(), "Healing")
+			new Pair<>(move.isHealing(), "Healing"),
+			new Pair<>(move.isCrushing(), "Crushing"),
+			new Pair<>(move.isBallOrBomb(), "Projectile")
 		);
 		
 		for (Pair<Boolean, String> flag : moveFlags) {

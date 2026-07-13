@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -739,6 +740,13 @@ public class UI extends AbstractUI {
 			drawDialogueScreen(true);
 			drawHappinessTweaker(currentTask.p);
 			break;
+		case Task.MINE:
+			currentDialogue = Item.breakString(currentTask.message, MAX_TEXTBOX);
+			drawDialogueScreen(true);
+			drawMineConfirm();
+			break;
+		case Task.MINING_CHANCES:
+			drawMineChances();
 		}
 	}
 
@@ -2031,7 +2039,7 @@ public class UI extends AbstractUI {
 					Task.addTask(Task.TEXT, "A powerful presence awaits...");
 					currentTask = null;
 					break;
-				case 17:
+				case 17: // UNUSED
 					((NPC_Mine) currentTask.e).startMine(gp.player.p);
 					currentTask = null;
 					break;
@@ -6454,7 +6462,7 @@ public class UI extends AbstractUI {
 		drawSubWindow(dFrameX,dFrameY,dFrameWidth,dFrameHeight);
 		g2.drawString(current.toString(), textX, textY);
 		
-		int priceX = getRightAlignedTextX("$	 ", dFrameX + dFrameWidth - gp.tileSize / 2);
+		int priceX = getRightAlignedTextX("$ ", dFrameX + dFrameWidth - gp.tileSize);
 		g2.drawImage(Item.STAR_PIECE.getImage2(), priceX, (int) (textY - gp.tileSize * 0.75), null);
 		String price = String.valueOf(current.getCost());
 		priceX += gp.tileSize * 0.9;
@@ -7704,5 +7712,172 @@ public class UI extends AbstractUI {
 		gp.player.p.hofTeams.add(snapshot);
 		gp.player.p.champion = true;
 		Task.addTask(Task.SAVE, "");
+	}
+	
+	private void drawMineConfirm() {
+		int x = gp.tileSize * 10;
+		int y = gp.tileSize * 4;
+		int width = gp.tileSize * 4;
+		int height = (int) (gp.tileSize * 3.5);
+		drawSubWindow(x, y, width, height);
+		if (currentTask.e != null && currentTask.e.name != null) drawNameLabel(true);
+		x += gp.tileSize;
+		y += gp.tileSize;
+		String yes = "Yes";
+		g2.drawString(yes, x, y);
+		if (commandNum == 0) {
+			g2.drawString(">", x-24, y);
+			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				((NPC_Mine) currentTask.e).startMine(gp.player.p);
+				currentTask = null;
+			}
+		}
+		y += gp.tileSize;
+		String chances = "Chances";
+		g2.drawString(chances, x, y);
+		if (commandNum == 1) {
+			g2.drawString(">", x-24, y);
+			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				((NPC_Mine) currentTask.e).recomputeChances();
+				Task.addTask(Task.MINING_CHANCES, currentTask.e, "");
+				currentTask = null;
+			}
+		}
+		
+		y += gp.tileSize;
+		String no = "No";
+		g2.drawString(no, x, y);
+		if (commandNum == 2) {
+			g2.drawString(">", x-24, y);
+			if (gp.keyH.wPressed) {
+				gp.keyH.wPressed = false;
+				currentTask = null;
+				gp.gameState = GamePanel.PLAY_STATE;
+				commandNum = 0;
+			}
+		}
+		
+		if (gp.keyH.sPressed) {
+			gp.keyH.sPressed = false;
+			currentTask = null;
+			tasks.clear();
+		}
+		
+		if (gp.keyH.upPressed) {
+			gp.keyH.upPressed = false;
+			commandNum--;
+			if (commandNum < 0) commandNum = 2;
+		}
+		if (gp.keyH.downPressed) {
+			gp.keyH.downPressed = false;
+			commandNum++;
+			if (commandNum > 2) commandNum = 0;
+		}
+		
+		drawToolTips("OK", null, "Back", null);
+	}
+	
+	private void drawMineChances() {
+	    NPC_Mine npc = (NPC_Mine) currentTask.e;
+	    npc.handleChanceViewerInput();
+
+	    LinkedHashMap<Item, Double> chances = npc.getChanceBuffer();
+	    double failChance = npc.getFailChance();
+
+	    List<Map.Entry<Item, Double>> sorted = new ArrayList<>(chances.entrySet());
+	    sorted.sort((a, b) -> Double.compare(b.getValue(), a.getValue()));
+
+	    int itemCount = sorted.size() + 1; // +1 for the fail row
+
+	    int maxItemsPerColumn = itemCount <= 12 ? 12 : 26;
+	    int fontSize = itemCount <= 12 ? 32 : 20;
+
+	    int columns = Math.max(1, (int) Math.ceil(itemCount / (double) maxItemsPerColumn));
+	    int itemsPerColumn = (int) Math.ceil(itemCount / (double) columns);
+
+	    int baseColumnWidth = (int) (gp.tileSize * 5.5);
+	    int columnSpacing = gp.tileSize / 2;
+	    int width = Math.min(gp.screenWidth,
+	        (baseColumnWidth * columns) + (columnSpacing * (columns - 1)) + gp.tileSize * 3 + columnSpacing);
+
+	    int rowHeight = fontSize * 3 / 2 - gp.tileSize / 4;
+	    int sliderAreaHeight = gp.tileSize; // reserve a row's worth of space for the slider
+	    int height = (int) (itemsPerColumn * rowHeight + gp.tileSize * 2 + sliderAreaHeight);
+
+	    int x = Math.max(0, (gp.screenWidth - width) / 2);
+	    int y = Math.max(0, (gp.screenHeight - height) / 2);
+
+	    drawSubWindow(x, y, width, height);
+
+	    int columnWidth = (width - columnSpacing * (columns - 1)) / columns;
+
+	    y += gp.tileSize / 4;
+	    g2.setFont(g2.getFont().deriveFont(40F));
+	    String header = "Depth " + npc.getViewDepth() + "/" + NPC_Mine.getMaxViewDepth()
+	        + "   |   Perilyte: " + (npc.isViewPerilyte() ? "ON" : "OFF");
+	    g2.drawString(header, getCenterAlignedTextX(header, gp.screenWidth / 2), y + gp.tileSize);
+
+	    // --- Depth slider ---
+	    int sliderX = x + gp.tileSize;
+	    int sliderWidth = width - gp.tileSize * 2;
+	    int sliderY = (int) (y + gp.tileSize * 1.4);
+	    int trackHeight = Math.max(6, gp.tileSize / 6);
+
+	    g2.setColor(Color.DARK_GRAY);
+	    g2.fillRoundRect(sliderX, sliderY, sliderWidth, trackHeight, trackHeight, trackHeight);
+
+	    float depthPct = npc.getViewDepth() / (float) NPC_Mine.getMaxViewDepth();
+	    int filledWidth = (int) (sliderWidth * depthPct);
+	    g2.setColor(Color.YELLOW);
+	    g2.fillRoundRect(sliderX, sliderY, filledWidth, trackHeight, trackHeight, trackHeight);
+
+	    int handleRadius = Math.max(8, gp.tileSize / 4);
+	    int handleX = sliderX + filledWidth - handleRadius / 2;
+	    int handleY = sliderY + trackHeight / 2 - handleRadius / 2;
+	    g2.setColor(Color.WHITE);
+	    g2.fillOval(handleX, handleY, handleRadius, handleRadius);
+	    g2.setColor(Color.BLACK);
+	    g2.drawOval(handleX, handleY, handleRadius, handleRadius);
+
+	    y += sliderAreaHeight / 2; // push everything below down by the slider's footprint
+
+	    g2.setFont(g2.getFont().deriveFont((float) fontSize));
+	    int currentColumn = 0;
+	    int currentRow = 0;
+
+	    // Fail chance gets its own highlighted row up top
+	    int rowY = (int) (y + gp.tileSize * 1.75);
+	    g2.setColor(Color.RED);
+	    g2.drawString(String.format("%.1f%% - Lose everything!", failChance * 100), x + gp.tileSize / 2, rowY);
+	    g2.setColor(Color.WHITE);
+	    currentRow++;
+	    if (currentRow >= itemsPerColumn) { currentRow = 0; currentColumn++; }
+
+	    for (Map.Entry<Item, Double> e : sorted) {
+	        int columnX = x + (currentColumn * (columnWidth + (currentColumn > 0 ? 0 : columnSpacing))) + gp.tileSize / 2;
+	        rowY = (int) (y + gp.tileSize * 1.75 + (currentRow * rowHeight));
+
+	        g2.drawImage(e.getKey().getImage(), columnX, rowY - fontSize, null);
+	        String name = truncate(e.getKey().toString(), 12);
+	        String line = String.format("%.1f%% %s", e.getValue() * 100, name);
+	        g2.drawString(line, (int) (columnX + gp.tileSize * 0.75), rowY);
+
+	        currentRow++;
+	        if (currentRow >= itemsPerColumn) { currentRow = 0; currentColumn++; }
+	    }
+
+	    if (gp.keyH.sPressed && !showMessage) {
+	        gp.keyH.sPressed = false;
+	        currentTask = null;
+	    }
+
+	    drawToolTips(null, "W: Perilyte   \u2190/\u2192: Depth", "Close", null);
+	}
+
+	private String truncate(String text, int maxLength) {
+	    if (text.length() <= maxLength) return text;
+	    return text.substring(0, maxLength) + "...";
 	}
 }

@@ -30,6 +30,7 @@ public class Script {
 	private void initializeScripts() {
 		giftEncounters = new ArrayList<>();
 		scriptMap.put(52.0, (npc) -> { // professor dad
+			boolean askAboutShadow = true;
 			if (!p.flag[0][0]) {
 				p.flag[0][0] = true;
 				Task.addTask(Task.DIALOGUE, npc, "Well hiya there son!");
@@ -178,6 +179,7 @@ public class Script {
 				Task.addTask(Task.SLEEP, "", 30);
 				Task.addTask(Task.DIALOGUE, npc, "Anyway - rest up if you need to, then get out there.");
 				Task.addTask(Task.DIALOGUE, npc, "Xhenos is waiting. And your friends are too.");
+				askAboutShadow = false;
 			} else if (p.flag[8][2] && !p.flag[8][3] && !p.flag[8][4]) { // after lava surf but before fred or scott
 				Task.addTask(Task.DIALOGUE, npc, "Well hiya there son!");
 				Task.addTask(Task.DIALOGUE, npc, "All rested up? Route 43 just opened up now that you've got Lava Surf.");
@@ -192,7 +194,7 @@ public class Script {
 				Task.addTask(Task.DIALOGUE, npc, "Well hiya there son!");
 				Task.addTask(Task.DIALOGUE, npc, "How's it going?");
 			}
-			if (p.flag[0][5] && !p.flag[0][21]) {
+			if (p.flag[0][5] && !p.flag[0][21] && askAboutShadow) {
 				Task.addTask(Task.DIALOGUE, npc, "Have you seen any new Shadow forms? Can I take a look?");
 				Pokemon[] sDex = p.getDexType(1);
 				int amt = 0;

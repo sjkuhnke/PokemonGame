@@ -639,7 +639,7 @@ public class PlayerCharacter extends Entity {
 		
 		gp.setTaskState();
 		if (p.getMoney() >= mine.PRICE) {
-			Task t = Task.addTask(Task.CONFIRM, mine, "Hi there! If you pay me $" + mine.PRICE + ", I'll head into my mine and see what I can dig up for you!\n(Warning: Will Auto-Save)", 17);
+			Task t = Task.addTask(Task.MINE, mine, "Hi there! If you pay me $" + mine.PRICE + ", I'll head into my mine and see what I can dig up for you!\n(Warning: Will Auto-Save)");
 			t.ui = Task.MONEY;
 		} else {
 			Task.addTask(Task.DIALOGUE, mine, "I'm sorry, you don't have enough money for my expert services. Come back with at least $" + mine.PRICE + "!");
