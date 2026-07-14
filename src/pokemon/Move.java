@@ -1211,21 +1211,25 @@ public enum Move {
 	}
 	
 	public int getPriority(Pokemon p) {
+		return getPriority(p, Pokemon.field);
+	}
+	
+	public int getPriority(Pokemon p, Field field) {
 		int pr = this.priority;
 		
 		if (p == null) return pr;
 		
-		if (this.cat == 2 && p.getAbility(Pokemon.field) == Ability.PRANKSTER) {
+		if (this.cat == 2 && p.getAbility(field) == Ability.PRANKSTER) {
 			pr++;
 		}
 		
 		if ((this.mtype == PType.MAGIC || p.lastMoveUsed == Move.VANISHING_ACT)
-			&& p.getAbility(Pokemon.field) == Ability.SLEIGHT_OF_HAND
+			&& p.getAbility(field) == Ability.SLEIGHT_OF_HAND
 			&& p.currentHP == p.getStat(0)) {
 			pr++;
 		}
 		
-		if (p.impressive && p.getAbility(Pokemon.field) == Ability.AMBUSH) {
+		if (p.impressive && p.getAbility(field) == Ability.AMBUSH) {
 			pr++;
 		}
 		

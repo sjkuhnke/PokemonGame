@@ -144,12 +144,10 @@ public class Trainer implements Serializable {
 	private Pokemon getNext2(Pokemon other) {
 		int bestScore = Integer.MIN_VALUE;
 		Pokemon next = null;
-		StringBuilder sb = new StringBuilder("______________\n");
-		sb.append("FREE SWITCH\n");
-		sb.append("______________\n");
+		StringBuilder sb = new StringBuilder("\n______________\nFREE SWITCH\n______________\n");
 		for (Pokemon p : team) {
 			if (!p.isFainted() && p != current) {
-				int score = p.scorePokemon(other, null, new Pair<>(0, 0.0), false, Pokemon.field, null, false);
+				int score = p.evaluateSwitchInScore(other, Pokemon.field);
 				sb.append("[" + p + ": " + score + "], ");
 				if (score > bestScore) {
 					bestScore = score;
@@ -500,6 +498,7 @@ public class Trainer implements Serializable {
 		result.catchable = this.catchable;
 		result.effects = DeepClonable.deepCloneList(this.effects);
 		result.cloned = true;
+		result.boosts = this.boosts.clone();
 		
 		return result;
 	}
@@ -510,6 +509,7 @@ public class Trainer implements Serializable {
 		if (this.effects != null) result.effects = DeepClonable.deepCloneList(this.effects);
 		result.cloned = true;
 		result.team = this.team.clone();
+		result.boosts = this.boosts;
 		return result;
 	}
 	

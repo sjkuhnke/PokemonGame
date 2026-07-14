@@ -447,348 +447,6 @@ public class Pokemon implements Serializable {
 	    }	    
 	}
 	
-	public Move bestMove(Pokemon foe, boolean first) {
-	    ArrayList<Move> validMoves = this.getValidMoveset();
-	    
-	    if (this.script) {
-	    	if (field.turns == 0) {
-	    		if (gp.currentMap == 160) {
-	    			return this.getStatusMove();
-	    		} else {
-	    			return this.moveset[0].move;
-	    		}
-	    	}
-	    }
-	    
-	    Pair<Pokemon, String> switchRsn = null;
-	    if (gp.gameState == GamePanel.SIM_BATTLE_STATE) {
-	    	if (gp.simBattleUI.p1Switch == null) {
-	    		gp.simBattleUI.p1Switch = new Pair<>(null, null);
-	    		switchRsn = gp.simBattleUI.p1Switch;
-	    	} else {
-	    		gp.simBattleUI.p2Switch = new Pair<>(null, null);
-	    		switchRsn = gp.simBattleUI.p2Switch;
-	    	}
-	    }
-	    
-	    Trainer tr = this.trainer;
-	    boolean canSwitch = tr.canSwitch(foe);
-	    
-        // Calculate and store the damage values of each move
-        Map<Move, Integer> moveToDamage = new HashMap<>();
-
-        for (Move move : validMoves) {
-            int damage = calcWithTypes(foe, move, first, field, true).getFirst();
-            moveToDamage.put(move, damage);
-        }
-        
-        // Check if there are no valid moves with non-zero PP
-        if (moveToDamage.isEmpty()) {
-        	// 100% chance to swap in a partner if you can only struggle
-        	if (canSwitch) {
-        		String rsn = "[All valid moves have 0 PP : 100%]";
-        		System.out.println(rsn);
-        		if (switchRsn != null) {
-    				switchRsn.setFirst(this);
-        			switchRsn.setSecond(rsn);
-    			}
-        		this.addStatus(Status.SWAP);
-        		return Move.GROWL;
-        	} else {
-        		return Move.STRUGGLE;
-        	}
-        }
-        
-        // Find the maximum damage value
-        int maxDamage = Collections.max(moveToDamage.values());
-        boolean iKill = maxDamage >= foe.currentHP;
-        
-        Ability foeAbility = foe.getAbility(field);
-        if (foe.getItem(field) != Item.ABILITY_SHIELD && this.getAbility(field) == Ability.MOLD_BREAKER) {
-			foeAbility = Ability.NULL;
-		}
-        
-        Move strongestMove = null;
-        int foeMaxDamage = Integer.MIN_VALUE;
-        
-        boolean moveKills = false;
-		boolean hasResist = false;
-		ArrayList<Move> foeMoveset = foe.getValidMoveset();
-		Collections.shuffle(foeMoveset);
-    	for (Move m : foeMoveset) {
-    		int damage = foe.calcWithTypes(this, m, true, 0, false, field, true).getFirst();
-    		hasResist = tr.hasResist(foe, m.mtype, m);
-    		if (damage > foeMaxDamage) {
-    			foeMaxDamage = damage;
-    			strongestMove = m;
-    		}
-    		if (damage >= this.currentHP) {
-    			moveKills = true;
-    			strongestMove = m;
-    			break;
-    		}
-    	}
-        
-        if (canSwitch) {
-        	// 25% chance to swap in a partner if they resist and you don't
-        	ArrayList<Move> damagingMoveset = foe.getDamagingMoveset();
-        	boolean only1Move = damagingMoveset.size() == 1;
-        	Move check = only1Move ? damagingMoveset.get(0) : foe.lastMoveUsed;
-        	if (check != null && check.cat != 2 && !tr.resists(this, foe, check.mtype, check)
-        			&& tr.hasResist(foe, check.mtype, check)) {
-        		double chance = ((1 - Trainer.getEffective(tr.getBestResist(foe, check.mtype, check), foe, check.mtype, check, false)) / 2) * 100;
-        		boolean faster = this == this.getFaster(foe, 0, 0, field);
-        		if (only1Move) {
-        			chance *= 3;
-        		} else {
-        			if (faster) chance /= 2;
-            		if (this.impressive) chance /= 4;
-        		}
-        		if (checkSecondary((int) Math.round(chance))) {
-        			String rsn = "[Partner resists : " + String.format("%.1f", chance) + "%]";
-        			System.out.println(rsn);
-        			if (switchRsn != null) {
-        				switchRsn.setFirst(this);
-            			switchRsn.setSecond(rsn);
-        			}
-        			if (faster) {
-        				Move pivotMove = hasPivotMove(foe, foeAbility, validMoves);
-            	        if (pivotMove != null) return pivotMove;
-        			}
-                	this.addStatus(Status.SWAP);
-                	return only1Move ? check : Move.SPLASH;
-        		}
-            }
-        	// 70% chance to swap if all of your moves do 0 damage
-        	if (maxDamage == 0 && !validMoves.equals(new ArrayList<>(Arrays.asList(new Move[] {Move.METRONOME})))) {
-        		double chance = 70;
-        		if (this.impressive) chance *= 0.75;
-        		if (checkSecondary((int) chance)) {
-        			String rsn = "[All moves do 0 damage : " + String.format("%.1f", chance) + "%]";
-        			System.out.println(rsn);
-        			if (switchRsn != null) {
-        				switchRsn.setFirst(this);
-            			switchRsn.setSecond(rsn);
-        			}
-        			Move pivotMove = hasPivotMove(foe, foeAbility, validMoves);
-        	        if (pivotMove != null) return pivotMove;
-        			this.addStatus(Status.SWAP);
-            		return Move.GROWL;
-        		}
-        	}
-        	// 20% chance to swap if the most damage you do is 1/5 or less to target
-        	if (maxDamage <= foe.getStat(0) * 1.0 / 5 && maxDamage < foe.currentHP && !(foe.getAbility(field) == Ability.SHADOW_VEIL && foe.illusion)) {
-        		double chance = 20;
-        		Move pivotMove = hasPivotMove(foe, foeAbility, validMoves);
-        		if (this == this.getFaster(foe, 0, 0, field) && pivotMove == null) chance /= 2;
-        		if (this.impressive) chance /= 2;
-        		if (checkSecondary((int) chance)) {
-        			String rsn = "[Damage i do is 1/5 or less : " + String.format("%.1f", chance) + "%]";
-        			System.out.println(rsn);
-        			if (switchRsn != null) {
-        				switchRsn.setFirst(this);
-            			switchRsn.setSecond(rsn);
-        			}
-        			if (pivotMove != null) return pivotMove;
-        			this.addStatus(Status.SWAP);
-            		return Move.GROWL;
-        		}
-        	}
-        	// 20, 40, 100% chance to swap based on perish counter
-        	if (this.perishCount > 0) {
-        		int chance = (this.perishCount == 1) ? 100 : this.perishCount == 2 ? 40 : 20;
-        		if (checkSecondary(chance)) {
-        			String rsn = "[Perish in " + this.perishCount + " : " + chance + "%]";
-        	        System.out.println(rsn);
-        	        if (switchRsn != null) {
-        	            switchRsn.setFirst(this);
-        	            switchRsn.setSecond(rsn);
-        	        }
-        	        Move pivotMove = hasPivotMove(foe, foeAbility, validMoves);
-        	        if (pivotMove != null) return pivotMove;
-        	        this.addStatus(Status.SWAP);
-        	        return Move.GROWL;
-        		}
-        	}
-        	// 10% chance to swap if i'm leech seeded
-        	if (this.hasStatus(Status.LEECHED) && checkSecondary(10)) {
-        		String rsn = "[Leeched : 10%]";
-        		System.out.println(rsn);
-        		if (switchRsn != null) {
-    				switchRsn.setFirst(this);
-        			switchRsn.setSecond(rsn);
-    			}
-        		Move pivotMove = hasPivotMove(foe, foeAbility, validMoves);
-    	        if (pivotMove != null) return pivotMove;
-        		this.addStatus(Status.SWAP);
-        		return Move.GROWL;
-        	}
-        	// 30% chance to swap if i'm yawned
-        	if (this.hasStatus(Status.DROWSY) && checkSecondary(30)) {
-        		String rsn = "[Drowsy : 30%]";
-        		System.out.println(rsn);
-        		if (switchRsn != null) {
-    				switchRsn.setFirst(this);
-        			switchRsn.setSecond(rsn);
-    			}
-        		Move pivotMove = hasPivotMove(foe, foeAbility, validMoves);
-    	        if (pivotMove != null) return pivotMove;
-        		this.addStatus(Status.SWAP);
-        		return Move.GROWL;
-        	}
-        	// 40% chance to swap if i'm cursed
-        	if (this.hasStatus(Status.CURSED) && checkSecondary(40)) {
-        		String rsn = "[Cursed : 40%]";
-        		System.out.println(rsn);
-        		if (switchRsn != null) {
-    				switchRsn.setFirst(this);
-        			switchRsn.setSecond(rsn);
-    			}
-        		Move pivotMove = hasPivotMove(foe, foeAbility, validMoves);
-    	        if (pivotMove != null) return pivotMove;
-        		this.addStatus(Status.SWAP);
-        		return Move.GROWL;
-        	}
-        	// 5% * toxic counter - 1 chance to swap
-        	if (this.status == Status.TOXIC && this.ability != Ability.MAGIC_GUARD &&
-        			this.ability != Ability.SCALY_SKIN && this.ability != Ability.POISON_HEAL) {
-        		double chance = (this.toxic - 1) * 5;
-        		if (checkSecondary((int) chance)) {
-	        		String rsn = "[Toxiced : " + String.format("%.1f", chance) + "%]";
-	        		System.out.println(rsn);
-	        		if (switchRsn != null) {
-	    				switchRsn.setFirst(this);
-	        			switchRsn.setSecond(rsn);
-	    			}
-	        		Move pivotMove = hasPivotMove(foe, foeAbility, validMoves);
-        	        if (pivotMove != null) return pivotMove;
-	        		this.addStatus(Status.SWAP);
-	        		return Move.GROWL;
-        		}
-        	}
-        	if (moveKills) {
-        		double chance = (this.currentHP * 1.0 / this.getStat(0)) * 100;
-        		chance *= 0.6;
-        		boolean faster = this == this.getFaster(foe, 0, 0, field);
-        		if (faster) chance /= 2;
-        		if (maxDamage >= foe.currentHP) chance /= 1.5;
-        		if (hasResist) {
-        			chance *= 1.5;
-        		} else {
-        			chance /= 5;
-        		}
-        		if (checkSecondary((int) chance)) {
-        			String rsn = "[Enemy kills me : " + String.format("%.1f", chance) + "%]";
-        			System.out.println(rsn);
-        			if (switchRsn != null) {
-        				switchRsn.setFirst(this);
-            			switchRsn.setSecond(rsn);
-        			}
-        			if (faster) {
-        				Move pivotMove = hasPivotMove(foe, foeAbility, validMoves);
-            	        if (pivotMove != null) return pivotMove;
-        			}
-        			this.addStatus(Status.SWAP);
-            		return Move.moveOfType(strongestMove.mtype);
-        		}
-        	}
-        }
-        
-        // Filter moves based on conditions and max damage
-        ArrayList<Move> bestMoves = new ArrayList<>();
-        for (Map.Entry<Move, Integer> entry : moveToDamage.entrySet()) {
-        	Move move = entry.getKey();
-        	Move moveTest = id == 237 ? this.get150Move(move) : move;
-        	int damage = entry.getValue();
-        	if (damage >= maxDamage && (damage > 0 || validMoves.size() == 1 || (allMovesAreDamaging(moveToDamage) && maxDamage == 0)) && moveTest.cat != 2) {
-        		bestMoves.add(move);
-        		bestMoves.add(move);
-        		bestMoves.add(move);
-        		if (move.hasPriority(this) || move == Move.FELL_STINGER || move == Move.COMET_PUNCH) {
-        			bestMoves.add(move);
-        			if (this.script) return move;
-        		}
-        	}
-        	if (moveTest.cat == 2 || Move.treatAsStatus(moveTest, this, foe)) {
-        		if (moveTest.accuracy > 100) {
-        			Pokemon freshYou = this.clone();
-        			freshYou.statStages = new int[freshYou.statStages.length];
-        			Pokemon freshFoe = new Pokemon(1, 1, false, false);
-        			int[] prevStatsF = freshYou.statStages.clone();
-        			freshYou.statusEffect(freshFoe, moveTest, field);
-        			int[] currentStatsF = freshYou.statStages.clone();
-        			if (!arrayEquals(prevStatsF, currentStatsF)) {
-        				Pokemon you = this.clone();
-            			Pokemon foeClone = foe.clone(); // shouldn't matter
-            			int[] prevStats = you.statStages.clone();
-            			you.statusEffect(foeClone, moveTest, field);
-            			int[] currentStats = you.statStages.clone();
-            			if (arrayGreaterOrEqual(prevStats, currentStats)) {
-            				// nothing: don't add
-            			} else {
-            				bestMoves.add(move);
-            				if (maxDamage < foe.currentHP / 4) {
-                    			bestMoves.add(move);
-                    		}
-            			}
-        			} else {
-        				bestMoves.add(move);
-            			if (maxDamage < foe.currentHP / 4) {
-                			bestMoves.add(move);
-                		}
-        			}
-        		} else {
-        			bestMoves.add(move);
-        			if (maxDamage < foe.currentHP / 4) {
-            			bestMoves.add(move);
-            		}
-        		}
-        	}
-        	if (move == Move.SEA_DRAGON && id == 150) {
-        		bestMoves.add(move);
-        	}
-        	
-        	if (!iKill && !moveKills && strongestMove != null && damage >= 0) {
-        		if (move == Move.COUNTER && strongestMove.isPhysical()) {
-        			bestMoves.add(move);
-        			bestMoves.add(move);
-        		}
-        		if (move == Move.MIRROR_COAT && strongestMove.isSpecial()) {
-        			bestMoves.add(move);
-        			bestMoves.add(move);
-        		}
-        		if (move == Move.METAL_BURST && foeMaxDamage >= this.getStat(0) * 1.0 / 5) {
-        			bestMoves.add(move);
-        			bestMoves.add(move);
-        		}
-        	}
-        	if (moveKills) {
-        		if (move == Move.DESTINY_BOND) {
-        			bestMoves.add(move);
-        		}
-        		if (move == Move.ENDURE) {
-        			bestMoves.add(move);
-        		}
-        	}
-        }
-        
-        bestMoves = modifyStatus(bestMoves, foe, moveKills);
-    	if (bestMoves.isEmpty()) { // fallback: return a random valid move
-    		int randomIndex = (int) (Math.random() * validMoves.size());
-            return validMoves.get(randomIndex);
-    	}
-        int randomIndex = (int) (Math.random() * bestMoves.size());
-        
-        if (gp.gameState == GamePanel.SIM_BATTLE_STATE) {
-        	if (gp.simBattleUI.p1Moves == null) {
-        		//gp.simBattleUI.p1Moves = new Pair<>(this, bestMoves);
-        	} else {
-        		//gp.simBattleUI.p2Moves = new Pair<>(this, bestMoves);
-        	}
-        }
-        return bestMoves.get(randomIndex);
-    }
-	
 	public Move bestMove2(Pokemon foe, boolean first, int difficulty) {
 		ArrayList<Move> validMoves = this.getValidMoveset();
 		
@@ -906,9 +564,9 @@ public class Pokemon implements Serializable {
 
 		brain.append("MOVE SCORES:\n");
 		for (Move m : moveScores.keySet()) {
-		    brain.append(m).append(": ")
-		         .append(moveScores.get(m))
-		         .append("\n");
+			brain.append(m).append(": ")
+			.append(moveScores.get(m))
+			.append("\n");
 		}
 		
 		HashMap<Pokemon, Integer> scoreMap = new HashMap<>();
@@ -916,36 +574,36 @@ public class Pokemon implements Serializable {
 		if (difficulty == Player.NORMAL && canSwitch) {
 			int maxScore = Collections.max(moveScores.values());
 			// 100% chance to swap if perish counter == 1
-	        if (this.perishCount == 1) {
-	            String rsn = "[Perish in 1 : 100%]\n";
-	            Print.debug(rsn);
-	            if (switchRsn != null) {
-	                switchRsn.setFirst(this);
-	                switchRsn.setSecond(rsn);
-	            }
-	            Move pivotMove = hasPivotMove(foe, foeAbility, validMoves);
-	            if (pivotMove != null) return pivotMove;
-	            this.addStatus(Status.SWAP, BattleUI.NORMAL_SWITCH);
-	            return Move.GROWL;
-	        }
-	        
-	        // 50% chance to swap if all moves do 0 damage
-	        if (maxScore <= 25 && !validMoves.equals(new ArrayList<>(Arrays.asList(new Move[] {Move.METRONOME})))) {
-	            double chance = 50;
-	            if (this.impressive) chance *= 0.75;
-	            if (checkSecondary((int) chance)) {
-	                String rsn = "[All moves do 0 damage : " + String.format("%.1f", chance) + "%]\n";
-	                Print.debug(rsn);
-	                if (switchRsn != null) {
-	                    switchRsn.setFirst(this);
-	                    switchRsn.setSecond(rsn);
-	                }
-	                Move pivotMove = hasPivotMove(foe, foeAbility, validMoves);
-	                if (pivotMove != null) return pivotMove;
-	                this.addStatus(Status.SWAP, BattleUI.NORMAL_SWITCH);
-	                return Move.GROWL;
-	            }
-	        }
+			if (this.perishCount == 1) {
+				String rsn = "[Perish in 1 : 100%]\n";
+				Print.debug(rsn);
+				if (switchRsn != null) {
+					switchRsn.setFirst(this);
+					switchRsn.setSecond(rsn);
+				}
+				Move pivotMove = hasPivotMove(foe, foeAbility, validMoves);
+				if (pivotMove != null) return pivotMove;
+				this.addStatus(Status.SWAP, BattleUI.NORMAL_SWITCH);
+				return Move.GROWL;
+			}
+			
+			// 50% chance to swap if all moves do 0 damage
+			if (maxScore <= 25 && !validMoves.equals(new ArrayList<>(Arrays.asList(new Move[] {Move.METRONOME})))) {
+				double chance = 50;
+				if (this.impressive) chance *= 0.75;
+				if (checkSecondary((int) chance)) {
+					String rsn = "[All moves do 0 damage : " + String.format("%.1f", chance) + "%]\n";
+					Print.debug(rsn);
+					if (switchRsn != null) {
+						switchRsn.setFirst(this);
+						switchRsn.setSecond(rsn);
+					}
+					Move pivotMove = hasPivotMove(foe, foeAbility, validMoves);
+					if (pivotMove != null) return pivotMove;
+					this.addStatus(Status.SWAP, BattleUI.NORMAL_SWITCH);
+					return Move.GROWL;
+				}
+			}
 		} else if (difficulty != Player.NORMAL && canSwitch) {
 			StringBuilder sb = new StringBuilder("===========================================\n");
 			
@@ -956,8 +614,7 @@ public class Pokemon implements Serializable {
 				if (ally != null && ally != this) {
 					Pokemon allyClone = trainerTeamClones[i];
 					Pokemon foeClone = foe.fullClone();
-					Pokemon simulatedAlly = simulateSwitchIn(ally, allyClone, foeClone, fieldClone);
-					int allyScore = simulatedAlly.scorePokemon(foe, strongestMove, foeMaxDamagePair, foeCanKO, fieldClone, null, false);
+					int allyScore = ally.evaluateSwitchInScore(allyClone, foe, foeClone, fieldClone);
 					scoreMap.put(ally, allyScore);
 				}
 			}
@@ -1221,7 +878,7 @@ public class Pokemon implements Serializable {
 		aggrDebug.append("=== AGGRESSION CALCULATION for ").append(this.nickname).append(" ===\n");
 		aggrDebug.append("Strongest Move vs ").append(foe.nickname).append(": ").append(ourStrongestMove).append("\n");
 		aggrDebug.append("Damage to Current Foe: ").append(maxDamageRaw).append(" HP (")
-		         .append(String.format("%.1f%%", maxDamagePercent)).append(")\n");
+			.append(String.format("%.1f%%", maxDamagePercent)).append(")\n");
 		aggrDebug.append("Survival if Foe Stays: ").append(String.format("%.3f", survivalIfStay)).append("\n");
 		aggrDebug.append(backMonDebug.toString());
 		aggrDebug.append("Best Switch Survival: ").append(String.format("%.3f", bestSwitchSurvival)).append("\n");
@@ -1362,146 +1019,6 @@ public class Pokemon implements Serializable {
 		
 		return result;
 	}
-
-	private ArrayList<Move> modifyStatus(ArrayList<Move> bestMoves, Pokemon foe, boolean moveKills) {
-		ArrayList<Move> checkForImmunity = new ArrayList<Move>(bestMoves);
-		Collections.shuffle(checkForImmunity);
-		for (Move m : checkForImmunity) {
-			if (bestMoves.size() > 1 && Trainer.getEffective(foe, this, m.mtype, m, true) == 0 && m.accuracy <= 100) bestMoves.removeIf(m::equals);
-		}
-		
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.THUNDER_WAVE) && foe.isType(PType.GROUND)) bestMoves.removeIf(Move.THUNDER_WAVE::equals);
-		
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.ENDURE) && !moveKills) bestMoves.removeIf(Move.ENDURE::equals);
-		
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.STICKY_WEB) && field.contains(foe.getFieldEffects(), Effect.STICKY_WEBS)) bestMoves.removeIf(Move.STICKY_WEB::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.STEALTH_ROCK) && field.contains(foe.getFieldEffects(), Effect.STEALTH_ROCKS)) bestMoves.removeIf(Move.STEALTH_ROCK::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.FLOODLIGHT) && field.contains(foe.getFieldEffects(), Effect.FLOODLIGHT)) bestMoves.removeIf(Move.FLOODLIGHT::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.SPIKES) && field.getLayers(foe.getFieldEffects(), Effect.SPIKES) == 3) bestMoves.removeIf(Move.SPIKES::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.TOXIC_SPIKES) && field.getLayers(foe.getFieldEffects(), Effect.TOXIC_SPIKES) == 2) bestMoves.removeIf(Move.TOXIC_SPIKES::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.DEFOG)) {
-			if (field.getHazards(this.getFieldEffects()).isEmpty() && field.getScreens(foe.getFieldEffects()).isEmpty() && field.terrain == null) {
-				bestMoves.removeIf(Move.DEFOG::equals);
-			} else {
-				bestMoves.add(Move.DEFOG);
-				bestMoves.add(Move.DEFOG);
-				bestMoves.add(Move.DEFOG);
-			}
-		}
-		
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.FIELD_FLIP)) {
-			if (field.getHazards(this.getFieldEffects()).isEmpty() && field.getScreens(foe.getFieldEffects()).isEmpty()) {
-				bestMoves.removeIf(Move.FIELD_FLIP::equals);
-			} else {
-				bestMoves.add(Move.FIELD_FLIP);
-				bestMoves.add(Move.FIELD_FLIP);
-			}
-		}
-		
-		ArrayList<Move> noRepeat = Move.getNoComboMoves();
-		for (Move m : noRepeat) {
-			if (bestMoves.size() > 1 && bestMoves.contains(m) && noRepeat.contains(lastMoveUsed)) bestMoves.removeIf(m::equals);
-		}
-		
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.MAGIC_REFLECT) && this.impressive) bestMoves.removeIf(Move.MAGIC_REFLECT::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.ABDUCT) && this.impressive) bestMoves.removeIf(Move.ABDUCT::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.TAKE_OVER) && this.impressive) bestMoves.removeIf(Move.TAKE_OVER::equals);
-		
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.SUNNY_DAY) && field.equals(field.weather, Effect.SUN)) bestMoves.removeIf(Move.SUNNY_DAY::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.RAIN_DANCE) && field.equals(field.weather, Effect.RAIN)) bestMoves.removeIf(Move.RAIN_DANCE::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.SANDSTORM) && field.equals(field.weather, Effect.SANDSTORM)) bestMoves.removeIf(Move.SANDSTORM::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.SNOWSCAPE) && field.equals(field.weather, Effect.SNOW)) bestMoves.removeIf(Move.SNOWSCAPE::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.ELECTRIC_TERRAIN) && field.equals(field.terrain, Effect.ELECTRIC)) bestMoves.removeIf(Move.ELECTRIC_TERRAIN::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.GRASSY_TERRAIN) && field.equals(field.terrain, Effect.GRASSY)) bestMoves.removeIf(Move.GRASSY_TERRAIN::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.PSYCHIC_TERRAIN) && field.equals(field.terrain, Effect.PSYCHIC)) bestMoves.removeIf(Move.PSYCHIC_TERRAIN::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.SPARKLING_TERRAIN) && field.equals(field.terrain, Effect.SPARKLY)) bestMoves.removeIf(Move.SPARKLING_TERRAIN::equals);
-		
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.WILL$O$WISP) && field.equals(field.weather, Effect.SNOW, foe)) bestMoves.removeIf(Move.WILL$O$WISP::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.MOLTEN_CONSUME) && field.equals(field.weather, Effect.SNOW, foe)) bestMoves.removeIf(Move.MOLTEN_CONSUME::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.FROSTBIND) && field.equals(field.weather, Effect.SUN, foe)) bestMoves.removeIf(Move.FROSTBIND::equals);
-		
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.REFLECT) && field.contains(this.getFieldEffects(), Effect.REFLECT)) bestMoves.removeIf(Move.REFLECT::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.LIGHT_SCREEN) && field.contains(this.getFieldEffects(), Effect.LIGHT_SCREEN)) bestMoves.removeIf(Move.LIGHT_SCREEN::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.AURORA_VEIL) && (field.contains(this.getFieldEffects(), Effect.AURORA_VEIL) || !field.equals(field.weather, Effect.SNOW))) bestMoves.removeIf(Move.AURORA_VEIL::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.AURORA_GLOW) && (field.contains(this.getFieldEffects(), Effect.AURORA_GLOW))) bestMoves.removeIf(Move.AURORA_GLOW::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.SAFEGUARD) && field.contains(this.getFieldEffects(), Effect.SAFEGUARD)) bestMoves.removeIf(Move.SAFEGUARD::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.LUCKY_CHANT) && field.contains(this.getFieldEffects(), Effect.LUCKY_CHANT)) bestMoves.removeIf(Move.LUCKY_CHANT::equals);
-		
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.HAZE) && !hasBoosts(foe.statStages) && arrayGreaterOrEqual(statStages, new int[] {0, 0, 0, 0, 0, 0, 0})) bestMoves.removeIf(Move.HAZE::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.BELLY_DRUM) && this.currentHP < this.getStat(0) / 2) bestMoves.removeIf(Move.BELLY_DRUM::equals);
-		
-		if (bestMoves.size() > 1 && (bestMoves.contains(Move.ROOST) || bestMoves.contains(Move.SYNTHESIS) || bestMoves.contains(Move.MOONLIGHT) || bestMoves.contains(Move.MORNING_SUN) ||
-				bestMoves.contains(Move.RECOVER) || bestMoves.contains(Move.SLACK_OFF) || bestMoves.contains(Move.WISH) || bestMoves.contains(Move.REST) ||
-				bestMoves.contains(Move.LIFE_DEW) || bestMoves.contains(Move.STRENGTH_SAP) || bestMoves.contains(Move.SHORE_UP) || bestMoves.contains(Move.ALCHEMY))) {
-			if (this.getStat(0) == this.currentHP) {
-				bestMoves.removeAll(Arrays.asList(new Move[] {Move.ROOST, Move.SYNTHESIS, Move.MOONLIGHT, Move.MORNING_SUN, Move.RECOVER, Move.SLACK_OFF, Move.WISH, Move.REST, Move.LIFE_DEW, Move.STRENGTH_SAP, Move.SHORE_UP, Move.ALCHEMY}));
-			}
-		}
-		
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.HEALING_WISH) && this.trainerOwned() && !this.trainer.hasValidMembers(null)) bestMoves.removeIf(Move.HEALING_WISH::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.LUNAR_DANCE) && this.trainerOwned() && !this.trainer.hasValidMembers(null)) bestMoves.removeIf(Move.LUNAR_DANCE::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.BATON_PASS) && this.trainerOwned() && !this.trainer.hasValidMembers(null)) bestMoves.removeIf(Move.BATON_PASS::equals);
-		if (bestMoves.contains(Move.TRICK) && this.getItem(field) != null && this.getItem(field).isTrickable()) bestMoves.add(Move.TRICK);
-		if (bestMoves.contains(Move.SWITCHEROO) && this.getItem(field) != null && this.getItem(field).isTrickable()) bestMoves.add(Move.SWITCHEROO);
-		if (bestMoves.contains(Move.TRICK_TACKLE) && this.tricked != foe && this.getItem(field) != null && this.getItem(field).isTrickable()) bestMoves.add(Move.TRICK_TACKLE);
-		if (bestMoves.contains(Move.TRICK) && foe.getItem(field) == Item.EVERSTONE) bestMoves.removeIf(Move.TRICK::equals);
-		if (bestMoves.contains(Move.SWITCHEROO) && foe.getItem(field) == Item.EVERSTONE) bestMoves.removeIf(Move.SWITCHEROO::equals);
-		if (bestMoves.contains(Move.TRICK_TACKLE) && foe.getItem(field) == Item.EVERSTONE) bestMoves.removeIf(Move.TRICK_TACKLE::equals);
-		
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.TRICK_ROOM) && field.contains(field.fieldEffects, Effect.TRICK_ROOM)) bestMoves.removeIf(Move.TRICK_ROOM::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.MAGIC_ROOM) && field.contains(field.fieldEffects, Effect.MAGIC_ROOM)) bestMoves.removeIf(Move.MAGIC_ROOM::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.TAILWIND) && field.contains(this.getFieldEffects(), Effect.TAILWIND)) bestMoves.removeIf(Move.TAILWIND::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.MUD_SPORT) && field.contains(field.fieldEffects, Effect.MUD_SPORT)) bestMoves.removeIf(Move.MUD_SPORT::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.WATER_SPORT) && field.contains(field.fieldEffects, Effect.WATER_SPORT)) bestMoves.removeIf(Move.WATER_SPORT::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.GRAVITY) && field.contains(field.fieldEffects, Effect.GRAVITY)) bestMoves.removeIf(Move.GRAVITY::equals);
-		
-		if (bestMoves.size() > 1 && (bestMoves.contains(Move.AQUA_RING) || bestMoves.contains(Move.INGRAIN)) && this.hasStatus(Status.AQUA_RING)) {
-			bestMoves.removeIf(Move.INGRAIN::equals);
-			bestMoves.removeIf(Move.AQUA_RING::equals);
-		}
-		
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.WORRY_SEED) && foe.getAbility(field) == Ability.INSOMNIA) bestMoves.removeIf(Move.WORRY_SEED::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.SIMPLE_BEAM) && foe.getAbility(field) == Ability.SIMPLE) bestMoves.removeIf(Move.SIMPLE_BEAM::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.GASTRO_ACID) && foe.getAbility(field) == Ability.NULL) bestMoves.removeIf(Move.GASTRO_ACID::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.FORESTS_CURSE) && foe.isType(PType.GRASS)) bestMoves.removeIf(Move.FORESTS_CURSE::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.MAGIC_POWDER) && foe.isType(PType.MAGIC)) bestMoves.removeIf(Move.MAGIC_POWDER::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.SOAK) && foe.isType(PType.WATER)) bestMoves.removeIf(Move.SOAK::equals);
-		
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.VENOM_DRENCH) && (foe.status != Status.POISONED || foe.status != Status.TOXIC)) bestMoves.removeIf(Move.VENOM_DRENCH::equals);
-		
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.MEAN_LOOK) && foe.hasStatus(Status.TRAPPED)) bestMoves.removeIf(Move.MEAN_LOOK::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.FOCUS_ENERGY) && this.getStatusNum(Status.CRIT_CHANCE) > 2) bestMoves.removeIf(Move.FOCUS_ENERGY::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.ENCORE) && foe.hasStatus(Status.ENCORED)) bestMoves.removeIf(Move.ENCORE::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.TAUNT) && foe.hasStatus(Status.TAUNTED)) bestMoves.removeIf(Move.TAUNT::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.TORMENT) && foe.hasStatus(Status.TORMENTED)) bestMoves.removeIf(Move.TORMENT::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.DISABLE) && foe.disabledMove != null) bestMoves.removeIf(Move.DISABLE::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.NO_RETREAT) && this.hasStatus(Status.NO_SWITCH)) bestMoves.removeIf(Move.NO_RETREAT::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.MEMENTO) && ((this.currentHP * 1.0 / this.getStat(0))) > 0.25) bestMoves.removeIf(Move.MEMENTO::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.CURSE) && (this.currentHP * 1.0 / this.getStat(0)) <= 0.55 && this.isType(PType.GHOST)) bestMoves.removeIf(Move.CURSE::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.PERISH_SONG) && (this.perishCount > 0 || foe.perishCount > 0)) bestMoves.removeIf(Move.PERISH_SONG::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.NIGHTMARE) && (foe.status != Status.ASLEEP || foe.hasStatus(Status.NIGHTMARE))) bestMoves.removeIf(Move.NIGHTMARE::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.MAGNET_RISE) && this.hasStatus(Status.MAGNET_RISE)) bestMoves.removeIf(Move.MAGNET_RISE::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.MIRROR_MOVE) && foe.lastMoveUsed == null) bestMoves.removeIf(Move.MIRROR_MOVE::equals);
-		
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.TELEPORT) && (this.trainer == null || !this.trainer.hasValidMembers(null))) bestMoves.removeIf(Move.TELEPORT::equals);
-		
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.VANDALIZE) && foe.getAbility(field) == Ability.NULL) bestMoves.removeIf(Move.VANDALIZE::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.ENCORE) && foe.lastMoveUsed == null) bestMoves.removeIf(Move.ENCORE::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.MIMIC) && foe.lastMoveUsed == null) bestMoves.removeIf(Move.MIMIC::equals);
-		
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.DECK_CHANGE) && foe.hasStatus(Status.DECK_CHANGE)) bestMoves.removeIf(Move.DECK_CHANGE::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.HEALING_CIRCLE) && (field.contains(this.getFieldEffects(), Effect.HEALING_CIRCLE) || (this.trainer == null || !this.trainer.hasValidMembers(foe)))) bestMoves.removeIf(Move.HEALING_CIRCLE::equals);
-		if (bestMoves.size() > 1 && bestMoves.contains(Move.SPELLBIND) && foe.hasStatus(Status.SPELLBIND)) bestMoves.removeIf(Move.SPELLBIND::equals);
-		
-		return bestMoves;
-	}
-
-	private boolean allMovesAreDamaging(Map<Move, Integer> moves) {
-		for (Map.Entry<Move, Integer> e : moves.entrySet()) {
-			if (e.getKey().cat == 2) return false;
-		}
-		return true;
-	}
 	
 	public Move hasPivotMove(Pokemon foe, Ability foeAbility, ArrayList<Move> validMoveset) {
 		for (Move m : validMoveset) {
@@ -1566,7 +1083,8 @@ public class Pokemon implements Serializable {
 		// --- Defensive matchup ---
 		double foeMaxDamageP = 0;
 		double foeDamageMoveP = 0;
-		boolean foeIsFaster = this.getFaster(foe, 0, 0, field) == foe;
+		int foePriority = move != null ? move.getPriority(foe, field) : 0;
+		boolean foeIsFaster = this.getFaster(foe, 0, foePriority, field) == foe;
 		boolean enemyKills = false;
 		for (Move m : foe.getValidMoveset()) {
 			double dmgP = foe.calcWithTypes(this, m, foeIsFaster, field, false).getSecond();
@@ -1590,7 +1108,9 @@ public class Pokemon implements Serializable {
 		
 		// dead to the enemy
 		if (enemyKills) {
-			score -= 30;
+			// scale by how much they overkill you by, so a mon that survives at 1%
+			// is scored differently than one that gets creamed
+			score -= 30 + Math.min(40, (foeMaxDamageP - hpPercent) * 0.5);
 		}
 		
 		foeMaxDamageP = Math.min(foeMaxDamageP, hpPercent);
@@ -1633,6 +1153,12 @@ public class Pokemon implements Serializable {
 
 		if (bestAttack != Integer.MIN_VALUE) score += bestAttack; // limit the score value of their damaging moves
 		if (bestStatus != Integer.MIN_VALUE) score += bestStatus; // limit the score value of their status move
+		
+		double matchup = matchupScore(Math.max(bestAttack, bestStatus), foeMaxDamageP, !foeIsFaster);
+		score += Math.round(matchup);
+		
+		Print.debug(String.format("  [MATCHUP] %s: myMoveScore=%d foeDmg=%.0f%% %s => %.1f\n",
+				this.nickname, Math.max(bestAttack, bestStatus), foeMaxDamageP, foeIsFaster ? "outsped" : "faster", matchup));
 		
 		if (score < 0) {
 			if (this.getItem(field) == Item.RED_CARD && foe.trainer != null && foe.trainer.hasValidMembers(this)) {
@@ -2018,6 +1544,87 @@ public class Pokemon implements Serializable {
 			}
 		
 		return 0;
+	}
+	
+	private static final double KILL_VALUE = 90;
+	private static final double DEATH_VALUE = -90;
+	private static final double CHIP_WEIGHT = 15;    // credit for damage dealt without a kill
+	private static final double THREAT_WEIGHT = 45;  // cost of remaining exposed to foe's damage
+	private static final double DELAY_WEIGHT = 20;   // extra cost of killing only after taking a hit
+	private static final double TEMPO_WEIGHT = 10;   // pure "who acts first" value when nothing dies
+
+	/**
+	 * Continuous expected-value score for a 1v1 matchup exchange.
+	 * @param myMaxDamagePercent  my best move's max-roll damage % against foe
+	 * @param foeMaxDamagePercent foe's best move's max-roll damage % against me
+	 * @param iAmFaster           whether I act first this turn
+	 */
+	public static double matchupScore(int myMaxMoveScore, double foeMaxDamagePercent, boolean iAmFaster) {
+		double atkFrac = Math.min(myMaxMoveScore, 100.0) / 100.0;
+		double defFrac = Math.min(foeMaxDamagePercent, 100) / 100.0;
+		
+		double value;
+		if (iAmFaster) {
+			// With prob kappa, foe never gets to act at all.
+			double ifSurvivedFoeTurn = atkFrac * CHIP_WEIGHT
+					- defFrac * Math.abs(DEATH_VALUE)
+					- (1 - defFrac) * defFrac * THREAT_WEIGHT;
+			value = atkFrac * KILL_VALUE + (1 - atkFrac) * ifSurvivedFoeTurn;
+		} else {
+			// With prob phi, I never get to act at all.
+			double ifSurvivedToAct = atkFrac * (KILL_VALUE - defFrac * DELAY_WEIGHT)
+					+ (1 - atkFrac) * (atkFrac * CHIP_WEIGHT - defFrac * THREAT_WEIGHT);
+			value = defFrac * DEATH_VALUE + (1 - defFrac) * ifSurvivedToAct;
+		}
+		
+		// Pure tempo value only matters in the genuine "nothing dies" region -
+		// fades out as kill probabilities take over, since in that region the
+		// KO/DEATH terms already dominate.
+		value += (iAmFaster ? TEMPO_WEIGHT : -TEMPO_WEIGHT) * (1 - atkFrac) * (1 - defFrac);
+		
+		return value;
+	}
+	
+	/**
+	 * Evaluates this Pokemon as a switch-in against foe, accounting for entry hazards/abilities,
+	 * and using the foe's ACTUAL best move against the post-switch-in state (not whatever
+	 * was strongest against the previously active Pokemon).
+	 * Convenience overload - clones everything itself.
+	 */
+	public int evaluateSwitchInScore(Pokemon foe, Field field) {
+		return evaluateSwitchInScore(this.fullClone(), foe, foe.fullClone(), field.clone());
+	}
+	
+	/**
+	 * Core version - caller supplies pre-made clones to avoid redundant cloning in hot loops
+	 * (e.g. bestMove2, which already clones the whole team up front).
+	 */
+	public int evaluateSwitchInScore(Pokemon myClone, Pokemon foe, Pokemon foeClone, Field fieldClone) {
+		Pokemon simulated = simulateSwitchIn(this, myClone, foeClone, fieldClone);
+		
+		Move foeStrongestMove = null;
+		Pair<Integer, Double> foeMaxDamagePair = new Pair<>(0, 0.0);
+		boolean foeCanKO = false;
+		int foeMaxDamage = Integer.MIN_VALUE;
+		
+		for (Move m : foeClone.getValidMoveset()) {
+			boolean isFaster = foeClone.getFaster(simulated, m.getPriority(foeClone), 0, fieldClone) == foeClone;
+			Pair<Integer, Double> dmgPair = foeClone.calcWithTypes(simulated, m, isFaster, fieldClone, false);
+			int dmg = dmgPair.getFirst();
+			if (dmg > foeMaxDamage) {
+				foeMaxDamage = dmg;
+				foeStrongestMove = m;
+				foeMaxDamagePair = dmgPair;
+			}
+			if (dmg >= simulated.currentHP) {
+				foeCanKO = true;
+				foeStrongestMove = m;
+				foeMaxDamagePair = dmgPair;
+				break;
+			}
+		}
+		
+		return simulated.scorePokemon(foeClone, foeStrongestMove, foeMaxDamagePair, foeCanKO, fieldClone, null, false);
 	}
 	
 	public boolean isHazardUseful(Move move, Pokemon foe, Field field) {

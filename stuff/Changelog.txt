@@ -1356,7 +1356,7 @@ Added functionality for naming your player (required on New Game) with the name 
 Fixed critical bug with Future Sight showing the "Not Very Effective" or "Super Effective" messages when calcing
 Fixed Disable's description, now saying "<Disables> the target's last used move" instead of "<Disabled> the target's last used move"
 Fixed a critical bug with how priority is calculated, some moves counting twice (like a Prankster-boosted status move)
-New sprites for Cluuz-S and Zurrclu-S!
+New sprites for Cluuz-S, Zurrclu-S and Zurroaratr-S!
 Added UUID's for all Pokemon to have so the game can keep track the same Pokemon object across evolutionary lines (mostly for the trainer database)
 Gave Safeguard to Bushewe and Thunderzap at lv 1, Cervora at lv 3, Mosscelot/Osceloma at lv 30 (moved Psychic Noise down 1 level)
 Changed Grass Knot to lv 25 on Twigzap (was 30) and gave Aromatherapy to Shockbranch at lv 24 (moved Thunder Punch down 1 level)
@@ -1364,3 +1364,46 @@ Made both the Cluuz line and the Cluuz-S line compatible with Bug Buzz TM
 Fixed a bug with the calc's field not getting reset after a battle like the normal field does (so effects like Light Screen will persist in the calc until entering a new battle)
 Updated Reboot's description to make it more clear what it does (about removing negative status effects too)
 Gave Mach Punch to Whiskeroar at lv 1
+Fixed Muddy Water dropping user's accuracy instead of the foe's
+Completely refactored the Blackjack UI to use my UI system instead of Java Swing (to look better and work better with the changable window size now), here are the new features with Blackjack:
+- New betting UI
+- New table UI with animations
+- Taking insurance
+- Being able to split hands!
+- More stats (for splitting)
+- New stats UI
+- Table rules written clearly
+- Dealer now having to hit on soft 17
+
+Changed Kissyfishy to be 30% in Mt. Splinkty (1A/2A) Fishing and added 10% Dragee chance
+Changed Sedinister to be 8% in Mt. Splinkty (2A), Kaboon 12%, Sneasel-H 14%, and added a 6% Dragee chance
+Changed Radio Burst -> Icicle Spear in Shaboom's level up moveset at lv 68
+Changed Maxwell 2's Shaboom's Rock Blast -> Icicle Spear
+Gave Zurroaratr-S Take Over at lv 1
+Changed Astronomer Solene's Shaboom's Flash Darts -> Icicle Spear
+Added sprites for Dusk Scales and Thunder Scales fossils!
+New sprites for Nightrex and Shadowsaur!
+Made running out of PP on a move remove your Encored status
+Fixed Mortal Spin/Rapid Spin/Tornado Spin to have it remove your Leech Seeded status
+Made Mortal Spin/Rapid Spin/Tornado Spin say which spinning move it was freeing you from (Wrap/Fire Spin/Whirlpool etc.)
+Fixed Rusty Bottle capping your HP IV (therefore losing max HP) also set your current HP accordingly so you can't have more current HP than max HP
+Changed the elite four Explorer Festus's name to Cole since there is already a Festus
+Added a log with a toggleable Debug flag in the actual build so I can release versions without console output (everything gets flushed to the log on game close/save)
+Fixed Rest to fail when used on Electric Terrain
+Gave Inkay Unseen Strangle at lv 35
+Gave Shelnado Rapid Spin at lv 27
+Gave Wormbot/Wormatron Rapid Spin at lv 40
+New sprite for Scraftagon!
+Added a Main Menu button to the in game menu!
+Fixed Outrage/Thrash etc. to set your outrage counter to 0 when missing/hitting into an immunity/protect instead of removing your status so you'd still get confused at the end of the turn
+Fixed Hidden Power/Return's type in the database to be the HP type of the Pokemon and remove the " <type>" at the end of the move name (was stored as "Hidden Power Rock")
+SET NATURES and PP UPs MANUALLY FOR EVERY TRAINER IN THE GAME. THESE ARENT ALWAYS OPTIMAL UNTIL THE PLAYER WOULD HAVE THE SUFFICIENT RESOURCES TO DO THE SAME, SCALES WITH PROGRESSION
+Overworld sprites added for the isolation quintet (Blohadel, Faulette, Sasquotta, Hueduu, Perilyte) added!
+Gave Nixnerva Mean Look at lv 1
+Gave Magie Roar at lv 22 and moved Metal Claw and Rollout accordingly
+Gave Cumin Roar at lv 5 and Cinneroph Roar at lv 1
+Gave Suvinero and Whiskeroar Roar at lv 1
+Made the Hammo line all incompatible with TM42 Light Screen
+Added a Whiskeroar overworld sprite!
+New sprites for Droid, Armoid and Soldrota!
+Changed Trace's description to specify "on switch-in"
