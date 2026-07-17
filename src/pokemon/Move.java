@@ -277,7 +277,7 @@ public enum Move {
 	INCINERATE(60,100,100,0,1,0,PType.FIRE,"% to burn up foe's berry",false,15),
 	INFERNO(100,50,100,0,1,0,PType.FIRE,"% chance to Burn foe",false,5),
 	INFESTATION(20,100,100,0,1,0,PType.BUG,"% to infest foe for 4-5 turns. While foe is infested, it takes 1/8 HP in damage, and cannot switch",true,15),
-	INGRAIN(0,1000,0,0,2,0,PType.GRASS,"Restores 1/16 of max HP at the end of every turn, user can't switch out",false,15),
+	INGRAIN(0,1000,0,0,2,0,PType.GRASS,"Restores 1/16 of max HP at the end of every turn, user can't switch out and gets grounded",false,15),
 	IRON_BLAST(85,95,30,0,1,0,PType.STEEL,"% chance to cause foe to flinch",false,20),
 	IRON_DEFENSE(0,1000,0,0,2,0,PType.STEEL,"Raises user's Defense by 2",false,10),
 	IRON_HEAD(80,100,30,0,0,0,PType.STEEL,"% of causing foe to flinch",true,15),

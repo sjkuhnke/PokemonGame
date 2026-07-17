@@ -1339,6 +1339,7 @@ Gave Scovillain Nasty Plot at lv 38 and Despenero Nasty Plot at lv 40 (Legends Z
 Implemented a "Trainer Database" that your save file tracks information about trainer battles you do, including:
 - Your team composition
 - Your selected lead (only matters for Extreme difficulty)
+- Number of badges you have
 - Pokemon information (your stats, nature, item, met at loc, level, moveset, and so much more)
 - Pokemon stats (kills, deaths, evolutions)
 - Battle start time and battle end time
@@ -1374,7 +1375,6 @@ Completely refactored the Blackjack UI to use my UI system instead of Java Swing
 - New stats UI
 - Table rules written clearly
 - Dealer now having to hit on soft 17
-
 Changed Kissyfishy to be 30% in Mt. Splinkty (1A/2A) Fishing and added 10% Dragee chance
 Changed Sedinister to be 8% in Mt. Splinkty (2A), Kaboon 12%, Sneasel-H 14%, and added a 6% Dragee chance
 Changed Radio Burst -> Icicle Spear in Shaboom's level up moveset at lv 68
@@ -1385,6 +1385,7 @@ Added sprites for Dusk Scales and Thunder Scales fossils!
 New sprites for Nightrex and Shadowsaur!
 Made running out of PP on a move remove your Encored status
 Fixed Mortal Spin/Rapid Spin/Tornado Spin to have it remove your Leech Seeded status
+Buffed Tornado Spin making it remove hazards too like Mortal Spin and Rapid Spin
 Made Mortal Spin/Rapid Spin/Tornado Spin say which spinning move it was freeing you from (Wrap/Fire Spin/Whirlpool etc.)
 Fixed Rusty Bottle capping your HP IV (therefore losing max HP) also set your current HP accordingly so you can't have more current HP than max HP
 Changed the elite four Explorer Festus's name to Cole since there is already a Festus
@@ -1407,3 +1408,94 @@ Made the Hammo line all incompatible with TM42 Light Screen
 Added a Whiskeroar overworld sprite!
 New sprites for Droid, Armoid and Soldrota!
 Changed Trace's description to specify "on switch-in"
+Removed the AI score reduction for inaccurate moves if you have Blunder Policy
+Gave Nixnerva Ice Beam at lv 52 and moved Freezing Glare to lv 52
+Fixed Obstruct and Aqua Veil to work with Brainwash (Stat stages should be reversed)
+Revamped trainer AI:
+- To use cloning to see switch-in effects for their back Pokemon (hazard damage, Intimidate, weather-setting abilities, etc)
+- To calc the player's back Pokemon and see if they have a switch-in to your strongest move and calculate their `aggression` value based on that (be more aggressive if they don't have a good switch-in)
+- To not check for a switch-in against the "foe" if the foe is the trainer's Pokemon (happens when the player has Magic Reflect/Abduct up)
+- To know that the player can't switch in a Pokemon that's over the level cap when nuzlocking
+Fixed Protective Pads and Punching Glove to make the moves not make contact earlier in the move to stop Lava Lair/Spiky Shield/Obstruct effects (and more!)
+Added Fishing and Surfing encounters to Route 43
+Made Magikarp and Durfish 40%->30% and Magikarp-E 20%->40% in Energy Plant pt. 2 (Fishing)
+Changed the following Route 45 encounter chances: Sabore 10%->11%, added 5% Hatenna chance, Flamehox 12%->6%, Wormite 12%->10%, Droid 7%->3%, Consodust 6%->10%, Capsakid 6%->7%, Elgyem 12%->7% (because a lot of these mons are gifts at Research Post B)
+Changed the following Electric Tunnel (1A) encounter chances: Flamehox-E 15%->16%, Elgyem-E 15%->16%, removed 2% Plasamp chance (in too many locations)
+Changed the following Shadow Ravine (1B) encounter chances: Wormbot: 10%->8%, Wormbot-S: 17%->14%, added a 6% Cluuz encounter, Cluuz-S: 12%->14%, Kaboon-S: 17%->15%, Capsakid-S: 19%->18%
+Changed the following Shadow Ravine (0A) encounter chances: Wormbot-S: 19%->20%, Cluuz-S: 18%->19%, Kaboon-S: 19%->22%, removed 5% Plasamp chance
+Changed the following Electric Tunnel (-3A) encounter chances: Hast-E: 20%->21%, Armoid-E: 20%->17%, Fireshard-E: 20%->18%, Beheeyem-E: 20%->19%, added 5% Plasamp chance
+Changed the following Electric Tunnel (H) chances: Hast-E: 21%->20%, Armoid-E: 19%->20% (to make all 5 be 20%)
+Changed the following Shadow Ravine (-2A) chances: removed 20% Drillatron, Detonape-S: 5%->15%, Capsakid-S: 10%->15%, added 5% Plasamp
+Changed the following Mt. Splinkty (Outside) chances: Teddician: 11%->7%, Hattrem: 7%->8%, removed 5% Sparkitten, removed 4% Arbok, Minishoo: 15%->10%, Cervora: 7%->11%, Consodust: 10%->15%, Splame: 14%->12%, Tinkie 8%->18% (to make it more worth delaying for)
+Removed the preset Prize Shop Pokemon when in a Nuzlocke (so no guaranteed encounters there)
+Added the current Save File name to the debug menu in the overworld (top middle)
+Fixed a location title bug between Iron Town and Route 39
+Added that Sand Force, Sand Rush, Sand Stream and Sand Veil are all immune to sand damage to their ability descriptions
+Made Sand Stream grant a sandstorm damage immunity
+Made both the encounters and invalid reasons in the nuzlocke info UI (player UI submenu) scrollable and you can toggle which one you're selecting to scroll by pressing the left and right arrows
+Changed the following Mt. Splinkty (3B) encounter chances: Lunymph: 15%->20%, Poof: 20%->25%, removed 30% Zubat chance, Diggie: 20%->25%, Glimmet: 15%->20%, added 10% Plasamp chance
+Changed the following Mt. Splinkty (3A) encounter chances: Cluuz: 25%->20%, Bronzor-X: 40%->25%, added 20% Grislush chance, removed 10% Plasamp chance, added 10% Zubat chance
+Changed the following Route 27 encounter chances: Charjabug & Swadloon: 8%->7%, Flameruff: 12%->8%, Clefairy: 12%->11%, Zorua: 5%->10%, Minishoo: 5%->12%, Butterfree-X: 12%->9%, Capsakid: 12%->10%
+Gave Curse to Hast at lv 52
+Gave Dragon Rush to Wormbot at lv 53, moved Dragon Pulse to 55 and Earth Power to 57
+Moved Relomidel's Sheer Cold to lv 95 (from 100)
+Gave Relopamil Rest at lv 45, changed Dragon Dance -> Roost at lv 73, and changed Rest -> Dragon dance at lv 79, and moved Future Sight to lv 95 (from 100)
+Gave Dust Sorcerer Shore Up at lv 53
+Changed Teddinaut's Base Stats: [80, 60, 75, 135, 85, 80] -> [80, 55, 75, 135, 85, 90] (-5 Atk, +10 Spe, +5 BST)
+Made Electroram and Superchargo compatible with TM59 Body Press
+Changed Meteor Beam's accuracy 90% -> 100% (if Electro Shot can be 100% accurate why can't Meteor Beam?)
+Fixed some consuming PP bugs with Metronome and Kissyfishy-D moves
+Fixed Terraforge to only clear positive stat changes when terrain ends/is removed, and fixed Terraforge to decrease stats if terrain gets removed, not just when it ends via running out of turns
+Fixed the battle UI not updating the Pokemon's name change on time (transormation, like Kissyfishy -> Kissyfishy-D updating the name instantly and not when it actually transforms)
+Gave Aurora Glow to Prismodon-E at lv 70 and moved Light of Ruin down to 68
+Gave the Dragee line Illumination as a secondary ability and changed their hidden ability Illumination -> Compound Eyes
+Made Lunymph and Fearomoth compatible with TM01 Super Fang
+Made Blastflames and Houndoom compatible with TM07 Focus Blast
+Changed Actress Semele's Draga's ability Multiscale -> Compound Eyes
+Changed Ace Trainer Belinda's Blastflames' Sunny Burst -> Focus Blast
+Changed Eclipse Grunt 49's Houndoom's Sunny Burst -> Focus Blast
+Changed Athlete Vance's Houndoom's Nasty Plot -> Focus Blast
+Buffed Flame Body to make the user immune to burn
+Buffed Gooey to make getting hit by any attack lower the attackers speed, not just contact moves
+Changed Ingrain and Aqua Ring's description to specify how much HP it restores per turn
+Changed Tornado Spin's description to say that it frees the user of being Leech Seeded and clears hazards
+Fixed Ingrain to give a new Rooted status that prevents the user from being forced out and makes the user grounded
+Changed Ingrain's description to specify that it makes the user grounded
+Gave Frosmoth Roost at lv 60
+Changed Clefairy's moveset Wish lv 3->9, Baby-Doll Eyes lv 6->3, Space Beam lv 9->6, so Cleffas can still get Wish (now that they're encountered at a higher level)
+Fixed some location bounds to make Route 24 (pt. 2), Route 25 and Gelb Forest make more sense for the encounter areas
+Buffed Shed Skin to proc 50% of the time (was 33%)
+Buffed Gravity Punch's PP (5 -> 10)
+Made the AI see Metronome as always useful, gave a +250 point boost to Sleep Talk and Snore when the AI's Pokemon is asleep and won't wake up on that turn
+Made 2-turn moves -30 points when the AI doesn't have a Power Herb
+Bug fix to finally make K.O.ing a Pokemon with Magic Reflect (getting them to K.O. themselves) award xp (used to not)
+Added forefitting to battle betting at the cost of the min bet
+Made save scumming remove the min bet instead of always 1 bet currency
+Fixed Spellbind's description incorrectly saying that it doesn't work on Magic types
+Fixed Mirror Shot lowering the user's accuracy instead of the foe's (oops lol)
+New sprite for Durfish and Dompster!
+Buffed Perish Body to only effect the foe on contact
+Fixed crucial bug where the foe can still use a move if they get forced out (Metronome calling Whirlwind or something before they can move)
+Buffed Empathic link to get one boost per stat stage that the opponent raises (Swords Dance will give the Empathic Link mon +2 to their highest attacking stat instead of +1)
+Fixed bug that the foe would get a Starborn boost if the player had Aurora Glow up on switch in
+Gave Houndoom Sucker Punch at lv 45 and moved Sunny Burst lv 46->47
+Added the ability to cycle through Pokemon summaries in the box and added arrows when this is possible with animations when pressed!
+Changed Psychic Roni's Psyballs' Quick Claw -> Focus Sash since Psychic Terrain blocks Quick Claw boosted moves
+Fixed formatting in Poison Tail's description
+Big battle change where your turn doesn't get cancelled if the enemy is fainted (from recoil or exploding or whatever), so the move will just say "But there was no target..." if it targets the fainted foe, will work as normal otherwise
+Made Shookwat line compatible with TM24 Terrain Pulse
+Made the calc not be openable when nicknaming a Pokemon in the PC (since calc is now C by default, this was really annoying when typing a name with a C)
+Changed Endure -> Rock Blast in Milipleura's moveset (since Endure is now a move tutor move)
+Made Encore ending due to running out of PP say that it ended instead of silently removing your Encore
+Made Houndour and Houndoom compatible with TM61 Scorching Sands
+New sprites for Droid-E, Armoid-E and Soldrota-E!
+Added the gift encounters to the encounter doc finally
+Added a chest to Route 37, Mt. St. Joseph (2A) and Mt. St. Joseph (4A)
+Fixed being Encored into Sucker Punch behaving weirdly/causing the foe to struggle
+Fixed Arcane Spell not lowering multi-hit moves correctly
+Made running out of PP also remove your disabled status so you can be disabled on a different move
+Added the toxic counter to the info screen in battles
+Fixed talking to Water/Lava with the HM move taught but not enough badges immediately closing the text box
+Fixed being able to move the cursor through the Pokemon's moves when a message is up in the Pokemon summary screen
+New sprite for Durfish-S and Dompster-S!
+Fixed Neutralizing Gas not disabling Natural Cure and Regenerator

@@ -447,6 +447,78 @@ public class Pokemon implements Serializable {
 	    }	    
 	}
 	
+	/**
+	 * Small container for the foe's best move against `this`, including whether it's lethal
+	 * and accounting for priority as a tiebreaker among equally-damaging lethal options.
+	 */
+	private static class FoeMoveResult {
+	    final Move move;
+	    final Pair<Integer, Double> damagePair;
+	    final boolean canKO;
+	    
+	    FoeMoveResult(Move move, Pair<Integer, Double> damagePair, boolean canKO) {
+	        this.move = move;
+	        this.damagePair = damagePair;
+	        this.canKO = canKO;
+	    }
+	}
+	
+	/**
+	 * Finds the foe's strongest move against `this`, preferring damage first, then (among
+	 * lethal options, when `this` outspeeds the foe at base speed) preferring higher priority —
+	 * since priority is the only way the foe could guarantee going first in that case.
+	 */
+	private FoeMoveResult findFoeStrongestMove(Pokemon foe, Field field) {
+	    Move strongestMove = null;
+	    int foeMaxDamage = Integer.MIN_VALUE;
+	    Pair<Integer, Double> foeMaxDamagePair = null;
+	    boolean foeCanKO = false;
+	    
+	    boolean iAmFaster = this.getFaster(foe, 0, 0, field) == this;
+	    int strongestMovePriority = Integer.MIN_VALUE;
+	    
+	    ArrayList<Move> foeMoveset = foe.getValidMoveset();
+	    Collections.shuffle(foeMoveset);
+	    
+	    for (Move m : foeMoveset) {
+	        Pair<Integer, Double> damagePair = foe.calcWithTypes(this, m, true, 0, false, field, false);
+	        int damage = damagePair.getFirst();
+	        boolean lethal = damage >= this.currentHP;
+	        int movePriority = m.getPriority(foe);
+	        
+	        if (foeCanKO) {
+	            if (lethal && iAmFaster && movePriority > strongestMovePriority) {
+	                strongestMove = m;
+	                foeMaxDamage = damage;
+	                foeMaxDamagePair = damagePair;
+	                strongestMovePriority = movePriority;
+	                Print.debug("Enemy can KO me (" + this + ") with higher-priority " + strongestMove + "\n");
+	            }
+	            continue;
+	        }
+	        
+	        if (damage > foeMaxDamage) {
+	            foeMaxDamage = damage;
+	            strongestMove = m;
+	            foeMaxDamagePair = damagePair;
+	            strongestMovePriority = movePriority;
+	        }
+	        
+	        if (lethal) {
+	            foeCanKO = true;
+	            strongestMove = m;
+	            foeMaxDamagePair = damagePair;
+	            strongestMovePriority = movePriority;
+	            Print.debug("Enemy can KO me (" + this + ") with " + strongestMove + "\n");
+	            if (!iAmFaster) {
+	                break;
+	            }
+	        }
+	    }
+	    
+	    return new FoeMoveResult(strongestMove, foeMaxDamagePair, foeCanKO);
+	}
+	
 	public Move bestMove2(Pokemon foe, boolean first, int difficulty) {
 		ArrayList<Move> validMoves = this.getValidMoveset();
 		
@@ -514,28 +586,10 @@ public class Pokemon implements Serializable {
 		}
 		
 		// Foe's attributes
-		Move strongestMove = null;
-		int foeMaxDamage = Integer.MIN_VALUE;
-		Pair<Integer, Double> foeMaxDamagePair = null;
-		boolean foeCanKO = false;
-		
-		ArrayList<Move> foeMoveset = foe.getValidMoveset();
-		Collections.shuffle(foeMoveset);
-		for (Move m : foeMoveset) {
-			Pair<Integer, Double> damagePair = foe.calcWithTypes(this, m, true, 0, false, field, false);
-			int damage = damagePair.getFirst();
-			if (damage > foeMaxDamage) {
-				foeMaxDamage = damage;
-				strongestMove = m;
-				foeMaxDamagePair = damagePair;
-			}
-			if (damage >= this.currentHP) {
-				foeCanKO = true;
-				strongestMove = m;
-				Print.debug("Enemy can KO me (" + this + ") with " + strongestMove + "\n");
-				break;
-			}
-		}
+		FoeMoveResult foeMoveResult = this.findFoeStrongestMove(foe, field);
+		Move strongestMove = foeMoveResult.move;
+		Pair<Integer, Double> foeMaxDamagePair = foeMoveResult.damagePair;
+		boolean foeCanKO = foeMoveResult.canKO;
 		
 		// for Parting Shot specifically
 		Ability foeAbility = foe.getAbility(field);
@@ -611,10 +665,10 @@ public class Pokemon implements Serializable {
 			
 			for (int i = 0; i < tr.team.length; i++) {
 				Pokemon ally = tr.team[i];
-				if (ally != null && ally != this) {
+				if (ally != null && ally != this && !ally.isFainted()) {
 					Pokemon allyClone = trainerTeamClones[i];
 					Pokemon foeClone = foe.fullClone();
-					int allyScore = ally.evaluateSwitchInScore(allyClone, foe, foeClone, fieldClone);
+					int allyScore = ally.evaluateSwitchInScore(allyClone, foe, foeClone, fieldClone, strongestMove);
 					scoreMap.put(ally, allyScore);
 				}
 			}
@@ -671,7 +725,7 @@ public class Pokemon implements Serializable {
 					chance = Math.max(0, chance);
 					Print.debug(String.format("%.1f%% to switch\n", chance));
 					
-					if (Math.random() * 100 <= chance) {
+					if (Math.random() * 100 <= chance && field.turns > 0) {
 						String rsn = "[Score diff switch : " + String.format("%.1f", chance) + "%]\n";
 						Print.debug(rsn);
 						if (switchRsn != null) {
@@ -681,8 +735,11 @@ public class Pokemon implements Serializable {
 						if (first || !foeCanKO) {
 							Move pivotMove = hasPivotMove(foe, foeAbility, validMoves);
 							if (pivotMove != null) {
-								this.addStatus(Status.SWAP, -(chosenSlot + 1));
-								return pivotMove;
+								first = this.getFaster(foe, pivotMove.getPriority(foe, fieldClone), strongestMove.getPriority(foe, field), fieldClone) == this;
+								if (first) {
+									this.addStatus(Status.TEMP_SWITCHING, -(chosenSlot + 1));
+									return pivotMove;
+								}
 							}
 						}
 						this.addStatus(Status.SWAP, chosenSlot + 1);
@@ -798,6 +855,7 @@ public class Pokemon implements Serializable {
 			if (m.isAttack()) {
 				boolean isFaster = this.getFaster(foe, m.getPriority(this), 0, field) == this;
 				Pair<Integer, Double> dmgPair = this.calcWithTypes(foe, m, isFaster, field, false);
+				//int damageRaw = dmgPair.getFirst();
 				double damagePercent = dmgPair.getSecond();
 				if (damagePercent > maxDamagePercent) {
 					maxDamagePercent = damagePercent;
@@ -814,7 +872,9 @@ public class Pokemon implements Serializable {
 		}
 		
 		// Step 2: Calculate survival ratio if current foe stays in
-		double survivalIfStay = Math.max(0.0, 1.0 - (maxDamagePercent / 100.0));
+		double survivalIfStay = foe.currentHP > 0
+			    ? Math.max(0.0, 1.0 - Math.min(1.0, maxDamageRaw / (double) foe.currentHP))
+			    	    : 0.0;
 		
 		// Step 3: Calculate survival ratio for each back Pokemon
 		double bestSwitchSurvival = 0.0;
@@ -869,7 +929,7 @@ public class Pokemon implements Serializable {
 		double k = 1.8;
 		
 		double vulnerabilityFactor = 1.0 - bestDefensiveResponse;
-		double aggression = baseAggression + k * Math.pow(vulnerabilityFactor, 2.0);
+		double aggression = baseAggression + k * vulnerabilityFactor;
 		
 		// Clamp aggression to reasonable bounds
 		aggression = Math.max(1.0, Math.min(3.0, aggression));
@@ -1082,15 +1142,26 @@ public class Pokemon implements Serializable {
 		
 		// --- Defensive matchup ---
 		double foeMaxDamageP = 0;
+		double foeMaxDamageFracHP = 0; // fraction of remaining HP this would take
 		double foeDamageMoveP = 0;
 		int foePriority = move != null ? move.getPriority(foe, field) : 0;
 		boolean foeIsFaster = this.getFaster(foe, 0, foePriority, field) == foe;
 		boolean enemyKills = false;
 		for (Move m : foe.getValidMoveset()) {
-			double dmgP = foe.calcWithTypes(this, m, foeIsFaster, field, false).getSecond();
+			Pair<Integer, Double> dmgPair = foe.calcWithTypes(this, m, foeIsFaster, field, false);
+			int dmgRaw = dmgPair.getFirst();
+			double dmgP = dmgPair.getSecond();
+			
 			if (dmgP >= hpPercent) enemyKills = true;
 			foeMaxDamageP = Math.max(foeMaxDamageP, dmgP);
-			if (m == move) foeDamageMoveP = dmgP;
+			double dmgFracHP = this.currentHP > 0 
+				? Math.min(100.0, (dmgRaw / (double) this.currentHP) * 100.0) 
+				: 100.0;
+			foeMaxDamageFracHP = Math.max(foeMaxDamageFracHP, dmgFracHP);
+			
+			if (m == move) {
+				foeDamageMoveP = dmgP;
+			}
 			
 			if (m.isHazard() && (this.getAbility(field) == Ability.MAGIC_BOUNCE || this.getAbility(field) == Ability.MOUTHWATER)) {
 				if (isHazardUseful(m, this, field)) {
@@ -1125,7 +1196,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		// --- Statuses ---
-		score -= this.toxic * 10;
+		score -= this.toxic * 15;
 		if (this.hasStatus(Status.LEECHED)) score -= 30;
 		if (this.hasStatus(Status.DROWSY)) score -= 60;
 		if (this.hasStatus(Status.CURSED)) score -= 80;
@@ -1151,14 +1222,17 @@ public class Pokemon implements Serializable {
 			}
 		}
 
-		if (bestAttack != Integer.MIN_VALUE) score += bestAttack; // limit the score value of their damaging moves
-		if (bestStatus != Integer.MIN_VALUE) score += bestStatus; // limit the score value of their status move
+		double defFracForWeight = Math.min(foeMaxDamageFracHP, 100.0) / 100.0;
+		double actionProbability = foeIsFaster ? (1.0 - defFracForWeight) : 1.0;
+
+		if (bestAttack != Integer.MIN_VALUE) score += bestAttack * actionProbability + bestAttack/2;
+		if (bestStatus != Integer.MIN_VALUE) score += bestStatus * actionProbability + bestStatus/2;
 		
-		double matchup = matchupScore(Math.max(bestAttack, bestStatus), foeMaxDamageP, !foeIsFaster);
+		double matchup = matchupScore(Math.max(bestAttack, bestStatus), foeMaxDamageFracHP, !foeIsFaster);
 		score += Math.round(matchup);
 		
-		Print.debug(String.format("  [MATCHUP] %s: myMoveScore=%d foeDmg=%.0f%% %s => %.1f\n",
-				this.nickname, Math.max(bestAttack, bestStatus), foeMaxDamageP, foeIsFaster ? "outsped" : "faster", matchup));
+		Print.debug(String.format("  [MATCHUP] %s: myMoveScore=%d foeDmg=%.0f%% (of my remaining HP) %s => %.1f\n",
+				this.nickname, Math.max(bestAttack, bestStatus), foeMaxDamageFracHP, foeIsFaster ? "outsped" : "faster", matchup));
 		
 		if (score < 0) {
 			if (this.getItem(field) == Item.RED_CARD && foe.trainer != null && foe.trainer.hasValidMembers(this)) {
@@ -1559,7 +1633,7 @@ public class Pokemon implements Serializable {
 	 * @param foeMaxDamagePercent foe's best move's max-roll damage % against me
 	 * @param iAmFaster           whether I act first this turn
 	 */
-	public static double matchupScore(int myMaxMoveScore, double foeMaxDamagePercent, boolean iAmFaster) {
+	public double matchupScore(int myMaxMoveScore, double foeMaxDamagePercent, boolean iAmFaster) {
 		double atkFrac = Math.min(myMaxMoveScore, 100.0) / 100.0;
 		double defFrac = Math.min(foeMaxDamagePercent, 100) / 100.0;
 		
@@ -1592,39 +1666,39 @@ public class Pokemon implements Serializable {
 	 * Convenience overload - clones everything itself.
 	 */
 	public int evaluateSwitchInScore(Pokemon foe, Field field) {
-		return evaluateSwitchInScore(this.fullClone(), foe, foe.fullClone(), field.clone());
+		return evaluateSwitchInScore(this.fullClone(), foe, foe.fullClone(), field.clone(), null);
 	}
 	
 	/**
 	 * Core version - caller supplies pre-made clones to avoid redundant cloning in hot loops
 	 * (e.g. bestMove2, which already clones the whole team up front).
 	 */
-	public int evaluateSwitchInScore(Pokemon myClone, Pokemon foe, Pokemon foeClone, Field fieldClone) {
-		Pokemon simulated = simulateSwitchIn(this, myClone, foeClone, fieldClone);
-		
-		Move foeStrongestMove = null;
-		Pair<Integer, Double> foeMaxDamagePair = new Pair<>(0, 0.0);
-		boolean foeCanKO = false;
-		int foeMaxDamage = Integer.MIN_VALUE;
-		
-		for (Move m : foeClone.getValidMoveset()) {
-			boolean isFaster = foeClone.getFaster(simulated, m.getPriority(foeClone), 0, fieldClone) == foeClone;
-			Pair<Integer, Double> dmgPair = foeClone.calcWithTypes(simulated, m, isFaster, fieldClone, false);
-			int dmg = dmgPair.getFirst();
-			if (dmg > foeMaxDamage) {
-				foeMaxDamage = dmg;
-				foeStrongestMove = m;
-				foeMaxDamagePair = dmgPair;
-			}
-			if (dmg >= simulated.currentHP) {
-				foeCanKO = true;
-				foeStrongestMove = m;
-				foeMaxDamagePair = dmgPair;
-				break;
-			}
-		}
-		
-		return simulated.scorePokemon(foeClone, foeStrongestMove, foeMaxDamagePair, foeCanKO, fieldClone, null, false);
+	public int evaluateSwitchInScore(Pokemon myClone, Pokemon foe, Pokemon foeClone, Field fieldClone, Move incomingMove) {
+	    Pokemon simulated = simulateSwitchIn(this, myClone, foeClone, fieldClone);
+	    
+	    // Apply the hit we take switching in THIS turn — the foe already committed to
+	    // this move against whatever's active, so assume they click it again into us.
+	    // We get no action this turn (switching forfeits it), so the foe acts unopposed.
+	    if (incomingMove != null && simulated.currentHP > 0) {
+	        Pair<Integer, Double> switchInDmgPair = foeClone.calcWithTypes(simulated, incomingMove, true, fieldClone, false);
+	        int switchInDmg = switchInDmgPair.getFirst();
+	        simulated.currentHP = Math.max(0, simulated.currentHP - switchInDmg);
+	        
+	        Print.debug(String.format("  Switch-in hit from %s: %d dmg, leaves %s at %d/%d (%.1f%%)\n",
+	            incomingMove, switchInDmg, simulated.nickname, simulated.currentHP,
+	            simulated.getStat(0), simulated.currentHP * 100.0 / simulated.getStat(0)));
+	        
+	        if (simulated.currentHP <= 0) {
+	            return Integer.MIN_VALUE + 1; // fainted on the switch-in itself, terrible switch
+	        }
+	    }
+	    
+	    FoeMoveResult foeMoveResult = simulated.findFoeStrongestMove(foeClone, fieldClone);
+	    Move strongestMove = foeMoveResult.move;
+	    Pair<Integer, Double> foeMaxDamagePair = foeMoveResult.damagePair;
+	    boolean foeCanKO = foeMoveResult.canKO;
+
+	    return simulated.scorePokemon(foeClone, strongestMove, foeMaxDamagePair, foeCanKO, fieldClone, null, false);
 	}
 	
 	public boolean isHazardUseful(Move move, Pokemon foe, Field field) {
@@ -7665,8 +7739,10 @@ public class Pokemon implements Serializable {
 			if (field.equals(field.weather, Effect.SNOW, this) && foe.isType(PType.ICE)) defenseMod *= 1.5;
 			if (!isCrit && (field.contains(foe.getFieldEffects(), Effect.REFLECT) || field.contains(foe.getFieldEffects(), Effect.AURORA_VEIL))) defenseMod *= 2;
 		} else {
-			if ((!isCrit || this.asModifier(2) > 1) && foeAbility != Ability.UNAWARE)
+			if ((!isCrit || this.asModifier(2) > 1) && foeAbility != Ability.UNAWARE) {
 				attackMod *= this.asModifier(2);
+				if (move == Move.METEOR_BEAM && this.getItem(Item.field) == Item.POWER_HERB) attackMod *= 1.5;
+			}
 			if (this.getItem(field) == Item.CHOICE_SPECS) attackMod *= 1.5;
 			if (this.status == Status.FROSTBITE) attackMod /= 2;
 			if (this.getAbility(field) == Ability.SOLAR_POWER && field.equals(field.weather, Effect.SUN, this)) attackMod *= 1.5;
@@ -12204,7 +12280,7 @@ public class Pokemon implements Serializable {
 			for (int i = 0; i < 5; i++) {
 	    		stat(this, i, this.trainer.boosts[0], null);
 	    	}
-			this.trainer.boosts[2] = 1;
+			if (!this.cloned) this.trainer.boosts[2] = 1;
 			return true;
 		}
 		return false;

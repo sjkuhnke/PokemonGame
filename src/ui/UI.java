@@ -3,6 +3,7 @@ package ui;
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Composite;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.FontMetrics;
@@ -154,8 +155,13 @@ public class UI extends AbstractUI {
 	private int hofPhase = 0; // 0 = pokemon showcase, 1 = credits scroll
 	private int hofPokemonIndex = 0; // which team member is showing
 	private int hofCounter = 0; // general timer within a phase
+	private int hofPhotoIndex = 0;    // how many team members have been revealed
+	private int hofPhotoCounter = 0;  // frame counter for current animation step
 	private float hofCreditsY = 0; // y-offset for credits scroll (starts at screenHeight)
-	private static final int HOF_POKEMON_DISPLAY_TIME = 300; // 5 seconds at 60fps
+	private static final int HOF_POKEMON_DISPLAY_TIME = 180; // 5 seconds at 60fps
+	private static final int HOF_PHOTO_SLIDE_TIME = 60; // frames for one mon to slide+settle
+	private static final int HOF_PHOTO_GAP_TIME   = 15; // pause after settling before next starts
+	private static final int HOF_PHOTO_HOLD_TIME  = 300; // hold full group photo before moving on
 	private static final Color HOF_GOLD  = new Color(255, 215, 0);
 	private static final Color HOF_CREAM = new Color(255, 248, 200);
 
@@ -7454,10 +7460,10 @@ public class UI extends AbstractUI {
 		g2.setColor(Color.BLACK);
 		g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
 		
-		if (hofPhase == 0) {
-			drawHofPokemonShowcase();
-		} else {
-			drawHofCredits();
+		switch (hofPhase) {
+        case 0: drawHofPokemonShowcase(); break; // existing per-mon showcase
+        case 1: drawHofTeamPhoto();       break; // NEW: player + team assembling for a photo
+        default: drawHofCredits();        break;
 		}
 	}
 
@@ -7585,8 +7591,126 @@ public class UI extends AbstractUI {
 		
 		drawToolTips("Next", null, "Next", null);
 	}
+	
+	/** Phase 1 - player and team assemble one at a time for a "team photo". */
+	private void drawHofTeamPhoto() {
+	    Pokemon[] team = gp.player.p.team;
+	    int teamCount = 0;
+	    for (Pokemon t : team) if (t != null) teamCount++;
 
-	/** Phase 1 – scrolling credits. */
+	    // Animated gold header
+	    float pulse = 0.5f + 0.5f * (float) Math.sin(pulseCounter * 0.08f);
+	    Color headerColor = new Color(HOF_GOLD.getRed(), (int) (HOF_GOLD.getGreen() * (0.8f + 0.2f * pulse)), 0);
+	    g2.setFont(g2.getFont().deriveFont(Font.BOLD, 42F));
+	    String header = "★  Champions  ★";
+	    drawOutlinedText(header, getCenterAlignedTextX(header, gp.screenWidth / 2), gp.tileSize, headerColor, Color.BLACK);
+
+	    // Row layout: player, then each team member spaced evenly
+	    int slots = teamCount + 1;
+	    int rowY = (int) (gp.screenHeight * 0.72);
+	    int spacing = Math.min(gp.tileSize * 3, (gp.screenWidth - gp.tileSize) / Math.max(1, slots));
+	    int rowWidth = spacing * (slots - 1);
+	    int startX = gp.screenWidth / 2 - rowWidth / 2;
+
+	    // --- Player, always visible, anchoring the left side of the group ---
+	    BufferedImage playerSprite = gp.player.fight;
+	    int playerW = 128, playerH = 128;
+	    int playerX = startX - playerW / 2;
+	    int playerY = rowY - playerH;
+	    if (playerSprite != null) {
+	        g2.drawImage(playerSprite, playerX, playerY, playerW, playerH, null);
+	    }
+	    g2.setFont(g2.getFont().deriveFont(Font.BOLD, 22F));
+	    String playerName = gp.player.getName();
+	    drawOutlinedText(playerName, getCenterAlignedTextX(playerName, playerX + playerW / 2),
+	            playerY + playerH + 24, HOF_CREAM, Color.BLACK);
+
+	    // --- Team members, revealed one at a time ---
+	    int shown = 0;
+	    for (Pokemon p : team) {
+	        if (p == null) continue;
+	        shown++;
+	        if (shown > hofPhotoIndex + 1) break; // not revealed yet, stop drawing further slots
+
+	        int slotX = startX + spacing * shown;
+	        BufferedImage sprite = p.getSprite();
+	        int scale = 2;
+	        int spriteW = sprite.getWidth() * scale;
+	        int spriteH = sprite.getHeight() * scale;
+	        int targetY = rowY - spriteH;
+
+	        boolean isCurrent = (shown - 1 == hofPhotoIndex);
+	        float progress = isCurrent ? Math.min(1f, hofPhotoCounter / (float) HOF_PHOTO_SLIDE_TIME) : 1f;
+	        float eased = 1 - (float) Math.pow(1 - progress, 3); // ease-out cubic
+
+	        // Slide up from below the screen
+	        int drawY = (int) (gp.screenHeight + (targetY - gp.screenHeight) * eased);
+
+	        // Slight "pop" overshoot as it settles
+	        float scalePop = isCurrent ? 1f + 0.15f * (float) Math.sin(eased * Math.PI) : 1f;
+	        int popW = (int) (spriteW * scalePop);
+	        int popH = (int) (spriteH * scalePop);
+	        int drawX = slotX - popW / 2;
+
+	        Composite oldComposite = g2.getComposite();
+	        if (isCurrent && eased < 1f) {
+	            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, Math.max(0.2f, eased)));
+	        }
+	        g2.drawImage(sprite, drawX, drawY, popW, popH, null);
+	        g2.setComposite(oldComposite);
+
+	        // Nickname label appears once settled
+	        if (!isCurrent || eased >= 1f) {
+	            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 16F));
+	            drawOutlinedText(p.getNickname(), getCenterAlignedTextX(p.getNickname(), slotX),
+	                    targetY + spriteH + 20, Color.WHITE, Color.BLACK);
+	        }
+
+	        // Little sparkle burst the moment it lands
+	        if (isCurrent && progress >= 1f && hofPhotoCounter < HOF_PHOTO_SLIDE_TIME + 20) {
+	            drawSparkle(slotX, targetY + spriteH / 2, hofPhotoCounter - HOF_PHOTO_SLIDE_TIME);
+	        }
+	    }
+
+	    // --- Advance the reveal / hold / transition ---
+	    hofPhotoCounter++;
+	    boolean skipPressed = gp.keyH.wPressed || gp.keyH.sPressed || gp.keyH.dPressed;
+	    if (skipPressed) {
+	        gp.keyH.wPressed = false;
+	        gp.keyH.sPressed = false;
+	        gp.keyH.dPressed = false;
+	    }
+
+	    if (hofPhotoIndex < teamCount) {
+	        if (hofPhotoCounter >= HOF_PHOTO_SLIDE_TIME + HOF_PHOTO_GAP_TIME || skipPressed) {
+	            hofPhotoIndex++;
+	            hofPhotoCounter = 0;
+	        }
+	    } else {
+	        // Whole team is in frame - hold for a beat so it reads as a photo, then move on
+	        if (hofPhotoCounter >= HOF_PHOTO_HOLD_TIME || skipPressed) {
+	            hofPhase = 2;
+	            hofPokemonIndex = 0;
+	            hofCounter = 0;
+	        }
+	    }
+
+	    drawToolTips("Next", null, "Skip", null);
+	}
+
+	/** Small fading diamond-shaped sparkle used when a team member lands in the photo. */
+	private void drawSparkle(int cx, int cy, int age) {
+	    if (age < 0 || age > 20) return;
+	    float t = age / 20f;
+	    int radius = (int) (6 + t * 26);
+	    int alpha = Math.max(0, (int) (255 * (1 - t)));
+	    g2.setColor(new Color(255, 255, 210, alpha));
+	    int[] xs = {cx, cx + radius / 3, cx, cx - radius / 3};
+	    int[] ys = {cy - radius, cy, cy + radius, cy};
+	    g2.fillPolygon(xs, ys, 4);
+	}
+
+	/** Phase 2 – scrolling credits. */
 	private void drawHofCredits() {
 		// Build the credits lines (done lazily so the array is always fresh)
 		String[] lines = buildCreditsLines();
@@ -7684,6 +7808,8 @@ public class UI extends AbstractUI {
 		hofPhase = 0;
 		hofPokemonIndex = 0;
 		hofCounter = 0;
+		hofPhotoIndex = 0;
+		hofPhotoCounter = 0;
 		
 		// Leave the HOF game state, then queue a task-based teleport
 		gp.setTaskState();
