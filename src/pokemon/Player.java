@@ -134,7 +134,7 @@ public class Player extends Trainer implements Serializable {
 	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 87;
+	public static final int VERSION = 88;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	public static final int BET_INC = 10;
@@ -2002,8 +2002,10 @@ public class Player extends Trainer implements Serializable {
         
         if (oldID == 263) {
         	for (Pokemon pok : team) {
-        		pok.convertToNonMeteorForm();
-        		pokedex[pok.id] = 2;
+        		if (pok != null) {
+        			pok.convertToNonMeteorForm();
+        			pokedex[pok.id] = 2;
+        		}
         	}
         }
         

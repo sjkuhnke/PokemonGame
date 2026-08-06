@@ -725,7 +725,7 @@ public class Pokemon implements Serializable {
 					chance = Math.max(0, chance);
 					Print.debug(String.format("%.1f%% to switch\n", chance));
 					
-					if (Math.random() * 100 <= chance && field.turns > 0) {
+					if (Math.random() * 100 <= chance) {
 						String rsn = "[Score diff switch : " + String.format("%.1f", chance) + "%]\n";
 						Print.debug(rsn);
 						if (switchRsn != null) {
@@ -4262,6 +4262,7 @@ public class Pokemon implements Serializable {
 	
 	private void handleWhiteHerb(int[] oldStages, Pokemon foe) {
 		if (oldStages == null) return;
+		if (this.isFainted()) return;
 		int[] restore = new int[statStages.length];
 		boolean herb = false;
 		for (int i = 0; i < statStages.length; i++) {
@@ -4282,6 +4283,7 @@ public class Pokemon implements Serializable {
 	
 	private void handleMirrorHerb(int[] foeOldStages, Pokemon foe) {
 		if (foeOldStages == null) return;
+		if (this.isFainted()) return;
 		int[] boost = new int[statStages.length];
 		boolean herb = false;
 		for (int i = 0; i < statStages.length; i++) {
@@ -4303,6 +4305,7 @@ public class Pokemon implements Serializable {
 	
 	private void handleEjectPack(int[] oldStages, Pokemon foe) {
 		if (oldStages == null) return;
+		if (this.isFainted()) return;
 		if (this.trainer == null || !this.trainer.hasValidMembers(foe)) return;
 		
 		if (!this.arrayGreaterOrEqual(this.statStages, oldStages)) {
@@ -7741,7 +7744,7 @@ public class Pokemon implements Serializable {
 		} else {
 			if ((!isCrit || this.asModifier(2) > 1) && foeAbility != Ability.UNAWARE) {
 				attackMod *= this.asModifier(2);
-				if (move == Move.METEOR_BEAM && this.getItem(Item.field) == Item.POWER_HERB) attackMod *= 1.5;
+				if (mode == 0 && move == Move.METEOR_BEAM && this.getItem(Item.field) == Item.POWER_HERB) attackMod *= 1.5;
 			}
 			if (this.getItem(field) == Item.CHOICE_SPECS) attackMod *= 1.5;
 			if (this.status == Status.FROSTBITE) attackMod /= 2;
@@ -10519,6 +10522,7 @@ public class Pokemon implements Serializable {
 		}
 		if (foe.getAbility(field) == Ability.ILLUSION && foe.illusion) return true;
 		if (foe.getAbility(field) == Ability.SHADOW_TAG) return true;
+		if (foe.getAbility(field) == Ability.MAGNET_PULL && foe.isType(PType.STEEL)) return true;
 		return false;
 	}
 	

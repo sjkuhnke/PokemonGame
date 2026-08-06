@@ -13,9 +13,9 @@
 10 |Scigeon      |NORMAL  |FLYING  |INSOMNIA          |INSECT_FEEDER     |AMBUSH            |[56, 61, 65, 20, 29, 45]      |5.5   |245|FLYING      |FLYING      |
 11 |Thieven      |NORMAL  |FLYING  |INSOMNIA          |INSECT_FEEDER     |AMBUSH            |[66, 76, 76, 40, 50, 78]      |40.9  |150|FLYING      |FLYING      |
 12 |Armoraven    |STEEL   |FLYING  |BATTLE_ARMOR      |TOUGH_CLAWS       |IRON_BARBS        |[76, 95, 100, 56, 80, 81]     |129.2 |85 |FLYING      |FLYING      |
-16 |Hammo        |NORMAL  |null    |MOUTHWATER        |THICK_FAT         |UNAWARE           |[99, 61, 51, 40, 79, 20]      |95.6  |255|FIELD       |HUMAN$LIKE  |
-17 |Grunswine    |NORMAL  |null    |MOUTHWATER        |THICK_FAT         |UNAWARE           |[150, 79, 75, 43, 108, 35]    |445.9 |190|FIELD       |HUMAN$LIKE  |
-18 |Hoghoncho    |NORMAL  |ROCK    |ROUGH_SKIN        |ROCK_HEAD         |SOLID_ROCK        |[150, 105, 110, 40, 85, 45]   |785.5 |100|FIELD       |HUMAN$LIKE  |
+16 |Hammo        |NORMAL  |null    |MOUTHWATER        |THICK_FAT         |UNAWARE           |[99, 61, 51, 40, 79, 20]      |125.6 |255|FIELD       |HUMAN$LIKE  |
+17 |Grunswine    |NORMAL  |null    |MOUTHWATER        |THICK_FAT         |UNAWARE           |[150, 79, 75, 40, 106, 30]    |545.9 |190|FIELD       |HUMAN$LIKE  |
+18 |Hoghoncho    |NORMAL  |ROCK    |ROUGH_SKIN        |ROCK_HEAD         |SOLID_ROCK        |[150, 105, 110, 40, 100, 40]  |985.5 |100|FIELD       |HUMAN$LIKE  |
 41 |Teddull      |NORMAL  |null    |ADAPTABILITY      |ANGER_POINT       |SCRAPPY           |[55, 55, 55, 55, 55, 55]      |65.7  |125|FIELD       |HUMAN$LIKE  |
 42 |Teddician    |NORMAL  |MAGIC   |ADAPTABILITY      |SHIELD_DUST       |SCRAPPY           |[75, 75, 75, 75, 75, 75]      |65.8  |100|FIELD       |HUMAN$LIKE  |
 43 |Teddinaut    |NORMAL  |GALACTIC|ADAPTABILITY      |LEVITATE          |SCRAPPY           |[80, 55, 75, 135, 85, 90]     |90.9  |50 |FIELD       |HUMAN$LIKE  |
@@ -108,9 +108,9 @@
 110|Sparkitten   |FIRE    |LIGHT   |ANTICIPATION      |ANTICIPATION      |NULL              |[60, 70, 65, 70, 65, 70]      |16.0  |110|FIELD       |FIELD       |
 111|Fireblion    |FIRE    |null    |DROUGHT           |DROUGHT           |NULL              |[85, 105, 99, 40, 92, 89]     |295.5 |35 |FIELD       |FIELD       |
 112|Flamebless   |FIRE    |LIGHT   |COMPETITIVE       |COMPETITIVE       |NULL              |[70, 40, 55, 120, 115, 110]   |125.0 |35 |FIELD       |FIELD       |
-164|Shookwat     |ELECTRIC|null    |STATIC            |VOLT_ABSORB       |MOTOR_DRIVE       |[55, 62, 46, 73, 75, 49]      |11.0  |255|AMORPHOUS   |MONSTER     |
-165|Wattwo       |ELECTRIC|null    |STATIC            |ELECTRIC_SURGE    |MOTOR_DRIVE       |[83, 65, 92, 105, 80, 50]     |56.1  |100|AMORPHOUS   |MONSTER     |
-166|Megawatt     |ELECTRIC|STEEL   |HUGE_POWER        |ELECTRIC_SURGE    |MOTOR_DRIVE       |[85, 65, 120, 92, 98, 55]     |65.9  |35 |AMORPHOUS   |MONSTER     |
+164|Shookwat     |ELECTRIC|null    |STATIC            |VOLT_ABSORB       |MAGNET_PULL       |[55, 62, 46, 73, 75, 49]      |11.0  |255|AMORPHOUS   |MONSTER     |
+165|Wattwo       |ELECTRIC|null    |STATIC            |ELECTRIC_SURGE    |MAGNET_PULL       |[83, 65, 92, 105, 80, 50]     |56.1  |100|AMORPHOUS   |MONSTER     |
+166|Megawatt     |ELECTRIC|STEEL   |HUGE_POWER        |ELECTRIC_SURGE    |MAGNET_PULL       |[85, 65, 120, 92, 98, 55]     |65.9  |35 |AMORPHOUS   |MONSTER     |
 139|Elelamb      |ELECTRIC|GROUND  |STATIC            |FLUFFY            |UNERODIBLE        |[54, 32, 53, 65, 58, 33]      |40.1  |255|FIELD       |FIELD       |
 140|Electroram   |ELECTRIC|GROUND  |STATIC            |FLUFFY            |UNERODIBLE        |[65, 80, 55, 45, 60, 50]      |76.0  |120|FIELD       |FIELD       |
 141|Superchargo  |ELECTRIC|GROUND  |SPEED_BOOST       |FLUFFY            |UNERODIBLE        |[85, 128, 72, 60, 77, 98]     |91.3  |45 |FIELD       |FIELD       |
@@ -189,11 +189,11 @@
 233|Drageye      |DRAGON  |LIGHT   |MULTISCALE        |ILLUMINATION      |COMPOUND_EYES     |[95, 85, 90, 115, 125, 90]    |247.2 |25 |WATER_1     |DRAGON      |
 225|Blobmo       |GALACTIC|null    |SHIELD_DUST       |REGENERATOR       |LEVITATE          |[90, 30, 30, 30, 100, 30]     |100.2 |85 |ALIEN       |AMORPHOUS   |
 226|Nebulimb     |GALACTIC|null    |SHIELD_DUST       |REGENERATOR       |GRAVITATION       |[125, 45, 50, 45, 115, 40]    |759.2 |65 |ALIEN       |AMORPHOUS   |
-227|Galactasolder|GALACTIC|FIGHTING|SNIPER            |SHEER_FORCE       |GRAVITATION       |[170, 135, 70, 55, 115, 50]   |1000.5|35 |ALIEN       |AMORPHOUS   |
+227|Galactasolder|GALACTIC|FIGHTING|SNIPER            |SHEER_FORCE       |GRAVITATION       |[170, 135, 70, 55, 115, 50]   |7950.5|35 |ALIEN       |AMORPHOUS   |
 218|Consodust    |GALACTIC|ICE     |SNOW_WARNING      |SLUSH_RUSH        |RECKLESS          |[70, 33, 76, 58, 93, 85]      |90.3  |100|ALIEN       |ALIEN       |
 219|Cosmocrash   |GALACTIC|ICE     |SNOW_WARNING      |SLUSH_RUSH        |RECKLESS          |[90, 150, 60, 65, 60, 100]    |378.2 |45 |ALIEN       |ALIEN       |
-223|Rockmite     |GALACTIC|ROCK    |GRAVITATION       |HUGE_POWER        |MOLD_BREAKER      |[70, 65, 130, 55, 75, 55]     |632.5 |75 |ALIEN       |MINERAL     |
-224|Stellarock   |GALACTIC|ROCK    |GRAVITATION       |HUGE_POWER        |MOLD_BREAKER      |[80, 75, 180, 65, 80, 60]     |1000.5|35 |ALIEN       |MINERAL     |
+223|Rockmite     |GALACTIC|ROCK    |GRAVITATION       |HUGE_POWER        |MOLD_BREAKER      |[70, 65, 130, 55, 75, 55]     |2632.5|75 |ALIEN       |MINERAL     |
+224|Stellarock   |GALACTIC|ROCK    |GRAVITATION       |HUGE_POWER        |MOLD_BREAKER      |[80, 75, 180, 65, 80, 60]     |8905.5|35 |ALIEN       |MINERAL     |
 -10|Poof-E       |GHOST   |ELECTRIC|FRIENDLY_GHOST    |COMPETITIVE       |LEVITATE          |[40, 35, 70, 85, 85, 85]      |1.0   |135|AMORPHOUS   |AMORPHOUS   |
 -11|Hast-E       |GHOST   |ELECTRIC|FRIENDLY_GHOST    |COMPETITIVE       |LEVITATE          |[45, 75, 70, 150, 45, 115]    |145.2 |45 |AMORPHOUS   |AMORPHOUS   |
 -7 |Droid-E      |FIGHTING|ELECTRIC|SNIPER            |IRON_FIST         |FULL_FORCE        |[40, 75, 70, 30, 30, 85]      |94.9  |135|HUMAN$LIKE  |HUMAN$LIKE  |

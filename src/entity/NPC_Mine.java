@@ -106,7 +106,7 @@ public class NPC_Mine extends Entity {
 	    
 	    items.add(new Pair<>(Item.BRIGHT_POWDER, 1));
 	    items.add(new Pair<>(Item.EXPERT_BELT, 1));
-	    items.add(new Pair<>(Item.METRONOME, 1));
+	    items.add(new Pair<>(Item.HEAVY$DUTY_BOOTS, 1));
 	    items.add(new Pair<>(Item.TERRAIN_EXTENDER, 1));
 	    items.add(new Pair<>(Item.ABILITY_SHIELD, 1));
 	    items.add(new Pair<>(Item.LIFE_ORB, 1));

@@ -638,8 +638,7 @@ public class Trainer implements Serializable {
 	            int likelihood = entry.getValue();
 	            
 	            if (likelihood > 0) {
-	                int matchupScore = ally.scorePokemon(playerMon, null, new Pair<>(0, 0.0), 
-	                                                     false, Pokemon.field, null, false);
+	                int matchupScore = ally.evaluateSwitchInScore(playerMon, Pokemon.field);
 	                totalWeightedScore += matchupScore * likelihood;
 	                totalWeight += likelihood;
 	            }
@@ -680,8 +679,7 @@ public class Trainer implements Serializable {
 	        for (int j = 0; j < team.length; j++) {
 	            Pokemon ourMon = team[j];
 	            if (ourMon != null) {
-	                int score = playerMon.scorePokemon(ourMon, null, new Pair<>(0, 0.0), 
-	                                                   false, Pokemon.field, null, false);
+	                int score = playerMon.evaluateSwitchInScore(ourMon, Pokemon.field);
 	                totalScore += score;
 	                count++;
 	            }

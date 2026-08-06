@@ -72,6 +72,7 @@ public enum Ability {
 	MAGIC_GUARD("The Pokemon only takes damage from attacks."),
 	MAGICAL("Powers up MAGIC moves by 1.5x."),
 	MAGMA_ARMOR("This Pokemon can't be Critical hit, and prevents the Pokemon from getting a frostbite."),
+	MAGNET_PULL("Prevents STEEL-type Pokemon from switching."),
 	MERCILESS("The Pokemon's attacks become critical hits if the target is poisoned, badly poisoned or paralyzed."),
 	MIRROR_ARMOR("Bounces back only the stat-lowering effects that the Pokemon receives."),
 	MOLD_BREAKER("Ignores the foe's ability when attacking."),

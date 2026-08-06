@@ -2065,6 +2065,22 @@ public class UI extends AbstractUI {
 					Task.addTask(Task.TURN, npc, "", Task.PLAYER);
 					Task.addTask(Task.SLEEP, "", 15);
 					Task.addTask(Task.DIALOGUE, npc, "Then go. Show them what it took to reach this peak.");
+					turnLeft = gp.player.worldX >= 49 * gp.tileSize;
+					if (gp.player.worldX != 49 * gp.tileSize) {
+						Task.addTask(Task.SLEEP, "", 30);
+						Task.addTask(Task.TURN, gp.player, "", turnLeft ? Task.LEFT : Task.RIGHT);
+						Task.addTask(Task.SLEEP, "", 15);
+						Task.addNPCMoveTask('x', 49 * gp.tileSize, gp.player, false, 2);
+						Task.addTask(Task.SLEEP, "", 20);
+					}
+					Task.addTask(Task.TURN, gp.player, "", Task.UP);
+					Task.addTask(Task.SLEEP, "", 60);
+					Task.addNPCMoveTask('y', 41 * gp.tileSize + gp.tileSize/2, gp.player, false, 2);
+					t = Task.addTask(Task.TELEPORT, "");
+					t.counter = 222;
+					t.start = 50;
+					t.finish = 57;
+					t.wipe = false;
 					currentTask = null;
 					break;
 				}

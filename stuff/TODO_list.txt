@@ -6,6 +6,13 @@ Make wild pokemon sometimes hold items (for balancing, can't covet bc it'll clea
 Remove the "first dialogue" thing from script npcs and make if the name is null then it'll put "???" as their name. this can be
 used to then not reveal the npc's name until they introduce themselves
 
+UPDATE LIST
+Make player walk into the E4 after saying yes to guard
+Make AI know what stat stage changes, screens, status conditions do and whether or not they're useful
+Natures and PP ups for all trainers (only 8th gym+ split left)
+Make the AI not click stat stage boost moves when they have a Choice item
+Make a skip button in the payout screen for battle betting
+
 Quality of Life
 Add exp trainer in Schrice City
 Make NPCs tell about old features being updated (deletable HMs, updated moves, etc)
