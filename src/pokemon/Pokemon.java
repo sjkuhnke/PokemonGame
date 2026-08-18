@@ -3101,6 +3101,16 @@ public class Pokemon implements Serializable {
 				return;
 			}
 			
+			if (Move.getSound().contains(move) && foeAbility == Ability.SOUNDPROOF) {
+				Task.addAbilityTask(foe);
+				Task.addTask(Task.TEXT, "It doesn't effect " + foe.nickname + "...");
+				endMove();
+				this.moveMultiplier = 1;
+				this.rollCount = 1;
+				this.metronome = -1;
+				return;
+			}
+			
 			if (((moveType == PType.WATER && (foeAbility == Ability.WATER_ABSORB || foeAbility == Ability.DRY_SKIN)) || (moveType == PType.ELECTRIC && foeAbility == Ability.VOLT_ABSORB)
 					|| (moveType == PType.BUG && foeAbility == Ability.INSECT_FEEDER) || ((moveType == PType.LIGHT || moveType == PType.GALACTIC) && foeAbility == Ability.BLACK_HOLE)
 					|| (moveType == PType.MAGIC && foeAbility == Ability.MYSTIC_ABSORB) || (moveType == PType.LIGHT && foeAbility == Ability.EVENT_HORIZON))
@@ -4493,6 +4503,10 @@ public class Pokemon implements Serializable {
 			break;
 		case HAMMER_ARM:
 			stat(this, 4, -1, foe);
+			break;
+		case HEADLONG_RUSH:
+			stat(this, 1, -1, foe);
+			stat(this, 3, -1, foe);
 			break;
 		case KNOCK_OFF:
 			if (foe.item != null && foe.item != Item.EVERSTONE && !(foe.getAbility(field) == Ability.STICKY_HOLD && this.ability != Ability.MOLD_BREAKER)) {
@@ -7472,6 +7486,10 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (move.isBallOrBomb() && foeAbility == Ability.BULLETPROOF) {
+			return new Pair<>(0, 0.0);
+		}
+		
+		if (Move.getSound().contains(move) && foeAbility == Ability.SOUNDPROOF) {
 			return new Pair<>(0, 0.0);
 		}
 		

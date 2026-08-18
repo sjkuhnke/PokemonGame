@@ -240,6 +240,7 @@ public enum Move {
 	HAZE(0,1000,0,0,2,0,PType.ICE,"Clears all stat changes on the field",false,25),
 	HEAD_SMASH(150,80,0,0,0,0,PType.ROCK,"User takes 1/2 of damage inflicted",true,5),
 	HEADBUTT(70,100,30,0,0,0,PType.NORMAL,"% chance of causing foe to flinch",true,15),
+	HEADLONG_RUSH(120,100,-1,0,0,0,PType.GROUND,"Lowers user's Defense and Sp.Def by 1",true,5),
 	HEAL_BELL(0,1000,0,0,2,0,PType.NORMAL,"Cures team of any status conditions",false,5),
 	HEAL_PULSE(0,1000,0,0,2,0,PType.PSYCHIC,"Heals 1/2 of foe's max HP",false,10),
 	HEALING_CIRCLE(0,1000,0,0,2,0,PType.MAGIC,"Creates a circle on the user's side that heals incoming Pokemon for 50% of their missing HP, lasts 10 turns",false,10),
@@ -428,7 +429,7 @@ public enum Move {
 	RISING_VOLTAGE(-1,100,0,0,1,0,PType.ELECTRIC,"Power is 2x if the terrain is ELECTRIC and foe is grounded",false,20),
 	ROAR(0,1000,0,0,2,-6,PType.NORMAL,"Forces foe to switch out into a random teammate, usually moves last",false,20),
 	ROCK_BLAST(25,90,0,0,0,0,PType.ROCK,"Hits 2-5 times",false,10),
-	ROCK_CLIMB(80,95,20,0,0,0,PType.ROCK,"% chance to confuse foe",true,10),
+	ROCK_CLIMB(80,100,20,0,0,0,PType.ROCK,"% chance to confuse foe",true,10),
 	ROCK_POLISH(0,1000,0,0,2,0,PType.ROCK,"Raises user's Speed by 2",false,20),
 	ROCK_SLIDE(75,90,30,0,0,0,PType.ROCK,"% of causing foe to flinch",false,10),
 	ROCK_SMASH(40,100,100,0,0,0,PType.FIGHTING,"% to lower foe's Defense by 1",true,30),
@@ -1069,6 +1070,7 @@ public enum Move {
 		result.add(DYNAMIC_PUNCH);
 		result.add(MANA_PUNCH);
 		result.add(CLOSE_COMBAT);
+		result.add(HEADLONG_RUSH);
 		
 		if (result.contains(this)) {
 			return true;

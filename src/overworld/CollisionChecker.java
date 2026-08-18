@@ -198,7 +198,7 @@ public class CollisionChecker {
 	    int index = 999;
 
 	    for (int i = 0; i < target[1].length; i++) {
-	        if (target[gp.currentMap][i] != null) {
+	        if (target[gp.currentMap][i] != null && target[gp.currentMap][i] != entity) {
 	            Rectangle entityRange = new Rectangle(entity.worldX + entity.solidArea.x, entity.worldY + entity.solidArea.y, entity.solidArea.width, entity.solidArea.height);
 	            int targetX = target[gp.currentMap][i].worldX;
 	            if (target[gp.currentMap][i] instanceof NPC_Clerk || target[gp.currentMap][i] instanceof NPC_Ball) targetX += gp.tileSize;
@@ -356,6 +356,34 @@ public class CollisionChecker {
 	}
 
 
+	public boolean checkPlayer(Entity entity) {
+	    Rectangle entityRange = new Rectangle(
+	        entity.worldX + entity.solidArea.x,
+	        entity.worldY + entity.solidArea.y,
+	        entity.solidArea.width,
+	        entity.solidArea.height
+	    );
 
+	    switch (entity.direction) {
+	        case "up":    entityRange.y -= entity.speed; break;
+	        case "down":  entityRange.y += entity.speed; break;
+	        case "left":  entityRange.x -= entity.speed; break;
+	        case "right": entityRange.x += entity.speed; break;
+	    }
+
+	    Rectangle playerRange = new Rectangle(
+	        gp.player.worldX + gp.player.solidArea.x,
+	        gp.player.worldY + gp.player.solidArea.y,
+	        gp.player.solidArea.width,
+	        gp.player.solidArea.height
+	    );
+
+	    if (entityRange.intersects(playerRange)) {
+	        entity.collisionOn = true;
+	        entity.ice = false;
+	        return true;
+	    }
+	    return false;
+	}
 
 }

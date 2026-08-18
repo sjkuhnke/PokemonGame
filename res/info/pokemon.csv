@@ -192,8 +192,8 @@
 227|Galactasolder|GALACTIC|FIGHTING|SNIPER            |SHEER_FORCE       |GRAVITATION       |[170, 135, 70, 55, 115, 50]   |7950.5|35 |ALIEN       |AMORPHOUS   |
 218|Consodust    |GALACTIC|ICE     |SNOW_WARNING      |SLUSH_RUSH        |RECKLESS          |[70, 33, 76, 58, 93, 85]      |90.3  |100|ALIEN       |ALIEN       |
 219|Cosmocrash   |GALACTIC|ICE     |SNOW_WARNING      |SLUSH_RUSH        |RECKLESS          |[90, 150, 60, 65, 60, 100]    |378.2 |45 |ALIEN       |ALIEN       |
-223|Rockmite     |GALACTIC|ROCK    |GRAVITATION       |HUGE_POWER        |MOLD_BREAKER      |[70, 65, 130, 55, 75, 55]     |2632.5|75 |ALIEN       |MINERAL     |
-224|Stellarock   |GALACTIC|ROCK    |GRAVITATION       |HUGE_POWER        |MOLD_BREAKER      |[80, 75, 180, 65, 80, 60]     |8905.5|35 |ALIEN       |MINERAL     |
+223|Rockmite     |GALACTIC|ROCK    |GRAVITATION       |HUGE_POWER        |SOUNDPROOF        |[70, 65, 130, 55, 75, 55]     |2632.5|75 |ALIEN       |MINERAL     |
+224|Stellarock   |GALACTIC|ROCK    |GRAVITATION       |HUGE_POWER        |SOUNDPROOF        |[80, 75, 180, 65, 80, 60]     |8905.5|35 |ALIEN       |MINERAL     |
 -10|Poof-E       |GHOST   |ELECTRIC|FRIENDLY_GHOST    |COMPETITIVE       |LEVITATE          |[40, 35, 70, 85, 85, 85]      |1.0   |135|AMORPHOUS   |AMORPHOUS   |
 -11|Hast-E       |GHOST   |ELECTRIC|FRIENDLY_GHOST    |COMPETITIVE       |LEVITATE          |[45, 75, 70, 150, 45, 115]    |145.2 |45 |AMORPHOUS   |AMORPHOUS   |
 -7 |Droid-E      |FIGHTING|ELECTRIC|SNIPER            |IRON_FIST         |FULL_FORCE        |[40, 75, 70, 30, 30, 85]      |94.9  |135|HUMAN$LIKE  |HUMAN$LIKE  |

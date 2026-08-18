@@ -221,6 +221,7 @@ public class AssetSetter {
 	private static final int RYDER_E4 = 222;
 	private static final int SENSEI_E4 = 223;
 	private static final int SHAE_E4 = 224;
+	private static final int INVESTIGATOR = 225;
 	
 	private static final int DOWN_3 = -1;
 	private static final int DOWN_2 = 0;
@@ -2078,6 +2079,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(YOUNGSTER_RIGHT, 78, 83, "Get ready, 'cause my Normal-types are anything but boring!", "Okay, okay... you're right. My Seviper doesn't really fit in.", 203);
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC_GAUNTLET, 83, 33, "", "", -1);
 		gp.npc[mapNum][index++] = null; // millie 5
+		gp.npc[mapNum][index++] = null; // investigator lauryn
 		
 		mapNum = 31;
 		index = 0;
@@ -4573,6 +4575,7 @@ public class AssetSetter {
 		}
 		if (flag[2][13]) {
 			gp.npc[28][38] = null;
+			gp.npc[28][39] = NPCSetup(INVESTIGATOR, "Lauryn", 81, 22, "test", 28.5);
 		}
 		
 		/**
@@ -5946,6 +5949,9 @@ public class AssetSetter {
 				break;
 			case SHAE_E4:
 				result.setupImages("/npc/shae", true);
+				break;
+			case INVESTIGATOR:
+				result = new NPC_Investigator(gp, name, messages, scriptIndex, flag, altDialogue);
 				break;
 		}
 		

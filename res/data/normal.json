@@ -4785,7 +4785,7 @@
     }
   },
 
-  "sleep_talk": {
+  "sleep_talk/heal_bell": {
     "type": "status",
     "frames": [
       {

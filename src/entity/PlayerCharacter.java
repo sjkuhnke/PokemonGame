@@ -1176,8 +1176,7 @@ public class PlayerCharacter extends Entity {
 	
 	public void runCode(String code, UI ui) {
 		if (code.equals("RAR3")) {
-			p.bag.add(Item.RARE_CANDY);
-			p.bag.count[18] = 999;
+			p.bag.add(Item.RARE_CANDY_BOX);
 			p.invalidateNuzlocke("Used " + code);
 		} else if (code.equals("M1X3R")) {
 			p.random = !p.random;

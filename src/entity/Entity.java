@@ -58,6 +58,11 @@ public class Entity {
 	public int flag = -1;
 	private int spin;
 	
+	// patrol behavior
+	public int patrolMinX = Integer.MIN_VALUE;
+	public int patrolMaxX = Integer.MAX_VALUE;
+	public boolean patrolling = false;
+	
 	public Entity(GamePanel gp, String name) {
 		this.gp = gp;
 		height = gp.tileSize;
@@ -217,6 +222,9 @@ public class Entity {
 	    g2.setClip(originalClip);
 	    g2.setComposite(originalComposite);
 	}
+	
+	public void setAction() {}
+	public void update() {}
 	
 	public void speak(int mode) {
 		if (mode == -1) {
@@ -398,5 +406,21 @@ public class Entity {
 
 	public boolean isSpin() {
 		return spin != 0;
+	}
+	
+	public void setPatrolBounds(int minX, int maxX) {
+		this.patrolMinX = minX;
+		this.patrolMaxX = maxX;
+		this.patrolling = true;
+	}
+	
+	public void updatePatrolDirection() {
+		if (!patrolling) return;
+		
+		if (direction.equals("left") && worldX <= patrolMinX) {
+			direction = "right";
+		} else if (direction.equals("right") && worldX >= patrolMaxX) {
+			direction = "left";
+		}
 	}
 }

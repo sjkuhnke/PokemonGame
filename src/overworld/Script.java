@@ -977,6 +977,10 @@ public class Script {
 			Task.addTask(Task.FLASH_OUT, "");
 		});
 		
+		scriptMap.put(28.5, (npc) -> { // investigator
+			Task.addTask(Task.DIALOGUE, npc, "PP");
+		});
+		
 		giftEncounters.add(new GiftEncounter(
 			new int[] {49, gp.npc[49][0].worldX / gp.tileSize, gp.npc[49][0].worldY / gp.tileSize},
 			GiftEncounter.GiftType.TABLE,

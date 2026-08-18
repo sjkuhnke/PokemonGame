@@ -281,10 +281,8 @@ public class GamePanel extends JPanel implements Runnable {
 				ticks = 0;
 			}
 			player.update();
-			if (ticks % 5 == 0) {
-				updateEntity();
-				//updateTempBag();
-			}
+			updateEntity();
+			//updateTempBag();
 		}
 		if (keyH.tabPressed) {
 			FPS = 120;
@@ -352,9 +350,16 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 
 	private void updateEntity() {
-		int index = new Random().nextInt(npc[1].length);
+		if (ticks % 5 == 0) {
+			int index = new Random().nextInt(npc[1].length);
+			if (npc[currentMap][index] != null) npc[currentMap][index].spinRandom();
+		}
 		
-		if (npc[currentMap][index] != null) npc[currentMap][index].spinRandom();
+		for (int i = 0; i < npc[1].length; i++) {
+			if (npc[currentMap][i] != null) {
+				npc[currentMap][i].update();
+			}
+		}
 		
 	}
 	

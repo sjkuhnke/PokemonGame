@@ -139,6 +139,7 @@ public enum Ability {
 	SNOW_WARNING("The Pokemon makes it SNOW for 5 turns when it enters a battle."),
 	SOLAR_POWER("Boosts the Sp. Atk stat in SUNNY weather by 1.5x, but loses 1/8 max HP each turn."),
 	SOLID_ROCK("Halves damage from supereffective attacks."),
+	SOUNDPROOF("Protects the Pokemon from sound moves."),
 	SPARKLY_SURGE("Turns the ground into SPARKLY TERRAIN for 5 turns when the Pokemon enters a battle."),
 	SPEED_BOOST("Its Speed stat is boosted at the end of every active turn."),
 	STARBORN("Raises highest attack by 1 if Aurora Glow is active."),
