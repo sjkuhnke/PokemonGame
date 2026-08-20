@@ -1148,6 +1148,22 @@ public class EventHandler {
 			if (!gp.player.p.flag[8][7] && hitRect(224,45,52,11,1)) gp.player.interactNPC(gp.npc[224][0], false);
 			if (!gp.player.p.flag[8][8] && hitRect(225,45,52,11,1)) gp.player.interactNPC(gp.npc[225][0], false);
 			if (!gp.player.p.flag[8][10] && !gp.player.p.flag[8][15] && hit(226,50,57)) gp.player.interactNPC(gp.npc[226][1], false);
+			
+			// Research Post C
+			if (hit(38,27,19)) teleport(166, 32, 22,true);
+			if (hit(166,32,22)) teleport(38, 27, 19,true);
+			
+			if (hit(38,22,12)) teleport(228, 31, 45,false);
+			if (hit(228,31,46)) teleport(38, 22, 13,false);
+			if (hit(228,31,35)) teleport(229, 31, 45,false);
+			if (hit(229,31,46)) teleport(228, 31, 36,false);
+			if (hit(229,31,40)) teleport(230, 31, 45,false);
+			if (hit(230,31,46)) teleport(229, 31, 41,false);
+			if (hit(230,31,40)) teleport(231, 31, 45,false);
+			if (hit(231,31,46)) teleport(230, 31, 41,false);
+			if (hit(231,31,40)) teleport(232, 31, 45,false);
+			if (hit(232,31,46)) teleport(231, 31, 41,false);
+			
 		}
 		// Cutscene with Ryder/Arthra in front of Spaceship
 		if (!gp.player.p.flag[7][20] && hit(152,67,78,true)) gp.player.interactNPC(gp.npc[152][5], false);

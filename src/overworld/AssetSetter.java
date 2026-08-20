@@ -4596,7 +4596,7 @@ public class AssetSetter {
 		if (flag[2][13] && !flag[7][21]) {
 			gp.npc[28][39] = NPCSetup(INVESTIGATOR, "Lauryn", 81, 22, "", 28.5);
 		}
-		if (flag[2][18]) {
+		if (flag[2][18] || flag[7][21]) {
 			gp.npc[228][0] = NPCSetup(INVESTIGATOR_RIGHT, "Lauryn", 30, 45, "", 228.0);
 		}
 		
@@ -5987,7 +5987,7 @@ public class AssetSetter {
 				break;
 			case INVESTIGATOR_RIGHT:
 				result.setupImages("/npc/investigator", true);
-				result.setDirection("left");
+				result.setDirection("right");
 		}
 		
 		result.worldX = gp.tileSize*x;

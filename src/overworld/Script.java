@@ -1005,7 +1005,7 @@ public class Script {
 					Task.addTask(Task.DIALOGUE, npc, "You'll understand once you're there - I'd rather my colleagues explain the specifics, they built the thing, not me.");
 					p.flag[2][18] = true;
 				}
-				Task.addTask(Task.CONFIRM, npc, "So - are you coming?");
+				Task.addTask(Task.CONFIRM, npc, "So - are you coming?", 17);
 				gp.ui.commandNum = 1;
 			} else {
 				if (!p.flag[2][16]) { // meeting for the first time
@@ -1134,28 +1134,85 @@ public class Script {
 			}
 		});
 		
-		scriptMap.put(228.0, (npc) -> {
-			Task.addTask(Task.DIALOGUE, npc, "This is it. Not glamorous, I know - we spent the budget on containment, not carpet.");
-			Task.addTask(Task.DIALOGUE, npc, "I have three scientists in the back rooms who are the best battlers on my team.");
-			Task.addTask(Task.DIALOGUE, npc, "Don't let the lab coats fool you - it's a genuinely terrifying sentence.");
-			Task.addTask(Task.DIALOGUE, npc, "You'll face them one at a time, and the fights get harder as you go.");
-			Task.addTask(Task.SLEEP, "", 30);
-			Task.addTask(Task.DIALOGUE, npc, "Here's the part I need you to actually listen to.");
-			Task.addTask(Task.DIALOGUE, npc, "You go in with four Pokemon. Every fight, one of them has to fall.");
-			Task.addTask(Task.DIALOGUE, npc, "Not zero. Not two. Exactly one.");
-			Task.addTask(Task.SPEAK, player, "Why does one have to faint?");
-			Task.addTask(Task.DIALOGUE, npc, "I don't fully know, if I'm honest. It's in every account we've ever cross-referenced - a cost, every time, always paid the same way.");
-			Task.addTask(Task.DIALOGUE, npc, "Whatever's on the other end of that relic isn't interest in taking something for nothing.");
-			Task.addTask(Task.SLEEP, "", 20);
-			Task.addTask(Task.DIALOGUE, npc, "I hate this part of my job, for what it's worth.");
-			Task.addTask(Task.DIALOGUE, npc, "Three fights. Four Pokemon, then three, then two.");
-			Task.addTask(Task.DIALOGUE, npc, "If you make it through all three with exactly one left standing, that's when we call down whatever's coming.");
-			Task.addTask(Task.DIALOGUE, npc, "And I need to be completely straight with you:");
-			Task.addTask(Task.DIALOGUE, npc, "You get one attempt.");
-			Task.addTask(Task.DIALOGUE, npc, "If you lose a battle, if the numbers don't line up right, if anything goes wrong - that's it.");
-			Task.addTask(Task.DIALOGUE, npc, "There's no reset on this. So if you need to walk out and prepare more first, do that now. Nobody will think less of you for it.");
-			Task.addTask(Task.DIALOGUE, npc, "The scientist by the door in each room can let you forefit the challenge at any point.");
-			Task.addTask(Task.DIALOGUE, npc, "Just know, when you talk to the guard, you either come out victorious or lose. There's no retrying.");
+		scriptMap.put(228.0, (npc) -> { // lauryn research C
+			if (p.flag[2][19]) { // player attempted gauntlet
+				if (p.flag[2][20]) { // player beat gauntlet
+					Task.addTask(Task.DIALOGUE, npc, "Hey! There you are. I keep expecting you to just vanish back into whatever you were doing before I hijacked you with all this.");
+					Task.addTask(Task.DIALOGUE, npc, "How's it doing? Settling in alright? I know it can't have been an easy transition for it - from wherever it was, straight into your party.");
+					Task.addTask(Task.SPEAK, player, "It's doing well.");
+					Task.addTask(Task.DIALOGUE, npc, "Good. Good, that's - actually that's a relief to hear, I wasn't sure what to expect honestly.");
+					Task.addTask(Task.DIALOGUE, npc, "You're doing exactly what I hoped someone would do with it.");
+					Task.addTask(Task.DIALOGUE, npc, "Anyway - don't let me keep you. Just wanted to see your face and confirm to myself this actually happened.");
+					Task.addTask(Task.DIALOGUE, npc, "Some mornings I still second-guess it.");
+				} else { // player lost gauntlet
+					// TODO: add the player beat dragowrath dialogue in (the it's over now, isn't it... messages) if the player has beat dragowrath in this branch too
+					Task.addTask(Task.DIALOGUE, npc, "Hey. I heard.");
+					Task.addTask(Task.SLEEP, "", 30);
+					Task.addTask(Task.DIALOGUE, npc, "I want you to know I don't regret asking you to try.");
+					Task.addTask(Task.DIALOGUE, npc, "Someone has to, eventually, and you got farther than anyone else who's offered.");
+					Task.addTask(Task.DIALOGUE, npc, "I'm still going to be out here doing this work. Maybe the next lead treats us kinder.");
+					Task.addTask(Task.DIALOGUE, npc, "Take care of yourself, alright?");
+				}
+			} else {
+				if (p.flag[7][21]) { // player beat dragowrath
+					boolean met = p.flag[2][16];
+					Entity e = p.flag[2][16] ? npc : new Entity(gp, "???");
+					Task.addTask(Task.DIALOGUE, e, "It's over now, isn't it. I felt it, actually - like something enormous just stopped holding its breath.");
+					Task.addTask(Task.DIALOGUE, e, "I don't think I need the relic anymore. Not for what I originally wanted it for, anyway.");
+					Task.addTask(Task.DIALOGUE, e, "Strange, letting go of something you spent years chasing.");
+					if (met) Task.addTask(Task.DIALOGUE, e, "Thank you for everything up to this point. I mean that.");
+				} else {
+					Task.addTask(Task.DIALOGUE, npc, "This is it. Not glamorous, I know - we spent the budget on containment, not carpet.");
+					Task.addTask(Task.DIALOGUE, npc, "I have three scientists in the back rooms who are the best battlers on my team.");
+					Task.addTask(Task.DIALOGUE, npc, "Don't let the lab coats fool you - it's a genuinely terrifying sentence.");
+					Task.addTask(Task.DIALOGUE, npc, "You'll face them one at a time, and the fights get harder as you go.");
+					Task.addTask(Task.SLEEP, "", 30);
+					Task.addTask(Task.DIALOGUE, npc, "Here's the part I need you to actually listen to.");
+					Task.addTask(Task.DIALOGUE, npc, "You go in with four Pokemon. Every fight, one of them has to fall.");
+					Task.addTask(Task.DIALOGUE, npc, "Not zero. Not two. Exactly one.");
+					Task.addTask(Task.SPEAK, player, "Why does one have to faint?");
+					Task.addTask(Task.DIALOGUE, npc, "I don't fully know, if I'm honest. It's in every account we've ever cross-referenced - a cost, every time, always paid the same way.");
+					Task.addTask(Task.DIALOGUE, npc, "Whatever's on the other end of that relic isn't interest in taking something for nothing.");
+					Task.addTask(Task.SLEEP, "", 20);
+					Task.addTask(Task.DIALOGUE, npc, "I hate this part of my job, for what it's worth.");
+					Task.addTask(Task.DIALOGUE, npc, "Three fights. Four Pokemon, then three, then two.");
+					Task.addTask(Task.DIALOGUE, npc, "If you make it through all three with exactly one left standing, that's when we call down whatever's coming.");
+					Task.addTask(Task.DIALOGUE, npc, "And I need to be completely straight with you:");
+					Task.addTask(Task.DIALOGUE, npc, "You get one attempt.");
+					Task.addTask(Task.DIALOGUE, npc, "If you lose a battle, if the numbers don't line up right, if anything goes wrong - that's it.");
+					Task.addTask(Task.DIALOGUE, npc, "There's no reset on this. So if you need to walk out and prepare more first, do that now. Nobody will think less of you for it.");
+					Task.addTask(Task.DIALOGUE, npc, "The scientist by the door in each room can let you forefit the challenge at any point.");
+					Task.addTask(Task.DIALOGUE, npc, "Just know, when you talk to the guard, you either come out victorious or lose. There's no retrying.");
+				}
+			}
+		});
+		
+		scriptMap.put(228.1, (npc) -> { // generic scientist
+			if (!p.flag[2][18]) { // haven't brought eternal relic to lauryn
+				Task.addTask(Task.DIALOGUE, npc, "Can't talk long, we're mid-calibration. Whatever you need, it's probably Lauryn you're after.");
+			} else {
+				if (!p.flag[2][19]) { // haven't attempted gauntlet
+					Task.addTask(Task.DIALOGUE, npc, "You're the one Lauryn brough in? Word travels fast around here - small building, lot of nervous energy.");
+					Task.addTask(Task.DIALOGUE, npc, "I'll be honest, most of us didn't think she'd actually find someone willing to try this. No offense.");
+					Task.addTask(Task.SLEEP, "", 20);
+					Task.addTask(Task.DIALOGUE, npc, "If you're still deciding - take the time.");
+					Task.addTask(Task.DIALOGUE, npc, "Nobody in this building think less of a person for being careful about something like this.");
+				} else if (!p.flag[2][20]) { // attempted and lost
+					Task.addTask(Task.DIALOGUE, npc, "Heard about your run. That's - that's a hard way for it to go, especially that close to the end.");
+					Task.addTask(Task.SLEEP, "", 20);
+					Task.addTask(Task.DIALOGUE, npc, "For what it's worth, nobody here thinks you did anything wrong. The margins on this were never fair to begin with.");
+					Task.addTask(Task.DIALOGUE, npc, "We knew that going in and asked you to try anyway.");
+					Task.addTask(Task.DIALOGUE, npc, "Door's always open if you're ever just passing through. Doesn't have to be about the relic.");
+				} else { // attempted and won
+					Task.addTask(Task.DIALOGUE, npc, "There they are. The one who actually pulled it off.");
+					Task.addTask(Task.DIALOGUE, npc, "I watched the readouts during your third fight - thought for a second the numbers weren't going to line up.");
+					Task.addTask(Task.DIALOGUE, npc, "Glad I was wrong.");
+					Task.addTask(Task.SLEEP, "", 20);
+					Task.addTask(Task.DIALOGUE, npc, "Lauryn hasn't stopped talking about it since. You'd think she caught the thing herself.");
+					Task.addTask(Task.DIALOGUE, npc, "Take care of it out there. We'll be here if you ever need anything cross-referenced - least we can do.");
+				}
+			}
+			
 		});
 		
 		giftEncounters.add(new GiftEncounter(
