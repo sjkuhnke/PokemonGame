@@ -25,6 +25,7 @@ public class AssetSetter {
 	public HashMap<Item, Integer> itemMap = new HashMap<>();
 	public HashMap<Integer, StaticSkeleton> legendarySkeletons = new HashMap<>();
 	
+	private static final int NPC_GEOLOGY = -43;
 	private static final int MINING = -42;
 	private static final int DEALER_B = -41;
 	private static final int DEALER = -40;
@@ -221,7 +222,9 @@ public class AssetSetter {
 	private static final int RYDER_E4 = 222;
 	private static final int SENSEI_E4 = 223;
 	private static final int SHAE_E4 = 224;
-	private static final int INVESTIGATOR = 225;
+	private static final int SHAE_E4_UP = 225;
+	private static final int INVESTIGATOR = 226;
+	private static final int INVESTIGATOR_RIGHT = 227;
 	
 	private static final int DOWN_3 = -1;
 	private static final int DOWN_2 = 0;
@@ -2591,8 +2594,12 @@ public class AssetSetter {
 		
 		mapNum = 131;
 		index = 0;
-		gp.npc[mapNum][index] = SetupClerk(NPC_MARKET, 31, 41, Item.EUPHORIAN_GEM, Item.LEAF_STONE, Item.FIRE_STONE, Item.WATER_STONE, Item.ICE_STONE, Item.DAWN_STONE, Item.DUSK_STONE,
+		gp.npc[mapNum][index] = SetupClerk(NPC_GEOLOGY, 31, 41, Item.EUPHORIAN_GEM, Item.LEAF_STONE, Item.FIRE_STONE, Item.WATER_STONE, Item.ICE_STONE, Item.DAWN_STONE, Item.DUSK_STONE,
 				Item.VALIANT_GEM, Item.PETTICOAT_GEM, Item.EVERSTONE, Item.HEAT_ROCK, Item.DAMP_ROCK, Item.SMOOTH_ROCK, Item.ICY_ROCK);
+		
+		mapNum = 136;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(SHAE_E4_UP, "???", 31, 42, "", mapNum);
 		
 		mapNum = 137;
 		index = 0;
@@ -3196,6 +3203,10 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(NOVA_DOWN, "Nova", 49, 51, "");
 		gp.npc[mapNum][index] = NPCSetup(ARTHRA_DOWN, "Arthra", 48, 52, "");
 		gp.npc[mapNum][index] = NPCSetup(ASTRID_E4, "Astrid", 52, 52, "");
+		
+		mapNum = 228;
+		index = 0;
+		gp.npc[mapNum][index++] = null; // lauryn
 	}
 
 	public void setInteractiveTile(int map) {
@@ -3429,6 +3440,10 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = ITileSetup(67, 26, SNOWBALL, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(67, 29, SNOWBALL, mapNum, map);
 		gp.iTile[mapNum][iIndex] = ITileSetup(66, 30, SNOWBALL, mapNum, map);
+		
+		gp.iTile[mapNum][iIndex] = ITileSetup(27, 19, SNOWBALL, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(33, 19, SNOWBALL, mapNum, map);
+		gp.iTile[mapNum][iIndex] = ITileSetup(34, 18, SNOWBALL, mapNum, map);
 		
 		mapNum = 41;
 		iIndex = 0;
@@ -4575,7 +4590,14 @@ public class AssetSetter {
 		}
 		if (flag[2][13]) {
 			gp.npc[28][38] = null;
-			gp.npc[28][39] = NPCSetup(INVESTIGATOR, "Lauryn", 81, 22, "test", 28.5);
+		}
+		
+		// investigator quest
+		if (flag[2][13] && !flag[7][21]) {
+			gp.npc[28][39] = NPCSetup(INVESTIGATOR, "Lauryn", 81, 22, "", 28.5);
+		}
+		if (flag[2][18]) {
+			gp.npc[228][0] = NPCSetup(INVESTIGATOR_RIGHT, "Lauryn", 30, 45, "", 228.0);
 		}
 		
 		/**
@@ -4734,9 +4756,12 @@ public class AssetSetter {
 		if (flag[5][8]) {
 			gp.npc[57][0] = null;
 			gp.npc[124][17] = null;
-			gp.npc[124][18] = null;
 			gp.npc[179][0] = null;
 			gp.npc[180][0] = null;
+		}
+		
+		if (flag[2][16]) { // after talking to lauryn, the guard in front of geology shop disappears
+			gp.npc[124][18] = null;
 		}
 		
 		if (flag[6][4]) {
@@ -5271,6 +5296,9 @@ public class AssetSetter {
 			break;
 		case NPC_MARKET:
 			result = new NPC_Market(gp);
+			break;
+		case NPC_GEOLOGY:
+			result = new NPC_Geology(gp);
 			break;
 		case STAR_SHOP:
 			result = new NPC_Star(gp);
@@ -5950,9 +5978,16 @@ public class AssetSetter {
 			case SHAE_E4:
 				result.setupImages("/npc/shae", true);
 				break;
+			case SHAE_E4_UP:
+				result.setupImages("/npc/shae", true);
+				result.setDirection("up");
+				break;
 			case INVESTIGATOR:
 				result = new NPC_Investigator(gp, name, messages, scriptIndex, flag, altDialogue);
 				break;
+			case INVESTIGATOR_RIGHT:
+				result.setupImages("/npc/investigator", true);
+				result.setDirection("left");
 		}
 		
 		result.worldX = gp.tileSize*x;

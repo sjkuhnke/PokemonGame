@@ -59,9 +59,9 @@ public class Entity {
 	private int spin;
 	
 	// patrol behavior
-	public int patrolMinX = Integer.MIN_VALUE;
-	public int patrolMaxX = Integer.MAX_VALUE;
-	public boolean patrolling = false;
+	public int guardMinX = Integer.MIN_VALUE;
+	public int guardMaxX = Integer.MAX_VALUE;
+	public boolean guarding = false;
 	
 	public Entity(GamePanel gp, String name) {
 		this.gp = gp;
@@ -409,17 +409,17 @@ public class Entity {
 	}
 	
 	public void setPatrolBounds(int minX, int maxX) {
-		this.patrolMinX = minX;
-		this.patrolMaxX = maxX;
-		this.patrolling = true;
+		this.guardMinX = minX;
+		this.guardMaxX = maxX;
+		this.guarding = true;
 	}
 	
 	public void updatePatrolDirection() {
-		if (!patrolling) return;
+		if (!guarding) return;
 		
-		if (direction.equals("left") && worldX <= patrolMinX) {
+		if (direction.equals("left") && worldX <= guardMinX) {
 			direction = "right";
-		} else if (direction.equals("right") && worldX >= patrolMaxX) {
+		} else if (direction.equals("right") && worldX >= guardMaxX) {
 			direction = "left";
 		}
 	}

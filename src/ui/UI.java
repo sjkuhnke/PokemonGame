@@ -133,7 +133,7 @@ public class UI extends AbstractUI {
 	public BufferedImage[] badgeIcons;
 
 	// LETTER STATE
-	private final String[][][] letter = new String[2][][];
+	private final String[][][] letter = new String[3][][];
 	private int currentLetter;
 	public int pageNum = 0;
 
@@ -187,6 +187,9 @@ public class UI extends AbstractUI {
 		message = loadText("/messages/letter2.txt").split("\n");
 		message = breakMessage(message, 73);
 		letter[1] = splitMessage(message);
+		message = loadText("/messages/letter3.txt").split("\n");
+		message = breakMessage(message, 30);
+		letter[2] = splitMessage(message);
 		
 		try {
 			InputStream is = getClass().getResourceAsStream("/font/creattion.ttf");
@@ -2045,8 +2048,12 @@ public class UI extends AbstractUI {
 					Task.addTask(Task.TEXT, "A powerful presence awaits...");
 					currentTask = null;
 					break;
-				case 17: // UNUSED
-					((NPC_Mine) currentTask.e).startMine(gp.player.p);
+				case 17: // go to research post C
+					t = Task.addTask(Task.TELEPORT, "");
+					t.counter = 38;
+					t.start = 22;
+					t.finish = 13;
+					t.wipe = false;
 					currentTask = null;
 					break;
 				case 18: // mining minigame
@@ -3950,6 +3957,10 @@ public class UI extends AbstractUI {
 		} else if (item == Item.LETTER_2) {
 			currentFont = kids;
 			currentLetter = 1;
+			gp.gameState = GamePanel.LETTER_STATE;
+		} else if (item == Item.LAURYN1S_NOTES) {
+			currentFont = consolas;
+			currentLetter = 2;
 			gp.gameState = GamePanel.LETTER_STATE;
 		} else if (item == Item.HEALING_PACK) {
 			if (inGauntlet || inE4) {

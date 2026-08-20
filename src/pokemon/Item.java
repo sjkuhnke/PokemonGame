@@ -421,6 +421,8 @@ public enum Item {
 	WAREHOUSE_KEY(267,0,0,Color.BLACK,Item.KEY_ITEM,false,"A key that unlocks Poppy Grove's Warehouse."),
 	FISHING_ROD(268,0,0,Color.BLACK,Item.KEY_ITEM,true,"Use when looking at water to fish!"),
 	WIRE_CUTTERS(269,0,0,Color.BLACK,Item.KEY_ITEM,false,"Heavy duty wire cutters that can cut through any wire, big or small. A favorite for electricians."),
+	LAURYN1S_NOTES(401,0,0,Color.BLACK,Item.KEY_ITEM,true,"Lauryn's field notes on known Ultra Paradox Pokemon."),
+	ETERNAL_RELIC(400,0,0,Color.BLACK,Item.KEY_ITEM,false,"A shard of something that was never meant to be whole. It hums faintly, out of sync - as if it's still keeping time with a world that isn't this one."),
 	VISOR(270,0,0,Color.BLACK,Item.KEY_ITEM,true,"A rainbow pair of shades that blocks 90% of harsh light."),
 	ICE_KEY(271,0,0,Color.BLACK,Item.KEY_ITEM,false,"A key that unlocks Ice Master's Classroom."),
 	GROUND_KEY(272,0,0,Color.BLACK,Item.KEY_ITEM,false,"A key that unlocks Ground Master's Classroom."),

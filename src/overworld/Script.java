@@ -977,8 +977,185 @@ public class Script {
 			Task.addTask(Task.FLASH_OUT, "");
 		});
 		
-		scriptMap.put(28.5, (npc) -> { // investigator
-			Task.addTask(Task.DIALOGUE, npc, "PP");
+		scriptMap.put(28.5, (npc) -> { // investigator lauryn
+			if (p.bag.contains(Item.ETERNAL_RELIC)) {
+				if (!p.flag[2][18]) {
+					Task.addTask(Task.DIALOGUE, npc, "You're back - wait.");
+					Task.addTask(Task.SLEEP, "", 30);
+					Task.addTask(Task.SPOT, npc, "");
+					Task.addTask(Task.SLEEP, "", 15);
+					Task.addTask(Task.DIALOGUE, npc, "Is that - that's it. That's actually it.");
+					Task.addTask(Task.SLEEP, "", 40);
+					Task.addTask(Task.DIALOGUE, npc, "I need to sit down. No - no, I need to call my team. No - okay, both, I need to do both.");
+					Task.addTask(Task.DIALOGUE, npc, "Do you have any idea how long we've - sorry. Sorry, I'm spiraling, give me a second.");
+					Task.addTask(Task.SLEEP, "", 30);
+					Task.addTask(Task.DIALOGUE, npc, "Okay. Here's the thing. I asked you to bring this to me because I needed proof it was real.");
+					Task.addTask(Task.DIALOGUE, npc, "But now that it's actually in front of me, I've got a much bigger problem.");
+					Task.addTask(Task.DIALOGUE, npc, "Which is that I have absolutely no intention of being the one who raises whatever comes out of this.");
+					Task.addTask(Task.DIALOGUE, npc, "I do research. I do not do \"hand-rearing an alien apex predator.\"");
+					Task.addTask(Task.DIALOGUE, npc, "That's not - that's not my skill set, and frankly it shouldn't be anyone's skill set who hasn't already walked up to a chained god and set it loose.");
+					Task.addTask(Task.SLEEP, "", 30);
+					Task.addTask(Task.DIALOGUE, npc, "So. My team has a facility. It's not much to look at, but we've been preparing for this exact scenario for longer than I'd like to admit.");
+					Task.addTask(Task.DIALOGUE, npc, "If you're willing, I want you to come with me, and I want you to be the one who does this.");
+					Task.addTask(Task.DIALOGUE, npc, "But I'm not going to pretend it's simple. Whatever we summon isn't just going to walk into a Poke Ball because we asked nicely.");
+					Task.addTask(Task.DIALOGUE, npc, "We need to know you can actually handle it.");
+					Task.addTask(Task.DIALOGUE, npc, "My team has a way of testing that.");
+					Task.addTask(Task.DIALOGUE, npc, "It is not gentle.");
+					Task.addTask(Task.DIALOGUE, npc, "All I'll say for now is that it costs something. Every serious thing does.");
+					Task.addTask(Task.DIALOGUE, npc, "You'll understand once you're there - I'd rather my colleagues explain the specifics, they built the thing, not me.");
+					p.flag[2][18] = true;
+				}
+				Task.addTask(Task.CONFIRM, npc, "So - are you coming?");
+				gp.ui.commandNum = 1;
+			} else {
+				if (!p.flag[2][16]) { // meeting for the first time
+					Entity unknown = new Entity(gp, "???");
+					Task.addTask(Task.DIALOGUE, unknown, "Oh - sorry, didn't mean to loom I just needed a minute to think without my equipment beeping at me.");
+					Task.addTask(Task.DIALOGUE, unknown, "You're the one who was here, aren't you? With the... thing. The chained one.");
+					Task.addTask(Task.SLEEP, "", 20);
+					Task.addTask(Task.DIALOGUE, unknown, "I've been camped near this tower for three days trying to get readings off the residual energy signature...");
+					Task.addTask(Task.DIALOGUE, unknown, "...and then you just walk up and solve my entire case study in an afternoon.");
+					Task.addTask(Task.SLEEP, "", 15);
+					Task.addTask(Task.DIALOGUE, npc, "Name's Lauryn. Independent researcher - well, independent's generous.");
+					Task.addTask(Task.DIALOGUE, npc, "I've got a small team and a very patient landlord.");
+					Task.addTask(Task.DIALOGUE, npc, "I study Ultra Paradox phenomena. That's what you freed, in case nobody told you: an Ultra Paradox Pokemon.");
+					Task.addTask(Task.DIALOGUE, npc, "What are they? Short version, they're not from here. Not from this world, and maybe not from this reality period.");
+					Task.addTask(Task.DIALOGUE, npc, "They resemble Pokemon we already know, sometimes down to the bone structure, but something about them is just... wrong.");
+					Task.addTask(Task.DIALOGUE, npc, "Bigger. Older. Angrier.");
+					Task.addTask(Task.SLEEP, "", 20);
+					Task.addTask(Task.DIALOGUE, npc, "As far as I can tell there are six of them total. I've only ever seen two, and one of those was through a telescope four miles away.");
+					Task.addTask(Task.DIALOGUE, npc, "What I actually want - what my whole team wants - is to get our hands on a young one. Something small enough to study without it flattening the lab.");
+					Task.addTask(Task.DIALOGUE, npc, "Raise it, watch how it develops, figure out where in the world - or off it - these things actually come from.");
+					Task.addTask(Task.SLEEP, "", 30);
+					Task.addTask(Task.DIALOGUE, npc, "Which brings me to my problem. I know how to summon one. I don't have what I need to do it.");
+					p.flag[2][16] = true;
+				} else {
+					if (p.flag[2][17]) { // has already talked to Shae
+						if (!p.bag.contains(Item.LAURYN1S_NOTES)) {
+							Task.addTask(Task.DIALOGUE, npc, "Talked to the tower, did you? Good - that's a promising sign. He's normally impossible to get a straight answer out of.");
+							Task.addTask(Task.DIALOGUE, npc, "Here.");
+							Task t = Task.addTask(Task.ITEM, "");
+							t.item = Item.LAURYN1S_NOTES;
+							Task.addTask(Task.DIALOGUE, npc, "These are my observation logs.");
+						} else {
+							Task.addTask(Task.DIALOGUE, npc, "I gave you my observation logs.");
+						}
+						Task.addTask(Task.DIALOGUE, npc, "Six confirmed sightings, six creatures, and I've cross-referenced their energy signatures against known typing charts.");
+						Task.addTask(Task.DIALOGUE, npc, "Should be everything you need to pass whatever test he's cooked up.");
+					} else {
+						Task.addTask(Task.DIALOGUE, npc, "There's an item. My team traced old records back generations and the story's always the same - something called the Eternal Relic.");
+						Task.addTask(Task.DIALOGUE, npc, "Every myth about these creatures circles back to it like a compass needle.");
+						Task.addTask(Task.DIALOGUE, npc, "I don't know exactly what it is. A fragment, a fossil, a focusing lens, take your pick, the sources disagree.");
+						Task.addTask(Task.DIALOGUE, npc, "But whatever it is, it's supposedly tied to the source of all this. Something old. Something big.");
+						Task.addTask(Task.DIALOGUE, npc, "I don't have a name for it and honestly I'm not sure I want one yet.");
+						Task.addTask(Task.SLEEP, "", 20);
+						Task.addTask(Task.DIALOGUE, npc, "All I know is the last confirmed lead on its location was Rawwar City.");
+						Task.addTask(Task.DIALOGUE, npc, "Past that I've got nothing - the trail just goes cold on my end.");
+						Task.addTask(Task.DIALOGUE, npc, "If you happen to find it... come find me first. Please. I've sunk years into this.");
+					}
+				}
+			}
+		});
+		
+		scriptMap.put(136.0, (npc) -> { // shae rawwar city
+			if (!p.bag.contains(Item.ETERNAL_RELIC)) {
+				if (!p.flag[2][17]) {
+					Task.addTask(Task.DIALOGUE, npc, "Took you long enough. I heard someone freed a caged god two towns over.");
+					Task.addTask(Task.DIALOGUE, npc, "Figured you'd wander up here eventually - they always do.");
+					Task.addTask(Task.SLEEP, "", 20);
+					Task.addTask(Task.DIALOGUE, npc, "Relax, I'm not with whoever's chaining Ultra Paradox mons to cell towers, if that's the face you're making.");
+					Task.addTask(Task.DIALOGUE, npc, "I just... keep an eye on things. Somebody has to.");
+					Task.addTask(Task.SLEEP, "", 15);
+					Task.addTask(Task.SPEAK, player, "Who are you?");
+					Task.addTask(Task.SLEEP, "", 25);
+					Task.addTask(Task.DIALOGUE, npc, "Somebody who's been around longer than you'd guess.");
+					Task.addTask(Task.DIALOGUE, npc, "Let's leave it there for now - titles get complicated, and I don't think you're here for my resume.");
+					Task.addTask(Task.SLEEP, "", 30);
+					Task.addTask(Task.DIALOGUE, npc, "You're here about the relic. I can tell because you've got that look - half determined, half completely out of your depth.");
+					Task.addTask(Task.DIALOGUE, npc, "It's a good look on people who end up actually getting somewhere.");
+					Task.addTask(Task.DIALOGUE, npc, "I've got it, for what it's worth. Been sitting on it a long time. Longer than I'd like to explain right now.");
+					Task.addTask(Task.DIALOGUE, npc, "But I'm not just handing a piece of something that powerful to whoever walks up a flight of stairs.");
+					Task.addTask(Task.DIALOGUE, npc, "You want it, you prove to me you understand what you're asking for.");
+					Task.addTask(Task.SLEEP, "", 10);
+				}
+				Task.addTask(Task.DIALOGUE, npc, "Here's the deal. Six creatures, six proofs. Bring me a team - six Pokemon, one slot per proof, in the right order.");
+				Task.addTask(Task.DIALOGUE, npc, "Show me you've actually done the homework on what's out there instead of just running in swinging.");
+				Task.addTask(Task.DIALOGUE, npc, "I'm not telling you the order. If you've been talking to that researcher by the cell tower, you already have everything you need to figure it out.");
+				if (!p.flag[2][17]) {
+					Task.addTask(Task.DIALOGUE, npc, "Go build your team, then come back.");
+					p.flag[2][17] = true;
+				} else {
+					Task.addTask(Task.DIALOGUE, npc, "Let me take a look...");
+					Task.addTask(Task.SLEEP, "", 60);
+					int slot = -1;
+					for (int i = 0; i < p.team.length; i++) {
+						if (slot >= 0 || p.team[i] == null) {
+							break;
+						}
+						if (!p.team[i].isType(Pokemon.getType1(i + 284)) && !p.team[i].isType(Pokemon.getType2(i + 284))) {
+							slot = i;
+						}
+					}
+					int correctSlot = -1;
+					if (slot > 0) {
+						correctSlot = new Random().nextInt(0, slot);
+						Task.addTask(Task.DIALOGUE, npc, "Close, but no. Slot [" + (slot+1) + "] doesn't line up.");
+					}
+					if (slot >= 0) {
+						Task.addTask(Task.DIALOGUE, npc, "Go take another look at what you're working with.");
+						if (correctSlot >= 0) {
+							Task.addTask(Task.DIALOGUE, npc, "I'm not gonna spell out exactly what's wrong - that'd defeat the point.");
+							Task.addTask(Task.DIALOGUE, npc, "But it's not slot [" + (correctSlot+1) + "], that one's solid.");
+						} else {
+							if (!p.bag.contains(Item.LAURYN1S_NOTES)) {
+								Task.addTask(Task.DIALOGUE, npc, "Maybe go check with your researcher friend and see if she has any help for you.");
+							}
+						}
+					} else {
+						Task.addTask(Task.DIALOGUE, npc, "Huh. Okay. I'll admit, I didn't expect anyone to actually nail this.");
+						Task.addTask(Task.SLEEP, "", 30);
+						Task.addTask(Task.DIALOGUE, npc, "Alright. You've done the reading, you've done the legwork.");
+						Task.addTask(Task.DIALOGUE, npc, "And you've got a team that says you actually respect these things instead of just wanting a shiny new box on your dex.");
+						Task.addTask(Task.DIALOGUE, npc, "This isn't a gift, by the way. It's a loan, as far as I'm concerned. What you do with it after this is on you.");
+						Task t = Task.addTask(Task.ITEM, "");
+						t.item = Item.ETERNAL_RELIC;
+						Task.addTask(Task.DIALOGUE, npc, "Take it back to your researcher friend. I'd imagine she's about to have the best day of her professional life.");
+						Task.addTask(Task.SLEEP, "", 20);
+						Task.addTask(Task.DIALOGUE, npc, "One more thing. Whatever's next - and there will be a \"next\", trust me - it's not going to be easy, and it's not going to be safe.");
+						Task.addTask(Task.DIALOGUE, npc, "If you're not sure you're ready, this is the part where you turn around.");
+						Task.addTask(Task.DIALOGUE, npc, "But something tells me you're not the turning-around type.");
+					}
+					
+				}
+			} else if (!p.flag[2][21]) { // haven't attempted UP test
+				Task.addTask(Task.DIALOGUE, npc, "Go on, she's waiting. I'll be here. I'm always here.");
+			} else { // already attempted UP test
+				Task.addTask(Task.DIALOGUE, npc, "I'll be here. I'm always here.");
+			}
+		});
+		
+		scriptMap.put(228.0, (npc) -> {
+			Task.addTask(Task.DIALOGUE, npc, "This is it. Not glamorous, I know - we spent the budget on containment, not carpet.");
+			Task.addTask(Task.DIALOGUE, npc, "I have three scientists in the back rooms who are the best battlers on my team.");
+			Task.addTask(Task.DIALOGUE, npc, "Don't let the lab coats fool you - it's a genuinely terrifying sentence.");
+			Task.addTask(Task.DIALOGUE, npc, "You'll face them one at a time, and the fights get harder as you go.");
+			Task.addTask(Task.SLEEP, "", 30);
+			Task.addTask(Task.DIALOGUE, npc, "Here's the part I need you to actually listen to.");
+			Task.addTask(Task.DIALOGUE, npc, "You go in with four Pokemon. Every fight, one of them has to fall.");
+			Task.addTask(Task.DIALOGUE, npc, "Not zero. Not two. Exactly one.");
+			Task.addTask(Task.SPEAK, player, "Why does one have to faint?");
+			Task.addTask(Task.DIALOGUE, npc, "I don't fully know, if I'm honest. It's in every account we've ever cross-referenced - a cost, every time, always paid the same way.");
+			Task.addTask(Task.DIALOGUE, npc, "Whatever's on the other end of that relic isn't interest in taking something for nothing.");
+			Task.addTask(Task.SLEEP, "", 20);
+			Task.addTask(Task.DIALOGUE, npc, "I hate this part of my job, for what it's worth.");
+			Task.addTask(Task.DIALOGUE, npc, "Three fights. Four Pokemon, then three, then two.");
+			Task.addTask(Task.DIALOGUE, npc, "If you make it through all three with exactly one left standing, that's when we call down whatever's coming.");
+			Task.addTask(Task.DIALOGUE, npc, "And I need to be completely straight with you:");
+			Task.addTask(Task.DIALOGUE, npc, "You get one attempt.");
+			Task.addTask(Task.DIALOGUE, npc, "If you lose a battle, if the numbers don't line up right, if anything goes wrong - that's it.");
+			Task.addTask(Task.DIALOGUE, npc, "There's no reset on this. So if you need to walk out and prepare more first, do that now. Nobody will think less of you for it.");
+			Task.addTask(Task.DIALOGUE, npc, "The scientist by the door in each room can let you forefit the challenge at any point.");
+			Task.addTask(Task.DIALOGUE, npc, "Just know, when you talk to the guard, you either come out victorious or lose. There's no retrying.");
 		});
 		
 		giftEncounters.add(new GiftEncounter(
