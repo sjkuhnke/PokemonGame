@@ -4063,6 +4063,8 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(41, 57, DOWN_3, 1, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(62, 51, DOWN_3, 1, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(60, 58, RIGHT, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(39, 21, DOWN_3, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(39, 22, DOWN_3, 2, mapNum, map);
 		
 		mapNum = 168;
 		iIndex = 0;
