@@ -223,8 +223,9 @@ public class AssetSetter {
 	private static final int SENSEI_E4 = 223;
 	private static final int SHAE_E4 = 224;
 	private static final int SHAE_E4_UP = 225;
-	private static final int INVESTIGATOR = 226;
-	private static final int INVESTIGATOR_RIGHT = 227;
+	private static final int INVESTIGATOR_DOWN = 226;
+	private static final int INVESTIGATOR_UP = 227;
+	private static final int INVESTIGATOR_RIGHT = 228;
 	
 	private static final int DOWN_3 = -1;
 	private static final int DOWN_2 = 0;
@@ -3207,6 +3208,30 @@ public class AssetSetter {
 		mapNum = 228;
 		index = 0;
 		gp.npc[mapNum][index++] = null; // lauryn
+		gp.npc[mapNum][index] = NPCSetup(SCIENTIST_UP, "Scientist", 33, 38, "", 228.1);
+		gp.npc[mapNum][index] = NPCSetup(SCIENTIST_DOWN, "Scientist", 31, 36, "", 228.2);
+		gp.npc[mapNum][index] = NPCSetup(NPC_PC, 27, 41, "", "", -1);
+		
+		mapNum = 229;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(SCIENTIST_DOWN, "Scientist", 31, 41, "", mapNum, -1, "", 547);
+		gp.npc[mapNum][index] = NPCSetup(SCIENTIST_UP, "Scientist", 31, 45, "", 229.1);
+		
+		mapNum = 230;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(SCIENTIST_DOWN, "Scientist", 31, 41, "", mapNum, -1, "", 548);
+		gp.npc[mapNum][index] = NPCSetup(SCIENTIST_UP, "Scientist", 31, 45, "", 230.1);
+		
+		mapNum = 231;
+		index = 0;
+		gp.npc[mapNum][index] = NPCSetup(SCIENTIST_DOWN, "Scientist", 31, 41, "", mapNum, -1, "", 549);
+		gp.npc[mapNum][index] = NPCSetup(SCIENTIST_UP, "Scientist", 31, 45, "", 231.1);
+		gp.npc[mapNum][index] = NPCSetup(INVESTIGATOR_DOWN, "Lauryn", 31, 99, "");
+		
+		mapNum = 232;
+		index = 0;
+		gp.npc[mapNum][index++] = null; // UP mon
+		gp.npc[mapNum][index] = NPCSetup(INVESTIGATOR_UP, "Lauryn", 31, 36, "");
 	}
 
 	public void setInteractiveTile(int map) {
@@ -4063,8 +4088,8 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(41, 57, DOWN_3, 1, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(62, 51, DOWN_3, 1, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(60, 58, RIGHT, 1, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(39, 21, DOWN_3, 2, mapNum, map);
-		gp.iTile[mapNum][iIndex] = SetupRockClimb(39, 22, DOWN_3, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(39, 21, UP, 2, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(39, 22, UP, 2, mapNum, map);
 		
 		mapNum = 168;
 		iIndex = 0;
@@ -4596,10 +4621,19 @@ public class AssetSetter {
 		
 		// investigator quest
 		if (flag[2][13] && !flag[7][21]) {
-			gp.npc[28][39] = NPCSetup(INVESTIGATOR, "Lauryn", 81, 22, "", 28.5);
+			gp.npc[28][39] = NPCSetup(INVESTIGATOR_DOWN, "Lauryn", 81, 22, "", 28.5);
 		}
 		if (flag[2][18] || flag[7][21]) {
 			gp.npc[228][0] = NPCSetup(INVESTIGATOR_RIGHT, "Lauryn", 30, 45, "", 228.0);
+		}
+		if (flag[7][21]) {
+			gp.npc[228][2] = null;
+			gp.npc[229][0] = null;
+			gp.npc[229][1] = null;
+			gp.npc[230][0] = null;
+			gp.npc[230][1] = null;
+			gp.npc[231][0] = null;
+			gp.npc[232][1] = null;
 		}
 		
 		/**
@@ -5984,7 +6018,7 @@ public class AssetSetter {
 				result.setupImages("/npc/shae", true);
 				result.setDirection("up");
 				break;
-			case INVESTIGATOR:
+			case INVESTIGATOR_DOWN:
 				result = new NPC_Investigator(gp, name, messages, scriptIndex, flag, altDialogue);
 				break;
 			case INVESTIGATOR_RIGHT:

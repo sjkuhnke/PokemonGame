@@ -24,7 +24,7 @@ import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
-import docs.TrainerDoc;
+import docs.DocUtils;
 import entity.PlayerCharacter;
 import overworld.GamePanel;
 import overworld.Main;
@@ -1496,7 +1496,7 @@ public class TitleScreen extends AbstractUI {
 		for (int i = 0; i < 6; i++) {
 			Pokemon p = previewPlayer.team[i];
 			if (p != null) {
-				Image sprite = TrainerDoc.getCachedSprite(p);
+				Image sprite = DocUtils.getCachedSprite(p);
 				if (sprite != null) {
 					int spriteX = contentX + (i % 3) * (width / 3);
 					int spriteY = contentY + (i / 3) * iconSize;
@@ -1787,8 +1787,8 @@ public class TitleScreen extends AbstractUI {
 			"Abilities", "Items", "Defensive Types", "Offensive Types"
 		};
 		boolean[] docCanBeExcel = {
-			true, true, false, false,
-			false, false, false, false
+			true, true, true, true,
+			true, true, true, true
 		};
 		
 		int col1X = x;

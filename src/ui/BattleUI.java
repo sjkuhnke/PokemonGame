@@ -100,6 +100,7 @@ public class BattleUI extends AbstractUI {
 	public boolean showMoveSummary;
 	public boolean showFoeSummary;
 	public Pokemon foeSummary;
+	public int foeSummaryIndex;
 
 	// IMAGES
 	protected BufferedImage battle;
@@ -1376,9 +1377,9 @@ public class BattleUI extends AbstractUI {
 					}
 				} else if (foe.trainerOwned()) {
 					if (foeSummary != null && foeSummary.trainer != null && moveSummaryNum < 0) {
-						int currentIndex = foeSummary.trainer.indexOf(foeSummary);
-						currentIndex = (currentIndex - 1 + foeSummary.trainer.team.length) % foeSummary.trainer.team.length;
-						foeSummary = foeSummary.trainer.team[currentIndex];
+						foeSummaryIndex = foeSummary.trainer.indexOf(foeSummary);
+						foeSummaryIndex = (foeSummaryIndex - 1 + foeSummary.trainer.team.length) % foeSummary.trainer.team.length;
+						foeSummary = foeSummary.trainer.team[foeSummaryIndex];
 					}
 				}
 			} else {
@@ -1398,9 +1399,9 @@ public class BattleUI extends AbstractUI {
 					}
 				} else if (foe.trainerOwned()) {
 					if (foeSummary != null && foeSummary.trainer != null && moveSummaryNum < 0) {
-						int currentIndex = foeSummary.trainer.indexOf(foeSummary);
-						currentIndex = (currentIndex + 1) % foeSummary.trainer.team.length;
-						foeSummary = foeSummary.trainer.team[currentIndex];
+						foeSummaryIndex = foeSummary.trainer.indexOf(foeSummary);
+						foeSummaryIndex = (foeSummaryIndex + 1) % foeSummary.trainer.team.length;
+						foeSummary = foeSummary.trainer.team[foeSummaryIndex];
 					}
 				}
 			} else {

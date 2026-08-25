@@ -19,18 +19,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import javax.imageio.ImageIO;
 
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 
 public class TrainerDoc {
 	
-	private static BufferedImage[] sprites = new BufferedImage[Pokemon.MAX_POKEMON];
 	private static Path docsDirectory;
 	private static Field field = new Field();
 	
@@ -42,7 +37,7 @@ public class TrainerDoc {
         int rowIndex = 1;
 
         // Define cell style
-        XSSFCellStyle headerStyle = (XSSFCellStyle) makeStyle(wb, true, false, 16, IndexedColors.WHITE.getIndex());
+        XSSFCellStyle headerStyle = (XSSFCellStyle) DocUtils.makeStyle(wb, true, false, 16, IndexedColors.WHITE.getIndex());
         headerStyle.setAlignment(HorizontalAlignment.CENTER);
         headerStyle.setVerticalAlignment(VerticalAlignment.CENTER);
         headerStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(80, 80, 80), null));
@@ -87,7 +82,6 @@ public class TrainerDoc {
             }
             sheet.addMergedRegion(new CellRangeAddress(outlineRowTop.getRowNum(), outlineRowTop.getRowNum(), 0, 8));
             sheet.addMergedRegion(new CellRangeAddress(outlineRowBottom.getRowNum(), outlineRowBottom.getRowNum(), 0, 8));
-
 		    for (Trainer tr : trainers) {
 		        Entity npc = trainerNPCMap.get(tr);
 		        rowIndex = writeTeam(sheet, tr, npc, rowIndex, gp);
@@ -107,7 +101,6 @@ public class TrainerDoc {
 	
 	public static Map<?, ?>[] getTrainerLocationMap(GamePanel gp) {
 		Entity[][] npc = gp.npc;
-		
 		Map<String, ArrayList<Trainer>> trainerMap = new LinkedHashMap<>();
 		Map<Trainer, Entity> trainerNPCMap = new HashMap<>();
 		for (int loc = 0; loc < npc.length; loc++) {
@@ -133,39 +126,6 @@ public class TrainerDoc {
 		return new Map<?, ?>[] {trainerMap, trainerNPCMap};
 	}
 	
-	private static CellStyle makeStyle(Workbook wb, boolean bold, boolean italic, int fontSize, short color) {
-		XSSFFont font = makeFont(wb, bold, italic, fontSize, color);
-
-	    CellStyle style = wb.createCellStyle();
-	    style.setFont(font);
-	    return style;
-	}
-	
-	private static XSSFFont makeFont(Workbook wb, boolean bold, boolean italic, int fontSize, short color) {
-		XSSFFont font = (XSSFFont) wb.createFont();
-        font.setFontHeightInPoints((short) fontSize);
-	    font.setBold(bold);
-	    font.setItalic(italic);
-	    font.setColor(color);
-	    
-	    return font;
-	}
-	
-	private static void insertImage(Sheet sheet, byte[] imageBytes, int col, int row, int colSpan, int rowSpan, double scaleX, double scaleY) {
-		Workbook wb = sheet.getWorkbook();
-	    int pictureIdx = wb.addPicture(imageBytes, Workbook.PICTURE_TYPE_PNG);
-	    CreationHelper helper = wb.getCreationHelper();
-	    Drawing<?> drawing = sheet.createDrawingPatriarch();
-	    ClientAnchor anchor = helper.createClientAnchor();
-	    anchor.setCol1(col);
-	    anchor.setRow1(row);
-	    anchor.setCol2(col + colSpan);
-	    anchor.setRow2(row + rowSpan);
-	    
-	    Picture pict = drawing.createPicture(anchor, pictureIdx);
-	    pict.resize(scaleX, scaleY); // Scales it relative to the anchor box size
-	}
-	
 	private static int writeTeam(Sheet sheet, Trainer tr, Entity npc, int startRow, GamePanel gp) {
 	    int colStart = 0;
 	    
@@ -186,19 +146,19 @@ public class TrainerDoc {
 	    Cell coordinatesCell = nameRow.createCell(3);
 	    Cell directionCell = nameRow.createCell(5);
 	    nameCell.setCellValue(trainerName);
-	    nameCell.setCellStyle(makeStyle(sheet.getWorkbook(), true, false, 14, IndexedColors.BLACK.getIndex()));
+	    nameCell.setCellStyle(DocUtils.makeStyle(sheet.getWorkbook(), true, false, 14, IndexedColors.BLACK.getIndex()));
 	    coordinatesCell.setCellValue(trainerCoordinates);
-	    coordinatesCell.setCellStyle(makeStyle(sheet.getWorkbook(), false, false, 12, IndexedColors.BLACK.getIndex()));
+	    coordinatesCell.setCellStyle(DocUtils.makeStyle(sheet.getWorkbook(), false, false, 12, IndexedColors.BLACK.getIndex()));
 	    directionCell.setCellValue(trainerDirection);
-	    directionCell.setCellStyle(makeStyle(sheet.getWorkbook(), false, false, 12, IndexedColors.BLACK.getIndex()));
+	    directionCell.setCellStyle(DocUtils.makeStyle(sheet.getWorkbook(), false, false, 12, IndexedColors.BLACK.getIndex()));
 	    
 	    byte[] trainerBytes;
 		try {
 			BufferedImage down1 = npc.down1;
 			if (down1 != null) {
-				trainerBytes = imageToBytes(npc.down1, "png");
+				trainerBytes = DocUtils.imageToBytes(npc.down1, "png");
 				if (trainerBytes != null) {
-		            insertImage(sheet, trainerBytes, 7, nameRow.getRowNum(), 1, 1, 1, 1);
+		            DocUtils.insertImage(sheet, trainerBytes, 7, nameRow.getRowNum(), 1, 1, 1, 1);
 		        }
 			} else {
 				System.out.println(npc + "'s down1 is null");
@@ -223,7 +183,7 @@ public class TrainerDoc {
 		    	
 		    	sheet.addMergedRegion(new CellRangeAddress(ivRow.getRowNum(), ivRow.getRowNum(), 1, 4));
 		    	
-		    	XSSFCellStyle ivStyle = (XSSFCellStyle) makeStyle(sheet.getWorkbook(), false, false, 12, IndexedColors.GREY_80_PERCENT.getIndex());
+		    	XSSFCellStyle ivStyle = (XSSFCellStyle) DocUtils.makeStyle(sheet.getWorkbook(), false, false, 12, IndexedColors.GREY_80_PERCENT.getIndex());
 		    	ivTitleCell.setCellStyle(ivStyle);
 		    	ivCell.setCellStyle(ivStyle);
 	    	}
@@ -231,7 +191,7 @@ public class TrainerDoc {
 	    	if (tr.boosts[0] > 0) {
 	    		Cell omniCell = ivRow.createCell(5);
 		    	omniCell.setCellValue(tr.getBoostString());
-		    	omniCell.setCellStyle(makeStyle(sheet.getWorkbook(), true, false, 12, IndexedColors.BLACK.getIndex()));
+		    	omniCell.setCellStyle(DocUtils.makeStyle(sheet.getWorkbook(), true, false, 12, IndexedColors.BLACK.getIndex()));
 		    	sheet.addMergedRegion(new CellRangeAddress(ivRow.getRowNum(), ivRow.getRowNum(), 5, 13));
 	    	}
 	    }
@@ -243,11 +203,11 @@ public class TrainerDoc {
 	    
 	    XSSFCellStyle currencyStyle = (XSSFCellStyle) sheet.getWorkbook().createCellStyle();
 	    currencyStyle.setDataFormat(sheet.getWorkbook().createDataFormat().getFormat("$#,##0"));
-	    currencyStyle.setFont(makeFont(sheet.getWorkbook(), true, false, 12, IndexedColors.BLACK.getIndex()));
+	    currencyStyle.setFont(DocUtils.makeFont(sheet.getWorkbook(), true, false, 12, IndexedColors.BLACK.getIndex()));
 	    moneyCell.setCellStyle(currencyStyle);
 	    
 	    if (tr.getItem() != null) rewardCell.setCellValue("Gives: " + tr.getItem().toString() + (tr.getItem() == Item.TEMPLE_ORB ? " (x100)" : tr.getItem() == Item.FABLE_CHARGE ? " (x3)" : ""));
-	    rewardCell.setCellStyle(makeStyle(sheet.getWorkbook(), false, true, 12, IndexedColors.BLACK.getIndex()));
+	    rewardCell.setCellStyle(DocUtils.makeStyle(sheet.getWorkbook(), false, true, 12, IndexedColors.BLACK.getIndex()));
 	    
 	    sheet.addMergedRegion(new CellRangeAddress(rewardRow.getRowNum(), rewardRow.getRowNum(), 1, 4));
 	    
@@ -257,11 +217,11 @@ public class TrainerDoc {
     	
         if (tr.getItem() != null) {
 			try {
-				byte[] itemImg = imageToBytes(tr.getItem().getImage(), "png");
+				byte[] itemImg = DocUtils.imageToBytes(tr.getItem().getImage(), "png");
 				if (itemImg != null) {
 	                rewardRow.setHeight((short) 372); // match row height
 
-	                insertImage(sheet, itemImg, 5, rewardRow.getRowNum(), 1, 1, 1, 1);
+	                DocUtils.insertImage(sheet, itemImg, 5, rewardRow.getRowNum(), 1, 1, 1, 1);
 	            }
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -287,20 +247,20 @@ public class TrainerDoc {
 	        // Name
 	        Cell pNameCell = nameRow2.createCell(col);
 	        pNameCell.setCellValue(p.name());
-	        pNameCell.setCellStyle(makeStyle(sheet.getWorkbook(), true, false, 11, IndexedColors.BLACK.getIndex()));
+	        pNameCell.setCellStyle(DocUtils.makeStyle(sheet.getWorkbook(), true, false, 11, IndexedColors.BLACK.getIndex()));
 	        
 	        // Level
 	        Cell pLevelCell = nameRow2.createCell(col + 1);
 	        pLevelCell.setCellValue(p.getLevel());
-	        pLevelCell.setCellStyle(makeStyle(sheet.getWorkbook(), true, false, p.level >= 100 ? 9 : 11, IndexedColors.BLACK.getIndex()));
+	        pLevelCell.setCellStyle(DocUtils.makeStyle(sheet.getWorkbook(), true, false, p.level >= 100 ? 9 : 11, IndexedColors.BLACK.getIndex()));
 
 	        // Sprite image
 	        try {
 	        	BufferedImage type1 = p.type1.getImage2();
 	        	BufferedImage type2 = p.type2 != null ? p.type2.getImage2() : null;
 	        	
-	        	BufferedImage typeImage = combineIcons(type1, type2);
-	        	byte[] typeBytes = imageToBytes(typeImage, "png");
+	        	BufferedImage typeImage = DocUtils.combineIcons(type1, type2);
+	        	byte[] typeBytes = DocUtils.imageToBytes(typeImage, "png");
 	        	
 	        	sheet.addMergedRegion(new CellRangeAddress(
 	        			typeRow.getRowNum(), typeRow.getRowNum(), col, col + 1
@@ -308,7 +268,7 @@ public class TrainerDoc {
 	        	
 	        	typeRow.setHeight((short) 384);
 	        	
-	        	insertImage(sheet, typeBytes, col, typeRow.getRowNum(), 2, 1, 0.5, 1);
+	        	DocUtils.insertImage(sheet, typeBytes, col, typeRow.getRowNum(), 2, 1, 0.5, 1);
 	        	
 	        	// Set square size for sprite cells (adjust as needed)
 	        	int spritePixelSize = 80; // Desired image dimension in pixels
@@ -324,10 +284,10 @@ public class TrainerDoc {
 	        	    spriteRow.getRowNum(), spriteRow2.getRowNum(), col, col + 1
 	        	));
 	        	
-		        byte[] spriteBytes = imageToBytes(getCachedSprite(p), "png");
+		        byte[] spriteBytes = DocUtils.imageToBytes(DocUtils.getCachedSprite(p), "png");
 		        if (spriteBytes != null) {
 		            // Insert sprite as 2x2 image
-		            insertImage(sheet, spriteBytes, col, spriteRow.getRowNum(), 2, 2, 1, 1);
+		            DocUtils.insertImage(sheet, spriteBytes, col, spriteRow.getRowNum(), 2, 2, 1, 1);
 		        }
 	
 		        // Item
@@ -336,14 +296,14 @@ public class TrainerDoc {
 		        
 		        Cell itemCell = itemRow.createCell(col);
 		        itemCell.setCellValue(p.item == null ? "None" : p.item.toString());
-		        itemCell.setCellStyle(makeStyle(sheet.getWorkbook(), true, true, 11, IndexedColors.BLACK.getIndex()));
+		        itemCell.setCellStyle(DocUtils.makeStyle(sheet.getWorkbook(), true, true, 11, IndexedColors.BLACK.getIndex()));
 		        if (p.item != null) {
-		            byte[] itemImg = imageToBytes(p.item.getImage(), "png");
+		            byte[] itemImg = DocUtils.imageToBytes(p.item.getImage(), "png");
 		            if (itemImg != null) {
 		                sheet.setColumnWidth(col + 1, charWidth); // match width for consistent spacing
 		                itemRow.setHeight((short) 372);             // match row height
 
-		                insertImage(sheet, itemImg, col + 1, itemRow.getRowNum(), 1, 1, 1, 1);
+		                DocUtils.insertImage(sheet, itemImg, col + 1, itemRow.getRowNum(), 1, 1, 1, 1);
 		            }
 		        }
 	        } catch (IOException e) {
@@ -353,7 +313,7 @@ public class TrainerDoc {
 	        // Ability
 	        Cell abilityCell = abilityRow.createCell(col);
 	        abilityCell.setCellValue(p.ability.toString());
-	        abilityCell.setCellStyle(makeStyle(sheet.getWorkbook(), true, false, 11, IndexedColors.BLACK.getIndex()));
+	        abilityCell.setCellStyle(DocUtils.makeStyle(sheet.getWorkbook(), true, false, 11, IndexedColors.BLACK.getIndex()));
 	        sheet.addMergedRegion(new CellRangeAddress(abilityRow.getRowNum(), abilityRow.getRowNum(), col, col + 1));
 	        
 	        // Nature
@@ -419,36 +379,6 @@ public class TrainerDoc {
 	    }
 
 	    return startRow;
-	}
-	
-	public static BufferedImage getCachedSprite(Pokemon p) {
-	    if (sprites[p.id - 1] == null) {
-	        sprites[p.id - 1] = p.setSprite();
-	    }
-	    return sprites[p.id - 1];
-	}
-	
-	private static byte[] imageToBytes(BufferedImage image, String formatName) throws IOException {
-	    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-	    ImageIO.write(image, formatName, baos); // formatName can be "png", "jpg", etc.
-	    baos.flush();
-	    byte[] imageBytes = baos.toByteArray();
-	    baos.close();
-	    return imageBytes;
-	}
-	
-	private static BufferedImage combineIcons(BufferedImage type1, BufferedImage type2) {
-	    int width = 96;  // 2 x 24
-	    int height = 48;
-	    BufferedImage combined = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-	    Graphics2D g = combined.createGraphics();
-	    g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-	    g.drawImage(type1, 0, 0, null);
-	    if (type2 != null) {
-	        g.drawImage(type2, 48, 0, null);
-	    }
-	    g.dispose();
-	    return combined;
 	}
 	
 	public static void writeTrainersToTxt(GamePanel gp, Path dir) {

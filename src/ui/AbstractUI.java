@@ -527,7 +527,7 @@ public abstract class AbstractUI {
 			drawSubWindow(slotX, slotY, gp.tileSize, gp.tileSize);
 			slotX += gp.tileSize / 2;
 			slotY += gp.tileSize * 0.75;
-			String slotString = String.valueOf(partyNum + 1);
+			String slotString = String.valueOf(p.trainerOwned() ? (gp.getBattleUI().foeSummaryIndex + 1) : (partyNum + 1));
 			g2.setFont(g2.getFont().deriveFont(30F));
 			g2.drawString(slotString, getCenterAlignedTextX(slotString, slotX - 1), slotY);
 		}

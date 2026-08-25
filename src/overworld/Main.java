@@ -4,43 +4,29 @@ import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.nio.file.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
+import docs.AbilitiesDoc;
 import docs.EncounterDoc;
+import docs.ItemsDoc;
+import docs.MovesDoc;
 import docs.PokemonDoc;
 import docs.TrainerDoc;
+import docs.TypingsDoc;
 import entity.PlayerCharacter;
-import object.ItemObj;
-import object.TreasureChest;
-import pokemon.Ability;
-import pokemon.Egg;
-import pokemon.Item;
-import pokemon.Move;
-import pokemon.PType;
 import pokemon.Player;
 import pokemon.Pokemon;
 import util.Print;
 import util.SaveManager;
-import pokemon.Node;
-import pokemon.Nursery.EggGroup;
 import ui.LoadingScreen;
 
 public class Main {
@@ -234,32 +220,56 @@ public class Main {
 						if (excel) {
 							PokemonDoc.writePokemonToExcel(docsDirectory);
 						} else {
-							writePokemon(docsDirectory);
+							PokemonDoc.writePokemonToTxt(docsDirectory);
 						}
 					}
 					if (selectedOptions[2]) {
 						loader.setProgress(88, "Generating encounter docs...");
-						EncounterDoc.writeEncounters(gp, docsDirectory);
+						if (excel) {
+							EncounterDoc.writeEncountersToExcel(gp, docsDirectory);
+						} else {
+							EncounterDoc.writeEncountersToTxt(gp, docsDirectory);
+						}
 					}
 					if (selectedOptions[3]) {
 						loader.setProgress(91, "Generating move docs...");
-						writeMoves(docsDirectory);
+						if (excel) {
+							MovesDoc.writeMovesToExcel(docsDirectory);
+						} else {
+							MovesDoc.writeMovesToTxt(docsDirectory);
+						}
 					}
 					if (selectedOptions[4]) {
 						loader.setProgress(92, "Generating ability docs...");
-						writeAbilities(docsDirectory);
+						if (excel) {
+							AbilitiesDoc.writeAbilitiesToExcel(docsDirectory);
+						} else {
+							AbilitiesDoc.writeAbilitiesToTxt(docsDirectory);
+						}
 					}
 					if (selectedOptions[5]) {
 						loader.setProgress(94, "Generating item docs...");
-						writeItems(gp, docsDirectory);
+						if (excel) {
+							ItemsDoc.writeItemsToExcel(gp, docsDirectory);
+						} else {
+							ItemsDoc.writeItemsToTxt(gp, docsDirectory);
+						}
 					}
 					if (selectedOptions[6]) {
 						loader.setProgress(96, "Generating defensive type docs...");
-						writeDefensiveTypes(docsDirectory);
+						if (excel) {
+							TypingsDoc.writeDefensiveTypingsToExcel(docsDirectory);
+						} else {
+							TypingsDoc.writeDefensiveTypingsToTxt(docsDirectory);
+						}
 					}
 					if (selectedOptions[7]) {
 						loader.setProgress(98, "Generating offensive type docs...");
-						writeOffensiveTypes(docsDirectory);
+						if (excel) {
+							TypingsDoc.writeOffensiveTypingsToExcel(docsDirectory);
+						} else {
+							TypingsDoc.writeOffensiveTypingsToTxt(docsDirectory);
+						}
 					}
 
 					loader.setProgress(99, "Opening docs folder...");
@@ -324,755 +334,5 @@ public class Main {
 			if (b) return true;
 		}
 		return false;
-	}
-
-	private static void writePokemon(Path dir) {
-		try {
-			Path outPath = dir.resolve("PokemonInfo.txt");
-			FileWriter writer = new FileWriter(outPath.toFile());
-			
-			int[] ids = new int[Pokemon.POKEDEX_1_SIZE + Pokemon.POKEDEX_METEOR_SIZE * 2 + Pokemon.POKEDEX_2_SIZE + 2];
-			int counter = 0;
-			for (Pokemon p : Player.pokedex1) {
-				ids[counter] = p.getID();
-				counter++;
-				if (p.getID() == 150) {
-					ids[counter++] = 237;
-				}
-				if (p.getID() == 290) {
-					ids[counter++] = 291;
-				}
-			}
-			for (Pokemon p : Player.pokedex2) {
-				ids[counter] = p.getID();
-				counter++;
-			}
-			for (Pokemon p : Player.pokedex3) {
-				ids[counter] = p.getID();
-				counter++;
-			}
-			for (Pokemon p : Player.pokedex4) {
-				ids[counter] = p.getID();
-				counter++;
-			}
-			
-			for (int i : ids) {
-				Pokemon p = new Pokemon(i, 5, false, false);
-				writer.write("===================\n");
-				String dexNo = Pokemon.getFormattedDexNo(p.getDexNo());
-				String name = dexNo + " - " + p.name();
-				while (name.length() < 103) {
-					name = name + " ";
-				}
-				name = name + Pokemon.getFormattedDexNo(p.getID()).replace('#', '[') + "]\n";
-				writer.write(name);
-				writer.write("===================\n");
-				
-				writer.write("Type:\n");
-				String type = p.type1.toString() + " / ";
-				type = p.type2 == null ? type + "None" : type + p.type2.toString();
-				writer.write(type + "\n\n");
-				
-				writer.write("Ability:\n");
-				StringBuilder abilityBuilder = new StringBuilder();
-				p.setAbility(0);
-				Ability ability1 = p.ability;
-				abilityBuilder.append(ability1.toString()).append(" / ");
-				p.setAbility(1);
-				if (p.ability == ability1) {
-				    abilityBuilder.append("None");
-				} else {
-				    abilityBuilder.append(p.ability.toString());
-				}
-				p.setAbility(2);
-				abilityBuilder.append(" / (");
-				if (p.ability == Ability.NULL || p.ability == ability1) {
-				    abilityBuilder.append("None");
-				} else {
-				    abilityBuilder.append(p.ability.toString());
-				}
-				abilityBuilder.append(")\n\n");
-				writer.write(abilityBuilder.toString());
-				
-				writer.write("Base Stats:\n");
-				String stats = "";
-				for (int j = 0; j < p.baseStats.length; j++) {
-					stats += p.getBaseStat(j) + " " + Pokemon.getStatType(j, false) + "/ ";
-				}
-				stats += p.getBST() + " BST";
-				writer.write(stats + "\n\n");
-				
-				writer.write("Level Up:\n");
-				Node[] movebank = p.getMovebank();
-				for (int j = 0; j < movebank.length; j++) {
-					Node n = movebank[j];
-					while (n != null) {
-						String level = j == 0 ? "E" : j + "";
-						String move = level + " - " + n.data.toString() + "\n";
-						n = n.next;
-						writer.write(move);
-					}
-				}
-				writer.write("\n");
-				if (p.canEvolve()) {
-					writer.write("Evolutions:\n");
-					writer.write(p.getEvolveString() + "\n\n");
-				}
-				
-				writer.write(String.format("%-13s| %s lbs\n", "Weight", p.weight));
-				writer.write(String.format("%-13s| %d\n", "Catch Rate", p.catchRate));
-				writer.write(String.format("%-13s| %d\n", "Egg Cycles", Egg.computeEggCycles(p.getFinalEvolution())));
-
-				ArrayList<EggGroup> eggGroups = Pokemon.getEggGroup(i);
-				String eggGroupStr = eggGroups.get(0).equals(eggGroups.get(1)) ?
-				    eggGroups.get(0).toString() :
-				    eggGroups.get(0) + ", " + eggGroups.get(1);
-				writer.write(String.format("%-13s| %s\n", "Egg Group(s)", eggGroupStr));
-				
-				writer.write("\n");
-				
-			}
-			writer.close();
-			
-			writeTMLearn(dir);
-			//writeUnusedMoves(dir);
-			//writeTypeStats(dir);
-			
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		
-	}
-	
-	private static void writeTMLearn(Path dir) {
-		try {
-			Path outPath = dir.resolve("PokemonInfo.txt");
-			FileWriter writer = new FileWriter(outPath.toFile(), true);
-			writer.write("TM Learnsets:\n");
-			
-			boolean[][] tms = Pokemon.getTMTable();
-			int id = 1;
-			
-			StringBuilder header = new StringBuilder("====================================================================================\n");
-			header.append("ID   Name               ");
-			for (int hm = 1; hm <= 8; hm++) {
-				header.append(String.format("HM%02d  ", hm));
-			}
-			for (int tm = 1; tm <= 99; tm++) {
-				header.append(String.format("TM%02d  ", tm));
-			}
-			header.append("\n");
-			header.append("====================================================================================\n");
-			writer.write(header.toString());
-			
-			for (boolean[] row : tms) {
-				if (id % 25 == 0) {
-					writer.write(header.toString());
-				}
-				StringBuilder rowBuilder = new StringBuilder();
-				String pokemonName = Pokemon.getName(id);
-				rowBuilder.append(String.format("#%03d %-20s", id, pokemonName));
-				for (boolean canLearn : row) {
-					rowBuilder.append(canLearn ? "Y     " : "N     ");
-				}
-				rowBuilder.append("\n");
-				id++;
-				writer.write(rowBuilder.toString());
-			}
-			writer.write("====================================================================================\n");
-			writer.close();
-		} catch (IOException e){
-			e.printStackTrace();
-		}
-	}
-
-	@SuppressWarnings("unused")
-	private static void writeTypeStats(Path dir) {
-		try {
-			Path outPath = dir.resolve("PokemonInfo.txt");
-			FileWriter writer = new FileWriter(outPath.toFile(), true);
-			writer.write("Stats:\n");
-			ArrayList<PType> types = new ArrayList<>(Arrays.asList(PType.values()));
-			types.remove(PType.UNKNOWN);
-			int[][] sums = new int[types.size()][6];
-			int[] amounts = new int[types.size()];
-			
-			for (int i = 1; i <= Pokemon.MAX_POKEMON; i++) {
-				Pokemon p = new Pokemon(i, 5, false, false);
-				for (int j = 0; j < p.baseStats.length; j++) {
-					sums[types.indexOf(p.type1)][j] += p.baseStats[j];
-					if (p.type2 != null) sums[types.indexOf(p.type2)][j] += p.baseStats[j];
-				}
-				amounts[types.indexOf(p.type1)]++;
-				if (p.type2 != null) amounts[types.indexOf(p.type2)]++;
-			}
-			StringBuilder header = new StringBuilder();
-			header.append("Type");
-			for (int i = 0; i < sums[1].length; i++) {
-				header.append("," + Pokemon.getStatType(i, false).trim());
-			}
-			header.append(",Amt\n");
-			writer.write(header.toString());
-			for (int i = 0; i < types.size(); i++) {
-				StringBuilder stats = new StringBuilder();
-				stats.append(types.get(i).toString());
-				for (int j = 0; j < sums[1].length; j++) {
-					double average = sums[i][j] * 1.0;
-					average /= amounts[i];
-					stats.append("," + String.format("%.1f", average));
-				}
-				stats.append("," + amounts[i]);
-				stats.append("\n");
-				writer.write(stats.toString());
-			}
-			writer.close();
-		} catch (IOException e){
-			e.printStackTrace();
-		}
-	}
-
-	public static void printIntArray2D(int[][] array) {
-		// Iterate over each row of the 2D array
-		for (int i = 0; i < array.length; i++) {
-			// Iterate over each element in the current row
-			for (int j = 0; j < array[i].length; j++) {
-				// Print the current element followed by a space
-				System.out.print(array[i][j] + " ");
-			}
-			// Move to the next line after printing all elements in the current row
-			System.out.println();
-		}
-	}
-
-	@SuppressWarnings("unused")
-	private static void writeUnusedMoves(Path dir) {
-		try {
-			Path outPath = dir.resolve("PokemonInfo.txt");
-			FileWriter writer = new FileWriter(outPath.toFile(), true);
-			writer.write("Unused moves:\n");
-			ArrayList<Move> unused = new ArrayList<>();
-			ArrayList<Move> unusedButTM = new ArrayList<>();
-			Map<Pokemon, Move> sigOne = new HashMap<>();
-			Map<Pokemon, Move> sigTwo = new HashMap<>();
-			Map<Pokemon, Move> sigThree = new HashMap<>();
-			Map<Move, Integer> moveCount = new HashMap<>();
-			for (Move m : Move.getAllMoves()) {
-				moveCount.put(m, 0);
-			}
-			for (int i = 1; i <= Pokemon.MAX_POKEMON; i++) {
-				Pokemon p = new Pokemon(i, 5, false, false);
-				ArrayList<Move> movebank = new ArrayList<>();
-				Node[] pokemonMovebank = p.getMovebank();
-				for (int j = 0; j < pokemonMovebank.length; j++) {
-					Node n = pokemonMovebank[j];
-					while (n != null) {
-						movebank.add(n.data);
-						n = n.next;
-					}
-				}
-
-				for (Move move : movebank) {
-					moveCount.put(move, moveCount.getOrDefault(move, 0) + 1);
-				}
-			}
-			for (Map.Entry<Move, Integer> entry : moveCount.entrySet()) {
-				if (entry.getValue() == 0) {
-					if (entry.getKey().isTM()) {
-						unusedButTM.add(entry.getKey());
-					} else {
-						unused.add(entry.getKey());
-					}
-				} else if (entry.getValue() == 3) {
-					int count = 0;
-					for (int i = 1; i <= Pokemon.MAX_POKEMON && count < 3; i++) {
-						Pokemon p = new Pokemon(i, 5, false, false);
-						ArrayList<Move> movebank = new ArrayList<>();
-						Node[] pokemonMovebank = p.getMovebank();
-						for (int j = 0; j < pokemonMovebank.length; j++) {
-							Node n = pokemonMovebank[j];
-							while (n != null) {
-								movebank.add(n.data);
-								n = n.next;
-							}
-						}
-						if (movebank.contains(entry.getKey())) {
-							sigThree.put(p, entry.getKey());
-							count++;
-						}
-					}
-				} else if (entry.getValue() == 2) {
-					int count = 0;
-					for (int i = 1; i <= Pokemon.MAX_POKEMON && count < 2; i++) {
-						Pokemon p = new Pokemon(i, 5, false, false);
-						ArrayList<Move> movebank = new ArrayList<>();
-						Node[] pokemonMovebank = p.getMovebank();
-						for (int j = 0; j < pokemonMovebank.length; j++) {
-							Node n = pokemonMovebank[j];
-							while (n != null) {
-								movebank.add(n.data);
-								n = n.next;
-							}
-						}
-						if (movebank.contains(entry.getKey())) {
-							sigTwo.put(p, entry.getKey());
-							count++;
-						}
-					}
-				} else if (entry.getValue() == 1) {
-					for (int i = 1; i <= Pokemon.MAX_POKEMON; i++) {
-						Pokemon p = new Pokemon(i, 5, false, false);
-						ArrayList<Move> movebank = new ArrayList<>();
-						Node[] pokemonMovebank = p.getMovebank();
-						for (int j = 0; j < pokemonMovebank.length; j++) {
-							Node n = pokemonMovebank[j];
-							while (n != null) {
-								movebank.add(n.data);
-								n = n.next;
-							}
-						}
-						if (movebank.contains(entry.getKey())) {
-							sigOne.put(p, entry.getKey());
-							break;
-						}
-					}
-				}
-			}
-			for (Move m : unused) {
-				writer.write(m.toString() + "\n");
-			}
-			writer.write("\nTM Only:\n");
-			for (Move m : unusedButTM) {
-				writer.write(m.toString() + "\n");
-			}
-			writer.write("\nSignature Moves (3):\n");
-			sigThree.entrySet().stream()
-			.sorted(Map.Entry.comparingByValue(Comparator.comparing(Move::toString)))
-			.forEach(entry -> {
-				try {
-					writer.write(entry.getValue().toString() + " : " + entry.getKey().name() + "\n");
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			});
-
-			writer.write("\nSignature Moves (2):\n");
-			sigTwo.entrySet().stream()
-			.sorted(Map.Entry.comparingByValue(Comparator.comparing(Move::toString)))
-			.forEach(entry -> {
-				try {
-					writer.write(entry.getValue().toString() + " : " + entry.getKey().name() + "\n");
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			});
-		
-			writer.write("\nSignature Moves (1):\n");
-			sigOne.entrySet().stream()
-			.sorted(Map.Entry.comparingByValue(Comparator.comparing(Move::toString)))
-			.forEach(entry -> {
-				try {
-					writer.write(entry.getValue().toString() + " : " + entry.getKey().name() + "\n");
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			});
-			writer.close();
-		} catch (IOException e){
-			e.printStackTrace();
-		}
-		
-	}
-
-	
-	
-	private static void writeMoves(Path dir) {
-		try {
-			Path outPath = dir.resolve("MovesInfo.txt");
-			FileWriter writer = new FileWriter(outPath.toFile());
-			
-			ArrayList<Move> moves = new ArrayList<>(Arrays.asList(Move.values()));
-			Map<PType, List<Move>> movesByType = new HashMap<>();
-			
-			for (Move m : moves) {
-				PType type = m.mtype;
-				movesByType.computeIfAbsent(type, k -> new ArrayList<>()).add(m);
-			}
-			
-			for (List<Move> typeMoves : movesByType.values()) {
-				typeMoves.sort(Comparator.comparing(Move::toString));
-			}
-			
-			List<PType> sortedTypes = new ArrayList<>(movesByType.keySet());
-			sortedTypes.sort(Comparator.comparing(PType::toString));
-			
-			for (PType type : sortedTypes) {
-				
-				writer.write("=============================================================================================================\n");
-	            writer.write("                                                  " + type.toString() + "\n");
-	            writer.write("=============================================================================================================\n");
-
-	            List<Move> typeMoves = movesByType.get(type);
-	            for (Move m : typeMoves) {
-	            	String move = " " + m.toString();
-	            	while (move.length() < 20) {
-	            		move += " ";
-	            	}
-	            	String cat = " " + m.getCategory();
-	            	while (cat.length() < 10) {
-	            		cat += " ";
-	            	}
-	            	String bp = " " + m.formatbp(null, null, Pokemon.field);
-	            	while (bp.length() < 5) {
-	            		bp += " ";
-	            	}
-	            	String acc = " " + m.getAccuracy(null, null, Pokemon.field);
-	            	while (acc.length() < 5) {
-	            		acc += " ";
-	            	}
-	            	String pp = " " + m.pp + " PP ";
-	            	while (pp.length() < 7) {
-	            		pp += " ";
-	            	}
-					writer.write(String.format("%s|%s|%s|%s|%s: %s\n", move, cat, bp, acc, pp, m.getDescription()));
-	            }
-			}
-			
-			writer.write("\n=================================\n");
-			writer.write("IVs | Hidden Power Type");
-			writer.write("\n=================================\n");
-			
-			Pokemon test = new Pokemon(1, 5, true, false);
-			
-			for (int i = 0; i < 64; i++) {
-				int[] ivs = new int[6];
-				for (int j = 0; j < 6; j++) {
-					ivs[j] = (i & (1 << j)) != 0 ? 31 : 30;
-				}
-				
-				test.ivs = ivs;
-				PType type = test.determineHPType();
-				writer.write(String.format("%s | %s\n", Arrays.toString(test.ivs), type.toString()));
-			}
-			
-			writer.close();
-			
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		
-	}
-	
-	private static void writeDefensiveTypes(Path dir) {
-		try {
-			Path outPath = dir.resolve("DefensiveTypings.txt");
-            FileWriter writer = new FileWriter(outPath.toFile());
-
-            PType[] types = PType.values();
-            ArrayList<PType> arrayListTypes = new ArrayList<>(Arrays.asList(types));
-            arrayListTypes.remove(PType.UNKNOWN);
-            types = arrayListTypes.toArray(new PType[1]);
-            
-            Pokemon test = new Pokemon(1, 5, true, false);
-            Pokemon foe = new Pokemon(4, 5, true, false);
-
-            writer.write("TYPE COMBINATIONS (Defensively)\n");
-            for (PType type1 : types) {
-                for (PType type2 : types) {
-                	writer.write("\n===========================\n");
-                    String combination = (type1 == type2) ? type1 + " - None" : type1 + " - " + type2;
-                    writer.write(combination + "\n===========================\n");
-                    
-                    Map<PType, Double> typeEffectivenessMap = new HashMap<>();
-                    foe.type1 = type1;
-                    foe.type2 = type2;
-                    
-                    for (PType type3 : types) {
-                        double multiplier = 1;
-                        if (test.getImmune(foe, type3)) multiplier = 0;
-                        
-                        if (multiplier != 0) {
-                        	// Check type effectiveness
-                    		PType[] resist = test.getResistances(type3);
-                    		for (PType type : resist) {
-                    			if (type1 == type) multiplier /= 2;
-                    			if (type2 == type) multiplier /= 2;
-                    		}
-                    		
-                    		// Check type effectiveness
-                    		PType[] weak = test.getWeaknesses(type3);
-                    		for (PType type : weak) {
-                    			if (type1 == type) multiplier *= 2;
-                    			if (type2 == type) multiplier *= 2;
-                    		}
-                    		
-                        }
-                        typeEffectivenessMap.put(type3, multiplier);
-                		
-                    }
-                    
-                    writer.write("Immune to:\n\n");
-                    for (Map.Entry<PType, Double> entry : typeEffectivenessMap.entrySet()) {
-                        if (entry.getValue() == 0.0) {
-                            writer.write(entry.getKey().toString() + "\n");
-                        }
-                    }
-                    
-                    writer.write("\n----------\nWeak to:\n\n");
-                    for (Map.Entry<PType, Double> entry : typeEffectivenessMap.entrySet()) {
-                        if (entry.getValue() >= 2.0) {
-                            writer.write(entry.getKey().toString());
-                            if (entry.getValue() == 4.0 && type1 != type2) writer.write(" (!!)");
-                            writer.write("\n");
-                        }
-                    }
-                    
-                    writer.write("\n----------\nResists:\n\n");
-                    for (Map.Entry<PType, Double> entry : typeEffectivenessMap.entrySet()) {
-                        if (entry.getValue() < 1.0 && entry.getValue() != 0) {
-                            writer.write(entry.getKey().toString());
-                            if (entry.getValue() == 0.25 && type1 != type2) writer.write(" (!!)");
-                            writer.write("\n");
-                        }
-                    }
-                    
-                }
-            }
-
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-		
-	}
-	
-	private static void writeOffensiveTypes(Path dir) {
-		try {
-			Path outPath = dir.resolve("OffensiveTypings.txt");
-            FileWriter writer = new FileWriter(outPath.toFile());
-
-            PType[] types = PType.values();
-            ArrayList<PType> arrayListTypes = new ArrayList<>(Arrays.asList(types));
-            arrayListTypes.remove(PType.UNKNOWN);
-            types = arrayListTypes.toArray(new PType[1]);
-            
-            Pokemon test = new Pokemon(1, 5, true, false);
-            Pokemon foe = new Pokemon(4, 5, true, false);
-
-            writer.write("TYPE COMBINATIONS (Offensively)\n");
-            for (PType type1 : types) {
-                for (PType type2 : types) {
-                	writer.write("\n===========================\n");
-                    String combination = (type1 == type2) ? type1 + " - None" : type1 + " - " + type2;
-                    writer.write(combination + "\n===========================\n");
-                    
-                    Map<PType, Double> typeEffectivenessMap = new HashMap<>();
-                    
-                    for (PType type3 : types) {
-                    	foe.type1 = type3;
-                        foe.type2 = null;
-                        double multiplier = 1;
-                        if (test.getImmune(foe, type1) && test.getImmune(foe, type2)) multiplier = 0;
-                        
-                        if (multiplier != 0) {
-                        	// Check type effectiveness
-                    		ArrayList<PType> resist1 = new ArrayList<>(Arrays.asList(test.getResistances(type1)));
-                    		ArrayList<PType> resist2 = new ArrayList<>(Arrays.asList(test.getResistances(type2)));
-                    		if ((resist1.contains(type3) && resist2.contains(type3)) || (test.getImmune(foe, type1) && resist2.contains(type3) || (resist1.contains(type3) && test.getImmune(foe, type2)))) multiplier /= 2;
-                    		
-                    		// Check type effectiveness
-                    		ArrayList<PType> weak1 = new ArrayList<>(Arrays.asList(test.getWeaknesses(type1)));
-                    		ArrayList<PType> weak2 = new ArrayList<>(Arrays.asList(test.getWeaknesses(type2)));
-                    		if (weak1.contains(type3) && weak2.contains(type3)) {
-                    			multiplier *= 4;
-                    		} else if (weak1.contains(type3) || weak2.contains(type3)) {
-                    			multiplier *= 2;
-                    		}
-                    		
-                    		
-                        }
-                        typeEffectivenessMap.put(type3, multiplier);
-                		
-                    }
-                    
-                    writer.write("Deals 2x to:\n\n");
-                    for (Map.Entry<PType, Double> entry : typeEffectivenessMap.entrySet()) {
-                        if (entry.getValue() >= 2.0) {
-                            writer.write(entry.getKey().toString());
-                            if (entry.getValue() == 4.0 && type1 != type2) writer.write(" (!!)");
-                            writer.write("\n");
-                        }
-                    }
-                    
-                    writer.write("\n----------\nDeals 1/2x to:\n\n");
-                    for (Map.Entry<PType, Double> entry : typeEffectivenessMap.entrySet()) {
-                        if (entry.getValue() < 1.0 && entry.getValue() != 0) {
-                            writer.write(entry.getKey().toString());
-                            if (entry.getValue() == 0.25 && type1 != type2) writer.write(" (!!)");
-                            writer.write("\n");
-                        }
-                    }
-                    
-                    writer.write("\n----------\nDeals 0x to:\n\n");
-                    for (Map.Entry<PType, Double> entry : typeEffectivenessMap.entrySet()) {
-                        if (entry.getValue() == 0.0) {
-                            writer.write(entry.getKey().toString() + "\n");
-                        }
-                    }
-                    
-                }
-            }
-
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-		
-	}
-	
-	private static void writeItems(GamePanel gp, Path dir) {
-		try {
-			Path outPath = dir.resolve("ItemsInfo.txt");
-			FileWriter writer = new FileWriter(outPath.toFile());
-			writer.write("--------------------------------------\n");
-			writer.write("Items Info:\n");
-			writer.write("Item | Pocket | Buy | Sell | Description");
-			writer.write("\n--------------------------------------\n");
-			Item[] allItems = Item.values();
-			for (Item i : allItems) {
-				String item = i.toString();
-				while (item.length() < 22) {
-					item += " ";
-				}
-				String pocket = Item.getPocketName(i.getPocket());
-				while(pocket.length() < 10) {
-					pocket += " ";
-				}
-				int cost = i.getCost();
-				int s = i.getSell();
-				String buy = cost == 0 ? "--" : "$" + cost;
-				while(buy.length() < 5) {
-					buy += " ";
-				}
-				String sell = s == 0 ? "--" : "$" + s;
-				while(sell.length() < 5) {
-					sell += " ";
-				}
-				String desc = i.getDesc();
-				writer.write(String.format("%s | %s | %s | %s | %s\n", item, pocket, buy, sell, desc));
-			}
-			
-			// TM Locations section
-			writer.write("\n--------------------------------------\n");
-			writer.write("TM Locations:\n");
-			writer.write("--------------------------------------\n");
-			try (Scanner scanner = new Scanner(Main.class.getResourceAsStream("/info/tm_locations.txt"))) {
-				while (scanner.hasNextLine()) {
-					writer.write(scanner.nextLine() + "\n");
-				}
-			} catch (Exception ex) {
-				writer.write("Could not load TM Locations file.\n");
-				ex.printStackTrace();
-			}
-			
-			boolean[][] tempItemsCollected = gp.player.p.itemsCollected.clone();
-			gp.player.p.itemsCollected = new boolean[gp.obj.length][gp.obj[1].length];
-			gp.aSetter.setObject();
-			ItemObj[][] items = gp.obj;
-			writer.write("\n--------------------------------------\n");
-			writer.write("Overworld Items:\n");
-			writer.write("(Note: the Variable Items:\n");
-			writer.write("- Nature Mints\n");
-			writer.write("- Type Resist Berries\n");
-			writer.write("- Stat Restoring Berries\n");
-			writer.write("- Treasure Chest Items\n");
-			writer.write("will show for only the save file you generated these docs for)");
-			writer.write("\n--------------------------------------\n");
-			Map<String, ArrayList<ItemObj>> itemsMap = new LinkedHashMap<>();
-			for (int loc = 0; loc < items.length; loc++) {
-				for (int col = 0; col < items[loc].length; col++) {
-					ItemObj e = items[loc][col];
-					if (e == null) continue;
-					PMap.getLoc(loc, e.worldX / gp.tileSize, e.worldY / gp.tileSize);
-					String location = PlayerCharacter.currentMapName;
-					if (itemsMap.containsKey(location)) {
-						ArrayList<ItemObj> list = itemsMap.get(location);
-						list.add(e);
-					} else {
-						ArrayList<ItemObj> list = new ArrayList<>();
-						list.add(e);
-						itemsMap.put(location, list);
-					}
-				}
-			}
-			
-			for (Map.Entry<String, ArrayList<ItemObj>> e : itemsMap.entrySet()) {
-				ArrayList<ItemObj> list = e.getValue();
-				String loc = e.getKey();
-				while (loc.length() < 50) {
-					loc += "-";
-				}
-				writer.write("\n\n" + loc + "\n");
-				
-				for (ItemObj i : list) {
-					writer.write("\n");
-					
-					int x = i.worldX / gp.tileSize;
-					int y = i.worldY / gp.tileSize;
-					
-					boolean chest = i instanceof TreasureChest;
-					String itemString = chest ? "Treasure Chest" : i.item.toString();
-					
-					writer.write(String.format("%s (%d, %d)", itemString, x, y));
-					
-					if (chest) {
-						for (Item it : i.inventory) {
-							String label = "\n  [";
-							label += it + "]";
-							while (label.length() < 26) label += " ";
-							label += "|";
-							
-							writer.write(label);
-						}
-					}
-					
-				}
-			}
-			writer.write("\n");
-			
-			writer.close();
-			
-			// cleanup
-			gp.player.p.itemsCollected = tempItemsCollected;
-			gp.aSetter.setObject();
-			
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		
-	}
-	
-	private static void writeAbilities(Path dir) {
-		try {
-			Path outPath = dir.resolve("AbilitiesInfo.txt");
-			FileWriter writer = new FileWriter(outPath.toFile());
-			writer.write("--------------------------------------\n");
-			writer.write("Abilities Info:\n");
-			writer.write("--------------------------------------\n");
-			Ability[] allAbilities = Ability.values();
-			for (Ability a : allAbilities) {
-				String ability = a.toString();
-				while (ability.length() < 18) {
-					ability += " ";
-				}
-				String desc = a.desc;
-				writer.write(String.format("%s | %s\n", ability, desc));
-			}
-			
-			writer.close();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		
-	}
-
+	}	
 }

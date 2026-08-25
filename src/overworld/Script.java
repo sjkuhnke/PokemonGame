@@ -1135,55 +1135,50 @@ public class Script {
 		});
 		
 		scriptMap.put(228.0, (npc) -> { // lauryn research C
-			if (p.flag[2][19]) { // player attempted gauntlet
-				if (p.flag[2][20]) { // player beat gauntlet
-					Task.addTask(Task.DIALOGUE, npc, "Hey! There you are. I keep expecting you to just vanish back into whatever you were doing before I hijacked you with all this.");
-					Task.addTask(Task.DIALOGUE, npc, "How's it doing? Settling in alright? I know it can't have been an easy transition for it - from wherever it was, straight into your party.");
-					Task.addTask(Task.SPEAK, player, "It's doing well.");
-					Task.addTask(Task.DIALOGUE, npc, "Good. Good, that's - actually that's a relief to hear, I wasn't sure what to expect honestly.");
-					Task.addTask(Task.DIALOGUE, npc, "You're doing exactly what I hoped someone would do with it.");
-					Task.addTask(Task.DIALOGUE, npc, "Anyway - don't let me keep you. Just wanted to see your face and confirm to myself this actually happened.");
-					Task.addTask(Task.DIALOGUE, npc, "Some mornings I still second-guess it.");
-				} else { // player lost gauntlet
-					// TODO: add the player beat dragowrath dialogue in (the it's over now, isn't it... messages) if the player has beat dragowrath in this branch too
-					Task.addTask(Task.DIALOGUE, npc, "Hey. I heard.");
-					Task.addTask(Task.SLEEP, "", 30);
-					Task.addTask(Task.DIALOGUE, npc, "I want you to know I don't regret asking you to try.");
-					Task.addTask(Task.DIALOGUE, npc, "Someone has to, eventually, and you got farther than anyone else who's offered.");
-					Task.addTask(Task.DIALOGUE, npc, "I'm still going to be out here doing this work. Maybe the next lead treats us kinder.");
-					Task.addTask(Task.DIALOGUE, npc, "Take care of yourself, alright?");
-				}
-			} else {
-				if (p.flag[7][21]) { // player beat dragowrath
-					boolean met = p.flag[2][16];
-					Entity e = p.flag[2][16] ? npc : new Entity(gp, "???");
-					Task.addTask(Task.DIALOGUE, e, "It's over now, isn't it. I felt it, actually - like something enormous just stopped holding its breath.");
-					Task.addTask(Task.DIALOGUE, e, "I don't think I need the relic anymore. Not for what I originally wanted it for, anyway.");
-					Task.addTask(Task.DIALOGUE, e, "Strange, letting go of something you spent years chasing.");
-					if (met) Task.addTask(Task.DIALOGUE, e, "Thank you for everything up to this point. I mean that.");
-				} else {
-					Task.addTask(Task.DIALOGUE, npc, "This is it. Not glamorous, I know - we spent the budget on containment, not carpet.");
-					Task.addTask(Task.DIALOGUE, npc, "I have three scientists in the back rooms who are the best battlers on my team.");
-					Task.addTask(Task.DIALOGUE, npc, "Don't let the lab coats fool you - it's a genuinely terrifying sentence.");
-					Task.addTask(Task.DIALOGUE, npc, "You'll face them one at a time, and the fights get harder as you go.");
-					Task.addTask(Task.SLEEP, "", 30);
-					Task.addTask(Task.DIALOGUE, npc, "Here's the part I need you to actually listen to.");
-					Task.addTask(Task.DIALOGUE, npc, "You go in with four Pokemon. Every fight, one of them has to fall.");
-					Task.addTask(Task.DIALOGUE, npc, "Not zero. Not two. Exactly one.");
-					Task.addTask(Task.SPEAK, player, "Why does one have to faint?");
-					Task.addTask(Task.DIALOGUE, npc, "I don't fully know, if I'm honest. It's in every account we've ever cross-referenced - a cost, every time, always paid the same way.");
-					Task.addTask(Task.DIALOGUE, npc, "Whatever's on the other end of that relic isn't interest in taking something for nothing.");
-					Task.addTask(Task.SLEEP, "", 20);
-					Task.addTask(Task.DIALOGUE, npc, "I hate this part of my job, for what it's worth.");
-					Task.addTask(Task.DIALOGUE, npc, "Three fights. Four Pokemon, then three, then two.");
-					Task.addTask(Task.DIALOGUE, npc, "If you make it through all three with exactly one left standing, that's when we call down whatever's coming.");
-					Task.addTask(Task.DIALOGUE, npc, "And I need to be completely straight with you:");
-					Task.addTask(Task.DIALOGUE, npc, "You get one attempt.");
-					Task.addTask(Task.DIALOGUE, npc, "If you lose a battle, if the numbers don't line up right, if anything goes wrong - that's it.");
-					Task.addTask(Task.DIALOGUE, npc, "There's no reset on this. So if you need to walk out and prepare more first, do that now. Nobody will think less of you for it.");
-					Task.addTask(Task.DIALOGUE, npc, "The scientist by the door in each room can let you forefit the challenge at any point.");
-					Task.addTask(Task.DIALOGUE, npc, "Just know, when you talk to the guard, you either come out victorious or lose. There's no retrying.");
-				}
+			if (p.flag[2][20]) { // player attempted gauntlet & succeeded
+				Task.addTask(Task.DIALOGUE, npc, "Hey! There you are. I keep expecting you to just vanish back into whatever you were doing before I hijacked you with all this.");
+				Task.addTask(Task.DIALOGUE, npc, "How's it doing? Settling in alright? I know it can't have been an easy transition for it - from wherever it was, straight into your party.");
+				Task.addTask(Task.SPEAK, player, "It's doing well.");
+				Task.addTask(Task.DIALOGUE, npc, "Good. Good, that's - actually that's a relief to hear, I wasn't sure what to expect honestly.");
+				Task.addTask(Task.DIALOGUE, npc, "You're doing exactly what I hoped someone would do with it.");
+				Task.addTask(Task.DIALOGUE, npc, "Anyway - don't let me keep you. Just wanted to see your face and confirm to myself this actually happened.");
+				Task.addTask(Task.DIALOGUE, npc, "Some mornings I still second-guess it.");
+			} else if (p.flag[7][21]) { // covers both never attempted and attempted but lost
+				boolean met = p.flag[2][16];
+				Entity e = p.flag[2][16] ? npc : new Entity(gp, "???");
+				Task.addTask(Task.DIALOGUE, e, "It's over now, isn't it. I felt it, actually - like something enormous just stopped holding its breath.");
+				Task.addTask(Task.DIALOGUE, e, "I don't think I need the relic anymore. Not for what I originally wanted it for, anyway.");
+				Task.addTask(Task.DIALOGUE, e, "Strange, letting go of something you spent years chasing.");
+				if (met) Task.addTask(Task.DIALOGUE, e, "Thank you for everything up to this point. I mean that.");
+			} else if (p.flag[2][19]) { // attempted gauntlet
+				Task.addTask(Task.DIALOGUE, npc, "Hey. I heard.");
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.DIALOGUE, npc, "I want you to know I don't regret asking you to try.");
+				Task.addTask(Task.DIALOGUE, npc, "Someone has to, eventually, and you got farther than anyone else who's offered.");
+				Task.addTask(Task.DIALOGUE, npc, "I'm still going to be out here doing this work. Maybe the next lead treats us kinder.");
+				Task.addTask(Task.DIALOGUE, npc, "Take care of yourself, alright?");
+			} else { // never attempted, dragowrath not beaten - explain the rules
+				Task.addTask(Task.DIALOGUE, npc, "This is it. Not glamorous, I know - we spent the budget on containment, not carpet.");
+				Task.addTask(Task.DIALOGUE, npc, "I have three scientists in the back rooms who are the best battlers on my team.");
+				Task.addTask(Task.DIALOGUE, npc, "Don't let the lab coats fool you - it's a genuinely terrifying sentence.");
+				Task.addTask(Task.DIALOGUE, npc, "You'll face them one at a time, and the fights get harder as you go.");
+				Task.addTask(Task.SLEEP, "", 30);
+				Task.addTask(Task.DIALOGUE, npc, "Here's the part I need you to actually listen to.");
+				Task.addTask(Task.DIALOGUE, npc, "You go in with four Pokemon. Every fight, one of them has to fall.");
+				Task.addTask(Task.DIALOGUE, npc, "Not zero. Not two. Exactly one.");
+				Task.addTask(Task.SPEAK, player, "Why does one have to faint?");
+				Task.addTask(Task.DIALOGUE, npc, "I don't fully know, if I'm honest. It's in every account we've ever cross-referenced - a cost, every time, always paid the same way.");
+				Task.addTask(Task.DIALOGUE, npc, "Whatever's on the other end of that relic isn't interest in taking something for nothing.");
+				Task.addTask(Task.SLEEP, "", 20);
+				Task.addTask(Task.DIALOGUE, npc, "I hate this part of my job, for what it's worth.");
+				Task.addTask(Task.DIALOGUE, npc, "Three fights. Four Pokemon, then three, then two.");
+				Task.addTask(Task.DIALOGUE, npc, "If you make it through all three with exactly one left standing, that's when we call down whatever's coming.");
+				Task.addTask(Task.DIALOGUE, npc, "And I need to be completely straight with you:");
+				Task.addTask(Task.DIALOGUE, npc, "You get one attempt.");
+				Task.addTask(Task.DIALOGUE, npc, "If you lose a battle, if the numbers don't line up right, if anything goes wrong - that's it.");
+				Task.addTask(Task.DIALOGUE, npc, "There's no reset on this. So if you need to walk out and prepare more first, do that now. Nobody will think less of you for it.");
+				Task.addTask(Task.DIALOGUE, npc, "The scientist by the door in each room can let you forefit the challenge at any point.");
+				Task.addTask(Task.DIALOGUE, npc, "Just know, when you talk to the guard, you either come out victorious or lose. There's no retrying.");
 			}
 		});
 		
@@ -1212,8 +1207,194 @@ public class Script {
 					Task.addTask(Task.DIALOGUE, npc, "Take care of it out there. We'll be here if you ever need anything cross-referenced - least we can do.");
 				}
 			}
-			
 		});
+		
+		scriptMap.put(228.2, (npc) -> { // battle test guard
+			if (p.flag[2][20]) { // beat gauntlet
+				Task.addTask(Task.DIALOGUE, npc, "You're the one who went through already, right? I'd recognize that look anywhere.");
+				Task.addTask(Task.SLEEP, "", 15);
+				Task.addTask(Task.DIALOGUE, npc, "Door's not going anywhere, but there's nothing left in there for you.");
+				Task.addTask(Task.DIALOGUE, npc, "Whatever came through with you is proof enough.");
+				Task.addTask(Task.DIALOGUE, npc, "Go on, check on it. That's the part that actually matters now.");
+			} else if (p.flag[2][19]) { // attempted and lost
+				Task.addTask(Task.DIALOGUE, npc, "I know why you're standing here, and I'm sorry, but the answer's still no.");
+				Task.addTask(Task.SLEEP, "", 25);
+				Task.addTask(Task.DIALOGUE, npc, "One attempt. That was the deal going in, and I don't get to make exceptions, not even for someone who came as close as you did.");
+				Task.addTask(Task.DIALOGUE, npc, "The door stays shut. I'm sorry.");
+			} else { // recap and offer entry
+				Task.addTask(Task.DIALOGUE, npc, "This is the door. Once you're through it, you're through it - no turning back partway.");
+				Task.addTask(Task.SLEEP, "", 20);
+				Task.addTask(Task.DIALOGUE, npc, "Quick refresher, since Lauryn probably threw a lot at you at once: three rooms, three of our best, one after another.");
+				Task.addTask(Task.DIALOGUE, npc, "Four Pokemon in the first room, three in the second, two in the third. Each fight, exactly one of yours has to fall.");
+				Task.addTask(Task.DIALOGUE, npc, "Not zero, not more than one.");
+				Task.addTask(Task.DIALOGUE, npc, "Clear all three with the numbers right, and the fourth room is where we find out what you've earned.");
+				Task.addTask(Task.SLEEP, "", 35);
+				Task.addTask(Task.DIALOGUE, npc, "Miss a fight, miss the count, anything - you talk to whoever's guarding the exit in that room and you're done.");
+				Task.addTask(Task.DIALOGUE, npc, "No second trip through this door.");
+				Task.addTask(Task.SLEEP, "", 45);
+				int count = 0;
+				for (int i = 0; i < p.team.length; i++) {
+					Pokemon po = p.team[i];
+					if (po != null && !po.isFainted()) {
+						count++;
+					}
+				}
+				if (count == 4) {
+					Task.addTask(Task.CONFIRM, npc, "So. You still want in?", 20);
+					gp.ui.commandNum = 1;
+				} else {
+					Task.addTask(Task.DIALOGUE, npc, "You don't have four healthy Pokemon with you.");
+					Task.addTask(Task.DIALOGUE, npc, "Come back with a team of exactly four, non-fainted Pokemon.");
+				}
+			}
+		});
+		
+		scriptMap.put(229.0, (npc) -> { // scientist 1
+			int trainerIndex = 547;
+			int count = 0;
+			for (int i = 0; i < p.team.length; i++) {
+				Pokemon po = p.team[i];
+				if (po != null && !po.isFainted()) {
+					count++;
+				}
+			}
+			if (p.trainersBeat[trainerIndex]) {
+				Task.addTask(Task.DIALOGUE, npc, "Not bad. Let's see the damage.");
+				Task.addTask(Task.SLEEP, "", 30);
+				if (count == 3) {
+					Task.addTask(Task.DIALOGUE, npc, "One down. That's the price, paid in full.");
+					Task.addTask(Task.DIALOGUE, npc, "Go on to the next room.");
+					Task t = Task.addTask(Task.TELEPORT, "");
+					t.counter = 230;
+					t.start = 31;
+					t.finish = 44;
+					t.wipe = false;
+				} else if (count < 3) {
+					Task.addTask(Task.DIALOGUE, npc, "That's - that's too many. This isn't about how hard you fought, it's about the count being exact.");
+					Task.addTask(Task.DIALOGUE, npc, "I don't make the rules, I just enforce them.");
+					Task.addTask(Task.DIALOGUE, npc, "I'm sorry. Go talk to the door.");
+				} else {
+					Task.addTask(Task.DIALOGUE, npc, "...Nobody fell. That's not how this works - I told you, exactly one.");
+					Task.addTask(Task.DIALOGUE, npc, "I can't let you go on like this.");
+					Task.addTask(Task.DIALOGUE, npc, "I'm sorry. I really am. Go talk to the door.");
+				}
+			} else {
+				if (count == 4) {
+					updateUPGauntletTrainer(trainerIndex);
+					Task.addTask(Task.DIALOGUE, npc, "Four in your party, good, you were listening.");
+					Task.addTask(Task.DIALOGUE, npc, "Let's see what you got.");
+					Task.addTask(Task.BATTLE, "", trainerIndex);
+				} else {
+					Task.addTask(Task.DIALOGUE, npc, "Hold on - you've got " + (count > 4 ? "more" : "fewer") + " than four with you. That's not how this works.");
+					Task.addTask(Task.DIALOGUE, npc, "Go sort your team out, or talk to my colleague by the door if you're stepping back.");
+				}
+			}
+		});
+		
+		scriptMap.put(229.1, (npc) -> { // exit scientist
+			addUPGauntletExitTasks(npc);
+		});
+		
+		scriptMap.put(230.0, (npc) -> { // scientist 2
+			int trainerIndex = 548;
+			int count = 0;
+			for (int i = 0; i < p.team.length; i++) {
+				Pokemon po = p.team[i];
+				if (po != null && !po.isFainted()) {
+					count++;
+				}
+			}
+			if (p.trainersBeat[trainerIndex]) {
+				Task.addTask(Task.DIALOGUE, npc, "Good work. Let's see how you did.");
+				Task.addTask(Task.SLEEP, "", 15);
+				if (count == 2) {
+					Task.addTask(Task.DIALOGUE, npc, "Two paid now. You're not flinching.");
+					Task.addTask(Task.DIALOGUE, npc, "You're not flinching. I respect that more than I expected to.");
+					Task.addTask(Task.DIALOGUE, npc, "You may go on to the next room.");
+					Task t = Task.addTask(Task.TELEPORT, "");
+					t.counter = 231;
+					t.start = 31;
+					t.finish = 44;
+					t.wipe = false;
+				} else {
+					Task.addTask(Task.DIALOGUE, npc, "The number's off. I wish I could bend on this. I can't.");
+				}
+			} else {
+				if (count == 3) {
+					updateUPGauntletTrainer(trainerIndex);
+					Task.addTask(Task.DIALOGUE, npc, "Three left, huh. Lauryn said you might actually make it this far.");
+					Task.addTask(Task.DIALOGUE, npc, "I wasn't sure I believed her.");
+					Task.addTask(Task.DIALOGUE, npc, "No hard feelings about what's coming. Well - some hard feelings. Occupational hazard.");
+					Task.addTask(Task.BATTLE, "", trainerIndex);
+				} else {
+					Task.addTask(Task.DIALOGUE, npc, "Hold on - you've got " + (count > 3 ? "more" : "fewer") + " than four with you. That's not how this works.");
+					Task.addTask(Task.DIALOGUE, npc, "Go sort your team out, or talk to my colleague by the door if you're stepping back.");
+				}
+			}
+		});
+		
+		scriptMap.put(230.1, (npc) -> { // exit scientist
+			addUPGauntletExitTasks(npc);
+		});
+		
+		scriptMap.put(231.0, (npc) -> { // scientist 3
+			int trainerIndex = 549;
+			int count = 0;
+			for (int i = 0; i < p.team.length; i++) {
+				Pokemon po = p.team[i];
+				if (po != null && !po.isFainted()) {
+					count++;
+				}
+			}
+			if (p.trainersBeat[trainerIndex]) {
+				if (count == 1) {
+					Task.addTask(Task.DIALOGUE, npc, "One left. Exactly one. You did it - you actually did it.");
+					Task.addTask(Task.SLEEP, "", 25);
+					Task.addTask(Task.DIALOGUE, npc, "Lauryn! Get in here!");
+					Task.addTask(Task.SLEEP, "", 5);
+					Task.addTask(Task.TURN, player, "", Task.DOWN);
+					Task.addTask(Task.SLEEP, "", 15);
+					Task.addTask(Task.FLASH_IN, "");
+					Task.addNPCMoveTask('y', 44 * gp.tileSize, gp.npc[231][2], false, 2640);
+					Task.addTask(Task.FLASH_OUT, "");
+					Task.addTask(Task.SLEEP, "", 15);
+					Task.addNPCMoveTask('y', 43 * gp.tileSize, gp.npc[231][2], false, 4);
+					Task.addTask(Task.SLEEP, "", 10);
+					Task.addTask(Task.DIALOGUE, gp.npc[231][2], "You're - you actually did it. All three. Exactly right.");
+					Task.addTask(Task.SLEEP, "", 40);
+					Task.addTask(Task.DIALOGUE, gp.npc[231][2], "Okay. Okay, no time to be stunned about it.");
+					Task.addTask(Task.DIALOGUE, gp.npc[231][2], "Let's move, the window doesn't stay open long once the relic's primed.");
+					Task.addTask(Task.SLEEP, "", 20);
+					Task t = Task.addTask(Task.TELEPORT, "");
+					t.counter = 232;
+					t.start = 30;
+					t.finish = 45;
+					t.wipe = false;
+					Task.addTask(Task.TURN, player, "", Task.RIGHT);
+					Task.addTask(Task.SLEEP, "", 15);
+					
+				} else {
+					Task.addTask(Task.DIALOGUE, npc, "So close, and the numbers still don't hold. I'm sorry - truly. This is the part of the job I hate most.");
+				}
+			} else {
+				if (count == 2) {
+					updateUPGauntletTrainer(trainerIndex);
+					Task.addTask(Task.DIALOGUE, npc, "Two Pokemon. Last stretch. I'm not going to lie to you and say this one's easier than the last two.");
+					Task.addTask(Task.SLEEP, "", 30);
+					Task.addTask(Task.DIALOGUE, npc, "Whatever happens in here, you should know - every single one of us on this team believes in what we're doing.");
+					Task.addTask(Task.DIALOGUE, npc, "I hope you do too by the end of it.");
+					Task.addTask(Task.BATTLE, "", trainerIndex);
+				} else {
+					Task.addTask(Task.DIALOGUE, npc, "Hold on - you've got " + (count > 2 ? "more" : "fewer") + " than four with you. That's not how this works.");
+					Task.addTask(Task.DIALOGUE, npc, "Go sort your team out, or talk to my colleague by the door if you're stepping back.");
+				}
+			}
+		});
+		
+		scriptMap.put(231.1, (npc) -> { // exit scientist
+			addUPGauntletExitTasks(npc);
+		});
+		
 		
 		giftEncounters.add(new GiftEncounter(
 			new int[] {49, gp.npc[49][0].worldX / gp.tileSize, gp.npc[49][0].worldY / gp.tileSize},
@@ -4034,8 +4215,6 @@ public class Script {
 			Task.addTask(Task.DIALOGUE, npc, "And <@>? No matter what happens next... I'm rooting for you.");
 			Task.addTask(Task.DIALOGUE, npc, "I think you're going to change the world. More than you already have.");
 			
-			System.out.println(p.secondStarter);
-			
 			int third = 3 - p.starter - p.secondStarter;
 			boolean givesEgg = third == ((p.starter + 2) % 3);
 			
@@ -4746,6 +4925,28 @@ public class Script {
 		});
 	}
 	
+	private void addUPGauntletExitTasks(Entity npc) {
+		Task.addTask(Task.DIALOGUE, npc, "You want to exit the challenge?");
+		Task.addTask(Task.DIALOGUE, npc, "There's no trying again - this is your one and only attempt.");
+		Task.addTask(Task.CONFIRM, npc, "Are you positive you want to forfeit?", 21);
+	}
+
+	private void updateUPGauntletTrainer(int i) {
+		if (p.badges > 7) return; // should never happen
+		Trainer t = Trainer.trainers[i];
+		int newLength = 3;
+		int index = newLength * (p.badges-2);
+		
+		Pokemon[] team = new Pokemon[newLength];
+		
+		for (int j = 0; j < newLength; j++) {
+			team[j] = t.team[index++];
+		}
+		t.team = team;
+		t.current = t.team[0];
+		t.setSlots();
+	}
+
 	private void addE4CutsceneTasks() {
 		boolean pause = false;
 		if (player.worldX < 50 * gp.tileSize) {

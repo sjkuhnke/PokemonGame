@@ -585,7 +585,10 @@ public class Trainer implements Serializable {
 	public Pokemon[] getSlotOrderedTeam() {
 		Pokemon[] result = new Pokemon[6];
 		for (Pokemon p : team) {
-			if (p != null) result[p.slot] = p;
+			if (p != null) {
+				if (p.slot >= result.length) break;
+				result[p.slot] = p;
+			}
 		}
 		return result;
 	}

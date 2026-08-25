@@ -2090,6 +2090,24 @@ public class UI extends AbstractUI {
 					t.wipe = false;
 					currentTask = null;
 					break;
+				case 20: // research post C guard
+					gp.player.p.flag[2][19] = true; // player attempted gauntlet
+					Task.addTask(Task.DIALOGUE, npc, "Alright. Good luck in there - I mean that.");
+					t = Task.addTask(Task.TELEPORT, "");
+					t.counter = 229;
+					t.start = 31;
+					t.finish = 44;
+					t.wipe = false;
+					currentTask = null;
+					break;
+				case 21: // UP quest exit
+					t = Task.addTask(Task.TELEPORT, "");
+					t.counter = 228;
+					t.start = 31;
+					t.finish = 37;
+					t.wipe = false;
+					currentTask = null;
+					break;
 				}
 			}
 		}
@@ -2132,6 +2150,9 @@ public class UI extends AbstractUI {
 					Task.addTask(Task.DIALOGUE, npc, "Smart. The mountain tests strength. The League tests preparation.");
 					Task.addTask(Task.DIALOGUE, npc, "Come back when you're ready.");
 					currentTask = null;
+					break;
+				case 20:
+					Task.addTask(Task.DIALOGUE, npc, "No shame in that. Door'll still be here whenever you're ready.");
 					break;
 				default:
 					currentTask = null;
