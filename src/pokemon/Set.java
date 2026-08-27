@@ -23,7 +23,11 @@ public class Set {
 	}
 	
 	public Pokemon makePokemon() {
-		Pokemon p = new Pokemon(id, 100, false, true);
+		return makePokemon(100);
+	}
+	
+	public Pokemon makePokemon(int level) {
+		Pokemon p = new Pokemon(id, level, false, true);
 		p.item = getItem();
 		Ability ability = getAbility();
 		int abilitySlot = getAbilitySlot(p, ability);
@@ -39,6 +43,10 @@ public class Set {
 		}
 		p.moveset = moveslot;
 		p.ivs = this.ivs;
+		
+		p.setStats();
+		p.verifyHP();
+		
 		return p;
 	}
 	
@@ -58,6 +66,12 @@ public class Set {
 	public void setIVs(PType type) {
 		if (type == null) return;
 		this.ivs = Pokemon.determineOptimalIVs(type);
+	}
+	
+	public void setIVs(int[] ivs) {
+		if (ivs != null && ivs.length == 6) {
+			this.ivs = Arrays.copyOf(ivs, 6);
+		}
 	}
 	
 	public void setItems(Item... items) {

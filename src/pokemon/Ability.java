@@ -26,7 +26,7 @@ public enum Ability {
 	COSMIC_WARP("Twists the dimensions for 4 turns when the Pokemon enters the battle, reversing the speed order."),
 	CURSED_BODY("30% chance to disable a move used on the Pokemon."),
 	DEFIANT("Boosts the Pokemon's Attack stat by 2 when its stats are lowered."),
-	DJINN1S_FAVOR("Raises highest attack if hit by a MAGIC move."),
+	DJINN1S_FAVOR("Raises highest attack by 1 if hit by a MAGIC move."),
 	DRIZZLE("The Pokemon makes it RAIN for 5 turns when it enters a battle."),
 	DRY_SKIN("Restores 1/8 HP in RAIN or 1/4 HP when hit by WATER moves, but loses 1/8 HP in SUN and is 1.25x weaker to FIRE."),
 	DROUGHT("Turns the sunlight HARSH for 5 turns when it enters a battle."),

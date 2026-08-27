@@ -576,8 +576,13 @@ public class GamePanel extends JPanel implements Runnable {
 				
 				if (trainer > -1 && player.p.summonedLegendaries != null && t.staticEnc) {
 					List<Integer> allLegends = Pokemon.legendaryMap.values().stream().map(arr -> arr[0]).collect(Collectors.toList());
+					List<Integer> allUP = Pokemon.ultraParadoxMap.values().stream().map(arr -> arr[0]).collect(Collectors.toList());
+					allLegends.addAll(allUP);
 					if (allLegends.contains(id) && player.p.summonedLegendaries.containsKey(currentMap)) {
 						player.p.summonedLegendaries.remove(currentMap);
+						if (currentMap == 232 && t.getCurrent().isFainted()) { // player killed ultra paradox test
+							player.p.flag[2][20] = false;
+						}
 						player.p.trainersBeat[trainer] = false;
 						Trainer.trainers[trainer] = Trainer.trainers[trainer].regeneratePokemon(id);
 					}
@@ -760,6 +765,7 @@ public class GamePanel extends JPanel implements Runnable {
 		tileM = new TileManager(this);
 		loadingScreen.setProgress(19, "Setting up static legendaries...");
 		aSetter.setLegendarySkeletons();
+		aSetter.setUltraParadoxSkeletons();
 		loadingScreen.setProgress(20, "Setting NPCs...");
 		aSetter.setNPC();
 		loadingScreen.setProgress(32, "Setting up item objects...");

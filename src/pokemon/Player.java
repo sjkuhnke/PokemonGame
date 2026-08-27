@@ -134,7 +134,7 @@ public class Player extends Trainer implements Serializable {
 	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 89;
+	public static final int VERSION = 90;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	public static final int BET_INC = 10;
@@ -241,6 +241,10 @@ public class Player extends Trainer implements Serializable {
 	    String metAt = PlayerCharacter.getMetAt();
 	    p.reset();
 	    p.ball = ball;
+	    if (p.trainer != null && p.trainer.staticEnc) {
+	    	p.happiness = 70;
+	    	p.happiness = p.determineHappiness(this);
+	    }
 	    p.trainer = this;
 	    p.metAt = metAt;
 	    if (nickname) {
@@ -629,7 +633,7 @@ public class Player extends Trainer implements Serializable {
 		String[][] flagDesc = {
 			{"Dad First", "Starter", "Pokedex 1", "Grandma", "Avery", "Scott 1", "Second Starter", "Talk to Robin", "Letter A", "Letter B", "Letter C", "Tell Robin 1", "WH Grunt", "WH Unlock", "Rick 1", "Letter D", "Tell Robin 2", "Crook", "Lucky Egg"},
 			{"Fred 1", "Researcher", "Teleport", "Ryder 1", "Fuse 1", "Rocky-E", "PP 1", "Poof-E", "PP 2", "Stanford", "TN Office", "Flamehox-E", "Office 2", "Scott", "Gyarados-E", "Fuse 2", "Stanford", "Fishing Rod", "Gym 2", "Photon Gift", "Res A Gift", "3+ E Forms", "All E Forms", "Endure", "Deletor"},
-			{"Scott 2", "Ryder 2", "Gift Magic", "Regional", "Millie 1", "Millie 2", "Fred 2", "Chained Xurkitree", "Millie 3", "TN Splinkty", "Millie 4", "Free Xurkitree", "UP Xurkitree", "Millie 5", "Gift Fossil", "All V Forms"},
+			{"Scott 2", "Ryder 2", "Gift Magic", "Regional", "Millie 1", "Millie 2", "Fred 2", "Chained Xurkitree", "Millie 3", "TN Splinkty", "Millie 4", "Free Xurkitree", "UP Xurkitree", "Millie 5", "Gift Fossil", "All V Forms", "Lauryn 1", "Shae 1", "Lauryn 2", "Did UP Test", "Caught UP"},
 			{"Ryder 3", "Ice Master", "Ground Master", "I Unlock", "G Unlock", "I Clear", "G Clear", "Principal", "UP Cairnasaur", "Gift \"Starter\"", "Petticoat", "Valiant", "Gym 4"},
 			{"Robin", "Scott 3", "Grandpa", "UP Shookwat", "Gift E/S", "Gym 5", "Coin Update", "Move Enc"},
 			{"Arthra 1", "Arthra Talk", "Rick 2", "Fred 3", "Maxwell 1", "UP Splame", "Scott 4", "Glurg Gift", "Gym 6", "Maxwell After", "Rick Pad"},
@@ -2132,15 +2136,43 @@ public class Player extends Trainer implements Serializable {
 		t.item = Item.FABLE_CHARGE;
 	}
 	
-	public void summonLegendary(GamePanel gp, int map) {
-		bag.remove(Item.FABLE_CHARGE, 5);
-		int legendaryID;
-		if (nuzlocke) { // generate a random legendary
+	public void summonLegendary(GamePanel gp, int map, PType[] types) {
+		int legendaryID = -1;
+		if (map == 232) { // summoning UP Paradox mon
 			Random random = new Random(gp.aSetter.generateSeed(getID(), 50, 50, map)); // should always return the same seed for the same save file
-			List<Integer> allLegends = Pokemon.legendaryMap.values().stream().map(arr -> arr[0]).collect(Collectors.toList());
-			legendaryID = allLegends.get(random.nextInt(allLegends.size()));
+			List<Integer> allUP = Pokemon.ultraParadoxMap.values().stream().map(arr -> arr[0]).collect(Collectors.toList());
+			Map<Integer, Integer> weights = new HashMap<>();
+			int totalWeight = 0;
+			for (Integer pokemonID: allUP) {
+				int weight = 1;
+				for (PType sacrificeType : types) {
+					if (sacrificeType == Pokemon.getType1(pokemonID) || sacrificeType == Pokemon.getType2(pokemonID)) {
+						weight += 3;
+					}
+				}
+				weights.put(pokemonID, weight);
+				totalWeight += weight;
+			}
+			int roll = random.nextInt(totalWeight);
+			for (Integer pokemonID : allUP) {
+				roll -= weights.get(pokemonID);
+				if (roll < 0) {
+					legendaryID = pokemonID;
+					break;
+				}
+			}
 		} else {
-			legendaryID = Pokemon.legendaryMap.get(map)[0];
+			bag.remove(Item.FABLE_CHARGE, 5);
+			if (nuzlocke) { // generate a random legendary
+				Random random = new Random(gp.aSetter.generateSeed(getID(), 50, 50, map)); // should always return the same seed for the same save file
+				List<Integer> allLegends = Pokemon.legendaryMap.values().stream().map(arr -> arr[0]).collect(Collectors.toList());
+				legendaryID = allLegends.get(random.nextInt(allLegends.size()));
+			} else {
+				legendaryID = Pokemon.legendaryMap.get(map)[0];
+			}
+		}
+		if (summonedLegendaries == null) {
+			summonedLegendaries = new HashMap<>();
 		}
 		summonedLegendaries.put(map, legendaryID);
 		gp.aSetter.updateNPC(map);

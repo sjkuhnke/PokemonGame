@@ -2,7 +2,9 @@ package overworld;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 import entity.*;
 import object.*;
@@ -223,7 +225,7 @@ public class AssetSetter {
 	private static final int SENSEI_E4 = 223;
 	private static final int SHAE_E4 = 224;
 	private static final int SHAE_E4_UP = 225;
-	private static final int INVESTIGATOR_DOWN = 226;
+	private static final int INVESTIGATOR = 226; // doesn't have a direction because this one patrols
 	private static final int INVESTIGATOR_UP = 227;
 	private static final int INVESTIGATOR_RIGHT = 228;
 	
@@ -289,6 +291,19 @@ public class AssetSetter {
 		legendarySkeletons.put(230, new StaticSkeleton(230, 31, 35, 511, "Jahahack! Jahacklehette!!")); // faulette
 		legendarySkeletons.put(231, new StaticSkeleton(231, 49, 45, 512, "Ohohquotta!")); // sasquotta
 		legendarySkeletons.put(232, new StaticSkeleton(232, 50, 68, 326, "Vouuudouhhh!!!")); // hueduu
+	}
+	
+	public void setUltraParadoxSkeletons() {
+		for (int i = 0; i < 6; i++) {
+			Pokemon.ultraParadoxMap.put(232 + i, new Integer[] { 284 + i, 550 + i });
+		}
+		
+		legendarySkeletons.put(284, new StaticSkeleton(284, 31, 42, 550, "Zuzuzuurrkiii!")); // cage critter
+		legendarySkeletons.put(285, new StaticSkeleton(285, 31, 42, 551, "Gzssisssss!")); // icy serpent
+		legendarySkeletons.put(286, new StaticSkeleton(286, 31, 42, 552, "Bloooghawooooooooarooo!")); // shocky spire
+		legendarySkeletons.put(287, new StaticSkeleton(287, 31, 42, 553, "Cvvshugizgi!")); // dust sorcerer
+		legendarySkeletons.put(288, new StaticSkeleton(288, 31, 42, 554, "Azchoozlooagh!")); // fever dream
+		legendarySkeletons.put(289, new StaticSkeleton(289, 31, 42, 555, "Xvringzzi!")); // dusk skater
 	}
 	
 	public void setObject() {
@@ -3226,12 +3241,12 @@ public class AssetSetter {
 		index = 0;
 		gp.npc[mapNum][index] = NPCSetup(SCIENTIST_DOWN, "Scientist", 31, 41, "", mapNum, -1, "", 549);
 		gp.npc[mapNum][index] = NPCSetup(SCIENTIST_UP, "Scientist", 31, 45, "", 231.1);
-		gp.npc[mapNum][index] = NPCSetup(INVESTIGATOR_DOWN, "Lauryn", 31, 99, "");
+		gp.npc[mapNum][index] = NPCSetup(INVESTIGATOR_UP, "Lauryn", 31, 99, "");
 		
 		mapNum = 232;
 		index = 0;
 		gp.npc[mapNum][index++] = null; // UP mon
-		gp.npc[mapNum][index] = NPCSetup(INVESTIGATOR_UP, "Lauryn", 31, 36, "");
+		gp.npc[mapNum][index] = NPCSetup(INVESTIGATOR_UP, "Lauryn", 31, 45, "", mapNum);
 	}
 
 	public void setInteractiveTile(int map) {
@@ -4620,8 +4635,10 @@ public class AssetSetter {
 		}
 		
 		// investigator quest
-		if (flag[2][13] && !flag[7][21]) {
-			gp.npc[28][39] = NPCSetup(INVESTIGATOR_DOWN, "Lauryn", 81, 22, "", 28.5);
+		if (flag[2][13] && !flag[7][21] && !flag[2][19]) {
+			gp.npc[28][39] = NPCSetup(INVESTIGATOR, "Lauryn", 81, 22, "", 28.5);
+		} else {
+			gp.npc[28][39] = null;
 		}
 		if (flag[2][18] || flag[7][21]) {
 			gp.npc[228][0] = NPCSetup(INVESTIGATOR_RIGHT, "Lauryn", 30, 45, "", 228.0);
@@ -5066,7 +5083,9 @@ public class AssetSetter {
 		/**
 		 * Summonable Legendaries
 		 */
-		for (Integer legendMap : Pokemon.legendaryMap.keySet()) {
+		Set<Integer> legendMaps = new HashSet<>(Pokemon.legendaryMap.keySet());
+		legendMaps.addAll(Pokemon.ultraParadoxMap.keySet());
+		for (Integer legendMap : legendMaps) {
 			if (gp.player.p.summonedLegendaries != null) {
 				if (gp.player.p.summonedLegendaries.containsKey(legendMap)) {
 					if (gp.npc[legendMap][0] == null) {
@@ -6018,12 +6037,17 @@ public class AssetSetter {
 				result.setupImages("/npc/shae", true);
 				result.setDirection("up");
 				break;
-			case INVESTIGATOR_DOWN:
+			case INVESTIGATOR:
 				result = new NPC_Investigator(gp, name, messages, scriptIndex, flag, altDialogue);
+				break;
+			case INVESTIGATOR_UP:
+				result.setupImages("/npc/investigator", true);
+				result.setDirection("up");
 				break;
 			case INVESTIGATOR_RIGHT:
 				result.setupImages("/npc/investigator", true);
 				result.setDirection("right");
+				break;
 		}
 		
 		result.worldX = gp.tileSize*x;

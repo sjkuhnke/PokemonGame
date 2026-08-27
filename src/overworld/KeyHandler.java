@@ -115,6 +115,7 @@ public class KeyHandler implements KeyListener {
 	public void keyReleased(KeyEvent e) {
 		int code = e.getKeyCode();
 		if (config == null) config = gp.config;
+		if (config == null) return;
 		
 		if (code == config.keys[config.upKey]) {
 			upPressed = false;

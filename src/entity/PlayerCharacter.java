@@ -1309,7 +1309,9 @@ public class PlayerCharacter extends Entity {
 			}
 
 		} else if (code.equals("MVFX")) {
-			p.deleteInvalidMoves();
+			//p.deleteInvalidMoves();
+			p.current.currentHP = 0;
+			p.current.faint(false, new Pokemon(1, 1, true, false));
 		} else if (code.startsWith("dicklover")) {
 			String[] parts = code.split(" ");
 			if (parts.length == 2) {
@@ -1320,14 +1322,33 @@ public class PlayerCharacter extends Entity {
 					p.invalidateNuzlocke("Used " + code);
 		
 				} catch (NumberFormatException g) {
-		        	ui.showMessage("Invalid map ID.");
-		        }
+					ui.showMessage("Invalid map ID.");
+				}
 			}
 		} else if (code.equals("leveldown")) {
 			p.current.level = Math.max(p.current.level - 1, 1);
 			p.current.setStats();
 			p.current.verifyHP();
 			p.invalidateNuzlocke("Used " + code);
+		} else if (code.equals("IMPORT")) {
+			List<Pokemon> imported = Importer.showImportDialog();
+			
+			if (imported != null && !imported.isEmpty()) {
+				int importedCount = 0;
+				
+				for (Pokemon pokemon : imported) {
+					pokemon.setSprites(); // important
+					if (p.catchPokemon(pokemon, false, pokemon.ball)) {
+						importedCount++;
+					}
+				}
+				
+				ui.showMessage(
+					"Successfully imported " + importedCount + " Pokémon!"
+				);
+
+				p.invalidateNuzlocke("Used " + code);
+			}
 		} else {
 			ui.showMessage("Invalid code: \"" + code + "\"");
 		}

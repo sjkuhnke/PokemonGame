@@ -33,7 +33,7 @@ public class Trainer implements Serializable {
 	transient ArrayList<FieldEffect> effects;
 	transient Item[] teamItems;
 	
-	public static final int MAX_TRAINERS = 550;
+	public static final int MAX_TRAINERS = 560;
 	public static Trainer[] trainers = new Trainer[MAX_TRAINERS];
 	
 	public static int levelCapIndex = 0;

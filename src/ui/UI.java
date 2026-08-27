@@ -727,7 +727,7 @@ public class UI extends AbstractUI {
 			drawSpace();
 			break;
 		case Task.SUMMON:
-			gp.player.p.summonLegendary(gp, gp.currentMap);
+			gp.player.p.summonLegendary(gp, gp.currentMap, currentTask.types);
 			currentTask = null;
 			break;
 		case Task.DELETE_MOVE:
@@ -2153,6 +2153,7 @@ public class UI extends AbstractUI {
 					break;
 				case 20:
 					Task.addTask(Task.DIALOGUE, npc, "No shame in that. Door'll still be here whenever you're ready.");
+					currentTask = null;
 					break;
 				default:
 					currentTask = null;

@@ -1151,7 +1151,7 @@ public class Script {
 				Task.addTask(Task.DIALOGUE, e, "Strange, letting go of something you spent years chasing.");
 				if (met) Task.addTask(Task.DIALOGUE, e, "Thank you for everything up to this point. I mean that.");
 			} else if (p.flag[2][19]) { // attempted gauntlet
-				Task.addTask(Task.DIALOGUE, npc, "Hey. I heard.");
+				Task.addTask(Task.DIALOGUE, npc, "Hey. I know.");
 				Task.addTask(Task.SLEEP, "", 30);
 				Task.addTask(Task.DIALOGUE, npc, "I want you to know I don't regret asking you to try.");
 				Task.addTask(Task.DIALOGUE, npc, "Someone has to, eventually, and you got farther than anyone else who's offered.");
@@ -1171,6 +1171,16 @@ public class Script {
 				Task.addTask(Task.DIALOGUE, npc, "Whatever's on the other end of that relic isn't interest in taking something for nothing.");
 				Task.addTask(Task.SLEEP, "", 20);
 				Task.addTask(Task.DIALOGUE, npc, "I hate this part of my job, for what it's worth.");
+				Task.addTask(Task.SLEEP, "", 25);
+				Task.addTask(Task.DIALOGUE, npc, "One more thing, since you seem like the type who'd want to know before you commit to it, not after -");
+				Task.addTask(Task.DIALOGUE, npc, "What you sacrifice isn't just a cost. Near as we can tell, it matters which Pokemon you let go of.");
+				Task.addTask(Task.SPEAK, player, "What do you mean?");
+				Task.addTask(Task.DIALOGUE, npc, "Whatever Pokemon types are given up seems to attract a similar Ultra Paradox Pokemon with those types when summoned.");
+				Task.addTask(Task.DIALOGUE, npc, "Not perfectly, not predictably, but it's not nothing either.");
+				Task.addTask(Task.SLEEP, "", 20);
+				Task.addTask(Task.DIALOGUE, npc, "I can't tell you the exact odds, I don't have enough data points to be that precise.");
+				Task.addTask(Task.DIALOGUE, npc, "But if I were building a team for this, I wouldn't just think about what wins the fights. I'd think about what I'm willing to lose, too - and what I want to come out the other side of that.");
+				Task.addTask(Task.SLEEP, "", 30);
 				Task.addTask(Task.DIALOGUE, npc, "Three fights. Four Pokemon, then three, then two.");
 				Task.addTask(Task.DIALOGUE, npc, "If you make it through all three with exactly one left standing, that's when we call down whatever's coming.");
 				Task.addTask(Task.DIALOGUE, npc, "And I need to be completely straight with you:");
@@ -1197,7 +1207,7 @@ public class Script {
 					Task.addTask(Task.SLEEP, "", 20);
 					Task.addTask(Task.DIALOGUE, npc, "For what it's worth, nobody here thinks you did anything wrong. The margins on this were never fair to begin with.");
 					Task.addTask(Task.DIALOGUE, npc, "We knew that going in and asked you to try anyway.");
-					Task.addTask(Task.DIALOGUE, npc, "Door's always open if you're ever just passing through. Doesn't have to be about the relic.");
+					Task.addTask(Task.DIALOGUE, npc, "We're always here if you're ever just passing through. Doesn't have to be about the relic.");
 				} else { // attempted and won
 					Task.addTask(Task.DIALOGUE, npc, "There they are. The one who actually pulled it off.");
 					Task.addTask(Task.DIALOGUE, npc, "I watched the readouts during your third fight - thought for a second the numbers weren't going to line up.");
@@ -1221,6 +1231,9 @@ public class Script {
 				Task.addTask(Task.SLEEP, "", 25);
 				Task.addTask(Task.DIALOGUE, npc, "One attempt. That was the deal going in, and I don't get to make exceptions, not even for someone who came as close as you did.");
 				Task.addTask(Task.DIALOGUE, npc, "The door stays shut. I'm sorry.");
+			} else if (!p.bag.contains(Item.ETERNAL_RELIC)) {
+				Task.addTask(Task.DIALOGUE, npc, "Behind this door is a very difficult test to try and find a trainer worthy of raising a rare Pokemon.");
+				Task.addTask(Task.DIALOGUE, npc, "We need a rare item in order to summon it though, so no point in letting anyone in now.");
 			} else { // recap and offer entry
 				Task.addTask(Task.DIALOGUE, npc, "This is the door. Once you're through it, you're through it - no turning back partway.");
 				Task.addTask(Task.SLEEP, "", 20);
@@ -1309,7 +1322,7 @@ public class Script {
 				Task.addTask(Task.SLEEP, "", 15);
 				if (count == 2) {
 					Task.addTask(Task.DIALOGUE, npc, "Two paid now. You're not flinching.");
-					Task.addTask(Task.DIALOGUE, npc, "You're not flinching. I respect that more than I expected to.");
+					Task.addTask(Task.DIALOGUE, npc, "I respect that more than I expected to.");
 					Task.addTask(Task.DIALOGUE, npc, "You may go on to the next room.");
 					Task t = Task.addTask(Task.TELEPORT, "");
 					t.counter = 231;
@@ -1370,9 +1383,49 @@ public class Script {
 					t.start = 30;
 					t.finish = 45;
 					t.wipe = false;
+					
 					Task.addTask(Task.TURN, player, "", Task.RIGHT);
+					Task.addTask(Task.SLEEP, "", 60);
+					t = Task.addTask(Task.FLASH_IN, "");
+					t.color = new Color(0, 0, 0, 100);
+					Task.addTask(Task.SLEEP, "", 15);
+					Task.addTask(Task.TURN, player, "", Task.UP);
+					Task.addTask(Task.SLEEP, "", 40);
+					Task.addTask(Task.SHAKE, "", 100);
 					Task.addTask(Task.SLEEP, "", 15);
 					
+					t = Task.addTask(Task.FLASH_IN, "");
+					t.color = Color.WHITE;
+					ArrayList<PType> types = new ArrayList<>();
+					for (Pokemon po : p.team) {
+						if (po != null && po.isFainted() && !(po instanceof Egg)) {
+							types.add(po.type1);
+							if (po.type2 != null) types.add(po.type2);
+						}
+					}
+					t = Task.addTask(Task.SUMMON, "");
+					t.types = types.toArray(new PType[0]);
+					Task.addTask(Task.FLASH_OUT, "");
+					Task.addTask(Task.SLEEP, "", 20);
+					Task.addTask(Task.SHAKE, "", 150);
+					Task.addTask(Task.SLEEP, "", 35);
+					Task.addTask(Task.DIALOGUE, gp.npc[232][1], "There it is. There it - that's really one of them.");
+					Task.addTask(Task.SLEEP, "", 45);
+					Task.addTask(Task.TURN, gp.npc[232][1], "", Task.LEFT);
+					Task.addTask(Task.SLEEP, "", 15);
+					Task.addTask(Task.TURN, player, "", Task.RIGHT);
+					Task.addTask(Task.SLEEP, "", 10);
+					Task.addTask(Task.DIALOGUE, gp.npc[232][1], "Here - give me the Eternal Relic. I'll focus on making sure you're safe, you focus on catching the thing.");
+					Task.addTask(Task.DIALOGUE, gp.npc[232][1], "This should help. It's our only one we've been able to get a hold of so far.");
+					t = Task.addTask(Task.ITEM, "");
+					t.item = Item.BEAST_BALL;
+					p.bag.remove(Item.ETERNAL_RELIC);
+					Task.addTask(Task.SLEEP, "", 30);
+					Task.addTask(Task.TURN, player, "", Task.UP);
+					Task.addTask(Task.SLEEP, "", 20);
+					Task.addTask(Task.DIALOGUE, gp.npc[232][1], "Good luck, <@>.");
+					Task.addTask(Task.TURN, gp.npc[232][1], "", Task.UP);
+					Task.addTask(Task.SLEEP, "", 10);
 				} else {
 					Task.addTask(Task.DIALOGUE, npc, "So close, and the numbers still don't hold. I'm sorry - truly. This is the part of the job I hate most.");
 				}
@@ -1393,6 +1446,32 @@ public class Script {
 		
 		scriptMap.put(231.1, (npc) -> { // exit scientist
 			addUPGauntletExitTasks(npc);
+		});
+		
+		scriptMap.put(232.0, (npc) -> { // lauryn UP room
+			if (gp.npc[232][0] == null) {
+				if (p.flag[2][20]) { // player captured UP
+					Task.addTask(Task.DIALOGUE, npc, "You did it. You actually - I need to sit down again, this is becoming a pattern with me today.");
+					Task.addTask(Task.DIALOGUE, npc, "Listen. This isn't the end of what we know, it's the start.");
+					Task.addTask(Task.DIALOGUE, npc, "You raise that thing right, and you and I are going to learn more about where these creatures come from than anyone alive.");
+					Task.addTask(Task.DIALOGUE, npc, "Go easy on it at first. It's not a Pokemon like any other you've got, but it still needs someone who's patient with it.");
+					Task.addTask(Task.DIALOGUE, npc, "I think you can manage that. You've shown me that much already.");
+					Task.addTask(Task.SLEEP, "", 30);
+					Task.addTask(Task.DIALOGUE, npc, "Thank you. Genuinely. I mean that.");
+				} else {
+					Task.addTask(Task.DIALOGUE, npc, "It's gone. It just - it's gone, and I don't know if it'll ever come back this close again.");
+					Task.addTask(Task.DIALOGUE, npc, "That's not on you. I should have prepared better. I'm sorry you paid what you paid for this.");
+				}
+				Task.addTask(Task.SLEEP, "", 20);
+				Task t = Task.addTask(Task.TELEPORT, "");
+				t.counter = 38;
+				t.start = 22;
+				t.finish = 13;
+				t.wipe = false;
+			} else {
+				Task.addTask(Task.DIALOGUE, npc, "I can't believe that's really one of them.");
+				Task.addTask(Task.DIALOGUE, npc, "Good luck, <@>.");
+			}
 		});
 		
 		
@@ -4929,6 +5008,7 @@ public class Script {
 		Task.addTask(Task.DIALOGUE, npc, "You want to exit the challenge?");
 		Task.addTask(Task.DIALOGUE, npc, "There's no trying again - this is your one and only attempt.");
 		Task.addTask(Task.CONFIRM, npc, "Are you positive you want to forfeit?", 21);
+		gp.ui.commandNum = 1;
 	}
 
 	private void updateUPGauntletTrainer(int i) {
