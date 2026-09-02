@@ -1516,6 +1516,21 @@ public enum Move {
 		}
 		return false;
 	}
+	
+	public boolean isProtect() {
+		ArrayList<Move> result = new ArrayList<>();
+		result.add(PROTECT);
+		result.add(DETECT);
+		result.add(LAVA_LAIR);
+		result.add(OBSTRUCT);
+		result.add(SPIKY_SHIELD);
+		result.add(AQUA_VEIL);
+		
+		if (result.contains(this)) {
+			return true;
+		}
+		return false;
+	}
 
 	public PType getType(Pokemon user, Field field) {
 		PType type = this.mtype;

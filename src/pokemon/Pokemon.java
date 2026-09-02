@@ -1356,7 +1356,7 @@ public class Pokemon implements Serializable {
 		
 		// --- Secondary Effects/Status Moves ---
 		if (move.cat == 2 || move.secondary != 0) {
-			EffectAnalysisResult effectResult = this.analyzeMoveEffect(foe, move, isFaster, field, damage, defResult.bestSwitchInMon);
+			EffectAnalysisResult effectResult = this.analyzeMoveEffect(foe, move, isFaster, field, damage, defResult.bestSwitchInMon, foeStrongestMove, foeMaxDamage.getSecond());
 			howUseful = effectResult.targetsChecked;
 			if (howUseful > 0) {
 				int secChance;
@@ -1376,9 +1376,9 @@ public class Pokemon implements Serializable {
 					if (field.equals(field.terrain, Effect.SPARKLY)) secChance *= 2;
 					secChance = Math.min(100, secChance);
 				}
-				score += Math.max(1.0, secChance) / 4 / howUseful;
+				score += Math.max(1.0, secChance) / 100.0 * effectResult.usefulness;
 				if (howUseful == 2) {
-					score *= Math.max(0.25, defResult.bestSwitchSurvival);
+					score *= Math.max(0.25, defResult.bestSwitchSurvival) * 0.6;
 				}
 				
 				// --- Custom status move heuristics ---
@@ -1386,15 +1386,7 @@ public class Pokemon implements Serializable {
 					if (move.isMagicBounceEffected(this, foe, foeAbility, move.accuracy)) {
 						score -= 10 * (foe != null && foe.trainer.canSwitch(this) ? 1 : 3); // if foe can switch, decrease it by less
 					} else {
-						if (move.isHazard()) {
-							if (!isHazardUseful(move, foe, field)) {
-								score -= 20;
-							} else {
-								if (foe.trainer != null) {
-									score += calcHazardTeamValue(move, foe.trainer, field);
-								}
-							}
-						} else if (move == Move.DISABLE || move == Move.TORMENT || move == Move.HEX_CLAW) {
+						if (move == Move.DISABLE || move == Move.TORMENT || move == Move.HEX_CLAW) {
 							ArrayList<Move> damagingMoveset = foe.getDamagingMoveset();
 							if (foe.getValidMoveset().size() == 1) {
 								score += 50;
@@ -1431,7 +1423,7 @@ public class Pokemon implements Serializable {
 							}
 						} else if (move == Move.DRAGON_TAIL || move == Move.CIRCLE_THROW || move == Move.WHIRLWIND || move == Move.ROAR) { // phasing
 							if (foe.trainer != null && foe.trainer.hasValidMembers(this)) score += calcStatBoostScore(foe);
-						} else if (move == Move.FIELD_FLIP || move == Move.RAPID_SPIN || move == Move.DEFOG || move == Move.TORNADO_SPIN) { // TODO: make it use the same logic as using hazards (more incentivized for rocks-weak team)
+						} else if (move == Move.FIELD_FLIP || move == Move.RAPID_SPIN || move == Move.DEFOG || move == Move.TORNADO_SPIN) {
 							if (this.trainer != null && this.trainer.hasValidMembers(null)) {
 								double removalValue = 0;
 								for (FieldEffect fe : field.getHazards(this.getFieldEffects())) {
@@ -1459,8 +1451,17 @@ public class Pokemon implements Serializable {
 							} else {
 								score = -10;
 							}
+						} else if (move.isProtect()) {
+							if (move == Move.SPIKY_SHIELD || move == Move.LAVA_LAIR || move == Move.OBSTRUCT) {
+								if (foeStrongestMove != null && foeStrongestMove.contact) score += 30;
+							} else if (move == Move.AQUA_VEIL) {
+								if (foeStrongestMove != null && foeStrongestMove.isSpecial()) score += 30;
+							}
+							if (this.hasStatus(Status.LEECHED) || this.status == Status.POISONED || this.status == Status.TOXIC) {
+								score += 25; // stall a free turn of residual damage onto them / heal-denial without exposing us
+							}
+							if (foeCanKO && !willKill) score += 10; // scout a KO attempt for free
 						}
-						// TODO: add heuristics for Spiky Shield/Lava Lair/Obstruct (if strongest move is contact), Aqua Veil (if foe is special attacker)
 					}
 				}
 			} else if (move.cat == 2) {
@@ -1521,197 +1522,290 @@ public class Pokemon implements Serializable {
 		
 		return (int) Math.round(score);
 	}
-	public EffectAnalysisResult analyzeMoveEffect(Pokemon foe, Move move, boolean isFaster, Field field, int damage, Pokemon likelySwitchIn) {
+	public EffectAnalysisResult analyzeMoveEffect(Pokemon foe, Move move, boolean isFaster, Field field, int damage, Pokemon likelySwitchIn, Move foeStrongestMove, double foeMaxDamagePercent) {
 		try {
-	        for (int attempt = 0; attempt < 2; attempt++) {
-	            boolean isBackCheck = (attempt > 0);
-	            if (isBackCheck) {
-	                if (move.cat == 2 && likelySwitchIn != null && foe.trainer != null && foe.trainer.canSwitch(this, foe) && this != foe) {
-	                    foe = likelySwitchIn;
-	                } else {
-	                    break;
-	                }
-	            }
+			for (int attempt = 0; attempt < 2; attempt++) {
+				boolean isBackCheck = (attempt > 0);
+				if (isBackCheck) {
+					if (move.cat == 2 && likelySwitchIn != null && foe.trainer != null && foe.trainer.canSwitch(this, foe) && this != foe) {
+						foe = likelySwitchIn;
+					} else {
+						break;
+					}
+				}
+				
+				Pokemon youClone = this.fullClone();
+				Pokemon foeClone = foe.fullClone();
+				Field fieldClone = field.clone();
+				
+				int youBeforeID = youClone.id;
+				int[] youBeforeStages = youClone.statStages.clone();
+				int[] foeBeforeStages = foeClone.statStages.clone();
+				ArrayList<StatusEffect> youBeforeV = DeepClonable.deepCloneList(youClone.vStatuses);
+				ArrayList<StatusEffect> foeBeforeV = DeepClonable.deepCloneList(foeClone.vStatuses);
+				Status youBeforeStatus = youClone.status;
+				Status foeBeforeStatus = foeClone.status;
+				int youBeforeHP = youClone.currentHP;
+				Item youBeforeItem = youClone.item;
+				Item foeBeforeItem = foeClone.item;
+				int foeBeforePerish = foeClone.perishCount;
+				Ability foeBeforeAbility = foeClone.getAbility(fieldClone);
+				ArrayList<FieldEffect> foeBeforeFE = DeepClonable.deepCloneList(youClone.getFieldEffects());
+				ArrayList<FieldEffect> youBeforeFE = DeepClonable.deepCloneList(youClone.getFieldEffects());
+				ArrayList<FieldEffect> fieldBeforeFE = DeepClonable.deepCloneList(fieldClone.fieldEffects);
+				Effect beforeWeather = fieldClone.weather == null ? null : fieldClone.weather.effect;
+				Effect beforeTerrain = fieldClone.terrain == null ? null : fieldClone.terrain.effect;
+				PType foeBeforeType1 = foeClone.type1, foeBeforeType2 = foeClone.type2;
+				Move foeBeforeDisabled = foeClone.disabledMove;
+				Pokemon oldCurrent = foeClone.trainer == null ? null : foeClone.trainer.current;
+				
+				if (move.cat != 2) {
+					if (damage == 0) return EffectAnalysisResult.NONE; // immune, secondary can't proc
+					createTask = false;
+					if (move.secondary < 0) {
+						youClone.primaryEffect(foeClone, move, foe.getItem(fieldClone) == Item.EJECT_BUTTON, fieldClone);
+					} else {
+						int sec = move.secondary;
+						if (foeClone.getItem(fieldClone) == Item.COVERT_CLOAK) sec = 0;
+						if (foeClone.getAbility(fieldClone) == Ability.SHIELD_DUST && youClone.getAbility(fieldClone) != Ability.MOLD_BREAKER) sec = 0;
+						if (fieldClone.equals(fieldClone.terrain, Effect.SPARKLY) && youClone.isGrounded()) sec *= 2;
+						if (youClone.getAbility(fieldClone) == Ability.SERENE_GRACE) sec *= 2;
+						if (sec > 0) youClone.secondaryEffect(foeClone, move, isFaster, fieldClone);
+					}
+				} else {
+					createTask = false;
+					if (youClone.getAbility(fieldClone) == Ability.PRANKSTER && foeClone.isType(PType.DARK) && move.accuracy <= 100) {
+						continue; // dark types immune to prankster - try the back-check attempt instead
+					}
+					youClone.statusEffect(foeClone, move, fieldClone);
+				}
+				
+				Effect afterWeather = fieldClone.weather == null ? null : fieldClone.weather.effect;
+				Effect afterTerrain = fieldClone.terrain == null ? null : fieldClone.terrain.effect;
+				
+				ArrayList<EffectChange> changes = new ArrayList<>();
+				
+				if (youBeforeID != youClone.id) changes.add(new EffectChange(EffectChange.Type.IDENTITY_CHANGE, true, -1, 1, null));
+				
+				int foeBeforeFESize = foeClone.getFieldEffectsSize(foeBeforeFE);
+				boolean foeFieldGrew = foeClone.getFieldEffectsSize() > foeBeforeFESize;
+				boolean foeFieldShrank = foeClone.getFieldEffectsSize() < foeBeforeFESize;
+				if (move == Move.BRICK_BREAK || move == Move.PSYCHIC_FANGS) {
+					if (foeFieldShrank) changes.add(new EffectChange(EffectChange.Type.SCREEN_BROKEN, false, -1, 1, null));
+				} else if (foeFieldGrew) {
+					Effect added = findAddedFieldEffect(foeBeforeFE, foeClone.getFieldEffects());
+					changes.add(new EffectChange(EffectChange.Type.FIELD_EFFECT_SET, false, -1, 1, added));
+				}
+				
+				int youBeforeFESize = youClone.getFieldEffectsSize(youBeforeFE);
+				boolean youFieldGrew = youClone.getFieldEffectsSize() > youBeforeFESize;
+				boolean youFieldShrank = youClone.getFieldEffectsSize() < youBeforeFESize;
+				if (move == Move.RAPID_SPIN || move == Move.DEFOG) {
+					if (youFieldShrank) changes.add(new EffectChange(EffectChange.Type.FIELD_EFFECT_CLEARED, true, -1, 1, null));
+				} else if (youFieldGrew) {
+					Effect added = findAddedFieldEffect(youBeforeFE, youClone.getFieldEffects());
+					changes.add(new EffectChange(EffectChange.Type.FIELD_EFFECT_SET, true, -1, 1, added));
+				}
+				
+				if (foeClone.status != foeBeforeStatus && foeClone.status != Status.HEALTHY)
+					changes.add(new EffectChange(EffectChange.Type.STATUS, false, -1, 1, foeClone.status));
+				if (youClone.status != youBeforeStatus && youBeforeStatus == Status.HEALTHY)
+					changes.add(new EffectChange(EffectChange.Type.STATUS, true, -1, 1, youClone.status));
+				
+				if (!vStatusesEqual(youClone.vStatuses, youBeforeV)) {
+					Status added = findAddedVolatileStatus(youBeforeV, youClone.vStatuses);
+					changes.add(new EffectChange(EffectChange.Type.VOLATILE_STATUS, true, -1, 1, added));
+				}
+				if (!vStatusesEqual(foeClone.vStatuses, foeBeforeV)) {
+					Status added = findAddedVolatileStatus(foeBeforeV, foeClone.vStatuses);
+					changes.add(new EffectChange(EffectChange.Type.VOLATILE_STATUS, false, -1, 1, added));
+				}
+				
+				detectStatStageChanges(youBeforeStages, youClone.statStages, true, true, changes);
+				detectStatStageChanges(foeBeforeStages, foeClone.statStages, false, false, changes);
+				
+				if (youClone.currentHP > youBeforeHP && move != Move.BELLY_DRUM && move != Move.CURSE
+						&& move != Move.HEALING_WISH && move != Move.LUNAR_DANCE && move != Move.MEMENTO)
+					changes.add(new EffectChange(EffectChange.Type.HP_HEAL, true, -1, youClone.currentHP - youBeforeHP, null));
+				
+				if ((youClone.item != youBeforeItem || foeClone.item != foeBeforeItem)
+						&& ((foeBeforeItem != null && !foeBeforeItem.isTrickable() && foeClone.item == null)
+								|| (youBeforeItem != null && youBeforeItem.isTrickable())
+								|| (youClone.item != null && !youClone.item.isTrickable())))
+					changes.add(new EffectChange(EffectChange.Type.ITEM_CHANGE, true, -1, 1, new Item[] {youClone.item, foeClone.item}));
+				
+				if (fieldClone.fieldEffects.size() > fieldBeforeFE.size()) {
+					Effect added = findAddedFieldEffect(fieldBeforeFE, fieldClone.fieldEffects);
+					changes.add(new EffectChange(EffectChange.Type.GLOBAL_FIELD_EFFECT, false, -1, 1, added));
+				}
+				if (foeClone.getAbility(fieldClone) != foeBeforeAbility) {
+					double abilityValue = foeClone.evaluateAbilityOverwrite(foeBeforeAbility, foeClone.getAbility(field));
+					changes.add(new EffectChange(EffectChange.Type.ABILITY_CHANGE, false, -1, 1, abilityValue));
+				}
+				if (foeClone.type1 != foeBeforeType1 || foeClone.type2 != foeBeforeType2) {
+					double retypeValue = this.evaluateRetype(foeClone, foe);
+					changes.add(new EffectChange(EffectChange.Type.TYPE_CHANGE, false, -1, 1, retypeValue));
+				}
+				if (foeClone.disabledMove != null && foeBeforeDisabled == null)
+					changes.add(new EffectChange(EffectChange.Type.MOVE_DISABLED, false, -1, 1, null));
+				if (foeClone.perishCount > foeBeforePerish)
+					changes.add(new EffectChange(EffectChange.Type.PERISH_SONG, false, -1, 1, null));
+				if (afterWeather != beforeWeather)
+					changes.add(new EffectChange(EffectChange.Type.WEATHER_CHANGE, false, -1, 1, afterWeather));
+				if (afterTerrain != beforeTerrain)
+					changes.add(new EffectChange(EffectChange.Type.TERRAIN_CHANGE, false, -1, 1, afterTerrain));
+				if (foeClone.trainer != null && oldCurrent != null && foeClone.trainer.current != oldCurrent)
+					changes.add(new EffectChange(EffectChange.Type.FORCED_SWITCH, false, -1, 1, null));
+				
+				double usefulness = this.scoreEffectUsefulness(changes, foe, isFaster, fieldClone, foeStrongestMove, foeMaxDamagePercent, likelySwitchIn);
+				if (usefulness > 0) {
+					return new EffectAnalysisResult(changes, isBackCheck ? 2 : 1, usefulness);
+				}
+			}
+		} finally {
+			createTask = true;
+		}
 	
-	            Pokemon youClone = this.fullClone();
-	            Pokemon foeClone = foe.fullClone();
-	            Field fieldClone = field.clone();
-	
-	            int youBeforeID = youClone.id;
-	            int[] youBeforeStages = youClone.statStages.clone();
-	            int[] foeBeforeStages = foeClone.statStages.clone();
-	            ArrayList<StatusEffect> youBeforeV = DeepClonable.deepCloneList(youClone.vStatuses);
-	            ArrayList<StatusEffect> foeBeforeV = DeepClonable.deepCloneList(foeClone.vStatuses);
-	            Status youBeforeStatus = youClone.status;
-	            Status foeBeforeStatus = foeClone.status;
-	            int youBeforeHP = youClone.currentHP;
-	            Item youBeforeItem = youClone.item;
-	            Item foeBeforeItem = foeClone.item;
-	            int foeBeforePerish = foeClone.perishCount;
-	            Ability foeBeforeAbility = foeClone.getAbility(fieldClone);
-	            int foeBeforeFE = foeClone.getFieldEffectsSize();
-	            int youBeforeFE = youClone.getFieldEffectsSize();
-	            int fieldBeforeFE = fieldClone.fieldEffects.size();
-	            Effect beforeWeather = fieldClone.weather == null ? null : fieldClone.weather.effect;
-	            Effect beforeTerrain = fieldClone.terrain == null ? null : fieldClone.terrain.effect;
-	            PType foeBeforeType1 = foeClone.type1, foeBeforeType2 = foeClone.type2;
-	            Move foeBeforeDisabled = foeClone.disabledMove;
-	            Pokemon oldCurrent = foeClone.trainer == null ? null : foeClone.trainer.current;
-	
-	            if (move.cat != 2) {
-	                if (damage == 0) return EffectAnalysisResult.NONE; // immune, secondary can't proc
-	                createTask = false;
-	                if (move.secondary < 0) {
-	                    youClone.primaryEffect(foeClone, move, foe.getItem(fieldClone) == Item.EJECT_BUTTON, fieldClone);
-	                } else {
-	                    int sec = move.secondary;
-	                    if (foeClone.getItem(fieldClone) == Item.COVERT_CLOAK) sec = 0;
-	                    if (foeClone.getAbility(fieldClone) == Ability.SHIELD_DUST && youClone.getAbility(fieldClone) != Ability.MOLD_BREAKER) sec = 0;
-	                    if (fieldClone.equals(fieldClone.terrain, Effect.SPARKLY) && youClone.isGrounded()) sec *= 2;
-	                    if (youClone.getAbility(fieldClone) == Ability.SERENE_GRACE) sec *= 2;
-	                    if (sec > 0) youClone.secondaryEffect(foeClone, move, isFaster, fieldClone);
-	                }
-	            } else {
-	                createTask = false;
-	                if (youClone.getAbility(fieldClone) == Ability.PRANKSTER && foeClone.isType(PType.DARK) && move.accuracy <= 100) {
-	                    continue; // dark types immune to prankster - try the back-check attempt instead
-	                }
-	                youClone.statusEffect(foeClone, move, fieldClone);
-	            }
-	
-	            Effect afterWeather = fieldClone.weather == null ? null : fieldClone.weather.effect;
-	            Effect afterTerrain = fieldClone.terrain == null ? null : fieldClone.terrain.effect;
-	
-	            ArrayList<EffectChange> changes = new ArrayList<>();
-	
-	            if (youBeforeID != youClone.id) changes.add(new EffectChange(EffectChange.Type.IDENTITY_CHANGE, true, -1, 1));
-	
-	            boolean foeFieldGrew = foeClone.getFieldEffectsSize() > foeBeforeFE;
-	            boolean foeFieldShrank = foeClone.getFieldEffectsSize() < foeBeforeFE;
-	            if (move == Move.BRICK_BREAK || move == Move.PSYCHIC_FANGS) {
-	                if (foeFieldShrank) changes.add(new EffectChange(EffectChange.Type.SCREEN_BROKEN, false, -1, 1));
-	            } else if (foeFieldGrew) {
-	                changes.add(new EffectChange(EffectChange.Type.FIELD_EFFECT_SET, false, -1, 1));
-	            }
-	
-	            boolean youFieldGrew = youClone.getFieldEffectsSize() > youBeforeFE;
-	            boolean youFieldShrank = youClone.getFieldEffectsSize() < youBeforeFE;
-	            if (move == Move.RAPID_SPIN || move == Move.DEFOG) {
-	                if (youFieldShrank) changes.add(new EffectChange(EffectChange.Type.FIELD_EFFECT_CLEARED, true, -1, 1));
-	            } else if (youFieldGrew) {
-	                changes.add(new EffectChange(EffectChange.Type.FIELD_EFFECT_SET, true, -1, 1));
-	            }
-	
-	            if (foeClone.status != foeBeforeStatus && foeClone.status != Status.HEALTHY)
-	                changes.add(new EffectChange(EffectChange.Type.STATUS, false, -1, 1));
-	            if (youClone.status != youBeforeStatus && youBeforeStatus == Status.HEALTHY)
-	                changes.add(new EffectChange(EffectChange.Type.STATUS, true, -1, 1));
-	
-	            if (!vStatusesEqual(youClone.vStatuses, youBeforeV))
-	                changes.add(new EffectChange(EffectChange.Type.VOLATILE_STATUS, true, -1, 1));
-	            if (!vStatusesEqual(foeClone.vStatuses, foeBeforeV))
-	                changes.add(new EffectChange(EffectChange.Type.VOLATILE_STATUS, false, -1, 1));
-	
-	            detectStatStageChanges(youBeforeStages, youClone.statStages, true, true, changes);
-	            detectStatStageChanges(foeBeforeStages, foeClone.statStages, false, false, changes);
-	
-	            if (youClone.currentHP > youBeforeHP && move != Move.BELLY_DRUM && move != Move.CURSE
-	                    && move != Move.HEALING_WISH && move != Move.LUNAR_DANCE && move != Move.MEMENTO)
-	                changes.add(new EffectChange(EffectChange.Type.HP_HEAL, true, -1, youClone.currentHP - youBeforeHP));
-	
-	            if ((youClone.item != youBeforeItem || foeClone.item != foeBeforeItem)
-	                    && ((foeBeforeItem != null && !foeBeforeItem.isTrickable() && foeClone.item == null)
-	                        || (youBeforeItem != null && youBeforeItem.isTrickable())
-	                        || (youClone.item != null && !youClone.item.isTrickable())))
-	                changes.add(new EffectChange(EffectChange.Type.ITEM_CHANGE, true, -1, 1));
-	
-	            if (fieldClone.fieldEffects.size() > fieldBeforeFE)
-	                changes.add(new EffectChange(EffectChange.Type.GLOBAL_FIELD_EFFECT, false, -1, 1));
-	            if (foeClone.getAbility(fieldClone) != foeBeforeAbility)
-	                changes.add(new EffectChange(EffectChange.Type.ABILITY_CHANGE, false, -1, 1));
-	            if (foeClone.type1 != foeBeforeType1 || foeClone.type2 != foeBeforeType2)
-	                changes.add(new EffectChange(EffectChange.Type.TYPE_CHANGE, false, -1, 1));
-	            if (foeClone.disabledMove != null && foeBeforeDisabled == null)
-	                changes.add(new EffectChange(EffectChange.Type.MOVE_DISABLED, false, -1, 1));
-	            if (foeClone.perishCount > foeBeforePerish)
-	                changes.add(new EffectChange(EffectChange.Type.PERISH_SONG, false, -1, 1));
-	            if (afterWeather != beforeWeather)
-	                changes.add(new EffectChange(EffectChange.Type.WEATHER_CHANGE, false, -1, 1));
-	            if (afterTerrain != beforeTerrain)
-	                changes.add(new EffectChange(EffectChange.Type.TERRAIN_CHANGE, false, -1, 1));
-	            if (foeClone.trainer != null && oldCurrent != null && foeClone.trainer.current != oldCurrent)
-	                changes.add(new EffectChange(EffectChange.Type.FORCED_SWITCH, false, -1, 1));
-	
-	            double usefulness = this.scoreEffectUsefulness(changes, foe, isFaster, fieldClone);
-	            if (usefulness > 0) {
-	                return new EffectAnalysisResult(changes, isBackCheck ? 2 : 1);
-	            }
-	        }
-	    } finally {
-	        createTask = true;
-	    }
-	
-	    return EffectAnalysisResult.NONE;
+		return EffectAnalysisResult.NONE;
 	}
 	
-	private static final double STAT_STAGE_UNIT_VALUE = 1.0; // per stage, per genuinely useful stat change
-	private static final double PLACEHOLDER_VALUE = 1.0;      // temporary flat weight for not-yet-refined categories
+	private static final double STAT_STAGE_UNIT_VALUE = 20; // per stage, per genuinely useful stat change
+	private static final double PLACEHOLDER_VALUE = 25;      // temporary flat weight for not-yet-refined categories
 
-	private double scoreEffectUsefulness(ArrayList<EffectChange> changes, Pokemon foe, boolean isFaster, Field field) {
-	    double total = 0;
-	    for (EffectChange c : changes) {
-	        switch (c.type) {
-	            case STAT_STAGE:
-	                if (this.statChangeIsUseful(c.statIndex, c.onSelf, foe, isFaster, field)) {
-	                    total += c.magnitude * STAT_STAGE_UNIT_VALUE;
-	                }
-	                break;
-	            // TODO: give these the same magnitude-aware treatment as stat stages when you get to them -
-	            // e.g. STATUS should probably weight by how threatening the statused mon currently is,
-	            // FIELD_EFFECT_SET/CLEARED should probably fold in calcHazardTeamValue directly.
-	            case STATUS:
-	            case VOLATILE_STATUS:
-	            case FIELD_EFFECT_SET:
-	            case FIELD_EFFECT_CLEARED:
-	            case SCREEN_BROKEN:
-	            case GLOBAL_FIELD_EFFECT:
-	            case HP_HEAL:
-	            case ITEM_CHANGE:
-	            case ABILITY_CHANGE:
-	            case TYPE_CHANGE:
-	            case MOVE_DISABLED:
-	            case PERISH_SONG:
-	            case WEATHER_CHANGE:
-	            case TERRAIN_CHANGE:
-	            case FORCED_SWITCH:
-	            case IDENTITY_CHANGE:
-	            default:
-	                total += PLACEHOLDER_VALUE;
-	                break;
-	        }
-	    }
-	    return total;
+	private double scoreEffectUsefulness(ArrayList<EffectChange> changes, Pokemon foe, boolean isFaster, Field field, Move foeStrongestMove, double foeMaxDamagePercent, Pokemon likelySwitchIn) {
+		double total = 0;
+		for (EffectChange c : changes) {
+			switch (c.type) {
+			case STAT_STAGE:
+				if (this.statChangeIsUseful(c.statIndex, c.onSelf, foe, isFaster, field)) {
+					total += c.magnitude * STAT_STAGE_UNIT_VALUE;
+				}
+				break;
+			case STATUS:
+				if (!c.onSelf) {
+					total += scoreInflictedStatus((Status) c.detail, foe, foeStrongestMove, field);
+				} else {
+					total += PLACEHOLDER_VALUE; // self-status (Rest) - the HP_HEAL entry already carries most of its value
+				}
+				break;
+			case VOLATILE_STATUS:
+				if (!c.onSelf) {
+					if (c.detail == Status.FLINCHED) {
+						total += isFaster ? 25 : 0;
+					} else {
+						total += PLACEHOLDER_VALUE;
+					}
+				} else if (c.detail == Status.MAGNET_RISE) {
+					total += foe.hasMoveOfType(PType.GROUND) ? 30 : -5; // negative: wasted turn if no Ground threat
+				} else {
+					total += PLACEHOLDER_VALUE;
+				}
+				break;
+			case FIELD_EFFECT_SET:
+				if (c.onSelf) {
+					Effect selfFe = (Effect) c.detail;
+					if (selfFe == Effect.LIGHT_SCREEN || selfFe == Effect.REFLECT || selfFe == Effect.AURORA_VEIL) {
+						total += scoreScreenValue(selfFe, foe, likelySwitchIn);
+					} else if (selfFe == Effect.SAFEGUARD) {
+						// Reuses the same "do they have real status options" signal Taunt already checks.
+						total += (foe.getDamagingMoveset().size() < foe.getValidMoveset().size()) ? 25 : 5;
+					} else if (selfFe == Effect.WISH) {
+						double missingHPPercent = 100.0 - (this.currentHP * 100.0 / this.getStat(0));
+						total += missingHPPercent * 0.3 + 10; // flat team-support floor, since Wish helps
+						// whoever's active next turn, not just us -
+						// can't see future switches from here
+					} else {
+						total += PLACEHOLDER_VALUE;
+					}
+				} else {
+					Effect foeFe = (Effect) c.detail;
+					Move hazardMove = hazardMoveForEffect(foeFe);
+					total += hazardMove != null ? calcHazardTeamValue(hazardMove, foe.trainer, field) : PLACEHOLDER_VALUE;
+				}
+				break;
+			case FIELD_EFFECT_CLEARED:
+				total += PLACEHOLDER_VALUE;
+				break;
+			case SCREEN_BROKEN:
+				total += PLACEHOLDER_VALUE;
+				break;
+			case GLOBAL_FIELD_EFFECT:
+				Effect ge = (Effect) c.detail;
+				if (ge == Effect.WATER_SPORT) {
+					total += foe.hasMoveOfType(PType.FIRE) ? 15 : 0;
+				} else if (ge == Effect.MUD_SPORT) {
+					total += foe.hasMoveOfType(PType.ELECTRIC) ? 15 : 0;
+				} else if (ge == Effect.TRICK_ROOM) {
+					// Proxy for "will TR actually help us": are we currently the slower one right now?
+					// Doesn't model the whole team's speed tiers, but it's the same info the rest of the
+					// system already treats as ground truth for turn order.
+					total += (this.getFaster(foe, 0, 0, field) == foe) ? 30 : -10;
+				} else {
+					total += PLACEHOLDER_VALUE;
+				}
+				break;
+			case HP_HEAL:
+				total += PLACEHOLDER_VALUE;
+				break;
+			case ITEM_CHANGE:
+				break;
+			case ABILITY_CHANGE:
+				total += (Double) c.detail;
+				break;
+			case TYPE_CHANGE:
+				total += (Double) c.detail;
+				break;
+			case MOVE_DISABLED:
+				total += PLACEHOLDER_VALUE;
+				break;
+			case PERISH_SONG:
+				total += PLACEHOLDER_VALUE;
+				break;
+			case WEATHER_CHANGE:
+				Effect w = (Effect) c.detail;
+				total += this.scoreWeatherValue(w, foe);
+				break;
+			case TERRAIN_CHANGE:
+				total += PLACEHOLDER_VALUE;
+				break;
+			case FORCED_SWITCH:
+				total += PLACEHOLDER_VALUE;
+				break;
+			case IDENTITY_CHANGE:
+			default:
+				total += PLACEHOLDER_VALUE;
+				break;
+			}
+		}
+		return total;
 	}
 	
 	private boolean hasPhysicalMoves(Pokemon foe) {
-	    for (Move m : this.getValidMoveset()) {
-	        if (m.isAttack() && m.isPhysical()) return true;
-	    }
-	    return false;
+		for (Move m : this.getValidMoveset()) {
+			if (m.isAttack() && m.isPhysical()) return true;
+		}
+		return false;
 	}
-
+	
 	private boolean hasSpecialMoves(Pokemon foe) {
-	    for (Move m : this.getValidMoveset()) {
-	        if (m.isAttack() && m.isSpecial()) return true;
-	    }
-	    return false;
+		for (Move m : this.getValidMoveset()) {
+			if (m.isAttack() && m.isSpecial()) return true;
+		}
+		return false;
 	}
-
+	
 	private boolean hasAccCheckedMoves(Pokemon foe) {
-	    for (Move m : foe.getValidMoveset()) {
-	        if (this.getEffectiveAccuracy(m, foe, field) <= 100) return true;
-	    }
-	    return false;
+		for (Move m : foe.getValidMoveset()) {
+			if (this.getEffectiveAccuracy(m, foe, field) <= 100) return true;
+		}
+		return false;
+	}
+	
+	private boolean hasMoveOfType(PType type) {
+		for (Move m : this.getValidMoveset()) {
+			if (m.isAttack() && m.mtype == type) return true;
+		}
+		return false;
 	}
 	
 	/**
@@ -1720,26 +1814,26 @@ public class Pokemon implements Serializable {
 	 * advantage to `self`, so most stats share one condition regardless of which side it happened on.
 	 */
 	private boolean statChangeIsUseful(int statIndex, boolean raisedOnSelf, Pokemon foe, boolean isFaster, Field field) {
-	    switch (statIndex) {
-	        case 0: // Atk
-	            return raisedOnSelf ? this.hasPhysicalMoves(foe) : this.hasPhysicalMoves(foe);
-	        case 1: // Def
-	            return raisedOnSelf
-	                ? (foe.hasPhysicalMoves(this) || this.knowsMove(Move.BODY_PRESS))
-	                : (this.hasPhysicalMoves(foe) || foe.knowsMove(Move.BODY_PRESS));
-	        case 2: // SpA
-	            return raisedOnSelf ? this.hasSpecialMoves(foe) : foe.hasSpecialMoves(this);
-	        case 3: // SpD
-	            return raisedOnSelf ? foe.hasSpecialMoves(this) : this.hasSpecialMoves(foe);
-	        case 4: // Spe - same condition either direction: are we currently the slower one?
-	            return !isFaster;
-	        case 5: // Acc
-	            return raisedOnSelf ? this.hasAccCheckedMoves(foe) : foe.hasAccCheckedMoves(this);
-	        case 6: // Eva
-	            return raisedOnSelf ? foe.hasAccCheckedMoves(this) : this.hasAccCheckedMoves(foe);
-	        default:
-	            return false;
-	    }
+		switch (statIndex) {
+		case 0: // Atk
+			return raisedOnSelf ? this.hasPhysicalMoves(foe) : foe.hasPhysicalMoves(this);
+		case 1: // Def
+			return raisedOnSelf
+					? (foe.hasPhysicalMoves(this) || this.knowsMove(Move.BODY_PRESS))
+					: (this.hasPhysicalMoves(foe) || foe.knowsMove(Move.BODY_PRESS));
+		case 2: // SpA
+			return raisedOnSelf ? this.hasSpecialMoves(foe) : foe.hasSpecialMoves(this);
+		case 3: // SpD
+			return raisedOnSelf ? foe.hasSpecialMoves(this) : this.hasSpecialMoves(foe);
+		case 4: // Spe - same condition either direction: are we currently the slower one?
+			return !isFaster;
+		case 5: // Acc
+			return raisedOnSelf ? this.hasAccCheckedMoves(foe) : foe.hasAccCheckedMoves(this);
+		case 6: // Eva
+			return raisedOnSelf ? foe.hasAccCheckedMoves(this) : this.hasAccCheckedMoves(foe);
+		default:
+			return false;
+		}
 	}
 	
 	private void detectStatStageChanges(int[] before, int[] after, boolean onSelf, boolean favorableIsIncrease, ArrayList<EffectChange> changes) {
@@ -1748,40 +1842,158 @@ public class Pokemon implements Serializable {
 			if (delta == 0) continue;
 			boolean favorable = favorableIsIncrease ? delta > 0 : delta < 0;
 			if (favorable) {
-				changes.add(new EffectChange(EffectChange.Type.STAT_STAGE, onSelf, i, Math.abs(delta)));
+				changes.add(new EffectChange(EffectChange.Type.STAT_STAGE, onSelf, i, Math.abs(delta), null));
 			}
 			// unfavorable/self-inflicted drops (e.g. Overheat's own SpA drop) aren't scored as
 			// "useful" here, matching old behavior - they're a cost, not a benefit, of using the move
-			}
 		}
+	}
+	
+	private double scoreWeatherValue(Effect weather, Pokemon foe) {
+		PType boosted = null, weakened = null;
+		switch (weather) {
+		case SUN: boosted = PType.FIRE; weakened = PType.WATER; break;
+		case RAIN: boosted = PType.WATER; weakened = PType.FIRE; break;
+		default: return 5; // Sand/Snow's main value here is Rock SpDef / Ice Def, which isn't
+		// a move-type effect - flat placeholder until you want to special-case those
+		}
+		double value = 0;
+		if (this.hasMoveOfType(boosted)) value += 20;
+		if (foe.hasMoveOfType(boosted)) value -= 15;   // helps them too
+		if (this.hasMoveOfType(weakened)) value -= 10; // hurts our own coverage
+		if (foe.hasMoveOfType(weakened)) value += 8;
+		return value;
+	}
+	
+	private double scoreInflictedStatus(Status status, Pokemon foe, Move foeStrongestMove, Field field) {
+		boolean foeHasGuts = foe.getAbility(field) == Ability.GUTS;
+		boolean foePhysical = foeStrongestMove != null && foeStrongestMove.isPhysical();
+		boolean foeSpecial = foeStrongestMove != null && foeStrongestMove.isSpecial();
+		
+		switch (status) {
+		case BURNED:
+			if (foeHasGuts) return -20; // Guts turns a burn into a buff for them
+			return foePhysical ? 40 : 15;
+		case FROSTBITE:
+			if (foeHasGuts) return -20;
+			return foeSpecial ? 40 : 15;
+		case PARALYZED:
+			// Speed cut is always something; the ~25% full-para chance is worth extra when
+			// they're currently the faster one, since that's the matchup where denying their
+			// turn outright matters most.
+			return (this.getFaster(foe, 0, 0, field) == foe) ? 40 : 15;
+		case POISONED:
+			return 20;
+		case TOXIC:
+			return 30; // escalating chip beats flat poison
+		case ASLEEP:
+			// Guts still wastes the Atk buff while asleep, but the turn-denial value survives.
+			return foeHasGuts ? 35 : 60;
+		default:
+			return PLACEHOLDER_VALUE;
+		}
+	}
+	
+	private double scoreScreenValue(Effect screen, Pokemon activeFoe, Pokemon likelySwitchIn) {
+		double value = 0;
+		if (screen == Effect.LIGHT_SCREEN || screen == Effect.AURORA_VEIL) {
+			if (activeFoe.hasSpecialMoves(this)) value += 20;
+			if (likelySwitchIn != null && likelySwitchIn.hasSpecialMoves(this)) value += 12;
+		}
+		if (screen == Effect.REFLECT || screen == Effect.AURORA_VEIL) {
+			if (activeFoe.hasPhysicalMoves(this)) value += 20;
+			if (likelySwitchIn != null && likelySwitchIn.hasPhysicalMoves(this)) value += 12;
+		}
+		return value;
+	}
+	
+	private double evaluateRetype(Pokemon newlyTyped, Pokemon originalTyped) {
+		double ourEffBefore = 0, ourEffAfter = 0;
+		for (Move m : this.getValidMoveset()) {
+			if (!m.isAttack()) continue;
+			ourEffBefore = Math.max(ourEffBefore, originalTyped.getEffectiveMultiplier(m.mtype, m, null));
+			ourEffAfter = Math.max(ourEffAfter, newlyTyped.getEffectiveMultiplier(m.mtype, m, null));
+		}
+		// Positive if the retype makes them easier for us to hit than they were before.
+		// Doesn't account for their own STAB loss or altered incoming-damage weaknesses against
+		// their teammates - a genuinely two-sided effect that's hard to price from one move's simulation.
+		return (ourEffAfter - ourEffBefore) * 15;
+	}
+	
+	private double evaluateAbilityOverwrite(Ability oldAbility, Ability newAbility) {
+		double value = 0;
+		switch (oldAbility.useful) {
+		case 0:
+			break;
+		case 1:
+			value += 25;
+			break;
+		case 2:
+			if (this.illusion) value += 25;
+			break;
+		case 3:
+			if (this.fortify < 2) value += 25;
+			break;
+		case 4:
+			if (this.item != null) value += 20;
+			break;
+		case 5:
+			if (this.currentHP == this.getStat(0)) value += 20;
+			break;
+		case 6:
+			if (this.currentHP >= this.getStat(0) / 2) value += 20;
+			break;
+		}
+		return value;
+	}
+	
+	private Effect findAddedFieldEffect(ArrayList<FieldEffect> before, ArrayList<FieldEffect> after) {
+		for (FieldEffect fe : after) {
+			boolean existedBefore = before.stream().anyMatch(b -> b.effect == fe.effect);
+			if (!existedBefore) return fe.effect;
+		}
+		return null;
+	}
+	
+	private Status findAddedVolatileStatus(ArrayList<StatusEffect> before, ArrayList<StatusEffect> after) {
+		for (StatusEffect se : after) {
+			boolean existedBefore = before.stream().anyMatch(b -> b.status == se.status);
+			if (!existedBefore) return se.status;
+		}
+		return null;
+	}
 	
 	private static class EffectChange {
-	    enum Type {
-	        STAT_STAGE, STATUS, VOLATILE_STATUS, FIELD_EFFECT_SET, FIELD_EFFECT_CLEARED,
-	        SCREEN_BROKEN, GLOBAL_FIELD_EFFECT, HP_HEAL, ITEM_CHANGE, ABILITY_CHANGE,
-	        TYPE_CHANGE, MOVE_DISABLED, PERISH_SONG, WEATHER_CHANGE, TERRAIN_CHANGE,
-	        FORCED_SWITCH, IDENTITY_CHANGE
-	    }
-	    final Type type;
-	    final boolean onSelf;   // true if this happened to `this`, false if it happened to the tested foe
-	    final int statIndex;    // STAT_STAGE only, -1 otherwise
-	    final int magnitude;    // stage count, heal amount, etc. where meaningful; 1 otherwise
-
-	    EffectChange(Type type, boolean onSelf, int statIndex, int magnitude) {
-	        this.type = type; this.onSelf = onSelf; this.statIndex = statIndex; this.magnitude = magnitude;
-	    }
+		enum Type {
+			STAT_STAGE, STATUS, VOLATILE_STATUS, FIELD_EFFECT_SET, FIELD_EFFECT_CLEARED,
+			SCREEN_BROKEN, GLOBAL_FIELD_EFFECT, HP_HEAL, ITEM_CHANGE, ABILITY_CHANGE,
+			TYPE_CHANGE, MOVE_DISABLED, PERISH_SONG, WEATHER_CHANGE, TERRAIN_CHANGE,
+			FORCED_SWITCH, IDENTITY_CHANGE
+		}
+		final Type type;
+		final boolean onSelf;   // true if this happened to `this`, false if it happened to the tested foe
+		final int statIndex;    // STAT_STAGE only, -1 otherwise
+		final int magnitude;    // stage count, heal amount, etc. where meaningful; 1 otherwise
+		final Object detail; // effect for weather/terrain/field effects, status for STATUS, Ability[] {old,new} for ABILITY_CHANGE, Double for precomputed TYPE_CHANGE value,
+		
+		EffectChange(Type type, boolean onSelf, int statIndex, int magnitude, Object detail) {
+			this.type = type; this.onSelf = onSelf; this.statIndex = statIndex; this.magnitude = magnitude;
+			this.detail = detail;
+		}
 	}
 
 	public static class EffectAnalysisResult {
-	    static final EffectAnalysisResult NONE = new EffectAnalysisResult(new ArrayList<>(), 0);
+		static final EffectAnalysisResult NONE = new EffectAnalysisResult(new ArrayList<>(), 0, 0.0);
 
 		final ArrayList<EffectChange> changes;
-	    public final int targetsChecked; // 0 = not useful anywhere, 1 = useful vs active foe, 2 = useful vs back-check target only
+		public final int targetsChecked; // 0 = not useful anywhere, 1 = useful vs active foe, 2 = useful vs back-check target only
+		public final double usefulness;
 
-	    EffectAnalysisResult(ArrayList<EffectChange> changes, int targetsChecked) {
-	        this.changes = changes;
-	        this.targetsChecked = targetsChecked;
-	    }
+		EffectAnalysisResult(ArrayList<EffectChange> changes, int targetsChecked, double usefulness) {
+			this.changes = changes;
+			this.targetsChecked = targetsChecked;
+			this.usefulness = usefulness;
+		}
 	}
 	
 	private static final double KILL_VALUE = 90;
@@ -1838,31 +2050,31 @@ public class Pokemon implements Serializable {
 	 * (e.g. bestMove2, which already clones the whole team up front).
 	 */
 	public int evaluateSwitchInScore(Pokemon myClone, Pokemon foe, Pokemon foeClone, Field fieldClone, Move incomingMove) {
-	    Pokemon simulated = simulateSwitchIn(this, myClone, foeClone, fieldClone);
-	    
-	    // Apply the hit we take switching in THIS turn — the foe already committed to
-	    // this move against whatever's active, so assume they click it again into us.
-	    // We get no action this turn (switching forfeits it), so the foe acts unopposed.
-	    if (incomingMove != null && simulated.currentHP > 0) {
-	        Pair<Integer, Double> switchInDmgPair = foeClone.calcWithTypes(simulated, incomingMove, true, fieldClone, false);
-	        int switchInDmg = switchInDmgPair.getFirst();
-	        simulated.currentHP = Math.max(0, simulated.currentHP - switchInDmg);
-	        
-	        Print.debug(String.format("  Switch-in hit from %s: %d dmg, leaves %s at %d/%d (%.1f%%)\n",
-	            incomingMove, switchInDmg, simulated.nickname, simulated.currentHP,
-	            simulated.getStat(0), simulated.currentHP * 100.0 / simulated.getStat(0)));
-	        
-	        if (simulated.currentHP <= 0) {
-	            return Integer.MIN_VALUE + 1; // fainted on the switch-in itself, terrible switch
-	        }
-	    }
-	    
-	    FoeMoveResult foeMoveResult = simulated.findFoeStrongestMove(foeClone, fieldClone);
-	    Move strongestMove = foeMoveResult.move;
-	    Pair<Integer, Double> foeMaxDamagePair = foeMoveResult.damagePair;
-	    boolean foeCanKO = foeMoveResult.canKO;
-
-	    return simulated.scorePokemon(foeClone, strongestMove, foeMaxDamagePair, foeCanKO, fieldClone, null, false);
+		Pokemon simulated = simulateSwitchIn(this, myClone, foeClone, fieldClone);
+		
+		// Apply the hit we take switching in THIS turn — the foe already committed to
+		// this move against whatever's active, so assume they click it again into us.
+		// We get no action this turn (switching forfeits it), so the foe acts unopposed.
+		if (incomingMove != null && simulated.currentHP > 0) {
+			Pair<Integer, Double> switchInDmgPair = foeClone.calcWithTypes(simulated, incomingMove, true, fieldClone, false);
+			int switchInDmg = switchInDmgPair.getFirst();
+			simulated.currentHP = Math.max(0, simulated.currentHP - switchInDmg);
+			
+			Print.debug(String.format("  Switch-in hit from %s: %d dmg, leaves %s at %d/%d (%.1f%%)\n",
+					incomingMove, switchInDmg, simulated.nickname, simulated.currentHP,
+					simulated.getStat(0), simulated.currentHP * 100.0 / simulated.getStat(0)));
+			
+			if (simulated.currentHP <= 0) {
+				return Integer.MIN_VALUE + 1; // fainted on the switch-in itself, terrible switch
+			}
+		}
+		
+		FoeMoveResult foeMoveResult = simulated.findFoeStrongestMove(foeClone, fieldClone);
+		Move strongestMove = foeMoveResult.move;
+		Pair<Integer, Double> foeMaxDamagePair = foeMoveResult.damagePair;
+		boolean foeCanKO = foeMoveResult.canKO;
+		
+		return simulated.scorePokemon(foeClone, strongestMove, foeMaxDamagePair, foeCanKO, fieldClone, null, false);
 	}
 	
 	/**
@@ -1923,6 +2135,10 @@ public class Pokemon implements Serializable {
 	
 	private int getFieldEffectsSize() {
 		ArrayList<FieldEffect> fes = this.getFieldEffects();
+		return getFieldEffectsSize(fes);
+	}
+	
+	private int getFieldEffectsSize(ArrayList<FieldEffect> fes) {
 		int result = 0;
 		
 		for (FieldEffect fe : fes) {
@@ -2119,50 +2335,50 @@ public class Pokemon implements Serializable {
 		}
 		return 0;
 	}
-
+	
 	public int checkMove(int index, int level) {
-	    Node node = getNode(this.id, level);
-	    while (node != null) {
-	        Move move = node.data;
-	        if (level != 0 && this.hasMoveAtLevel(move, 0)) {
-	        	node = node.next;
-	        	continue;
-	        }
-	        if (move != null && !this.knowsMove(move)) {
-	            boolean learnedMove = false;
-	            for (int i = 0; i < 4; i++) {
-	                if (this.moveset[i] == null) {
-	                    this.moveset[i] = new Moveslot(move);
-	                    if (gp.gameState == GamePanel.BATTLE_STATE || gp.gameState == GamePanel.RARE_CANDY_STATE || gp.gameState == GamePanel.TASK_STATE) {
-	                    	Task t = Task.createTask(Task.TEXT, this.nickname + " learned " + move.toString() + "!");
-		                    Task.insertTask(t, index++);
-	                    } else {
-	                    	Task.addTask(Task.TEXT, this.nickname + " learned " + move.toString() + "!");
-	                    }
-	                    
-	                    learnedMove = true;
-	                    break;
-	                }
-	            }
-	            if (!learnedMove) {
-	            	Task t = Task.createTask(Task.MOVE, "", this);
-            		t.setMove(move);
-	            	if (gp.gameState == GamePanel.BATTLE_STATE || gp.gameState == GamePanel.RARE_CANDY_STATE || gp.gameState == GamePanel.TASK_STATE) {
-	            		Task.insertTask(t, index++);
-	            	} else {
-	            		gp.ui.currentPokemon = this;
-		            	gp.ui.currentMove = move;
-		            	gp.ui.showMoveOptions = true;
-	            	}
-	            	gp.battleUI.moveOption = -1;
-	            }
-	        }
-	        node = node.next;
-	    }
-	    return index;
+		Node node = getNode(this.id, level);
+		while (node != null) {
+			Move move = node.data;
+			if (level != 0 && this.hasMoveAtLevel(move, 0)) {
+				node = node.next;
+				continue;
+			}
+			if (move != null && !this.knowsMove(move)) {
+				boolean learnedMove = false;
+				for (int i = 0; i < 4; i++) {
+					if (this.moveset[i] == null) {
+						this.moveset[i] = new Moveslot(move);
+						if (gp.gameState == GamePanel.BATTLE_STATE || gp.gameState == GamePanel.RARE_CANDY_STATE || gp.gameState == GamePanel.TASK_STATE) {
+							Task t = Task.createTask(Task.TEXT, this.nickname + " learned " + move.toString() + "!");
+							Task.insertTask(t, index++);
+						} else {
+							Task.addTask(Task.TEXT, this.nickname + " learned " + move.toString() + "!");
+						}
+						
+						learnedMove = true;
+						break;
+					}
+				}
+				if (!learnedMove) {
+					Task t = Task.createTask(Task.MOVE, "", this);
+					t.setMove(move);
+					if (gp.gameState == GamePanel.BATTLE_STATE || gp.gameState == GamePanel.RARE_CANDY_STATE || gp.gameState == GamePanel.TASK_STATE) {
+						Task.insertTask(t, index++);
+					} else {
+						gp.ui.currentPokemon = this;
+						gp.ui.currentMove = move;
+						gp.ui.showMoveOptions = true;
+					}
+					gp.battleUI.moveOption = -1;
+				}
+			}
+			node = node.next;
+		}
+		return index;
 	}
-
-
+	
+	
 	private boolean hasMoveAtLevel(Move m, int level) {
 		Node n = getNode(this.id, level);
 		while (n != null) {
@@ -2171,7 +2387,7 @@ public class Pokemon implements Serializable {
 		}
 		return false;
 	}
-
+	
 	private void checkEvo(Player player, int index) {
 		if (this.item == Item.EVERSTONE) return;
 		if (this.getEvolveString() == null) return;
