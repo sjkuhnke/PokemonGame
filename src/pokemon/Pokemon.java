@@ -1356,8 +1356,14 @@ public class Pokemon implements Serializable {
 		
 		// --- Secondary Effects/Status Moves ---
 		if (move.cat == 2 || move.secondary != 0) {
-			EffectAnalysisResult effectResult = this.analyzeMoveEffect(foe, move, isFaster, field, damage, defResult.bestSwitchInMon, foeStrongestMove, foeMaxDamage.getSecond());
-			howUseful = effectResult.targetsChecked;
+			EffectAnalysisResult effectResult = EffectAnalysisResult.NONE;
+			if (move.cat == 2 && this.item != null && this.getItem(field).isChoiceItem() && !move.isMagicBounceEffected(this, foe, Ability.MAGIC_BOUNCE, move.accuracy)) {
+				howUseful = 0;
+			} else {
+				effectResult = this.analyzeMoveEffect(foe, move, isFaster, field, damage, defResult.bestSwitchInMon, foeStrongestMove, foeMaxDamage.getSecond());
+				howUseful = effectResult.targetsChecked;
+			}
+			
 			if (howUseful > 0) {
 				int secChance;
 				if (move.secondary == 0) {
@@ -1550,7 +1556,7 @@ public class Pokemon implements Serializable {
 				Item foeBeforeItem = foeClone.item;
 				int foeBeforePerish = foeClone.perishCount;
 				Ability foeBeforeAbility = foeClone.getAbility(fieldClone);
-				ArrayList<FieldEffect> foeBeforeFE = DeepClonable.deepCloneList(youClone.getFieldEffects());
+				ArrayList<FieldEffect> foeBeforeFE = DeepClonable.deepCloneList(foeClone.getFieldEffects());
 				ArrayList<FieldEffect> youBeforeFE = DeepClonable.deepCloneList(youClone.getFieldEffects());
 				ArrayList<FieldEffect> fieldBeforeFE = DeepClonable.deepCloneList(fieldClone.fieldEffects);
 				Effect beforeWeather = fieldClone.weather == null ? null : fieldClone.weather.effect;
@@ -1678,7 +1684,7 @@ public class Pokemon implements Serializable {
 			switch (c.type) {
 			case STAT_STAGE:
 				if (this.statChangeIsUseful(c.statIndex, c.onSelf, foe, isFaster, field)) {
-					total += c.magnitude * STAT_STAGE_UNIT_VALUE;
+					total += c.magnitude * STAT_STAGE_UNIT_VALUE * (foe.knowsMove(Move.SPECTRAL_THIEF) ? 0.2 : 1);
 				}
 				break;
 			case STATUS:
@@ -2103,6 +2109,7 @@ public class Pokemon implements Serializable {
 	/** Maps a currently-active hazard Effect back to its setting Move, so removal scoring can reuse
 	 *  calcHazardTeamValue. Mirrors the switch in isHazardUseful. */
 	private Move hazardMoveForEffect(Effect effect) {
+		if (effect == null) return null;
 		switch (effect) {
 		case STEALTH_ROCKS: return Move.STEALTH_ROCK;
 		case SPIKES: return Move.SPIKES;

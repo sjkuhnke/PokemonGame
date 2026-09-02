@@ -5253,6 +5253,7 @@ public class UI extends AbstractUI {
 				gp.titleScreen.menuState = TitleScreen.MAIN_MENU;
 				gp.titleScreen.menuNum = TitleScreen.MAIN_CONTINUE;
 				gp.titleScreen.newGameMenuNum = TitleScreen.NG_SAVE_NAME;
+				gp.titleScreen.docOptions = new boolean[8];
 				gp.player = new PlayerCharacter(gp);
 				Main.window.setTitle(Main.gameTitle);
 				gp.setGameState(GamePanel.TITLE_STATE);
