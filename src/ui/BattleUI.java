@@ -1887,6 +1887,10 @@ public class BattleUI extends AbstractUI {
 		            	}
 		            	user.getPlayer().updateHappinessCaps();
 		            	gp.player.setClerkItems();
+		            } else if (foe.trainer.eliteFour) {
+		            	for (Pokemon p : user.trainer.team) {
+		            		if (p != null) p.awardHappiness(15, true);
+		            	}
 		            }
 		            break;
 				}

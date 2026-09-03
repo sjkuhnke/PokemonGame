@@ -10965,7 +10965,7 @@ public class Pokemon implements Serializable {
 		}
 		if (foe.getAbility(field) == Ability.ILLUSION && foe.illusion) return true;
 		if (foe.getAbility(field) == Ability.SHADOW_TAG) return true;
-		if (foe.getAbility(field) == Ability.MAGNET_PULL && foe.isType(PType.STEEL)) return true;
+		if (foe.getAbility(field) == Ability.MAGNET_PULL && this.isType(PType.STEEL)) return true;
 		return false;
 	}
 	
