@@ -564,7 +564,7 @@ public enum Move {
 	THUNDER(110,70,30,0,1,0,PType.ELECTRIC,"% of Paralyzing foe, doesn't check accuracy in RAIN, 50% accuracy in SUN",false,5),
 	THUNDER_FANG(65,95,20,0,0,0,PType.ELECTRIC,"% of Paralyzing and/or flinching foe",true,15),
 	THUNDER_PUNCH(75,100,20,0,0,0,PType.ELECTRIC,"% of Paralyzing foe",true,15),
-	THUNDER_WAVE(0,90,0,0,2,0,PType.ELECTRIC,"Paralyzes foe, accuracy is 100% for ELECTRIC Pokemon",false,15),
+	THUNDER_WAVE(0,90,0,0,2,0,PType.ELECTRIC,"Paralyzes foe, accuracy is 100% for ELECTRIC Pokemon. Respects time immunities",false,15),
 	THUNDERBOLT(90,100,10,0,1,0,PType.ELECTRIC,"% of Paralyzing foe",false,10),
 	THUNDERSHOCK(40,100,10,0,1,0,PType.ELECTRIC,"% of Paralyzing foe",false,30),
 	TICKLE(0,100,0,0,2,0,PType.NORMAL,"Lowers foe's Attack and Defense by 1",false,20),

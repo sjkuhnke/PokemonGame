@@ -708,7 +708,9 @@ public class TitleScreen extends AbstractUI {
 			drawToolTips("Select", null, null, null);
 		}
 		
-		updateMainMenu();
+		if (!showMessage) {
+			updateMainMenu();
+		}
 	}
 	
 	@Override

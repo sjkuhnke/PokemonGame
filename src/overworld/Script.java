@@ -1179,7 +1179,8 @@ public class Script {
 				Task.addTask(Task.DIALOGUE, npc, "Not perfectly, not predictably, but it's not nothing either.");
 				Task.addTask(Task.SLEEP, "", 20);
 				Task.addTask(Task.DIALOGUE, npc, "I can't tell you the exact odds, I don't have enough data points to be that precise.");
-				Task.addTask(Task.DIALOGUE, npc, "But if I were building a team for this, I wouldn't just think about what wins the fights. I'd think about what I'm willing to lose, too - and what I want to come out the other side of that.");
+				Task.addTask(Task.DIALOGUE, npc, "But if I were building a team for this, I wouldn't just think about what wins the fights.");
+				Task.addTask(Task.DIALOGUE, npc, "I'd think about what I'm willing to lose, too - and what I want to come out the other side of that.");
 				Task.addTask(Task.SLEEP, "", 30);
 				Task.addTask(Task.DIALOGUE, npc, "Three fights. Four Pokemon, then three, then two.");
 				Task.addTask(Task.DIALOGUE, npc, "If you make it through all three with exactly one left standing, that's when we call down whatever's coming.");

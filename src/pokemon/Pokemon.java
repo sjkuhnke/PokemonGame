@@ -577,7 +577,7 @@ public class Pokemon implements Serializable {
 			}
 			
 			// 50% chance to swap if all moves do 0 damage
-			if (maxScore <= 25 && !validMoves.equals(new ArrayList<>(Arrays.asList(new Move[] {Move.METRONOME})))) {
+			if (maxScore < 5 && !validMoves.equals(new ArrayList<>(Arrays.asList(new Move[] {Move.METRONOME})))) {
 				double chance = 50;
 				if (this.impressive) chance *= 0.75;
 				if (checkSecondary((int) chance)) {
@@ -1684,7 +1684,7 @@ public class Pokemon implements Serializable {
 			switch (c.type) {
 			case STAT_STAGE:
 				if (this.statChangeIsUseful(c.statIndex, c.onSelf, foe, isFaster, field)) {
-					total += c.magnitude * STAT_STAGE_UNIT_VALUE * (foe.knowsMove(Move.SPECTRAL_THIEF) ? 0.2 : 1);
+					total += c.magnitude * STAT_STAGE_UNIT_VALUE * (foe.knowsMove(Move.SPECTRAL_THIEF) || foe.getItem(field) == Item.MIRROR_HERB ? 0.2 : 1);
 				}
 				break;
 			case STATUS:
