@@ -177,28 +177,28 @@ public abstract class AbstractUI {
 	public void drawButton(int x, int y, char key, boolean pressed) {
 		int width = gp.tileSize;
 		int height = gp.tileSize;
-        if (pressed) {
-        	g2.setColor(new Color(255,255,255,150));
-            g2.fillRoundRect(x, y, width, height, 35, 35);
-    		Color background = new Color(0, 0, 0, 200);
-    		g2.setColor(background);
-    		g2.drawRoundRect(x+5, y+5, width-10, height-10, 25, 25);
-        } else {
-        	Color background = new Color(0, 0, 0, 200);
-    		g2.setColor(background);
-    		g2.fillRoundRect(x, y, width, height, 35, 35);
-    		
-    		Color border = new Color(255, 255, 255);
-    		g2.setColor(border);
-    		g2.setStroke(new BasicStroke(5));
-    		g2.drawRoundRect(x+5, y+5, width-10, height-10, 25, 25);
-        }
-        x += 14;
-        y += 32;
-        g2.setColor(pressed ? Color.black: Color.white);
-        g2.setFont(g2.getFont().deriveFont(30.F));
-        g2.drawString(String.valueOf(key), x, y);
-        
+		if (pressed) {
+			g2.setColor(new Color(255,255,255,150));
+			g2.fillRoundRect(x, y, width, height, 35, 35);
+			Color background = new Color(0, 0, 0, 200);
+			g2.setColor(background);
+			g2.drawRoundRect(x+5, y+5, width-10, height-10, 25, 25);
+		} else {
+			Color background = new Color(0, 0, 0, 200);
+			g2.setColor(background);
+			g2.fillRoundRect(x, y, width, height, 35, 35);
+			
+			Color border = new Color(255, 255, 255);
+			g2.setColor(border);
+			g2.setStroke(new BasicStroke(5));
+			g2.drawRoundRect(x+5, y+5, width-10, height-10, 25, 25);
+		}
+		x += 14;
+		y += 32;
+		g2.setColor(pressed ? Color.black: Color.white);
+		g2.setFont(g2.getFont().deriveFont(30.F));
+		g2.drawString(String.valueOf(key), x, y);
+		
 	}
 		
 	public void drawKeyStrokes() {
@@ -218,39 +218,39 @@ public abstract class AbstractUI {
 	}
 	
 	public BufferedImage setup(String imageName, double scale) {
-	    BufferedImage image = null;
-	    
-	    try {
-	        // Load the original image
-	        BufferedImage originalImage = ImageIO.read(getClass().getResourceAsStream(imageName + ".png"));
-	        if (scale != 1) {
-	        	image = scaleImage(originalImage, scale);
-	        } else {
-	        	image = originalImage;
-	        }
-	        
-	    } catch (IOException | IllegalArgumentException e) {
-	    	System.out.println(imageName + " is null!");
-	        e.printStackTrace();
-	    }
-	    
-	    return image;
+		BufferedImage image = null;
+		
+		try {
+			// Load the original image
+			BufferedImage originalImage = ImageIO.read(getClass().getResourceAsStream(imageName + ".png"));
+			if (scale != 1) {
+				image = scaleImage(originalImage, scale);
+			} else {
+				image = originalImage;
+			}
+			
+		} catch (IOException | IllegalArgumentException e) {
+			System.out.println(imageName + " is null!");
+			e.printStackTrace();
+		}
+		
+		return image;
 	}
 	
 	public BufferedImage scaleImage(BufferedImage image, double scale) {
 		// Calculate the new dimensions based on the scale
-        int newWidth = (int) (image.getWidth() * scale);
-        int newHeight = (int) (image.getHeight() * scale);
-        
-        // Create a new BufferedImage with the scaled dimensions
-        BufferedImage result = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
-        
-        // Draw the original image onto the scaled image
-        Graphics2D g2d = result.createGraphics();
-        g2d.drawImage(image, 0, 0, newWidth, newHeight, null);
-        g2d.dispose();
-        
-        return result;
+		int newWidth = (int) (image.getWidth() * scale);
+		int newHeight = (int) (image.getHeight() * scale);
+		
+		// Create a new BufferedImage with the scaled dimensions
+		BufferedImage result = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
+		
+		// Draw the original image onto the scaled image
+		Graphics2D g2d = result.createGraphics();
+		g2d.drawImage(image, 0, 0, newWidth, newHeight, null);
+		g2d.dispose();
+		
+		return result;
 	}
 	
 	public BufferedImage makeSilhouette(BufferedImage image) {
@@ -279,16 +279,16 @@ public abstract class AbstractUI {
 	
 	public int getRightAlignedTextX(String text, int rightX) {
 		FontMetrics metrics = g2.getFontMetrics(); // Assuming g2 is your Graphics2D object
-	    int length = metrics.stringWidth(text); // Calculate the width of the text
-	    int x = rightX - length; // Calculate the x-coordinate for positioning
-	    return x;
+		int length = metrics.stringWidth(text); // Calculate the width of the text
+		int x = rightX - length; // Calculate the x-coordinate for positioning
+		return x;
 	}
 	
 	public int getCenterAlignedTextX(String text, int centerX) {
 		FontMetrics metrics = g2.getFontMetrics(); // Assuming g2 is your Graphics2D object
-	    int length = metrics.stringWidth(text); // Calculate the width of the text
-	    int x = centerX - length / 2; // Calculate the x-coordinate for center alignment
-	    return x;
+		int length = metrics.stringWidth(text); // Calculate the width of the text
+		int x = centerX - length / 2; // Calculate the x-coordinate for center alignment
+		return x;
 	}
 	
 	public void drawParty() {
@@ -602,21 +602,21 @@ public abstract class AbstractUI {
 		
 		y += gp.tileSize / 2;
 		String happinessCap = p.happiness >= 255 ? 0 + "" : p.happinessCap + "";
-        String friendship = egg ? "???" : p.happiness + " (" + happinessCap + " remaining)";
-        g2.drawString(friendship, getCenterAlignedTextX(friendship, x), y);
-        
-        g2.setFont(g2.getFont().deriveFont(16F));
-        y += gp.tileSize / 2;
-        String friendshipDesc = egg ? "" : p.getHappinessDesc();
-        g2.drawString(friendshipDesc, getCenterAlignedTextX(friendshipDesc, x), y);
-        
-        // HP Label
-        g2.setFont(g2.getFont().deriveFont(24F));
-        x = startX;
-        y -= gp.tileSize / 4 + 4;
-        String hp = egg ? "" : p.currentHP + " / " + p.getStat(0) + " HP";
-    	g2.drawString(hp, getCenterAlignedTextX(hp, x + (barWidth / 2)), y);
-    	
+		String friendship = egg ? "???" : p.happiness + " (" + happinessCap + " remaining)";
+		g2.drawString(friendship, getCenterAlignedTextX(friendship, x), y);
+		
+		g2.setFont(g2.getFont().deriveFont(16F));
+		y += gp.tileSize / 2;
+		String friendshipDesc = egg ? "" : p.getHappinessDesc();
+		g2.drawString(friendshipDesc, getCenterAlignedTextX(friendshipDesc, x), y);
+		
+		// HP Label
+		g2.setFont(g2.getFont().deriveFont(24F));
+		x = startX;
+		y -= gp.tileSize / 4 + 4;
+		String hp = egg ? "" : p.currentHP + " / " + p.getStat(0) + " HP";
+		g2.drawString(hp, getCenterAlignedTextX(hp, x + (barWidth / 2)), y);
+		
 		// Stats
 		y += gp.tileSize;
 		for (int i = 0; i < 6; i++) {
@@ -627,45 +627,45 @@ public abstract class AbstractUI {
 			String type = Pokemon.getStatType(i, false);
 			int stat = p.getStat(i);
 			type += egg ? "??" : stat;
-        	
-        	if (i != 0 && !egg) {
-        	    if (p.nat.getStat(i - 1) == 1.1) {
-        	        g2.setColor(Color.red.darker());
-        	        g2.drawString("\u2191", x - 15, y);
-        	    } else if (p.nat.getStat(i - 1) == 0.9) {
-        	    	g2.setColor(Color.blue);
-        	    	g2.drawString("\u2193", x - 15, y);
-        	    }
-        	}
-        	g2.drawString(type, x, y);
-        	
-        	x += gp.tileSize * 1.5;
-        	y -= 3;
-        	g2.setFont(g2.getFont().deriveFont(16F));
-        	g2.setColor(Color.WHITE);
-        	String iv = egg ? "??" : p.getIVs()[i] + "";
-        	String siv = "IV: " + iv;
-        	g2.drawString(siv, x, y);
-        	
-        	x += gp.tileSize;
-        	int statWidth = 3 * gp.tileSize;
-        	int statHeight = gp.tileSize / 2;
-        	y -= gp.tileSize / 3;
-        	g2.setColor(Color.BLACK);
-        	g2.fillRect(x, y, statWidth, statHeight);
-        	g2.setColor(Color.WHITE);
-        	g2.fillRect(x + 2, y + 2, statWidth - 4, statHeight - 4);
-        	int baseStat = egg ? 0 : p.getBaseStat(i);
-        	double bar = Math.min(baseStat * 1.0 / 200, 1.0);
-        	g2.setColor(Pokemon.getColor(p.getBaseStat(i)));
-        	g2.fillRect(x + 2, y + 2, (int) ((statWidth - 4) * bar), statHeight - 4);
-        	x += 4;
-        	y += (gp.tileSize / 2) - 4;
-        	g2.setColor(Color.BLACK);
-        	String baseStatString = egg ? "??" : baseStat + "";
-        	g2.drawString(baseStatString, x, y);
-        	
-        	y = sY + gp.tileSize / 2;
+			
+			if (i != 0 && !egg) {
+				if (p.nat.getStat(i - 1) == 1.1) {
+					g2.setColor(Color.red.darker());
+					g2.drawString("\u2191", x - 15, y);
+				} else if (p.nat.getStat(i - 1) == 0.9) {
+					g2.setColor(Color.blue);
+					g2.drawString("\u2193", x - 15, y);
+				}
+			}
+			g2.drawString(type, x, y);
+			
+			x += gp.tileSize * 1.5;
+			y -= 3;
+			g2.setFont(g2.getFont().deriveFont(16F));
+			g2.setColor(Color.WHITE);
+			String iv = egg ? "??" : p.getIVs()[i] + "";
+			String siv = "IV: " + iv;
+			g2.drawString(siv, x, y);
+			
+			x += gp.tileSize;
+			int statWidth = 3 * gp.tileSize;
+			int statHeight = gp.tileSize / 2;
+			y -= gp.tileSize / 3;
+			g2.setColor(Color.BLACK);
+			g2.fillRect(x, y, statWidth, statHeight);
+			g2.setColor(Color.WHITE);
+			g2.fillRect(x + 2, y + 2, statWidth - 4, statHeight - 4);
+			int baseStat = egg ? 0 : p.getBaseStat(i);
+			double bar = Math.min(baseStat * 1.0 / 200, 1.0);
+			g2.setColor(Pokemon.getColor(p.getBaseStat(i)));
+			g2.fillRect(x + 2, y + 2, (int) ((statWidth - 4) * bar), statHeight - 4);
+			x += 4;
+			y += (gp.tileSize / 2) - 4;
+			g2.setColor(Color.BLACK);
+			String baseStatString = egg ? "??" : baseStat + "";
+			g2.drawString(baseStatString, x, y);
+			
+			y = sY + gp.tileSize / 2;
 		}
 		
 		// Nature
@@ -715,15 +715,15 @@ public abstract class AbstractUI {
 						g2.fillRoundRect(x, y, moveWidth, moveHeight, 10, 10);
 					}
 					g2.setColor(Color.BLACK);
-			        String text = m.move.toString();
-			        g2.drawString(text, getCenterAlignedTextX(text, (x + moveWidth / 2)), y + gp.tileSize / 3);
-			        g2.setColor(m.getPPColor());
-			        String pp = m.currentPP + " / " + m.maxPP;
-			        g2.drawString(pp, getCenterAlignedTextX(pp, (x + moveWidth / 2)), (int) (y + gp.tileSize * 0.75) - 3);
-			        if (moveSummaryNum == i) {
-			            g2.setColor(Color.RED);
-			            g2.drawRoundRect(x - 2, y - 2, moveWidth + 4, moveHeight + 4, 10, 10);
-			        }
+					String text = m.move.toString();
+					g2.drawString(text, getCenterAlignedTextX(text, (x + moveWidth / 2)), y + gp.tileSize / 3);
+					g2.setColor(m.getPPColor());
+					String pp = m.currentPP + " / " + m.maxPP;
+					g2.drawString(pp, getCenterAlignedTextX(pp, (x + moveWidth / 2)), (int) (y + gp.tileSize * 0.75) - 3);
+					if (moveSummaryNum == i) {
+						g2.setColor(Color.RED);
+						g2.drawRoundRect(x - 2, y - 2, moveWidth + 4, moveHeight + 4, 10, 10);
+					}
 					y += gp.tileSize;
 				}
 			}
@@ -738,38 +738,38 @@ public abstract class AbstractUI {
 		boolean arrowKeyPressable = moveSummaryNum < 0 && nicknaming < 0 && !gp.ui.showMessage && !gp.battleUI.showFoeSummary && !gp.simBattleUI.showFoeSummary;
 		if (arrowKeyPressable) {
 			if (arrowKeyPressable) {
-			    // Decay timers each frame
-			    if (leftPressTimer > 0) leftPressTimer--;
-			    if (rightPressTimer > 0) rightPressTimer--;
+				// Decay timers each frame
+				if (leftPressTimer > 0) leftPressTimer--;
+				if (rightPressTimer > 0) rightPressTimer--;
 
-			    int arrowSize = gp.tileSize / 3;
-			    int arrowY = windowY + height / 2;
+				int arrowSize = gp.tileSize / 3;
+				int arrowY = windowY + height / 2;
 
-			    // Left arrow
-			    int leftArrowX = windowX - arrowSize * 2;
-			    float leftT = leftPressTimer / 10f; // 0.0 - 1.0
-			    Color leftFill = blendColor(Color.WHITE, new Color(180, 220, 255), leftT);
-			    Color leftBorder = blendColor(Color.DARK_GRAY, new Color(100, 160, 255), leftT);
-			    int leftOffset = (int)(leftT * 3); // nudge left when pressed
-			    int[] leftXPoints = {leftArrowX - leftOffset, leftArrowX + arrowSize - leftOffset, leftArrowX + arrowSize - leftOffset};
-			    int[] leftYPoints = {arrowY, arrowY - arrowSize, arrowY + arrowSize};
-			    g2.setColor(leftFill);
-			    g2.fillPolygon(leftXPoints, leftYPoints, 3);
-			    g2.setColor(leftBorder);
-			    g2.drawPolygon(leftXPoints, leftYPoints, 3);
+				// Left arrow
+				int leftArrowX = windowX - arrowSize * 2;
+				float leftT = leftPressTimer / 10f; // 0.0 - 1.0
+				Color leftFill = blendColor(Color.WHITE, new Color(180, 220, 255), leftT);
+				Color leftBorder = blendColor(Color.DARK_GRAY, new Color(100, 160, 255), leftT);
+				int leftOffset = (int)(leftT * 3); // nudge left when pressed
+				int[] leftXPoints = {leftArrowX - leftOffset, leftArrowX + arrowSize - leftOffset, leftArrowX + arrowSize - leftOffset};
+				int[] leftYPoints = {arrowY, arrowY - arrowSize, arrowY + arrowSize};
+				g2.setColor(leftFill);
+				g2.fillPolygon(leftXPoints, leftYPoints, 3);
+				g2.setColor(leftBorder);
+				g2.drawPolygon(leftXPoints, leftYPoints, 3);
 
-			    // Right arrow
-			    int rightArrowX = windowX + width + arrowSize * 2;
-			    float rightT = rightPressTimer / 10f;
-			    Color rightFill = blendColor(Color.WHITE, new Color(180, 220, 255), rightT);
-			    Color rightBorder = blendColor(Color.DARK_GRAY, new Color(100, 160, 255), rightT);
-			    int rightOffset = (int)(rightT * 3); // nudge right when pressed
-			    int[] rightXPoints = {rightArrowX + rightOffset, rightArrowX - arrowSize + rightOffset, rightArrowX - arrowSize + rightOffset};
-			    int[] rightYPoints = {arrowY, arrowY - arrowSize, arrowY + arrowSize};
-			    g2.setColor(rightFill);
-			    g2.fillPolygon(rightXPoints, rightYPoints, 3);
-			    g2.setColor(rightBorder);
-			    g2.drawPolygon(rightXPoints, rightYPoints, 3);
+				// Right arrow
+				int rightArrowX = windowX + width + arrowSize * 2;
+				float rightT = rightPressTimer / 10f;
+				Color rightFill = blendColor(Color.WHITE, new Color(180, 220, 255), rightT);
+				Color rightBorder = blendColor(Color.DARK_GRAY, new Color(100, 160, 255), rightT);
+				int rightOffset = (int)(rightT * 3); // nudge right when pressed
+				int[] rightXPoints = {rightArrowX + rightOffset, rightArrowX - arrowSize + rightOffset, rightArrowX - arrowSize + rightOffset};
+				int[] rightYPoints = {arrowY, arrowY - arrowSize, arrowY + arrowSize};
+				g2.setColor(rightFill);
+				g2.fillPolygon(rightXPoints, rightYPoints, 3);
+				g2.setColor(rightBorder);
+				g2.drawPolygon(rightXPoints, rightYPoints, 3);
 			}
 		}
 		
@@ -1045,25 +1045,25 @@ public abstract class AbstractUI {
 	public float getFontSize(String text, float targetWidth) {
 		float fontSize = g2.getFont().getSize2D(); // Default font size
 
-	    FontMetrics metrics = g2.getFontMetrics(new Font(Font.SANS_SERIF, Font.PLAIN, (int) fontSize));
-	    int textWidth = metrics.stringWidth(text);
+		FontMetrics metrics = g2.getFontMetrics(new Font(Font.SANS_SERIF, Font.PLAIN, (int) fontSize));
+		int textWidth = metrics.stringWidth(text);
 
-	    // Reduce font size until the text fits within the target width
-	    while (textWidth > targetWidth && fontSize > 1) {
-	        fontSize -= 1; // Decrease font size
-	        metrics = g2.getFontMetrics(new Font(Font.SANS_SERIF, Font.PLAIN, (int) fontSize));
-	        textWidth = metrics.stringWidth(text);
-	    }
+		// Reduce font size until the text fits within the target width
+		while (textWidth > targetWidth && fontSize > 1) {
+			fontSize -= 1; // Decrease font size
+			metrics = g2.getFontMetrics(new Font(Font.SANS_SERIF, Font.PLAIN, (int) fontSize));
+			textWidth = metrics.stringWidth(text);
+		}
 
-	    return fontSize;
+		return fontSize;
 	}
 	
 	public int getTextWidth(String text) {
 		float fontSize = g2.getFont().getSize2D(); // Default font size
 
-	    FontMetrics metrics = g2.getFontMetrics(new Font(g2.getFont().getFamily(), g2.getFont().getStyle(), (int) fontSize));
-	    int textWidth = metrics.stringWidth(text);
-	    return textWidth;
+		FontMetrics metrics = g2.getFontMetrics(new Font(g2.getFont().getFamily(), g2.getFont().getStyle(), (int) fontSize));
+		int textWidth = metrics.stringWidth(text);
+		return textWidth;
 	}
 
 	public void setNickname(Pokemon p, boolean above) {
@@ -1085,18 +1085,18 @@ public abstract class AbstractUI {
 		int charWidth = 36;
 		for (int i = 0; i < 12; i++) {
 			String currentChar = i < nickname.length() ? nickname.charAt(i) + "" : null;
-	        if (currentChar != null) g2.drawString(currentChar, x, y);
-	        g2.setStroke(new BasicStroke(1));
-	        g2.drawLine(x - 6, y + 5, x + 20, y + 5);
-	        if (i == nickname.length() && nicknaming == 1) {
-	        	int x2 = x;
-	        	int y2 = y + gp.tileSize / 3;
-	        	int width2 = gp.tileSize / 4;
-	        	int height2 = gp.tileSize / 4;
-	        	g2.fillPolygon(new int[] {x2, (x2 + width2), (x2 + width2 / 2)}, new int[] {y2 + height2, y2 + height2, y2}, 3);
-	        }
-	        x += charWidth;
-	    }
+			if (currentChar != null) g2.drawString(currentChar, x, y);
+			g2.setStroke(new BasicStroke(1));
+			g2.drawLine(x - 6, y + 5, x + 20, y + 5);
+			if (i == nickname.length() && nicknaming == 1) {
+				int x2 = x;
+				int y2 = y + gp.tileSize / 3;
+				int width2 = gp.tileSize / 4;
+				int height2 = gp.tileSize / 4;
+				g2.fillPolygon(new int[] {x2, (x2 + width2), (x2 + width2 / 2)}, new int[] {y2 + height2, y2 + height2, y2}, 3);
+			}
+			x += charWidth;
+		}
 		g2.setStroke(new BasicStroke(3));
 		
 		y += gp.tileSize * 1.5;
@@ -1107,12 +1107,12 @@ public abstract class AbstractUI {
 		}
 		
 		if (nicknaming == 1) {
-		    g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 13F));
-		    String enterHint = "[Enter]";
-		    // position it beneath the character row, right-aligned to the window
-		    int hintX = (gp.tileSize * 3 + gp.tileSize * 10) - g2.getFontMetrics().stringWidth(enterHint) - 12;
-		    int hintY = y - (int)(gp.tileSize * 0.7); // just above the Confirm text
-		    drawOutlinedText(enterHint, hintX, hintY, new Color(180, 180, 180, 180), Color.BLACK);
+			g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 13F));
+			String enterHint = "[Enter]";
+			// position it beneath the character row, right-aligned to the window
+			int hintX = (gp.tileSize * 3 + gp.tileSize * 10) - g2.getFontMetrics().stringWidth(enterHint) - 12;
+			int hintY = y - (int)(gp.tileSize * 0.7); // just above the Confirm text
+			drawOutlinedText(enterHint, hintX, hintY, new Color(180, 180, 180, 180), Color.BLACK);
 		}
 		
 		if (gp.keyH.upPressed && nicknaming == 0) {
@@ -1187,14 +1187,14 @@ public abstract class AbstractUI {
 			g2.setColor(color);
 			g2.fillRoundRect(x, y, moveWidth, moveHeight, 10, 10);
 			g2.setColor(Color.BLACK);
-	        String text = m.toString();
-	        g2.drawString(text, getCenterAlignedTextX(text, x + moveWidth / 2), y + gp.tileSize / 2);
-	        String pp = m.pp + " / " + m.pp;
-	        g2.drawString(pp, getCenterAlignedTextX(pp, (x + moveWidth / 2)), y + gp.tileSize);
-	        if (moveOption == 0) {
-	            g2.setColor(Color.RED);
-	            g2.drawRoundRect(x - 2, y - 2, moveWidth + 4, moveHeight + 4, 10, 10);
-	        }
+			String text = m.toString();
+			g2.drawString(text, getCenterAlignedTextX(text, x + moveWidth / 2), y + gp.tileSize / 2);
+			String pp = m.pp + " / " + m.pp;
+			g2.drawString(pp, getCenterAlignedTextX(pp, (x + moveWidth / 2)), y + gp.tileSize);
+			if (moveOption == 0) {
+				g2.setColor(Color.RED);
+				g2.drawRoundRect(x - 2, y - 2, moveWidth + 4, moveHeight + 4, 10, 10);
+			}
 			y += gp.tileSize * 5 / 3;
 			x -= gp.tileSize * 11 / 6;
 		}
@@ -1210,29 +1210,29 @@ public abstract class AbstractUI {
 				boolean canRelearn = Move.getMoveTutorMoves().contains(ms.move) || movebankList.contains(ms.move) ||
 						(gp.player.p.hasTM(ms.move) && Pokemon.getLearned(p.id - 1, Item.getTMMoves().indexOf(ms.move)));
 				if (!canRelearn) {
-		        	g2.setPaint(new GradientPaint(x, y, color, x + moveWidth, y + moveHeight, new Color(245, 225, 210)));
-		        } else {
-		        	g2.setColor(color);	
-		        }
+					g2.setPaint(new GradientPaint(x, y, color, x + moveWidth, y + moveHeight, new Color(245, 225, 210)));
+				} else {
+					g2.setColor(color);	
+				}
 				g2.fillRoundRect(x, y, moveWidth, moveHeight, 10, 10);
 				g2.setColor(Color.BLACK);
-		        String text = ms.move.toString();
-		        g2.drawString(text, getCenterAlignedTextX(text, x + moveWidth / 2), y + gp.tileSize / 2);
-		        g2.setColor(ms.getPPColor());
-		        String pp = ms.currentPP + " / " + ms.maxPP;
-		        g2.drawString(pp, getCenterAlignedTextX(pp, (x + moveWidth / 2)), y + gp.tileSize);
-		        if (moveOption == i) {
-		            g2.setColor(Color.RED);
-		            g2.drawRoundRect(x - 2, y - 2, moveWidth + 4, moveHeight + 4, 10, 10);
-		            drawMoveSummary((int) (startX - gp.tileSize * 1.5), gp.tileSize * 6, p, null, ms, null);
-		        }
-		        if (i % 2 == 1) {
-		        	x += moveWidth + gp.tileSize / 3;
-		        } else {
-		        	x = startX;
-		        	y += gp.tileSize * 1.5;
-		        }
-		        max++;
+				String text = ms.move.toString();
+				g2.drawString(text, getCenterAlignedTextX(text, x + moveWidth / 2), y + gp.tileSize / 2);
+				g2.setColor(ms.getPPColor());
+				String pp = ms.currentPP + " / " + ms.maxPP;
+				g2.drawString(pp, getCenterAlignedTextX(pp, (x + moveWidth / 2)), y + gp.tileSize);
+				if (moveOption == i) {
+					g2.setColor(Color.RED);
+					g2.drawRoundRect(x - 2, y - 2, moveWidth + 4, moveHeight + 4, 10, 10);
+					drawMoveSummary((int) (startX - gp.tileSize * 1.5), gp.tileSize * 6, p, null, ms, null);
+				}
+				if (i % 2 == 1) {
+					x += moveWidth + gp.tileSize / 3;
+				} else {
+					x = startX;
+					y += gp.tileSize * 1.5;
+				}
+				max++;
 			}
 		}
 		
@@ -1311,7 +1311,7 @@ public abstract class AbstractUI {
 			if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
 				gp.player.p.evolve(t.p, t.counter, gp);
-		        currentTask = null;
+				currentTask = null;
 			}
 		}
 		y += gp.tileSize;
@@ -1345,9 +1345,9 @@ public abstract class AbstractUI {
 	}
 
 	public void handleBackspace() {
-	    if (nickname.length() > 0) {
-	        nickname.deleteCharAt(nickname.length() - 1);
-	    }
+		if (nickname.length() > 0) {
+			nickname.deleteCharAt(nickname.length() - 1);
+		}
 	}
 
 	public void setNicknaming(boolean n) {
@@ -1409,19 +1409,19 @@ public abstract class AbstractUI {
 	
 	public String truncateText(String text, int maxWidth, FontMetrics metrics) {
 		if (metrics.stringWidth(text) <= maxWidth) {
-	    	return text;
-	    }
-	    
-	    String ellipsis = "...";
-	    
-	    for (int i = text.length() - 1; i > 0; i--) {
-	    	String truncated = text.substring(0, i) + ellipsis;
-	        if (metrics.stringWidth(truncated) <= maxWidth) {
-	        	return truncated;
-	        }
-	    }
-	    
-	    return ellipsis;
+			return text;
+		}
+		
+		String ellipsis = "...";
+		
+		for (int i = text.length() - 1; i > 0; i--) {
+			String truncated = text.substring(0, i) + ellipsis;
+			if (metrics.stringWidth(truncated) <= maxWidth) {
+				return truncated;
+			}
+		}
+		
+		return ellipsis;
 	}
 	
 	public void drawToolTips(int x, int y, String w, String a, String s, String d, String c) {
@@ -1469,37 +1469,37 @@ public abstract class AbstractUI {
 	}
 	
 	public void drawParlaySheet(boolean editable) {
-	    int x = gp.tileSize * 5;
-	    int y = gp.tileSize / 2;
-	    int width = gp.tileSize * 6;
-	    int height = (int) (gp.tileSize * 11.25);
+		int x = gp.tileSize * 5;
+		int y = gp.tileSize / 2;
+		int width = gp.tileSize * 6;
+		int height = (int) (gp.tileSize * 11.25);
 
-	    int maxBet = MAX_PARLAYS - 1;
+		int maxBet = MAX_PARLAYS - 1;
 
-	    drawSubWindow(x, y, width, height, 255);
+		drawSubWindow(x, y, width, height, 255);
 
-	    int parlayWidth = (int) (gp.tileSize * 5.5);
-	    int parlayHeight = (int) (gp.tileSize * 1.75);
+		int parlayWidth = (int) (gp.tileSize * 5.5);
+		int parlayHeight = (int) (gp.tileSize * 1.75);
 
-	    int startX = x;
+		int startX = x;
 
-	    for (int i = 0; i < MAX_PARLAYS; i++) {
-	        g2.setColor(Color.WHITE);
-	        int startY = y;
-	        x += width / 2;
-	        y += gp.tileSize * 0.75;
-	        g2.setFont(g2.getFont().deriveFont(18F));
+		for (int i = 0; i < MAX_PARLAYS; i++) {
+			g2.setColor(Color.WHITE);
+			int startY = y;
+			x += width / 2;
+			y += gp.tileSize * 0.75;
+			g2.setFont(g2.getFont().deriveFont(18F));
 
-	        Pair<Double, String> current = gp.simBattleUI.parlaySheet.get(i);
-	        String bet = String.format("%.1f %s", current.getFirst(), current.getSecond());
-	        g2.drawString(bet, getCenterAlignedTextX(bet, x), y);
+			Pair<Double, String> current = gp.simBattleUI.parlaySheet.get(i);
+			String bet = String.format("%.1f %s", current.getFirst(), current.getSecond());
+			g2.drawString(bet, getCenterAlignedTextX(bet, x), y);
 
-	        y += gp.tileSize * 0.75;
-	        g2.setStroke(new BasicStroke(2));
-	        g2.drawLine((int) (x - gp.tileSize * 1.25), y, x - gp.tileSize, y);
+			y += gp.tileSize * 0.75;
+			g2.setStroke(new BasicStroke(2));
+			g2.drawLine((int) (x - gp.tileSize * 1.25), y, x - gp.tileSize, y);
 
-	        // Determine bet color: Gray if unselected, Red if under, Green if over
-	        if (parlays[i] == 0) {
+			// Determine bet color: Gray if unselected, Red if under, Green if over
+			if (parlays[i] == 0) {
 				g2.setColor(Color.LIGHT_GRAY);
 				g2.fillOval(x - gp.tileSize / 2, y - gp.tileSize / 2, gp.tileSize, gp.tileSize);
 				g2.setColor(Color.WHITE);
@@ -1512,11 +1512,11 @@ public abstract class AbstractUI {
 			
 			g2.drawLine((int) (x + gp.tileSize * 1.25), y, x + gp.tileSize, y);
 
-	        int diff = gp.tileSize * 2;
-	        x -= diff;
-	        
-	        // Draw Under Button
-	        if (parlays[i] == -1) {
+			int diff = gp.tileSize * 2;
+			x -= diff;
+			
+			// Draw Under Button
+			if (parlays[i] == -1) {
 				g2.setColor(Color.RED);
 				g2.fillOval(x - gp.tileSize / 2, y - gp.tileSize / 2, gp.tileSize, gp.tileSize);
 				g2.setColor(Color.WHITE);
@@ -1540,104 +1540,104 @@ public abstract class AbstractUI {
 			String plus = "+";
 			g2.drawString(plus, getCenterAlignedTextX(plus, x), y + 8);
 			x -= diff;
-
-	        // Display Cost
-	        g2.setFont(g2.getFont().deriveFont(14F));
-	        g2.setColor(parlays[i] != 0 ? Color.WHITE : Color.GRAY);
-	        if (editable || parlays[i] != 0) {
-	        	g2.drawString("-" + parlayBet + " " + getBetCurrencyName(gauntlet), (int) (x - gp.tileSize * 2.6), (int) (y - gp.tileSize * 0.75));
-	        }
-
-	        // Calculate Payout if bet is placed
-	        if (parlays[i] != 0) {
-	        	int payout = SimBattleUI.calculateParlayPayout(parlays, null, null, parlayBet, -1);
-	            g2.setColor(Color.GREEN);
-	            g2.drawString("+" + payout + " " + getBetCurrencyName(gauntlet), (int) (x + gp.tileSize * 1.6), (int) (y - gp.tileSize * 0.75));
-	        }
-
-	        g2.setStroke(new BasicStroke(3));
-	        if ((editable && i == gp.ui.areaCounter) || (!editable && i == gp.simBattleUI.currentParlay)) {
-	            g2.setColor(Color.RED);
-	            g2.drawRoundRect(x - parlayWidth / 2, y - gp.tileSize - 6, parlayWidth, parlayHeight, 45, 45);
-	        }
-
-	        x = startX;
-	        y = startY + parlayHeight;
-	    }
-
-	    if (editable) {
-	        if (gp.keyH.downPressed) {
-	            gp.keyH.downPressed = false;
-	            if (gp.ui.areaCounter < maxBet) {
-	                gp.ui.areaCounter++;
-	            } else {
-	                gp.ui.areaCounter = 0;
-	                showParlays = false;
-	            }
-	        }
-
-	        if (gp.keyH.upPressed) {
-	            gp.keyH.upPressed = false;
-	            if (gp.ui.areaCounter > 0) {
-	                gp.ui.areaCounter--;
-	            } else {
-	                gp.ui.areaCounter = 0;
-	                showParlays = false;
-	            }
-	        }
-
-	        if (gp.keyH.leftPressed) {
-	            gp.keyH.leftPressed = false;
-	            if (parlays[gp.ui.areaCounter] > -1) {
-	            	if (parlays[gp.ui.areaCounter] == 0) {
-	            		if (gp.player.p.getBetCurrency(gauntlet) >= parlayBet) {
-	                    	gp.player.p.addBetCurrency(gauntlet, -parlayBet);
-	                    	parlays[gp.ui.areaCounter]--;
-	    	                sheetFilled = true;
-	    	                coinColor = Color.WHITE;
-	                    } else {
-	                    	coinColor = Color.RED;
-	                    }
-	            	} else {
-	            		parlays[gp.ui.areaCounter]--;
-	            		gp.player.p.addBetCurrency(gauntlet, parlayBet);
-	            		coinColor = Color.WHITE;
-	            	}
-	                if (gp.ui.areaCounter < maxBet) {
-	                    gp.ui.areaCounter++;
-	                } else {
-	                    gp.ui.areaCounter = 0;
-	                    showParlays = false;
-	                }
-	            }
-	        }
-
-	        if (gp.keyH.rightPressed) {
-	            gp.keyH.rightPressed = false;
-	            if (parlays[gp.ui.areaCounter] < 1) {
-	            	if (parlays[gp.ui.areaCounter] == 0) {
-	            		if (gp.player.p.getBetCurrency(gauntlet) >= parlayBet) {
-	            			gp.player.p.addBetCurrency(gauntlet, -parlayBet);
-	                    	parlays[gp.ui.areaCounter]++;
-	    	                sheetFilled = true;
-	    	                coinColor = Color.WHITE;
-	                    } else {
-	                    	coinColor = Color.RED;
-	                    }
-	            	} else {
-	            		parlays[gp.ui.areaCounter]++;
-	            		gp.player.p.addBetCurrency(gauntlet, parlayBet);
-	            		coinColor = Color.WHITE;
-	            	}
-	                if (gp.ui.areaCounter < maxBet) {
-	                    gp.ui.areaCounter++;
-	                } else {
-	                    gp.ui.areaCounter = 0;
-	                    showParlays = false;
-	                }
-	            }
-	        }
-	        if (gp.keyH.aPressed || gp.keyH.sPressed) {
+			
+			// Display Cost
+			g2.setFont(g2.getFont().deriveFont(14F));
+			g2.setColor(parlays[i] != 0 ? Color.WHITE : Color.GRAY);
+			if (editable || parlays[i] != 0) {
+				g2.drawString("-" + parlayBet + " " + getBetCurrencyName(gauntlet), (int) (x - gp.tileSize * 2.6), (int) (y - gp.tileSize * 0.75));
+			}
+			
+			// Calculate Payout if bet is placed
+			if (parlays[i] != 0) {
+				int payout = SimBattleUI.calculateParlayPayout(parlays, null, null, parlayBet, -1);
+				g2.setColor(Color.GREEN);
+				g2.drawString("+" + payout + " " + getBetCurrencyName(gauntlet), (int) (x + gp.tileSize * 1.6), (int) (y - gp.tileSize * 0.75));
+			}
+			
+			g2.setStroke(new BasicStroke(3));
+			if ((editable && i == gp.ui.areaCounter) || (!editable && i == gp.simBattleUI.currentParlay)) {
+				g2.setColor(Color.RED);
+				g2.drawRoundRect(x - parlayWidth / 2, y - gp.tileSize - 6, parlayWidth, parlayHeight, 45, 45);
+			}
+			
+			x = startX;
+			y = startY + parlayHeight;
+		}
+		
+		if (editable) {
+			if (gp.keyH.downPressed) {
+				gp.keyH.downPressed = false;
+				if (gp.ui.areaCounter < maxBet) {
+					gp.ui.areaCounter++;
+				} else {
+					gp.ui.areaCounter = 0;
+					showParlays = false;
+				}
+			}
+			
+			if (gp.keyH.upPressed) {
+				gp.keyH.upPressed = false;
+				if (gp.ui.areaCounter > 0) {
+					gp.ui.areaCounter--;
+				} else {
+					gp.ui.areaCounter = 0;
+					showParlays = false;
+				}
+			}
+			
+			if (gp.keyH.leftPressed) {
+				gp.keyH.leftPressed = false;
+				if (parlays[gp.ui.areaCounter] > -1) {
+					if (parlays[gp.ui.areaCounter] == 0) {
+						if (gp.player.p.getBetCurrency(gauntlet) >= parlayBet) {
+							gp.player.p.addBetCurrency(gauntlet, -parlayBet);
+							parlays[gp.ui.areaCounter]--;
+							sheetFilled = true;
+							coinColor = Color.WHITE;
+						} else {
+							coinColor = Color.RED;
+						}
+					} else {
+						parlays[gp.ui.areaCounter]--;
+						gp.player.p.addBetCurrency(gauntlet, parlayBet);
+						coinColor = Color.WHITE;
+					}
+					if (gp.ui.areaCounter < maxBet) {
+						gp.ui.areaCounter++;
+					} else {
+						gp.ui.areaCounter = 0;
+						showParlays = false;
+					}
+				}
+			}
+			
+			if (gp.keyH.rightPressed) {
+				gp.keyH.rightPressed = false;
+				if (parlays[gp.ui.areaCounter] < 1) {
+					if (parlays[gp.ui.areaCounter] == 0) {
+						if (gp.player.p.getBetCurrency(gauntlet) >= parlayBet) {
+							gp.player.p.addBetCurrency(gauntlet, -parlayBet);
+							parlays[gp.ui.areaCounter]++;
+							sheetFilled = true;
+							coinColor = Color.WHITE;
+						} else {
+							coinColor = Color.RED;
+						}
+					} else {
+						parlays[gp.ui.areaCounter]++;
+						gp.player.p.addBetCurrency(gauntlet, parlayBet);
+						coinColor = Color.WHITE;
+					}
+					if (gp.ui.areaCounter < maxBet) {
+						gp.ui.areaCounter++;
+					} else {
+						gp.ui.areaCounter = 0;
+						showParlays = false;
+					}
+				}
+			}
+			if (gp.keyH.aPressed || gp.keyH.sPressed) {
 				gp.keyH.aPressed = false;
 				gp.keyH.sPressed = false;
 				showParlays = false;
@@ -1647,10 +1647,10 @@ public abstract class AbstractUI {
 				gp.keyH.sPressed = false;
 				showParlays = false;
 			}
-	    }
-
-	    drawToolTips(null, editable ? "Close" : null, "Close", null);
-	    
+		}
+		
+		drawToolTips(null, editable ? "Close" : null, "Close", null);
+		
 	}
 	
 	public void drawSettings() {
@@ -2436,107 +2436,107 @@ public abstract class AbstractUI {
 	}
 	
 	public void drawBadgesWindow(int x, int y, int width, int height, Player p, GamePanel gp, boolean drawBorder) {
-    	if (p.badges >= 8) {
-            drawFireAnimation(x, y, width, height);
-        }
-        
-        // Draw badge container with border
-    	if (drawBorder) {
-    		drawPanelWithBorder(x, y, width, height, 50, p.badges >= 8 ? new Color(255, 215, 0) : new Color(150, 150, 150)); // Gold border if all badges
-    	}
-        
-        // Draw badges in a 4x2 grid
-        int badgeX = x + gp.tileSize / 2;
-        int startBadgeX = badgeX;
-        int badgeY = y + gp.tileSize / 4;
-        int badgeSpacing = gp.tileSize;
-        
-        for (int i = 0; i < 8; i++) {
-            if (i < p.badges) {
-                BufferedImage badgeIcon = gp.ui.badgeIcons[i];
-                g2.drawImage(badgeIcon, badgeX, badgeY, null);
-            } else {
-                // Greyed out badge
-                BufferedImage badgeIcon = gp.ui.badgeIcons[i + 8];
-                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
-                g2.drawImage(badgeIcon, badgeX, badgeY, null);
-                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
-            }
-            
-            badgeX += badgeSpacing;
-            if ((i + 1) % 4 == 0) {
-                badgeX = startBadgeX;
-                badgeY += badgeSpacing;
-            }
-        }
+		if (p.badges >= 8) {
+			drawFireAnimation(x, y, width, height);
+		}
+		
+		// Draw badge container with border
+		if (drawBorder) {
+			drawPanelWithBorder(x, y, width, height, 50, p.badges >= 8 ? new Color(255, 215, 0) : new Color(150, 150, 150)); // Gold border if all badges
+		}
+		
+		// Draw badges in a 4x2 grid
+		int badgeX = x + gp.tileSize / 2;
+		int startBadgeX = badgeX;
+		int badgeY = y + gp.tileSize / 4;
+		int badgeSpacing = gp.tileSize;
+		
+		for (int i = 0; i < 8; i++) {
+			if (i < p.badges) {
+				BufferedImage badgeIcon = gp.ui.badgeIcons[i];
+				g2.drawImage(badgeIcon, badgeX, badgeY, null);
+			} else {
+				// Greyed out badge
+				BufferedImage badgeIcon = gp.ui.badgeIcons[i + 8];
+				g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+				g2.drawImage(badgeIcon, badgeX, badgeY, null);
+				g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+			}
+			
+			badgeX += badgeSpacing;
+			if ((i + 1) % 4 == 0) {
+				badgeX = startBadgeX;
+				badgeY += badgeSpacing;
+			}
+		}
 	}
 	
 	public void drawFireAnimation(int x, int y, int width, int height) {
-	    // Create animated fire effect around the badge box
-	    float pulseProgress = pulseCounter / 120f; // Normalize to [0, 1)
-	    
-	    // Draw multiple layers of "flames" with varying colors and offsets
-	    int numFlames = 12;
-	    
-	    for (int i = 0; i < numFlames; i++) {
-	        float angle = (float) (i * Math.PI * 2 / numFlames + pulseProgress * Math.PI * 2);
-	        float offset = (float) (Math.sin(pulseProgress * Math.PI * 4 + i) * 6 + 4);
-	        
-	        // Calculate flame position around the box
-	        float flameCenterX = x + width / 2f + (float) Math.cos(angle) * (width / 2f + offset);
-	        float flameCenterY = y + height / 2f + (float) Math.sin(angle) * (height / 2f + offset);
-	        
-	        // Flame color transitions: red -> orange -> yellow
-	        float colorPhase = (pulseProgress + i / (float) numFlames) % 1.0f;
-	        Color flameColor;
-	        
-	        if (colorPhase < 0.33f) {
-	            // Red to Orange
-	            float t = colorPhase / 0.33f;
-	            flameColor = new Color(255, (int) (100 + 155 * t), 0);
-	        } else if (colorPhase < 0.66f) {
-	            // Orange to Yellow
-	            float t = (colorPhase - 0.33f) / 0.33f;
-	            flameColor = new Color(255, (int) (200 + 55 * t), (int) (50 * t));
-	        } else {
-	            // Yellow to Red
-	            float t = (colorPhase - 0.66f) / 0.34f;
-	            flameColor = new Color(255, (int) (255 - 155 * t), (int) (50 - 50 * t));
-	        }
-	        
-	        // Size varies with pulse and position
-	        float sizeMultiplier = (float) (0.5 + 0.5 * Math.sin(pulseProgress * Math.PI * 2 + i * 0.5));
-	        int flameSize = (int) (8 + 4 * sizeMultiplier);
-	        
-	        // Draw flame with alpha for glow effect
-	        float alpha = 0.3f + 0.4f * sizeMultiplier;
-	        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
-	        
-	        // Draw outer glow
-	        g2.setColor(new Color(flameColor.getRed(), flameColor.getGreen(), 0, 100));
-	        g2.fillOval((int) flameCenterX - flameSize, (int) flameCenterY - flameSize, 
-	                    flameSize * 2, flameSize * 2);
-	        
-	        // Draw inner flame
-	        g2.setColor(flameColor);
-	        g2.fillOval((int) flameCenterX - flameSize / 2, (int) flameCenterY - flameSize / 2, 
-	                    flameSize, flameSize);
-	    }
-	    
-	    // Add inner glow effect
-	    float innerGlowAlpha = 0.1f + 0.1f * (float) Math.sin(pulseProgress * Math.PI * 2);
-	    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, innerGlowAlpha));
-	    
-	    GradientPaint innerGlow = new GradientPaint(
-	        x + width / 2f, y, new Color(255, 200, 0, 150),
-	        x + width / 2f, y + height, new Color(255, 100, 0, 50)
-	    );
-	    g2.setPaint(innerGlow);
-	    g2.fillRoundRect(x + 4, y + 4, width - 8, height - 8, 25, 25);
-	    
-	    // Reset composite
-	    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
-	    g2.setColor(Color.WHITE);
+		// Create animated fire effect around the badge box
+		float pulseProgress = pulseCounter / 120f; // Normalize to [0, 1)
+		
+		// Draw multiple layers of "flames" with varying colors and offsets
+		int numFlames = 12;
+		
+		for (int i = 0; i < numFlames; i++) {
+			float angle = (float) (i * Math.PI * 2 / numFlames + pulseProgress * Math.PI * 2);
+			float offset = (float) (Math.sin(pulseProgress * Math.PI * 4 + i) * 6 + 4);
+			
+			// Calculate flame position around the box
+			float flameCenterX = x + width / 2f + (float) Math.cos(angle) * (width / 2f + offset);
+			float flameCenterY = y + height / 2f + (float) Math.sin(angle) * (height / 2f + offset);
+			
+			// Flame color transitions: red -> orange -> yellow
+			float colorPhase = (pulseProgress + i / (float) numFlames) % 1.0f;
+			Color flameColor;
+			
+			if (colorPhase < 0.33f) {
+				// Red to Orange
+				float t = colorPhase / 0.33f;
+				flameColor = new Color(255, (int) (100 + 155 * t), 0);
+			} else if (colorPhase < 0.66f) {
+				// Orange to Yellow
+				float t = (colorPhase - 0.33f) / 0.33f;
+				flameColor = new Color(255, (int) (200 + 55 * t), (int) (50 * t));
+			} else {
+				// Yellow to Red
+				float t = (colorPhase - 0.66f) / 0.34f;
+				flameColor = new Color(255, (int) (255 - 155 * t), (int) (50 - 50 * t));
+			}
+			
+			// Size varies with pulse and position
+			float sizeMultiplier = (float) (0.5 + 0.5 * Math.sin(pulseProgress * Math.PI * 2 + i * 0.5));
+			int flameSize = (int) (8 + 4 * sizeMultiplier);
+			
+			// Draw flame with alpha for glow effect
+			float alpha = 0.3f + 0.4f * sizeMultiplier;
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+			
+			// Draw outer glow
+			g2.setColor(new Color(flameColor.getRed(), flameColor.getGreen(), 0, 100));
+			g2.fillOval((int) flameCenterX - flameSize, (int) flameCenterY - flameSize, 
+						flameSize * 2, flameSize * 2);
+			
+			// Draw inner flame
+			g2.setColor(flameColor);
+			g2.fillOval((int) flameCenterX - flameSize / 2, (int) flameCenterY - flameSize / 2, 
+						flameSize, flameSize);
+		}
+		
+		// Add inner glow effect
+		float innerGlowAlpha = 0.1f + 0.1f * (float) Math.sin(pulseProgress * Math.PI * 2);
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, innerGlowAlpha));
+		
+		GradientPaint innerGlow = new GradientPaint(
+			x + width / 2f, y, new Color(255, 200, 0, 150),
+			x + width / 2f, y + height, new Color(255, 100, 0, 50)
+		);
+		g2.setPaint(innerGlow);
+		g2.fillRoundRect(x + 4, y + 4, width - 8, height - 8, 25, 25);
+		
+		// Reset composite
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+		g2.setColor(Color.WHITE);
 	}
 	
 	public void drawToggleSwitch(int x, int y, boolean isOn, boolean selected) {
@@ -2645,11 +2645,11 @@ public abstract class AbstractUI {
 	}
 	
 	public Color blendColor(Color a, Color b, float t) {
-	    t = Math.max(0f, Math.min(1f, t));
-	    return new Color(
-	        (int)(a.getRed()   + (b.getRed()   - a.getRed())   * t),
-	        (int)(a.getGreen() + (b.getGreen() - a.getGreen()) * t),
-	        (int)(a.getBlue()  + (b.getBlue()  - a.getBlue())  * t)
-	    );
+		t = Math.max(0f, Math.min(1f, t));
+		return new Color(
+			(int)(a.getRed()   + (b.getRed()   - a.getRed())   * t),
+			(int)(a.getGreen() + (b.getGreen() - a.getGreen()) * t),
+			(int)(a.getBlue()  + (b.getBlue()  - a.getBlue())  * t)
+		);
 	}
 }

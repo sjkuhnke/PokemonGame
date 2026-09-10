@@ -71,14 +71,14 @@ public abstract class Puzzle {
 	
 	protected String[] shuffle(String[] input) {
 		List<String> list = new ArrayList<>(Arrays.asList(input));
-        Collections.shuffle(list, random);
-        return list.toArray(new String[1]);
+		Collections.shuffle(list, random);
+		return list.toArray(new String[1]);
 	}
 	
 	protected String[][] shuffle(String[][] input) {
 		List<String[]> list = new ArrayList<>(Arrays.asList(input));
-        Collections.shuffle(list, random);
-        return list.toArray(new String[1][]);
+		Collections.shuffle(list, random);
+		return list.toArray(new String[1][]);
 	}
 	
 	public void setNextLocation(int x, int y) {

@@ -37,6 +37,7 @@ public class Set {
 		
 		Moveslot[] moveslot = new Moveslot[4];
 		for (int i = 0; i < moveslot.length; i++) {
+			if (this.moves[i] == null) break;
 			moveslot[i] = new Moveslot(getMove(i));
 			moveslot[i].maxPP();
 			moveslot[i].currentPP = moveslot[i].maxPP;
@@ -118,13 +119,13 @@ public class Set {
 	
 	@Override
 	public String toString() {
-	    return "Set{id=" + id +
-           ", items=" + items +
-           ", natures=" + natures +
-           ", abilities=" + abilities +
-           ", ivs=" + Arrays.toString(ivs) +
-           ", moves=" + Arrays.deepToString(moves) +
-           '}';
+		return "Set{id=" + id +
+		   ", items=" + items +
+		   ", natures=" + natures +
+		   ", abilities=" + abilities +
+		   ", ivs=" + Arrays.toString(ivs) +
+		   ", moves=" + Arrays.deepToString(moves) +
+		   '}';
 	}
 
 	public ArrayList<Move> getMoves() {

@@ -1,4 +1,4 @@
-package pokemon;
+package util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +7,14 @@ import java.awt.Dimension;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+
+import pokemon.Ability;
+import pokemon.Item;
+import pokemon.Move;
+import pokemon.Nature;
+import pokemon.Pokemon;
+import pokemon.Set;
+
 import javax.swing.JOptionPane;
 
 public class Importer {
@@ -183,13 +191,6 @@ public class Importer {
             );
         }
         
-        if (moves.size() != 4) {
-            throw new IllegalArgumentException(
-                pokemonName + " must have exactly 4 moves. Found: "
-                + moves.size()
-            );
-        }
-        
         // Build a Set using your existing system
         Set set = new Set(id);
         
@@ -198,7 +199,7 @@ public class Importer {
         set.setNatures(nature);
         set.setIVs(ivs);
         
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < moves.size(); i++) {
             set.setMoves(i, moves.get(i));
         }
         
@@ -213,7 +214,7 @@ public class Importer {
         }
         
         // Restore imported current PP
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < movePP.size(); i++) {
             if (movePP.get(i) != null) {
                 p.moveset[i].currentPP = Math.min(
                     movePP.get(i),
@@ -337,37 +338,35 @@ public class Importer {
     }
     
     public static List<Pokemon> showImportDialog() {
-
         JTextArea textArea = new JTextArea(25, 60);
         textArea.setLineWrap(false);
-
+        
         JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setPreferredSize(new Dimension(650, 500));
-
+        
         int result = JOptionPane.showConfirmDialog(
-            null,
+            Pokemon.gp,
             scrollPane,
-            "Import Pokémon",
+            "Import Pokemon",
             JOptionPane.OK_CANCEL_OPTION,
             JOptionPane.PLAIN_MESSAGE
         );
-
+        
         if (result != JOptionPane.OK_OPTION) {
             return null;
         }
-
+        
         try {
             return importPokemon(textArea.getText());
 
         } catch (IllegalArgumentException e) {
-
             JOptionPane.showMessageDialog(
                 null,
                 e.getMessage(),
                 "Import Error",
                 JOptionPane.ERROR_MESSAGE
             );
-
+            
             return null;
         }
     }

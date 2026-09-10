@@ -39,105 +39,105 @@ public class EncounterDoc {
 	// unchanged.
 	// ----------------------------------------------------------------------
 	public static void writeEncountersToTxt(GamePanel gp, Path dir) {
-	    try {
-	        Path outPath = dir.resolve("WildPokemon.txt");
-	        FileWriter writer = new FileWriter(outPath.toFile());
+		try {
+			Path outPath = dir.resolve("WildPokemon.txt");
+			FileWriter writer = new FileWriter(outPath.toFile());
 
-	        Map<String, ArrayList<GiftEncounter>> giftMap = buildGiftLocationMap(gp);
+			Map<String, ArrayList<GiftEncounter>> giftMap = buildGiftLocationMap(gp);
 
-	        ArrayList<Encounter> allEncounters = new ArrayList<>();
-	        int[] amounts = new int[Pokemon.MAX_POKEMON + 1];
-	        double[] chances = new double[Pokemon.MAX_POKEMON + 1];
+			ArrayList<Encounter> allEncounters = new ArrayList<>();
+			int[] amounts = new int[Pokemon.MAX_POKEMON + 1];
+			double[] chances = new double[Pokemon.MAX_POKEMON + 1];
 
-	        // Track which locations had wild encounters, so we can write
-	        // gift-only locations separately afterward
-	        Set<String> writtenLocations = new LinkedHashSet<>();
+			// Track which locations had wild encounters, so we can write
+			// gift-only locations separately afterward
+			Set<String> writtenLocations = new LinkedHashSet<>();
 
-	        for (Map.Entry<String, ArrayList<Encounter>> e : Encounter.encounters.entrySet()) {
-	            String[] parts = e.getKey().split("\\|");
-	            String area = parts[0];
-	            String type = parts[1];
+			for (Map.Entry<String, ArrayList<Encounter>> e : Encounter.encounters.entrySet()) {
+				String[] parts = e.getKey().split("\\|");
+				String area = parts[0];
+				String type = parts[1];
 
-	            String typeName;
-	            switch (type) {
-	                case "G": typeName = "Standard"; break;
-	                case "F": typeName = "Fish";     break;
-	                case "S": typeName = "Surf";     break;
-	                case "L": typeName = "Lava";     break;
-	                default:  typeName = "Unknown";  break;
-	            }
+				String typeName;
+				switch (type) {
+					case "G": typeName = "Standard"; break;
+					case "F": typeName = "Fish";	 break;
+					case "S": typeName = "Surf";	 break;
+					case "L": typeName = "Lava";	 break;
+					default:  typeName = "Unknown";  break;
+				}
 
-	            writer.write(area + " (" + typeName + ")\n");
-	            writer.write(writeEncounter(e.getValue()));
-	            allEncounters.addAll(e.getValue());
-	            writtenLocations.add(area);
+				writer.write(area + " (" + typeName + ")\n");
+				writer.write(writeEncounter(e.getValue()));
+				allEncounters.addAll(e.getValue());
+				writtenLocations.add(area);
 
-	            // Append gifts for this area inline, after its wild encounters
-	            if (giftMap.containsKey(area)) {
-	            	writer.write("-------------------------------------------------------------------\n");
-	                writer.write(writeGiftSection(giftMap.get(area)));
-	            }
-	            writer.write("===================================================================\n");
-	        }
+				// Append gifts for this area inline, after its wild encounters
+				if (giftMap.containsKey(area)) {
+					writer.write("-------------------------------------------------------------------\n");
+					writer.write(writeGiftSection(giftMap.get(area)));
+				}
+				writer.write("===================================================================\n");
+			}
 
-	        // Write gift-only locations that had no wild encounters
-	        for (Map.Entry<String, ArrayList<GiftEncounter>> e : giftMap.entrySet()) {
-	            if (!writtenLocations.contains(e.getKey())) {
-	                writer.write(e.getKey() + " (Gift Only)\n");
-	                writer.write("===================================================================\n");
-	                writer.write(writeGiftSection(e.getValue()));
-	                writer.write("===================================================================\n");
-	            }
-	        }
+			// Write gift-only locations that had no wild encounters
+			for (Map.Entry<String, ArrayList<GiftEncounter>> e : giftMap.entrySet()) {
+				if (!writtenLocations.contains(e.getKey())) {
+					writer.write(e.getKey() + " (Gift Only)\n");
+					writer.write("===================================================================\n");
+					writer.write(writeGiftSection(e.getValue()));
+					writer.write("===================================================================\n");
+				}
+			}
 
-	        for (Encounter e : allEncounters) {
-	            int index = e.getId();
-	            amounts[index]++;
-	            chances[index] += e.getEncounterChance();
-	        }
-	        
-	        writer.write("ID,species,amt,avg");
-	        for (int i = 1; i <= Pokemon.MAX_POKEMON; i++) {
-	            double average = amounts[i] == 0 ? 0.0 : chances[i] / amounts[i] * 100;
-	            writer.write(i + "," + Pokemon.getName(i) + "," + amounts[i] + "," + String.format("%.2f", average) + "%\n");
-	        }
+			for (Encounter e : allEncounters) {
+				int index = e.getId();
+				amounts[index]++;
+				chances[index] += e.getEncounterChance();
+			}
+			
+			writer.write("ID,species,amt,avg");
+			for (int i = 1; i <= Pokemon.MAX_POKEMON; i++) {
+				double average = amounts[i] == 0 ? 0.0 : chances[i] / amounts[i] * 100;
+				writer.write(i + "," + Pokemon.getName(i) + "," + amounts[i] + "," + String.format("%.2f", average) + "%\n");
+			}
 
-	        writer.close();
-	    } catch (IOException e1) {
-	        e1.printStackTrace();
-	    }
+			writer.close();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 	}
 
 	private static String writeGiftSection(ArrayList<GiftEncounter> gifts) {
-	    StringBuilder sb = new StringBuilder();
-	    int gift = 0;
-	    for (GiftEncounter g : gifts) {
-	    	if (gift > 0) sb.append("-------------------------------------------------------------------\n");
-	        sb.append("GIFT:\n");
-	        switch (g.type) {
-	            case FIXED:
-	                sb.append("  Gift: ");
-	                for (int i = 0; i < g.possibleIds.length; i++) {
-	                    if (i > 0) sb.append(" / ");
-	                    sb.append(Pokemon.getName(g.possibleIds[i]));
-	                }
-	                sb.append("\n");
-	                break;
-	            case TABLE:
-	                sb.append("  Possible Pokemon (").append(g.possibleIds.length).append(" options):\n");
-	                for (int id : g.possibleIds) {
-	                    sb.append("    - ").append(Pokemon.getName(id)).append("\n");
-	                }
-	                break;
-	            case UNREGISTERED_BASE:
-	                sb.append("  Pool: Random unregistered non-legendary base Pokemon\n");
-	                break;
-	        }
-	        if (g.level > 0) sb.append("  Level: ").append(g.level).append("\n");
-	        if (g.notes != null && !g.notes.isEmpty()) sb.append("  Notes: ").append(g.notes).append("\n");
-	        gift++;
-	    }
-	    return sb.toString();
+		StringBuilder sb = new StringBuilder();
+		int gift = 0;
+		for (GiftEncounter g : gifts) {
+			if (gift > 0) sb.append("-------------------------------------------------------------------\n");
+			sb.append("GIFT:\n");
+			switch (g.type) {
+				case FIXED:
+					sb.append("  Gift: ");
+					for (int i = 0; i < g.possibleIds.length; i++) {
+						if (i > 0) sb.append(" / ");
+						sb.append(Pokemon.getName(g.possibleIds[i]));
+					}
+					sb.append("\n");
+					break;
+				case TABLE:
+					sb.append("  Possible Pokemon (").append(g.possibleIds.length).append(" options):\n");
+					for (int id : g.possibleIds) {
+						sb.append("	- ").append(Pokemon.getName(id)).append("\n");
+					}
+					break;
+				case UNREGISTERED_BASE:
+					sb.append("  Pool: Random unregistered non-legendary base Pokemon\n");
+					break;
+			}
+			if (g.level > 0) sb.append("  Level: ").append(g.level).append("\n");
+			if (g.notes != null && !g.notes.isEmpty()) sb.append("  Notes: ").append(g.notes).append("\n");
+			gift++;
+		}
+		return sb.toString();
 	}
 
 	private static String writeEncounter(ArrayList<Encounter> encounters) {
@@ -163,185 +163,185 @@ public class EncounterDoc {
 	}
 	
 	private static Map<String, ArrayList<GiftEncounter>> buildGiftLocationMap(GamePanel gp) {
-	    Map<String, ArrayList<GiftEncounter>> giftMap = new LinkedHashMap<>();
-	    for (GiftEncounter g : Script.giftEncounters) {
-	        int mapNum = g.coordinates[0];
-	        int tileX = g.coordinates[1];
-	        int tileY = g.coordinates[2];
-	        PMap.getLoc(mapNum, tileX, tileY);
-	        String location = PlayerCharacter.currentMapName;
-	        giftMap.computeIfAbsent(location, k -> new ArrayList<>()).add(g);
-	    }
-	    return giftMap;
+		Map<String, ArrayList<GiftEncounter>> giftMap = new LinkedHashMap<>();
+		for (GiftEncounter g : Script.giftEncounters) {
+			int mapNum = g.coordinates[0];
+			int tileX = g.coordinates[1];
+			int tileY = g.coordinates[2];
+			PMap.getLoc(mapNum, tileX, tileY);
+			String location = PlayerCharacter.currentMapName;
+			giftMap.computeIfAbsent(location, k -> new ArrayList<>()).add(g);
+		}
+		return giftMap;
 	}
 
 	// ========================================================================
 	// Excel version
 	// ========================================================================
 	public static void writeEncountersToExcel(GamePanel gp, Path dir) {
-	    Workbook wb = new XSSFWorkbook();
-	    Sheet sheet = wb.createSheet("Wild Encounters");
-	    sheet.setColumnWidth(0, 1400); // sprite col
-	    for (int c = 1; c <= WILD_LAST_COL; c++) {
-	        sheet.setColumnWidth(c, 2400);
-	    }
+		Workbook wb = new XSSFWorkbook();
+		Sheet sheet = wb.createSheet("Wild Encounters");
+		sheet.setColumnWidth(0, 1400); // sprite col
+		for (int c = 1; c <= WILD_LAST_COL; c++) {
+			sheet.setColumnWidth(c, 2400);
+		}
 
-	    int rowIndex = 0;
-	    for (Map.Entry<String, ArrayList<Encounter>> e : Encounter.encounters.entrySet()) {
-	        String[] parts = e.getKey().split("\\|");
-	        String area = parts[0];
-	        String type = parts[1];
-	        String typeName = encounterTypeName(type);
+		int rowIndex = 0;
+		for (Map.Entry<String, ArrayList<Encounter>> e : Encounter.encounters.entrySet()) {
+			String[] parts = e.getKey().split("\\|");
+			String area = parts[0];
+			String type = parts[1];
+			String typeName = encounterTypeName(type);
 
-	        rowIndex = DocUtils.writeLocationHeader(sheet, rowIndex, area + " (" + typeName + ")", WILD_LAST_COL);
-	        rowIndex = writeEncounterRows(wb, sheet, e.getValue(), rowIndex);
-	        rowIndex++; // blank spacer row between locations
-	    }
+			rowIndex = DocUtils.writeLocationHeader(sheet, rowIndex, area + " (" + typeName + ")", WILD_LAST_COL);
+			rowIndex = writeEncounterRows(wb, sheet, e.getValue(), rowIndex);
+			rowIndex++; // blank spacer row between locations
+		}
 
-	    // Gift encounters get their own tab rather than being interleaved,
-	    // since they don't carry the same sprite-table shape as wild encounters.
-	    writeGiftEncounterSheet(wb, gp);
+		// Gift encounters get their own tab rather than being interleaved,
+		// since they don't carry the same sprite-table shape as wild encounters.
+		writeGiftEncounterSheet(wb, gp);
 
-	    Path outPath = dir.resolve("WildPokemon.xlsx");
-	    try (FileOutputStream fileOut = new FileOutputStream(outPath.toFile())) {
-	        wb.write(fileOut);
-	        wb.close();
-	    } catch (IOException ex) {
-	        ex.printStackTrace();
-	    }
+		Path outPath = dir.resolve("WildPokemon.xlsx");
+		try (FileOutputStream fileOut = new FileOutputStream(outPath.toFile())) {
+			wb.write(fileOut);
+			wb.close();
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	private static String encounterTypeName(String type) {
-	    switch (type) {
-	        case "G": return "Standard";
-	        case "F": return "Fish";
-	        case "S": return "Surf";
-	        case "L": return "Lava";
-	        default:  return "Unknown";
-	    }
+		switch (type) {
+			case "G": return "Standard";
+			case "F": return "Fish";
+			case "S": return "Surf";
+			case "L": return "Lava";
+			default:  return "Unknown";
+		}
 	}
 
 	private static int writeEncounterRows(Workbook wb, Sheet sheet, ArrayList<Encounter> encounters, int rowIndex) {
-	    for (Encounter enc : encounters) {
-	        Pokemon p = new Pokemon(enc.getId(), 5, false, false);
-	        Row row = sheet.createRow(rowIndex++);
-	        row.setHeightInPoints(20);
+		for (Encounter enc : encounters) {
+			Pokemon p = new Pokemon(enc.getId(), 5, false, false);
+			Row row = sheet.createRow(rowIndex++);
+			row.setHeightInPoints(20);
 
-	        try {
-	            byte[] spriteBytes = DocUtils.imageToBytes(DocUtils.getCachedSprite(p), "png");
-	            if (spriteBytes != null) {
-	                DocUtils.insertImage(sheet, spriteBytes, 0, row.getRowNum(), 1, 1, 0.6, 0.6);
-	            }
-	        } catch (IOException ex) {
-	            ex.printStackTrace();
-	        }
+			try {
+				byte[] spriteBytes = DocUtils.imageToBytes(DocUtils.getCachedSprite(p), "png");
+				if (spriteBytes != null) {
+					DocUtils.insertImage(sheet, spriteBytes, 0, row.getRowNum(), 1, 1, 0.6, 0.6);
+				}
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
 
-	        Cell nameCell = row.createCell(1);
-	        nameCell.setCellValue(p.name());
-	        nameCell.setCellStyle(plainStyle(wb, true, HorizontalAlignment.LEFT));
-	        sheet.addMergedRegion(new CellRangeAddress(row.getRowNum(), row.getRowNum(), 1, 3));
+			Cell nameCell = row.createCell(1);
+			nameCell.setCellValue(p.name());
+			nameCell.setCellStyle(plainStyle(wb, true, HorizontalAlignment.LEFT));
+			sheet.addMergedRegion(new CellRangeAddress(row.getRowNum(), row.getRowNum(), 1, 3));
 
-	        boolean sameLv = enc.getMinLevel() == enc.getMaxLevel();
-	        String levelStr = sameLv ? "Lv. " + enc.getMinLevel() : "Lv. " + enc.getMinLevel() + " - " + enc.getMaxLevel();
-	        Cell levelCell = row.createCell(4);
-	        levelCell.setCellValue(levelStr);
-	        levelCell.setCellStyle(plainStyle(wb, false, HorizontalAlignment.LEFT));
-	        sheet.addMergedRegion(new CellRangeAddress(row.getRowNum(), row.getRowNum(), 4, 5));
+			boolean sameLv = enc.getMinLevel() == enc.getMaxLevel();
+			String levelStr = sameLv ? "Lv. " + enc.getMinLevel() : "Lv. " + enc.getMinLevel() + " - " + enc.getMaxLevel();
+			Cell levelCell = row.createCell(4);
+			levelCell.setCellValue(levelStr);
+			levelCell.setCellStyle(plainStyle(wb, false, HorizontalAlignment.LEFT));
+			sheet.addMergedRegion(new CellRangeAddress(row.getRowNum(), row.getRowNum(), 4, 5));
 
-	        Cell chanceCell = row.createCell(6);
-	        chanceCell.setCellValue(enc.getEncounterChance());
-	        chanceCell.setCellStyle(percentStyle(wb));
-	        sheet.addMergedRegion(new CellRangeAddress(row.getRowNum(), row.getRowNum(), 6, WILD_LAST_COL));
-	    }
-	    return rowIndex;
+			Cell chanceCell = row.createCell(6);
+			chanceCell.setCellValue(enc.getEncounterChance());
+			chanceCell.setCellStyle(percentStyle(wb));
+			sheet.addMergedRegion(new CellRangeAddress(row.getRowNum(), row.getRowNum(), 6, WILD_LAST_COL));
+		}
+		return rowIndex;
 	}
 
 	// ----------------------------------------------------------------------
 	// Gift encounters tab
 	// ----------------------------------------------------------------------
 	private static void writeGiftEncounterSheet(Workbook wb, GamePanel gp) {
-	    Sheet sheet = wb.createSheet("Gift Encounters");
-	    sheet.setColumnWidth(0, 1400);
-	    for (int c = 1; c <= WILD_LAST_COL; c++) {
-	        sheet.setColumnWidth(c, 2400);
-	    }
+		Sheet sheet = wb.createSheet("Gift Encounters");
+		sheet.setColumnWidth(0, 1400);
+		for (int c = 1; c <= WILD_LAST_COL; c++) {
+			sheet.setColumnWidth(c, 2400);
+		}
 
-	    Map<String, ArrayList<GiftEncounter>> giftMap = buildGiftLocationMap(gp);
+		Map<String, ArrayList<GiftEncounter>> giftMap = buildGiftLocationMap(gp);
 
-	    int rowIndex = 0;
-	    for (Map.Entry<String, ArrayList<GiftEncounter>> e : giftMap.entrySet()) {
-	        rowIndex = DocUtils.writeLocationHeader(sheet, rowIndex, e.getKey(), WILD_LAST_COL);
+		int rowIndex = 0;
+		for (Map.Entry<String, ArrayList<GiftEncounter>> e : giftMap.entrySet()) {
+			rowIndex = DocUtils.writeLocationHeader(sheet, rowIndex, e.getKey(), WILD_LAST_COL);
 
-	        for (GiftEncounter g : e.getValue()) {
-	            rowIndex = writeGiftRows(wb, sheet, g, rowIndex);
-	        }
-	        rowIndex++; // blank spacer row
-	    }
+			for (GiftEncounter g : e.getValue()) {
+				rowIndex = writeGiftRows(wb, sheet, g, rowIndex);
+			}
+			rowIndex++; // blank spacer row
+		}
 	}
 
 	private static int writeGiftRows(Workbook wb, Sheet sheet, GiftEncounter g, int rowIndex) {
-	    ArrayList<Pokemon> options = new ArrayList<>();
-	    for (int id : g.possibleIds) {
-	        options.add(new Pokemon(id, 5, false, false));
-	    }
+		ArrayList<Pokemon> options = new ArrayList<>();
+		for (int id : g.possibleIds) {
+			options.add(new Pokemon(id, 5, false, false));
+		}
 
-	    for (Pokemon p : options) {
-	        Row row = sheet.createRow(rowIndex++);
-	        row.setHeightInPoints(20);
+		for (Pokemon p : options) {
+			Row row = sheet.createRow(rowIndex++);
+			row.setHeightInPoints(20);
 
-	        try {
-	            byte[] spriteBytes = DocUtils.imageToBytes(DocUtils.getCachedSprite(p), "png");
-	            if (spriteBytes != null) {
-	                DocUtils.insertImage(sheet, spriteBytes, 0, row.getRowNum(), 1, 1, 0.6, 0.6);
-	            }
-	        } catch (IOException ex) {
-	            ex.printStackTrace();
-	        }
+			try {
+				byte[] spriteBytes = DocUtils.imageToBytes(DocUtils.getCachedSprite(p), "png");
+				if (spriteBytes != null) {
+					DocUtils.insertImage(sheet, spriteBytes, 0, row.getRowNum(), 1, 1, 0.6, 0.6);
+				}
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
 
-	        Cell nameCell = row.createCell(1);
-	        nameCell.setCellValue(p.name());
-	        nameCell.setCellStyle(plainStyle(wb, true, HorizontalAlignment.LEFT));
-	        sheet.addMergedRegion(new CellRangeAddress(row.getRowNum(), row.getRowNum(), 1, 3));
+			Cell nameCell = row.createCell(1);
+			nameCell.setCellValue(p.name());
+			nameCell.setCellStyle(plainStyle(wb, true, HorizontalAlignment.LEFT));
+			sheet.addMergedRegion(new CellRangeAddress(row.getRowNum(), row.getRowNum(), 1, 3));
 
-	        String detail = "";
-	        if (g.level > 0) detail += "Lv. " + g.level;
-	        if (g.notes != null && !g.notes.isEmpty()) detail += (detail.isEmpty() ? "" : "  |  ") + g.notes;
+			String detail = "";
+			if (g.level > 0) detail += "Lv. " + g.level;
+			if (g.notes != null && !g.notes.isEmpty()) detail += (detail.isEmpty() ? "" : "  |  ") + g.notes;
 
-	        Cell detailCell = row.createCell(4);
-	        detailCell.setCellValue(detail);
-	        detailCell.setCellStyle(plainStyle(wb, false, HorizontalAlignment.LEFT));
-	        sheet.addMergedRegion(new CellRangeAddress(row.getRowNum(), row.getRowNum(), 4, WILD_LAST_COL));
-	    }
+			Cell detailCell = row.createCell(4);
+			detailCell.setCellValue(detail);
+			detailCell.setCellStyle(plainStyle(wb, false, HorizontalAlignment.LEFT));
+			sheet.addMergedRegion(new CellRangeAddress(row.getRowNum(), row.getRowNum(), 4, WILD_LAST_COL));
+		}
 
-	    return rowIndex;
+		return rowIndex;
 	}
 
 	// ----------------------------------------------------------------------
 	// Styles
 	// ----------------------------------------------------------------------
 	private static CellStyle plainStyle(Workbook wb, boolean bold, HorizontalAlignment align) {
-	    XSSFCellStyle style = (XSSFCellStyle) wb.createCellStyle();
-	    style.setAlignment(align);
-	    style.setVerticalAlignment(VerticalAlignment.CENTER);
+		XSSFCellStyle style = (XSSFCellStyle) wb.createCellStyle();
+		style.setAlignment(align);
+		style.setVerticalAlignment(VerticalAlignment.CENTER);
 
-	    XSSFFont font = (XSSFFont) wb.createFont();
-	    font.setBold(bold);
-	    font.setFontHeightInPoints((short) 11);
-	    style.setFont(font);
+		XSSFFont font = (XSSFFont) wb.createFont();
+		font.setBold(bold);
+		font.setFontHeightInPoints((short) 11);
+		style.setFont(font);
 
-	    return style;
+		return style;
 	}
 
 	private static CellStyle percentStyle(Workbook wb) {
-	    XSSFCellStyle style = (XSSFCellStyle) wb.createCellStyle();
-	    style.setAlignment(HorizontalAlignment.LEFT);
-	    style.setVerticalAlignment(VerticalAlignment.CENTER);
-	    style.setDataFormat(wb.createDataFormat().getFormat("0%"));
+		XSSFCellStyle style = (XSSFCellStyle) wb.createCellStyle();
+		style.setAlignment(HorizontalAlignment.LEFT);
+		style.setVerticalAlignment(VerticalAlignment.CENTER);
+		style.setDataFormat(wb.createDataFormat().getFormat("0%"));
 
-	    XSSFFont font = (XSSFFont) wb.createFont();
-	    font.setFontHeightInPoints((short) 11);
-	    style.setFont(font);
+		XSSFFont font = (XSSFFont) wb.createFont();
+		font.setFontHeightInPoints((short) 11);
+		style.setFont(font);
 
-	    return style;
+		return style;
 	}
 }

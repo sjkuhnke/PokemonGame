@@ -2041,7 +2041,7 @@ public class AssetSetter {
 		gp.npc[87][index] = NPCSetup(NPC_CLERK, 27, 39, "", "", -1);
 		gp.npc[87][index] = NPCSetup(NPC_BALL, 27, 38, "", "", -1);
 		gp.npc[89][index] = SetupClerk(NPC_MARKET, 24, 36, Item.TM45, Item.TM50, Item.TM54, Item.TM74, Item.TM75,
-                Item.TM76, Item.TM77, Item.TM79, Item.TM80, Item.TM81, Item.TM82);
+				Item.TM76, Item.TM77, Item.TM79, Item.TM80, Item.TM81, Item.TM82);
 		gp.npc[112][index] = SetupClerk(NPC_MARKET, 31, 41, Item.MAX_ELIXIR, Item.PP_UP, Item.TM41, Item.TM42, Item.TM91, Item.TM97);
 		gp.npc[126][index] = NPCSetup(NPC_CLERK, 27, 39, "", "", -1);
 		gp.npc[126][index] = NPCSetup(NPC_BALL, 27, 38, "", "", -1);
@@ -2258,12 +2258,12 @@ public class AssetSetter {
 		mapNum = 53;
 		index = 0;
 		gp.npc[mapNum][index] = SetupClerk(NPC_MARKET, 31, 41, Item.ORAN_BERRY, Item.CHERI_BERRY, Item.CHESTO_BERRY, Item.PECHA_BERRY, Item.RAWST_BERRY, Item.ASPEAR_BERRY,
-                Item.PERSIM_BERRY, Item.LUM_BERRY, Item.LEPPA_BERRY, Item.SITRUS_BERRY, Item.WIKI_BERRY, Item.SPELON_BERRY, Item.BELUE_BERRY, Item.PAMTRE_BERRY, Item.DURIN_BERRY,
-                Item.WATMEL_BERRY, Item.WEPEAR_BERRY, Item.BLUK_BERRY, Item.OCCA_BERRY, Item.PASSHO_BERRY, Item.WACAN_BERRY, Item.RINDO_BERRY,
-                Item.YACHE_BERRY, Item.CHOPLE_BERRY, Item.KEBIA_BERRY, Item.SHUCA_BERRY, Item.COBA_BERRY, Item.PAYAPA_BERRY, Item.TANGA_BERRY, Item.CHARTI_BERRY,
-                Item.KASIB_BERRY, Item.HABAN_BERRY, Item.COLBUR_BERRY, Item.BABIRI_BERRY, Item.CHILAN_BERRY, Item.ROSELI_BERRY, Item.MYSTICOLA_BERRY, Item.GALAXEED_BERRY,
-                Item.LIECHI_BERRY, Item.GANLON_BERRY, Item.SALAC_BERRY, Item.PETAYA_BERRY, Item.APICOT_BERRY, Item.STARF_BERRY, Item.MICLE_BERRY, Item.LANSAT_BERRY, Item.CUSTAP_BERRY,
-                Item.JABOCA_BERRY, Item.ROWAP_BERRY, Item.KEE_BERRY, Item.MARANGA_BERRY, Item.ENIGMA_BERRY);
+				Item.PERSIM_BERRY, Item.LUM_BERRY, Item.LEPPA_BERRY, Item.SITRUS_BERRY, Item.WIKI_BERRY, Item.SPELON_BERRY, Item.BELUE_BERRY, Item.PAMTRE_BERRY, Item.DURIN_BERRY,
+				Item.WATMEL_BERRY, Item.WEPEAR_BERRY, Item.BLUK_BERRY, Item.OCCA_BERRY, Item.PASSHO_BERRY, Item.WACAN_BERRY, Item.RINDO_BERRY,
+				Item.YACHE_BERRY, Item.CHOPLE_BERRY, Item.KEBIA_BERRY, Item.SHUCA_BERRY, Item.COBA_BERRY, Item.PAYAPA_BERRY, Item.TANGA_BERRY, Item.CHARTI_BERRY,
+				Item.KASIB_BERRY, Item.HABAN_BERRY, Item.COLBUR_BERRY, Item.BABIRI_BERRY, Item.CHILAN_BERRY, Item.ROSELI_BERRY, Item.MYSTICOLA_BERRY, Item.GALAXEED_BERRY,
+				Item.LIECHI_BERRY, Item.GANLON_BERRY, Item.SALAC_BERRY, Item.PETAYA_BERRY, Item.APICOT_BERRY, Item.STARF_BERRY, Item.MICLE_BERRY, Item.LANSAT_BERRY, Item.CUSTAP_BERRY,
+				Item.JABOCA_BERRY, Item.ROWAP_BERRY, Item.KEE_BERRY, Item.MARANGA_BERRY, Item.ENIGMA_BERRY);
 		
 		mapNum = 57;
 		index = 0;
@@ -2394,7 +2394,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC, 36, 35, "", "", -1);
 		gp.npc[mapNum][index] = SetupClerk(NPC_MARKET, 22, 37, Item.LONELY_MINT, Item.ADAMANT_MINT, Item.NAUGHTY_MINT, Item.BRAVE_MINT, Item.BOLD_MINT, Item.IMPISH_MINT,
 				Item.LAX_MINT, Item.RELAXED_MINT, Item.MODEST_MINT, Item.MILD_MINT, Item.RASH_MINT, Item.QUIET_MINT, Item.CALM_MINT, Item.GENTLE_MINT, Item.CAREFUL_MINT,
-                Item.SASSY_MINT, Item.TIMID_MINT, Item.HASTY_MINT, Item.JOLLY_MINT, Item.NAIVE_MINT, Item.SERIOUS_MINT);
+				Item.SASSY_MINT, Item.TIMID_MINT, Item.HASTY_MINT, Item.JOLLY_MINT, Item.NAIVE_MINT, Item.SERIOUS_MINT);
 		
 		mapNum = 93;
 		index = 0;
@@ -6094,20 +6094,20 @@ public class AssetSetter {
 	}
 	
 	public int generateFlagSeed(int id, int x, int y, int currentMap, boolean[][] flag) {
-	    int hash = 7;
-	    hash = 31 * hash + id;
-
-	    hash = 31 * hash + x;
-	    hash = 31 * hash + y;
-	    hash = 31 * hash + currentMap;
-
-	    for (boolean[] row : flag) {
-	        for (boolean b : row) {
-	            hash = 31 * hash + (b ? 1 : 0);
-	        }
-	    }
-
-	    return hash;
+		int hash = 7;
+		hash = 31 * hash + id;
+		
+		hash = 31 * hash + x;
+		hash = 31 * hash + y;
+		hash = 31 * hash + currentMap;
+		
+		for (boolean[] row : flag) {
+			for (boolean b : row) {
+				hash = 31 * hash + (b ? 1 : 0);
+			}
+		}
+		
+		return hash;
 	}
 
 	private ItemObj ObjSetup(int x, int y, Item item, int mapNum, int amt) {
@@ -6311,23 +6311,23 @@ public class AssetSetter {
 		iIndex++;
 		
 		int[][] offsets = {
-	            {-1, -1}, {0, -1}, {1, -1},
-	            {-1, 0},           {1, 0},
-	            {-1, 1},  {0, 1},  {1, 1}
-	    };
+				{-1, -1}, {0, -1}, {1, -1},
+				{-1, 0},           {1, 0},
+				{-1, 1},  {0, 1},  {1, 1}
+		};
 		
 		for (int i = 0; i < 8; i++) {
 			int offsetX = x + offsets[i][0];
-	        int offsetY = y + offsets[i][1];
+			int offsetY = y + offsets[i][1];
 			
 			Whirlpool current;
-	        if (i % 2 == 0) {
-	            current = new Whirlpool_Side(gp, offsetX, offsetY);
-	            current.down1 = current.setup("/interactive/whirlpool" + (i + 1));
-	        } else {
-	            current = new Whirlpool_Corner(gp, offsetX, offsetY);
-	            current.down1 = current.setup("/interactive/whirlpool" + (i + 1));
-	        }
+			if (i % 2 == 0) {
+				current = new Whirlpool_Side(gp, offsetX, offsetY);
+				current.down1 = current.setup("/interactive/whirlpool" + (i + 1));
+			} else {
+				current = new Whirlpool_Corner(gp, offsetX, offsetY);
+				current.down1 = current.setup("/interactive/whirlpool" + (i + 1));
+			}
 			
 			gp.iTile[mapNum][iIndex] = current;
 			iIndex++;

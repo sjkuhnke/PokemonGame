@@ -3509,6 +3509,134 @@
       }
     ]
   },
+  
+  "perish_song": {
+    "type": "status",
+    "frames": [
+      {
+        "type": "SHAKE",
+        "target": "ATTACKER",
+        "delay": 0,
+        "duration": 400,
+        "properties": {
+          "intensity": 5
+        }
+      },
+      {
+        "type": "EFFECT",
+        "target": "ATTACKER",
+        "delay": 0,
+        "duration": 600,
+        "properties": {
+          "sprite": "note",
+          "startX": 0,
+          "startY": 0,
+          "endX": 0,
+          "endY": -0.4,
+          "towardsTarget": false,
+          "easing": "decel",
+          "count": 5,
+          "spreadX": 0.3,
+          "spreadY": 0.15,
+          "delayBetween": 60
+        }
+      },
+      {
+        "type": "EFFECT",
+        "target": "ATTACKER",
+        "delay": 100,
+        "duration": 600,
+        "properties": {
+          "sprite": "note",
+          "startX": 0,
+          "startY": 0,
+          "endX": 1,
+          "endY": 0,
+          "towardsTarget": true,
+          "easing": "linear",
+          "count": 6,
+          "spreadX": 0.12,
+          "spreadY": 0.12,
+          "delayBetween": 50
+        }
+      },
+      {
+        "type": "EFFECT",
+        "target": "DEFENDER",
+        "delay": 600,
+        "duration": 700,
+        "properties": {
+          "sprite": "note",
+          "startX": 0.3,
+          "startY": 0.3,
+          "endX": -0.3,
+          "endY": -0.3,
+          "towardsTarget": false,
+          "easing": "linear",
+          "count": 4,
+          "spreadX": 0.35,
+          "spreadY": 0.35,
+          "delayBetween": 100
+        }
+      },
+      {
+        "type": "EFFECT",
+        "target": "DEFENDER",
+        "delay": 700,
+        "duration": 600,
+        "properties": {
+          "sprite": "blackwisp",
+          "startX": 0,
+          "startY": 0.1,
+          "endX": 0,
+          "endY": -0.2,
+          "towardsTarget": false,
+          "easing": "decel",
+          "count": 3,
+          "spreadX": 0.2,
+          "spreadY": 0.1,
+          "delayBetween": 90
+        }
+      },
+      {
+        "type": "SHAKE",
+        "target": "DEFENDER",
+        "delay": 600,
+        "duration": 400,
+        "properties": {
+          "intensity": 5
+        }
+      },
+      {
+        "type": "EFFECT",
+        "target": "ATTACKER",
+        "delay": 900,
+        "duration": 600,
+        "properties": {
+          "sprite": "blackwisp",
+          "startX": 0,
+          "startY": 0.1,
+          "endX": 0,
+          "endY": -0.2,
+          "towardsTarget": false,
+          "easing": "decel",
+          "count": 3,
+          "spreadX": 0.2,
+          "spreadY": 0.1,
+          "delayBetween": 90
+        }
+      },
+      {
+        "type": "SHAKE",
+        "target": "ATTACKER",
+        "delay": 900,
+        "duration": 300,
+        "properties": {
+          "intensity": 4
+        }
+      }
+    ]
+  },
 
   "play_nice": {
     "type": "status",

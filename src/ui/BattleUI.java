@@ -373,86 +373,86 @@ public class BattleUI extends AbstractUI {
 		if (gp.keyH.leftPressed) {
 			gp.keyH.leftPressed = false;
 			if (commandNum >= offset) {
-	            // In player team - move left
-	            if (commandNum > offset) commandNum--;
-	        } else {
-	            // In foe team - move left in grid
-	            if (commandNum % 3 > 0) commandNum--;
-	        }
+				// In player team - move left
+				if (commandNum > offset) commandNum--;
+			} else {
+				// In foe team - move left in grid
+				if (commandNum % 3 > 0) commandNum--;
+			}
 		}
 		if (gp.keyH.rightPressed) {
 			gp.keyH.rightPressed = false;
 			if (commandNum >= offset) {
-	            // In player team - move right
-	            int maxIndex = offset;
-	            for (int i = 0; i < team.length; i++) {
-	                if (team[i] != null) maxIndex = i + offset;
-	            }
-	            if (commandNum < maxIndex) commandNum++;
-	        } else {
-	            // In foe team - move right in grid
-	            Pokemon[] foeTeam = foe.trainer.getTeam();
-	            if (commandNum % 3 < 2 && commandNum + 1 < foeTeam.length && foeTeam[commandNum + 1] != null) {
-	                commandNum++;
-	            }
-	        }
+				// In player team - move right
+				int maxIndex = offset;
+				for (int i = 0; i < team.length; i++) {
+					if (team[i] != null) maxIndex = i + offset;
+				}
+				if (commandNum < maxIndex) commandNum++;
+			} else {
+				// In foe team - move right in grid
+				Pokemon[] foeTeam = foe.trainer.getTeam();
+				if (commandNum % 3 < 2 && commandNum + 1 < foeTeam.length && foeTeam[commandNum + 1] != null) {
+					commandNum++;
+				}
+			}
 		}
 		if (gp.keyH.upPressed) {
 			gp.keyH.upPressed = false;
 			// Move up in the grid
 			if (commandNum >= offset) {
-	            // In player team - move to foe team (bottom row, same column if possible)
-	            int playerIndex = commandNum - offset;
-	            int foeTeamSize = foe.trainer.team.length;
-	            // Go to bottom row of foe team
-	            if (foeTeamSize > 3) {
-	                commandNum = Math.min(3 + playerIndex, foeTeamSize - 1);
-	            } else {
-	                commandNum = Math.min(playerIndex, foeTeamSize - 1);
-	            }
-	        } else {
-	            // In foe team - move up in grid
-	            if (commandNum >= 3) commandNum -= 3;
-	        }
+				// In player team - move to foe team (bottom row, same column if possible)
+				int playerIndex = commandNum - offset;
+				int foeTeamSize = foe.trainer.team.length;
+				// Go to bottom row of foe team
+				if (foeTeamSize > 3) {
+					commandNum = Math.min(3 + playerIndex, foeTeamSize - 1);
+				} else {
+					commandNum = Math.min(playerIndex, foeTeamSize - 1);
+				}
+			} else {
+				// In foe team - move up in grid
+				if (commandNum >= 3) commandNum -= 3;
+			}
 		}
 		if (gp.keyH.downPressed) {
 			gp.keyH.downPressed = false;
 			// Move down in the grid
 			if (commandNum >= offset) {
-	            // Already in player team - do nothing
-	        } else {
-	            // In foe team
-	            Pokemon[] foeTeam = foe.trainer.getTeam();
-	            if (commandNum + 3 < foeTeam.length && foeTeam[commandNum + 3] != null) {
-	                // Move down in grid
-	                commandNum += 3;
-	            } else {
-	                // Move to player team
-	                int col = commandNum % 3;
-	                int playerTeamSize = 0;
-	                for (int i = 0; i < team.length && team[i] != null; i++) {
-	                    playerTeamSize++;
-	                }
-	                commandNum = offset + Math.min(col, playerTeamSize - 1);
-	            }
-	        }
+				// Already in player team - do nothing
+			} else {
+				// In foe team
+				Pokemon[] foeTeam = foe.trainer.getTeam();
+				if (commandNum + 3 < foeTeam.length && foeTeam[commandNum + 3] != null) {
+					// Move down in grid
+					commandNum += 3;
+				} else {
+					// Move to player team
+					int col = commandNum % 3;
+					int playerTeamSize = 0;
+					for (int i = 0; i < team.length && team[i] != null; i++) {
+						playerTeamSize++;
+					}
+					commandNum = offset + Math.min(col, playerTeamSize - 1);
+				}
+			}
 		}
 		if (gp.keyH.wPressed) {
 			gp.keyH.wPressed = false;
 			if (commandNum >= offset) { // player team
-	            int playerIndex = commandNum - offset;
-	            Pokemon pokemon = gp.player.p.team[playerIndex];
-	            if (!pokemon.isFainted()) {
-	            	Pokemon current = gp.player.p.current;
-		            gp.player.p.setCurrent(pokemon);
-		            gp.player.p.team[0] = pokemon;
-		            gp.player.p.team[playerIndex] = current;
-		            user = pokemon;
-		            commandNum = 0;
-		            selectedLead = true;
-		            subState = STARTING_STATE;
-	            }
-	        }
+				int playerIndex = commandNum - offset;
+				Pokemon pokemon = gp.player.p.team[playerIndex];
+				if (!pokemon.isFainted()) {
+					Pokemon current = gp.player.p.current;
+					gp.player.p.setCurrent(pokemon);
+					gp.player.p.team[0] = pokemon;
+					gp.player.p.team[playerIndex] = current;
+					user = pokemon;
+					commandNum = 0;
+					selectedLead = true;
+					subState = STARTING_STATE;
+				}
+			}
 		}
 		
 		drawToolTips(commandNum >= offset ? "Select" : null, null, null, null, "Calc");
@@ -765,15 +765,15 @@ public class BattleUI extends AbstractUI {
 			break;
 		case Task.EXP:
 			currentDialogue = currentTask.message;
-		    if (currentTask.p.isVisible()) {
-		        if (userExp < currentTask.finish) {
-		            userExp++;
-		        } else {
-		            endTask();
-		        }
-		    } else {
-		        endTask();
-		    }
+			if (currentTask.p.isVisible()) {
+				if (userExp < currentTask.finish) {
+					userExp++;
+				} else {
+					endTask();
+				}
+			} else {
+				endTask();
+			}
 			break;
 		case Task.LEVEL_UP:
 			currentDialogue = currentTask.message;
@@ -1013,7 +1013,7 @@ public class BattleUI extends AbstractUI {
 			gp.keyH.wPressed = false;
 			switch(subState) {
 			case STARTING_STATE:
-			    setStartingTasks();
+				setStartingTasks();
 				break;
 			case END_STATE:
 				if (tasks.isEmpty()) {
@@ -1065,11 +1065,11 @@ public class BattleUI extends AbstractUI {
 		field = new Field();
 		user.getFieldEffects().clear();
 		foe.getFieldEffects().clear();
-	    Pokemon.field = field;
-	    userHP = user.currentHP;
-	    maxUserHP = user.getStat(0);
-	    invalidEncounter = false;
-	    if (gp.player.p.nuzlocke && !gp.player.p.canCatchPokemonHere(PlayerCharacter.getMetAt(), foe) && !gp.player.p.bag.contains(Item.TEMPLE_BALL)) {
+		Pokemon.field = field;
+		userHP = user.currentHP;
+		maxUserHP = user.getStat(0);
+		invalidEncounter = false;
+		if (gp.player.p.nuzlocke && !gp.player.p.canCatchPokemonHere(PlayerCharacter.getMetAt(), foe) && !gp.player.p.bag.contains(Item.TEMPLE_BALL)) {
 			invalidEncounter = true;
 		}
 		
@@ -1081,12 +1081,12 @@ public class BattleUI extends AbstractUI {
 		Task.addSwapInTask(user, true);
 		if (staticID == 235) { // dragowrath
 			for (Pokemon p : user.getPlayer().team) {
-	    		if (p != null && p.item != null) {
-	    			p.lostItem = p.item;
-		    		p.item = null;
-		    		Task.addTask(Task.TEXT, p.nickname + " dropped its " + p.lostItem.toString() + " in a panic!");
-	    		}
-	    	}
+				if (p != null && p.item != null) {
+					p.lostItem = p.item;
+					p.item = null;
+					Task.addTask(Task.TEXT, p.nickname + " dropped its " + p.lostItem.toString() + " in a panic!");
+				}
+			}
 		}
 		
 		if (user.getAbility(field) == Ability.NEUTRALIZING_GAS) {
@@ -1099,7 +1099,7 @@ public class BattleUI extends AbstractUI {
 			field.setEffect(field.new FieldEffect(Effect.NEUTRALIZING_GAS), false);
 		}
 		
-	    Pokemon fasterInit = user.getFaster(foe, 0, 0, field);
+		Pokemon fasterInit = user.getFaster(foe, 0, 0, field);
 		Pokemon slowerInit = fasterInit == user ? foe : user;
 		boolean slowerSwapIn = true;
 		fasterInit.swapIn(slowerInit, true);
@@ -1108,7 +1108,7 @@ public class BattleUI extends AbstractUI {
 				Task.addTask(Task.PARTY, "");
 				subState = TASK_STATE;
 				slowerSwapIn = false;
-	        	return;
+				return;
 			}
 		} else {
 			if (slowerInit.trainer != null && slowerInit.trainer.hasValidMembers(foe) && slowerInit.hasStatus(Status.SWITCHING)) {
@@ -1124,7 +1124,7 @@ public class BattleUI extends AbstractUI {
 			if (fasterInit.trainer.hasValidMembers(foe) && hasAlive() && fasterInit.hasStatus(Status.SWITCHING)) {
 				Task.addTask(Task.PARTY, "");
 				subState = TASK_STATE;
-	        	return;
+				return;
 			}
 		} else {
 			if (fasterInit.trainer != null && fasterInit.trainer.hasValidMembers(foe) && fasterInit.hasStatus(Status.SWITCHING)) {
@@ -1502,18 +1502,18 @@ public class BattleUI extends AbstractUI {
 		for (int i = 0; i < 6; i++) {
 		   BufferedImage image = ballIcon;
 
-		    if (i < foe.trainer.getTeam().length) {
-	            if (foeSummary.trainer.team[i].isFainted()) {
-	                image = faintedIcon;
-	            }
-	            if (i == yellowIndex && foe.isVisible()) {
-	            	image = currentIcon;
-	            }
-		    } else {
-		    	image = emptyIcon;
-		    }
-		    g2.drawImage(image, x, y, null);
-            x += width;
+			if (i < foe.trainer.getTeam().length) {
+				if (foeSummary.trainer.team[i].isFainted()) {
+					image = faintedIcon;
+				}
+				if (i == yellowIndex && foe.isVisible()) {
+					image = currentIcon;
+				}
+			} else {
+				image = emptyIcon;
+			}
+			g2.drawImage(image, x, y, null);
+			x += width;
 		}
 		
 	}
@@ -1642,31 +1642,31 @@ public class BattleUI extends AbstractUI {
 		Moveslot[] moves = user.moveset;
 		for (int i = 0; i < moves.length; i++) {
 			if (moves[i] != null) {
-		        if (i == 2) {
-		            x = gp.tileSize * 7;
-		            y += height + 16;
-		        } else if (i != 0) {
-		            x += width + gp.tileSize;
-		        }
-		        
-		        Move move = moves[i].move;
-		        PType mtype = move.getType(user, Pokemon.field);
-		        Color color = mtype.getColor();
-		        if (!user.moveUsable(moves[i].move)) color = new Color(100, 100, 100, 200);
-		        g2.setColor(color);
-		        g2.fillRoundRect(x, y, width, height, 10, 10);
-		        String text = moves[i].move.toString();
-		        g2.setFont(g2.getFont().deriveFont(getFontSize(text, width + gp.tileSize / 2)));
-		        g2.setColor(moves[i].getPPColor());
-		        g2.drawString(text, getCenterAlignedTextX(text, (x + width / 2)), y + 30);
-		        g2.setFont(g2.getFont().deriveFont(24F));
-		        String pp = showMoveSummary ? moves[i].move.cat == 2 ? "Status" : mtype.effectiveness(foe, user, moves[i].move) : moves[i].currentPP + " / " + moves[i].maxPP;
-		        g2.drawString(pp, getCenterAlignedTextX(pp, (x + width / 2)), y + 55);
-		        if (moveNum == i) {
-		            g2.setColor(Color.WHITE);
-		            g2.drawRoundRect(x, y, width, height, 10, 10);
-		        }
-		    }
+				if (i == 2) {
+					x = gp.tileSize * 7;
+					y += height + 16;
+				} else if (i != 0) {
+					x += width + gp.tileSize;
+				}
+				
+				Move move = moves[i].move;
+				PType mtype = move.getType(user, Pokemon.field);
+				Color color = mtype.getColor();
+				if (!user.moveUsable(moves[i].move)) color = new Color(100, 100, 100, 200);
+				g2.setColor(color);
+				g2.fillRoundRect(x, y, width, height, 10, 10);
+				String text = moves[i].move.toString();
+				g2.setFont(g2.getFont().deriveFont(getFontSize(text, width + gp.tileSize / 2)));
+				g2.setColor(moves[i].getPPColor());
+				g2.drawString(text, getCenterAlignedTextX(text, (x + width / 2)), y + 30);
+				g2.setFont(g2.getFont().deriveFont(24F));
+				String pp = showMoveSummary ? moves[i].move.cat == 2 ? "Status" : mtype.effectiveness(foe, user, moves[i].move) : moves[i].currentPP + " / " + moves[i].maxPP;
+				g2.drawString(pp, getCenterAlignedTextX(pp, (x + width / 2)), y + 55);
+				if (moveNum == i) {
+					g2.setColor(Color.WHITE);
+					g2.drawRoundRect(x, y, width, height, 10, 10);
+				}
+			}
 		}
 		if (gp.keyH.wPressed) {
 			gp.keyH.wPressed = false;
@@ -1682,22 +1682,22 @@ public class BattleUI extends AbstractUI {
 			
 			if (moves[moveNum].currentPP == 0 && !user.movesetEmpty()) {
 				subState = MOVE_MESSAGE_STATE;
-    			showMessage("No more PP remaining!");
-    			return;
-    		}
-        	if (!user.moveUsable(moves[moveNum].move) && !user.movesetEmpty()) {
-        		subState = MOVE_MESSAGE_STATE;
-    			showMessage(moves[moveNum].move + " cannot be used!");
-    			return;
-    		}
-        	Move move = moves[moveNum].move;
-    		if (user.movesetEmpty()) move = Move.STRUGGLE;
+				showMessage("No more PP remaining!");
+				return;
+			}
+			if (!user.moveUsable(moves[moveNum].move) && !user.movesetEmpty()) {
+				subState = MOVE_MESSAGE_STATE;
+				showMessage(moves[moveNum].move + " cannot be used!");
+				return;
+			}
+			Move move = moves[moveNum].move;
+			if (user.movesetEmpty()) move = Move.STRUGGLE;
 			
-    		foeMove = foe.trainerOwned() ? foe.bestMove2(user, user.getFaster(foe, 0, 0, field) == foe, difficulty) : foe.randomMove();
-        	
-        	showMoveSummary = false;
-        	turn(move, foeMove);
-        }
+			foeMove = foe.trainerOwned() ? foe.bestMove2(user, user.getFaster(foe, 0, 0, field) == foe, difficulty) : foe.randomMove();
+			
+			showMoveSummary = false;
+			turn(move, foeMove);
+		}
 		if (gp.keyH.sPressed) {
 			gp.keyH.sPressed = false;
 			subState = IDLE_STATE;
@@ -1728,8 +1728,8 @@ public class BattleUI extends AbstractUI {
 			}
 		}
 		if (showMoveSummary) {
-        	drawMoveSummary(gp.tileSize * 3, gp.tileSize * 2, user, foe, moves[moveNum], null);
-        }
+			drawMoveSummary(gp.tileSize * 3, gp.tileSize * 2, user, foe, moves[moveNum], null);
+		}
 	}
 	
 	public void turn(Move uMove, Move fMove) {
@@ -1786,24 +1786,24 @@ public class BattleUI extends AbstractUI {
 				Task t = Task.addTask(Task.PARTY, "");
 				t.wipe = faster.lastMoveUsed == Move.BATON_PASS;
 				subState = TASK_STATE;
-	        	return;
+				return;
 			}
 			
-	        if (!(foe.trainer != null && slower != foe.trainer.getCurrent()) && foeCanMove) {
-	        	slower.moveInit(faster, fMove, false);
-	        	faster = faster.trainer.getCurrent();
-	        	if (foe.trainer != null) slower = foe.trainer.getCurrent();
-	        	foeMove = null;
-	        }
-	        // Check for swap (AI)
-	        if (foe.trainer != null && foe.trainer.hasValidMembers(foe) && foeCanMove && slower.hasStatus(Status.SWITCHING)) {
-	        	slower = foe.trainer.swapOut2(faster, FREE_SWITCH, slower.lastMoveUsed == Move.BATON_PASS, false);
-	        }
-	        // Check for swap (player)
+			if (!(foe.trainer != null && slower != foe.trainer.getCurrent()) && foeCanMove) {
+				slower.moveInit(faster, fMove, false);
+				faster = faster.trainer.getCurrent();
+				if (foe.trainer != null) slower = foe.trainer.getCurrent();
+				foeMove = null;
+			}
+			// Check for swap (AI)
+			if (foe.trainer != null && foe.trainer.hasValidMembers(foe) && foeCanMove && slower.hasStatus(Status.SWITCHING)) {
+				slower = foe.trainer.swapOut2(faster, FREE_SWITCH, slower.lastMoveUsed == Move.BATON_PASS, false);
+			}
+			// Check for swap (player)
  			if (user.trainer.hasValidMembers(foe) && hasAlive() && faster.hasStatus(Status.SWITCHING)) {
  				Task.addTask(Task.PARTY, "");
  				subState = TASK_STATE;
- 	        	return;
+ 				return;
  			}
 		} else { // enemy Pokemon is faster
 			if (switchSlot > 0) { // AI wants to swap out
@@ -1822,39 +1822,39 @@ public class BattleUI extends AbstractUI {
 				}
 				foeMove = null;
 			}
-	        // Check for swap (player)
+			// Check for swap (player)
  			if (user.trainer.hasValidMembers(foe) && hasAlive() && slower.hasStatus(Status.SWITCHING)) {
  				Task.addTask(Task.PARTY, "");
  				subState = TASK_STATE;
- 	        	return;
+ 				return;
  			}
  			// Check for swap (AI)
-	        if (foe.trainer != null && foe.trainer.hasValidMembers(foe) && faster.hasStatus(Status.SWITCHING)) {
-	        	faster = foe.trainer.swapOut2(slower, faster.getStatusNum(Status.SWITCHING), faster.lastMoveUsed == Move.BATON_PASS, false);
-	        	foeCanMove = false;
-	        	foeMove = null;
-	        }
+			if (foe.trainer != null && foe.trainer.hasValidMembers(foe) && faster.hasStatus(Status.SWITCHING)) {
+				faster = foe.trainer.swapOut2(slower, faster.getStatusNum(Status.SWITCHING), faster.lastMoveUsed == Move.BATON_PASS, false);
+				foeCanMove = false;
+				foeMove = null;
+			}
 			
-	        if (userCanMove) {
-	        	slower.moveInit(faster, uMove, false);
-	        	if (faster.trainer != null) faster = faster.trainer.getCurrent();
+			if (userCanMove) {
+				slower.moveInit(faster, uMove, false);
+				if (faster.trainer != null) faster = faster.trainer.getCurrent();
 				slower = slower.trainer.getCurrent();
-	        }
-	        // Check for swap (AI)
-	        if (foe.trainer != null && foe.trainer.hasValidMembers(foe) && faster.hasStatus(Status.SWITCHING)) {
-	        	faster = foe.trainer.swapOut2(slower, FREE_SWITCH, false, false);
-	        }
-	        // Check for swap
-	        if (user.trainer.hasValidMembers(foe) && hasAlive() && slower.hasStatus(Status.SWITCHING)) {
-	        	Task t = Task.addTask(Task.PARTY, "");
-	        	t.wipe = slower.lastMoveUsed == Move.BATON_PASS;
-	        	subState = TASK_STATE;
-	        	return;
+			}
+			// Check for swap (AI)
+			if (foe.trainer != null && foe.trainer.hasValidMembers(foe) && faster.hasStatus(Status.SWITCHING)) {
+				faster = foe.trainer.swapOut2(slower, FREE_SWITCH, false, false);
+			}
+			// Check for swap
+			if (user.trainer.hasValidMembers(foe) && hasAlive() && slower.hasStatus(Status.SWITCHING)) {
+				Task t = Task.addTask(Task.PARTY, "");
+				t.wipe = slower.lastMoveUsed == Move.BATON_PASS;
+				subState = TASK_STATE;
+				return;
 			}
 		}
-	    subState = TASK_STATE;
-	    
-	    if (hasAlive()) faster.endOfTurn(slower);
+		subState = TASK_STATE;
+		
+		if (hasAlive()) faster.endOfTurn(slower);
 		if (hasAlive()) slower.endOfTurn(faster);
 		if (hasAlive()) field.endOfTurn(faster, slower);
 		
@@ -1879,20 +1879,20 @@ public class BattleUI extends AbstractUI {
 					String message = foe.trainer.toString() + " was defeated!";
 					if (money > 0) message += "\nWon $" + money + "!";
 					Task.addTask(Task.END, message);
-		            if (foe.trainer.getMoney() == 500 && user.getPlayer().badges < 8) {
-		            	user.getPlayer().badges++;
-		            	user.getPlayer().beatGymTrainers();
-		            	for (Pokemon p : user.trainer.team) {
-		            		if (p != null) p.awardHappiness(15, true);
-		            	}
-		            	user.getPlayer().updateHappinessCaps();
-		            	gp.player.setClerkItems();
-		            } else if (foe.trainer.eliteFour) {
-		            	for (Pokemon p : user.trainer.team) {
-		            		if (p != null) p.awardHappiness(15, true);
-		            	}
-		            }
-		            break;
+					if (foe.trainer.getMoney() == 500 && user.getPlayer().badges < 8) {
+						user.getPlayer().badges++;
+						user.getPlayer().beatGymTrainers();
+						for (Pokemon p : user.trainer.team) {
+							if (p != null) p.awardHappiness(15, true);
+						}
+						user.getPlayer().updateHappinessCaps();
+						gp.player.setClerkItems();
+					} else if (foe.trainer.eliteFour) {
+						for (Pokemon p : user.trainer.team) {
+							if (p != null) p.awardHappiness(15, true);
+						}
+					}
+					break;
 				}
 			} else if (!user.getPlayer().wiped()) {
 				subState = TASK_STATE;
@@ -1900,25 +1900,25 @@ public class BattleUI extends AbstractUI {
 				break;
 			}
 		}
-	    if (user.getPlayer().wiped()) {
-	    	wipe();
+		if (user.getPlayer().wiped()) {
+			wipe();
 		}
 	}
 	
 	private void wipe() {
 		subState = TASK_STATE;
 		boolean fullWipe = staticID != 235;
-    	if (fullWipe) {
-    		String message = "Player wiped to " + (foe.trainerOwned() ? foe.trainer.toString() : "a wild " + foe.getName());
-    		gp.saveScum(message); // for if they save scum
-    		gp.player.p.invalidateNuzlocke(message); // for if they don't save scum
-    		int loss = gp.player.p.getMoney() >= 500 ? 500 : gp.player.p.getMoney();
-	    	Task.addTask(Task.TEXT, "You have no more Pokemon that can fight!\nYou lost $" + loss + "!");
-	    	Task t = Task.addTask(Task.END, "");
+		if (fullWipe) {
+			String message = "Player wiped to " + (foe.trainerOwned() ? foe.trainer.toString() : "a wild " + foe.getName());
+			gp.saveScum(message); // for if they save scum
+			gp.player.p.invalidateNuzlocke(message); // for if they don't save scum
+			int loss = gp.player.p.getMoney() >= 500 ? 500 : gp.player.p.getMoney();
+			Task.addTask(Task.TEXT, "You have no more Pokemon that can fight!\nYou lost $" + loss + "!");
+			Task t = Task.addTask(Task.END, "");
 			t.setWipe(true);
-    	} else { // dragowrath
-    		Task.addTask(Task.END, "You have no more Pokemon that can fight!");
-    	}
+		} else { // dragowrath
+			Task.addTask(Task.END, "You have no more Pokemon that can fight!");
+		}
 	}
 
 	protected boolean hasAlive() {
@@ -1943,7 +1943,7 @@ public class BattleUI extends AbstractUI {
 			} else if (select == select.trainer.getCurrent()) {
 				currentDialogue = select.getNickname() + " is already out!";
 			} else if (cancellableParty && user.isTrapped(foe)) {
-        		currentDialogue = "You are trapped and cannot switch!";
+				currentDialogue = "You are trapped and cannot switch!";
 			} else if (gp.player.p.nuzlocke && select.level > Trainer.getLevelCap(gp.player.p.getEffectiveBadges(foe), gp.player.p)) {
 				Pokemon current = user.getPlayer().getCurrent();
 				user.getPlayer().setCurrent(select);
@@ -2057,143 +2057,143 @@ public class BattleUI extends AbstractUI {
 		y = (int) (startY + gp.tileSize * 1.5);
 		startY = y;
 		g2.setFont(g2.getFont().deriveFont(20F));
-        
-        for (int i = 2; i < 16; i++) {
-        	g2.setColor(Color.WHITE);
-        	String type = Pokemon.getStatType(i / 2, false);
-        	int stage;
-        	if (i % 2 == 0) {
-        		stage = user.statStages[i / 2 - 1];
-        	} else {
-        		stage = foe.statStages[i / 2 - 1];
-        	}
-        	String amt = stage > 0 ? "+" + stage : stage + "";
-        	
-        	if (stage > 0) g2.setColor(Color.red.darker());
-        	if (stage < 0) g2.setColor(Color.blue);
-        	
-        	g2.drawString(type + ": " + amt, x, y);
-        	if (i % 2 == 0) {
-        		x = foeX;
-        	} else {
-        		x = userX;
-        		y += gp.tileSize / 2;
-        	}
-        }
-        
-        x = userX + gp.tileSize * 3;
-        int endY = y;
-        y = startY;
-        g2.setColor(Color.WHITE);
-	    ArrayList<String> addVStatus = user.getStatusLabels();
-	    for (String s : addVStatus) {
-        	g2.drawString(s, (int) (x - gp.tileSize * 1.5), y);
-        	y += gp.tileSize / 3;
-        }
-        
-        x = foeX + gp.tileSize * 2;
-        y = startY;
-        g2.setColor(Color.WHITE);
-        addVStatus = foe.getStatusLabels();
-        for (String s : addVStatus) {
-        	g2.drawString(s, x, y);
-        	y += gp.tileSize / 3;
-        }
-        
-        y = endY;
-        g2.setColor(Color.WHITE);
-        g2.setFont(g2.getFont().deriveFont(24F));
-        String fieldLabel = "Field Effects:";
-        int middleX = gp.tileSize * 3 + width / 2;
-        g2.drawString(fieldLabel, getCenterAlignedTextX(fieldLabel, middleX), y);
-        
-        y += gp.tileSize * 0.75;
-	    
-	    if (field.weather != null) {
-	    	String weather = field.weather.toString();
-	    	String turns = field.weatherTurns + "/" + field.weather.effect.turns;
-	    	g2.setColor(field.weather.getColor());
-	    	g2.drawString(weather, getCenterAlignedTextX(weather, middleX - gp.tileSize), y);
-	    	g2.setColor(Color.WHITE);
-	    	g2.drawString(turns, getCenterAlignedTextX(turns, middleX + gp.tileSize), y);
-	    	y += gp.tileSize / 2;
-	    }
-	    
-	    if (field.terrain != null) {
-	    	String terrain = field.terrain.toString();
-	    	String turns = field.terrainTurns + "/" + field.terrain.effect.turns;
-	    	g2.setColor(field.terrain.getColor());
-	    	g2.drawString(terrain, getCenterAlignedTextX(terrain, middleX - gp.tileSize), y);
-	    	g2.setColor(Color.WHITE);
-	    	g2.drawString(turns, getCenterAlignedTextX(turns, middleX + gp.tileSize), y);
-	    	y += gp.tileSize / 2;
-	    }
-	    
-	    for (FieldEffect fe : field.fieldEffects) {
-	    	String effect = fe.toString();
-	    	boolean showTurns = !(fe.turns < 0 || fe.effect.turns < 0);
-	    	String turns = showTurns ? fe.turns + "/" + fe.effect.turns : "";
-	    	g2.setColor(fe.getColor());
-	    	g2.drawString(effect, getCenterAlignedTextX(effect, middleX - (showTurns ? gp.tileSize : 0)), y);
-	    	g2.setColor(Color.WHITE);
-	    	g2.drawString(turns, getCenterAlignedTextX(turns, middleX + gp.tileSize), y);
-	    	y += gp.tileSize / 2;
-	    }
-	    
-	    x = userX;
-	    y += gp.tileSize / 2;
-	    startY = y;
-	    
-	    for (FieldEffect fe : user.getFieldEffects()) {
-	    	String effect = fe.toString();
-	    	boolean showTurns = !(fe.turns < 0 || fe.effect.turns < 0);
-	    	String turns = showTurns ? fe.turns + "/" + fe.effect.turns : "";
-	    	if (field.getHazards(user.getFieldEffects()).contains(fe)) {
-	    		int layers = field.getLayers(user.getFieldEffects(), fe.effect);
-	    		int maxLayers = 1;
-	    		if (fe.effect == Effect.SPIKES) maxLayers = 3;
-	    		if (fe.effect == Effect.TOXIC_SPIKES) maxLayers = 2;
-	    		turns = "( " + layers + " / " + maxLayers + " )";
-	    	}
-	    	g2.setColor(fe.getColor());
-	    	g2.drawString(effect, x, y);
-	    	g2.setColor(Color.WHITE);
-	    	g2.drawString(turns, x + gp.tileSize * 3, y);
-	    	y += gp.tileSize / 2;
-	    }
-	    
-	    x = foeX;
-	    y = startY;
+		
+		for (int i = 2; i < 16; i++) {
+			g2.setColor(Color.WHITE);
+			String type = Pokemon.getStatType(i / 2, false);
+			int stage;
+			if (i % 2 == 0) {
+				stage = user.statStages[i / 2 - 1];
+			} else {
+				stage = foe.statStages[i / 2 - 1];
+			}
+			String amt = stage > 0 ? "+" + stage : stage + "";
+			
+			if (stage > 0) g2.setColor(Color.red.darker());
+			if (stage < 0) g2.setColor(Color.blue);
+			
+			g2.drawString(type + ": " + amt, x, y);
+			if (i % 2 == 0) {
+				x = foeX;
+			} else {
+				x = userX;
+				y += gp.tileSize / 2;
+			}
+		}
+		
+		x = userX + gp.tileSize * 3;
+		int endY = y;
+		y = startY;
+		g2.setColor(Color.WHITE);
+		ArrayList<String> addVStatus = user.getStatusLabels();
+		for (String s : addVStatus) {
+			g2.drawString(s, (int) (x - gp.tileSize * 1.5), y);
+			y += gp.tileSize / 3;
+		}
+		
+		x = foeX + gp.tileSize * 2;
+		y = startY;
+		g2.setColor(Color.WHITE);
+		addVStatus = foe.getStatusLabels();
+		for (String s : addVStatus) {
+			g2.drawString(s, x, y);
+			y += gp.tileSize / 3;
+		}
+		
+		y = endY;
+		g2.setColor(Color.WHITE);
+		g2.setFont(g2.getFont().deriveFont(24F));
+		String fieldLabel = "Field Effects:";
+		int middleX = gp.tileSize * 3 + width / 2;
+		g2.drawString(fieldLabel, getCenterAlignedTextX(fieldLabel, middleX), y);
+		
+		y += gp.tileSize * 0.75;
+		
+		if (field.weather != null) {
+			String weather = field.weather.toString();
+			String turns = field.weatherTurns + "/" + field.weather.effect.turns;
+			g2.setColor(field.weather.getColor());
+			g2.drawString(weather, getCenterAlignedTextX(weather, middleX - gp.tileSize), y);
+			g2.setColor(Color.WHITE);
+			g2.drawString(turns, getCenterAlignedTextX(turns, middleX + gp.tileSize), y);
+			y += gp.tileSize / 2;
+		}
+		
+		if (field.terrain != null) {
+			String terrain = field.terrain.toString();
+			String turns = field.terrainTurns + "/" + field.terrain.effect.turns;
+			g2.setColor(field.terrain.getColor());
+			g2.drawString(terrain, getCenterAlignedTextX(terrain, middleX - gp.tileSize), y);
+			g2.setColor(Color.WHITE);
+			g2.drawString(turns, getCenterAlignedTextX(turns, middleX + gp.tileSize), y);
+			y += gp.tileSize / 2;
+		}
+		
+		for (FieldEffect fe : field.fieldEffects) {
+			String effect = fe.toString();
+			boolean showTurns = !(fe.turns < 0 || fe.effect.turns < 0);
+			String turns = showTurns ? fe.turns + "/" + fe.effect.turns : "";
+			g2.setColor(fe.getColor());
+			g2.drawString(effect, getCenterAlignedTextX(effect, middleX - (showTurns ? gp.tileSize : 0)), y);
+			g2.setColor(Color.WHITE);
+			g2.drawString(turns, getCenterAlignedTextX(turns, middleX + gp.tileSize), y);
+			y += gp.tileSize / 2;
+		}
+		
+		x = userX;
+		y += gp.tileSize / 2;
+		startY = y;
+		
+		for (FieldEffect fe : user.getFieldEffects()) {
+			String effect = fe.toString();
+			boolean showTurns = !(fe.turns < 0 || fe.effect.turns < 0);
+			String turns = showTurns ? fe.turns + "/" + fe.effect.turns : "";
+			if (field.getHazards(user.getFieldEffects()).contains(fe)) {
+				int layers = field.getLayers(user.getFieldEffects(), fe.effect);
+				int maxLayers = 1;
+				if (fe.effect == Effect.SPIKES) maxLayers = 3;
+				if (fe.effect == Effect.TOXIC_SPIKES) maxLayers = 2;
+				turns = "( " + layers + " / " + maxLayers + " )";
+			}
+			g2.setColor(fe.getColor());
+			g2.drawString(effect, x, y);
+			g2.setColor(Color.WHITE);
+			g2.drawString(turns, x + gp.tileSize * 3, y);
+			y += gp.tileSize / 2;
+		}
+		
+		x = foeX;
+		y = startY;
 
-	    for (FieldEffect fe : foe.getFieldEffects()) {
-	    	String effect = fe.toString();
-	    	boolean showTurns = !(fe.turns < 0 || fe.effect.turns < 0);
-	    	String turns = showTurns ? fe.turns + "/" + fe.effect.turns : "";
-	    	if (field.getHazards(foe.getFieldEffects()).contains(fe)) {
-	    		int layers = field.getLayers(foe.getFieldEffects(), fe.effect);
-	    		int maxLayers = 1;
-	    		if (fe.effect == Effect.SPIKES) maxLayers = 3;
-	    		if (fe.effect == Effect.TOXIC_SPIKES) maxLayers = 2;
-	    		turns = "( " + layers + " / " + maxLayers + " )";
-	    	}
-	    	g2.setColor(fe.getColor());
-	    	g2.drawString(effect, x, y);
-	    	g2.setColor(Color.WHITE);
-	    	g2.drawString(turns, x + gp.tileSize * 3, y);
-	    	y += gp.tileSize / 2;
-	    }
-	    
-	    if (gp.keyH.calcPressed) {
+		for (FieldEffect fe : foe.getFieldEffects()) {
+			String effect = fe.toString();
+			boolean showTurns = !(fe.turns < 0 || fe.effect.turns < 0);
+			String turns = showTurns ? fe.turns + "/" + fe.effect.turns : "";
+			if (field.getHazards(foe.getFieldEffects()).contains(fe)) {
+				int layers = field.getLayers(foe.getFieldEffects(), fe.effect);
+				int maxLayers = 1;
+				if (fe.effect == Effect.SPIKES) maxLayers = 3;
+				if (fe.effect == Effect.TOXIC_SPIKES) maxLayers = 2;
+				turns = "( " + layers + " / " + maxLayers + " )";
+			}
+			g2.setColor(fe.getColor());
+			g2.drawString(effect, x, y);
+			g2.setColor(Color.WHITE);
+			g2.drawString(turns, x + gp.tileSize * 3, y);
+			y += gp.tileSize / 2;
+		}
+		
+		if (gp.keyH.calcPressed) {
 			gp.keyH.calcPressed = false;
 			Item.useCalc(user, null, foe, true);
 		}
-	    
-	    if (gp.keyH.sPressed) {
+		
+		if (gp.keyH.sPressed) {
 			gp.keyH.sPressed = false;
 			subState = IDLE_STATE;
 		}
-	    
-	    drawToolTips(null, null, "Back", null, "Calc");
+		
+		drawToolTips(null, null, "Back", null, "Calc");
 	}
 
 	protected void startingState() {
@@ -2205,8 +2205,8 @@ public class BattleUI extends AbstractUI {
 			catchable = (staticID > 0 && foe.trainer.catchable) || !foe.trainerOwned();
 			foe.setVisible(true);
 			foeHP = foe.currentHP;
-		    maxFoeHP = foe.getStat(0);
-		    foeLevel = foe.level;
+			maxFoeHP = foe.getStat(0);
+			foeLevel = foe.level;
 			foeStatus = foe.status;
 			foeName = foe.nickname;
 			foeType = new PType[] {foe.type1, foe.type2};

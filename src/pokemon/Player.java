@@ -235,96 +235,96 @@ public class Player extends Trainer implements Serializable {
 	public boolean catchPokemon(Pokemon p, boolean nickname, Item ball) {
 		if (p == null) return false;
 		boolean egg = p instanceof Egg;
-	    if (p.isFainted() && !egg) return false;
-	    int index = 1;
-	    Task t = null;
-	    String metAt = PlayerCharacter.getMetAt();
-	    p.reset();
-	    p.ball = ball;
-	    if (p.trainer != null && p.trainer.staticEnc) {
-	    	p.happiness = 70;
-	    	p.happiness = p.determineHappiness(this);
-	    }
-	    p.trainer = this;
-	    p.metAt = metAt;
-	    if (nickname) {
-	    	if (nuzlocke && !canCatchPokemonHere(metAt, p)) {
-	    		String s = egg ? "receive " : "catch ";
-	    		String reason = isDupes(p) ? p.name() + " is a dupe!" : "you've already gotten an encounter at " + metAt + "!";
-	    		t = Task.createTask(Task.END, Item.breakString("Cannot " + s + p.name() + ", " + reason , UI.MAX_TEXTBOX));
-	        	Task.insertTask(t, 0);
-	    		return false;
-	    	}
-	    	t = Task.createTask(Task.NICKNAME, "Would you like to nickname " + p.name() + "?", p);
-		    if (Pokemon.gp.gameState != GamePanel.PLAY_STATE) Task.insertTask(t, 0);
-	    } else {
-	    	index = 0;
-	    }
-	    if (!egg) pokedex[p.id] = 2;
-	    if (item == Item.HEAL_BALL) p.heal();
-	    if (item == Item.FRIEND_BALL) p.happiness = Math.max(200, p.happiness);
-	    
-	    int place = addPokemon(p);
-	    if (place == 0) { // party
-	    	if (nickname || egg) {
-            	String s = egg ? "Received " : "Caught ";
-            	t = Task.createTask(Task.END, s + p.name() + ", added to party!");
-            	Task.insertTask(t, index);
-            }
-	    } else if (place == -1) {
-	    	if (nickname || egg) {
-	        	t = Task.createTask(Task.END, "Cannot catch " + p.name() + ", all boxes are full.");
-	        	Task.insertTask(t, index);
-	    	}
-	    } else {
-	    	if (nickname || egg) {
-            	String s = egg ? "Received " : "Caught ";
-            	t = Task.createTask(Task.END, s + p.name() + ", sent to box " + place + "!");
-            	Task.insertTask(t, index);
-            }
-	    }
-	    
-	    if (nuzlocke && !egg) {
-	    	removeEncounterArea(metAt, null);
-	    }
-	    return true;
+		if (p.isFainted() && !egg) return false;
+		int index = 1;
+		Task t = null;
+		String metAt = PlayerCharacter.getMetAt();
+		p.reset();
+		p.ball = ball;
+		if (p.trainer != null && p.trainer.staticEnc) {
+			p.happiness = 70;
+			p.happiness = p.determineHappiness(this);
+		}
+		p.trainer = this;
+		p.metAt = metAt;
+		if (nickname) {
+			if (nuzlocke && !canCatchPokemonHere(metAt, p)) {
+				String s = egg ? "receive " : "catch ";
+				String reason = isDupes(p) ? p.name() + " is a dupe!" : "you've already gotten an encounter at " + metAt + "!";
+				t = Task.createTask(Task.END, Item.breakString("Cannot " + s + p.name() + ", " + reason , UI.MAX_TEXTBOX));
+				Task.insertTask(t, 0);
+				return false;
+			}
+			t = Task.createTask(Task.NICKNAME, "Would you like to nickname " + p.name() + "?", p);
+			if (Pokemon.gp.gameState != GamePanel.PLAY_STATE) Task.insertTask(t, 0);
+		} else {
+			index = 0;
+		}
+		if (!egg) pokedex[p.id] = 2;
+		if (item == Item.HEAL_BALL) p.heal();
+		if (item == Item.FRIEND_BALL) p.happiness = Math.max(200, p.happiness);
+		
+		int place = addPokemon(p);
+		if (place == 0) { // party
+			if (nickname || egg) {
+				String s = egg ? "Received " : "Caught ";
+				t = Task.createTask(Task.END, s + p.name() + ", added to party!");
+				Task.insertTask(t, index);
+			}
+		} else if (place == -1) {
+			if (nickname || egg) {
+				t = Task.createTask(Task.END, "Cannot catch " + p.name() + ", all boxes are full.");
+				Task.insertTask(t, index);
+			}
+		} else {
+			if (nickname || egg) {
+				String s = egg ? "Received " : "Caught ";
+				t = Task.createTask(Task.END, s + p.name() + ", sent to box " + place + "!");
+				Task.insertTask(t, index);
+			}
+		}
+		
+		if (nuzlocke && !egg) {
+			removeEncounterArea(metAt, null);
+		}
+		return true;
 	}
 	
 	public int addPokemon(Pokemon p) {
 		boolean hasNull = false;
 		
 		for (int i = 0; i < team.length; i++) {
-	        if (team[i] == null) {
-	            hasNull = true;
-	            break;
-	        }
-	    }
-	    if (hasNull) {
-	        for (int i = 0; i < team.length; i++) {
-	            if (team[i] == null) {
-	                team[i] = p;
-	                p.slot = i;
-	                current = team[0];
-	                return 0;
-	            }
-	        }
-	    } else {
-	    	p.heal();
-	        int empty = -1;
-	        for (int i = 0; i < boxes.length; i++) {
-	            for (int j = 0; j < boxes[i].length; j++) {
-	                if (boxes[i][j] == null) {
-	                	empty = j;
-	                    break;
-	                }
-	            }
-	            if (empty >= 0) {
-	                boxes[i][empty] = p;
-	                return i + 1;
-	            }
-	        }
-	    }
-	    return -1;
+			if (team[i] == null) {
+				hasNull = true;
+				break;
+			}
+		}
+		if (hasNull) {
+			for (int i = 0; i < team.length; i++) {
+				if (team[i] == null) {
+					team[i] = p;
+					p.slot = i;
+					current = team[0];
+					return 0;
+				}
+			}
+		} else {
+			p.heal();
+			int empty = -1;
+			for (int i = 0; i < boxes.length; i++) {
+				for (int j = 0; j < boxes[i].length; j++) {
+					if (boxes[i][j] == null) {
+						empty = j;
+						break;
+					}
+				}
+				if (empty >= 0) {
+					boxes[i][empty] = p;
+					return i + 1;
+				}
+			}
+		}
+		return -1;
 	}
 
 	public boolean catchPokemon(Pokemon p, boolean nickname) {
@@ -358,6 +358,45 @@ public class Player extends Trainer implements Serializable {
 	public boolean isDupes(Pokemon p) {
 		if (p == null) return false;
 		return isDupes(p.id);
+	}
+	
+	public boolean clearTeamToBoxes() {
+		int partyCount = 0;
+		for (Pokemon p : team) {
+			if (p != null) partyCount++;
+		}
+		
+		int emptyBoxSlots = 0;
+		for (Pokemon[] box : boxes) {
+			for (Pokemon p : box) {
+				if (p == null) emptyBoxSlots++;
+				if (emptyBoxSlots >= partyCount) break;
+			}
+		}
+		
+		if (emptyBoxSlots < partyCount) return false;
+		
+		for (int i = 0; i < team.length; i++) {
+			Pokemon p = team[i];
+			if (p == null) continue;
+			
+			for (int box = 0; box < boxes.length; box++) {
+				boolean deposited = false;
+				
+				for (int slot = 0; slot < boxes[box].length; slot++) {
+					if (boxes[box][slot] == null) {
+						boxes[box][slot] = p;
+						team[i] = null;
+						deposited = true;
+						break;
+					}
+				}
+				if (deposited) break;
+			}
+		}
+		
+		current = null;
+		return true;
 	}
 
 	public void invalidateNuzlocke(String string) {
@@ -442,15 +481,15 @@ public class Player extends Trainer implements Serializable {
 	public boolean elevate(Pokemon pokemon) {
 		if (nuzlocke && pokemon.isFainted()) return false;
 		int expAmt = pokemon.expMax - pokemon.exp;
-    	pokemon.exp += expAmt;
-    	while (pokemon.exp >= pokemon.expMax) {
-    		if (pokemon.happiness < 255 && pokemon.happinessCap > 2) pokemon.awardHappiness(-3, false);
-            // Pokemon has leveled up, check for evolution
-            pokemon.levelUp(this);
-            pokemon.exp = 0;
-        }
-    	pokemon.fainted = false;
-    	return true;
+		pokemon.exp += expAmt;
+		while (pokemon.exp >= pokemon.expMax) {
+			if (pokemon.happiness < 255 && pokemon.happinessCap > 2) pokemon.awardHappiness(-3, false);
+			// Pokemon has leveled up, check for evolution
+			pokemon.levelUp(this);
+			pokemon.exp = 0;
+		}
+		pokemon.fainted = false;
+		return true;
 	}
 	
 	public boolean buy(Item item) {
@@ -570,12 +609,12 @@ public class Player extends Trainer implements Serializable {
 			if (p != null) p.happinessCap += 50;
 		}
 		for (int i = 0; i < boxes.length; i++) {
-            for (int j = 0; j < boxes[i].length; j++) {
-                if (boxes[i][j] != null) {
-                    boxes[i][j].happinessCap += 50;
-                }
-            }
-        }
+			for (int j = 0; j < boxes[i].length; j++) {
+				if (boxes[i][j] != null) {
+					boxes[i][j].happinessCap += 50;
+				}
+			}
+		}
 	}
 
 	public JPanel displayTweaker() {
@@ -671,9 +710,9 @@ public class Player extends Trainer implements Serializable {
 		JPanel locationsPanel = new JPanel();
 		locationsPanel.setLayout(new BoxLayout(locationsPanel, BoxLayout.Y_AXIS));
 		for (int i = 0; i < 12; i++) {
-		    locations[i] = new JCheckBox(locDesc[i]);
-		    locations[i].setSelected(this.locations[i]);
-		    locationsPanel.add(locations[i]);
+			locations[i] = new JCheckBox(locDesc[i]);
+			locations[i].setSelected(this.locations[i]);
+			locationsPanel.add(locations[i]);
 		}
 		JScrollPane locationsPane = new JScrollPane(locationsPanel);
 		locationsPane.setPreferredSize(new Dimension(150, 100));
@@ -683,39 +722,39 @@ public class Player extends Trainer implements Serializable {
 		importTrainers.addActionListener(e -> {
 			String filePath = "./docs/trainers.txt";
 
-		    try {
-		        byte[] fileBytes = Files.readAllBytes(Paths.get(filePath));
-		        String data = new String(fileBytes, StandardCharsets.UTF_8);
+			try {
+				byte[] fileBytes = Files.readAllBytes(Paths.get(filePath));
+				String data = new String(fileBytes, StandardCharsets.UTF_8);
 
-		        String[] entries = data.split(",");
-		        for (int i = 0; i < trainersBeat.length; i++) {
-		        	trainersBeat[i] = Boolean.parseBoolean(entries[i]);
-		        }
-		    } catch (IOException ex) {
-		    	JOptionPane.showMessageDialog(null, "Error reading from trainers.txt,\nmake sure it exists in\nthe docs folder and was\nexported correctly!");
-		    }
+				String[] entries = data.split(",");
+				for (int i = 0; i < trainersBeat.length; i++) {
+					trainersBeat[i] = Boolean.parseBoolean(entries[i]);
+				}
+			} catch (IOException ex) {
+				JOptionPane.showMessageDialog(null, "Error reading from trainers.txt,\nmake sure it exists in\nthe docs folder and was\nexported correctly!");
+			}
 		});
 		
 		importItems.addActionListener(e -> {
 			String filePath = "./docs/items.txt";
 
-		    try {
-		    	byte[] fileBytes = Files.readAllBytes(Paths.get(filePath));
-		        String data = new String(fileBytes, StandardCharsets.UTF_8);
+			try {
+				byte[] fileBytes = Files.readAllBytes(Paths.get(filePath));
+				String data = new String(fileBytes, StandardCharsets.UTF_8);
 
-		        String[] rows = data.split("\n");
-		        int numRows = rows.length;
-		        int numCols = rows[0].split(",").length;
+				String[] rows = data.split("\n");
+				int numRows = rows.length;
+				int numCols = rows[0].split(",").length;
 
-		        for (int i = 0; i < numRows; i++) {
-		            String[] values = rows[i].split(",");
-		            for (int j = 0; j < numCols; j++) {
-		                this.itemsCollected[i][j] = Boolean.parseBoolean(values[j]);
-		            }
-		        }
-		    } catch (IOException ex) {
-		    	JOptionPane.showMessageDialog(null, "Error reading from items.txt,\nmake sure it exists in\nthe docs folder and was\nexported correctly!");
-		    }
+				for (int i = 0; i < numRows; i++) {
+					String[] values = rows[i].split(",");
+					for (int j = 0; j < numCols; j++) {
+						this.itemsCollected[i][j] = Boolean.parseBoolean(values[j]);
+					}
+				}
+			} catch (IOException ex) {
+				JOptionPane.showMessageDialog(null, "Error reading from items.txt,\nmake sure it exists in\nthe docs folder and was\nexported correctly!");
+			}
 		});
 		
 		result.add(importTrainers);
@@ -882,9 +921,9 @@ public class Player extends Trainer implements Serializable {
 			counts[i].setPreferredSize(new Dimension(40, counts[i].getPreferredSize().height));
 			counts[i].addFocusListener(new FocusAdapter() {
 				@Override
-		    	public void focusGained(FocusEvent e) {
-		        	counts[index].selectAll();
-		    	}
+				public void focusGained(FocusEvent e) {
+					counts[index].selectAll();
+				}
 			});
 			member.add(counts[i]);
 			
@@ -952,12 +991,12 @@ public class Player extends Trainer implements Serializable {
 			if (p != null) result.add(p);
 		}
 		for (int i = 0; i < boxes.length; i++) {
-            for (int j = 0; j < boxes[i].length; j++) {
-                if (boxes[i][j] != null) {
-                    result.add(boxes[i][j]);
-                }
-            }
-        }
+			for (int j = 0; j < boxes[i].length; j++) {
+				if (boxes[i][j] != null) {
+					result.add(boxes[i][j]);
+				}
+			}
+		}
 		for (Pokemon p : gauntletBox) {
 			if (p != null) result.add(p);
 		}
@@ -1023,12 +1062,12 @@ public class Player extends Trainer implements Serializable {
 			if (p.item != null) {
 				Item old = p.item;
 				bag.add(old);
-        		p.item = item;
-	        	gp.ui.showMessage(Item.breakString(p.nickname + " swapped its " + old.toString() + " for a " + p.item.toString() + "!", UI.MAX_TEXTBOX));
-        	} else {
-        		p.item = item;
-        		gp.ui.showMessage(Item.breakString(p.nickname + " was given " + item.toString() + " to hold!", UI.MAX_TEXTBOX));
-        	}
+				p.item = item;
+				gp.ui.showMessage(Item.breakString(p.nickname + " swapped its " + old.toString() + " for a " + p.item.toString() + "!", UI.MAX_TEXTBOX));
+			} else {
+				p.item = item;
+				gp.ui.showMessage(Item.breakString(p.nickname + " was given " + item.toString() + " to hold!", UI.MAX_TEXTBOX));
+			}
 			gp.ui.selectedBagNum = -1;
 		} else {
 			switch (item) {
@@ -1039,25 +1078,25 @@ public class Player extends Trainer implements Serializable {
 			case MAX_POTION:
 			case FULL_RESTORE:
 				if (p.currentHP == p.getStat(0)) {
-	        		gp.ui.showMessage(p.nickname + " is already full HP!");
-	        		return;
+					gp.ui.showMessage(p.nickname + " is already full HP!");
+					return;
 				} else if (p.isFainted()) {
 					gp.ui.showMessage("It won't have any effect.");
 					return;
-	        	} else {
-	        		int difference = 0;
-	        		int healAmt = item.getHealAmount();
-	        		if (healAmt > 0) {
-	        			difference = Math.min(healAmt, p.getStat(0) - p.currentHP);
-	        			p.currentHP += healAmt;
-	        		} else {
-	        			difference = p.getStat(0) - p.currentHP;
-	        			p.currentHP = p.getStat(0);
-	        			if (item == Item.FULL_RESTORE) p.status = Status.HEALTHY;
-	        		}
-	        		gp.ui.showMessage(p.nickname + " was healed by " + difference + " HP!");
-		        	p.verifyHP();
-	        	}
+				} else {
+					int difference = 0;
+					int healAmt = item.getHealAmount();
+					if (healAmt > 0) {
+						difference = Math.min(healAmt, p.getStat(0) - p.currentHP);
+						p.currentHP += healAmt;
+					} else {
+						difference = p.getStat(0) - p.currentHP;
+						p.currentHP = p.getStat(0);
+						if (item == Item.FULL_RESTORE) p.status = Status.HEALTHY;
+					}
+					gp.ui.showMessage(p.nickname + " was healed by " + difference + " HP!");
+					p.verifyHP();
+				}
 				break;
 				
 			// Status Healers
@@ -1070,40 +1109,40 @@ public class Player extends Trainer implements Serializable {
 			case ANTIDOTE:
 				Status target = item.getStatus();
 				target = target == null && p.status != Status.HEALTHY ? p.status : target;
-		        target = p.status == Status.TOXIC && target == Status.POISONED ? Status.TOXIC : target;
+				target = p.status == Status.TOXIC && target == Status.POISONED ? Status.TOXIC : target;
 
-	    		if (p.status != target || p.isFainted()) {
-	    			gp.ui.showMessage("It won't have any effect.");
-	        		return;	    			
-	        	} else {
-	        		Status temp = p.status;
-	        		p.status = Status.HEALTHY;
-		        	gp.ui.showMessage(Item.breakString(p.nickname + " was cured of its " + temp.getName() + "!", UI.MAX_TEXTBOX));
-	        	}
+				if (p.status != target || p.isFainted()) {
+					gp.ui.showMessage("It won't have any effect.");
+					return;					
+				} else {
+					Status temp = p.status;
+					p.status = Status.HEALTHY;
+					gp.ui.showMessage(Item.breakString(p.nickname + " was cured of its " + temp.getName() + "!", UI.MAX_TEXTBOX));
+				}
 				break;
 				
 			// Revives
 			case REVIVE:
 			case MAX_REVIVE:
 				if (!p.isFainted()) {
-	        		gp.ui.showMessage(p.nickname + " isn't fainted!");
-	        		return;
-	        	} else {
-	        		if (!allowRevives) {
+					gp.ui.showMessage(p.nickname + " isn't fainted!");
+					return;
+				} else {
+					if (!allowRevives) {
 						gp.ui.showMessage("Revives are banned in your Nuzlocke settings!");
 						return;
 					}
-	        		p.fainted = false;
-	        		if (nuzlocke) {
-	        			invalidateNuzlocke("Used " + item.toString() + " on " + p.getName() + ".");
-	        		}
-	        		if (item == Item.REVIVE) {
-	        			p.currentHP = p.getStat(0) / 2;
-	        		} else {
-	        			p.currentHP = p.getStat(0);
-	        		}
-		        	gp.ui.showMessage(p.nickname + " was revived!");
-	        	}
+					p.fainted = false;
+					if (nuzlocke) {
+						invalidateNuzlocke("Used " + item.toString() + " on " + p.getName() + ".");
+					}
+					if (item == Item.REVIVE) {
+						p.currentHP = p.getStat(0) / 2;
+					} else {
+						p.currentHP = p.getStat(0);
+					}
+					gp.ui.showMessage(p.nickname + " was revived!");
+				}
 				break;
 				
 			// Mints
@@ -1133,30 +1172,30 @@ public class Player extends Trainer implements Serializable {
 					return;
 				}
 				boolean changeable = p.canUseItem(item) == 1;
-	    		if (!changeable) {
-	        		gp.ui.showMessage("It won't have any effect.");
-	        		return;
-	        	} else {
-	        		String natureOld = p.nat == null ? "null" : p.getNature();
-		        	p.nat = item.getNature();
-		        	p.setStats();
-		        	gp.ui.showMessage(Item.breakString(p.nickname + "'s nature was changed from " + natureOld + " to " + p.getNature() + "!", UI.MAX_TEXTBOX));
-	        	}
+				if (!changeable) {
+					gp.ui.showMessage("It won't have any effect.");
+					return;
+				} else {
+					String natureOld = p.nat == null ? "null" : p.getNature();
+					p.nat = item.getNature();
+					p.setStats();
+					gp.ui.showMessage(Item.breakString(p.nickname + "'s nature was changed from " + natureOld + " to " + p.getNature() + "!", UI.MAX_TEXTBOX));
+				}
 				break;
 				
 			// Euphorian Gem
 			case EUPHORIAN_GEM:
 				if (p.happiness >= 255) {
-	        		gp.ui.showMessage(p.nickname + " is already as happy as can be!");
-	        		return;
-	        	} else {
-	        		if (p.item == Item.SOOTHE_BELL) {
-	        			p.awardHappiness(50, true);
-	        		} else {
-	        			p.awardHappiness(100, true);
-	        		}
-	        		gp.ui.showMessage(p.nickname + " looked happier!");
-	        	}
+					gp.ui.showMessage(p.nickname + " is already as happy as can be!");
+					return;
+				} else {
+					if (p.item == Item.SOOTHE_BELL) {
+						p.awardHappiness(50, true);
+					} else {
+						p.awardHappiness(100, true);
+					}
+					gp.ui.showMessage(p.nickname + " looked happier!");
+				}
 				break;
 				
 			// Evo Items
@@ -1171,47 +1210,47 @@ public class Player extends Trainer implements Serializable {
 			case RAZOR_CLAW:
 				boolean eligible = item.getEligible(p.id);
 				if (!eligible) {
-	        		gp.ui.showMessage(p.nickname + " isn't compatible with " + item.toString() + ".");
-	        		return;
-	        	} else {
-	        		gp.gameState = GamePanel.RARE_CANDY_STATE;
-	        		Task t = Task.addTask(Task.EVO_ITEM, "", p);
-	        		t.counter = p.getEvolved(item);
-	        		Task.addTask(Task.CLOSE, "");
-	        	}
+					gp.ui.showMessage(p.nickname + " isn't compatible with " + item.toString() + ".");
+					return;
+				} else {
+					gp.gameState = GamePanel.RARE_CANDY_STATE;
+					Task t = Task.addTask(Task.EVO_ITEM, "", p);
+					t.counter = p.getEvolved(item);
+					Task.addTask(Task.CLOSE, "");
+				}
 				break;
 				
 			// Ability Capsule
 			case ABILITY_CAPSULE:
 				int usable = p.canUseItem(item);
-	    		if (usable != 1) {
-	    			String message = usable == 2 ? p.nickname + " has its hidden ability, use an Ability Patch to swap back to its regular ability!" : p.nickname + " only has one regular ability, it won't have any effect.";
-	        		gp.ui.showMessage(Item.breakString(message, UI.MAX_TEXTBOX));
-	        		return;
-	        	} else {
-	        		Ability oldAbility = p.ability;
-	        		p.abilitySlot = 1 - p.abilitySlot;
-	        		p.setAbility();
-	        		gp.ui.showMessage(Item.breakString(p.nickname + "'s ability was swapped from " + oldAbility + " to " + p.ability + "!", UI.MAX_TEXTBOX));
-	        	}
+				if (usable != 1) {
+					String message = usable == 2 ? p.nickname + " has its hidden ability, use an Ability Patch to swap back to its regular ability!" : p.nickname + " only has one regular ability, it won't have any effect.";
+					gp.ui.showMessage(Item.breakString(message, UI.MAX_TEXTBOX));
+					return;
+				} else {
+					Ability oldAbility = p.ability;
+					p.abilitySlot = 1 - p.abilitySlot;
+					p.setAbility();
+					gp.ui.showMessage(Item.breakString(p.nickname + "'s ability was swapped from " + oldAbility + " to " + p.ability + "!", UI.MAX_TEXTBOX));
+				}
 				break;
 				
 			// Ability Patch
 			case ABILITY_PATCH:
 				boolean swappable2 = p.canUseItem(item) == 1;
-	    		if (!swappable2) {
-	        		gp.ui.showMessage(Item.breakString(p.nickname + " doesn't have a hidden ability, it won't have any effect.", UI.MAX_TEXTBOX));
-	        		return;
-	        	} else {
-	        		Ability oldAbility = p.ability;
-	        		if (p.abilitySlot == 2) {
-	        			p.abilitySlot = 0;
-	        		} else {
-	        			p.abilitySlot = 2;
-	        		}
-	        		p.setAbility();
-	        		gp.ui.showMessage(Item.breakString(p.nickname + "'s ability was changed from " + oldAbility + " to " + p.ability + "!", UI.MAX_TEXTBOX));
-	        	}
+				if (!swappable2) {
+					gp.ui.showMessage(Item.breakString(p.nickname + " doesn't have a hidden ability, it won't have any effect.", UI.MAX_TEXTBOX));
+					return;
+				} else {
+					Ability oldAbility = p.ability;
+					if (p.abilitySlot == 2) {
+						p.abilitySlot = 0;
+					} else {
+						p.abilitySlot = 2;
+					}
+					p.setAbility();
+					gp.ui.showMessage(Item.breakString(p.nickname + "'s ability was changed from " + oldAbility + " to " + p.ability + "!", UI.MAX_TEXTBOX));
+				}
 				break;
 				
 			// Bottle Caps
@@ -1223,72 +1262,72 @@ public class Player extends Trainer implements Serializable {
 					return;
 				}
 				if (item == Item.BOTTLE_CAP) {
-	        		gp.ui.currentPokemon = p;
-	        		gp.ui.currentHeader = "Which IV to max out?";
-	        		gp.ui.moveOption = -1;
-	        		gp.ui.showIVOptions = true;
-	        		return;
-	        	} else if (item == Item.RUSTY_BOTTLE_CAP) {
-	        		gp.ui.currentPokemon = p;
-	        		gp.ui.currentHeader = "Which IV to set to 0?";
-	        		gp.ui.moveOption = -1;
-	        		gp.ui.showIVOptions = true;
-	        		return;
-	        	} else {
-	        		gp.ui.showMessage(p.nickname + "'s IVs were maxed out!");
-	        		p.ivs = new int[] {31, 31, 31, 31, 31, 31};
-	        		p.setStats();
-	        	}
+					gp.ui.currentPokemon = p;
+					gp.ui.currentHeader = "Which IV to max out?";
+					gp.ui.moveOption = -1;
+					gp.ui.showIVOptions = true;
+					return;
+				} else if (item == Item.RUSTY_BOTTLE_CAP) {
+					gp.ui.currentPokemon = p;
+					gp.ui.currentHeader = "Which IV to set to 0?";
+					gp.ui.moveOption = -1;
+					gp.ui.showIVOptions = true;
+					return;
+				} else {
+					gp.ui.showMessage(p.nickname + "'s IVs were maxed out!");
+					p.ivs = new int[] {31, 31, 31, 31, 31, 31};
+					p.setStats();
+				}
 				break;
 					
 			// Edge Kit
 			case EDGE_KIT:
 				if (p.expMax - p.exp != 1) {
-	        		p.exp = p.expMax - 1;
-	        		gp.ui.showMessage(p.nickname + " successfully edged!");
-	        	} else {
-	        		gp.ui.showMessage(p.nickname + " is already edged.");
-	        	}
+					p.exp = p.expMax - 1;
+					gp.ui.showMessage(p.nickname + " successfully edged!");
+				} else {
+					gp.ui.showMessage(p.nickname + " is already edged.");
+				}
 				return;
 			
 			// Elixirs
 			case ELIXIR:
 			case MAX_ELIXIR:
 				if (item == Item.MAX_ELIXIR) {
-	        		boolean work = false;
-	        		for (Moveslot m : p.moveset) {
-	        			if (m != null && m.currentPP != m.maxPP) {
-	        				work = true;
-	        				break;
-	        			}
-	        		}
-	        		if (work) {
-		        		for (Moveslot m : p.moveset) {
-		        			if (m != null) m.currentPP = m.maxPP;
-		        		}
-		        		gp.ui.showMessage(p.nickname + "'s PP was restored!");
-	        		} else {
-	        			gp.ui.showMessage(p.nickname + "'s PP is already full!");
-	        			return;
-	        		}
-	        		break;
-	        	} else {
-	        		gp.ui.currentPokemon = p;
-	            	gp.ui.currentMove = null;
-	            	gp.ui.currentHeader = "Select a move to restore PP:";
-	            	gp.ui.moveOption = -1;
-	            	gp.ui.showMoveOptions = true;
-	        	}
+					boolean work = false;
+					for (Moveslot m : p.moveset) {
+						if (m != null && m.currentPP != m.maxPP) {
+							work = true;
+							break;
+						}
+					}
+					if (work) {
+						for (Moveslot m : p.moveset) {
+							if (m != null) m.currentPP = m.maxPP;
+						}
+						gp.ui.showMessage(p.nickname + "'s PP was restored!");
+					} else {
+						gp.ui.showMessage(p.nickname + "'s PP is already full!");
+						return;
+					}
+					break;
+				} else {
+					gp.ui.currentPokemon = p;
+					gp.ui.currentMove = null;
+					gp.ui.currentHeader = "Select a move to restore PP:";
+					gp.ui.moveOption = -1;
+					gp.ui.showMoveOptions = true;
+				}
 				return;
 				
 			// PPs
 			case PP_UP:
 			case PP_MAX:
 				gp.ui.currentPokemon = p;
-	        	gp.ui.currentMove = null;
-	        	gp.ui.currentHeader = "Select a move to increase PP:";
-	        	gp.ui.moveOption = -1;
-	        	gp.ui.showMoveOptions = true;
+				gp.ui.currentMove = null;
+				gp.ui.currentHeader = "Select a move to increase PP:";
+				gp.ui.moveOption = -1;
+				gp.ui.showMoveOptions = true;
 				return;
 			
 			case RARE_CANDY:
@@ -1404,26 +1443,26 @@ public class Player extends Trainer implements Serializable {
 			case TM99:
 				int learnable = p.canUseItem(item);
 				if (learnable == 0) {
-	        		gp.ui.showMessage("" + p.nickname + " can't learn " + item.getMove() + "!");
-	        	} else if (learnable == 2) {
-	        		gp.ui.showMessage("" + p.nickname + " already knows " + item.getMove() + "!");
-	        	} else {
-	        		boolean learnedMove = false;
-		            for (int k = 0; k < 4; k++) {
-		                if (p.moveset[k] == null) {
-		                	p.moveset[k] = new Moveslot(item.getMove());
-		                	gp.ui.showMessage(p.nickname + " learned " + item.getMove() + "!");
-		                    learnedMove = true;
-		                    break;
-		                }
-		            }
-		            if (!learnedMove) {
-		            	gp.ui.currentPokemon = p;
-		            	gp.ui.currentMove = item.getMove();
-		            	gp.ui.moveOption = -1;
-		            	gp.ui.showMoveOptions = true;
-		            }
-	        	}
+					gp.ui.showMessage("" + p.nickname + " can't learn " + item.getMove() + "!");
+				} else if (learnable == 2) {
+					gp.ui.showMessage("" + p.nickname + " already knows " + item.getMove() + "!");
+				} else {
+					boolean learnedMove = false;
+					for (int k = 0; k < 4; k++) {
+						if (p.moveset[k] == null) {
+							p.moveset[k] = new Moveslot(item.getMove());
+							gp.ui.showMessage(p.nickname + " learned " + item.getMove() + "!");
+							learnedMove = true;
+							break;
+						}
+					}
+					if (!learnedMove) {
+						gp.ui.currentPokemon = p;
+						gp.ui.currentMove = item.getMove();
+						gp.ui.moveOption = -1;
+						gp.ui.showMoveOptions = true;
+					}
+				}
 				return;
 			case BUG_CRYSTAL:
 			case DARK_CRYSTAL:
@@ -1462,15 +1501,15 @@ public class Player extends Trainer implements Serializable {
 				break;
 			case DAMAGE_KIT:
 				if (p.currentHP > 1) {
-	        		p.currentHP--;
+					p.currentHP--;
 				}
 				return;
 			case STATUS_KIT:
 				if (!p.isFainted()) {
 					gp.ui.currentPokemon = p;
-	        		gp.ui.currentHeader = "Which status to inflict?";
-	        		gp.ui.moveOption = -1;
-	        		gp.ui.showStatusOptions = true;
+					gp.ui.currentHeader = "Which status to inflict?";
+					gp.ui.moveOption = -1;
+					gp.ui.showStatusOptions = true;
 				}
 				return;
 			default:
@@ -1591,12 +1630,12 @@ public class Player extends Trainer implements Serializable {
 
 	public void shiftTeamForward(int index) {
 		Pokemon[] teamTemp = team.clone();
-    	for (int i = index + 1; i < team.length; i++) {
-        	teamTemp[i - 1] = team[i];
-        }
-    	team = teamTemp;
-    	current = team[0];
-    	team[5] = null;
+		for (int i = index + 1; i < team.length; i++) {
+			teamTemp[i - 1] = team[i];
+		}
+		team = teamTemp;
+		current = team[0];
+		team[5] = null;
 	}
 
 	public int[] getDexAmounts(Pokemon[] pokedex) {
@@ -1766,38 +1805,38 @@ public class Player extends Trainer implements Serializable {
 
 	public void setupStatBerries() {
 		statBerries = new Item[7];
-        int count = 0;
+		int count = 0;
 		for (int i = 275; i < 282; i++) {
 			statBerries[count] = Item.getItem(i);
 			count++;
 		}
-        List<Item> berryList = new ArrayList<>(Arrays.asList(statBerries));
-        Collections.shuffle(berryList);
-        statBerries = berryList.toArray(new Item[1]);
+		List<Item> berryList = new ArrayList<>(Arrays.asList(statBerries));
+		Collections.shuffle(berryList);
+		statBerries = berryList.toArray(new Item[1]);
 	}
 	
 	public void setupResistBerries() {
 		resistBerries = new Item[20];
-        int count = 0;
+		int count = 0;
 		for (int i = 232; i < 252; i++) {
 			resistBerries[count] = Item.getItem(i);
 			count++;
 		}
-        List<Item> berryList = new ArrayList<>(Arrays.asList(resistBerries));
-        Collections.shuffle(berryList);
-        resistBerries = berryList.toArray(new Item[1]);
+		List<Item> berryList = new ArrayList<>(Arrays.asList(resistBerries));
+		Collections.shuffle(berryList);
+		resistBerries = berryList.toArray(new Item[1]);
 	}
 	
 	public void setupCrystals() {
 		crystals = new Item[19];
-        int count = 0;
+		int count = 0;
 		for (int i = 285; i < 304; i++) {
 			crystals[count] = Item.getItem(i);
 			count++;
 		}
-        List<Item> crystalList = new ArrayList<>(Arrays.asList(crystals));
-        Collections.shuffle(crystalList);
-        crystals = crystalList.toArray(new Item[1]);
+		List<Item> crystalList = new ArrayList<>(Arrays.asList(crystals));
+		Collections.shuffle(crystalList);
+		crystals = crystalList.toArray(new Item[1]);
 	}
 
 	public void purchaseItem(UI ui, Item item, Pair<Item, Integer> p, int mode, Entity npc) {
@@ -1994,42 +2033,42 @@ public class Player extends Trainer implements Serializable {
 		int oldID = p.id;
 		p.evolve(counter);
 		
-        Task text = Task.createTask(Task.EVOLUTION, oldNickname + " evolved into " + p.name() + "!", p);
-        text.types = new PType[] {p.type1, p.type2};
-        Task.insertTask(text, 0);
-        pokedex[p.id] = 2;
-        if (oldID == 129 && !banShedinja) {
-        	Pokemon shedinja = p.clone();
-        	shedinja.cloned = false;
-        	catchPokemon(shedinja.evolve(131), false);
-        }
-        
-        if (oldID == 263) {
-        	for (Pokemon pok : team) {
-        		if (pok != null) {
-        			pok.convertToNonMeteorForm();
-        			pokedex[pok.id] = 2;
-        		}
-        	}
-        }
-        
-        if (p == getCurrent()) {
-        	gp.battleUI.userHP = p.currentHP;
-        	gp.battleUI.maxUserHP = p.getStat(0);
-        }
-        int i = p.checkMove(1, 0);
-        p.checkMove(i, p.level);
-        
-        ArrayList<Task> tasks = gp.getTasks();
-        tasks.removeIf(task -> task.type == Task.EVO && task.p.slot == p.slot && task.start == oldID);
-        for (int j = 1; j < tasks.size(); j++) {
-        	Task t = tasks.get(j);
-        	if (t.message.contains(oldNickname)) {
-        		t.message = t.message.replace(oldNickname, p.nickname);
-        	}
-        }
-        
-        this.recordEvolution(p);
+		Task text = Task.createTask(Task.EVOLUTION, oldNickname + " evolved into " + p.name() + "!", p);
+		text.types = new PType[] {p.type1, p.type2};
+		Task.insertTask(text, 0);
+		pokedex[p.id] = 2;
+		if (oldID == 129 && !banShedinja) {
+			Pokemon shedinja = p.clone();
+			shedinja.cloned = false;
+			catchPokemon(shedinja.evolve(131), false);
+		}
+		
+		if (oldID == 263) {
+			for (Pokemon pok : team) {
+				if (pok != null) {
+					pok.convertToNonMeteorForm();
+					pokedex[pok.id] = 2;
+				}
+			}
+		}
+		
+		if (p == getCurrent()) {
+			gp.battleUI.userHP = p.currentHP;
+			gp.battleUI.maxUserHP = p.getStat(0);
+		}
+		int i = p.checkMove(1, 0);
+		p.checkMove(i, p.level);
+		
+		ArrayList<Task> tasks = gp.getTasks();
+		tasks.removeIf(task -> task.type == Task.EVO && task.p.slot == p.slot && task.start == oldID);
+		for (int j = 1; j < tasks.size(); j++) {
+			Task t = tasks.get(j);
+			if (t.message.contains(oldNickname)) {
+				t.message = t.message.replace(oldNickname, p.nickname);
+			}
+		}
+		
+		this.recordEvolution(p);
 	}
 	
 	public void setupPuzzles(GamePanel gp, int map) {
@@ -2221,7 +2260,7 @@ public class Player extends Trainer implements Serializable {
 
 	public Color getHotkeyColor(int i) {
 		Color[] colors = new Color[] {
-			new Color(255, 89, 94),    // Coral Red
+			new Color(255, 89, 94),	// Coral Red
 			new Color(255, 202, 58),   // Golden Yellow
 			new Color(138, 201, 38),   // Lime Green
 			new Color(25, 130, 196),   // Ocean Blue

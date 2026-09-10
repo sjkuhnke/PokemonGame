@@ -41,17 +41,17 @@ public enum PType {
 	}
 	
 	private BufferedImage setup(String imageName) {
-	    BufferedImage image = null;
-	    
-	    try {
-	        // Load the original image
-	        image = ImageIO.read(getClass().getResourceAsStream(imageName + ".png"));
-	        
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
-	    
-	    return image;
+		BufferedImage image = null;
+		
+		try {
+			// Load the original image
+			image = ImageIO.read(getClass().getResourceAsStream(imageName + ".png"));
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return image;
 	}
 	
 	public Color getColor() {
@@ -69,7 +69,7 @@ public enum PType {
 	@Override // implementation
 	public String toString() {
 		String name = name().toLowerCase();
-        return name.substring(0, 1).toUpperCase() + name.substring(1);
+		return name.substring(0, 1).toUpperCase() + name.substring(1);
 	}
 
 	public String effectiveness(Pokemon foe, Pokemon user, Move m) {

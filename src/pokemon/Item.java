@@ -56,6 +56,7 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 import overworld.Main;
 import pokemon.Field.Effect;
+import util.JGradientButton;
 import util.Pair;
 
 public enum Item {
@@ -481,29 +482,29 @@ public enum Item {
 	private Image greyImage2;
 	
 	public static final int MEDICINE = 1;
-    public static final int OTHER = 2;
-    public static final int BALLS = 3;
-    public static final int TMS = 4;
-    public static final int HELD_ITEM = 5;
-    public static final int BERRY = 6;
-    public static final int KEY_ITEM = 7;
-    
-    public static Item[] itemTable = setupItemTable();
-    public static Item[] mints;
-    public static Item[] balls;
-    public static int mintID = 0;
-    public static int ballID = 0;
-    
-    public static JPanel calc;
-    public static JFrame calcFrame;
-    private static JComboBox<Pokemon> userMons;
-    private static JComboBox<Pokemon> foeMons;
-    private static JSpinner userLevel;
-    public static Field field;
-    private static JButton okButton;
-    
-    private static int userGen;
-    private static int foeGen;
+	public static final int OTHER = 2;
+	public static final int BALLS = 3;
+	public static final int TMS = 4;
+	public static final int HELD_ITEM = 5;
+	public static final int BERRY = 6;
+	public static final int KEY_ITEM = 7;
+	
+	public static Item[] itemTable = setupItemTable();
+	public static Item[] mints;
+	public static Item[] balls;
+	public static int mintID = 0;
+	public static int ballID = 0;
+	
+	public static JPanel calc;
+	public static JFrame calcFrame;
+	private static JComboBox<Pokemon> userMons;
+	private static JComboBox<Pokemon> foeMons;
+	private static JSpinner userLevel;
+	public static Field field;
+	private static JButton okButton;
+	
+	private static int userGen;
+	private static int foeGen;
 	
 	Item(int id, int cost, int sell, Color color, int pocket, Object o, String desc) {
 		this.id = id;
@@ -542,22 +543,22 @@ public enum Item {
 		Image image = image2;
 		
 		BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-	    Graphics2D graphics = bufferedImage.createGraphics();
+		Graphics2D graphics = bufferedImage.createGraphics();
 
-	    // Flip the image horizontally by drawing it with negative width
-	    graphics.drawImage(image, image.getWidth(null), 0, -image.getWidth(null), image.getHeight(null), null);
-	    graphics.dispose();
+		// Flip the image horizontally by drawing it with negative width
+		graphics.drawImage(image, image.getWidth(null), 0, -image.getWidth(null), image.getHeight(null), null);
+		graphics.dispose();
 
-	    return bufferedImage;
+		return bufferedImage;
 	}
 	
 	public Image setupGreyImage(BufferedImage image) {
 		ImageFilter grayFilter = new GrayFilter(true, 25);
 
-        ImageProducer producer = new FilteredImageSource(image.getSource(), grayFilter);
-        Image grayImage = Toolkit.getDefaultToolkit().createImage(producer);
-        
-        return grayImage;
+		ImageProducer producer = new FilteredImageSource(image.getSource(), grayFilter);
+		Image grayImage = Toolkit.getDefaultToolkit().createImage(producer);
+		
+		return grayImage;
 	}
 
 	private void addToMintTable() {
@@ -597,86 +598,86 @@ public enum Item {
 	
 	public BufferedImage scaleImage(BufferedImage image, int scale) {
 		// Calculate the new dimensions based on the scale
-        int newWidth = image.getWidth() * scale;
-        int newHeight = image.getHeight() * scale;
-        
-        // Create a new BufferedImage with the scaled dimensions
-        BufferedImage result = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
-        
-        // Draw the original image onto the scaled image
-        Graphics2D g2d = result.createGraphics();
-        g2d.drawImage(image, 0, 0, newWidth, newHeight, null);
-        g2d.dispose();
-        
-        return result;
+		int newWidth = image.getWidth() * scale;
+		int newHeight = image.getHeight() * scale;
+		
+		// Create a new BufferedImage with the scaled dimensions
+		BufferedImage result = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
+		
+		// Draw the original image onto the scaled image
+		Graphics2D g2d = result.createGraphics();
+		g2d.drawImage(image, 0, 0, newWidth, newHeight, null);
+		g2d.dispose();
+		
+		return result;
 	}
 	
 	public BufferedImage createOutlineImage(BufferedImage src, Object... colorThicknessPairs) {
-	    if (colorThicknessPairs.length % 2 != 0) {
-	        throw new IllegalArgumentException("Arguments must be in (Color, thickness) pairs.");
-	    }
+		if (colorThicknessPairs.length % 2 != 0) {
+			throw new IllegalArgumentException("Arguments must be in (Color, thickness) pairs.");
+		}
 
-	    int srcW = src.getWidth();
-	    int srcH = src.getHeight();
+		int srcW = src.getWidth();
+		int srcH = src.getHeight();
 
-	    // Find largest thickness to size canvas
-	    int maxThickness = 0;
-	    for (int i = 1; i < colorThicknessPairs.length; i += 2) {
-	        int thickness = (int) colorThicknessPairs[i];
-	        maxThickness = Math.max(maxThickness, thickness);
-	    }
+		// Find largest thickness to size canvas
+		int maxThickness = 0;
+		for (int i = 1; i < colorThicknessPairs.length; i += 2) {
+			int thickness = (int) colorThicknessPairs[i];
+			maxThickness = Math.max(maxThickness, thickness);
+		}
 
-	    int w = srcW + maxThickness * 2;
-	    int h = srcH + maxThickness * 2;
-	    BufferedImage outlined = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+		int w = srcW + maxThickness * 2;
+		int h = srcH + maxThickness * 2;
+		BufferedImage outlined = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
 
-	    // Draw original in the center
-	    Graphics2D g2 = outlined.createGraphics();
-	    g2.drawImage(src, maxThickness, maxThickness, null);
-	    g2.dispose();
+		// Draw original in the center
+		Graphics2D g2 = outlined.createGraphics();
+		g2.drawImage(src, maxThickness, maxThickness, null);
+		g2.dispose();
 
-	    // Process each outline layer
-	    for (int pairIndex = 0; pairIndex < colorThicknessPairs.length; pairIndex += 2) {
-	        Color borderColor = (Color) colorThicknessPairs[pairIndex];
-	        int thickness = (int) colorThicknessPairs[pairIndex + 1];
-	        int borderRGB = borderColor.getRGB();
+		// Process each outline layer
+		for (int pairIndex = 0; pairIndex < colorThicknessPairs.length; pairIndex += 2) {
+			Color borderColor = (Color) colorThicknessPairs[pairIndex];
+			int thickness = (int) colorThicknessPairs[pairIndex + 1];
+			int borderRGB = borderColor.getRGB();
 
-	        boolean skipFilledPixels = (pairIndex == 0); 
-	        // Only skip filled pixels on first layer (outermost)
+			boolean skipFilledPixels = (pairIndex == 0); 
+			// Only skip filled pixels on first layer (outermost)
 
-	        for (int y = 0; y < h; y++) {
-	            for (int x = 0; x < w; x++) {
-	                if (skipFilledPixels && (outlined.getRGB(x, y) >>> 24) != 0) {
-	                    // Skip pixels already opaque (sprite or previously drawn outline)
-	                    continue;
-	                }
+			for (int y = 0; y < h; y++) {
+				for (int x = 0; x < w; x++) {
+					if (skipFilledPixels && (outlined.getRGB(x, y) >>> 24) != 0) {
+						// Skip pixels already opaque (sprite or previously drawn outline)
+						continue;
+					}
 
-	                // Check neighbors within thickness radius for opaque src pixels
-	                boolean isBorder = false;
-	                for (int oy = -thickness; oy <= thickness && !isBorder; oy++) {
-	                    for (int ox = -thickness; ox <= thickness && !isBorder; ox++) {
-	                        int nx = x + ox;
-	                        int ny = y + oy;
-	                        if (nx >= 0 && nx < w && ny >= 0 && ny < h) {
-	                            int sx = nx - maxThickness;
-	                            int sy = ny - maxThickness;
-	                            if (sx >= 0 && sx < srcW && sy >= 0 && sy < srcH) {
-	                                if ((src.getRGB(sx, sy) >>> 24) != 0) {
-	                                    isBorder = true;
-	                                }
-	                            }
-	                        }
-	                    }
-	                }
+					// Check neighbors within thickness radius for opaque src pixels
+					boolean isBorder = false;
+					for (int oy = -thickness; oy <= thickness && !isBorder; oy++) {
+						for (int ox = -thickness; ox <= thickness && !isBorder; ox++) {
+							int nx = x + ox;
+							int ny = y + oy;
+							if (nx >= 0 && nx < w && ny >= 0 && ny < h) {
+								int sx = nx - maxThickness;
+								int sy = ny - maxThickness;
+								if (sx >= 0 && sx < srcW && sy >= 0 && sy < srcH) {
+									if ((src.getRGB(sx, sy) >>> 24) != 0) {
+										isBorder = true;
+									}
+								}
+							}
+						}
+					}
 
-	                if (isBorder) {
-	                    outlined.setRGB(x, y, (borderRGB & 0x00FFFFFF) | (0xFF << 24));
-	                }
-	            }
-	        }
-	    }
+					if (isBorder) {
+						outlined.setRGB(x, y, (borderRGB & 0x00FFFFFF) | (0xFF << 24));
+					}
+				}
+			}
+		}
 
-	    return outlined;
+		return outlined;
 	}
 
 
@@ -724,8 +725,8 @@ public enum Item {
 		ArrayList<Item> result = new ArrayList<>();
 
 		for (int i = 93; i <= 199; i++) {
-            result.add(Item.getItem(i));
-        }
+			result.add(Item.getItem(i));
+		}
 		
 		return result;
 	}
@@ -743,47 +744,47 @@ public enum Item {
 	
 	@Override
 	public String toString() {
-	    String result = "";
-	    String name = super.toString();
-	    if (this.isTM()) {
-	        result = name + " " + getMove().toString();
-	    } else {
-	    	name = name.replace('$', '-');
-	        name = name.replace('1', '\'');
-	        name = name.toLowerCase().replace('_', ' ');
+		String result = "";
+		String name = super.toString();
+		if (this.isTM()) {
+			result = name + " " + getMove().toString();
+		} else {
+			name = name.replace('$', '-');
+			name = name.replace('1', '\'');
+			name = name.toLowerCase().replace('_', ' ');
 
-	        StringBuilder sb = new StringBuilder();
-	        boolean capitalizeNext = true; // Flag to capitalize the next word
-	        for (char c : name.toCharArray()) {
-	            if (c == ' ' || c == '-') {
-	                sb.append(c); // Keep the space or hyphen
-	                capitalizeNext = true;
-	            } else {
-	                if (capitalizeNext) {
-	                    sb.append(Character.toUpperCase(c));
-	                    capitalizeNext = false;
-	                } else {
-	                    sb.append(c);
-	                }
-	            }
-	        }
-	        result = sb.toString().trim();
-	        result = result.replace("Pp", "PP");
-	        result = result.replace("Pc", "PC");
-	    }
+			StringBuilder sb = new StringBuilder();
+			boolean capitalizeNext = true; // Flag to capitalize the next word
+			for (char c : name.toCharArray()) {
+				if (c == ' ' || c == '-') {
+					sb.append(c); // Keep the space or hyphen
+					capitalizeNext = true;
+				} else {
+					if (capitalizeNext) {
+						sb.append(Character.toUpperCase(c));
+						capitalizeNext = false;
+					} else {
+						sb.append(c);
+					}
+				}
+			}
+			result = sb.toString().trim();
+			result = result.replace("Pp", "PP");
+			result = result.replace("Pc", "PC");
+		}
 
-	    return result;
+		return result;
 	}
 	
 	public static Item getEnum(String string) {
 		// Normalize the string
-	    String normalized = string.toUpperCase().replace('\'', '1').replace('-', '$').replace(' ', '_');
-	    
-	    try {
-	        return Item.valueOf(normalized);
-	    } catch (IllegalArgumentException e) {
-	        throw new IllegalStateException("No matching Item enum found for string: " + string, e);
-	    }
+		String normalized = string.toUpperCase().replace('\'', '1').replace('-', '$').replace(' ', '_');
+		
+		try {
+			return Item.valueOf(normalized);
+		} catch (IllegalArgumentException e) {
+			throw new IllegalStateException("No matching Item enum found for string: " + string, e);
+		}
 	}
 
 	public int getHealAmount() {
@@ -808,35 +809,35 @@ public enum Item {
 	private void writeTMCSV(boolean[][] tm) {
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter("./tms.csv"))) {
 			int r = 1;
-	        for (boolean[] row : tm) {
-	            // Write TMs (indexes 7 to 106 inclusive)
-	            for (int i = 8; i <= 106; i++) {
-	                writer.write(row[i] ? '1' : '0');
-	            }
-	            writer.write(" "); // Space between TMs and HMs
+			for (boolean[] row : tm) {
+				// Write TMs (indexes 7 to 106 inclusive)
+				for (int i = 8; i <= 106; i++) {
+					writer.write(row[i] ? '1' : '0');
+				}
+				writer.write(" "); // Space between TMs and HMs
 
-	            // Write HMs (indexes 0 to 7 inclusive)
-	            for (int i = 0; i <= 7; i++) {
-	                writer.write(row[i] ? '1' : '0');
-	            }
-	            writer.write(" "); // Space between HMs and Pokemon name
+				// Write HMs (indexes 0 to 7 inclusive)
+				for (int i = 0; i <= 7; i++) {
+					writer.write(row[i] ? '1' : '0');
+				}
+				writer.write(" "); // Space between HMs and Pokemon name
 
-	            // Write Pokemon name
-	            writer.write(Pokemon.getName(r++));
-	            writer.newLine(); // Move to the next line for the next Pokemon
-	        }
-	        writer.newLine();
-	        for (int i = 101; i < 200; i++) {
-	        	writer.write(Item.getItem(i).toString());
-	        	writer.newLine();
-	        }
-	        writer.newLine();
-	        for (int i = 93; i < 101; i++) {
-	        	writer.write(Item.getItem(i).toString());
-	        	writer.newLine();
-	        }
+				// Write Pokemon name
+				writer.write(Pokemon.getName(r++));
+				writer.newLine(); // Move to the next line for the next Pokemon
+			}
+			writer.newLine();
+			for (int i = 101; i < 200; i++) {
+				writer.write(Item.getItem(i).toString());
+				writer.newLine();
+			}
+			writer.newLine();
+			for (int i = 93; i < 101; i++) {
+				writer.write(Item.getItem(i).toString());
+				writer.newLine();
+			}
 		} catch (IOException e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
 	}
 
@@ -894,53 +895,53 @@ public enum Item {
 		Trainer pl = p.trainer;
 		if (calc == null) {
 			calc = new JPanel();
-		    calc.setLayout(new GridBagLayout());
-		    
-		    SpinnerModel levelModel = new SpinnerNumberModel(50, 1, 100, 1);
-		    SpinnerModel foeLevelModel = new SpinnerNumberModel(50, 1, 100, 1);
-		    
-		    GridBagConstraints gbc = new GridBagConstraints();
-	        gbc.gridx = 0;
-	        gbc.gridy = 0;
-	        gbc.insets = new Insets(5, 5, 5, 5); // Add space between components
-	        
-	        userMons = new JComboBox<>();
-	        userLevel = new JSpinner(levelModel);
-	        
-	        JSpinner.DefaultEditor editor = (JSpinner.DefaultEditor)userLevel.getEditor();
-	        JTextField textField = editor.getTextField();
-	        textField.addFocusListener( new FocusAdapter() {
-	            public void focusGained(final FocusEvent e) {
-	                SwingUtilities.invokeLater(new Runnable() {
-	                    @Override
-	                    public void run() {
-	                        JTextField tf = (JTextField)e.getSource();
-	                        tf.selectAll();
-	                    }
-	                });
-	            }
-	        });
-	        
-	        JLabel[] userStatLabels = new JLabel[6];
-	        @SuppressWarnings("unchecked")
+			calc.setLayout(new GridBagLayout());
+			
+			SpinnerModel levelModel = new SpinnerNumberModel(50, 1, 100, 1);
+			SpinnerModel foeLevelModel = new SpinnerNumberModel(50, 1, 100, 1);
+			
+			GridBagConstraints gbc = new GridBagConstraints();
+			gbc.gridx = 0;
+			gbc.gridy = 0;
+			gbc.insets = new Insets(5, 5, 5, 5); // Add space between components
+			
+			userMons = new JComboBox<>();
+			userLevel = new JSpinner(levelModel);
+			
+			JSpinner.DefaultEditor editor = (JSpinner.DefaultEditor)userLevel.getEditor();
+			JTextField textField = editor.getTextField();
+			textField.addFocusListener( new FocusAdapter() {
+				public void focusGained(final FocusEvent e) {
+					SwingUtilities.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							JTextField tf = (JTextField)e.getSource();
+							tf.selectAll();
+						}
+					});
+				}
+			});
+			
+			JLabel[] userStatLabels = new JLabel[6];
+			@SuppressWarnings("unchecked")
 			JComboBox<Integer>[] userStages = new JComboBox[6];
-	        JButton userCurrentHP = new JButton();
-	        JLabel userHPP = new JLabel();
-	        JLabel userSpeed = new JLabel();
-	        JGradientButton[] userMoves = new JGradientButton[] {new JGradientButton(""), new JGradientButton(""), new JGradientButton(""), new JGradientButton(""), };
-	        JLabel[] userDamage = new JLabel[] {new JLabel(""), new JLabel(""), new JLabel(""), new JLabel(""), };
-	        JCheckBox critCheck = new JCheckBox("Crit");
-	        for (Pokemon pokemon : pl.getOrderedTeam()) {
-	        	Pokemon add = pokemon.clone();
-	        	if (!(pl instanceof Player)) {
-	        		add.setCalcNickname();
-	        	}
-	    		if (!(pokemon instanceof Egg)) {
-	    			userMons.addItem(add.clone());
-	    			
-	    			if (pokemon.id == 150) {
-		        		Pokemon kD = pokemon.clone();
-		        		int oHP = kD.getStat(0);
+			JButton userCurrentHP = new JButton();
+			JLabel userHPP = new JLabel();
+			JLabel userSpeed = new JLabel();
+			JGradientButton[] userMoves = new JGradientButton[] {new JGradientButton(""), new JGradientButton(""), new JGradientButton(""), new JGradientButton(""), };
+			JLabel[] userDamage = new JLabel[] {new JLabel(""), new JLabel(""), new JLabel(""), new JLabel(""), };
+			JCheckBox critCheck = new JCheckBox("Crit");
+			for (Pokemon pokemon : pl.getOrderedTeam()) {
+				Pokemon add = pokemon.clone();
+				if (!(pl instanceof Player)) {
+					add.setCalcNickname();
+				}
+				if (!(pokemon instanceof Egg)) {
+					userMons.addItem(add.clone());
+					
+					if (pokemon.id == 150) {
+						Pokemon kD = pokemon.clone();
+						int oHP = kD.getStat(0);
 						kD.id = 237;
 						kD.setName(kD.getName());
 						if (kD.nickname == kD.name()) kD.nickname = kD.getName();
@@ -954,329 +955,329 @@ public enum Item {
 						kD.setSprites();
 						kD.setAbility(kD.abilitySlot);
 						userMons.addItem(kD);
-		        	}
-	    		}
-	        }
-	        if (box != null) {
+					}
+				}
+			}
+			if (box != null) {
 				for (Pokemon q : box) {
 					if (q != null && !(q instanceof Egg)) {
 						userMons.addItem(q.clone());
 					}
 				}
 			}
-	        if (box != null) {
-	        	Player player = (Player) pl;
-	        	if (player.gauntletBox != null && !Pokemon.gp.ui.gauntlet) {
-	        		for (Pokemon q : player.gauntletBox) {
-	    				if (q != null && !(q instanceof Egg)) {
-	    					userMons.addItem(q.clone());
-	    				}
-	    			}
-	        	}
-	        }
-	        
-	        AutoCompleteDecorator.decorate(userMons);
-	        
-	        foeMons = new JComboBox<>();
-	        JSpinner foeLevel = new JSpinner(foeLevelModel);
-	        
-	        JSpinner.DefaultEditor fEditor = (JSpinner.DefaultEditor)foeLevel.getEditor();
-	        JTextField fTextField = fEditor.getTextField();
-	        fTextField.addFocusListener(new FocusAdapter() {
-	            public void focusGained(final FocusEvent e) {
-	                SwingUtilities.invokeLater(new Runnable() {
-	                    @Override
-	                    public void run() {
-	                        JTextField tf = (JTextField)e.getSource();
-	                        tf.selectAll();
-	                    }
-	                });
-	            }
-	        });
-	        
-	        JLabel[] foeStatLabels = new JLabel[6];
-	        @SuppressWarnings("unchecked")
+			if (box != null) {
+				Player player = (Player) pl;
+				if (player.gauntletBox != null && !Pokemon.gp.ui.gauntlet) {
+					for (Pokemon q : player.gauntletBox) {
+						if (q != null && !(q instanceof Egg)) {
+							userMons.addItem(q.clone());
+						}
+					}
+				}
+			}
+			
+			AutoCompleteDecorator.decorate(userMons);
+			
+			foeMons = new JComboBox<>();
+			JSpinner foeLevel = new JSpinner(foeLevelModel);
+			
+			JSpinner.DefaultEditor fEditor = (JSpinner.DefaultEditor)foeLevel.getEditor();
+			JTextField fTextField = fEditor.getTextField();
+			fTextField.addFocusListener(new FocusAdapter() {
+				public void focusGained(final FocusEvent e) {
+					SwingUtilities.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							JTextField tf = (JTextField)e.getSource();
+							tf.selectAll();
+						}
+					});
+				}
+			});
+			
+			JLabel[] foeStatLabels = new JLabel[6];
+			@SuppressWarnings("unchecked")
 			JComboBox<Integer>[] foeStages = new JComboBox[6];
-	        JButton foeCurrentHP = new JButton();
-	        JLabel foeHPP = new JLabel();
-	        JLabel foeSpeed = new JLabel();
-	        JGradientButton[] foeMoves = new JGradientButton[] {new JGradientButton(""), new JGradientButton(""), new JGradientButton(""), new JGradientButton(""), };
-	        JLabel[] foeDamage = new JLabel[] {new JLabel(""), new JLabel(""), new JLabel(""), new JLabel(""), };
-	        JCheckBox fCritCheck = new JCheckBox("Crit");
-	        for (int k = 1; k <= Pokemon.MAX_POKEMON; k++) {
-	        	foeMons.addItem(new Pokemon(k, 50, false, true));
-	        }
-	        for (int i = 0; i < Trainer.trainers.length; i++) {
-	        	Trainer tr = Trainer.trainers[i];
-	        	if (tr != null && !Pokemon.gp.player.p.trainersBeat[i]) {
-	        		Pokemon[] newTeam = new Pokemon[tr.getTeam().length];
-	        		for (int j = 0; j < tr.getTeam().length; j++) {
-	        			Pokemon po = tr.getTeam()[j];
-	            		Pokemon add = po.clone();
-	            		add.setCalcNickname();
-	            		foeMons.addItem(add);
-	            		newTeam[j] = add;
-	            	}
-	        		Trainer newT = tr.shallowClone(Pokemon.gp);
-	        		for (Pokemon po : newTeam) {
-	        			po.trainer = newT;
-	        		}
-	        	}
-	        }
-	        AutoCompleteDecorator.decorate(foeMons);
-	        
-	        JComboBox<Ability> userAbility = new JComboBox<>(Ability.values());
-	        JComboBox<Ability> foeAbility = new JComboBox<>(Ability.values());
-	        AutoCompleteDecorator.decorate(userAbility);
-	        AutoCompleteDecorator.decorate(foeAbility);
-	        
-	        JButton infoButton = new JButton("   Info   ");
-	        JButton fInfoButton = new JButton("   Info   ");
-	        
-	        ArrayList<Item> items = new ArrayList<>();
-	        items.add(null);
-	        for (Item item : Item.values()) {
-	        	if (item.getPocket() == Item.HELD_ITEM || item.getPocket() == Item.BERRY) {
-	        		items.add(item);
-	        	}
-	        }
-	        
-	        infoButton.addActionListener(e -> {
-	        	JOptionPane.showMessageDialog(calc, ((Pokemon) userMons.getSelectedItem()).showSummary(field, null), "Pokemon details", JOptionPane.PLAIN_MESSAGE);
-	        });
-	        
-	        fInfoButton.addActionListener(e -> {
-	        	Pokemon foe = (Pokemon) foeMons.getSelectedItem();
-	        	if (foe.getSprite() == null) foe.setSprites();
-	        	JOptionPane.showMessageDialog(calc, ((Pokemon) foeMons.getSelectedItem()).showSummary(field, null), "Pokemon details", JOptionPane.PLAIN_MESSAGE);
-	        });
-	        
-	        JComboBox<Item> userItem = new JComboBox<>((Item[]) items.toArray(new Item[1]));
-	        JComboBox<Item> foeItem = new JComboBox<>((Item[]) items.toArray(new Item[1]));
-	        
-	        field = Pokemon.field.clone();
-	        
-	        AutoCompleteDecorator.decorate(userItem);
-	        AutoCompleteDecorator.decorate(foeItem);
-	        
-	        userMons.addActionListener(l -> {
-	        	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
-	        	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-	            userLevel.setValue(userCurrent.getLevel());
-	            updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
-	            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
-	        });
-	        
-	        foeMons.addActionListener(l -> {
-	        	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
-	        	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-	        	foeLevel.setValue(foeCurrent.getLevel());
-	        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
-	        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
-	        });
-	        
-	        userLevel.addFocusListener(new FocusAdapter() {
+			JButton foeCurrentHP = new JButton();
+			JLabel foeHPP = new JLabel();
+			JLabel foeSpeed = new JLabel();
+			JGradientButton[] foeMoves = new JGradientButton[] {new JGradientButton(""), new JGradientButton(""), new JGradientButton(""), new JGradientButton(""), };
+			JLabel[] foeDamage = new JLabel[] {new JLabel(""), new JLabel(""), new JLabel(""), new JLabel(""), };
+			JCheckBox fCritCheck = new JCheckBox("Crit");
+			for (int k = 1; k <= Pokemon.MAX_POKEMON; k++) {
+				foeMons.addItem(new Pokemon(k, 50, false, true));
+			}
+			for (int i = 0; i < Trainer.trainers.length; i++) {
+				Trainer tr = Trainer.trainers[i];
+				if (tr != null && !Pokemon.gp.player.p.trainersBeat[i]) {
+					Pokemon[] newTeam = new Pokemon[tr.getTeam().length];
+					for (int j = 0; j < tr.getTeam().length; j++) {
+						Pokemon po = tr.getTeam()[j];
+						Pokemon add = po.clone();
+						add.setCalcNickname();
+						foeMons.addItem(add);
+						newTeam[j] = add;
+					}
+					Trainer newT = tr.shallowClone(Pokemon.gp);
+					for (Pokemon po : newTeam) {
+						po.trainer = newT;
+					}
+				}
+			}
+			AutoCompleteDecorator.decorate(foeMons);
+			
+			JComboBox<Ability> userAbility = new JComboBox<>(Ability.values());
+			JComboBox<Ability> foeAbility = new JComboBox<>(Ability.values());
+			AutoCompleteDecorator.decorate(userAbility);
+			AutoCompleteDecorator.decorate(foeAbility);
+			
+			JButton infoButton = new JButton("   Info   ");
+			JButton fInfoButton = new JButton("   Info   ");
+			
+			ArrayList<Item> items = new ArrayList<>();
+			items.add(null);
+			for (Item item : Item.values()) {
+				if (item.getPocket() == Item.HELD_ITEM || item.getPocket() == Item.BERRY) {
+					items.add(item);
+				}
+			}
+			
+			infoButton.addActionListener(e -> {
+				JOptionPane.showMessageDialog(calc, ((Pokemon) userMons.getSelectedItem()).showSummary(field, null), "Pokemon details", JOptionPane.PLAIN_MESSAGE);
+			});
+			
+			fInfoButton.addActionListener(e -> {
+				Pokemon foe = (Pokemon) foeMons.getSelectedItem();
+				if (foe.getSprite() == null) foe.setSprites();
+				JOptionPane.showMessageDialog(calc, ((Pokemon) foeMons.getSelectedItem()).showSummary(field, null), "Pokemon details", JOptionPane.PLAIN_MESSAGE);
+			});
+			
+			JComboBox<Item> userItem = new JComboBox<>((Item[]) items.toArray(new Item[1]));
+			JComboBox<Item> foeItem = new JComboBox<>((Item[]) items.toArray(new Item[1]));
+			
+			field = Pokemon.field.clone();
+			
+			AutoCompleteDecorator.decorate(userItem);
+			AutoCompleteDecorator.decorate(foeItem);
+			
+			userMons.addActionListener(l -> {
+				Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
+				Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
+				userLevel.setValue(userCurrent.getLevel());
+				updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
+				updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
+			});
+			
+			foeMons.addActionListener(l -> {
+				Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
+				Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
+				foeLevel.setValue(foeCurrent.getLevel());
+				updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
+				updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
+			});
+			
+			userLevel.addFocusListener(new FocusAdapter() {
 				@Override // implementation
-		    	public void focusGained(FocusEvent e) {
+				public void focusGained(FocusEvent e) {
 					JTextField textField = ((JSpinner.DefaultEditor) userLevel.getEditor()).getTextField();
 					textField.selectAll();
-		    	}
+				}
 			});
-	        
+			
 			foeLevel.addFocusListener(new FocusAdapter() {
 				@Override // implementation
-		    	public void focusGained(FocusEvent e) {
+				public void focusGained(FocusEvent e) {
 					JTextField textField = ((JSpinner.DefaultEditor) foeLevel.getEditor()).getTextField();
 					textField.selectAll();
-		    	}
+				}
 			});
-	        
-	        Pokemon userC = ((Pokemon) userMons.getSelectedItem());
-	        Pokemon foeC = ((Pokemon) foeMons.getSelectedItem());
-	        
-	        calc.add(userMons, gbc);
-	        gbc.gridx++;
-	        calc.add(foeMons, gbc);
-	        gbc.gridx = 0;
-	        gbc.gridy++;
-	        
-	        calc.add(userLevel, gbc);
-	        gbc.gridx++;
-	        JPanel foeLevelPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-	        foeLevelPanel.add(foeLevel);
-	        calc.add(foeLevelPanel, gbc);
-	        gbc.gridx = 0;
-	        gbc.gridy++;
-	        
-	        JPanel statsPanel = new JPanel(new GridLayout(6, 3));
-	        for (int i = 0; i < 6; i++) {
-	        	userStatLabels[i] = new JLabel(userC.getStat(i) + "");
-	        	Integer[] stages = new Integer[] {-6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6};
-	        	userStages[i] = new JComboBox<Integer>(stages);
-	        	if (i != 0) userStages[i].setSelectedIndex(userC.statStages[i - 1] + 6);
-	        	JLabel blank = new JLabel("");
-	        	statsPanel.add(userStatLabels[i]);
-	        	if (i == 0) {
-	        		userCurrentHP.setText(userC.currentHP + "");
-	        		statsPanel.add(userCurrentHP);
-	        	} else {
-	        		int index = i;
-	        		userStages[i].addActionListener(e -> {
-	        			Pokemon current = ((Pokemon) userMons.getSelectedItem());
-	        			Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-	        			int amt = (int) userStages[index].getSelectedItem();
-	        			current.statStages[index - 1] = amt;
-	        			updateMoves(current, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
-	        			updateMoves(foeCurrent, foeMoves, foeDamage, current, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
-	        			if (index == 5) userSpeed.setText((current.getSpeed(field)) + "");
-	        		});
-	        		statsPanel.add(userStages[i]);
-	        	}
-	        	
-	        	if (i == 0) {
-	        		double percent = userC.currentHP * 100.0 / userC.getStat(0);
-	        		userHPP.setText(String.format("%.1f", percent) + "%");
-	        		statsPanel.add(userHPP);
-	        	} else if (i == 5) {
-	        		userSpeed.setText((userC.getSpeed(field)) + "");
-	        		statsPanel.add(userSpeed);
-	        	} else {
-	        		statsPanel.add(blank);
-	        	}
-	        	
-	        	
-	        }
-	        
-	        JPanel fStatsPanel = new JPanel(new GridLayout(6, 3));
-	        for (int i = 0; i < 6; i++) {
-	        	foeStatLabels[i] = new JLabel(foeC.getStat(i) + "");
-	        	Integer[] stages = new Integer[] {-6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6};
-	        	foeStages[i] = new JComboBox<Integer>(stages);
-	        	if (i != 0) foeStages[i].setSelectedIndex(foeC.statStages[i - 1] + 6);
-	        	JLabel blank = new JLabel("");
-	        	fStatsPanel.add(foeStatLabels[i]);
-	        	if (i == 0) {
-	        		foeCurrentHP.setText(foeC.currentHP + "");
-	        		fStatsPanel.add(foeCurrentHP);
-	        	} else {
-	        		int index = i;
-	        		foeStages[i].addActionListener(e -> {
-	        			Pokemon current = ((Pokemon) foeMons.getSelectedItem());
-	        			Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
-	        			int amt = (int) foeStages[index].getSelectedItem();
-	        			current.statStages[index - 1] = amt;
-	        			updateMoves(current, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
-	        			updateMoves(userCurrent, userMoves, userDamage, current, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
-	        			if (index == 5) foeSpeed.setText((current.getSpeed(field)) + "");
-	        		});
-	        		fStatsPanel.add(foeStages[i]);
-	        	}
-	        	
-	        	if (i == 0) {
-	        		double percent = foeC.currentHP * 100.0 / foeC.getStat(0);
-	        		foeHPP.setText(String.format("%.1f", percent) + "%");
-	        		fStatsPanel.add(foeHPP);
-	        	} else if (i == 5) {
-	        		foeSpeed.setText((foeC.getSpeed(field)) + "");
-	        		fStatsPanel.add(foeSpeed);
-	        	} else {
-	        		fStatsPanel.add(blank);
-	        	}
-	        	
-	        }
-	        
-	        userLevel.setValue(userC.getLevel());
-	        updateMoves(userC, userMoves, userDamage, foeC, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
-	        
-	        foeLevel.setValue(foeC.getLevel());
-	        updateMoves(foeC, foeMoves, foeDamage, userC, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
-	    	
+			
+			Pokemon userC = ((Pokemon) userMons.getSelectedItem());
+			Pokemon foeC = ((Pokemon) foeMons.getSelectedItem());
+			
+			calc.add(userMons, gbc);
+			gbc.gridx++;
+			calc.add(foeMons, gbc);
+			gbc.gridx = 0;
+			gbc.gridy++;
+			
+			calc.add(userLevel, gbc);
+			gbc.gridx++;
+			JPanel foeLevelPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+			foeLevelPanel.add(foeLevel);
+			calc.add(foeLevelPanel, gbc);
+			gbc.gridx = 0;
+			gbc.gridy++;
+			
+			JPanel statsPanel = new JPanel(new GridLayout(6, 3));
+			for (int i = 0; i < 6; i++) {
+				userStatLabels[i] = new JLabel(userC.getStat(i) + "");
+				Integer[] stages = new Integer[] {-6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6};
+				userStages[i] = new JComboBox<Integer>(stages);
+				if (i != 0) userStages[i].setSelectedIndex(userC.statStages[i - 1] + 6);
+				JLabel blank = new JLabel("");
+				statsPanel.add(userStatLabels[i]);
+				if (i == 0) {
+					userCurrentHP.setText(userC.currentHP + "");
+					statsPanel.add(userCurrentHP);
+				} else {
+					int index = i;
+					userStages[i].addActionListener(e -> {
+						Pokemon current = ((Pokemon) userMons.getSelectedItem());
+						Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
+						int amt = (int) userStages[index].getSelectedItem();
+						current.statStages[index - 1] = amt;
+						updateMoves(current, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
+						updateMoves(foeCurrent, foeMoves, foeDamage, current, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
+						if (index == 5) userSpeed.setText((current.getSpeed(field)) + "");
+					});
+					statsPanel.add(userStages[i]);
+				}
+				
+				if (i == 0) {
+					double percent = userC.currentHP * 100.0 / userC.getStat(0);
+					userHPP.setText(String.format("%.1f", percent) + "%");
+					statsPanel.add(userHPP);
+				} else if (i == 5) {
+					userSpeed.setText((userC.getSpeed(field)) + "");
+					statsPanel.add(userSpeed);
+				} else {
+					statsPanel.add(blank);
+				}
+				
+				
+			}
+			
+			JPanel fStatsPanel = new JPanel(new GridLayout(6, 3));
+			for (int i = 0; i < 6; i++) {
+				foeStatLabels[i] = new JLabel(foeC.getStat(i) + "");
+				Integer[] stages = new Integer[] {-6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6};
+				foeStages[i] = new JComboBox<Integer>(stages);
+				if (i != 0) foeStages[i].setSelectedIndex(foeC.statStages[i - 1] + 6);
+				JLabel blank = new JLabel("");
+				fStatsPanel.add(foeStatLabels[i]);
+				if (i == 0) {
+					foeCurrentHP.setText(foeC.currentHP + "");
+					fStatsPanel.add(foeCurrentHP);
+				} else {
+					int index = i;
+					foeStages[i].addActionListener(e -> {
+						Pokemon current = ((Pokemon) foeMons.getSelectedItem());
+						Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
+						int amt = (int) foeStages[index].getSelectedItem();
+						current.statStages[index - 1] = amt;
+						updateMoves(current, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
+						updateMoves(userCurrent, userMoves, userDamage, current, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
+						if (index == 5) foeSpeed.setText((current.getSpeed(field)) + "");
+					});
+					fStatsPanel.add(foeStages[i]);
+				}
+				
+				if (i == 0) {
+					double percent = foeC.currentHP * 100.0 / foeC.getStat(0);
+					foeHPP.setText(String.format("%.1f", percent) + "%");
+					fStatsPanel.add(foeHPP);
+				} else if (i == 5) {
+					foeSpeed.setText((foeC.getSpeed(field)) + "");
+					fStatsPanel.add(foeSpeed);
+				} else {
+					fStatsPanel.add(blank);
+				}
+				
+			}
+			
+			userLevel.setValue(userC.getLevel());
+			updateMoves(userC, userMoves, userDamage, foeC, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
+			
+			foeLevel.setValue(foeC.getLevel());
+			updateMoves(foeC, foeMoves, foeDamage, userC, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
+			
 			userLevel.addChangeListener(l -> {
 				Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
-		    	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-	        	updatePokemonLevel(userLevel, userCurrent, foeCurrent, true);
-	        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
-	        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
-	        });
+				Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
+				updatePokemonLevel(userLevel, userCurrent, foeCurrent, true);
+				updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
+				updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
+			});
 			
 			foeLevel.addChangeListener(l -> {
 				Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
-		    	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-	        	updatePokemonLevel(foeLevel, userCurrent, foeCurrent, false);
-	        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
-	        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
-	        });
-	        
-	        userItem.addActionListener(l -> {
-	        	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
-	        	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-	        	userCurrent.item = (Item) userItem.getSelectedItem();
-	        	
-	        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
-	            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
-	        });
-	        
-	        foeItem.addActionListener(l -> {
-	        	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
-	        	Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-	        	foeCurrent.item = (Item) foeItem.getSelectedItem();
-	        	
-	        	updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
-	        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
-	        });
-	        
-	        calc.add(statsPanel, gbc);
-	        gbc.gridx++;
-	        calc.add(fStatsPanel, gbc);
-	        gbc.gridx = 0;
-	        gbc.gridy++;
-	        
-	        JPanel userMovesPanel = new JPanel(new GridLayout(4,2));
-	        for (int k = 0; k < userMoves.length; k++) {
-	        	userMovesPanel.add(userMoves[k]);
-	        	userMovesPanel.add(userDamage[k]);
-	        }
-	        calc.add(userMovesPanel, gbc);
-	        gbc.gridx++;
-	        JPanel foeMovesPanel = new JPanel(new GridLayout(4,2));
-	        for (int k = 0; k < userMoves.length; k++) {
-	        	foeMovesPanel.add(foeMoves[k]);
-	        	foeMovesPanel.add(foeDamage[k]);
-	        }
-	        calc.add(foeMovesPanel, gbc);
-	        gbc.gridx = 0;
-	        gbc.gridy++;
-	        
-	        calc.add(userAbility, gbc);
-	        gbc.gridx++;
-	        calc.add(foeAbility, gbc);
-	        gbc.gridx = 0;
-	        gbc.gridy++;
-	        
-	        calc.add(userItem, gbc);
-	        gbc.gridx++;
-	        calc.add(foeItem, gbc);
-	        gbc.gridx = 0;
-	        gbc.gridy++;
-	        
-	        critCheck.addActionListener(e -> {
-	        	Pokemon current = ((Pokemon) userMons.getSelectedItem());
+				Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
+				updatePokemonLevel(foeLevel, userCurrent, foeCurrent, false);
+				updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
+				updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
+			});
+			
+			userItem.addActionListener(l -> {
+				Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
+				Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
+				userCurrent.item = (Item) userItem.getSelectedItem();
+				
+				updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
+				updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
+			});
+			
+			foeItem.addActionListener(l -> {
+				Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
+				Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
+				foeCurrent.item = (Item) foeItem.getSelectedItem();
+				
+				updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
+				updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
+			});
+			
+			calc.add(statsPanel, gbc);
+			gbc.gridx++;
+			calc.add(fStatsPanel, gbc);
+			gbc.gridx = 0;
+			gbc.gridy++;
+			
+			JPanel userMovesPanel = new JPanel(new GridLayout(4,2));
+			for (int k = 0; k < userMoves.length; k++) {
+				userMovesPanel.add(userMoves[k]);
+				userMovesPanel.add(userDamage[k]);
+			}
+			calc.add(userMovesPanel, gbc);
+			gbc.gridx++;
+			JPanel foeMovesPanel = new JPanel(new GridLayout(4,2));
+			for (int k = 0; k < userMoves.length; k++) {
+				foeMovesPanel.add(foeMoves[k]);
+				foeMovesPanel.add(foeDamage[k]);
+			}
+			calc.add(foeMovesPanel, gbc);
+			gbc.gridx = 0;
+			gbc.gridy++;
+			
+			calc.add(userAbility, gbc);
+			gbc.gridx++;
+			calc.add(foeAbility, gbc);
+			gbc.gridx = 0;
+			gbc.gridy++;
+			
+			calc.add(userItem, gbc);
+			gbc.gridx++;
+			calc.add(foeItem, gbc);
+			gbc.gridx = 0;
+			gbc.gridy++;
+			
+			critCheck.addActionListener(e -> {
+				Pokemon current = ((Pokemon) userMons.getSelectedItem());
 				Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
 				updateMoves(current, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
-	        });
-	        
-	        fCritCheck.addActionListener(e -> {
-	        	Pokemon current = ((Pokemon) userMons.getSelectedItem());
+			});
+			
+			fCritCheck.addActionListener(e -> {
+				Pokemon current = ((Pokemon) userMons.getSelectedItem());
 				Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
 				updateMoves(foeCurrent, foeMoves, foeDamage, current, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
-	        });
-	        
-	        userAbility.addActionListener(l -> {
+			});
+			
+			userAbility.addActionListener(l -> {
 				Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
 				Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
 				userCurrent.ability = (Ability) userAbility.getSelectedItem();
 				updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
-	            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
+				updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
 			});
 			
 			foeAbility.addActionListener(l -> {
@@ -1284,121 +1285,121 @@ public enum Item {
 				Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
 				foeCurrent.ability = (Ability) foeAbility.getSelectedItem();
 				updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
-	            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
+				updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
 			});
-	        
-	        JPanel infoButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	        infoButtonPanel.add(infoButton);
-	        infoButtonPanel.add(critCheck);
-	        calc.add(infoButtonPanel, gbc);
-	        gbc.gridx++;
-	        
-	        JPanel fInfoButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	        fInfoButtonPanel.add(fInfoButton);
-	        fInfoButtonPanel.add(fCritCheck);
-	        calc.add(fInfoButtonPanel, gbc);
-	        gbc.gridx = 0;
-	        gbc.gridy++;
-	        
-	        JPanel addButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	        JButton addButton = new JButton("Add");
-	        addButtonPanel.add(addButton);
-	        JButton moreButton = new JButton("More");
-	        addButtonPanel.add(moreButton);
-	        
-	        JPanel fAddButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	        JButton fAddButton = new JButton("Add");
-	        fAddButtonPanel.add(fAddButton);
-	        JButton fMoreButton = new JButton("More");
-	        fAddButtonPanel.add(fMoreButton);
-	        
-	        gbc.gridx = 0;
-	        gbc.gridwidth = 1;
-	        calc.add(addButtonPanel, gbc);
+			
+			JPanel infoButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+			infoButtonPanel.add(infoButton);
+			infoButtonPanel.add(critCheck);
+			calc.add(infoButtonPanel, gbc);
+			gbc.gridx++;
+			
+			JPanel fInfoButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+			fInfoButtonPanel.add(fInfoButton);
+			fInfoButtonPanel.add(fCritCheck);
+			calc.add(fInfoButtonPanel, gbc);
+			gbc.gridx = 0;
+			gbc.gridy++;
+			
+			JPanel addButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+			JButton addButton = new JButton("Add");
+			addButtonPanel.add(addButton);
+			JButton moreButton = new JButton("More");
+			addButtonPanel.add(moreButton);
+			
+			JPanel fAddButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+			JButton fAddButton = new JButton("Add");
+			fAddButtonPanel.add(fAddButton);
+			JButton fMoreButton = new JButton("More");
+			fAddButtonPanel.add(fMoreButton);
+			
+			gbc.gridx = 0;
+			gbc.gridwidth = 1;
+			calc.add(addButtonPanel, gbc);
 
-	        gbc.gridx = 1;
-	        gbc.gridwidth = 1;
-	        calc.add(fAddButtonPanel, gbc);
-	        
-	        addButton.addActionListener(l -> {
-	        	Pokemon result = displayGenerator((Pokemon) userMons.getSelectedItem());
-	        	if (result != null) {
-	        		result.nickname = String.format("%s %d", "Generated", ++userGen);
-	        		userMons.insertItemAt(result, 0);
-	        	}
-	        });
-	        
-	        fAddButton.addActionListener(l -> {
-	        	Pokemon result = displayGenerator((Pokemon) foeMons.getSelectedItem());
-	        	if (result != null) {
-	        		result.nickname = String.format("%s %d", "Generated", ++foeGen);
-	        		foeMons.insertItemAt(result, 0);
-	        	}
-	        });
-	        
-	        moreButton.addActionListener(l -> {
-	        	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
+			gbc.gridx = 1;
+			gbc.gridwidth = 1;
+			calc.add(fAddButtonPanel, gbc);
+			
+			addButton.addActionListener(l -> {
+				Pokemon result = displayGenerator((Pokemon) userMons.getSelectedItem());
+				if (result != null) {
+					result.nickname = String.format("%s %d", "Generated", ++userGen);
+					userMons.insertItemAt(result, 0);
+				}
+			});
+			
+			fAddButton.addActionListener(l -> {
+				Pokemon result = displayGenerator((Pokemon) foeMons.getSelectedItem());
+				if (result != null) {
+					result.nickname = String.format("%s %d", "Generated", ++foeGen);
+					foeMons.insertItemAt(result, 0);
+				}
+			});
+			
+			moreButton.addActionListener(l -> {
+				Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
 				Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-	        	moreButton(userCurrent, field);
-	        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
-	            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
-	        });
-	        
-	        fMoreButton.addActionListener(l -> {
-	        	Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
+				moreButton(userCurrent, field);
+				updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
+				updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
+			});
+			
+			fMoreButton.addActionListener(l -> {
+				Pokemon userCurrent = ((Pokemon) userMons.getSelectedItem());
 				Pokemon foeCurrent = ((Pokemon) foeMons.getSelectedItem());
-	        	moreButton(foeCurrent, field);
-	        	updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
-	            updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
-	        });
-	        
-	        calcFrame = new JFrame("Damage Calculator");
-            calcFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            calcFrame.setLayout(new BorderLayout());
+				moreButton(foeCurrent, field);
+				updateMoves(userCurrent, userMoves, userDamage, foeCurrent, userStatLabels, userStages, userSpeed, userCurrentHP, userHPP, critCheck.isSelected(), userAbility, userItem, field);
+				updateMoves(foeCurrent, foeMoves, foeDamage, userCurrent, foeStatLabels, foeStages, foeSpeed, foeCurrentHP, foeHPP, fCritCheck.isSelected(), foeAbility, foeItem, field);
+			});
+			
+			calcFrame = new JFrame("Damage Calculator");
+			calcFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			calcFrame.setLayout(new BorderLayout());
 
-            // Panel to hold calculator and button
-            JPanel contentPanel = new JPanel(new BorderLayout());
-            contentPanel.add(calc, BorderLayout.CENTER);
+			// Panel to hold calculator and button
+			JPanel contentPanel = new JPanel(new BorderLayout());
+			contentPanel.add(calc, BorderLayout.CENTER);
 
-            // Create "OK" button
-            okButton = new JButton("OK");
-            okButton.addActionListener(e -> calcFrame.dispose()); // Close when clicked
+			// Create "OK" button
+			okButton = new JButton("OK");
+			okButton.addActionListener(e -> calcFrame.dispose()); // Close when clicked
 
-            // Make OK button the default button for Enter key
-            JRootPane rootPane = calcFrame.getRootPane();
-            rootPane.setDefaultButton(okButton);
+			// Make OK button the default button for Enter key
+			JRootPane rootPane = calcFrame.getRootPane();
+			rootPane.setDefaultButton(okButton);
 
-            // Add button to bottom of the frame
-            JPanel buttonPanel = new JPanel();
-            buttonPanel.add(okButton);
-            contentPanel.add(buttonPanel, BorderLayout.SOUTH);
+			// Add button to bottom of the frame
+			JPanel buttonPanel = new JPanel();
+			buttonPanel.add(okButton);
+			contentPanel.add(buttonPanel, BorderLayout.SOUTH);
 
-            calcFrame.add(contentPanel);
-            calcFrame.pack();
-            Main.loadIcon(calcFrame, 5);
-            calcFrame.setLocationRelativeTo(Pokemon.gp); // Center on screen
+			calcFrame.add(contentPanel);
+			calcFrame.pack();
+			Main.loadIcon(calcFrame, 5);
+			calcFrame.setLocationRelativeTo(Pokemon.gp); // Center on screen
 		}
 		
 		if (calc != null) {
 			field = Pokemon.field.clone();
 			ActionListener[] listeners = userMons.getActionListeners();
 			for (ActionListener al : listeners) {
-			    userMons.removeActionListener(al);
+				userMons.removeActionListener(al);
 			}
 			
 			userMons.removeAllItems();
 			ArrayList<Pokemon> addList = new ArrayList<>();
 			for (Pokemon pokemon : pl.getOrderedTeam()) {
-	        	Pokemon add = pokemon.clone();
-	        	if (!(pl instanceof Player)) {
-	        		add.setCalcNickname();
-	        	}
-	        	if (!(pokemon instanceof Egg)) {
-	        		addList.add(add);
-	        		
-		    		if (pokemon.id == 150) {
-		        		Pokemon kD = pokemon.clone();
-		        		int oHP = kD.getStat(0);
+				Pokemon add = pokemon.clone();
+				if (!(pl instanceof Player)) {
+					add.setCalcNickname();
+				}
+				if (!(pokemon instanceof Egg)) {
+					addList.add(add);
+					
+					if (pokemon.id == 150) {
+						Pokemon kD = pokemon.clone();
+						int oHP = kD.getStat(0);
 						kD.id = 237;
 						kD.setName(kD.getName());
 						if (kD.nickname == kD.name()) kD.nickname = kD.getName();
@@ -1412,86 +1413,86 @@ public enum Item {
 						kD.setSprites();
 						kD.setAbility(kD.abilitySlot);
 						addList.add(kD);
-		        	}
-	        	}
-	        }
-	        if (box != null) {
+					}
+				}
+			}
+			if (box != null) {
 				for (Pokemon q : box) {
 					if (q != null && !(q instanceof Egg)) {
 						addList.add(q.clone());
 					}
 				}
 			}
-	        if (box != null) {
-	        	Player player = (Player) pl;
-	        	if (player.gauntletBox != null && !Pokemon.gp.ui.gauntlet) {
-	        		for (Pokemon q : player.gauntletBox) {
-	    				if (q != null && !(q instanceof Egg)) {
-	    					addList.add(q.clone());
-	    				}
-	    			}
-	        	}
-	        }
-	        Trainer newT = pl.shallowClone(Pokemon.gp);
-	        for (Pokemon po : addList) {
-	        	po.trainer = newT;
-	        	userMons.addItem(po);
-	        }
-	        
-	        Pokemon userC = (Pokemon) userMons.getSelectedItem();
-	        userLevel.setValue(userC.getLevel());
-	        
-	        for (ActionListener al : listeners) {
-	            userMons.addActionListener(al);
-	        }
-	        
-	        userMons.setSelectedIndex(0);
+			if (box != null) {
+				Player player = (Player) pl;
+				if (player.gauntletBox != null && !Pokemon.gp.ui.gauntlet) {
+					for (Pokemon q : player.gauntletBox) {
+						if (q != null && !(q instanceof Egg)) {
+							addList.add(q.clone());
+						}
+					}
+				}
+			}
+			Trainer newT = pl.shallowClone(Pokemon.gp);
+			for (Pokemon po : addList) {
+				po.trainer = newT;
+				userMons.addItem(po);
+			}
+			
+			Pokemon userC = (Pokemon) userMons.getSelectedItem();
+			userLevel.setValue(userC.getLevel());
+			
+			for (ActionListener al : listeners) {
+				userMons.addActionListener(al);
+			}
+			
+			userMons.setSelectedIndex(0);
 		}
-        
-        if (f != null) {
-        	if (f.trainerOwned() && !f.trainer.catchable) {
-        		Pokemon clone = f.trainer.getTeam()[0].clone();
-        		clone.setCalcNickname();
-        		int index = getPokemonIndex(clone, foeMons);
-            	boolean remove = index >= 0;
-            	if (!remove) index = 0;
-            	
-            	Pokemon[] team = f.trainer.getTeam();
-            	int currentIndex = -1;
-            	Pokemon[] newTeam = new Pokemon[f.trainer.getTeam().length];
-            	for (int i = 0; i < team.length; i++) {
-            		Pokemon updatedMon = team[i].clone();
-            		updatedMon.setCalcNickname();
-            		foeMons.insertItemAt(updatedMon, index + i + 1);
-            		if (remove) foeMons.removeItemAt(index + i);
-            		
-            		if (currentIndex < 0 && team[i].equals(f)) {
-            			currentIndex = index + i;
-            			if (!remove) currentIndex++;
-            		}
-            		newTeam[i] = updatedMon;
-            	}
-            	Trainer newT = f.trainer.shallowClone(Pokemon.gp);
-        		for (Pokemon po : newTeam) {
-        			po.trainer = newT;
-        		}
-            	
-            	if (currentIndex >= 0) {
-            		foeMons.setSelectedItem(foeMons.getItemAt(currentIndex));
-            	}
-            } else {
-            	foeMons.setSelectedIndex(0);
-        	}
-        }
-        
-        if (display) {
-        	//if (!Pokemon.gp.config.fullscreen) calcFrame.setLocationRelativeTo(Pokemon.gp); // Center on screen
-        	// Make OK button the default button for Enter key
-            JRootPane rootPane = calcFrame.getRootPane();
-            rootPane.setDefaultButton(okButton);
-            Main.loadIcon(calcFrame, 5);
-        	calcFrame.setVisible(true);
-        }
+		
+		if (f != null) {
+			if (f.trainerOwned() && !f.trainer.catchable) {
+				Pokemon clone = f.trainer.getTeam()[0].clone();
+				clone.setCalcNickname();
+				int index = getPokemonIndex(clone, foeMons);
+				boolean remove = index >= 0;
+				if (!remove) index = 0;
+				
+				Pokemon[] team = f.trainer.getTeam();
+				int currentIndex = -1;
+				Pokemon[] newTeam = new Pokemon[f.trainer.getTeam().length];
+				for (int i = 0; i < team.length; i++) {
+					Pokemon updatedMon = team[i].clone();
+					updatedMon.setCalcNickname();
+					foeMons.insertItemAt(updatedMon, index + i + 1);
+					if (remove) foeMons.removeItemAt(index + i);
+					
+					if (currentIndex < 0 && team[i].equals(f)) {
+						currentIndex = index + i;
+						if (!remove) currentIndex++;
+					}
+					newTeam[i] = updatedMon;
+				}
+				Trainer newT = f.trainer.shallowClone(Pokemon.gp);
+				for (Pokemon po : newTeam) {
+					po.trainer = newT;
+				}
+				
+				if (currentIndex >= 0) {
+					foeMons.setSelectedItem(foeMons.getItemAt(currentIndex));
+				}
+			} else {
+				foeMons.setSelectedIndex(0);
+			}
+		}
+		
+		if (display) {
+			//if (!Pokemon.gp.config.fullscreen) calcFrame.setLocationRelativeTo(Pokemon.gp); // Center on screen
+			// Make OK button the default button for Enter key
+			JRootPane rootPane = calcFrame.getRootPane();
+			rootPane.setDefaultButton(okButton);
+			Main.loadIcon(calcFrame, 5);
+			calcFrame.setVisible(true);
+		}
 		
 	}
 
@@ -1508,97 +1509,97 @@ public enum Item {
 
 	private static void updateMoves(Pokemon current, JGradientButton[] moves, JLabel[] damages, Pokemon foe, JLabel[] statLabels, JComboBox<Integer>[] stages,
 			JLabel speed, JButton currentHP, JLabel HPP, boolean crit, JComboBox<Ability> currentAbility, JComboBox<Item> currentItem, Field field) {
-        for (int k = 0; k < moves.length; k++) {
-        	if (current.moveset[k] != null) {
-        		moves[k].setText(current.moveset[k].move.toString());
-        		Move move = current.moveset[k].move;
-        		PType mtype = move.getType(current, field);
-		        Color color = mtype.getColor();
-		        moves[k].setSolid(false);
-        		moves[k].setBackground(color);
-        		moves[k].setFont(new Font("Arial", Font.BOLD, 12));
-        		moves[k].setPreferredSize(new Dimension(120, 26));
-        		if (!current.getValidMoveset().contains(move)) {
-        			moves[k].setSolid(true);
-        			moves[k].setBackground(Color.GRAY);
-        			moves[k].setFont(new Font("Arial", Font.PLAIN, 12));
-        		}
-        		double minDamage = current.calcWithTypes(foe, current.moveset[k].move, current.getFaster(foe, 0, 0, field) == current, -1, crit, field, false).getSecond();
-        		double maxDamage = current.calcWithTypes(foe, current.moveset[k].move, current.getFaster(foe, 0, 0, field) == current, 1, crit, field, false).getSecond();
-        		String formattedMinD = String.format("%.1f", minDamage);
-        		String formattedMaxD = String.format("%.1f", maxDamage);
-        		damages[k].setText(formattedMinD + "% - " + formattedMaxD + "%");
-        		boolean crittable = crit && current.moveset[k].move.cat != 2 && current.moveset[k].move.critChance >= 0;
-        		damages[k].setForeground(crittable ? Color.RED : Color.BLACK);
-        		damages[k].setFont(crittable ? new Font("Arial", Font.BOLD, 12) : new Font("Arial", Font.PLAIN, 12));
-        	} else {
-        		moves[k].setText("[NO MOVE]");
-        		moves[k].setBackground(null);
-        		damages[k].setText("0% - 0%");
-        		damages[k].setForeground(Color.BLACK);
-        	}
-    		MouseListener[] listeners = moves[k].getMouseListeners();
-    		for (MouseListener listener : listeners) {
-    			moves[k].removeMouseListener(listener);
-    		}
-    		final int kndex = k;
-    		moves[k].addMouseListener(new MouseAdapter() {
-			    @Override
-			    public void mouseClicked(MouseEvent e) {
-			    	if (SwingUtilities.isRightMouseButton(e)) {
-			    		if (current.moveset[kndex] != null) {
-	    	                JOptionPane.showMessageDialog(calc, current.moveset[kndex].move.getMoveSummary(current, foe, field), "Move Description", JOptionPane.INFORMATION_MESSAGE);
-	        			}
-			    	} else {
-			    		Move[] allMoves = Move.values();
-			    		JComboBox<Move> moveComboBox = new JComboBox<>(allMoves);
-			    		
-			    		AutoCompleteDecorator.decorate(moveComboBox);
-			    		
-			    		JPanel setMovePanel = new JPanel();
-			    		setMovePanel.add(new JLabel("Select a move:"));
-			            setMovePanel.add(moveComboBox);
-			            
-			    		int result = JOptionPane.showConfirmDialog(calc, setMovePanel, "Set Move", JOptionPane.OK_OPTION);
-			    		if (result == JOptionPane.OK_OPTION) {
-			    			Move selectedMove = (Move) moveComboBox.getSelectedItem();
-			    			current.moveset[kndex] = new Moveslot(selectedMove);
-			    			if (selectedMove.isCalcHiddenPowerReturn()) {
-			    				int cHP = current.currentHP;
-			    				current.ivs = Pokemon.determineOptimalIVs(selectedMove.mtype);
-			    				current.setStats();
-			    				int nHP = current.getStat(0);
-			    				current.currentHP += nHP - cHP;
-			    			}
-			    		}
-			    		updateMoves(current, moves, damages, foe, statLabels, stages, speed, currentHP, HPP, crit, currentAbility, currentItem, field);
-			    	}
-			    }
-            });    		
-        }
-        for (int i = 0; i < 6; i++) {
+		for (int k = 0; k < moves.length; k++) {
+			if (current.moveset[k] != null) {
+				moves[k].setText(current.moveset[k].move.toString());
+				Move move = current.moveset[k].move;
+				PType mtype = move.getType(current, field);
+				Color color = mtype.getColor();
+				moves[k].setSolid(false);
+				moves[k].setBackground(color);
+				moves[k].setFont(new Font("Arial", Font.BOLD, 12));
+				moves[k].setPreferredSize(new Dimension(120, 26));
+				if (!current.getValidMoveset().contains(move)) {
+					moves[k].setSolid(true);
+					moves[k].setBackground(Color.GRAY);
+					moves[k].setFont(new Font("Arial", Font.PLAIN, 12));
+				}
+				double minDamage = current.calcWithTypes(foe, current.moveset[k].move, current.getFaster(foe, 0, 0, field) == current, -1, crit, field, false).getSecond();
+				double maxDamage = current.calcWithTypes(foe, current.moveset[k].move, current.getFaster(foe, 0, 0, field) == current, 1, crit, field, false).getSecond();
+				String formattedMinD = String.format("%.1f", minDamage);
+				String formattedMaxD = String.format("%.1f", maxDamage);
+				damages[k].setText(formattedMinD + "% - " + formattedMaxD + "%");
+				boolean crittable = crit && current.moveset[k].move.cat != 2 && current.moveset[k].move.critChance >= 0;
+				damages[k].setForeground(crittable ? Color.RED : Color.BLACK);
+				damages[k].setFont(crittable ? new Font("Arial", Font.BOLD, 12) : new Font("Arial", Font.PLAIN, 12));
+			} else {
+				moves[k].setText("[NO MOVE]");
+				moves[k].setBackground(null);
+				damages[k].setText("0% - 0%");
+				damages[k].setForeground(Color.BLACK);
+			}
+			MouseListener[] listeners = moves[k].getMouseListeners();
+			for (MouseListener listener : listeners) {
+				moves[k].removeMouseListener(listener);
+			}
+			final int kndex = k;
+			moves[k].addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					if (SwingUtilities.isRightMouseButton(e)) {
+						if (current.moveset[kndex] != null) {
+							JOptionPane.showMessageDialog(calc, current.moveset[kndex].move.getMoveSummary(current, foe, field), "Move Description", JOptionPane.INFORMATION_MESSAGE);
+						}
+					} else {
+						Move[] allMoves = Move.values();
+						JComboBox<Move> moveComboBox = new JComboBox<>(allMoves);
+						
+						AutoCompleteDecorator.decorate(moveComboBox);
+						
+						JPanel setMovePanel = new JPanel();
+						setMovePanel.add(new JLabel("Select a move:"));
+						setMovePanel.add(moveComboBox);
+						
+						int result = JOptionPane.showConfirmDialog(calc, setMovePanel, "Set Move", JOptionPane.OK_OPTION);
+						if (result == JOptionPane.OK_OPTION) {
+							Move selectedMove = (Move) moveComboBox.getSelectedItem();
+							current.moveset[kndex] = new Moveslot(selectedMove);
+							if (selectedMove.isCalcHiddenPowerReturn()) {
+								int cHP = current.currentHP;
+								current.ivs = Pokemon.determineOptimalIVs(selectedMove.mtype);
+								current.setStats();
+								int nHP = current.getStat(0);
+								current.currentHP += nHP - cHP;
+							}
+						}
+						updateMoves(current, moves, damages, foe, statLabels, stages, speed, currentHP, HPP, crit, currentAbility, currentItem, field);
+					}
+				}
+			});			
+		}
+		for (int i = 0; i < 6; i++) {
 			statLabels[i].setText(current.getStat(i) + "");
 			
 			if (i != 0) {
-    			ActionListener stagesListener = stages[i].getActionListeners()[0];
-    		    stages[i].removeActionListener(stagesListener);
-    		    
-    		    if (i != 0) stages[i].setSelectedIndex(current.statStages[i-1] + 6);
-    		    
-    		    stages[i].addActionListener(stagesListener);
+				ActionListener stagesListener = stages[i].getActionListeners()[0];
+				stages[i].removeActionListener(stagesListener);
+				
+				if (i != 0) stages[i].setSelectedIndex(current.statStages[i-1] + 6);
+				
+				stages[i].addActionListener(stagesListener);
 			}
 
 			if (i == 0 && currentHP != null) {
 				currentHP.setText(current.currentHP + "");
 				double percent = current.currentHP * 100.0 / current.getStat(0);
-        		HPP.setText(String.format("%.1f", percent) + "%");
+				HPP.setText(String.format("%.1f", percent) + "%");
 			}
 			if (i == 5) speed.setText(current.getSpeed(field) + "");
 		}
 
-        currentAbility.setSelectedItem(current.ability);
-        currentItem.setSelectedItem(current.item);
-        if (calcFrame != null) calcFrame.pack();
+		currentAbility.setSelectedItem(current.ability);
+		currentItem.setSelectedItem(current.item);
+		if (calcFrame != null) calcFrame.pack();
 	}
 	
 	private static void updatePokemonLevel(JSpinner spinner, Pokemon userCurrent, Pokemon foeCurrent, boolean isUser) {
@@ -1622,116 +1623,116 @@ public enum Item {
 		}
 	}
 	
-	private static void moreButton(Pokemon p, Field f) {        
+	private static void moreButton(Pokemon p, Field f) {		
 		JDialog dialog = new JDialog((Frame) calcFrame, "Edit Pokemon", true);
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5);
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        
-        // Label at the top
-        JLabel title = new JLabel("Editing: " + p.toString());
-        title.setFont(new Font("Arial", Font.BOLD, 16));
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridwidth = 2;
-        panel.add(title, gbc);
-        
-        gbc.gridwidth = 1; // Reset gridwidth
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.insets = new Insets(5, 5, 5, 5);
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		
+		// Label at the top
+		JLabel title = new JLabel("Editing: " + p.toString());
+		title.setFont(new Font("Arial", Font.BOLD, 16));
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.gridwidth = 2;
+		panel.add(title, gbc);
+		
+		gbc.gridwidth = 1; // Reset gridwidth
 
-        // Weather ComboBox
-        gbc.gridy++;
-        panel.add(new JLabel("Weather:"), gbc);
-        JComboBox<Effect> weatherBox = new JComboBox<>(new Effect[]{Effect.SUN, Effect.RAIN, Effect.SANDSTORM, Effect.SNOW});
-        weatherBox.insertItemAt(null, 0);
-        weatherBox.setSelectedItem(f.weather == null ? null : f.weather.effect);
-        AutoCompleteDecorator.decorate(weatherBox);
-        gbc.gridx = 1;
-        panel.add(weatherBox, gbc);
+		// Weather ComboBox
+		gbc.gridy++;
+		panel.add(new JLabel("Weather:"), gbc);
+		JComboBox<Effect> weatherBox = new JComboBox<>(new Effect[]{Effect.SUN, Effect.RAIN, Effect.SANDSTORM, Effect.SNOW});
+		weatherBox.insertItemAt(null, 0);
+		weatherBox.setSelectedItem(f.weather == null ? null : f.weather.effect);
+		AutoCompleteDecorator.decorate(weatherBox);
+		gbc.gridx = 1;
+		panel.add(weatherBox, gbc);
 
-        // Terrain ComboBox
-        gbc.gridx = 0;
-        gbc.gridy++;
-        panel.add(new JLabel("Terrain:"), gbc);
-        JComboBox<Effect> terrainBox = new JComboBox<>(new Effect[]{Effect.GRASSY, Effect.ELECTRIC, Effect.PSYCHIC, Effect.SPARKLY});
-        terrainBox.insertItemAt(null, 0);
-        terrainBox.setSelectedItem(f.terrain == null ? null : f.terrain.effect);
-        AutoCompleteDecorator.decorate(terrainBox);
-        gbc.gridx = 1;
-        panel.add(terrainBox, gbc);
-        
-        JPanel fieldEffectsPanel = new JPanel(new GridBagLayout());
-        GridBagConstraints effectGbc = new GridBagConstraints();
-        effectGbc.insets = new Insets(5, 10, 5, 10);
-        effectGbc.anchor = GridBagConstraints.CENTER;
+		// Terrain ComboBox
+		gbc.gridx = 0;
+		gbc.gridy++;
+		panel.add(new JLabel("Terrain:"), gbc);
+		JComboBox<Effect> terrainBox = new JComboBox<>(new Effect[]{Effect.GRASSY, Effect.ELECTRIC, Effect.PSYCHIC, Effect.SPARKLY});
+		terrainBox.insertItemAt(null, 0);
+		terrainBox.setSelectedItem(f.terrain == null ? null : f.terrain.effect);
+		AutoCompleteDecorator.decorate(terrainBox);
+		gbc.gridx = 1;
+		panel.add(terrainBox, gbc);
+		
+		JPanel fieldEffectsPanel = new JPanel(new GridBagLayout());
+		GridBagConstraints effectGbc = new GridBagConstraints();
+		effectGbc.insets = new Insets(5, 10, 5, 10);
+		effectGbc.anchor = GridBagConstraints.CENTER;
 
-        int cols = 3; // how many checkboxes per row
+		int cols = 3; // how many checkboxes per row
 
-        @SuppressWarnings("unchecked")
-        Pair<Effect, JCheckBox>[] fieldEffects = new Pair[] {
-            new Pair<>(Effect.GRAVITY, null),
-            new Pair<>(Effect.TRICK_ROOM, null),
-            new Pair<>(Effect.MAGIC_ROOM, null),
-            new Pair<>(Effect.NEUTRALIZING_GAS, null),
-            new Pair<>(Effect.WATER_SPORT, null),
-            new Pair<>(Effect.MUD_SPORT, null),
-        };
+		@SuppressWarnings("unchecked")
+		Pair<Effect, JCheckBox>[] fieldEffects = new Pair[] {
+			new Pair<>(Effect.GRAVITY, null),
+			new Pair<>(Effect.TRICK_ROOM, null),
+			new Pair<>(Effect.MAGIC_ROOM, null),
+			new Pair<>(Effect.NEUTRALIZING_GAS, null),
+			new Pair<>(Effect.WATER_SPORT, null),
+			new Pair<>(Effect.MUD_SPORT, null),
+		};
 
-        for (int i = 0; i < fieldEffects.length; i++) {
-            Pair<Effect, JCheckBox> pair = fieldEffects[i];
-            Effect effect = pair.getFirst();
-            JCheckBox checkBox = new JCheckBox(effect.toString());
-            pair.setSecond(checkBox);
-            checkBox.setSelected(f.contains(f.fieldEffects, effect));
-            
-            effectGbc.gridx = i % cols;
-            effectGbc.gridy = i / cols;
-            fieldEffectsPanel.add(checkBox, effectGbc);
-        }
-        
-        gbc.gridx = 0;
-        gbc.gridy++;
-        gbc.gridwidth = 2;
-        panel.add(fieldEffectsPanel, gbc);
-        gbc.gridwidth = 1;
+		for (int i = 0; i < fieldEffects.length; i++) {
+			Pair<Effect, JCheckBox> pair = fieldEffects[i];
+			Effect effect = pair.getFirst();
+			JCheckBox checkBox = new JCheckBox(effect.toString());
+			pair.setSecond(checkBox);
+			checkBox.setSelected(f.contains(f.fieldEffects, effect));
+			
+			effectGbc.gridx = i % cols;
+			effectGbc.gridy = i / cols;
+			fieldEffectsPanel.add(checkBox, effectGbc);
+		}
+		
+		gbc.gridx = 0;
+		gbc.gridy++;
+		gbc.gridwidth = 2;
+		panel.add(fieldEffectsPanel, gbc);
+		gbc.gridwidth = 1;
 
-        // Type 1 and Type 2 ComboBoxes
-        gbc.gridy++;
-        gbc.gridx = 0;
-        panel.add(new JLabel("Type 1:"), gbc);
-        JComboBox<PType> type1Box = new JComboBox<>(PType.values());
-        type1Box.setSelectedItem(p.type1);
-        AutoCompleteDecorator.decorate(type1Box);
-        gbc.gridx = 1;
-        panel.add(type1Box, gbc);
+		// Type 1 and Type 2 ComboBoxes
+		gbc.gridy++;
+		gbc.gridx = 0;
+		panel.add(new JLabel("Type 1:"), gbc);
+		JComboBox<PType> type1Box = new JComboBox<>(PType.values());
+		type1Box.setSelectedItem(p.type1);
+		AutoCompleteDecorator.decorate(type1Box);
+		gbc.gridx = 1;
+		panel.add(type1Box, gbc);
 
-        gbc.gridx = 0;
-        gbc.gridy++;
-        panel.add(new JLabel("Type 2:"), gbc);
-        JComboBox<PType> type2Box = new JComboBox<>(PType.values());
-        type2Box.insertItemAt(null, 0); // Allow null for Type 2
-        type2Box.setSelectedItem(p.type2);
-        AutoCompleteDecorator.decorate(type2Box);
-        gbc.gridx = 1;
-        panel.add(type2Box, gbc);
+		gbc.gridx = 0;
+		gbc.gridy++;
+		panel.add(new JLabel("Type 2:"), gbc);
+		JComboBox<PType> type2Box = new JComboBox<>(PType.values());
+		type2Box.insertItemAt(null, 0); // Allow null for Type 2
+		type2Box.setSelectedItem(p.type2);
+		AutoCompleteDecorator.decorate(type2Box);
+		gbc.gridx = 1;
+		panel.add(type2Box, gbc);
 
-        // Status ComboBox
-        gbc.gridx = 0;
-        gbc.gridy++;
-        panel.add(new JLabel("Status:"), gbc);
-        JComboBox<Status> statusBox = new JComboBox<>(Status.getNonVolStatuses().toArray(new Status[0]));
-        statusBox.insertItemAt(Status.HEALTHY, 0);
-        statusBox.setSelectedItem(p.status);
-        AutoCompleteDecorator.decorate(statusBox);
-        gbc.gridx = 1;
-        panel.add(statusBox, gbc);
-        
-        JPanel sideFieldEffectsPanel = new JPanel(new GridLayout(0, 2, 5, 5));
-        JPanel statusEffectsPanel = new JPanel(new GridLayout(0, 2, 5, 5));
+		// Status ComboBox
+		gbc.gridx = 0;
+		gbc.gridy++;
+		panel.add(new JLabel("Status:"), gbc);
+		JComboBox<Status> statusBox = new JComboBox<>(Status.getNonVolStatuses().toArray(new Status[0]));
+		statusBox.insertItemAt(Status.HEALTHY, 0);
+		statusBox.setSelectedItem(p.status);
+		AutoCompleteDecorator.decorate(statusBox);
+		gbc.gridx = 1;
+		panel.add(statusBox, gbc);
+		
+		JPanel sideFieldEffectsPanel = new JPanel(new GridLayout(0, 2, 5, 5));
+		JPanel statusEffectsPanel = new JPanel(new GridLayout(0, 2, 5, 5));
 
-        // Add JCheckBoxes for each field effect
-        @SuppressWarnings("unchecked")
+		// Add JCheckBoxes for each field effect
+		@SuppressWarnings("unchecked")
 		Pair<Object, JCheckBox>[] effect = new Pair[] {
 				new Pair<Effect, JCheckBox>(Effect.REFLECT, null),
 				new Pair<Effect, JCheckBox>(Effect.LIGHT_SCREEN, null),
@@ -1750,277 +1751,277 @@ public enum Item {
 				new Pair<Status, JCheckBox>(Status.FLASH_FIRE, null),
 				new Pair<Status, JCheckBox>(Status.CHARGED, null),
 				new Pair<Status, JCheckBox>(Status.LOADED, null),};
-        
-        for (int i = 0; i < effect.length; i++) {
-            Pair<Object, JCheckBox> pair = effect[i];
-            Object first = pair.getFirst();
-            JCheckBox checkBox = new JCheckBox(first.toString());
-            pair.setSecond(checkBox);
+		
+		for (int i = 0; i < effect.length; i++) {
+			Pair<Object, JCheckBox> pair = effect[i];
+			Object first = pair.getFirst();
+			JCheckBox checkBox = new JCheckBox(first.toString());
+			pair.setSecond(checkBox);
 
-            if (first instanceof Effect) {
-                checkBox.setSelected(f.contains(p.getFieldEffects(), (Effect) first));
-                sideFieldEffectsPanel.add(checkBox);
-            } else {
-                checkBox.setSelected(p.hasStatus((Status) first));
-                statusEffectsPanel.add(checkBox);
-            }
-        }
-        
-        JScrollPane sideScroll = new JScrollPane(sideFieldEffectsPanel);
-        sideScroll.setPreferredSize(new Dimension(300, 100));
-        sideScroll.getVerticalScrollBar().setUnitIncrement(8);
-        sideScroll.setBorder(BorderFactory.createTitledBorder("Field Effects"));
-        
-        gbc.gridx = 0;
-        gbc.gridy++;
-        gbc.gridwidth = 2;
-        panel.add(sideScroll, gbc);
-        
-        JScrollPane statusScroll = new JScrollPane(statusEffectsPanel);
-        statusScroll.setPreferredSize(new Dimension(300, 125));
-        statusScroll.getVerticalScrollBar().setUnitIncrement(8);
-        statusScroll.setBorder(BorderFactory.createTitledBorder("Status Effects"));
-        
-        gbc.gridx = 0;
-        gbc.gridy++;
-        gbc.gridwidth = 2;
-        panel.add(statusScroll, gbc);
-        
-        // Create "Fields" panel with a titled border
-        JPanel fieldsPanel = new JPanel(new GridBagLayout());
-        GridBagConstraints fieldsGbc = new GridBagConstraints();
-        fieldsGbc.insets = new Insets(2, 5, 2, 5);
-        fieldsGbc.gridx = 0;
-        fieldsGbc.gridy = 0;
-        fieldsGbc.anchor = GridBagConstraints.WEST;
+			if (first instanceof Effect) {
+				checkBox.setSelected(f.contains(p.getFieldEffects(), (Effect) first));
+				sideFieldEffectsPanel.add(checkBox);
+			} else {
+				checkBox.setSelected(p.hasStatus((Status) first));
+				statusEffectsPanel.add(checkBox);
+			}
+		}
+		
+		JScrollPane sideScroll = new JScrollPane(sideFieldEffectsPanel);
+		sideScroll.setPreferredSize(new Dimension(300, 100));
+		sideScroll.getVerticalScrollBar().setUnitIncrement(8);
+		sideScroll.setBorder(BorderFactory.createTitledBorder("Field Effects"));
+		
+		gbc.gridx = 0;
+		gbc.gridy++;
+		gbc.gridwidth = 2;
+		panel.add(sideScroll, gbc);
+		
+		JScrollPane statusScroll = new JScrollPane(statusEffectsPanel);
+		statusScroll.setPreferredSize(new Dimension(300, 125));
+		statusScroll.getVerticalScrollBar().setUnitIncrement(8);
+		statusScroll.setBorder(BorderFactory.createTitledBorder("Status Effects"));
+		
+		gbc.gridx = 0;
+		gbc.gridy++;
+		gbc.gridwidth = 2;
+		panel.add(statusScroll, gbc);
+		
+		// Create "Fields" panel with a titled border
+		JPanel fieldsPanel = new JPanel(new GridBagLayout());
+		GridBagConstraints fieldsGbc = new GridBagConstraints();
+		fieldsGbc.insets = new Insets(2, 5, 2, 5);
+		fieldsGbc.gridx = 0;
+		fieldsGbc.gridy = 0;
+		fieldsGbc.anchor = GridBagConstraints.WEST;
 
-        // ===== Weight =====
-        fieldsPanel.add(new JLabel("Weight:"), fieldsGbc);
-        JTextField weightField = new JTextField(String.valueOf(p.weight), 10);
-        fieldsGbc.gridx = 1;
-        fieldsPanel.add(weightField, fieldsGbc);
+		// ===== Weight =====
+		fieldsPanel.add(new JLabel("Weight:"), fieldsGbc);
+		JTextField weightField = new JTextField(String.valueOf(p.weight), 10);
+		fieldsGbc.gridx = 1;
+		fieldsPanel.add(weightField, fieldsGbc);
 
-        // ===== Current HP =====
-        fieldsGbc.gridx = 0;
-        fieldsGbc.gridy++;
-        fieldsPanel.add(new JLabel("Current HP:"), fieldsGbc);
-        JTextField hpField = new JTextField(String.valueOf(p.currentHP), 10);
-        fieldsGbc.gridx = 1;
-        fieldsPanel.add(hpField, fieldsGbc);
+		// ===== Current HP =====
+		fieldsGbc.gridx = 0;
+		fieldsGbc.gridy++;
+		fieldsPanel.add(new JLabel("Current HP:"), fieldsGbc);
+		JTextField hpField = new JTextField(String.valueOf(p.currentHP), 10);
+		fieldsGbc.gridx = 1;
+		fieldsPanel.add(hpField, fieldsGbc);
 
-        // ===== Move Multiplier =====
-        fieldsGbc.gridx = 0;
-        fieldsGbc.gridy++;
-        fieldsPanel.add(new JLabel("Move Multiplier:"), fieldsGbc);
-        JComboBox<Integer> moveMultBox = new JComboBox<>(new Integer[]{1, 2, 4});
-        moveMultBox.setSelectedItem(p.moveMultiplier);
-        fieldsGbc.gridx = 1;
-        fieldsPanel.add(moveMultBox, fieldsGbc);
+		// ===== Move Multiplier =====
+		fieldsGbc.gridx = 0;
+		fieldsGbc.gridy++;
+		fieldsPanel.add(new JLabel("Move Multiplier:"), fieldsGbc);
+		JComboBox<Integer> moveMultBox = new JComboBox<>(new Integer[]{1, 2, 4});
+		moveMultBox.setSelectedItem(p.moveMultiplier);
+		fieldsGbc.gridx = 1;
+		fieldsPanel.add(moveMultBox, fieldsGbc);
 
-        // ===== Roll Count =====
-        fieldsGbc.gridx = 0;
-        fieldsGbc.gridy++;
-        fieldsPanel.add(new JLabel("Roll Count:"), fieldsGbc);
-        JComboBox<Integer> rollBox = new JComboBox<>(new Integer[]{1, 2, 3, 4, 5});
-        rollBox.setSelectedItem(p.rollCount);
-        fieldsGbc.gridx = 1;
-        fieldsPanel.add(rollBox, fieldsGbc);
+		// ===== Roll Count =====
+		fieldsGbc.gridx = 0;
+		fieldsGbc.gridy++;
+		fieldsPanel.add(new JLabel("Roll Count:"), fieldsGbc);
+		JComboBox<Integer> rollBox = new JComboBox<>(new Integer[]{1, 2, 3, 4, 5});
+		rollBox.setSelectedItem(p.rollCount);
+		fieldsGbc.gridx = 1;
+		fieldsPanel.add(rollBox, fieldsGbc);
 
-        // ===== Metronome =====
-        fieldsGbc.gridx = 0;
-        fieldsGbc.gridy++;
-        fieldsPanel.add(new JLabel("Metronome:"), fieldsGbc);
-        JComboBox<Integer> metroBox = new JComboBox<>(new Integer[]{-1, 0, 1, 2, 3, 4, 5});
-        metroBox.setSelectedItem(p.metronome);
-        fieldsGbc.gridx = 1;
-        fieldsPanel.add(metroBox, fieldsGbc);
-        
-        // ===== Last Move Used =====
-        fieldsGbc.gridx = 0;
-        fieldsGbc.gridy++;
-        fieldsPanel.add(new JLabel("Last Used Move:"), fieldsGbc);
-        JComboBox<Move> lastBox = new JComboBox<>(Move.values());
-        lastBox.insertItemAt(null, 0);
-        lastBox.setSelectedItem(p.lastMoveUsed);
-        AutoCompleteDecorator.decorate(lastBox);
-        fieldsGbc.gridx = 1;
-        fieldsPanel.add(lastBox, fieldsGbc);
-        
-        // ===== Choice Move =====
-        fieldsGbc.gridx = 0;
-        fieldsGbc.gridy++;
-        fieldsPanel.add(new JLabel("Choice Move:"), fieldsGbc);
-        JComboBox<Move> choiceBox = new JComboBox<>(Move.values());
-        choiceBox.insertItemAt(null, 0);
-        choiceBox.setSelectedItem(p.choiceMove);
-        AutoCompleteDecorator.decorate(choiceBox);
-        fieldsGbc.gridx = 1;
-        fieldsPanel.add(choiceBox, fieldsGbc);
+		// ===== Metronome =====
+		fieldsGbc.gridx = 0;
+		fieldsGbc.gridy++;
+		fieldsPanel.add(new JLabel("Metronome:"), fieldsGbc);
+		JComboBox<Integer> metroBox = new JComboBox<>(new Integer[]{-1, 0, 1, 2, 3, 4, 5});
+		metroBox.setSelectedItem(p.metronome);
+		fieldsGbc.gridx = 1;
+		fieldsPanel.add(metroBox, fieldsGbc);
+		
+		// ===== Last Move Used =====
+		fieldsGbc.gridx = 0;
+		fieldsGbc.gridy++;
+		fieldsPanel.add(new JLabel("Last Used Move:"), fieldsGbc);
+		JComboBox<Move> lastBox = new JComboBox<>(Move.values());
+		lastBox.insertItemAt(null, 0);
+		lastBox.setSelectedItem(p.lastMoveUsed);
+		AutoCompleteDecorator.decorate(lastBox);
+		fieldsGbc.gridx = 1;
+		fieldsPanel.add(lastBox, fieldsGbc);
+		
+		// ===== Choice Move =====
+		fieldsGbc.gridx = 0;
+		fieldsGbc.gridy++;
+		fieldsPanel.add(new JLabel("Choice Move:"), fieldsGbc);
+		JComboBox<Move> choiceBox = new JComboBox<>(Move.values());
+		choiceBox.insertItemAt(null, 0);
+		choiceBox.setSelectedItem(p.choiceMove);
+		AutoCompleteDecorator.decorate(choiceBox);
+		fieldsGbc.gridx = 1;
+		fieldsPanel.add(choiceBox, fieldsGbc);
 
-        // ===== Disabled Move =====
-        fieldsGbc.gridx = 0;
-        fieldsGbc.gridy++;
-        fieldsPanel.add(new JLabel("Disabled Move:"), fieldsGbc);
-        JComboBox<Move> disabledBox = new JComboBox<>(Move.values());
-        disabledBox.insertItemAt(null, 0);
-        disabledBox.setSelectedItem(p.disabledMove);
-        AutoCompleteDecorator.decorate(disabledBox);
-        fieldsGbc.gridx = 1;
-        fieldsPanel.add(disabledBox, fieldsGbc);
+		// ===== Disabled Move =====
+		fieldsGbc.gridx = 0;
+		fieldsGbc.gridy++;
+		fieldsPanel.add(new JLabel("Disabled Move:"), fieldsGbc);
+		JComboBox<Move> disabledBox = new JComboBox<>(Move.values());
+		disabledBox.insertItemAt(null, 0);
+		disabledBox.setSelectedItem(p.disabledMove);
+		AutoCompleteDecorator.decorate(disabledBox);
+		fieldsGbc.gridx = 1;
+		fieldsPanel.add(disabledBox, fieldsGbc);
 
-        // ===== Illusion =====
-        fieldsGbc.gridx = 0;
-        fieldsGbc.gridy++;
-        fieldsPanel.add(new JLabel(p.getIllusionText()), fieldsGbc);
-        JCheckBox illusionBox = new JCheckBox();
-        illusionBox.setSelected(p.illusion);
-        fieldsGbc.gridx = 1;
-        fieldsPanel.add(illusionBox, fieldsGbc);
-        
-        // ===== Consumed Item =====
-        fieldsGbc.gridx = 0;
-        fieldsGbc.gridy++;
-        fieldsPanel.add(new JLabel("Consumed Item:"), fieldsGbc);
-        JCheckBox consumedBox = new JCheckBox();
-        consumedBox.setSelected(p.consumedItem);
-        fieldsGbc.gridx = 1;
-        fieldsPanel.add(consumedBox, fieldsGbc);
+		// ===== Illusion =====
+		fieldsGbc.gridx = 0;
+		fieldsGbc.gridy++;
+		fieldsPanel.add(new JLabel(p.getIllusionText()), fieldsGbc);
+		JCheckBox illusionBox = new JCheckBox();
+		illusionBox.setSelected(p.illusion);
+		fieldsGbc.gridx = 1;
+		fieldsPanel.add(illusionBox, fieldsGbc);
+		
+		// ===== Consumed Item =====
+		fieldsGbc.gridx = 0;
+		fieldsGbc.gridy++;
+		fieldsPanel.add(new JLabel("Consumed Item:"), fieldsGbc);
+		JCheckBox consumedBox = new JCheckBox();
+		consumedBox.setSelected(p.consumedItem);
+		fieldsGbc.gridx = 1;
+		fieldsPanel.add(consumedBox, fieldsGbc);
 
-        // 🔹 Status Effects Panel (Nested inside "Fields")
-        JPanel statusPanel = new JPanel(new GridBagLayout());
-        statusPanel.setBorder(BorderFactory.createTitledBorder("Status Effects"));
-        GridBagConstraints statusGbc = new GridBagConstraints();
-        statusGbc.insets = new Insets(2, 5, 2, 5);
-        statusGbc.gridx = 0;
-        statusGbc.gridy = 0;
-        statusGbc.anchor = GridBagConstraints.WEST;
+		// 🔹 Status Effects Panel (Nested inside "Fields")
+		JPanel statusPanel = new JPanel(new GridBagLayout());
+		statusPanel.setBorder(BorderFactory.createTitledBorder("Status Effects"));
+		GridBagConstraints statusGbc = new GridBagConstraints();
+		statusGbc.insets = new Insets(2, 5, 2, 5);
+		statusGbc.gridx = 0;
+		statusGbc.gridy = 0;
+		statusGbc.anchor = GridBagConstraints.WEST;
 
-        // ===== CRIT_CHANCE =====
-        statusPanel.add(new JLabel("Crit Chance:"), statusGbc);
-        JTextField critChanceField = new JTextField(String.valueOf(p.getStatusNum(Status.CRIT_CHANCE)), 5);
-        statusGbc.gridx = 1;
-        statusPanel.add(critChanceField, statusGbc);
+		// ===== CRIT_CHANCE =====
+		statusPanel.add(new JLabel("Crit Chance:"), statusGbc);
+		JTextField critChanceField = new JTextField(String.valueOf(p.getStatusNum(Status.CRIT_CHANCE)), 5);
+		statusGbc.gridx = 1;
+		statusPanel.add(critChanceField, statusGbc);
 
-        // ===== ARCANE_SPELL =====
-        statusGbc.gridx = 0;
-        statusGbc.gridy++;
-        statusPanel.add(new JLabel("Arcane Spell:"), statusGbc);
-        JTextField arcaneField = new JTextField(String.valueOf(p.getStatusNum(Status.ARCANE_SPELL)), 5);
-        statusGbc.gridx = 1;
-        statusPanel.add(arcaneField, statusGbc);
+		// ===== ARCANE_SPELL =====
+		statusGbc.gridx = 0;
+		statusGbc.gridy++;
+		statusPanel.add(new JLabel("Arcane Spell:"), statusGbc);
+		JTextField arcaneField = new JTextField(String.valueOf(p.getStatusNum(Status.ARCANE_SPELL)), 5);
+		statusGbc.gridx = 1;
+		statusPanel.add(arcaneField, statusGbc);
 
-        // Add the status panel inside the fields panel
-        fieldsGbc.gridx = 0;
-        fieldsGbc.gridy++;
-        fieldsGbc.gridwidth = 2;  // Make it span both columns
-        fieldsPanel.add(statusPanel, fieldsGbc);
-        
-        JScrollPane fieldsScroll = new JScrollPane(fieldsPanel);
-        fieldsScroll.setPreferredSize(new Dimension(300, 150));
-        fieldsScroll.getVerticalScrollBar().setUnitIncrement(8);
-        fieldsScroll.setBorder(BorderFactory.createTitledBorder("Fields"));
+		// Add the status panel inside the fields panel
+		fieldsGbc.gridx = 0;
+		fieldsGbc.gridy++;
+		fieldsGbc.gridwidth = 2;  // Make it span both columns
+		fieldsPanel.add(statusPanel, fieldsGbc);
+		
+		JScrollPane fieldsScroll = new JScrollPane(fieldsPanel);
+		fieldsScroll.setPreferredSize(new Dimension(300, 150));
+		fieldsScroll.getVerticalScrollBar().setUnitIncrement(8);
+		fieldsScroll.setBorder(BorderFactory.createTitledBorder("Fields"));
 
-        // Add "Fields" panel to the main panel
-        gbc.gridx = 0;
-        gbc.gridy++;
-        gbc.gridwidth = 2;  // Span across both columns in main layout
-        panel.add(fieldsScroll, gbc);
-        
-        // Apply and Cancel Buttons
-        gbc.gridy++;
-        gbc.gridx = 0;
-        gbc.anchor = GridBagConstraints.CENTER;
-        JButton applyButton = new JButton("Apply");
-        applyButton.addActionListener(e -> {
-            // Update Field and Pokemon with the selected values
-        	Effect weather = (Field.Effect) weatherBox.getSelectedItem();
-        	f.weather = weather == null ? null : f.new FieldEffect(weather);
-        	Effect terrain = (Field.Effect) terrainBox.getSelectedItem();
-            f.terrain = terrain == null ? null : f.new FieldEffect(terrain);
-            
-            for (int i = 0; i < fieldEffects.length; i++) {
-            	Pair<Effect, JCheckBox> pair = fieldEffects[i];
-                Effect first = pair.getFirst();
-                JCheckBox second = pair.getSecond();
-                
-            	if (second.isSelected()) {
-            		if (!f.contains(f.fieldEffects, first)) f.fieldEffects.add(f.new FieldEffect(first));
-            	} else {
-            		f.remove(f.fieldEffects, first);
-            	}
-            }
-            
-            p.type1 = (PType) type1Box.getSelectedItem();
-            p.type2 = (PType) type2Box.getSelectedItem();
-            p.status = (Status) statusBox.getSelectedItem();
-            
-            for (int i = 0; i < effect.length; i++) {
-            	Pair<Object, JCheckBox> pair = effect[i];
-                Object first = pair.getFirst();
-                JCheckBox second = pair.getSecond();
-                
-                if (first instanceof Effect) {
-                	Effect ef = (Effect) first;
-                	if (second.isSelected()) {
-                		if (!f.contains(p.getFieldEffects(), ef)) p.getFieldEffects().add(f.new FieldEffect(ef));
-                	} else {
-                		f.remove(p.getFieldEffects(), ef);
-                	}
-                } else {
-                    Status st = (Status) first;
-                    if (second.isSelected()) {
-                    	if (!p.hasStatus(st)) p.addStatus(st);
-                    } else {
-                    	p.removeStatus(st);
-                    }
-                }
-            }
-            
-            try {
-                p.weight = Math.max(0.1, Math.min(9999.9, Double.parseDouble(weightField.getText())));
-            } catch (NumberFormatException ex) {
-                p.weight = 0.1;
-            }
+		// Add "Fields" panel to the main panel
+		gbc.gridx = 0;
+		gbc.gridy++;
+		gbc.gridwidth = 2;  // Span across both columns in main layout
+		panel.add(fieldsScroll, gbc);
+		
+		// Apply and Cancel Buttons
+		gbc.gridy++;
+		gbc.gridx = 0;
+		gbc.anchor = GridBagConstraints.CENTER;
+		JButton applyButton = new JButton("Apply");
+		applyButton.addActionListener(e -> {
+			// Update Field and Pokemon with the selected values
+			Effect weather = (Field.Effect) weatherBox.getSelectedItem();
+			f.weather = weather == null ? null : f.new FieldEffect(weather);
+			Effect terrain = (Field.Effect) terrainBox.getSelectedItem();
+			f.terrain = terrain == null ? null : f.new FieldEffect(terrain);
+			
+			for (int i = 0; i < fieldEffects.length; i++) {
+				Pair<Effect, JCheckBox> pair = fieldEffects[i];
+				Effect first = pair.getFirst();
+				JCheckBox second = pair.getSecond();
+				
+				if (second.isSelected()) {
+					if (!f.contains(f.fieldEffects, first)) f.fieldEffects.add(f.new FieldEffect(first));
+				} else {
+					f.remove(f.fieldEffects, first);
+				}
+			}
+			
+			p.type1 = (PType) type1Box.getSelectedItem();
+			p.type2 = (PType) type2Box.getSelectedItem();
+			p.status = (Status) statusBox.getSelectedItem();
+			
+			for (int i = 0; i < effect.length; i++) {
+				Pair<Object, JCheckBox> pair = effect[i];
+				Object first = pair.getFirst();
+				JCheckBox second = pair.getSecond();
+				
+				if (first instanceof Effect) {
+					Effect ef = (Effect) first;
+					if (second.isSelected()) {
+						if (!f.contains(p.getFieldEffects(), ef)) p.getFieldEffects().add(f.new FieldEffect(ef));
+					} else {
+						f.remove(p.getFieldEffects(), ef);
+					}
+				} else {
+					Status st = (Status) first;
+					if (second.isSelected()) {
+						if (!p.hasStatus(st)) p.addStatus(st);
+					} else {
+						p.removeStatus(st);
+					}
+				}
+			}
+			
+			try {
+				p.weight = Math.max(0.1, Math.min(9999.9, Double.parseDouble(weightField.getText())));
+			} catch (NumberFormatException ex) {
+				p.weight = 0.1;
+			}
 
-            try {
-                p.currentHP = Math.max(1, Math.min(p.getStat(0), Integer.parseInt(hpField.getText())));
-            } catch (NumberFormatException ex) {
-                p.currentHP = 1;
-            }
+			try {
+				p.currentHP = Math.max(1, Math.min(p.getStat(0), Integer.parseInt(hpField.getText())));
+			} catch (NumberFormatException ex) {
+				p.currentHP = 1;
+			}
 
-            p.moveMultiplier = (Integer) moveMultBox.getSelectedItem();
-            p.rollCount = (Integer) rollBox.getSelectedItem();
-            p.metronome = (Integer) metroBox.getSelectedItem();
-            p.lastMoveUsed = (Move) lastBox.getSelectedItem();
-            p.choiceMove = (Move) choiceBox.getSelectedItem();
-            p.disabledMove = (Move) disabledBox.getSelectedItem();
-            p.illusion = illusionBox.isSelected();
-            p.consumedItem = consumedBox.isSelected();
+			p.moveMultiplier = (Integer) moveMultBox.getSelectedItem();
+			p.rollCount = (Integer) rollBox.getSelectedItem();
+			p.metronome = (Integer) metroBox.getSelectedItem();
+			p.lastMoveUsed = (Move) lastBox.getSelectedItem();
+			p.choiceMove = (Move) choiceBox.getSelectedItem();
+			p.disabledMove = (Move) disabledBox.getSelectedItem();
+			p.illusion = illusionBox.isSelected();
+			p.consumedItem = consumedBox.isSelected();
 
-            try {
-                p.removeStatus(Status.CRIT_CHANCE);
-                int crit = Integer.parseInt(critChanceField.getText());
-                if (crit != 0) p.addStatus(Status.CRIT_CHANCE, crit);
-            } catch (NumberFormatException ex) {
-                p.removeStatus(Status.CRIT_CHANCE);
-            }
+			try {
+				p.removeStatus(Status.CRIT_CHANCE);
+				int crit = Integer.parseInt(critChanceField.getText());
+				if (crit != 0) p.addStatus(Status.CRIT_CHANCE, crit);
+			} catch (NumberFormatException ex) {
+				p.removeStatus(Status.CRIT_CHANCE);
+			}
 
-            try {
-                p.removeStatus(Status.ARCANE_SPELL);
-                int arcane = Integer.parseInt(arcaneField.getText());
-                if (arcane > 0) p.addStatus(Status.ARCANE_SPELL, arcane);
-            } catch (NumberFormatException ex) {
-                p.removeStatus(Status.ARCANE_SPELL);
-            }
-            
-            SwingUtilities.getWindowAncestor(panel).dispose();
-        });
-        panel.add(applyButton, gbc);
+			try {
+				p.removeStatus(Status.ARCANE_SPELL);
+				int arcane = Integer.parseInt(arcaneField.getText());
+				if (arcane > 0) p.addStatus(Status.ARCANE_SPELL, arcane);
+			} catch (NumberFormatException ex) {
+				p.removeStatus(Status.ARCANE_SPELL);
+			}
+			
+			SwingUtilities.getWindowAncestor(panel).dispose();
+		});
+		panel.add(applyButton, gbc);
 
-        dialog.getContentPane().add(panel);
-        dialog.pack();
-        dialog.setLocationRelativeTo(calc);
-        dialog.setVisible(true);
+		dialog.getContentPane().add(panel);
+		dialog.pack();
+		dialog.setLocationRelativeTo(calc);
+		dialog.setVisible(true);
 	}
 
 	public static Pokemon displayGenerator(Pokemon p) {
@@ -2028,16 +2029,16 @@ public enum Item {
 		result.setLayout(new BoxLayout(result, BoxLayout.Y_AXIS));
 		
 		BiConsumer<String, JComponent> addLabeledInput = (labelText, input) -> {
-	        JPanel panel = new JPanel(new GridLayout(1, 2));
-	        panel.add(new JLabel(labelText));
-	        panel.add(input);
-	        result.add(panel);
-	    };
+			JPanel panel = new JPanel(new GridLayout(1, 2));
+			panel.add(new JLabel(labelText));
+			panel.add(input);
+			result.add(panel);
+		};
 		
 		JComboBox<Pokemon> nameInput = new JComboBox<Pokemon>();
 		for (int k = 1; k <= Pokemon.MAX_POKEMON; k++) {
-        	nameInput.addItem(new Pokemon(k, 50, false, true));
-        }
+			nameInput.addItem(new Pokemon(k, 50, false, true));
+		}
 		if (p != null) {
 			if (p.getEvolveString() != null) {
 				nameInput.setSelectedIndex(p.id);
@@ -2074,15 +2075,15 @@ public enum Item {
 		Integer[] ivOptions = IntStream.rangeClosed(0, 31).boxed().toArray(Integer[]::new);
 		int index = 0;
 		for (String ivLabel : new String[]{"HP", "Atk", "Def", "SpA", "SpD", "Spe"}) {
-	        JComboBox<Integer> ivInput = new JComboBox<>(ivOptions);
-	        if (p != null) {
-	        	ivInput.setSelectedIndex(p.ivs[index]);
-	        } else {
-	        	ivInput.setSelectedIndex(31);
-	        }
-	        addLabeledInput.accept(ivLabel, ivInput);
-	        ivInputs[index++] = ivInput;
-	    }
+			JComboBox<Integer> ivInput = new JComboBox<>(ivOptions);
+			if (p != null) {
+				ivInput.setSelectedIndex(p.ivs[index]);
+			} else {
+				ivInput.setSelectedIndex(31);
+			}
+			addLabeledInput.accept(ivLabel, ivInput);
+			ivInputs[index++] = ivInput;
+		}
 		
 		JComboBox<Integer> happiness = new JComboBox<>(IntStream.rangeClosed(0, 255).boxed().toArray(Integer[]::new));
 		if (p != null) {
@@ -2090,13 +2091,13 @@ public enum Item {
 		} else {
 			happiness.setSelectedIndex(70);
 		}
-	    addLabeledInput.accept("Happiness", happiness);
+		addLabeledInput.accept("Happiness", happiness);
 		
-	    JTextField happinessCapInput = new JTextField(p == null ? "50" : "" + p.happinessCap, 5);
-	    addLabeledInput.accept("Happiness Cap", happinessCapInput);
+		JTextField happinessCapInput = new JTextField(p == null ? "50" : "" + p.happinessCap, 5);
+		addLabeledInput.accept("Happiness Cap", happinessCapInput);
 
-	    JTextField expInput = new JTextField(p == null ? "2" : "" + (p.expMax - p.exp), 5);
-	    addLabeledInput.accept("Exp Remaining", expInput);
+		JTextField expInput = new JTextField(p == null ? "2" : "" + (p.expMax - p.exp), 5);
+		addLabeledInput.accept("Exp Remaining", expInput);
 		
 		AutoCompleteDecorator.decorate(nameInput);
 		AutoCompleteDecorator.decorate(levelInput);
@@ -2165,22 +2166,22 @@ public enum Item {
 		JButton randomize = new JButton("RANDOMIZE");
 		randomize.addMouseListener(new MouseAdapter() {
 			@Override
-		    public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e) {
 				Random random = new Random();
-		    	if (SwingUtilities.isRightMouseButton(e)) {
-		            nameInput.setSelectedIndex(random.nextInt(Pokemon.MAX_POKEMON));
-		            levelInput.setSelectedIndex(random.nextInt(100));
-		            happiness.setSelectedIndex(random.nextInt(255));
-		            for (int i = 0; i < 4; i++) {
-		            	moveInputs[i].setSelectedIndex(random.nextInt(Move.values().length));
-		            }
-		        }
-		    	abilityInput.setSelectedIndex(random.nextInt(2));
-		    	natures.setSelectedIndex(random.nextInt(25));
-		    	for (int i = 0; i < 6; i++) {
-		    		ivInputs[i].setSelectedIndex(random.nextInt(32));
-		    	}
-		    }
+				if (SwingUtilities.isRightMouseButton(e)) {
+					nameInput.setSelectedIndex(random.nextInt(Pokemon.MAX_POKEMON));
+					levelInput.setSelectedIndex(random.nextInt(100));
+					happiness.setSelectedIndex(random.nextInt(255));
+					for (int i = 0; i < 4; i++) {
+						moveInputs[i].setSelectedIndex(random.nextInt(Move.values().length));
+					}
+				}
+				abilityInput.setSelectedIndex(random.nextInt(2));
+				natures.setSelectedIndex(random.nextInt(25));
+				for (int i = 0; i < 6; i++) {
+					ivInputs[i].setSelectedIndex(random.nextInt(32));
+				}
+			}
 		});
 		result.add(randomize);
 		
@@ -2301,16 +2302,16 @@ public enum Item {
 	}
 	
 	public boolean isSellable(int amt) {
-	    if (pocket != HELD_ITEM) return true;
-	    
-	    // Rule 1: Never sell unique held items (Choice Band etc.)
-	    if (getSell() == 0) return amt > 1;
-	    
-	    // Rule 2: Everstone logic - only sell if multiple
-	    if (healAmount == 0 && getSell() > 0 && getCost() > 0) return amt > 1;
-	    
-	    // Rule 3 & 4: Star shop items and Air Balloon are always sellable
-	    return healAmount > 0 || (getSell() > 0 && getCost() == 0);
+		if (pocket != HELD_ITEM) return true;
+		
+		// Rule 1: Never sell unique held items (Choice Band etc.)
+		if (getSell() == 0) return amt > 1;
+		
+		// Rule 2: Everstone logic - only sell if multiple
+		if (healAmount == 0 && getSell() > 0 && getCost() > 0) return amt > 1;
+		
+		// Rule 3 & 4: Star shop items and Air Balloon are always sellable
+		return healAmount > 0 || (getSell() > 0 && getCost() == 0);
 	}
 
 	private boolean isFossil() {
@@ -2318,50 +2319,50 @@ public enum Item {
 	}
 	
 	public static String breakString(String input, int maxChar) {
-	    if (input == null || maxChar <= 0) {
-	        return null;
-	    }
+		if (input == null || maxChar <= 0) {
+			return null;
+		}
 
-	    StringBuilder result = new StringBuilder();
-	    StringBuilder currentLine = new StringBuilder();
-	    int currentLength = 0;
+		StringBuilder result = new StringBuilder();
+		StringBuilder currentLine = new StringBuilder();
+		int currentLength = 0;
 
-	    // split on spaces and tabs but not \n
-	    for (String word : input.split("[ \\t]+")) {
-	        // split the word if it contains \n
-	        String[] parts = word.split("\n", -1);
+		// split on spaces and tabs but not \n
+		for (String word : input.split("[ \\t]+")) {
+			// split the word if it contains \n
+			String[] parts = word.split("\n", -1);
 
-	        for (int i = 0; i < parts.length; i++) {
-	            String part = parts[i];
+			for (int i = 0; i < parts.length; i++) {
+				String part = parts[i];
 
-	            // check if need to wrap before adding this part
-	            if (currentLength + part.length() > maxChar) {
-	                result.append(currentLine.toString().trim()).append("\n");
-	                currentLine.setLength(0);
-	                currentLength = 0;
-	            }
+				// check if need to wrap before adding this part
+				if (currentLength + part.length() > maxChar) {
+					result.append(currentLine.toString().trim()).append("\n");
+					currentLine.setLength(0);
+					currentLength = 0;
+				}
 
-	            currentLine.append(part);
-	            currentLength += part.length();
+				currentLine.append(part);
+				currentLength += part.length();
 
-	            // if this part was followed by a \n break the line
-	            if (i < parts.length - 1) {
-	                result.append(currentLine.toString().trim()).append("\n");
-	                currentLine.setLength(0);
-	                currentLength = 0;
-	            } else {
-	                currentLine.append(" ");
-	                currentLength += 1;
-	            }
-	        }
-	    }
+				// if this part was followed by a \n break the line
+				if (i < parts.length - 1) {
+					result.append(currentLine.toString().trim()).append("\n");
+					currentLine.setLength(0);
+					currentLength = 0;
+				} else {
+					currentLine.append(" ");
+					currentLength += 1;
+				}
+			}
+		}
 
-	    // append any leftover line
-	    if (currentLine.length() > 0) {
-	        result.append(currentLine.toString().trim());
-	    }
+		// append any leftover line
+		if (currentLine.length() > 0) {
+			result.append(currentLine.toString().trim());
+		}
 
-	    return result.toString();
+		return result.toString();
 	}
 
 	

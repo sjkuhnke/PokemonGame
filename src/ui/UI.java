@@ -155,7 +155,7 @@ public class UI extends AbstractUI {
 	private int hofPhase = 0; // 0 = pokemon showcase, 1 = credits scroll
 	private int hofPokemonIndex = 0; // which team member is showing
 	private int hofCounter = 0; // general timer within a phase
-	private int hofPhotoIndex = 0;    // how many team members have been revealed
+	private int hofPhotoIndex = 0;	// how many team members have been revealed
 	private int hofPhotoCounter = 0;  // frame counter for current animation step
 	private float hofCreditsY = 0; // y-offset for credits scroll (starts at screenHeight)
 	private static final int HOF_POKEMON_DISPLAY_TIME = 180; // 5 seconds at 60fps
@@ -1145,7 +1145,7 @@ public class UI extends AbstractUI {
 			g2.setFont(g2.getFont().deriveFont(16F));
 			for (Moveslot m : p.moveset) {
 				String moveName = (m == null) ? "" :
-	                (m.move == Move.HIDDEN_POWER || m.move == Move.RETURN) ? m.move == Move.HIDDEN_POWER ? m.move + " " + p.determineHPType() : m.move + " " + p.determineHPType() : m.move.toString();
+					(m.move == Move.HIDDEN_POWER || m.move == Move.RETURN) ? m.move == Move.HIDDEN_POWER ? m.move + " " + p.determineHPType() : m.move + " " + p.determineHPType() : m.move.toString();
 				g2.drawString(moveName, x, y);
 				y += gp.tileSize / 3;
 			}
@@ -7511,9 +7511,9 @@ public class UI extends AbstractUI {
 		g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
 		
 		switch (hofPhase) {
-        case 0: drawHofPokemonShowcase(); break; // existing per-mon showcase
-        case 1: drawHofTeamPhoto();       break; // NEW: player + team assembling for a photo
-        default: drawHofCredits();        break;
+		case 0: drawHofPokemonShowcase(); break; // existing per-mon showcase
+		case 1: drawHofTeamPhoto();	   break; // NEW: player + team assembling for a photo
+		default: drawHofCredits();		break;
 		}
 	}
 
@@ -7644,120 +7644,120 @@ public class UI extends AbstractUI {
 	
 	/** Phase 1 - player and team assemble one at a time for a "team photo". */
 	private void drawHofTeamPhoto() {
-	    Pokemon[] team = gp.player.p.team;
-	    int teamCount = 0;
-	    for (Pokemon t : team) if (t != null) teamCount++;
+		Pokemon[] team = gp.player.p.team;
+		int teamCount = 0;
+		for (Pokemon t : team) if (t != null) teamCount++;
 
-	    // Animated gold header
-	    float pulse = 0.5f + 0.5f * (float) Math.sin(pulseCounter * 0.08f);
-	    Color headerColor = new Color(HOF_GOLD.getRed(), (int) (HOF_GOLD.getGreen() * (0.8f + 0.2f * pulse)), 0);
-	    g2.setFont(g2.getFont().deriveFont(Font.BOLD, 42F));
-	    String header = "★  Champions  ★";
-	    drawOutlinedText(header, getCenterAlignedTextX(header, gp.screenWidth / 2), gp.tileSize, headerColor, Color.BLACK);
+		// Animated gold header
+		float pulse = 0.5f + 0.5f * (float) Math.sin(pulseCounter * 0.08f);
+		Color headerColor = new Color(HOF_GOLD.getRed(), (int) (HOF_GOLD.getGreen() * (0.8f + 0.2f * pulse)), 0);
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 42F));
+		String header = "★  Champions  ★";
+		drawOutlinedText(header, getCenterAlignedTextX(header, gp.screenWidth / 2), gp.tileSize, headerColor, Color.BLACK);
 
-	    // Row layout: player, then each team member spaced evenly
-	    int slots = teamCount + 1;
-	    int rowY = (int) (gp.screenHeight * 0.72);
-	    int spacing = Math.min(gp.tileSize * 3, (gp.screenWidth - gp.tileSize) / Math.max(1, slots));
-	    int rowWidth = spacing * (slots - 1);
-	    int startX = gp.screenWidth / 2 - rowWidth / 2;
+		// Row layout: player, then each team member spaced evenly
+		int slots = teamCount + 1;
+		int rowY = (int) (gp.screenHeight * 0.72);
+		int spacing = Math.min(gp.tileSize * 3, (gp.screenWidth - gp.tileSize) / Math.max(1, slots));
+		int rowWidth = spacing * (slots - 1);
+		int startX = gp.screenWidth / 2 - rowWidth / 2;
 
-	    // --- Player, always visible, anchoring the left side of the group ---
-	    BufferedImage playerSprite = gp.player.fight;
-	    int playerW = 128, playerH = 128;
-	    int playerX = startX - playerW / 2;
-	    int playerY = rowY - playerH;
-	    if (playerSprite != null) {
-	        g2.drawImage(playerSprite, playerX, playerY, playerW, playerH, null);
-	    }
-	    g2.setFont(g2.getFont().deriveFont(Font.BOLD, 22F));
-	    String playerName = gp.player.getName();
-	    drawOutlinedText(playerName, getCenterAlignedTextX(playerName, playerX + playerW / 2),
-	            playerY + playerH + 24, HOF_CREAM, Color.BLACK);
+		// --- Player, always visible, anchoring the left side of the group ---
+		BufferedImage playerSprite = gp.player.fight;
+		int playerW = 128, playerH = 128;
+		int playerX = startX - playerW / 2;
+		int playerY = rowY - playerH;
+		if (playerSprite != null) {
+			g2.drawImage(playerSprite, playerX, playerY, playerW, playerH, null);
+		}
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 22F));
+		String playerName = gp.player.getName();
+		drawOutlinedText(playerName, getCenterAlignedTextX(playerName, playerX + playerW / 2),
+				playerY + playerH + 24, HOF_CREAM, Color.BLACK);
 
-	    // --- Team members, revealed one at a time ---
-	    int shown = 0;
-	    for (Pokemon p : team) {
-	        if (p == null) continue;
-	        shown++;
-	        if (shown > hofPhotoIndex + 1) break; // not revealed yet, stop drawing further slots
+		// --- Team members, revealed one at a time ---
+		int shown = 0;
+		for (Pokemon p : team) {
+			if (p == null) continue;
+			shown++;
+			if (shown > hofPhotoIndex + 1) break; // not revealed yet, stop drawing further slots
 
-	        int slotX = startX + spacing * shown;
-	        BufferedImage sprite = p.getSprite();
-	        int scale = 2;
-	        int spriteW = sprite.getWidth() * scale;
-	        int spriteH = sprite.getHeight() * scale;
-	        int targetY = rowY - spriteH;
+			int slotX = startX + spacing * shown;
+			BufferedImage sprite = p.getSprite();
+			int scale = 2;
+			int spriteW = sprite.getWidth() * scale;
+			int spriteH = sprite.getHeight() * scale;
+			int targetY = rowY - spriteH;
 
-	        boolean isCurrent = (shown - 1 == hofPhotoIndex);
-	        float progress = isCurrent ? Math.min(1f, hofPhotoCounter / (float) HOF_PHOTO_SLIDE_TIME) : 1f;
-	        float eased = 1 - (float) Math.pow(1 - progress, 3); // ease-out cubic
+			boolean isCurrent = (shown - 1 == hofPhotoIndex);
+			float progress = isCurrent ? Math.min(1f, hofPhotoCounter / (float) HOF_PHOTO_SLIDE_TIME) : 1f;
+			float eased = 1 - (float) Math.pow(1 - progress, 3); // ease-out cubic
 
-	        // Slide up from below the screen
-	        int drawY = (int) (gp.screenHeight + (targetY - gp.screenHeight) * eased);
+			// Slide up from below the screen
+			int drawY = (int) (gp.screenHeight + (targetY - gp.screenHeight) * eased);
 
-	        // Slight "pop" overshoot as it settles
-	        float scalePop = isCurrent ? 1f + 0.15f * (float) Math.sin(eased * Math.PI) : 1f;
-	        int popW = (int) (spriteW * scalePop);
-	        int popH = (int) (spriteH * scalePop);
-	        int drawX = slotX - popW / 2;
+			// Slight "pop" overshoot as it settles
+			float scalePop = isCurrent ? 1f + 0.15f * (float) Math.sin(eased * Math.PI) : 1f;
+			int popW = (int) (spriteW * scalePop);
+			int popH = (int) (spriteH * scalePop);
+			int drawX = slotX - popW / 2;
 
-	        Composite oldComposite = g2.getComposite();
-	        if (isCurrent && eased < 1f) {
-	            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, Math.max(0.2f, eased)));
-	        }
-	        g2.drawImage(sprite, drawX, drawY, popW, popH, null);
-	        g2.setComposite(oldComposite);
+			Composite oldComposite = g2.getComposite();
+			if (isCurrent && eased < 1f) {
+				g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, Math.max(0.2f, eased)));
+			}
+			g2.drawImage(sprite, drawX, drawY, popW, popH, null);
+			g2.setComposite(oldComposite);
 
-	        // Nickname label appears once settled
-	        if (!isCurrent || eased >= 1f) {
-	            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 16F));
-	            drawOutlinedText(p.getNickname(), getCenterAlignedTextX(p.getNickname(), slotX),
-	                    targetY + spriteH + 20, Color.WHITE, Color.BLACK);
-	        }
+			// Nickname label appears once settled
+			if (!isCurrent || eased >= 1f) {
+				g2.setFont(g2.getFont().deriveFont(Font.BOLD, 16F));
+				drawOutlinedText(p.getNickname(), getCenterAlignedTextX(p.getNickname(), slotX),
+						targetY + spriteH + 20, Color.WHITE, Color.BLACK);
+			}
 
-	        // Little sparkle burst the moment it lands
-	        if (isCurrent && progress >= 1f && hofPhotoCounter < HOF_PHOTO_SLIDE_TIME + 20) {
-	            drawSparkle(slotX, targetY + spriteH / 2, hofPhotoCounter - HOF_PHOTO_SLIDE_TIME);
-	        }
-	    }
+			// Little sparkle burst the moment it lands
+			if (isCurrent && progress >= 1f && hofPhotoCounter < HOF_PHOTO_SLIDE_TIME + 20) {
+				drawSparkle(slotX, targetY + spriteH / 2, hofPhotoCounter - HOF_PHOTO_SLIDE_TIME);
+			}
+		}
 
-	    // --- Advance the reveal / hold / transition ---
-	    hofPhotoCounter++;
-	    boolean skipPressed = gp.keyH.wPressed || gp.keyH.sPressed || gp.keyH.dPressed;
-	    if (skipPressed) {
-	        gp.keyH.wPressed = false;
-	        gp.keyH.sPressed = false;
-	        gp.keyH.dPressed = false;
-	    }
+		// --- Advance the reveal / hold / transition ---
+		hofPhotoCounter++;
+		boolean skipPressed = gp.keyH.wPressed || gp.keyH.sPressed || gp.keyH.dPressed;
+		if (skipPressed) {
+			gp.keyH.wPressed = false;
+			gp.keyH.sPressed = false;
+			gp.keyH.dPressed = false;
+		}
 
-	    if (hofPhotoIndex < teamCount) {
-	        if (hofPhotoCounter >= HOF_PHOTO_SLIDE_TIME + HOF_PHOTO_GAP_TIME || skipPressed) {
-	            hofPhotoIndex++;
-	            hofPhotoCounter = 0;
-	        }
-	    } else {
-	        // Whole team is in frame - hold for a beat so it reads as a photo, then move on
-	        if (hofPhotoCounter >= HOF_PHOTO_HOLD_TIME || skipPressed) {
-	            hofPhase = 2;
-	            hofPokemonIndex = 0;
-	            hofCounter = 0;
-	        }
-	    }
+		if (hofPhotoIndex < teamCount) {
+			if (hofPhotoCounter >= HOF_PHOTO_SLIDE_TIME + HOF_PHOTO_GAP_TIME || skipPressed) {
+				hofPhotoIndex++;
+				hofPhotoCounter = 0;
+			}
+		} else {
+			// Whole team is in frame - hold for a beat so it reads as a photo, then move on
+			if (hofPhotoCounter >= HOF_PHOTO_HOLD_TIME || skipPressed) {
+				hofPhase = 2;
+				hofPokemonIndex = 0;
+				hofCounter = 0;
+			}
+		}
 
-	    drawToolTips("Next", null, "Skip", null);
+		drawToolTips("Next", null, "Skip", null);
 	}
 
 	/** Small fading diamond-shaped sparkle used when a team member lands in the photo. */
 	private void drawSparkle(int cx, int cy, int age) {
-	    if (age < 0 || age > 20) return;
-	    float t = age / 20f;
-	    int radius = (int) (6 + t * 26);
-	    int alpha = Math.max(0, (int) (255 * (1 - t)));
-	    g2.setColor(new Color(255, 255, 210, alpha));
-	    int[] xs = {cx, cx + radius / 3, cx, cx - radius / 3};
-	    int[] ys = {cy - radius, cy, cy + radius, cy};
-	    g2.fillPolygon(xs, ys, 4);
+		if (age < 0 || age > 20) return;
+		float t = age / 20f;
+		int radius = (int) (6 + t * 26);
+		int alpha = Math.max(0, (int) (255 * (1 - t)));
+		g2.setColor(new Color(255, 255, 210, alpha));
+		int[] xs = {cx, cx + radius / 3, cx, cx - radius / 3};
+		int[] ys = {cy - radius, cy, cy + radius, cy};
+		g2.fillPolygon(xs, ys, 4);
 	}
 
 	/** Phase 2 – scrolling credits. */
@@ -7789,13 +7789,13 @@ public class UI extends AbstractUI {
 			}
 		}
 
-	    hofCreditsY -= scrollSpeed;
+		hofCreditsY -= scrollSpeed;
 
-	    // Done when last line has fully scrolled off screen
-	    float lastLineY = hofCreditsY + (lines.length - 1) * lineHeight;
-	    if (lastLineY < 0) {
-	        finishHallOfFame();
-	    }
+		// Done when last line has fully scrolled off screen
+		float lastLineY = hofCreditsY + (lines.length - 1) * lineHeight;
+		if (lastLineY < 0) {
+			finishHallOfFame();
+		}
 	}
 
 	/** Returns the lines to display in the credits roll. */
@@ -7956,104 +7956,104 @@ public class UI extends AbstractUI {
 	}
 	
 	private void drawMineChances() {
-	    NPC_Mine npc = (NPC_Mine) currentTask.e;
-	    npc.handleChanceViewerInput();
+		NPC_Mine npc = (NPC_Mine) currentTask.e;
+		npc.handleChanceViewerInput();
 
-	    LinkedHashMap<Item, Double> chances = npc.getChanceBuffer();
-	    double failChance = npc.getFailChance();
+		LinkedHashMap<Item, Double> chances = npc.getChanceBuffer();
+		double failChance = npc.getFailChance();
 
-	    List<Map.Entry<Item, Double>> sorted = new ArrayList<>(chances.entrySet());
-	    sorted.sort((a, b) -> Double.compare(b.getValue(), a.getValue()));
+		List<Map.Entry<Item, Double>> sorted = new ArrayList<>(chances.entrySet());
+		sorted.sort((a, b) -> Double.compare(b.getValue(), a.getValue()));
 
-	    int itemCount = sorted.size() + 1; // +1 for the fail row
+		int itemCount = sorted.size() + 1; // +1 for the fail row
 
-	    int maxItemsPerColumn = itemCount <= 12 ? 12 : 26;
-	    int fontSize = itemCount <= 12 ? 32 : 20;
+		int maxItemsPerColumn = itemCount <= 12 ? 12 : 26;
+		int fontSize = itemCount <= 12 ? 32 : 20;
 
-	    int columns = Math.max(1, (int) Math.ceil(itemCount / (double) maxItemsPerColumn));
-	    int itemsPerColumn = (int) Math.ceil(itemCount / (double) columns);
+		int columns = Math.max(1, (int) Math.ceil(itemCount / (double) maxItemsPerColumn));
+		int itemsPerColumn = (int) Math.ceil(itemCount / (double) columns);
 
-	    int baseColumnWidth = (int) (gp.tileSize * 5.5);
-	    int columnSpacing = gp.tileSize / 2;
-	    int width = Math.min(gp.screenWidth,
-	        (baseColumnWidth * columns) + (columnSpacing * (columns - 1)) + gp.tileSize * 3 + columnSpacing);
+		int baseColumnWidth = (int) (gp.tileSize * 5.5);
+		int columnSpacing = gp.tileSize / 2;
+		int width = Math.min(gp.screenWidth,
+			(baseColumnWidth * columns) + (columnSpacing * (columns - 1)) + gp.tileSize * 3 + columnSpacing);
 
-	    int rowHeight = fontSize * 3 / 2 - gp.tileSize / 4;
-	    int sliderAreaHeight = gp.tileSize; // reserve a row's worth of space for the slider
-	    int height = (int) (itemsPerColumn * rowHeight + gp.tileSize * 2 + sliderAreaHeight);
+		int rowHeight = fontSize * 3 / 2 - gp.tileSize / 4;
+		int sliderAreaHeight = gp.tileSize; // reserve a row's worth of space for the slider
+		int height = (int) (itemsPerColumn * rowHeight + gp.tileSize * 2 + sliderAreaHeight);
 
-	    int x = Math.max(0, (gp.screenWidth - width) / 2);
-	    int y = Math.max(0, (gp.screenHeight - height) / 2);
+		int x = Math.max(0, (gp.screenWidth - width) / 2);
+		int y = Math.max(0, (gp.screenHeight - height) / 2);
 
-	    drawSubWindow(x, y, width, height);
+		drawSubWindow(x, y, width, height);
 
-	    int columnWidth = (width - columnSpacing * (columns - 1)) / columns;
+		int columnWidth = (width - columnSpacing * (columns - 1)) / columns;
 
-	    y += gp.tileSize / 4;
-	    g2.setFont(g2.getFont().deriveFont(40F));
-	    String header = "Depth " + npc.getViewDepth() + "/" + NPC_Mine.getMaxViewDepth()
-	        + "   |   Perilyte: " + (npc.isViewPerilyte() ? "ON" : "OFF");
-	    g2.drawString(header, getCenterAlignedTextX(header, gp.screenWidth / 2), y + gp.tileSize);
+		y += gp.tileSize / 4;
+		g2.setFont(g2.getFont().deriveFont(40F));
+		String header = "Depth " + npc.getViewDepth() + "/" + NPC_Mine.getMaxViewDepth()
+			+ "   |   Perilyte: " + (npc.isViewPerilyte() ? "ON" : "OFF");
+		g2.drawString(header, getCenterAlignedTextX(header, gp.screenWidth / 2), y + gp.tileSize);
 
-	    // --- Depth slider ---
-	    int sliderX = x + gp.tileSize;
-	    int sliderWidth = width - gp.tileSize * 2;
-	    int sliderY = (int) (y + gp.tileSize * 1.4);
-	    int trackHeight = Math.max(6, gp.tileSize / 6);
+		// --- Depth slider ---
+		int sliderX = x + gp.tileSize;
+		int sliderWidth = width - gp.tileSize * 2;
+		int sliderY = (int) (y + gp.tileSize * 1.4);
+		int trackHeight = Math.max(6, gp.tileSize / 6);
 
-	    g2.setColor(Color.DARK_GRAY);
-	    g2.fillRoundRect(sliderX, sliderY, sliderWidth, trackHeight, trackHeight, trackHeight);
+		g2.setColor(Color.DARK_GRAY);
+		g2.fillRoundRect(sliderX, sliderY, sliderWidth, trackHeight, trackHeight, trackHeight);
 
-	    float depthPct = npc.getViewDepth() / (float) NPC_Mine.getMaxViewDepth();
-	    int filledWidth = (int) (sliderWidth * depthPct);
-	    g2.setColor(Color.YELLOW);
-	    g2.fillRoundRect(sliderX, sliderY, filledWidth, trackHeight, trackHeight, trackHeight);
+		float depthPct = npc.getViewDepth() / (float) NPC_Mine.getMaxViewDepth();
+		int filledWidth = (int) (sliderWidth * depthPct);
+		g2.setColor(Color.YELLOW);
+		g2.fillRoundRect(sliderX, sliderY, filledWidth, trackHeight, trackHeight, trackHeight);
 
-	    int handleRadius = Math.max(8, gp.tileSize / 4);
-	    int handleX = sliderX + filledWidth - handleRadius / 2;
-	    int handleY = sliderY + trackHeight / 2 - handleRadius / 2;
-	    g2.setColor(Color.WHITE);
-	    g2.fillOval(handleX, handleY, handleRadius, handleRadius);
-	    g2.setColor(Color.BLACK);
-	    g2.drawOval(handleX, handleY, handleRadius, handleRadius);
+		int handleRadius = Math.max(8, gp.tileSize / 4);
+		int handleX = sliderX + filledWidth - handleRadius / 2;
+		int handleY = sliderY + trackHeight / 2 - handleRadius / 2;
+		g2.setColor(Color.WHITE);
+		g2.fillOval(handleX, handleY, handleRadius, handleRadius);
+		g2.setColor(Color.BLACK);
+		g2.drawOval(handleX, handleY, handleRadius, handleRadius);
 
-	    y += sliderAreaHeight / 2; // push everything below down by the slider's footprint
+		y += sliderAreaHeight / 2; // push everything below down by the slider's footprint
 
-	    g2.setFont(g2.getFont().deriveFont((float) fontSize));
-	    int currentColumn = 0;
-	    int currentRow = 0;
+		g2.setFont(g2.getFont().deriveFont((float) fontSize));
+		int currentColumn = 0;
+		int currentRow = 0;
 
-	    // Fail chance gets its own highlighted row up top
-	    int rowY = (int) (y + gp.tileSize * 1.75);
-	    g2.setColor(Color.RED);
-	    g2.drawString(String.format("%.1f%% - Lose everything!", failChance * 100), x + gp.tileSize / 2, rowY);
-	    g2.setColor(Color.WHITE);
-	    currentRow++;
-	    if (currentRow >= itemsPerColumn) { currentRow = 0; currentColumn++; }
+		// Fail chance gets its own highlighted row up top
+		int rowY = (int) (y + gp.tileSize * 1.75);
+		g2.setColor(Color.RED);
+		g2.drawString(String.format("%.1f%% - Lose everything!", failChance * 100), x + gp.tileSize / 2, rowY);
+		g2.setColor(Color.WHITE);
+		currentRow++;
+		if (currentRow >= itemsPerColumn) { currentRow = 0; currentColumn++; }
 
-	    for (Map.Entry<Item, Double> e : sorted) {
-	        int columnX = x + (currentColumn * (columnWidth + (currentColumn > 0 ? 0 : columnSpacing))) + gp.tileSize / 2;
-	        rowY = (int) (y + gp.tileSize * 1.75 + (currentRow * rowHeight));
+		for (Map.Entry<Item, Double> e : sorted) {
+			int columnX = x + (currentColumn * (columnWidth + (currentColumn > 0 ? 0 : columnSpacing))) + gp.tileSize / 2;
+			rowY = (int) (y + gp.tileSize * 1.75 + (currentRow * rowHeight));
 
-	        g2.drawImage(e.getKey().getImage(), columnX, rowY - fontSize, null);
-	        String name = truncate(e.getKey().toString(), 12);
-	        String line = String.format("%.1f%% %s", e.getValue() * 100, name);
-	        g2.drawString(line, (int) (columnX + gp.tileSize * 0.75), rowY);
+			g2.drawImage(e.getKey().getImage(), columnX, rowY - fontSize, null);
+			String name = truncate(e.getKey().toString(), 12);
+			String line = String.format("%.1f%% %s", e.getValue() * 100, name);
+			g2.drawString(line, (int) (columnX + gp.tileSize * 0.75), rowY);
 
-	        currentRow++;
-	        if (currentRow >= itemsPerColumn) { currentRow = 0; currentColumn++; }
-	    }
+			currentRow++;
+			if (currentRow >= itemsPerColumn) { currentRow = 0; currentColumn++; }
+		}
 
-	    if (gp.keyH.sPressed && !showMessage) {
-	        gp.keyH.sPressed = false;
-	        currentTask = null;
-	    }
+		if (gp.keyH.sPressed && !showMessage) {
+			gp.keyH.sPressed = false;
+			currentTask = null;
+		}
 
-	    drawToolTips(null, "W: Perilyte   \u2190/\u2192: Depth", "Close", null);
+		drawToolTips(null, "W: Perilyte   \u2190/\u2192: Depth", "Close", null);
 	}
 
 	private String truncate(String text, int maxLength) {
-	    if (text.length() <= maxLength) return text;
-	    return text.substring(0, maxLength) + "...";
+		if (text.length() <= maxLength) return text;
+		return text.substring(0, maxLength) + "...";
 	}
 }

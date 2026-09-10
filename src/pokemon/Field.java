@@ -105,38 +105,38 @@ public class Field {
 		@Override
 		public String toString() {
 			String name = super.toString();
-		    name = name.toLowerCase().replace('_', ' ');
-		    String[] words = name.split(" ");
-		    StringBuilder sb = new StringBuilder();
-		    for (String word : words) {
-		        sb.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1)).append(" ");
-		    }
-		    return sb.toString().trim();
+			name = name.toLowerCase().replace('_', ' ');
+			String[] words = name.split(" ");
+			StringBuilder sb = new StringBuilder();
+			for (String word : words) {
+				sb.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1)).append(" ");
+			}
+			return sb.toString().trim();
 		}
 		
 		private Image setupImage(String path) {
 			Image originalImage = null;
 
-	        try {
-	            originalImage = new ImageIcon(getClass().getResource(path)).getImage();
-	        } catch (Exception e) {
-	            try {
-	                originalImage = ImageIO.read(getClass().getResourceAsStream("/items/null.png"));
-	            } catch (IOException e1) {
-	                e1.printStackTrace();
-	            }
-	        }
-	        
-	        if (isWeather) return originalImage;
-	        
-	        BufferedImage bufferedImage = new BufferedImage(originalImage.getWidth(null), originalImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+			try {
+				originalImage = new ImageIcon(getClass().getResource(path)).getImage();
+			} catch (Exception e) {
+				try {
+					originalImage = ImageIO.read(getClass().getResourceAsStream("/items/null.png"));
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+			
+			if (isWeather) return originalImage;
+			
+			BufferedImage bufferedImage = new BufferedImage(originalImage.getWidth(null), originalImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
 
-	        Graphics2D g2d = bufferedImage.createGraphics();
-	        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
-	        g2d.drawImage(originalImage, 0, 0, null);
-	        g2d.dispose();
+			Graphics2D g2d = bufferedImage.createGraphics();
+			g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
+			g2d.drawImage(originalImage, 0, 0, null);
+			g2d.dispose();
 
-	        return bufferedImage;
+			return bufferedImage;
 		}
 		
 		public Image getImage() {
@@ -253,17 +253,17 @@ public class Field {
 
 		public void handleAurora(Pokemon p) {
 			if (this.effect == Effect.AURORA_GLOW) {
-	        	ArrayList<Pokemon> team;
-	        	if (p.trainer != null) {
-	        		team = new ArrayList<>(p.trainer.getOrderedTeam());
-	        	} else {
-	        		team = new ArrayList<>();
-	        		team.add(p);
-	        	}
-	        	for (Pokemon po : team) {
-	        		po.auroraGlow();
-	        	}
-	        }
+				ArrayList<Pokemon> team;
+				if (p.trainer != null) {
+					team = new ArrayList<>(p.trainer.getOrderedTeam());
+				} else {
+					team = new ArrayList<>();
+					team.add(p);
+				}
+				for (Pokemon po : team) {
+					po.auroraGlow();
+				}
+			}
 		}
 
 		public void handleFutureSight(Pokemon reciever, Pokemon foe) {
@@ -290,43 +290,43 @@ public class Field {
 	
 	public boolean setWeather(FieldEffect weather, Pokemon user, Pokemon foe) {
 		if (weather != null && weather.effect.isWeather) {
-	        if (this.weather == null || this.weather.effect != weather.effect) {
-	        	if (user.getAbility(this) == Ability.CLOUD_NINE || foe.getAbility(this) == Ability.CLOUD_NINE) {
-	        		Task.addAbilityTask(user.getAbility(this) == Ability.CLOUD_NINE ? user : foe);
-	        		Task.addTask(Task.TEXT, "The weather couldn't be set!");
-	        		return false;
-	        	}
-	            Task t = Task.addTask(Task.WEATHER, "The weather became " + weather.toString() + "!");
-	            t.setEffect(weather);
-	            this.weather = weather;
-	            this.weatherTurns = weather.turns;
-	            return true;
-	        } else {
-	            Task.addTask(Task.TEXT, "The weather is already " + weather.toString() + "!");
-	            return false;
-	        }
-	    } else {
-	        Task.addTask(Task.TEXT, "Invalid weather effect or weather object is null.");
-	        return false;
-	    }
+			if (this.weather == null || this.weather.effect != weather.effect) {
+				if (user.getAbility(this) == Ability.CLOUD_NINE || foe.getAbility(this) == Ability.CLOUD_NINE) {
+					Task.addAbilityTask(user.getAbility(this) == Ability.CLOUD_NINE ? user : foe);
+					Task.addTask(Task.TEXT, "The weather couldn't be set!");
+					return false;
+				}
+				Task t = Task.addTask(Task.WEATHER, "The weather became " + weather.toString() + "!");
+				t.setEffect(weather);
+				this.weather = weather;
+				this.weatherTurns = weather.turns;
+				return true;
+			} else {
+				Task.addTask(Task.TEXT, "The weather is already " + weather.toString() + "!");
+				return false;
+			}
+		} else {
+			Task.addTask(Task.TEXT, "Invalid weather effect or weather object is null.");
+			return false;
+		}
 	}
 	
 	public boolean setTerrain(FieldEffect terrain) {
 		if (terrain != null && terrain.effect.isTerrain) {
-	        if (this.terrain == null || this.terrain.effect != terrain.effect) {
-	            Task t = Task.addTask(Task.TERRAIN, "The terrain became " + terrain.toString() + "!");
-	            t.setEffect(terrain);
-	            this.terrain = terrain;
-	            this.terrainTurns = terrain.turns;
-	            return true;
-	        } else {
-	            Task.addTask(Task.TEXT, "The terrain is already " + terrain.toString() + "!");
-	            return false;
-	        }
-	    } else {
-	        Task.addTask(Task.TEXT, "Invalid terrain effect or terrain object is null.");
-	        return false;
-	    }
+			if (this.terrain == null || this.terrain.effect != terrain.effect) {
+				Task t = Task.addTask(Task.TERRAIN, "The terrain became " + terrain.toString() + "!");
+				t.setEffect(terrain);
+				this.terrain = terrain;
+				this.terrainTurns = terrain.turns;
+				return true;
+			} else {
+				Task.addTask(Task.TEXT, "The terrain is already " + terrain.toString() + "!");
+				return false;
+			}
+		} else {
+			Task.addTask(Task.TEXT, "Invalid terrain effect or terrain object is null.");
+			return false;
+		}
 	}
 	
 	public void setEffect(FieldEffect effect) {
@@ -450,63 +450,63 @@ public class Field {
 	}
 	
 	public void endOfTurn(Pokemon faster, Pokemon slower) {
-	    if (weather != null) {
-	        weatherTurns--;
-	        if (weatherTurns == 0) {
-	            Task t = Task.addTask(Task.WEATHER, "The weather returned to normal!");
-	            t.setEffect(null);
-	            weather = null;
-	        }
-	    }
-	    if (terrain != null) {
-	        terrainTurns--;
-	        if (terrainTurns == 0) {
-	            clearTerrain(faster, slower);
-	        } else {
-	        	faster.checkTerraforge(slower);
-	            slower.checkTerraforge(faster);
-	        }
-	    }
-	    
-	    Iterator<FieldEffect> iterator = fieldEffects.iterator();
-	    while (iterator.hasNext()) {
-	        FieldEffect effect = iterator.next();
-	        if (effect.turns > 0) effect.turns--;
-	        if (effect.turns == 0) {
-	            if (effect.effect != Effect.ION) Task.addTask(Task.TEXT, effect.effect.toString() + " wore off!");
-	            iterator.remove();
-	        }
-	    }
-	    
-	    iterator = faster.getFieldEffects().iterator();
-	    while (iterator.hasNext()) {
-	        FieldEffect effect = iterator.next();
-	        effect.handleAurora(faster);
-	        if (effect.turns > 0) effect.turns--;
-	        effect.handleFutureSight(faster, slower);
-	        effect.handleWish(faster);
-	        if (effect.turns == 0) {
-	        	if (effect.effect != Effect.FUTURE_SIGHT && effect.effect != Effect.WISH)
-	        		Task.addTask(Task.TEXT, faster.nickname + "'s side's " + effect.effect.toString() + " wore off!");
-	            iterator.remove();
-	        }
-	    }
-	    
-	    iterator = slower.getFieldEffects().iterator();
-	    while (iterator.hasNext()) {
-	        FieldEffect effect = iterator.next();
-	        effect.handleAurora(slower);
-	        if (effect.turns > 0) effect.turns--;
-	        effect.handleFutureSight(slower, faster);
-	        effect.handleWish(slower);
-	        if (effect.turns == 0) {
-	            if (effect.effect != Effect.FUTURE_SIGHT && effect.effect != Effect.WISH)
-	            	Task.addTask(Task.TEXT, slower.nickname + "'s side's " + effect.effect.toString() + " wore off!");
-	            iterator.remove();
-	        }
-	    }
-	    
-	    turns++;
+		if (weather != null) {
+			weatherTurns--;
+			if (weatherTurns == 0) {
+				Task t = Task.addTask(Task.WEATHER, "The weather returned to normal!");
+				t.setEffect(null);
+				weather = null;
+			}
+		}
+		if (terrain != null) {
+			terrainTurns--;
+			if (terrainTurns == 0) {
+				clearTerrain(faster, slower);
+			} else {
+				faster.checkTerraforge(slower);
+				slower.checkTerraforge(faster);
+			}
+		}
+		
+		Iterator<FieldEffect> iterator = fieldEffects.iterator();
+		while (iterator.hasNext()) {
+			FieldEffect effect = iterator.next();
+			if (effect.turns > 0) effect.turns--;
+			if (effect.turns == 0) {
+				if (effect.effect != Effect.ION) Task.addTask(Task.TEXT, effect.effect.toString() + " wore off!");
+				iterator.remove();
+			}
+		}
+		
+		iterator = faster.getFieldEffects().iterator();
+		while (iterator.hasNext()) {
+			FieldEffect effect = iterator.next();
+			effect.handleAurora(faster);
+			if (effect.turns > 0) effect.turns--;
+			effect.handleFutureSight(faster, slower);
+			effect.handleWish(faster);
+			if (effect.turns == 0) {
+				if (effect.effect != Effect.FUTURE_SIGHT && effect.effect != Effect.WISH)
+					Task.addTask(Task.TEXT, faster.nickname + "'s side's " + effect.effect.toString() + " wore off!");
+				iterator.remove();
+			}
+		}
+		
+		iterator = slower.getFieldEffects().iterator();
+		while (iterator.hasNext()) {
+			FieldEffect effect = iterator.next();
+			effect.handleAurora(slower);
+			if (effect.turns > 0) effect.turns--;
+			effect.handleFutureSight(slower, faster);
+			effect.handleWish(slower);
+			if (effect.turns == 0) {
+				if (effect.effect != Effect.FUTURE_SIGHT && effect.effect != Effect.WISH)
+					Task.addTask(Task.TEXT, slower.nickname + "'s side's " + effect.effect.toString() + " wore off!");
+				iterator.remove();
+			}
+		}
+		
+		turns++;
 	}
 	
 	public void clearTerrain(Pokemon faster, Pokemon slower) {
@@ -579,13 +579,13 @@ public class Field {
 
 	public int[] getStats() {
 		return new int[] {
-	        this.crits,
-	        this.misses,
-	        this.superEffective,
-	        this.switches,
-	        this.knockouts,
-	        this.turns
-	    };
+			this.crits,
+			this.misses,
+			this.superEffective,
+			this.switches,
+			this.knockouts,
+			this.turns
+		};
 	}
 
 }

@@ -34,6 +34,7 @@ public class Main {
 	public static GamePanel gp;
 	public static final String gameTitle = "Pokemon Xhenos";
 	public static final BufferedImage[] icons = new BufferedImage[5];
+	public static boolean closer;
 
 	public static void main(String[] args) {
 		window = new JFrame();
@@ -306,6 +307,7 @@ public class Main {
 	}
 
 	private static void setupWindowCloseHandler() {
+		if (closer) return;
 		window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		window.addWindowListener(new WindowAdapter() {
 			@Override
@@ -323,10 +325,12 @@ public class Main {
 					}
 					Print.flush();
 					Sound.disposeAll();
+					gp.titleScreen.previewExecutor.shutdown();
 					System.exit(0);
 				}
 			}
 		});
+		closer = true;
 	}
 
 	private static boolean hasAnyChecked(boolean[] options) {

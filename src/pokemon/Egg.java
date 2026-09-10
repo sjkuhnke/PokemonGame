@@ -29,13 +29,13 @@ public class Egg extends Pokemon {
 	
 	public static int computeEggCycles(int finalEvo) {
 		int catchRate = Pokemon.getCatchRate(finalEvo);
-	    double minCycles = 2;
-	    double maxCycles = 20;
-	    double logMin = Math.log(3);
-	    double logMax = Math.log(255);
-	    double scale = (Math.log(catchRate) - logMin) / (logMax - logMin);
-	    double cycles = maxCycles - scale * (maxCycles - minCycles);
-	    return (int)Math.round(cycles);
+		double minCycles = 2;
+		double maxCycles = 20;
+		double logMin = Math.log(3);
+		double logMax = Math.log(255);
+		double scale = (Math.log(catchRate) - logMin) / (logMax - logMin);
+		double cycles = maxCycles - scale * (maxCycles - minCycles);
+		return (int)Math.round(cycles);
 	}
 	
 	@Override
@@ -70,21 +70,21 @@ public class Egg extends Pokemon {
 			image = sprite;
 			
 			int scaledWidth = 40;  // New width
-	        int scaledHeight = 40; // New height
+			int scaledHeight = 40; // New height
 
-	        // Create a BufferedImage with transparent pixels
-	        BufferedImage miniImage = new BufferedImage(60, 60, BufferedImage.TYPE_INT_ARGB);
+			// Create a BufferedImage with transparent pixels
+			BufferedImage miniImage = new BufferedImage(60, 60, BufferedImage.TYPE_INT_ARGB);
 
-	        // Calculate the position to draw the scaled image in the center
-	        int x = (60 - scaledWidth) / 2;
-	        int y = (60 - scaledHeight) / 2;
+			// Calculate the position to draw the scaled image in the center
+			int x = (60 - scaledWidth) / 2;
+			int y = (60 - scaledHeight) / 2;
 
-	        // Draw the scaled-down sprite onto the BufferedImage
-	        Graphics2D g2d = miniImage.createGraphics();
-	        g2d.drawImage(image, x, y, scaledWidth, scaledHeight, null);
-	        g2d.dispose();
+			// Draw the scaled-down sprite onto the BufferedImage
+			Graphics2D g2d = miniImage.createGraphics();
+			g2d.drawImage(image, x, y, scaledWidth, scaledHeight, null);
+			g2d.dispose();
 
-	        return miniImage;
+			return miniImage;
 		}
 		return image;
 	}

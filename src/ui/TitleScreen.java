@@ -18,9 +18,15 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
 
@@ -68,6 +74,17 @@ public class TitleScreen extends AbstractUI {
 	private ArrayList<String> saveFiles;
 	private int selectedSaveIndex = 0;
 	private Player previewPlayer;
+	private final Map<String, Player> previewCache = new ConcurrentHashMap<>();
+	public final ThreadPoolExecutor previewExecutor = new ThreadPoolExecutor(
+			1, 1, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(),
+			r -> {
+				Thread t = new Thread(r, "save-preview-loader");
+				t.setDaemon(true);
+				return t;
+			});
+	
+	private volatile boolean previewLoading;
+	private volatile String pendingPreviewRequest;
 	
 	// DOC CHECKBOXES
 	public boolean[] docOptions = new boolean[8];
@@ -190,7 +207,30 @@ public class TitleScreen extends AbstractUI {
 	}
 
 	private void loadPreviewPlayer(String fileName) {
-		previewPlayer = SaveManager.loadPlayer(fileName);
+		Player cached = previewCache.get(fileName);
+		if (cached != null) {
+			previewPlayer = cached;
+			previewLoading = false;
+			return;
+		}
+		
+		pendingPreviewRequest = fileName;
+		previewLoading = true;
+		
+		previewExecutor.getQueue().clear();
+		
+		previewExecutor.submit(() -> {
+			if (!fileName.equals(pendingPreviewRequest)) return;
+			
+			Player loaded = SaveManager.loadPlayer(fileName);
+			if (loaded != null) {
+				previewCache.put(fileName, loaded);
+			}
+			if (fileName.equals(pendingPreviewRequest)) {
+				previewPlayer = loaded;
+				previewLoading = false;
+			}
+		});
 	}
 
 	private void updateMainMenu() {
@@ -412,6 +452,7 @@ public class TitleScreen extends AbstractUI {
 				gp.playSFX(Sound.S_MENU_CON);
 				try {
 					SaveManager.deleteSave(fileToDelete);
+					previewCache.remove(fileToDelete);
 					loadSaveFiles();
 					if (selectedSaveIndex >= saveFiles.size() && selectedSaveIndex > 0) {
 						selectedSaveIndex--;
@@ -547,6 +588,8 @@ public class TitleScreen extends AbstractUI {
 				
 				try {
 					SaveManager.renameSave(oldName, newName + ".dat");
+					Player p = previewCache.remove(oldName);
+					if (p != null) previewCache.put(newName + ".dat", p);
 					loadSaveFiles();
 					showMessage("Save file renamed successfully!");
 				} catch (FileAlreadyExistsException e) {
@@ -1481,7 +1524,14 @@ public class TitleScreen extends AbstractUI {
 	}
 	
 	private void drawSavePreview(int x, int y, int width) {
-		if (previewPlayer == null) return;
+		if (previewPlayer == null) {
+			return;
+		}
+		
+		if (previewLoading) {
+			drawLoadingPreview(x, y, width);
+			return;
+		}
 		
 		int height = gp.tileSize * 6;
 		
@@ -1498,7 +1548,7 @@ public class TitleScreen extends AbstractUI {
 		for (int i = 0; i < 6; i++) {
 			Pokemon p = previewPlayer.team[i];
 			if (p != null) {
-				Image sprite = DocUtils.getCachedSprite(p);
+				Image sprite = p.isFainted() ? p.getFaintedSprite() : DocUtils.getCachedSprite(p);
 				if (sprite != null) {
 					int spriteX = contentX + (i % 3) * (width / 3);
 					int spriteY = contentY + (i / 3) * iconSize;
@@ -1534,6 +1584,24 @@ public class TitleScreen extends AbstractUI {
 		int badgeX = x + width - badgeBoxWidth;
 		int badgeY = y + height - badgeBoxHeight;
 		drawBadgesWindow(badgeX, badgeY, badgeBoxWidth, badgeBoxHeight, previewPlayer, gp, false);
+	}
+	
+	private void drawLoadingPreview(int x, int y, int width) {
+		int height = gp.tileSize * 6;
+		
+		g2.setColor(new Color(20, 20, 20, 200));
+		g2.fillRect(x, y, width, height);
+		g2.setStroke(new BasicStroke(2));
+		g2.setColor(new Color(100, 100, 100));
+		g2.drawRect(x, y, width, height);
+		
+		int dots = (pulseCounter / 20) % 4;
+		String text = "Loading" + String.join("", Collections.nCopies(dots, "."));
+		
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 22F));
+		int textX = getCenterAlignedTextX(text, x + width / 2);
+		int textY = y + height / 2;
+		drawOutlinedText(text, textX, textY, textColor, Color.BLACK);
 	}
 	
 	private void drawManageMenu() {		

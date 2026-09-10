@@ -105,25 +105,25 @@ public class SaveManager {
 	
 	public static void showInExplorer(File file) {
 		if (file == null || !file.exists()) {
-	        System.err.println("File not found: " + file);
-	        return;
-	    }
+			System.err.println("File not found: " + file);
+			return;
+		}
 		
 		String os = System.getProperty("os.name").toLowerCase();
-	    File folder = file.getParentFile();
-	    
+		File folder = file.getParentFile();
+		
 		try {
 			if (os.contains("win")) {
-	            Desktop.getDesktop().open(folder);
-	            return;
-	        }
+				Desktop.getDesktop().open(folder);
+				return;
+			}
 
-	        if (os.contains("mac")) {
-	            new ProcessBuilder("open", "-R", file.getAbsolutePath()).start();
-	            return;
-	        }
+			if (os.contains("mac")) {
+				new ProcessBuilder("open", "-R", file.getAbsolutePath()).start();
+				return;
+			}
 
-	        new ProcessBuilder("xdg-open", folder.getAbsolutePath()).start();
+			new ProcessBuilder("xdg-open", folder.getAbsolutePath()).start();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

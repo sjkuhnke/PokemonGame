@@ -16,6 +16,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import pokemon.Field.Effect;
+import util.JGradientButton;
 import util.Pair;
 
 public enum Move {
@@ -227,7 +228,7 @@ public enum Move {
 	GRASS_KNOT(-1,100,0,0,1,0,PType.GRASS,"Damage is based on how heavy foe is",true,20),
 	GRASS_WHISTLE(0,55,0,0,2,0,PType.GRASS,"Foe falls asleep",false,15),
 	GRASSY_TERRAIN(0,1000,0,0,2,0,PType.GRASS,"Sets the terrain to GRASSY for 5 turns",false,10),
-	GRAVITY(0,1000,0,0,2,0,PType.GALACTIC,"Sets GRAVITY for 6 turns, in which the accuracy of all Pokemon is increased",false,10),
+	GRAVITY(0,1000,0,0,2,0,PType.GALACTIC,"Sets GRAVITY for 6 turns, in which the accuracy of all Pokemon is increased by 5/3 and non-grounded Pokemon can be hit by GROUND moves",false,10),
 	GRAVITY_PUNCH(40,100,0,0,0,2,PType.PSYCHIC,"Increased priority with extra priority. Still works in PSYCHIC TERRAIN.",true,10),
 	GROWL(0,100,0,0,2,0,PType.NORMAL,"Lowers foe's Attack by 1",false,35),
 	GROWTH(0,1000,0,0,2,0,PType.GRASS,"Raises user's Attack and Sp.Atk by 1, 2 each in the SUN",false,15),
@@ -372,7 +373,7 @@ public enum Move {
 	PARTING_SHOT(0,100,0,0,2,0,PType.DARK,"Lower foe's Atk and Sp.Atk by 1, user switches out",false,5),
 	PAYBACK(-1,100,0,0,0,0,PType.DARK,"Power is doubled if the user moves after foe",true,10),
 	PECK(35,100,0,0,0,0,PType.FLYING,"A normal attack",true,30),
-	PERISH_SONG(0,1000,0,0,2,0,PType.GHOST,"All Pokemon hearing this song will faint in 3 turns",false,5),
+	PERISH_SONG(0,1000,0,0,2,0,PType.NORMAL,"All Pokemon hearing this song will faint in 3 turns",false,5),
 	PETAL_BLIZZARD(90,100,0,0,0,0,PType.GRASS,"A normal attack",false,15),
 	PETAL_DANCE(120,100,0,0,1,0,PType.GRASS,"User is locked into this move for 2-3 turns, Confuses user when the effect is done",true,10),
 	PHANTOM_FORCE(100,100,0,0,0,0,PType.GHOST,"A two turn attack. User vanishes on the first, and attacks on the second. Hits through protect.",true,10),
@@ -827,10 +828,10 @@ public enum Move {
 	public String getDescription() {
 		int secChance = getSecondaryChance();
 		if (secChance > 0) {
-            return secChance + desc;
-        } else {
-        	return desc;
-        }
+			return secChance + desc;
+		} else {
+			return desc;
+		}
 		
 	}
 	
@@ -841,36 +842,36 @@ public enum Move {
 	}
 	
 	public JPanel getMoveSummary(Pokemon user, Pokemon foe, Field field) {
-	    JPanel result = new JPanel();
-	    result.setLayout(new BoxLayout(result, BoxLayout.Y_AXIS));
+		JPanel result = new JPanel();
+		result.setLayout(new BoxLayout(result, BoxLayout.Y_AXIS));
 
-	    // Move Name
-	    JLabel nameLabel = new JLabel(toString());
-	    nameLabel.setFont(new Font("Helvetica", Font.BOLD, 16));
-	    PType type = getType(user, field);
-        Color color = type.getColor();
-	    JGradientButton typeButton = new JGradientButton(type.toString());
-	    typeButton.setBackground(color);
+		// Move Name
+		JLabel nameLabel = new JLabel(toString());
+		nameLabel.setFont(new Font("Helvetica", Font.BOLD, 16));
+		PType type = getType(user, field);
+		Color color = type.getColor();
+		JGradientButton typeButton = new JGradientButton(type.toString());
+		typeButton.setBackground(color);
 
-	    // Category
-	    JLabel categoryLabel = new JLabel("Cat");
-	    JLabel categoryIconLabel = new JLabel(getScaledIcon(1.5));
+		// Category
+		JLabel categoryLabel = new JLabel("Cat");
+		JLabel categoryIconLabel = new JLabel(getScaledIcon(1.5));
 
-	    // Power
-	    JLabel powerLabel = new JLabel("Power");
-	    JLabel powerValueLabel = new JLabel(formatbp(user, foe, field));
+		// Power
+		JLabel powerLabel = new JLabel("Power");
+		JLabel powerValueLabel = new JLabel(formatbp(user, foe, field));
 
-	    // Accuracy
-	    JLabel accuracyLabel = new JLabel("Acc");
-	    JLabel accuracyValueLabel = new JLabel(getAccuracy(user, foe, field));
+		// Accuracy
+		JLabel accuracyLabel = new JLabel("Acc");
+		JLabel accuracyValueLabel = new JLabel(getAccuracy(user, foe, field));
 
-	    // PP
-	    JLabel ppLabel = new JLabel("PP");
-	    JLabel ppValueLabel = new JLabel(String.valueOf(pp));
-	    
-	    // Move Attributes
-	    JPanel attributesPanel = new JPanel(new GridLayout(0, 1));
-	    if (contact) {
+		// PP
+		JLabel ppLabel = new JLabel("PP");
+		JLabel ppValueLabel = new JLabel(String.valueOf(pp));
+		
+		// Move Attributes
+		JPanel attributesPanel = new JPanel(new GridLayout(0, 1));
+		if (contact) {
 			attributesPanel.add(new JLabel("Makes Contact"));
 		}
 		if (priority != 0) {
@@ -880,18 +881,18 @@ public enum Move {
 			attributesPanel.add(new JLabel("+" + critChance + " Crit Chance"));
 		}
 
-	    // Description
-	    JLabel descriptionLabel = new JLabel();
-	    String text = Item.breakString(getDescription(), 65);
-	    text = text.replace("\n", "<br>");
-	    descriptionLabel.setText("<html>" + text + "</html>");
-	    descriptionLabel.setOpaque(false);
-	    descriptionLabel.setHorizontalAlignment(SwingConstants.LEFT);
-	    descriptionLabel.setHorizontalTextPosition(SwingConstants.LEFT);
-	    
-	    // Move Flags
-	    JPanel flagsPanel = new JPanel();
-	    StringBuilder flags = new StringBuilder();
+		// Description
+		JLabel descriptionLabel = new JLabel();
+		String text = Item.breakString(getDescription(), 65);
+		text = text.replace("\n", "<br>");
+		descriptionLabel.setText("<html>" + text + "</html>");
+		descriptionLabel.setOpaque(false);
+		descriptionLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		descriptionLabel.setHorizontalTextPosition(SwingConstants.LEFT);
+		
+		// Move Flags
+		JPanel flagsPanel = new JPanel();
+		StringBuilder flags = new StringBuilder();
 		
 		List<Pair<Boolean, String>> moveFlags = Arrays.asList(
 			new Pair<>(isSlicing(), "Slicing"),
@@ -914,36 +915,36 @@ public enum Move {
 			flagsPanel.add(new JLabel(flags.toString()));
 		}
 
-	    // Create a panel for the move summary
-	    JPanel moveSummaryPanel = new JPanel();
-	    moveSummaryPanel.setLayout(new GridLayout(6, 2));
-	    moveSummaryPanel.add(nameLabel);
-	    moveSummaryPanel.add(typeButton);
-	    moveSummaryPanel.add(categoryLabel);
-	    moveSummaryPanel.add(categoryIconLabel);
-	    moveSummaryPanel.add(powerLabel);
-	    moveSummaryPanel.add(powerValueLabel);
-	    moveSummaryPanel.add(accuracyLabel);
-	    moveSummaryPanel.add(accuracyValueLabel);
-	    moveSummaryPanel.add(ppLabel);
-	    moveSummaryPanel.add(ppValueLabel);
+		// Create a panel for the move summary
+		JPanel moveSummaryPanel = new JPanel();
+		moveSummaryPanel.setLayout(new GridLayout(6, 2));
+		moveSummaryPanel.add(nameLabel);
+		moveSummaryPanel.add(typeButton);
+		moveSummaryPanel.add(categoryLabel);
+		moveSummaryPanel.add(categoryIconLabel);
+		moveSummaryPanel.add(powerLabel);
+		moveSummaryPanel.add(powerValueLabel);
+		moveSummaryPanel.add(accuracyLabel);
+		moveSummaryPanel.add(accuracyValueLabel);
+		moveSummaryPanel.add(ppLabel);
+		moveSummaryPanel.add(ppValueLabel);
 
-	    // Add the move summary panel to the result panel
-	    result.add(moveSummaryPanel);
-	    
-	    // Add the attributes panel
-	    result.add(attributesPanel);
-	    
-	    // Add the description area to the result panel
-	    JPanel descriptionArea = new JPanel();
-	    descriptionArea.add(descriptionLabel);
-	    descriptionArea.setBackground(new Color(225, 225, 225));
-	    result.add(descriptionArea);
-	    
-	    // Add the flags panel
-	    result.add(flagsPanel);
-	    
-	    return result;
+		// Add the move summary panel to the result panel
+		result.add(moveSummaryPanel);
+		
+		// Add the attributes panel
+		result.add(attributesPanel);
+		
+		// Add the description area to the result panel
+		JPanel descriptionArea = new JPanel();
+		descriptionArea.add(descriptionLabel);
+		descriptionArea.setBackground(new Color(225, 225, 225));
+		result.add(descriptionArea);
+		
+		// Add the flags panel
+		result.add(flagsPanel);
+		
+		return result;
 	}
 	public int getNumHits(Pokemon user, Pokemon[] team) {
 		if (this == Move.DOUBLE_SLAP || this == Move.FURY_ATTACK ||this == Move.FURY_SWIPES || this == Move.ICICLE_SPEAR ||
@@ -959,16 +960,16 @@ public enum Move {
 				}
 			} else {
 				if (randomNum <= 35) {
-		            return 2; // 2 hits with 35% probability
-		        } else if (randomNum <= 70) {
-		            return 3; // 3 hits with 35% probability
-		        } else if (randomNum <= 85) {
-		            return 4; // 4 hits with 15% probability
-		        } else {
-		            return 5; // 5 hits with 15% probability
-		        }
+					return 2; // 2 hits with 35% probability
+				} else if (randomNum <= 70) {
+					return 3; // 3 hits with 35% probability
+				} else if (randomNum <= 85) {
+					return 4; // 4 hits with 15% probability
+				} else {
+					return 5; // 5 hits with 15% probability
+				}
 			}
-	        
+			
 		} else if (this == Move.DOUBLE_KICK || this == Move.DRAGON_DARTS || this == Move.DUAL_CHOP || this == Move.DOUBLE_HIT || this == Move.TWINEEDLE || this == Move.POP_POP) {
 			return 2;
 		} else if (this == Move.BEAT_UP) {
@@ -1143,46 +1144,46 @@ public enum Move {
 	}
 	@Override // implementation
 	public String toString() {
-	    String name = super.toString();
-	    name = name.replace('$', '-'); // Replace '$' with '-'
-	    name = name.toLowerCase().replace('_', ' '); // Convert underscores to spaces
-	    String[] words = name.split(" ");
-	    StringBuilder sb = new StringBuilder();
-	    for (int i = 0; i < words.length; i++) {
-	        String word = words[i];
-	        if (word.contains("-")) {
-	            String[] hyphenWords = word.split("-");
-	            for (int j = 0; j < hyphenWords.length; j++) {
-	                sb.append(Character.toUpperCase(hyphenWords[j].charAt(0)))
-	                  .append(hyphenWords[j].substring(1));
-	                if (j < hyphenWords.length - 1) {
-	                    sb.append('-');
-	                }
-	            }
-	        } else {
-	            sb.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1));
-	        }
-	        if (i < words.length - 1) { // Check if there's a next word
-	            char nextChar = name.charAt(name.indexOf(word) + word.length());
-	            if (nextChar == ' ' || nextChar == '-') {
-	                sb.append(nextChar); // Keep the space or hyphen
-	            } else {
-	                sb.append(" "); // Add a space if the next character is not space or hyphen
-	            }
-	        }
-	    }
-	    return sb.toString().trim();
+		String name = super.toString();
+		name = name.replace('$', '-'); // Replace '$' with '-'
+		name = name.toLowerCase().replace('_', ' '); // Convert underscores to spaces
+		String[] words = name.split(" ");
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < words.length; i++) {
+			String word = words[i];
+			if (word.contains("-")) {
+				String[] hyphenWords = word.split("-");
+				for (int j = 0; j < hyphenWords.length; j++) {
+					sb.append(Character.toUpperCase(hyphenWords[j].charAt(0)))
+					  .append(hyphenWords[j].substring(1));
+					if (j < hyphenWords.length - 1) {
+						sb.append('-');
+					}
+				}
+			} else {
+				sb.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1));
+			}
+			if (i < words.length - 1) { // Check if there's a next word
+				char nextChar = name.charAt(name.indexOf(word) + word.length());
+				if (nextChar == ' ' || nextChar == '-') {
+					sb.append(nextChar); // Keep the space or hyphen
+				} else {
+					sb.append(" "); // Add a space if the next character is not space or hyphen
+				}
+			}
+		}
+		return sb.toString().trim();
 	}
 	
 	public static Move getEnum(String string) {
 		// Normalize the string
-	    String normalized = string.toUpperCase().replace('-', '$').replace(' ', '_');
-	    
-	    try {
-	        return Move.valueOf(normalized);
-	    } catch (IllegalArgumentException e) {
-	        throw new IllegalStateException("No matching Move enum found for string: " + string, e);
-	    }
+		String normalized = string.toUpperCase().replace('-', '$').replace(' ', '_');
+		
+		try {
+			return Move.valueOf(normalized);
+		} catch (IllegalArgumentException e) {
+			throw new IllegalStateException("No matching Move enum found for string: " + string, e);
+		}
 	}
 
 	public static ArrayList<Move> getRecoil() {
@@ -1316,8 +1317,8 @@ public enum Move {
 	}
 	
 	public boolean isCalcHiddenPowerReturn() {
-        return this.superToString().contains("HP") || this.superToString().contains("RETURN_");
-    }
+		return this.superToString().contains("HP") || this.superToString().contains("RETURN_");
+	}
 	
 	public static boolean treatAsStatus(Move m, Pokemon me, Pokemon foe) {
 		// covert cloak or shield dust make secondary 0

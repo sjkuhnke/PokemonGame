@@ -5,14 +5,13 @@ import java.awt.Color;
 
 import javax.swing.*;
 
-import pokemon.JGradientButton;
-
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.LineBorder;
 
 import entity.PlayerCharacter;
+import util.JGradientButton;
 
 public class PMap extends JPanel {
 

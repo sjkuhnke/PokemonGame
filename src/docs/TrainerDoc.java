@@ -32,70 +32,70 @@ public class TrainerDoc {
 	public static void writeTrainersToExcel(GamePanel gp, Path dir) {
 		docsDirectory = dir;
 		Workbook wb = new XSSFWorkbook();
-        Sheet sheet = wb.createSheet("Trainer Teams");
+		Sheet sheet = wb.createSheet("Trainer Teams");
 
-        int rowIndex = 1;
+		int rowIndex = 1;
 
-        // Define cell style
-        XSSFCellStyle headerStyle = (XSSFCellStyle) DocUtils.makeStyle(wb, true, false, 16, IndexedColors.WHITE.getIndex());
-        headerStyle.setAlignment(HorizontalAlignment.CENTER);
-        headerStyle.setVerticalAlignment(VerticalAlignment.CENTER);
-        headerStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(80, 80, 80), null));
-        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-        
-        Map<?, ?>[] maps = getTrainerLocationMap(gp);
-        
-        @SuppressWarnings("unchecked")
+		// Define cell style
+		XSSFCellStyle headerStyle = (XSSFCellStyle) DocUtils.makeStyle(wb, true, false, 16, IndexedColors.WHITE.getIndex());
+		headerStyle.setAlignment(HorizontalAlignment.CENTER);
+		headerStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+		headerStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(80, 80, 80), null));
+		headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		
+		Map<?, ?>[] maps = getTrainerLocationMap(gp);
+		
+		@SuppressWarnings("unchecked")
 		Map<String, ArrayList<Trainer>> trainerMap = (Map<String, ArrayList<Trainer>>) maps[0];
 		@SuppressWarnings("unchecked")
 		Map<Trainer, Entity> trainerNPCMap = (Map<Trainer, Entity>) maps[1];
 		
 		for (Map.Entry<String, ArrayList<Trainer>> e : trainerMap.entrySet()) {
 			String loc = e.getKey();
-		    ArrayList<Trainer> trainers = e.getValue();
-		    
-		    // Location outline
-		    CellStyle colored = sheet.getWorkbook().createCellStyle();
-            colored.setFillForegroundColor(new XSSFColor(new java.awt.Color(80, 80, 80), null));
-            colored.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-            
-            // Location header row
-		    Row headerRow = sheet.createRow(rowIndex++);
-		    Cell headerCell = headerRow.createCell(1);
-		    headerCell.setCellValue(loc);
-		    headerCell.setCellStyle(headerStyle);
-		    
-		    Cell o1 = headerRow.createCell(0);
-		    o1.setCellStyle(colored);
-		    Cell o2 = headerRow.createCell(8);
-		    o2.setCellStyle(colored);
-		    
-		    sheet.addMergedRegion(new CellRangeAddress(headerRow.getRowNum(), headerRow.getRowNum(), 1, 7));
-            
-            Row outlineRowTop = sheet.createRow(rowIndex - 2);
-            Row outlineRowBottom = sheet.createRow(rowIndex++);
-            for (int i = 0; i <= 8; i++) {
-            	Cell c1 = outlineRowTop.createCell(i);
-            	c1.setCellStyle(colored);
-            	Cell c2 = outlineRowBottom.createCell(i);
-            	c2.setCellStyle(colored);
-            }
-            sheet.addMergedRegion(new CellRangeAddress(outlineRowTop.getRowNum(), outlineRowTop.getRowNum(), 0, 8));
-            sheet.addMergedRegion(new CellRangeAddress(outlineRowBottom.getRowNum(), outlineRowBottom.getRowNum(), 0, 8));
-		    for (Trainer tr : trainers) {
-		        Entity npc = trainerNPCMap.get(tr);
-		        rowIndex = writeTeam(sheet, tr, npc, rowIndex, gp);
-		    }
-		    
-		    rowIndex++; // Blank row between locations
+			ArrayList<Trainer> trainers = e.getValue();
+			
+			// Location outline
+			CellStyle colored = sheet.getWorkbook().createCellStyle();
+			colored.setFillForegroundColor(new XSSFColor(new java.awt.Color(80, 80, 80), null));
+			colored.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+			
+			// Location header row
+			Row headerRow = sheet.createRow(rowIndex++);
+			Cell headerCell = headerRow.createCell(1);
+			headerCell.setCellValue(loc);
+			headerCell.setCellStyle(headerStyle);
+			
+			Cell o1 = headerRow.createCell(0);
+			o1.setCellStyle(colored);
+			Cell o2 = headerRow.createCell(8);
+			o2.setCellStyle(colored);
+			
+			sheet.addMergedRegion(new CellRangeAddress(headerRow.getRowNum(), headerRow.getRowNum(), 1, 7));
+			
+			Row outlineRowTop = sheet.createRow(rowIndex - 2);
+			Row outlineRowBottom = sheet.createRow(rowIndex++);
+			for (int i = 0; i <= 8; i++) {
+				Cell c1 = outlineRowTop.createCell(i);
+				c1.setCellStyle(colored);
+				Cell c2 = outlineRowBottom.createCell(i);
+				c2.setCellStyle(colored);
+			}
+			sheet.addMergedRegion(new CellRangeAddress(outlineRowTop.getRowNum(), outlineRowTop.getRowNum(), 0, 8));
+			sheet.addMergedRegion(new CellRangeAddress(outlineRowBottom.getRowNum(), outlineRowBottom.getRowNum(), 0, 8));
+			for (Trainer tr : trainers) {
+				Entity npc = trainerNPCMap.get(tr);
+				rowIndex = writeTeam(sheet, tr, npc, rowIndex, gp);
+			}
+			
+			rowIndex++; // Blank row between locations
 		}
 		
 		Path outPath = docsDirectory.resolve("TrainerInfo.xlsx");
 		try (FileOutputStream fileOut = new FileOutputStream(outPath.toFile())) {
-		    wb.write(fileOut);
-		    wb.close();
+			wb.write(fileOut);
+			wb.close();
 		} catch (Exception ex) {
-		    ex.printStackTrace();
+			ex.printStackTrace();
 		}
 	}
 	
@@ -127,210 +127,210 @@ public class TrainerDoc {
 	}
 	
 	private static int writeTeam(Sheet sheet, Trainer tr, Entity npc, int startRow, GamePanel gp) {
-	    int colStart = 0;
-	    
-	    XSSFFont headerFont = (XSSFFont) sheet.getWorkbook().createFont();
-        headerFont.setFontHeightInPoints((short) 14);
-        headerFont.setBold(true);
-        
-        XSSFCellStyle headerStyle = (XSSFCellStyle) sheet.getWorkbook().createCellStyle();
-        headerStyle.setFont(headerFont);
+		int colStart = 0;
+		
+		XSSFFont headerFont = (XSSFFont) sheet.getWorkbook().createFont();
+		headerFont.setFontHeightInPoints((short) 14);
+		headerFont.setBold(true);
+		
+		XSSFCellStyle headerStyle = (XSSFCellStyle) sheet.getWorkbook().createCellStyle();
+		headerStyle.setFont(headerFont);
 
-	    // Trainer name row
-	    Row nameRow = sheet.createRow(startRow++);
-	    String trainerName = tr.getName();
-	    String trainerCoordinates = String.format("X: %d, Y: %d", npc.worldX / gp.tileSize, npc.worldY / gp.tileSize);
-	    String trainerDirection = "Facing: " + npc.direction;
-	    if (npc.isSpin()) trainerDirection += "*";
-	    Cell nameCell = nameRow.createCell(colStart);
-	    Cell coordinatesCell = nameRow.createCell(3);
-	    Cell directionCell = nameRow.createCell(5);
-	    nameCell.setCellValue(trainerName);
-	    nameCell.setCellStyle(DocUtils.makeStyle(sheet.getWorkbook(), true, false, 14, IndexedColors.BLACK.getIndex()));
-	    coordinatesCell.setCellValue(trainerCoordinates);
-	    coordinatesCell.setCellStyle(DocUtils.makeStyle(sheet.getWorkbook(), false, false, 12, IndexedColors.BLACK.getIndex()));
-	    directionCell.setCellValue(trainerDirection);
-	    directionCell.setCellStyle(DocUtils.makeStyle(sheet.getWorkbook(), false, false, 12, IndexedColors.BLACK.getIndex()));
-	    
-	    byte[] trainerBytes;
+		// Trainer name row
+		Row nameRow = sheet.createRow(startRow++);
+		String trainerName = tr.getName();
+		String trainerCoordinates = String.format("X: %d, Y: %d", npc.worldX / gp.tileSize, npc.worldY / gp.tileSize);
+		String trainerDirection = "Facing: " + npc.direction;
+		if (npc.isSpin()) trainerDirection += "*";
+		Cell nameCell = nameRow.createCell(colStart);
+		Cell coordinatesCell = nameRow.createCell(3);
+		Cell directionCell = nameRow.createCell(5);
+		nameCell.setCellValue(trainerName);
+		nameCell.setCellStyle(DocUtils.makeStyle(sheet.getWorkbook(), true, false, 14, IndexedColors.BLACK.getIndex()));
+		coordinatesCell.setCellValue(trainerCoordinates);
+		coordinatesCell.setCellStyle(DocUtils.makeStyle(sheet.getWorkbook(), false, false, 12, IndexedColors.BLACK.getIndex()));
+		directionCell.setCellValue(trainerDirection);
+		directionCell.setCellStyle(DocUtils.makeStyle(sheet.getWorkbook(), false, false, 12, IndexedColors.BLACK.getIndex()));
+		
+		byte[] trainerBytes;
 		try {
 			BufferedImage down1 = npc.down1;
 			if (down1 != null) {
 				trainerBytes = DocUtils.imageToBytes(npc.down1, "png");
 				if (trainerBytes != null) {
-		            DocUtils.insertImage(sheet, trainerBytes, 7, nameRow.getRowNum(), 1, 1, 1, 1);
-		        }
+					DocUtils.insertImage(sheet, trainerBytes, 7, nameRow.getRowNum(), 1, 1, 1, 1);
+				}
 			} else {
 				System.out.println(npc + "'s down1 is null");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	    
-	    sheet.addMergedRegion(new CellRangeAddress(nameRow.getRowNum(), nameRow.getRowNum(), 0, 2));
-	    sheet.addMergedRegion(new CellRangeAddress(nameRow.getRowNum(), nameRow.getRowNum(), 3, 4));
-	    sheet.addMergedRegion(new CellRangeAddress(nameRow.getRowNum(), nameRow.getRowNum(), 5, 6));
-	    
-	    Row ivRow = null;
-	    if ((tr.staticEnc && !tr.catchable) || tr.boosts[0] > 0) {
-	    	ivRow = sheet.createRow(startRow++);
-	    	if (tr.staticEnc && !tr.catchable) {
-	    		Cell ivTitleCell = ivRow.createCell(colStart);
-		    	ivTitleCell.setCellValue("IVs:");
-		    	
-		    	Cell ivCell = ivRow.createCell(1);
-		    	ivCell.setCellValue(Arrays.toString(tr.getCurrent().ivs));
-		    	
-		    	sheet.addMergedRegion(new CellRangeAddress(ivRow.getRowNum(), ivRow.getRowNum(), 1, 4));
-		    	
-		    	XSSFCellStyle ivStyle = (XSSFCellStyle) DocUtils.makeStyle(sheet.getWorkbook(), false, false, 12, IndexedColors.GREY_80_PERCENT.getIndex());
-		    	ivTitleCell.setCellStyle(ivStyle);
-		    	ivCell.setCellStyle(ivStyle);
-	    	}
-	    	
-	    	if (tr.boosts[0] > 0) {
-	    		Cell omniCell = ivRow.createCell(5);
-		    	omniCell.setCellValue(tr.getBoostString());
-		    	omniCell.setCellStyle(DocUtils.makeStyle(sheet.getWorkbook(), true, false, 12, IndexedColors.BLACK.getIndex()));
-		    	sheet.addMergedRegion(new CellRangeAddress(ivRow.getRowNum(), ivRow.getRowNum(), 5, 13));
-	    	}
-	    }
-	    Row rewardRow = sheet.createRow(startRow++);
-	    Cell moneyCell = rewardRow.createCell(colStart);
-	    Cell rewardCell = rewardRow.createCell(1);
-	    
-	    moneyCell.setCellValue(tr.getMoney());
-	    
-	    XSSFCellStyle currencyStyle = (XSSFCellStyle) sheet.getWorkbook().createCellStyle();
-	    currencyStyle.setDataFormat(sheet.getWorkbook().createDataFormat().getFormat("$#,##0"));
-	    currencyStyle.setFont(DocUtils.makeFont(sheet.getWorkbook(), true, false, 12, IndexedColors.BLACK.getIndex()));
-	    moneyCell.setCellStyle(currencyStyle);
-	    
-	    if (tr.getItem() != null) rewardCell.setCellValue("Gives: " + tr.getItem().toString() + (tr.getItem() == Item.TEMPLE_ORB ? " (x100)" : tr.getItem() == Item.FABLE_CHARGE ? " (x3)" : ""));
-	    rewardCell.setCellStyle(DocUtils.makeStyle(sheet.getWorkbook(), false, true, 12, IndexedColors.BLACK.getIndex()));
-	    
-	    sheet.addMergedRegion(new CellRangeAddress(rewardRow.getRowNum(), rewardRow.getRowNum(), 1, 4));
-	    
-	    // Item
-        int itemPixelSize = 24; // Desired image dimension in pixels
-    	int charWidth = (int)(itemPixelSize * 256 / 7.001); // Excel column width
-    	
-        if (tr.getItem() != null) {
+		
+		sheet.addMergedRegion(new CellRangeAddress(nameRow.getRowNum(), nameRow.getRowNum(), 0, 2));
+		sheet.addMergedRegion(new CellRangeAddress(nameRow.getRowNum(), nameRow.getRowNum(), 3, 4));
+		sheet.addMergedRegion(new CellRangeAddress(nameRow.getRowNum(), nameRow.getRowNum(), 5, 6));
+		
+		Row ivRow = null;
+		if ((tr.staticEnc && !tr.catchable) || tr.boosts[0] > 0) {
+			ivRow = sheet.createRow(startRow++);
+			if (tr.staticEnc && !tr.catchable) {
+				Cell ivTitleCell = ivRow.createCell(colStart);
+				ivTitleCell.setCellValue("IVs:");
+				
+				Cell ivCell = ivRow.createCell(1);
+				ivCell.setCellValue(Arrays.toString(tr.getCurrent().ivs));
+				
+				sheet.addMergedRegion(new CellRangeAddress(ivRow.getRowNum(), ivRow.getRowNum(), 1, 4));
+				
+				XSSFCellStyle ivStyle = (XSSFCellStyle) DocUtils.makeStyle(sheet.getWorkbook(), false, false, 12, IndexedColors.GREY_80_PERCENT.getIndex());
+				ivTitleCell.setCellStyle(ivStyle);
+				ivCell.setCellStyle(ivStyle);
+			}
+			
+			if (tr.boosts[0] > 0) {
+				Cell omniCell = ivRow.createCell(5);
+				omniCell.setCellValue(tr.getBoostString());
+				omniCell.setCellStyle(DocUtils.makeStyle(sheet.getWorkbook(), true, false, 12, IndexedColors.BLACK.getIndex()));
+				sheet.addMergedRegion(new CellRangeAddress(ivRow.getRowNum(), ivRow.getRowNum(), 5, 13));
+			}
+		}
+		Row rewardRow = sheet.createRow(startRow++);
+		Cell moneyCell = rewardRow.createCell(colStart);
+		Cell rewardCell = rewardRow.createCell(1);
+		
+		moneyCell.setCellValue(tr.getMoney());
+		
+		XSSFCellStyle currencyStyle = (XSSFCellStyle) sheet.getWorkbook().createCellStyle();
+		currencyStyle.setDataFormat(sheet.getWorkbook().createDataFormat().getFormat("$#,##0"));
+		currencyStyle.setFont(DocUtils.makeFont(sheet.getWorkbook(), true, false, 12, IndexedColors.BLACK.getIndex()));
+		moneyCell.setCellStyle(currencyStyle);
+		
+		if (tr.getItem() != null) rewardCell.setCellValue("Gives: " + tr.getItem().toString() + (tr.getItem() == Item.TEMPLE_ORB ? " (x100)" : tr.getItem() == Item.FABLE_CHARGE ? " (x3)" : ""));
+		rewardCell.setCellStyle(DocUtils.makeStyle(sheet.getWorkbook(), false, true, 12, IndexedColors.BLACK.getIndex()));
+		
+		sheet.addMergedRegion(new CellRangeAddress(rewardRow.getRowNum(), rewardRow.getRowNum(), 1, 4));
+		
+		// Item
+		int itemPixelSize = 24; // Desired image dimension in pixels
+		int charWidth = (int)(itemPixelSize * 256 / 7.001); // Excel column width
+		
+		if (tr.getItem() != null) {
 			try {
 				byte[] itemImg = DocUtils.imageToBytes(tr.getItem().getImage(), "png");
 				if (itemImg != null) {
-	                rewardRow.setHeight((short) 372); // match row height
+					rewardRow.setHeight((short) 372); // match row height
 
-	                DocUtils.insertImage(sheet, itemImg, 5, rewardRow.getRowNum(), 1, 1, 1, 1);
-	            }
+					DocUtils.insertImage(sheet, itemImg, 5, rewardRow.getRowNum(), 1, 1, 1, 1);
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-        }
+		}
 
-	    // Pokémon info in a horizontal block per team member
-	    Row nameRow2 = sheet.createRow(startRow++);
-	    Row typeRow = sheet.createRow(startRow++);
-	    Row spriteRow = sheet.createRow(startRow++);
-	    Row spriteRow2 = sheet.createRow(startRow++); // needed for image height
-	    Row itemRow = sheet.createRow(startRow++);
-	    Row abilityRow = sheet.createRow(startRow++);
-	    Row natureRow = sheet.createRow(startRow++);
-	    Row moveRow1 = sheet.createRow(startRow++);
-	    Row moveRow2 = sheet.createRow(startRow++);
-	    Row moveRow3 = sheet.createRow(startRow++);
-	    Row moveRow4 = sheet.createRow(startRow++);
+		// Pokémon info in a horizontal block per team member
+		Row nameRow2 = sheet.createRow(startRow++);
+		Row typeRow = sheet.createRow(startRow++);
+		Row spriteRow = sheet.createRow(startRow++);
+		Row spriteRow2 = sheet.createRow(startRow++); // needed for image height
+		Row itemRow = sheet.createRow(startRow++);
+		Row abilityRow = sheet.createRow(startRow++);
+		Row natureRow = sheet.createRow(startRow++);
+		Row moveRow1 = sheet.createRow(startRow++);
+		Row moveRow2 = sheet.createRow(startRow++);
+		Row moveRow3 = sheet.createRow(startRow++);
+		Row moveRow4 = sheet.createRow(startRow++);
 
-	    int col = 0;
+		int col = 0;
 
-	    for (Pokemon p : tr.getTeam()) {
-	        // Name
-	        Cell pNameCell = nameRow2.createCell(col);
-	        pNameCell.setCellValue(p.name());
-	        pNameCell.setCellStyle(DocUtils.makeStyle(sheet.getWorkbook(), true, false, 11, IndexedColors.BLACK.getIndex()));
-	        
-	        // Level
-	        Cell pLevelCell = nameRow2.createCell(col + 1);
-	        pLevelCell.setCellValue(p.getLevel());
-	        pLevelCell.setCellStyle(DocUtils.makeStyle(sheet.getWorkbook(), true, false, p.level >= 100 ? 9 : 11, IndexedColors.BLACK.getIndex()));
+		for (Pokemon p : tr.getTeam()) {
+			// Name
+			Cell pNameCell = nameRow2.createCell(col);
+			pNameCell.setCellValue(p.name());
+			pNameCell.setCellStyle(DocUtils.makeStyle(sheet.getWorkbook(), true, false, 11, IndexedColors.BLACK.getIndex()));
+			
+			// Level
+			Cell pLevelCell = nameRow2.createCell(col + 1);
+			pLevelCell.setCellValue(p.getLevel());
+			pLevelCell.setCellStyle(DocUtils.makeStyle(sheet.getWorkbook(), true, false, p.level >= 100 ? 9 : 11, IndexedColors.BLACK.getIndex()));
 
-	        // Sprite image
-	        try {
-	        	BufferedImage type1 = p.type1.getImage2();
-	        	BufferedImage type2 = p.type2 != null ? p.type2.getImage2() : null;
-	        	
-	        	BufferedImage typeImage = DocUtils.combineIcons(type1, type2);
-	        	byte[] typeBytes = DocUtils.imageToBytes(typeImage, "png");
-	        	
-	        	sheet.addMergedRegion(new CellRangeAddress(
-	        			typeRow.getRowNum(), typeRow.getRowNum(), col, col + 1
-		        ));
-	        	
-	        	typeRow.setHeight((short) 384);
-	        	
-	        	DocUtils.insertImage(sheet, typeBytes, col, typeRow.getRowNum(), 2, 1, 0.5, 1);
-	        	
-	        	// Set square size for sprite cells (adjust as needed)
-	        	int spritePixelSize = 80; // Desired image dimension in pixels
-	        	charWidth = (int)(spritePixelSize * 256 / 7.001); // Excel column width
-	        	
-	        	spriteRow.setHeight((short) 804);
-	        	spriteRow2.setHeight((short) 804);
+			// Sprite image
+			try {
+				BufferedImage type1 = p.type1.getImage2();
+				BufferedImage type2 = p.type2 != null ? p.type2.getImage2() : null;
+				
+				BufferedImage typeImage = DocUtils.combineIcons(type1, type2);
+				byte[] typeBytes = DocUtils.imageToBytes(typeImage, "png");
+				
+				sheet.addMergedRegion(new CellRangeAddress(
+						typeRow.getRowNum(), typeRow.getRowNum(), col, col + 1
+				));
+				
+				typeRow.setHeight((short) 384);
+				
+				DocUtils.insertImage(sheet, typeBytes, col, typeRow.getRowNum(), 2, 1, 0.5, 1);
+				
+				// Set square size for sprite cells (adjust as needed)
+				int spritePixelSize = 80; // Desired image dimension in pixels
+				charWidth = (int)(spritePixelSize * 256 / 7.001); // Excel column width
+				
+				spriteRow.setHeight((short) 804);
+				spriteRow2.setHeight((short) 804);
 
-	        	sheet.setColumnWidth(col, charWidth);
+				sheet.setColumnWidth(col, charWidth);
 
-	        	// Merge 2x2 block for sprite
-	        	sheet.addMergedRegion(new CellRangeAddress(
-	        	    spriteRow.getRowNum(), spriteRow2.getRowNum(), col, col + 1
-	        	));
-	        	
-		        byte[] spriteBytes = DocUtils.imageToBytes(DocUtils.getCachedSprite(p), "png");
-		        if (spriteBytes != null) {
-		            // Insert sprite as 2x2 image
-		            DocUtils.insertImage(sheet, spriteBytes, col, spriteRow.getRowNum(), 2, 2, 1, 1);
-		        }
+				// Merge 2x2 block for sprite
+				sheet.addMergedRegion(new CellRangeAddress(
+					spriteRow.getRowNum(), spriteRow2.getRowNum(), col, col + 1
+				));
+				
+				byte[] spriteBytes = DocUtils.imageToBytes(DocUtils.getCachedSprite(p), "png");
+				if (spriteBytes != null) {
+					// Insert sprite as 2x2 image
+					DocUtils.insertImage(sheet, spriteBytes, col, spriteRow.getRowNum(), 2, 2, 1, 1);
+				}
 	
-		        // Item
-		        itemPixelSize = 24; // Desired image dimension in pixels
-	        	charWidth = (int)(itemPixelSize * 256 / 7.001); // Excel column width
-		        
-		        Cell itemCell = itemRow.createCell(col);
-		        itemCell.setCellValue(p.item == null ? "None" : p.item.toString());
-		        itemCell.setCellStyle(DocUtils.makeStyle(sheet.getWorkbook(), true, true, 11, IndexedColors.BLACK.getIndex()));
-		        if (p.item != null) {
-		            byte[] itemImg = DocUtils.imageToBytes(p.item.getImage(), "png");
-		            if (itemImg != null) {
-		                sheet.setColumnWidth(col + 1, charWidth); // match width for consistent spacing
-		                itemRow.setHeight((short) 372);             // match row height
+				// Item
+				itemPixelSize = 24; // Desired image dimension in pixels
+				charWidth = (int)(itemPixelSize * 256 / 7.001); // Excel column width
+				
+				Cell itemCell = itemRow.createCell(col);
+				itemCell.setCellValue(p.item == null ? "None" : p.item.toString());
+				itemCell.setCellStyle(DocUtils.makeStyle(sheet.getWorkbook(), true, true, 11, IndexedColors.BLACK.getIndex()));
+				if (p.item != null) {
+					byte[] itemImg = DocUtils.imageToBytes(p.item.getImage(), "png");
+					if (itemImg != null) {
+						sheet.setColumnWidth(col + 1, charWidth); // match width for consistent spacing
+						itemRow.setHeight((short) 372);			 // match row height
 
-		                DocUtils.insertImage(sheet, itemImg, col + 1, itemRow.getRowNum(), 1, 1, 1, 1);
-		            }
-		        }
-	        } catch (IOException e) {
-	        	e.printStackTrace();
-	        }
+						DocUtils.insertImage(sheet, itemImg, col + 1, itemRow.getRowNum(), 1, 1, 1, 1);
+					}
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 
-	        // Ability
-	        Cell abilityCell = abilityRow.createCell(col);
-	        abilityCell.setCellValue(p.ability.toString());
-	        abilityCell.setCellStyle(DocUtils.makeStyle(sheet.getWorkbook(), true, false, 11, IndexedColors.BLACK.getIndex()));
-	        sheet.addMergedRegion(new CellRangeAddress(abilityRow.getRowNum(), abilityRow.getRowNum(), col, col + 1));
-	        
-	        // Nature
-	        natureRow.createCell(col).setCellValue(p.nat.toString() + " Nature");
-	        sheet.addMergedRegion(new CellRangeAddress(natureRow.getRowNum(), natureRow.getRowNum(), col, col + 1));
+			// Ability
+			Cell abilityCell = abilityRow.createCell(col);
+			abilityCell.setCellValue(p.ability.toString());
+			abilityCell.setCellStyle(DocUtils.makeStyle(sheet.getWorkbook(), true, false, 11, IndexedColors.BLACK.getIndex()));
+			sheet.addMergedRegion(new CellRangeAddress(abilityRow.getRowNum(), abilityRow.getRowNum(), col, col + 1));
+			
+			// Nature
+			natureRow.createCell(col).setCellValue(p.nat.toString() + " Nature");
+			sheet.addMergedRegion(new CellRangeAddress(natureRow.getRowNum(), natureRow.getRowNum(), col, col + 1));
 
-	        // Moves
-	        for (int i = 0; i < 4; i++) {
-	            Move m = p.moveset[i] != null ? p.moveset[i].move : null;
-	            if (m != null) {
-	            	
-	            }
-	            String moveName = (m == null) ? "" :
-	                (m == Move.HIDDEN_POWER || m == Move.RETURN) ? m == Move.HIDDEN_POWER ? "HP " + p.determineHPType() : m + " " + p.determineHPType() : m.toString();
-	            PType mtype = m != null ? m.getType(p, field) : null;
-	            if (m == Move.HIDDEN_POWER || m == Move.RETURN) mtype = p.determineHPType();
-	            if (m != null) {
+			// Moves
+			for (int i = 0; i < 4; i++) {
+				Move m = p.moveset[i] != null ? p.moveset[i].move : null;
+				if (m != null) {
+					
+				}
+				String moveName = (m == null) ? "" :
+					(m == Move.HIDDEN_POWER || m == Move.RETURN) ? m == Move.HIDDEN_POWER ? "HP " + p.determineHPType() : m + " " + p.determineHPType() : m.toString();
+				PType mtype = m != null ? m.getType(p, field) : null;
+				if (m == Move.HIDDEN_POWER || m == Move.RETURN) mtype = p.determineHPType();
+				if (m != null) {
 					if (mtype == PType.NORMAL && m.isAttack()) {
 						if (p.ability == Ability.GALVANIZE) mtype = PType.ELECTRIC;
 						if (p.ability == Ability.REFRIGERATE) mtype = PType.ICE;
@@ -338,47 +338,47 @@ public class TrainerDoc {
 					}
 					if (p.ability == Ability.NORMALIZE) mtype = PType.NORMAL;
 				}
-	            if (p.moveset[i] != null && p.moveset[i].getPPUps() > 0) {
+				if (p.moveset[i] != null && p.moveset[i].getPPUps() > 0) {
 					for (int pp = 0; pp < p.moveset[i].getPPUps(); pp++) {
 						moveName += "+";
 					}
 				}
 
-	            Row moveRow;
-	            switch (i) {
-	                case 0:
-	                	moveRow = moveRow1;
-	                	break;
-	                case 1:
-	                	moveRow = moveRow2;
-	                	break;
-	                case 2:
-	                	moveRow = moveRow3;
-	                	break;
-	                default:
-	                	moveRow = moveRow4;
-	                	break;
-	            };
+				Row moveRow;
+				switch (i) {
+					case 0:
+						moveRow = moveRow1;
+						break;
+					case 1:
+						moveRow = moveRow2;
+						break;
+					case 2:
+						moveRow = moveRow3;
+						break;
+					default:
+						moveRow = moveRow4;
+						break;
+				};
 
-	            Cell moveCell = moveRow.createCell(col);
-	            moveCell.setCellValue(moveName);
-	            sheet.addMergedRegion(new CellRangeAddress(moveRow.getRowNum(), moveRow.getRowNum(), col, col + 1));
-	            if (m != null) {
-	                java.awt.Color c = mtype.getColor();
-	                CellStyle colored = sheet.getWorkbook().createCellStyle();
-	                colored.setFillForegroundColor(new XSSFColor(new java.awt.Color(c.getRGB()), null));
-	                colored.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-	                Font font = sheet.getWorkbook().createFont();
-	                font.setBold(true);
-	                colored.setFont(font);
-	                moveCell.setCellStyle(colored);
-	            }
-	        }
+				Cell moveCell = moveRow.createCell(col);
+				moveCell.setCellValue(moveName);
+				sheet.addMergedRegion(new CellRangeAddress(moveRow.getRowNum(), moveRow.getRowNum(), col, col + 1));
+				if (m != null) {
+					java.awt.Color c = mtype.getColor();
+					CellStyle colored = sheet.getWorkbook().createCellStyle();
+					colored.setFillForegroundColor(new XSSFColor(new java.awt.Color(c.getRGB()), null));
+					colored.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+					Font font = sheet.getWorkbook().createFont();
+					font.setBold(true);
+					colored.setFont(font);
+					moveCell.setCellStyle(colored);
+				}
+			}
 
-	        col += 2; // Leave one col buffer between mons
-	    }
+			col += 2; // Leave one col buffer between mons
+		}
 
-	    return startRow;
+		return startRow;
 	}
 	
 	public static void writeTrainersToTxt(GamePanel gp, Path dir) {
@@ -408,8 +408,8 @@ public class TrainerDoc {
 					StringBuilder trainerName = new StringBuilder();
 					trainerName.append(tr.getName());
 					if (tr.staticEnc && !tr.catchable) {
-	                    trainerName.append(" " + Arrays.toString(tr.getCurrent().ivs));
-	                }
+						trainerName.append(" " + Arrays.toString(tr.getCurrent().ivs));
+					}
 					Entity corresponding = trainerNPCMap.get(tr);
 					trainerName.append(String.format(" | X: %d, Y: %d, Facing: %s", corresponding.worldX / gp.tileSize, corresponding.worldY / gp.tileSize, corresponding.direction));
 					trainerName.append(corresponding.isSpin() ? "*" : "");

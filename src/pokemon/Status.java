@@ -67,28 +67,28 @@ public enum Status {
 	}
 	
 	public BufferedImage loadImage(String imageName) {
-        BufferedImage image = null;
+		BufferedImage image = null;
 
-        try {
-            // Load the original image
-            BufferedImage originalImage = ImageIO.read(getClass().getResourceAsStream(imageName));
-            // Scale the image
-            int newWidth = originalImage.getWidth() * 2;
-            int newHeight = originalImage.getHeight() * 2;
-            image = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
-            Graphics2D g2d = image.createGraphics();
-            g2d.drawImage(originalImage, 0, 0, newWidth, newHeight, null);
-            g2d.dispose();
-        } catch (Exception e) {
-        	try {
+		try {
+			// Load the original image
+			BufferedImage originalImage = ImageIO.read(getClass().getResourceAsStream(imageName));
+			// Scale the image
+			int newWidth = originalImage.getWidth() * 2;
+			int newHeight = originalImage.getHeight() * 2;
+			image = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
+			Graphics2D g2d = image.createGraphics();
+			g2d.drawImage(originalImage, 0, 0, newWidth, newHeight, null);
+			g2d.dispose();
+		} catch (Exception e) {
+			try {
 				image = ImageIO.read(getClass().getResourceAsStream("/items/null.png"));
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
-        }
+		}
 
-        return image;
-    }
+		return image;
+	}
 	
 	private String name;
 	private Color color;
@@ -110,13 +110,13 @@ public enum Status {
 	@Override
 	public String toString() {
 		String name = super.toString();
-	    name = name.toLowerCase().replace('_', ' ');
-	    String[] words = name.split(" ");
-	    StringBuilder sb = new StringBuilder();
-	    for (String word : words) {
-	        sb.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1)).append(" ");
-	    }
-	    return sb.toString().trim();
+		name = name.toLowerCase().replace('_', ' ');
+		String[] words = name.split(" ");
+		StringBuilder sb = new StringBuilder();
+		for (String word : words) {
+			sb.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1)).append(" ");
+		}
+		return sb.toString().trim();
 	}
 
 	public BufferedImage getImage() {

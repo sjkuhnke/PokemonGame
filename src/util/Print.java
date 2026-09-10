@@ -61,20 +61,20 @@ public class Print {
 	}
 	
 	public static void startBattleLog(String name) {
-	    synchronized (lock) {
-	        inBattle = true;
-	        battleBuffer.clear();
-	        battleBuffer.add("===== BATTLE START " + name + " =====");
-	    }
+		synchronized (lock) {
+			inBattle = true;
+			battleBuffer.clear();
+			battleBuffer.add("===== BATTLE START " + name + " =====");
+		}
 	}
 
 	public static void endBattleLog(String name) {
-	    synchronized (lock) {
-	        battleBuffer.add("===== BATTLE END " + name + " =====\n");
-	        buffer.addAll(battleBuffer); // merge into main buffer
-	        battleBuffer.clear();
-	        inBattle = false;
-	    }
+		synchronized (lock) {
+			battleBuffer.add("===== BATTLE END " + name + " =====\n");
+			buffer.addAll(battleBuffer); // merge into main buffer
+			battleBuffer.clear();
+			inBattle = false;
+		}
 	}
 
 	public static void flush() {

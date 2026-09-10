@@ -25,35 +25,35 @@ public class TreasureChest extends ItemObj {
 	static {
 		resourcePool.put(Item.RARE_CANDY, 5);
 		resourcePool.put(Item.EUPHORIAN_GEM, 6);
-        resourcePool.put(Item.REVIVE, 10);
-        resourcePool.put(Item.MAX_REVIVE, 8);
-        resourcePool.put(Item.PP_UP, 12);
-        resourcePool.put(Item.PP_MAX, 5);
-        resourcePool.put(Item.ABILITY_CAPSULE, 7);
-        resourcePool.put(Item.ABILITY_PATCH, 6);
-        
-        treasurePool.put(Item.BOTTLE_CAP, 10);
-        treasurePool.put(Item.GOLD_BOTTLE_CAP, 6);
-        treasurePool.put(Item.RUSTY_BOTTLE_CAP, 5);
-        treasurePool.put(Item.TINY_MUSHROOM, 10);
-        treasurePool.put(Item.BIG_MUSHROOM, 5);
-        treasurePool.put(Item.NUGGET, 15);
-        treasurePool.put(Item.BIG_NUGGET, 9);
-        treasurePool.put(Item.STAR_PIECE, 20);
-        treasurePool.put(Item.RELIC_GOLD, 8);
-        treasurePool.put(Item.RELIC_SILVER, 14);
-        
-        stonePool.put(Item.LEAF_STONE, 3);
-        stonePool.put(Item.FIRE_STONE, 2);
-        stonePool.put(Item.WATER_STONE, 3);
-        stonePool.put(Item.DUSK_STONE, 4);
-        stonePool.put(Item.DAWN_STONE, 3);
-        stonePool.put(Item.ICE_STONE, 3);
-        stonePool.put(Item.VALIANT_GEM, 2);
-        stonePool.put(Item.PETTICOAT_GEM, 2);
-        stonePool.put(Item.RAZOR_CLAW, 1);
-        stonePool.put(Item.THUNDER_SCALES_FOSSIL, 2);
-        stonePool.put(Item.DUSK_SCALES_FOSSIL, 2);
+		resourcePool.put(Item.REVIVE, 10);
+		resourcePool.put(Item.MAX_REVIVE, 8);
+		resourcePool.put(Item.PP_UP, 12);
+		resourcePool.put(Item.PP_MAX, 5);
+		resourcePool.put(Item.ABILITY_CAPSULE, 7);
+		resourcePool.put(Item.ABILITY_PATCH, 6);
+		
+		treasurePool.put(Item.BOTTLE_CAP, 10);
+		treasurePool.put(Item.GOLD_BOTTLE_CAP, 6);
+		treasurePool.put(Item.RUSTY_BOTTLE_CAP, 5);
+		treasurePool.put(Item.TINY_MUSHROOM, 10);
+		treasurePool.put(Item.BIG_MUSHROOM, 5);
+		treasurePool.put(Item.NUGGET, 15);
+		treasurePool.put(Item.BIG_NUGGET, 9);
+		treasurePool.put(Item.STAR_PIECE, 20);
+		treasurePool.put(Item.RELIC_GOLD, 8);
+		treasurePool.put(Item.RELIC_SILVER, 14);
+		
+		stonePool.put(Item.LEAF_STONE, 3);
+		stonePool.put(Item.FIRE_STONE, 2);
+		stonePool.put(Item.WATER_STONE, 3);
+		stonePool.put(Item.DUSK_STONE, 4);
+		stonePool.put(Item.DAWN_STONE, 3);
+		stonePool.put(Item.ICE_STONE, 3);
+		stonePool.put(Item.VALIANT_GEM, 2);
+		stonePool.put(Item.PETTICOAT_GEM, 2);
+		stonePool.put(Item.RAZOR_CLAW, 1);
+		stonePool.put(Item.THUNDER_SCALES_FOSSIL, 2);
+		stonePool.put(Item.DUSK_SCALES_FOSSIL, 2);
 	}
 	
 	public TreasureChest(GamePanel gp, boolean open, int map) {
@@ -111,9 +111,9 @@ public class TreasureChest extends ItemObj {
 		ArrayList<Item> loot = new ArrayList<>();
 		
 		loot.addAll(pickRandomItems(resourcePool, 2, 4));   // Pick 1-4 from resources
-        loot.addAll(pickRandomItems(treasurePool, 4, 6));   // Pick 4-6 from treasure
-        loot.addAll(pickRandomItems(stonePool, 1, 2));      // Pick 1-2 from stones
-        loot.add(randomMint());
+		loot.addAll(pickRandomItems(treasurePool, 4, 6));   // Pick 4-6 from treasure
+		loot.addAll(pickRandomItems(stonePool, 1, 2));	  // Pick 1-2 from stones
+		loot.add(randomMint());
 		
 		return loot;
 	}

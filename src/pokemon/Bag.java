@@ -265,9 +265,9 @@ public class Bag implements Serializable {
 	
 	@Override
 	public int hashCode() {
-	    int result = Arrays.hashCode(itemList);
-	    result = 31 * result + Arrays.hashCode(count);
-	    return result;
+		int result = Arrays.hashCode(itemList);
+		result = 31 * result + Arrays.hashCode(count);
+		return result;
 	}
 
 }

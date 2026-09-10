@@ -620,46 +620,46 @@ public class Trainer implements Serializable {
 	}
 
 	public Pokemon pickLead(Pokemon foe) {
-	    if (!foe.playerOwned()) return current;
-	    
-	    // Step 1: Predict which Pokemon the player is likely to lead with
-	    HashMap<Pokemon, Integer> playerLeadScores = predictPlayerLeads(foe);
-	    
-	    // Step 2: Score each of our Pokemon against the likely player leads
-	    HashMap<Pokemon, Double> aiPokemonScores = new HashMap<>();
-	    
-	    for (int i = 0; i < team.length; i++) {
-	        Pokemon ally = team[i];
-	        if (ally == null) continue;
-	        
-	        double totalWeightedScore = 0.0;
-	        double totalWeight = 0.0;
-	        
-	        // Score against each potential player lead, weighted by likelihood
-	        for (Map.Entry<Pokemon, Integer> entry : playerLeadScores.entrySet()) {
-	            Pokemon playerMon = entry.getKey();
-	            int likelihood = entry.getValue();
-	            
-	            if (likelihood > 0) {
-	                int matchupScore = ally.evaluateSwitchInScore(playerMon, Pokemon.field);
-	                totalWeightedScore += matchupScore * likelihood;
-	                totalWeight += likelihood;
-	            }
-	        }
-	        
-	        double averageScore = (totalWeight > 0) ? totalWeightedScore / totalWeight : 0.0;
-	        aiPokemonScores.put(ally, averageScore);
-	        
-	        System.out.println(ally.name + " weighted score vs predicted leads: " + 
-	                         String.format("%.1f", averageScore));
-	    }
-	    
-	    // Step 3: Use weighted random selection based on scores
-	    Pokemon chosen = weightedRandomSelection(aiPokemonScores);
-	    
-	    current = chosen;
-	    System.out.println(current.name + " chosen as lead");
-	    return current;
+		if (!foe.playerOwned()) return current;
+		
+		// Step 1: Predict which Pokemon the player is likely to lead with
+		HashMap<Pokemon, Integer> playerLeadScores = predictPlayerLeads(foe);
+		
+		// Step 2: Score each of our Pokemon against the likely player leads
+		HashMap<Pokemon, Double> aiPokemonScores = new HashMap<>();
+		
+		for (int i = 0; i < team.length; i++) {
+			Pokemon ally = team[i];
+			if (ally == null) continue;
+			
+			double totalWeightedScore = 0.0;
+			double totalWeight = 0.0;
+			
+			// Score against each potential player lead, weighted by likelihood
+			for (Map.Entry<Pokemon, Integer> entry : playerLeadScores.entrySet()) {
+				Pokemon playerMon = entry.getKey();
+				int likelihood = entry.getValue();
+				
+				if (likelihood > 0) {
+					int matchupScore = ally.evaluateSwitchInScore(playerMon, Pokemon.field);
+					totalWeightedScore += matchupScore * likelihood;
+					totalWeight += likelihood;
+				}
+			}
+			
+			double averageScore = (totalWeight > 0) ? totalWeightedScore / totalWeight : 0.0;
+			aiPokemonScores.put(ally, averageScore);
+			
+			System.out.println(ally.name + " weighted score vs predicted leads: " + 
+							 String.format("%.1f", averageScore));
+		}
+		
+		// Step 3: Use weighted random selection based on scores
+		Pokemon chosen = weightedRandomSelection(aiPokemonScores);
+		
+		current = chosen;
+		System.out.println(current.name + " chosen as lead");
+		return current;
 	}
 
 	/**
@@ -667,34 +667,34 @@ public class Trainer implements Serializable {
 	 * each player Pokemon against our team (simulating what they might think).
 	 */
 	private HashMap<Pokemon, Integer> predictPlayerLeads(Pokemon foe) {
-	    HashMap<Pokemon, Integer> playerScores = new HashMap<>();
-	    
-	    System.out.println("\n=== Predicting Player Leads ===");
-	    
-	    for (int i = 0; i < foe.trainer.team.length; i++) {
-	        Pokemon playerMon = foe.trainer.team[i];
-	        if (playerMon == null) continue;
-	        
-	        int totalScore = 0;
-	        int count = 0;
-	        
-	        // Score this player Pokemon against each of our Pokemon
-	        for (int j = 0; j < team.length; j++) {
-	            Pokemon ourMon = team[j];
-	            if (ourMon != null) {
-	                int score = playerMon.evaluateSwitchInScore(ourMon, Pokemon.field);
-	                totalScore += score;
-	                count++;
-	            }
-	        }
-	        
-	        int avgScore = (count > 0) ? totalScore / count : 0;
-	        playerScores.put(playerMon, avgScore);
-	        
-	        System.out.println("  " + playerMon.name + " avg score vs our team: " + avgScore);
-	    }
-	    
-	    return playerScores;
+		HashMap<Pokemon, Integer> playerScores = new HashMap<>();
+		
+		System.out.println("\n=== Predicting Player Leads ===");
+		
+		for (int i = 0; i < foe.trainer.team.length; i++) {
+			Pokemon playerMon = foe.trainer.team[i];
+			if (playerMon == null || playerMon.isFainted()) continue;
+			
+			int totalScore = 0;
+			int count = 0;
+			
+			// Score this player Pokemon against each of our Pokemon
+			for (int j = 0; j < team.length; j++) {
+				Pokemon ourMon = team[j];
+				if (ourMon != null) {
+					int score = playerMon.evaluateSwitchInScore(ourMon, Pokemon.field);
+					totalScore += score;
+					count++;
+				}
+			}
+			
+			int avgScore = (count > 0) ? totalScore / count : 0;
+			playerScores.put(playerMon, avgScore);
+			
+			System.out.println("  " + playerMon.name + " avg score vs our team: " + avgScore);
+		}
+		
+		return playerScores;
 	}
 
 	/**
@@ -703,55 +703,55 @@ public class Trainer implements Serializable {
 	 * can be selected.
 	 */
 	private Pokemon weightedRandomSelection(HashMap<Pokemon, Double> scores) {
-	    // Calculate weights (convert scores to positive weights)
-	    HashMap<Pokemon, Double> weights = new HashMap<>();
-	    double totalWeight = 0.0;
-	    
-	    // Find the minimum score to shift all scores positive if needed
-	    double minScore = Double.MAX_VALUE;
-	    for (double score : scores.values()) {
-	        if (score < minScore) minScore = score;
-	    }
-	    
-	    // Shift scores to be positive and square them to emphasize differences
-	    double shift = (minScore < 0) ? Math.abs(minScore) + 1 : 0;
-	    
-	    for (Map.Entry<Pokemon, Double> entry : scores.entrySet()) {
-	        double adjustedScore = entry.getValue() + shift;
-	        // Square the score to make better options much more likely
-	        // But add a small base weight so even weak options have a tiny chance
-	        double weight = Math.pow(adjustedScore, 2) + 10.0;
-	        weights.put(entry.getKey(), weight);
-	        totalWeight += weight;
-	    }
-	    
-	    // Debug output
-	    System.out.println("\n=== Lead Selection Probabilities ===");
-	    for (Map.Entry<Pokemon, Double> entry : weights.entrySet()) {
-	        double probability = (entry.getValue() / totalWeight) * 100.0;
-	        System.out.printf("%s: %.1f%%\n", entry.getKey().name, probability);
-	    }
-	    
-	    // Weighted random selection
-	    double r = Math.random() * totalWeight;
-	    for (Map.Entry<Pokemon, Double> entry : weights.entrySet()) {
-	        r -= entry.getValue();
-	        if (r <= 0) {
-	            return entry.getKey();
-	        }
-	    }
-	    
-	    // Fallback: return the highest scoring Pokemon
-	    Pokemon best = null;
-	    double bestScore = Double.NEGATIVE_INFINITY;
-	    for (Map.Entry<Pokemon, Double> entry : scores.entrySet()) {
-	        if (entry.getValue() > bestScore) {
-	            bestScore = entry.getValue();
-	            best = entry.getKey();
-	        }
-	    }
-	    
-	    return best != null ? best : current;
+		// Calculate weights (convert scores to positive weights)
+		HashMap<Pokemon, Double> weights = new HashMap<>();
+		double totalWeight = 0.0;
+		
+		// Find the minimum score to shift all scores positive if needed
+		double minScore = Double.MAX_VALUE;
+		for (double score : scores.values()) {
+			if (score < minScore) minScore = score;
+		}
+		
+		// Shift scores to be positive and square them to emphasize differences
+		double shift = (minScore < 0) ? Math.abs(minScore) + 1 : 0;
+		
+		for (Map.Entry<Pokemon, Double> entry : scores.entrySet()) {
+			double adjustedScore = entry.getValue() + shift;
+			// Square the score to make better options much more likely
+			// But add a small base weight so even weak options have a tiny chance
+			double weight = Math.pow(adjustedScore, 2) + 10.0;
+			weights.put(entry.getKey(), weight);
+			totalWeight += weight;
+		}
+		
+		// Debug output
+		System.out.println("\n=== Lead Selection Probabilities ===");
+		for (Map.Entry<Pokemon, Double> entry : weights.entrySet()) {
+			double probability = (entry.getValue() / totalWeight) * 100.0;
+			System.out.printf("%s: %.1f%%\n", entry.getKey().name, probability);
+		}
+		
+		// Weighted random selection
+		double r = Math.random() * totalWeight;
+		for (Map.Entry<Pokemon, Double> entry : weights.entrySet()) {
+			r -= entry.getValue();
+			if (r <= 0) {
+				return entry.getKey();
+			}
+		}
+		
+		// Fallback: return the highest scoring Pokemon
+		Pokemon best = null;
+		double bestScore = Double.NEGATIVE_INFINITY;
+		for (Map.Entry<Pokemon, Double> entry : scores.entrySet()) {
+			if (entry.getValue() > bestScore) {
+				bestScore = entry.getValue();
+				best = entry.getKey();
+			}
+		}
+		
+		return best != null ? best : current;
 	}
 
 	public boolean isGymOrE4() {

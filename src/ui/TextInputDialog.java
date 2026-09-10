@@ -167,11 +167,11 @@ public class TextInputDialog extends AbstractUI {
 		}
 		
 		if (commandNum == NAMING) {
-		    g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 13F));
-		    String enterHint = "[Enter]";
-		    int hintX = fieldX + fieldWidth - getTextWidth(enterHint) - 2;
-		    int hintY = fieldY + fieldHeight - 6;
-		    drawOutlinedText(enterHint, hintX, hintY, new Color(180, 180, 180, 180), Color.BLACK);
+			g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 13F));
+			String enterHint = "[Enter]";
+			int hintX = fieldX + fieldWidth - getTextWidth(enterHint) - 2;
+			int hintY = fieldY + fieldHeight - 6;
+			drawOutlinedText(enterHint, hintX, hintY, new Color(180, 180, 180, 180), Color.BLACK);
 		}
 		
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 14F));

@@ -136,12 +136,12 @@ public class PlayerCharacter extends Entity {
 				boolean fast = false;
 				for (int i = 0; i < p.team.length; i++) {
 					Pokemon po = p.team[i];
-            		if (po != null) {
-            			po.awardHappiness(1, false);
-            			if (po instanceof Egg) eggs.add(new Pair<>(((Egg) po), i));
-            			if (po.ability == Ability.FLAME_BODY || po.ability == Ability.MAGMA_ARMOR || po.ability == Ability.HEAT_COMPACTION) fast = true;
-            		}
-            	}
+					if (po != null) {
+						po.awardHappiness(1, false);
+						if (po instanceof Egg) eggs.add(new Pair<>(((Egg) po), i));
+						if (po.ability == Ability.FLAME_BODY || po.ability == Ability.MAGMA_ARMOR || po.ability == Ability.HEAT_COMPACTION) fast = true;
+					}
+				}
 				for (Pair<Egg, Integer> pair : eggs) {
 					Egg e = pair.getFirst();
 					boolean hatch = e.step(fast);
@@ -577,18 +577,18 @@ public class PlayerCharacter extends Entity {
 
 	private void interactNurse(Entity npc) {
 		// NMT, BVT, PG, SC, KV, PP, SRC, GT, FC, RC, IT, CC
-    	if (gp.currentMap == 1) p.locations[1] = true;
-    	if (gp.currentMap == 5) p.locations[2] = true;
-    	if (gp.currentMap == 19) p.locations[3] = true;
-    	if (gp.currentMap == 29) p.locations[4] = true;
-    	if (gp.currentMap == 39) p.locations[6] = true;
-    	if (gp.currentMap == 86) p.locations[8] = true;
-    	if (gp.currentMap == 92) p.locations[5] = true;
-    	if (gp.currentMap == 111) p.locations[7] = true;
-    	if (gp.currentMap == 125) p.locations[9] = true;
-    	if (gp.currentMap == 153) p.locations[10] = true;
-    	if (gp.currentMap == 216) p.locations[11] = true;
-    	
+		if (gp.currentMap == 1) p.locations[1] = true;
+		if (gp.currentMap == 5) p.locations[2] = true;
+		if (gp.currentMap == 19) p.locations[3] = true;
+		if (gp.currentMap == 29) p.locations[4] = true;
+		if (gp.currentMap == 39) p.locations[6] = true;
+		if (gp.currentMap == 86) p.locations[8] = true;
+		if (gp.currentMap == 92) p.locations[5] = true;
+		if (gp.currentMap == 111) p.locations[7] = true;
+		if (gp.currentMap == 125) p.locations[9] = true;
+		if (gp.currentMap == 153) p.locations[10] = true;
+		if (gp.currentMap == 216) p.locations[11] = true;
+		
 		gp.gameState = GamePanel.NURSE_STATE;
 		npc.speak(-1);
 	}
@@ -1136,7 +1136,7 @@ public class PlayerCharacter extends Entity {
 		int drawY = screenY - offset + gp.offsetY;
 		
 		drawReflection(g2, image, drawX, drawY, gp.tileSize, height);
-	    g2.drawImage(image, drawX, drawY, gp.tileSize, height, null);
+		g2.drawImage(image, drawX, drawY, gp.tileSize, height, null);
 	}
 	
 	public Item[] getItems() {
@@ -1211,44 +1211,44 @@ public class PlayerCharacter extends Entity {
 			p.invalidateNuzlocke("Used " + code);
 		} else if (code.startsWith("dex")) {
 			String[] parts = code.split(" ");
-		    if (parts.length > 1) {
-		        try {
-		            PType type = PType.valueOf(parts[1]);
-		            dexType = type;
-		        } catch (IllegalArgumentException g) {
-		            ui.showMessage("Dex Type reset");
-		            dexType = null;
-		        }
-		        newDex = null;
-		    }
+			if (parts.length > 1) {
+				try {
+					PType type = PType.valueOf(parts[1]);
+					dexType = type;
+				} catch (IllegalArgumentException g) {
+					ui.showMessage("Dex Type reset");
+					dexType = null;
+				}
+				newDex = null;
+			}
 		} else if (code.startsWith("Shae")) {
 			String[] parts = code.split(" ");
-		    if (parts.length >= 3) {
-		        try {
-		            int id = Integer.parseInt(parts[1]);
-		            int level = Integer.parseInt(parts[2]);
-		            p.catchPokemon(new Pokemon(id, level, true, false));
-		            p.invalidateNuzlocke("Used " + code);
-		        } catch (NumberFormatException g) {
-		            // Handle invalid input (e.g., if the entered value is not a valid integer)
-		        	ui.showMessage("Invalid Pokemon ID/Level.");
-		        }
-		    }
+			if (parts.length >= 3) {
+				try {
+					int id = Integer.parseInt(parts[1]);
+					int level = Integer.parseInt(parts[2]);
+					p.catchPokemon(new Pokemon(id, level, true, false));
+					p.invalidateNuzlocke("Used " + code);
+				} catch (NumberFormatException g) {
+					// Handle invalid input (e.g., if the entered value is not a valid integer)
+					ui.showMessage("Invalid Pokemon ID/Level.");
+				}
+			}
 		} else if (code.equals("UPDATE")) {
 			p.update(gp);
-    	    ui.showMessage("Player successfully updated!");
+			ui.showMessage("Player successfully updated!");
 		} else if (code.equals("HP")) {
 			String message = "";
 			for (Pokemon p : p.team) {
 				if (p != null) {
-	    			message += p.nickname + " : ";
-	    			message += p.determineHPType();
-	    			message += "\n";
+					message += p.nickname + " : ";
+					message += p.determineHPType();
+					message += "\n";
 				}
 			}
-    	    ui.showMessage(message);
+			ui.showMessage(message);
 		} else if (code.equals("nei")) {
-            Arrays.fill(p.pokedex, 2);
+			Arrays.fill(p.pokedex, 2);
 			p.invalidateNuzlocke("Used " + code);
 		} else if (code.equals("GENN")) {
 			Pokemon po = Item.displayGenerator(null);
@@ -1259,7 +1259,7 @@ public class PlayerCharacter extends Entity {
 			p.invalidateNuzlocke("Used " + code);
 
 		} else if (code.equals("ASH MUSTARD")) {
-            Arrays.fill(p.trainersBeat, true);
+			Arrays.fill(p.trainersBeat, true);
 			p.invalidateNuzlocke("Used " + code);
 		} else if (code.equals("exptrainer")) {
 			StringBuilder result = new StringBuilder();
@@ -1276,19 +1276,19 @@ public class PlayerCharacter extends Entity {
 		} else if (code.equals("expitem")) {
 			StringBuilder result = new StringBuilder();
 
-		    for (boolean[] row : p.itemsCollected) {
-		        for (boolean value : row) {
-		            result.append(value).append(",");
-		        }
-		        result.append("\n");
-		    }
+			for (boolean[] row : p.itemsCollected) {
+				for (boolean value : row) {
+					result.append(value).append(",");
+				}
+				result.append("\n");
+			}
 			try {
 				FileWriter writer = new FileWriter("./items.txt");
 				writer.write(result.toString());
 				writer.close();
 			} catch (IOException e1) {
-                e1.printStackTrace();
-            }
+				e1.printStackTrace();
+			}
 		} else if (code.equals("EDGEMEDADDY")) {
 			p.bag.add(Item.EDGE_KIT);
 			p.invalidateNuzlocke("Used " + code);
@@ -1300,12 +1300,12 @@ public class PlayerCharacter extends Entity {
 		} else if (code.equals("ITEMHASH")) {
 			// Ensure all items from Item.values() are present in the map with at least 0 count
 			for (Item item : Item.values()) {
-			    gp.aSetter.itemMap.putIfAbsent(item, 0);
+				gp.aSetter.itemMap.putIfAbsent(item, 0);
 			}
 
 			// Print items in the order they appear in Item.values()
 			for (Item item : Item.values()) {
-			    System.out.println(item + "," + gp.aSetter.itemMap.get(item));
+				System.out.println(item + "," + gp.aSetter.itemMap.get(item));
 			}
 
 		} else if (code.equals("MVFX")) {
@@ -1330,10 +1330,17 @@ public class PlayerCharacter extends Entity {
 			p.current.setStats();
 			p.current.verifyHP();
 			p.invalidateNuzlocke("Used " + code);
+		} else if (code.equals("EXPORT")) {
+			Exporter.showExportDialog(p.team);
 		} else if (code.equals("IMPORT")) {
 			List<Pokemon> imported = Importer.showImportDialog();
 			
 			if (imported != null && !imported.isEmpty()) {
+				if (!p.clearTeamToBoxes()) {
+					ui.showMessage("Cannot import team: not enough room in the boxes.");
+					return;
+				}
+				
 				int importedCount = 0;
 				
 				for (Pokemon pokemon : imported) {
@@ -1343,11 +1350,17 @@ public class PlayerCharacter extends Entity {
 					}
 				}
 				
+				if (p.team[0] != null) {
+					p.current = p.team[0];
+				}
+				
 				ui.showMessage(
 					"Successfully imported " + importedCount + " Pokémon!"
 				);
-
-				p.invalidateNuzlocke("Used " + code);
+				
+				if (importedCount > 0) {
+					p.invalidateNuzlocke("Used " + code);
+				}
 			}
 		} else {
 			ui.showMessage("Invalid code: \"" + code + "\"");
@@ -1400,8 +1413,8 @@ public class PlayerCharacter extends Entity {
 	
 	public void setClerkItems() {
 		for (Entity clerk : gp.aSetter.clerks) {
-    		clerk.setItems(true, getItems());
-    	}
+			clerk.setItems(true, getItems());
+		}
 	}
 
 	public Pokemon[] getPokemonOfType(Pokemon[] dex) {

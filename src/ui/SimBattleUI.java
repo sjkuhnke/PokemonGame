@@ -274,12 +274,12 @@ public class SimBattleUI extends BattleUI {
 		} else if (!payParlay) {
 			if (parlayPayout == -1) {
 				double[] expectedValues = {
-			        parlaySheet.get(0).getFirst(),
-			        parlaySheet.get(1).getFirst(),
-			        parlaySheet.get(2).getFirst(),
-			        parlaySheet.get(3).getFirst(),
-			        parlaySheet.get(4).getFirst(),
-			        parlaySheet.get(5).getFirst()
+					parlaySheet.get(0).getFirst(),
+					parlaySheet.get(1).getFirst(),
+					parlaySheet.get(2).getFirst(),
+					parlaySheet.get(3).getFirst(),
+					parlaySheet.get(4).getFirst(),
+					parlaySheet.get(5).getFirst()
 				};
 				parlayPayout = SimBattleUI.calculateParlayPayout(parlays, expectedValues, Pokemon.field.getStats(), parlayBet, -1);
 			}
@@ -399,7 +399,7 @@ public class SimBattleUI extends BattleUI {
 			gp.keyH.wPressed = false;
 			switch(subState) {
 			case STARTING_STATE:
-			    setStartingTasks();
+				setStartingTasks();
 				subState = TASK_STATE;
 				break;
 			case END_STATE:
@@ -431,17 +431,17 @@ public class SimBattleUI extends BattleUI {
 		field = new Field();
 		user.getFieldEffects().clear();
 		foe.getFieldEffects().clear();
-	    Pokemon.field = field;
-	    userHP = user.currentHP;
-	    maxUserHP = user.getStat(0);
-	    foeHP = foe.currentHP;
-	    maxFoeHP = foe.getStat(0);
-	    catchable = false;
+		Pokemon.field = field;
+		userHP = user.currentHP;
+		maxUserHP = user.getStat(0);
+		foeHP = foe.currentHP;
+		maxFoeHP = foe.getStat(0);
+		catchable = false;
 		
-	    Task.addSwapInTask(foe, false);
+		Task.addSwapInTask(foe, false);
 		foeFainted = foe.trainer.getNumFainted();
 		Task.addSwapInTask(user, true);
-	    Pokemon fasterInit = user.getFaster(foe, 0, 0, field);
+		Pokemon fasterInit = user.getFaster(foe, 0, 0, field);
 		Pokemon slowerInit = fasterInit == user ? foe : user;
 		fasterInit.swapIn(slowerInit, true);
 		slowerInit.swapIn(fasterInit, true);
@@ -689,9 +689,9 @@ public class SimBattleUI extends BattleUI {
 	}
 	
 	private void drawParlays() {
-	    int x = gp.tileSize * 11;
-	    int y = gp.tileSize / 2;
-	    int width = gp.tileSize * 5;
+		int x = gp.tileSize * 11;
+		int y = gp.tileSize / 2;
+		int width = gp.tileSize * 5;
 		int height = (int) (gp.tileSize * 11.25);
 		
 		drawSubWindow(x, y, width, height);
@@ -699,41 +699,41 @@ public class SimBattleUI extends BattleUI {
 		x += gp.tileSize / 3;
 		y += gp.tileSize;
 		
-	    int lineSpacing = (int) (gp.tileSize * 1.75); // Match the parlay spacing
-	    
-	    String[] labels = {"crits:", "misses:", "super effective hits:", "switches:", "knockouts:", "total turns:"};
-	    double[] expectedValues = {
-	        parlaySheet.get(0).getFirst(),
-	        parlaySheet.get(1).getFirst(),
-	        parlaySheet.get(2).getFirst(),
-	        parlaySheet.get(3).getFirst(),
-	        parlaySheet.get(4).getFirst(),
-	        parlaySheet.get(5).getFirst()
-	    };
-	    int[] actualValues = Pokemon.field.getStats();
-	    
-	    g2.setFont(g2.getFont().deriveFont(24F));
-	    
-	    for (int i = 0; i < labels.length; i++) {
-	        g2.setColor(Color.WHITE);
-	        g2.drawString(labels[i], x, y);
+		int lineSpacing = (int) (gp.tileSize * 1.75); // Match the parlay spacing
+		
+		String[] labels = {"crits:", "misses:", "super effective hits:", "switches:", "knockouts:", "total turns:"};
+		double[] expectedValues = {
+			parlaySheet.get(0).getFirst(),
+			parlaySheet.get(1).getFirst(),
+			parlaySheet.get(2).getFirst(),
+			parlaySheet.get(3).getFirst(),
+			parlaySheet.get(4).getFirst(),
+			parlaySheet.get(5).getFirst()
+		};
+		int[] actualValues = Pokemon.field.getStats();
+		
+		g2.setFont(g2.getFont().deriveFont(24F));
+		
+		for (int i = 0; i < labels.length; i++) {
+			g2.setColor(Color.WHITE);
+			g2.drawString(labels[i], x, y);
 
-	        int guess = parlays[i]; // Player's guess: 1 (over), -1 (under), 0 (no guess)
-	        int actual = actualValues[i];
-	        double expected = expectedValues[i];
+			int guess = parlays[i]; // Player's guess: 1 (over), -1 (under), 0 (no guess)
+			int actual = actualValues[i];
+			double expected = expectedValues[i];
 
-	        // Determine text color
-	        if (guess == 1) { // Player guessed "over"
-	            g2.setColor(actual >= expected ? Color.GREEN : Color.RED);
-	        } else if (guess == -1) { // Player guessed "under"
-	            g2.setColor(actual < expected ? Color.GREEN : Color.RED);
-	        } else { // No guess made
-	            g2.setColor(Color.GRAY);
-	        }
+			// Determine text color
+			if (guess == 1) { // Player guessed "over"
+				g2.setColor(actual >= expected ? Color.GREEN : Color.RED);
+			} else if (guess == -1) { // Player guessed "under"
+				g2.setColor(actual < expected ? Color.GREEN : Color.RED);
+			} else { // No guess made
+				g2.setColor(Color.GRAY);
+			}
 
-	        g2.drawString(String.valueOf(actual), (int) (x + gp.tileSize * 3.85), y);
-	        y += lineSpacing;
-	    }
+			g2.drawString(String.valueOf(actual), (int) (x + gp.tileSize * 3.85), y);
+			y += lineSpacing;
+		}
 
 	}
 
@@ -872,17 +872,17 @@ public class SimBattleUI extends BattleUI {
 			slowCanMove = false;
 		}
 		
-        if (slowCanMove) {
-        	slower.moveInit(faster, slowMove, false);
-        	faster = faster.trainer.getCurrent();
-        	slower = slower.trainer.getCurrent();
-        }
-        
-        // Check for swap
-        if (slower.trainer.hasValidMembers(faster) && slowCanMove && !faster.trainer.wiped() && slower.hasStatus(Status.SWITCHING)) {
-        	slower = slower.trainer.swapOut2(faster, FREE_SWITCH, slower.lastMoveUsed == Move.BATON_PASS, slower.trainer.hasUser(user));
-        }
-    	// Check for swap
+		if (slowCanMove) {
+			slower.moveInit(faster, slowMove, false);
+			faster = faster.trainer.getCurrent();
+			slower = slower.trainer.getCurrent();
+		}
+		
+		// Check for swap
+		if (slower.trainer.hasValidMembers(faster) && slowCanMove && !faster.trainer.wiped() && slower.hasStatus(Status.SWITCHING)) {
+			slower = slower.trainer.swapOut2(faster, FREE_SWITCH, slower.lastMoveUsed == Move.BATON_PASS, slower.trainer.hasUser(user));
+		}
+		// Check for swap
  		if (faster.trainer.hasValidMembers(slower) && !slower.trainer.wiped() && faster.hasStatus(Status.SWITCHING)) {
  			faster = faster.trainer.swapOut2(slower, FREE_SWITCH, false, faster.trainer.hasUser(user));
  		}
@@ -913,7 +913,7 @@ public class SimBattleUI extends BattleUI {
 					Task.addSwapInTask(next, userSide);
 					next.swapIn(foe, true);
 				} else {
-		            break;
+					break;
 				}
 			}
 		}
@@ -986,35 +986,35 @@ public class SimBattleUI extends BattleUI {
 	}
 	
 	public static int calculateParlayPayout(int[] parlayBets, double[] lines, int[] actualResults, int wager, int numCorrect) {
-	    double baseMultiplier = 1.8; // Payout for individual parlays
-	    double[] bonusMultipliers = {0.0, 0.0, 0.0, 0.5, 1.5, 2.0, 4.0}; // Bonus multipliers based on correct bets
-	    int correctBets = 0;
-	    int betsMade = 0;
+		double baseMultiplier = 1.8; // Payout for individual parlays
+		double[] bonusMultipliers = {0.0, 0.0, 0.0, 0.5, 1.5, 2.0, 4.0}; // Bonus multipliers based on correct bets
+		int correctBets = 0;
+		int betsMade = 0;
 
-	    for (int i = 0; i < parlayBets.length; i++) {
-	        if (parlayBets[i] != 0) { // Player placed a bet
-	            betsMade++;
-	            if (lines == null) {
-	            	correctBets = numCorrect > 0 ? numCorrect : 1;
-	            	continue;
-	            }
-	            if (actualResults == null ||
-	            		(parlayBets[i] > 0 && lines[i] < actualResults[i]) ||
-	            		(parlayBets[i] < 0 && lines[i] > actualResults[i])) {
-	                correctBets++;
-	            }
-	        }
-	    }
+		for (int i = 0; i < parlayBets.length; i++) {
+			if (parlayBets[i] != 0) { // Player placed a bet
+				betsMade++;
+				if (lines == null) {
+					correctBets = numCorrect > 0 ? numCorrect : 1;
+					continue;
+				}
+				if (actualResults == null ||
+						(parlayBets[i] > 0 && lines[i] < actualResults[i]) ||
+						(parlayBets[i] < 0 && lines[i] > actualResults[i])) {
+					correctBets++;
+				}
+			}
+		}
 
-	    // Base payout calculation
-	    double payout = correctBets * baseMultiplier * wager;
+		// Base payout calculation
+		double payout = correctBets * baseMultiplier * wager;
 
-	    // Apply bonus if applicable
-	    if (betsMade > 0) {
-	        payout += bonusMultipliers[correctBets] * wager;
-	    }
+		// Apply bonus if applicable
+		if (betsMade > 0) {
+			payout += bonusMultipliers[correctBets] * wager;
+		}
 
-	    return (int) Math.ceil(payout); // Round up to the nearest whole coin
+		return (int) Math.ceil(payout); // Round up to the nearest whole coin
 	}
 
 }

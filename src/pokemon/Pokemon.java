@@ -46,6 +46,9 @@ import javax.swing.JProgressBar;
 import javax.swing.SwingUtilities;
 
 import org.json.JSONObject;
+
+import docs.DocUtils;
+
 import org.json.JSONArray;
 
 import overworld.GamePanel;
@@ -56,7 +59,9 @@ import pokemon.Nursery.EggGroup;
 import puzzle.Puzzle;
 import ui.AbstractUI;
 import ui.BattleUI;
+import ui.CustomProgressBarUI;
 import util.DeepClonable;
+import util.JGradientButton;
 import util.Pair;
 import util.Print;
 
@@ -327,7 +332,7 @@ public class Pokemon implements Serializable {
 	}
 	
 	private UUID setUUID() {
-        return UUID.randomUUID();
+		return UUID.randomUUID();
 	}
 	
 	public BufferedImage getSprite() {
@@ -381,13 +386,13 @@ public class Pokemon implements Serializable {
 		Image image = frontSprite;
 		
 		BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-	    Graphics2D graphics = bufferedImage.createGraphics();
+		Graphics2D graphics = bufferedImage.createGraphics();
 
-	    // Flip the image horizontally by drawing it with negative width
-	    graphics.drawImage(image, image.getWidth(null), 0, -image.getWidth(null), image.getHeight(null), null);
-	    graphics.dispose();
+		// Flip the image horizontally by drawing it with negative width
+		graphics.drawImage(image, image.getWidth(null), 0, -image.getWidth(null), image.getHeight(null), null);
+		graphics.dispose();
 
-	    return bufferedImage;
+		return bufferedImage;
 	}
 	
 	public BufferedImage setMiniSprite() {
@@ -402,21 +407,21 @@ public class Pokemon implements Serializable {
 			image = sprite;
 			
 			int scaledWidth = 40;  // New width
-	        int scaledHeight = 40; // New height
+			int scaledHeight = 40; // New height
 
-	        // Create a BufferedImage with transparent pixels
-	        BufferedImage miniImage = new BufferedImage(60, 60, BufferedImage.TYPE_INT_ARGB);
+			// Create a BufferedImage with transparent pixels
+			BufferedImage miniImage = new BufferedImage(60, 60, BufferedImage.TYPE_INT_ARGB);
 
-	        // Calculate the position to draw the scaled image in the center
-	        int x = (60 - scaledWidth) / 2;
-	        int y = (60 - scaledHeight) / 2;
+			// Calculate the position to draw the scaled image in the center
+			int x = (60 - scaledWidth) / 2;
+			int y = (60 - scaledHeight) / 2;
 
-	        // Draw the scaled-down sprite onto the BufferedImage
-	        Graphics2D g2d = miniImage.createGraphics();
-	        g2d.drawImage(image, x, y, scaledWidth, scaledHeight, null);
-	        g2d.dispose();
+			// Draw the scaled-down sprite onto the BufferedImage
+			Graphics2D g2d = miniImage.createGraphics();
+			g2d.drawImage(image, x, y, scaledWidth, scaledHeight, null);
+			g2d.dispose();
 
-	        return miniImage;
+			return miniImage;
 		}
 		return image;
 	}
@@ -427,32 +432,37 @@ public class Pokemon implements Serializable {
 		Node[] movebank = this.getMovebank();
 		for (int i = 1; i <= level && i < movebank.length; i++) {
 			Node node = movebank[i];
-	        while (node != null) {
-	            moveset[index] = new Moveslot(node.data);
-	            index++;
-	            if (index >= 4) {
-	                index = 0;
-	            }
-	            node = node.next;
-	        }
+			while (node != null) {
+				moveset[index] = new Moveslot(node.data);
+				index++;
+				if (index >= 4) {
+					index = 0;
+				}
+				node = node.next;
+			}
 		}
 	}
 	
 	public Move randomMove() {
-	    ArrayList<Move> validMoves = this.getValidMoveset();
+		ArrayList<Move> validMoves = this.getValidMoveset();
 
-	    // Pick a random move from the validMoves list
-	    Random rand = new Random();
-	    
-	    if (validMoves.size() > 0) {
-	    	int index = rand.nextInt(validMoves.size());
-	    	return validMoves.get(index);
-	    } else {
-	    	return Move.STRUGGLE;
-	    }	    
+		// Pick a random move from the validMoves list
+		Random rand = new Random();
+		
+		if (validMoves.size() > 0) {
+			int index = rand.nextInt(validMoves.size());
+			return validMoves.get(index);
+		} else {
+			return Move.STRUGGLE;
+		}		
 	}
 	
 	public Move bestMove2(Pokemon foe, boolean first, int difficulty) {
+		StringBuilder turn = new StringBuilder();
+		turn.append("\n\n====================================================\n");
+		turn.append("-------------------- TURN " + (field.turns+1) + " ------------------------\n");
+		turn.append("====================================================\n\n");
+		Print.debug(turn.toString());
 		ArrayList<Move> validMoves = this.getValidMoveset();
 		
 		if (this.script) {
@@ -532,20 +542,20 @@ public class Pokemon implements Serializable {
 		
 		// Calculate aggression factor
 		boolean needsDefensiveAnalysis = difficulty != Player.NORMAL
-		    || validMoves.stream().anyMatch(m -> m.cat == 2 || m.secondary != 0);
+			|| validMoves.stream().anyMatch(m -> m.cat == 2 || m.secondary != 0);
 		DefensiveResponseResult defResult = needsDefensiveAnalysis
-		    ? this.analyzeDefensiveResponse(foe, playerTeamClones, fieldClone)
-		    : DefensiveResponseResult.NONE;
+			? this.analyzeDefensiveResponse(foe, playerTeamClones, fieldClone)
+			: DefensiveResponseResult.NONE;
 
 		double aggressionFactor = 1.0;
 		if (difficulty != Player.NORMAL && playerTeamClones != null) {
-		    aggressionFactor = calculateDefensiveResponse(foe, defResult).getSecond();
+			aggressionFactor = calculateDefensiveResponse(foe, defResult).getSecond();
 		}
 
 		HashMap<Move, Integer> moveScores = new HashMap<>();
 		double totalPositiveWeight = 0.0;
 		for (Move move : validMoves) {
-		    moveScores.put(move, scoreMove(move, foe, fieldClone, foeCanKO, strongestMove, foeMaxDamagePair, defResult));
+			moveScores.put(move, scoreMove(move, foe, fieldClone, foeCanKO, strongestMove, foeMaxDamagePair, defResult));
 		}
 		
 		StringBuilder brain = new StringBuilder();
@@ -561,7 +571,6 @@ public class Pokemon implements Serializable {
 		HashMap<Pokemon, Integer> scoreMap = new HashMap<>();
 		
 		if (difficulty == Player.NORMAL && canSwitch) {
-			int maxScore = Collections.max(moveScores.values());
 			// 100% chance to swap if perish counter == 1
 			if (this.perishCount == 1) {
 				String rsn = "[Perish in 1 : 100%]\n";
@@ -570,33 +579,78 @@ public class Pokemon implements Serializable {
 					switchRsn.setFirst(this);
 					switchRsn.setSecond(rsn);
 				}
+				int bestSlot = chooseSwitchInSlot(foe, tr, trainerTeamClones, fieldClone, strongestMove);
 				Move pivotMove = hasPivotMove(foe, foeAbility, validMoves);
-				if (pivotMove != null) return pivotMove;
-				this.addStatus(Status.SWAP, BattleUI.NORMAL_SWITCH);
+				if (pivotMove != null) {
+					first = this.getFaster(foe, pivotMove.getPriority(foe, fieldClone), strongestMove.getPriority(foe, fieldClone), fieldClone) == this;
+					if (first) {
+						this.addStatus(Status.TEMP_SWITCHING, -(bestSlot + 1));
+						return pivotMove;
+					}
+				}
+				this.addStatus(Status.SWAP, bestSlot >= 0 ? bestSlot + 1 : BattleUI.NORMAL_SWITCH);
 				return Move.GROWL;
 			}
 			
-			// 50% chance to swap if all moves do 0 damage
-			if (maxScore < 5 && !validMoves.equals(new ArrayList<>(Arrays.asList(new Move[] {Move.METRONOME})))) {
-				double chance = 50;
-				if (this.impressive) chance *= 0.75;
-				if (checkSecondary((int) chance)) {
-					String rsn = "[All moves do 0 damage : " + String.format("%.1f", chance) + "%]\n";
-					Print.debug(rsn);
-					if (switchRsn != null) {
-						switchRsn.setFirst(this);
-						switchRsn.setSecond(rsn);
+			boolean hasRealAction = validMoves.equals(new ArrayList<>(Arrays.asList(new Move[] {Move.METRONOME})));
+			if (!hasRealAction) {
+				for (Move move : validMoves) {
+					Move resolvedMove = move;
+					boolean moveIsFaster = this.getFaster(foe, move.getPriority(this), strongestMove != null ? strongestMove.getPriority(foe) : 0, fieldClone) == this;
+					if (move == Move.MIMIC || move == Move.MIRROR_MOVE) {
+						resolvedMove = moveIsFaster ? foe.lastMoveUsed : strongestMove;
 					}
-					Move pivotMove = hasPivotMove(foe, foeAbility, validMoves);
-					if (pivotMove != null) return pivotMove;
-					this.addStatus(Status.SWAP, BattleUI.NORMAL_SWITCH);
-					return Move.GROWL;
+					if (resolvedMove == null) continue;
+					
+					Pair<Integer, Double> dmgPair = this.calcWithTypes(foe, strongestMove, moveIsFaster, fieldClone, false);
+					int dmg = dmgPair.getFirst();
+					if (dmg < 0) continue;
+					
+					if (resolvedMove.isAttack()) {
+						if (dmg > 0) {
+							hasRealAction = true;
+							break;
+						}
+						continue;
+					}
+					
+					if (resolvedMove.cat == 2 && this.item != null && this.getItem(fieldClone).isChoiceItem() && !resolvedMove.isMagicBounceEffected(this, foe, foeAbility, resolvedMove.accuracy)) {
+						continue; // don't click a status move if we have a choice item
+					}
+					
+					// pass likely switch in as null to never analyze a back check
+					EffectAnalysisResult effectResult = this.analyzeMoveEffect(foe, resolvedMove, moveIsFaster, fieldClone, dmg, null, strongestMove, foeMaxDamagePair.getSecond());
+					if (effectResult.targetsChecked == 1 && effectResult.usefulness > 0) {
+						hasRealAction = true;
+						break;
+					}
 				}
+			}
+			
+			// swap if nothing does anything to what's actually out right now
+			if (!hasRealAction) {
+				String rsn = "[No move does anything to active foe]\n";
+				Print.debug(rsn);
+				if (switchRsn != null) {
+					switchRsn.setFirst(this);
+					switchRsn.setSecond(rsn);
+				}
+				int bestSlot = chooseSwitchInSlot(foe, tr, trainerTeamClones, fieldClone, strongestMove);
+				Move pivotMove = hasPivotMove(foe, foeAbility, validMoves);
+				if (pivotMove != null) {
+					first = this.getFaster(foe, pivotMove.getPriority(foe, fieldClone), strongestMove.getPriority(foe, fieldClone), fieldClone) == this;
+					if (first) {
+						this.addStatus(Status.TEMP_SWITCHING, -(bestSlot + 1));
+						return pivotMove;
+					}
+				}
+				this.addStatus(Status.SWAP, bestSlot >= 0 ? bestSlot + 1 : BattleUI.NORMAL_SWITCH);
+				return Move.GROWL;
 			}
 		} else if (difficulty != Player.NORMAL && canSwitch) {
 			StringBuilder sb = new StringBuilder("===========================================\n");
 			
-			int currentScore = this.scorePokemon(foe, strongestMove, foeMaxDamagePair, foeCanKO, fieldClone, moveScores, true);
+			int currentScore = this.scorePokemon(foe, strongestMove, foeMaxDamagePair, foeCanKO, fieldClone, moveScores, true, false);
 			
 			for (int i = 0; i < tr.team.length; i++) {
 				Pokemon ally = tr.team[i];
@@ -604,7 +658,7 @@ public class Pokemon implements Serializable {
 					Pokemon allyClone = trainerTeamClones[i];
 					Pokemon foeClone = foe.fullClone();
 					Field candidateField = fieldClone.clone();
-					int allyScore = ally.evaluateSwitchInScore(allyClone, foe, foeClone, candidateField, strongestMove);
+					int allyScore = ally.evaluateSwitchInScore(allyClone, foe, foeClone, candidateField, strongestMove, false);
 					scoreMap.put(ally, allyScore);
 				}
 			}
@@ -769,15 +823,15 @@ public class Pokemon implements Serializable {
 	 * and accounting for priority as a tiebreaker among equally-damaging lethal options.
 	 */
 	private static class FoeMoveResult {
-	    final Move move;
-	    final Pair<Integer, Double> damagePair;
-	    final boolean canKO;
-	    
-	    FoeMoveResult(Move move, Pair<Integer, Double> damagePair, boolean canKO) {
-	        this.move = move;
-	        this.damagePair = damagePair;
-	        this.canKO = canKO;
-	    }
+		final Move move;
+		final Pair<Integer, Double> damagePair;
+		final boolean canKO;
+		
+		FoeMoveResult(Move move, Pair<Integer, Double> damagePair, boolean canKO) {
+			this.move = move;
+			this.damagePair = damagePair;
+			this.canKO = canKO;
+		}
 	}
 	
 	/**
@@ -786,54 +840,54 @@ public class Pokemon implements Serializable {
 	 * since priority is the only way the foe could guarantee going first in that case.
 	 */
 	private FoeMoveResult findFoeStrongestMove(Pokemon foe, Field field) {
-	    Move strongestMove = null;
-	    int foeMaxDamage = Integer.MIN_VALUE;
-	    Pair<Integer, Double> foeMaxDamagePair = null;
-	    boolean foeCanKO = false;
-	    
-	    boolean iAmFaster = this.getFaster(foe, 0, 0, field) == this;
-	    int strongestMovePriority = Integer.MIN_VALUE;
-	    
-	    ArrayList<Move> foeMoveset = foe.getValidMoveset();
-	    Collections.shuffle(foeMoveset);
-	    
-	    for (Move m : foeMoveset) {
-	        Pair<Integer, Double> damagePair = foe.calcWithTypes(this, m, true, 0, false, field, false);
-	        int damage = damagePair.getFirst();
-	        boolean lethal = damage >= this.currentHP;
-	        int movePriority = m.getPriority(foe);
-	        
-	        if (foeCanKO) {
-	            if (lethal && iAmFaster && movePriority > strongestMovePriority) {
-	                strongestMove = m;
-	                foeMaxDamage = damage;
-	                foeMaxDamagePair = damagePair;
-	                strongestMovePriority = movePriority;
-	                Print.debug("Enemy can KO me (" + this + ") with higher-priority " + strongestMove + "\n");
-	            }
-	            continue;
-	        }
-	        
-	        if (damage > foeMaxDamage) {
-	            foeMaxDamage = damage;
-	            strongestMove = m;
-	            foeMaxDamagePair = damagePair;
-	            strongestMovePriority = movePriority;
-	        }
-	        
-	        if (lethal) {
-	            foeCanKO = true;
-	            strongestMove = m;
-	            foeMaxDamagePair = damagePair;
-	            strongestMovePriority = movePriority;
-	            Print.debug("Enemy can KO me (" + this + ") with " + strongestMove + "\n");
-	            if (!iAmFaster) {
-	                break;
-	            }
-	        }
-	    }
-	    
-	    return new FoeMoveResult(strongestMove, foeMaxDamagePair, foeCanKO);
+		Move strongestMove = null;
+		int foeMaxDamage = Integer.MIN_VALUE;
+		Pair<Integer, Double> foeMaxDamagePair = null;
+		boolean foeCanKO = false;
+		
+		boolean iAmFaster = this.getFaster(foe, 0, 0, field) == this;
+		int strongestMovePriority = Integer.MIN_VALUE;
+		
+		ArrayList<Move> foeMoveset = foe.getValidMoveset();
+		Collections.shuffle(foeMoveset);
+		
+		for (Move m : foeMoveset) {
+			Pair<Integer, Double> damagePair = foe.calcWithTypes(this, m, true, 0, false, field, false);
+			int damage = damagePair.getFirst();
+			boolean lethal = damage >= this.currentHP;
+			int movePriority = m.getPriority(foe);
+			
+			if (foeCanKO) {
+				if (lethal && iAmFaster && movePriority > strongestMovePriority) {
+					strongestMove = m;
+					foeMaxDamage = damage;
+					foeMaxDamagePair = damagePair;
+					strongestMovePriority = movePriority;
+					Print.debug("Enemy can KO me (" + this + ") with higher-priority " + strongestMove + "\n");
+				}
+				continue;
+			}
+			
+			if (damage > foeMaxDamage) {
+				foeMaxDamage = damage;
+				strongestMove = m;
+				foeMaxDamagePair = damagePair;
+				strongestMovePriority = movePriority;
+			}
+			
+			if (lethal) {
+				foeCanKO = true;
+				strongestMove = m;
+				foeMaxDamagePair = damagePair;
+				strongestMovePriority = movePriority;
+				Print.debug("Enemy can KO me (" + this + ") with " + strongestMove + "\n");
+				if (!iAmFaster) {
+					break;
+				}
+			}
+		}
+		
+		return new FoeMoveResult(strongestMove, foeMaxDamagePair, foeCanKO);
 	}
 	
 	/**
@@ -843,41 +897,43 @@ public class Pokemon implements Serializable {
 	 * (isUsefulEffect), and KO tiebreaking (scoreMove).
 	 */
 	private static class DefensiveResponseResult {
-	    static final DefensiveResponseResult NONE = new DefensiveResponseResult(null, null, 0.0, 0.0);
-
-	    final Move ourStrongestMove;
-	    final Pokemon bestSwitchInMon;   // real (non-clone) foe Pokemon, or null if none/no valid back mons
-	    final double survivalIfStay;
-	    final double bestSwitchSurvival; // 0 if bestSwitchInMon == null
-
-	    DefensiveResponseResult(Move ourStrongestMove, Pokemon bestSwitchInMon, double survivalIfStay, double bestSwitchSurvival) {
-	        this.ourStrongestMove = ourStrongestMove;
-	        this.bestSwitchInMon = bestSwitchInMon;
-	        this.survivalIfStay = survivalIfStay;
-	        this.bestSwitchSurvival = bestSwitchSurvival;
-	    }
-
-	    double bestDefensiveResponse() {
-	        return Math.max(survivalIfStay, bestSwitchSurvival);
-	    }
+		static final DefensiveResponseResult NONE = new DefensiveResponseResult(null, null, null, 0.0, 0.0);
+		
+		final Move ourStrongestMove;
+		final Pokemon bestSwitchInMon;   // real (non-clone) foe Pokemon, or null if none/no valid back mons
+		final Pokemon backCheckTarget;
+		final double survivalIfStay;
+		final double bestSwitchSurvival; // 0 if bestSwitchInMon == null
+		
+		DefensiveResponseResult(Move ourStrongestMove, Pokemon bestSwitchInMon, Pokemon backCheckTarget, double survivalIfStay, double bestSwitchSurvival) {
+			this.ourStrongestMove = ourStrongestMove;
+			this.bestSwitchInMon = bestSwitchInMon;
+			this.backCheckTarget = backCheckTarget;
+			this.survivalIfStay = survivalIfStay;
+			this.bestSwitchSurvival = bestSwitchSurvival;
+		}
+		
+		double bestDefensiveResponse() {
+			return Math.max(survivalIfStay, bestSwitchSurvival);
+		}
 	}
-
+	
 	/** Finds our strongest attacking move against `foe` (by max-roll damage %). Extracted from
 	 *  calculateDefensiveResponse's step 1 so it can be reused/called standalone. */
 	private Move findStrongestMove(Pokemon foe, Field field) {
-	    Move strongest = null;
-	    double maxDamagePercent = 0;
-	    for (Move m : this.getValidMoveset()) {
-	        if (m.isAttack()) {
-	            boolean isFaster = this.getFaster(foe, m.getPriority(this), 0, field) == this;
-	            double damagePercent = this.calcWithTypes(foe, m, isFaster, field, false).getSecond();
-	            if (damagePercent > maxDamagePercent) {
-	                maxDamagePercent = damagePercent;
-	                strongest = m;
-	            }
-	        }
-	    }
-	    return strongest;
+		Move strongest = null;
+		double maxDamagePercent = 0;
+		for (Move m : this.getValidMoveset()) {
+			if (m.isAttack()) {
+				boolean isFaster = this.getFaster(foe, m.getPriority(this), 0, field) == this;
+				double damagePercent = this.calcWithTypes(foe, m, isFaster, field, false).getSecond();
+				if (damagePercent > maxDamagePercent) {
+					maxDamagePercent = damagePercent;
+					strongest = m;
+				}
+			}
+		}
+		return strongest;
 	}
 	
 	/**
@@ -885,58 +941,69 @@ public class Pokemon implements Serializable {
 	 * has these; avoids re-cloning the whole team per candidate move/status check).
 	 */
 	private DefensiveResponseResult analyzeDefensiveResponse(Pokemon foe, Pokemon[] playerTeamClones, Field field) {
-	    Move ourStrongestMove = findStrongestMove(foe, field);
-	    if (ourStrongestMove == null) {
-	        return DefensiveResponseResult.NONE;
-	    }
-	    
-	    double survivalIfStay = foe.currentHP > 0
-	        ? Math.max(0.0, 1.0 - Math.min(1.0, this.calcWithTypes(foe, ourStrongestMove,
-	              this.getFaster(foe, ourStrongestMove.getPriority(this), 0, field) == this, field, false).getFirst()
-	              / (double) foe.currentHP))
-	        : 0.0;
-	    
-	    double bestSwitchSurvival = 0.0;
-	    Pokemon bestMon = null;
-	    
-	    if (foe.trainer != null && playerTeamClones != null) {
-	        for (int i = 0; i < playerTeamClones.length; i++) {
-	            Pokemon backMon = playerTeamClones[i];
-	            Pokemon realBackMon = foe.trainer.team[i];
-	            
-	            if (backMon == null || !backMon.isValid(backMon.getPlayer(), this) || realBackMon == foe) {
-	                continue;
-	            }
-	            
-	            Field candidateField = field.clone();
-	            Pokemon userClone = this.fullClone();
-	            Pokemon simulatedMon = simulateSwitchIn(realBackMon, backMon, userClone, candidateField);
-	            
-	            boolean isFaster = userClone.getFaster(simulatedMon, ourStrongestMove.getPriority(userClone), 0, candidateField) == userClone;
-	            int damageToSwitchIn = userClone.calcWithTypes(simulatedMon, ourStrongestMove, isFaster, candidateField, false).getFirst();
-	            
-	            double survivalRatio = 1.0 - ((double) damageToSwitchIn / simulatedMon.getStat(0));
-	            survivalRatio = Math.max(0.0, Math.min(1.0, survivalRatio));
-	            
-	            if (survivalRatio > bestSwitchSurvival || bestMon == null) {
-	                bestSwitchSurvival = survivalRatio;
-	                bestMon = realBackMon;
-	            }
-	        }
-	    }
-	    
-	    return new DefensiveResponseResult(ourStrongestMove, bestMon, survivalIfStay, bestSwitchSurvival);
+		Move ourStrongestMove = findStrongestMove(foe, field);
+		if (ourStrongestMove == null) {
+			return DefensiveResponseResult.NONE;
+		}
+		
+		double survivalIfStay = foe.currentHP > 0
+			? Math.max(0.0, 1.0 - Math.min(1.0, this.calcWithTypes(foe, ourStrongestMove,
+			this.getFaster(foe, ourStrongestMove.getPriority(this), 0, field) == this, field, false).getFirst()
+			/ (double) foe.currentHP))
+			: 0.0;
+		
+		double bestSwitchScore = Integer.MIN_VALUE;
+		Pokemon bestMon = null;
+		
+		if (foe.trainer != null && playerTeamClones != null) {
+			for (int i = 0; i < playerTeamClones.length; i++) {
+				Pokemon backMon = playerTeamClones[i];
+				Pokemon realBackMon = foe.trainer.team[i];
+				
+				if (backMon == null || !backMon.isValid(backMon.getPlayer(), this) || realBackMon == foe) {
+					continue;
+				}
+				
+				Field preField = field.clone();
+				Pokemon userPreClone = this.fullClone();
+				Pokemon simulatedCandidate = simulateSwitchIn(realBackMon, backMon, userPreClone, preField);
+				Move ourMoveVsCandidate = findStrongestMove(simulatedCandidate, preField);
+				
+				Pokemon thisCloneForEval = this.fullClone();
+				Field evalField = field.clone();
+				int switchScore = realBackMon.evaluateSwitchInScore(backMon, this, thisCloneForEval, evalField, ourMoveVsCandidate, true);
+				
+				if (switchScore > bestSwitchScore || bestMon == null) {
+					bestSwitchScore = switchScore;
+					bestMon = realBackMon;
+				}
+			}
+		}
+		
+		double bestSwitchSurvival = 0.0;
+		if (bestMon != null) {
+			Field survivalField = field.clone();
+			Pokemon userClone = this.fullClone();
+			Pokemon simulatedBest = simulateSwitchIn(bestMon, bestMon.fullClone(), userClone, survivalField);
+			boolean isFaster = userClone.getFaster(simulatedBest, ourStrongestMove.getPriority(userClone), 0, survivalField) == userClone;
+			int dmg = userClone.calcWithTypes(simulatedBest, ourStrongestMove, isFaster, survivalField, false).getFirst();
+			bestSwitchSurvival = Math.max(0.0, Math.min(1.0, 1.0 - ((double) dmg / simulatedBest.getStat(0))));
+		}
+		
+		Pokemon backCheckTarget = (bestMon != null && bestSwitchSurvival > survivalIfStay) ? bestMon : null;
+		
+		return new DefensiveResponseResult(ourStrongestMove, bestMon, backCheckTarget, survivalIfStay, bestSwitchSurvival);
 	}
-
+	
 	/** Convenience overload that clones the foe's team itself - used from scorePokemon's
 	 *  internal moveScores==null path, where pre-made clones aren't available. */
 	private DefensiveResponseResult analyzeDefensiveResponse(Pokemon foe, Field field) {
-	    if (foe.trainer == null) return DefensiveResponseResult.NONE;
-	    Pokemon[] clones = new Pokemon[foe.trainer.team.length];
-	    for (int i = 0; i < foe.trainer.team.length; i++) {
-	        if (foe.trainer.team[i] != null) clones[i] = foe.trainer.team[i].fullClone();
-	    }
-	    return analyzeDefensiveResponse(foe, clones, field);
+		if (foe.trainer == null) return DefensiveResponseResult.NONE;
+		Pokemon[] clones = new Pokemon[foe.trainer.team.length];
+		for (int i = 0; i < foe.trainer.team.length; i++) {
+			if (foe.trainer.team[i] != null) clones[i] = foe.trainer.team[i].fullClone();
+		}
+		return analyzeDefensiveResponse(foe, clones, field);
 	}
 	
 	/**
@@ -958,25 +1025,26 @@ public class Pokemon implements Serializable {
 	 */
 	private Pair<Double, Double> calculateDefensiveResponse(Pokemon foe, DefensiveResponseResult defResult) {
 		if (defResult.ourStrongestMove == null) {
-	        Print.debug("[AI] " + this.nickname + " has no attacking moves, using default aggression 1.5\n");
-	        return new Pair<>(0.5, 1.5);
-	    }
-
-	    double bestDefensiveResponse = defResult.bestDefensiveResponse();
-	    double baseAggression = 1.2;
-	    double k = 1.8;
-	    double vulnerabilityFactor = 1.0 - bestDefensiveResponse;
-	    double aggression = Math.max(1.0, Math.min(3.0, baseAggression + k * vulnerabilityFactor));
-
-	    Print.debug(String.format(
-	        "=== AGGRESSION CALCULATION for %s ===\nStrongest Move vs %s: %s\nSurvival if Foe Stays: %.3f\n" +
-	        "Best Switch Survival: %.3f (%s)\nBest Defensive Response: %.3f\nVulnerability Factor: %.3f\n" +
-	        "Formula: %.2f + %.2f * (%.3f)^2 = %.3f\n",
-	        this.nickname, foe.nickname, defResult.ourStrongestMove, defResult.survivalIfStay,
-	        defResult.bestSwitchSurvival, defResult.bestSwitchInMon != null ? defResult.bestSwitchInMon.nickname : "none",
-	        bestDefensiveResponse, vulnerabilityFactor, baseAggression, k, vulnerabilityFactor, aggression));
-
-	    return new Pair<>(bestDefensiveResponse, aggression);
+			Print.debug("[AI] " + this.nickname + " has no attacking moves, using default aggression 1.5\n");
+			return new Pair<>(0.5, 1.5);
+		}
+		
+		double bestDefensiveResponse = defResult.bestDefensiveResponse();
+		double baseAggression = 1.2;
+		double k = 1.8;
+		double vulnerabilityFactor = 1.0 - bestDefensiveResponse;
+		double aggression = Math.max(1.0, Math.min(3.0, baseAggression + k * vulnerabilityFactor));
+		
+		Print.debug(String.format(
+				"=== AGGRESSION CALCULATION for %s ===\nStrongest Move vs %s: %s\nSurvival if Foe Stays: %.3f\n" +
+				"Best Switch Survival: %.3f (%s)\nBest Defensive Response: %.3f (%s)\nVulnerability Factor: %.3f\n" +
+				"Formula: %.2f + %.2f * (%.3f)^2 = %.3f\n",
+				this.nickname, foe.nickname, defResult.ourStrongestMove, defResult.survivalIfStay,
+				defResult.bestSwitchSurvival, defResult.bestSwitchInMon != null ? defResult.bestSwitchInMon.nickname : "none",
+				bestDefensiveResponse, defResult.backCheckTarget != null ? "switching" : "staying in",
+				vulnerabilityFactor, baseAggression, k, vulnerabilityFactor, aggression));
+		
+		return new Pair<>(bestDefensiveResponse, aggression);
 	}
 	
 	/**
@@ -1015,10 +1083,10 @@ public class Pokemon implements Serializable {
 		// Debug output for switch-in simulation
 		if (hpLost > 0 || !Arrays.equals(statsBefore, clone.statStages)) {
 			StringBuilder switchDebug = new StringBuilder();
-			switchDebug.append("    Switch-in Effects for ").append(original.nickname).append(":\n");
+			switchDebug.append("	Switch-in Effects for ").append(original.nickname).append(":\n");
 			
 			if (hpLost > 0) {
-				switchDebug.append(String.format("      HP: %d -> %d (-%d from hazards/abilities, %.1f%% remaining)\n",
+				switchDebug.append(String.format("	  HP: %d -> %d (-%d from hazards/abilities, %.1f%% remaining)\n",
 					hpBefore, hpAfter, hpLost, hpAfter * 100.0 / clone.getStat(0)));
 			}
 			
@@ -1027,7 +1095,7 @@ public class Pokemon implements Serializable {
 			for (int i = 0; i < 7; i++) {
 				if (statsBefore[i] != clone.statStages[i]) {
 					int change = clone.statStages[i] - statsBefore[i];
-					switchDebug.append(String.format("      %s: %+d\n", statNames[i], change));
+					switchDebug.append(String.format("	  %s: %+d\n", statNames[i], change));
 				}
 			}
 			
@@ -1138,7 +1206,26 @@ public class Pokemon implements Serializable {
 		return false;
 	}
 	
-	public int scorePokemon(Pokemon foe, Move move, Pair<Integer, Double> foeMaxDamage, boolean foeCanKO, Field field, HashMap<Move, Integer> moveScores, boolean active) {
+	private int chooseSwitchInSlot(Pokemon foe, Trainer tr, Pokemon[] trainerTeamClones, Field fieldClone, Move incomingMove) {
+		int bestSlot = -1;
+		int bestScore = Integer.MIN_VALUE;
+		for (int i = 0; i < tr.team.length; i++) {
+			Pokemon ally = tr.team[i];
+			if (ally != null && ally != this && !ally.isFainted()) {
+				Pokemon allyClone = trainerTeamClones[i];
+				Pokemon foeClone = foe.fullClone();
+				Field candidateField = fieldClone.clone();
+				int score = ally.evaluateSwitchInScore(allyClone, foe, foeClone, candidateField, incomingMove, false);
+				if (score > bestScore) {
+					bestScore = score;
+					bestSlot = i;
+				}
+			}
+		}
+		return bestSlot;
+	}
+	
+	public int scorePokemon(Pokemon foe, Move move, Pair<Integer, Double> foeMaxDamage, boolean foeCanKO, Field field, HashMap<Move, Integer> moveScores, boolean active, boolean skipDefenseAnalysis) {
 		int score = 0;
 		
 		if (this.isFainted()) return Integer.MIN_VALUE;
@@ -1231,7 +1318,7 @@ public class Pokemon implements Serializable {
 		// --- Offense potential/Move Scores ---
 		if (moveScores == null) {
 			moveScores = new HashMap<>();
-			DefensiveResponseResult defResult = this.analyzeDefensiveResponse(foe, field);
+			DefensiveResponseResult defResult = skipDefenseAnalysis ? DefensiveResponseResult.NONE : this.analyzeDefensiveResponse(foe, field);
 			for (Move m : this.getValidMoveset()) {
 				moveScores.put(m, scoreMove(m, foe, field, foeCanKO, move, foeMaxDamage, defResult));
 			}
@@ -1316,10 +1403,10 @@ public class Pokemon implements Serializable {
 			score += 40;
 			
 			if (willKill && move.isAttack() && defResult.bestSwitchInMon != null) {
-			    Pokemon likelySwitchIn = defResult.bestSwitchInMon;
-			    boolean weOutspeedNext = this.getFaster(likelySwitchIn, move.getPriority(this), 0, field) == this;
-			    double followUpDamagePercent = this.calcWithTypes(likelySwitchIn, move, weOutspeedNext, field, false).getSecond();
-			    score += followUpDamagePercent * 0.5;
+				Pokemon likelySwitchIn = defResult.bestSwitchInMon;
+				boolean weOutspeedNext = this.getFaster(likelySwitchIn, move.getPriority(this), 0, field) == this;
+				double followUpDamagePercent = this.calcWithTypes(likelySwitchIn, move, weOutspeedNext, field, false).getSecond();
+				score += followUpDamagePercent * 0.5;
 			}
 			
 			if (accuracy >= 100) { // perfectly accurate moves get a big boost
@@ -1341,6 +1428,12 @@ public class Pokemon implements Serializable {
 			if (move == Move.FELL_STINGER || move == Move.COMET_PUNCH) {
 				score += 25;
 			}
+		} else if (move.isAttack() && defResult.backCheckTarget != null) {
+			Pokemon likelySwitchIn = defResult.backCheckTarget;
+			boolean weOutspeedNext = this.getFaster(likelySwitchIn, move.getPriority(this), 0, field) == this;
+			double followUpDamagePercent = this.calcWithTypes(likelySwitchIn, move, weOutspeedNext, field, false).getSecond();
+			double switchLikelihood = Math.min(1.0, (defResult.bestSwitchSurvival - defResult.survivalIfStay) / Math.max(0.01, defResult.bestSwitchSurvival));
+			score += followUpDamagePercent * switchLikelihood * 0.5;
 		}
 		
 		// Penalize recoil moves at low HP
@@ -1360,7 +1453,7 @@ public class Pokemon implements Serializable {
 			if (move.cat == 2 && this.item != null && this.getItem(field).isChoiceItem() && !move.isMagicBounceEffected(this, foe, Ability.MAGIC_BOUNCE, move.accuracy)) {
 				howUseful = 0;
 			} else {
-				effectResult = this.analyzeMoveEffect(foe, move, isFaster, field, damage, defResult.bestSwitchInMon, foeStrongestMove, foeMaxDamage.getSecond());
+				effectResult = this.analyzeMoveEffect(foe, move, isFaster, field, damage, defResult.backCheckTarget, foeStrongestMove, foeMaxDamage.getSecond());
 				howUseful = effectResult.targetsChecked;
 			}
 			
@@ -1484,7 +1577,7 @@ public class Pokemon implements Serializable {
 		
 		// --- Custom Heuristics ---
 		if (!willKill && (!foeCanKO || this.getItem(field) == Item.FOCUS_BAND) && foeStrongestMove != null && foeMaxDamage.getFirst() >= 0) {
-			if (move == Move.COUNTER && foeStrongestMove.isPhysical() || move == Move.MIRROR_COAT && foeStrongestMove.isSpecial()) {
+			if ((move == Move.COUNTER && foeStrongestMove.isPhysical()) || (move == Move.MIRROR_COAT && foeStrongestMove.isSpecial())) {
 				score += foeMaxDamage.getSecond() * 2;
 			}
 			if (move == Move.METAL_BURST && foeMaxDamage.getFirst() >= this.getStat(0) * 1.0 / 5) {
@@ -1583,7 +1676,11 @@ public class Pokemon implements Serializable {
 					if (youClone.getAbility(fieldClone) == Ability.PRANKSTER && foeClone.isType(PType.DARK) && move.accuracy <= 100) {
 						continue; // dark types immune to prankster - try the back-check attempt instead
 					}
-					youClone.statusEffect(foeClone, move, fieldClone);
+					if (youClone.isImmuneToMoveEffect(foeClone, move, fieldClone)) {
+						continue; // ability/type immunity to status move - try the back-check attempt instead
+					} else {
+						youClone.statusEffect(foeClone, move, fieldClone);
+					}
 				}
 				
 				Effect afterWeather = fieldClone.weather == null ? null : fieldClone.weather.effect;
@@ -1675,15 +1772,56 @@ public class Pokemon implements Serializable {
 		return EffectAnalysisResult.NONE;
 	}
 	
+	
+	public boolean isImmuneToMoveEffect(Pokemon foe, Move move, Field field) {
+		PType moveType = move.mtype;
+		Ability foeAbility = foe.getAbility(field);
+		if (foe.getItem(field) != Item.ABILITY_SHIELD && this.getAbility(field) == Ability.MOLD_BREAKER) {
+			foeAbility = Ability.NULL;
+		}
+		
+		if (foeAbility == Ability.WONDER_SKIN && move.cat == 2
+				&& (move.accuracy <= 100 || move == Move.PERISH_SONG || move == Move.DEFOG)) {
+			return true;
+		}
+		
+		if (move.isBallOrBomb() && foeAbility == Ability.BULLETPROOF) return true;
+		if (Move.getSound().contains(move) && foeAbility == Ability.SOUNDPROOF) return true;
+		
+		if (foe.getItem(field) == Item.RING_TARGET) return false; // strips all of the below
+		
+		boolean targetsFoe = !(move.cat == 2 && move.accuracy > 100);
+		if (targetsFoe) {
+			if ((moveType == PType.WATER && (foeAbility == Ability.WATER_ABSORB || foeAbility == Ability.DRY_SKIN))
+					|| (moveType == PType.ELECTRIC && (foeAbility == Ability.VOLT_ABSORB || foeAbility == Ability.MOTOR_DRIVE || foeAbility == Ability.LIGHTNING_ROD))
+					|| (moveType == PType.BUG && foeAbility == Ability.INSECT_FEEDER)
+					|| ((moveType == PType.LIGHT || moveType == PType.GALACTIC) && foeAbility == Ability.BLACK_HOLE)
+					|| (moveType == PType.MAGIC && (foeAbility == Ability.MYSTIC_ABSORB || foeAbility == Ability.DJINN1S_FAVOR))
+					|| (moveType == PType.LIGHT && foeAbility == Ability.EVENT_HORIZON)
+					|| (moveType == PType.GRASS && foeAbility == Ability.SAP_SIPPER)
+					|| (moveType == PType.FIRE && (foeAbility == Ability.HEAT_COMPACTION || foeAbility == Ability.FLASH_FIRE))
+					|| (moveType == PType.GHOST && foeAbility == Ability.FRIENDLY_GHOST)
+					|| (moveType == PType.ICE && foeAbility == Ability.WARM_HEART)
+					|| (moveType == PType.PSYCHIC && foeAbility == Ability.COLD_HEART)
+					|| (moveType == PType.DRAGON && foeAbility == Ability.WHITE_HOLE)) {
+				return true;
+			}
+		}
+		
+		if (move == Move.THUNDER_WAVE && getImmune(foe, move.getType(this, field))) return true;
+		
+		return false;
+	}
+	
 	private static final double STAT_STAGE_UNIT_VALUE = 20; // per stage, per genuinely useful stat change
-	private static final double PLACEHOLDER_VALUE = 25;      // temporary flat weight for not-yet-refined categories
+	private static final double PLACEHOLDER_VALUE = 25;	  // temporary flat weight for not-yet-refined categories
 
 	private double scoreEffectUsefulness(ArrayList<EffectChange> changes, Pokemon foe, boolean isFaster, Field field, Move foeStrongestMove, double foeMaxDamagePercent, Pokemon likelySwitchIn) {
 		double total = 0;
 		for (EffectChange c : changes) {
 			switch (c.type) {
 			case STAT_STAGE:
-				if (this.statChangeIsUseful(c.statIndex, c.onSelf, foe, isFaster, field)) {
+				if (this.statChangeIsUseful(c.statIndex, c.onSelf, foe, foeStrongestMove, isFaster, field)) {
 					total += c.magnitude * STAT_STAGE_UNIT_VALUE * (foe.knowsMove(Move.SPECTRAL_THIEF) || foe.getItem(field) == Item.MIRROR_HERB ? 0.2 : 1);
 				}
 				break;
@@ -1801,8 +1939,8 @@ public class Pokemon implements Serializable {
 	}
 	
 	private boolean hasAccCheckedMoves(Pokemon foe) {
-		for (Move m : foe.getValidMoveset()) {
-			if (this.getEffectiveAccuracy(m, foe, field) <= 100) return true;
+		for (Move m : this.getValidMoveset()) {
+			if (this.getEffectiveAccuracy(m, foe, field) < 1) return true;
 		}
 		return false;
 	}
@@ -1819,24 +1957,24 @@ public class Pokemon implements Serializable {
 	 * the stage went UP on `self`, false if it went DOWN on `foe` — both represent the same kind of
 	 * advantage to `self`, so most stats share one condition regardless of which side it happened on.
 	 */
-	private boolean statChangeIsUseful(int statIndex, boolean raisedOnSelf, Pokemon foe, boolean isFaster, Field field) {
+	private boolean statChangeIsUseful(int statIndex, boolean raisedOnSelf, Pokemon foe, Move foeStrongestMove, boolean isFaster, Field field) {
 		switch (statIndex) {
 		case 0: // Atk
-			return raisedOnSelf ? this.hasPhysicalMoves(foe) : foe.hasPhysicalMoves(this);
+			return raisedOnSelf ? this.hasPhysicalMoves(foe) : foeStrongestMove.isPhysical();
 		case 1: // Def
 			return raisedOnSelf
-					? (foe.hasPhysicalMoves(this) || this.knowsMove(Move.BODY_PRESS))
-					: (this.hasPhysicalMoves(foe) || foe.knowsMove(Move.BODY_PRESS));
+					? (foeStrongestMove.isPhysical() || this.knowsMove(Move.BODY_PRESS))
+					: (this.hasPhysicalMoves(foe) || foeStrongestMove == Move.BODY_PRESS);
 		case 2: // SpA
-			return raisedOnSelf ? this.hasSpecialMoves(foe) : foe.hasSpecialMoves(this);
+			return raisedOnSelf ? this.hasSpecialMoves(foe) : foeStrongestMove.isSpecial();
 		case 3: // SpD
-			return raisedOnSelf ? foe.hasSpecialMoves(this) : this.hasSpecialMoves(foe);
+			return raisedOnSelf ? (foeStrongestMove.isSpecial() && foeStrongestMove != Move.PSYSHOCK && foeStrongestMove != Move.MAGIC_MISSILES) : this.hasSpecialMoves(foe);
 		case 4: // Spe - same condition either direction: are we currently the slower one?
 			return !isFaster;
 		case 5: // Acc
-			return raisedOnSelf ? this.hasAccCheckedMoves(foe) : foe.hasAccCheckedMoves(this);
+			return raisedOnSelf ? this.hasAccCheckedMoves(foe) : foe.getEffectiveAccuracy(foeStrongestMove, this, field) <= 1;
 		case 6: // Eva
-			return raisedOnSelf ? foe.hasAccCheckedMoves(this) : this.hasAccCheckedMoves(foe);
+			return raisedOnSelf ? foe.getEffectiveAccuracy(foeStrongestMove, this, field) <= 1 : this.hasAccCheckedMoves(foe);
 		default:
 			return false;
 		}
@@ -1920,10 +2058,12 @@ public class Pokemon implements Serializable {
 			ourEffBefore = Math.max(ourEffBefore, originalTyped.getEffectiveMultiplier(m.mtype, m, null));
 			ourEffAfter = Math.max(ourEffAfter, newlyTyped.getEffectiveMultiplier(m.mtype, m, null));
 		}
-		// Positive if the retype makes them easier for us to hit than they were before.
-		// Doesn't account for their own STAB loss or altered incoming-damage weaknesses against
-		// their teammates - a genuinely two-sided effect that's hard to price from one move's simulation.
-		return (ourEffAfter - ourEffBefore) * 15;
+		return (retypeEff(ourEffAfter) - retypeEff(ourEffBefore)) * 15;
+	}
+	
+	private double retypeEff(double mult) {
+		if (mult <= 0) return -4; // two octaves below 0.25x (-2)
+		return Math.log(mult) / Math.log(2);
 	}
 	
 	private double evaluateAbilityOverwrite(Ability oldAbility, Ability newAbility) {
@@ -1978,8 +2118,8 @@ public class Pokemon implements Serializable {
 		}
 		final Type type;
 		final boolean onSelf;   // true if this happened to `this`, false if it happened to the tested foe
-		final int statIndex;    // STAT_STAGE only, -1 otherwise
-		final int magnitude;    // stage count, heal amount, etc. where meaningful; 1 otherwise
+		final int statIndex;	// STAT_STAGE only, -1 otherwise
+		final int magnitude;	// stage count, heal amount, etc. where meaningful; 1 otherwise
 		final Object detail; // effect for weather/terrain/field effects, status for STATUS, Ability[] {old,new} for ABILITY_CHANGE, Double for precomputed TYPE_CHANGE value,
 		
 		EffectChange(Type type, boolean onSelf, int statIndex, int magnitude, Object detail) {
@@ -2004,7 +2144,7 @@ public class Pokemon implements Serializable {
 	
 	private static final double KILL_VALUE = 90;
 	private static final double DEATH_VALUE = -90;
-	private static final double CHIP_WEIGHT = 15;    // credit for damage dealt without a kill
+	private static final double CHIP_WEIGHT = 15;	// credit for damage dealt without a kill
 	private static final double THREAT_WEIGHT = 45;  // cost of remaining exposed to foe's damage
 	private static final double DELAY_WEIGHT = 20;   // extra cost of killing only after taking a hit
 	private static final double TEMPO_WEIGHT = 10;   // pure "who acts first" value when nothing dies
@@ -2013,7 +2153,7 @@ public class Pokemon implements Serializable {
 	 * Continuous expected-value score for a 1v1 matchup exchange.
 	 * @param myMaxDamagePercent  my best move's max-roll damage % against foe
 	 * @param foeMaxDamagePercent foe's best move's max-roll damage % against me
-	 * @param iAmFaster           whether I act first this turn
+	 * @param iAmFaster		   whether I act first this turn
 	 */
 	public double matchupScore(int myMaxMoveScore, double foeMaxDamagePercent, boolean iAmFaster) {
 		double atkFrac = Math.min(myMaxMoveScore, 100.0) / 100.0;
@@ -2048,14 +2188,14 @@ public class Pokemon implements Serializable {
 	 * Convenience overload - clones everything itself.
 	 */
 	public int evaluateSwitchInScore(Pokemon foe, Field field) {
-		return evaluateSwitchInScore(this.fullClone(), foe, foe.fullClone(), field.clone(), null);
+		return evaluateSwitchInScore(this.fullClone(), foe, foe.fullClone(), field.clone(), null, false);
 	}
 	
 	/**
 	 * Core version - caller supplies pre-made clones to avoid redundant cloning in hot loops
 	 * (e.g. bestMove2, which already clones the whole team up front).
 	 */
-	public int evaluateSwitchInScore(Pokemon myClone, Pokemon foe, Pokemon foeClone, Field fieldClone, Move incomingMove) {
+	public int evaluateSwitchInScore(Pokemon myClone, Pokemon foe, Pokemon foeClone, Field fieldClone, Move incomingMove, boolean skipDefenseAnalysis) {
 		Pokemon simulated = simulateSwitchIn(this, myClone, foeClone, fieldClone);
 		
 		// Apply the hit we take switching in THIS turn — the foe already committed to
@@ -2080,7 +2220,7 @@ public class Pokemon implements Serializable {
 		Pair<Integer, Double> foeMaxDamagePair = foeMoveResult.damagePair;
 		boolean foeCanKO = foeMoveResult.canKO;
 		
-		return simulated.scorePokemon(foeClone, strongestMove, foeMaxDamagePair, foeCanKO, fieldClone, null, false);
+		return simulated.scorePokemon(foeClone, strongestMove, foeMaxDamagePair, foeCanKO, fieldClone, null, false, skipDefenseAnalysis);
 	}
 	
 	/**
@@ -2743,27 +2883,27 @@ public class Pokemon implements Serializable {
 	
 	public String toString(PType[] weak) {
 		StringBuilder sb = new StringBuilder();
-	    sb.append("[");
-	    for (int i = 0; i < weak.length; i++) {
-	        sb.append(weak[i]);
-	        if (i != weak.length - 1) {
-	            sb.append(", ");
-	        }
-	    }
-	    sb.append("]");
-	    return sb.toString();
+		sb.append("[");
+		for (int i = 0; i < weak.length; i++) {
+			sb.append(weak[i]);
+			if (i != weak.length - 1) {
+				sb.append(", ");
+			}
+		}
+		sb.append("]");
+		return sb.toString();
 	}
 	
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-	    sb.append(name());
-	    if (nickname != null && !nickname.equals(name())) {
-	    	sb.append(" (");
-		    sb.append(nickname);
-		    sb.append(")");
-	    }
-	    return sb.toString();
+		sb.append(name());
+		if (nickname != null && !nickname.equals(name())) {
+			sb.append(" (");
+			sb.append(nickname);
+			sb.append(")");
+		}
+		return sb.toString();
 	}
 	
 	public static int[] getBaseStats(int id) {
@@ -2923,7 +3063,7 @@ public class Pokemon implements Serializable {
 		if (consumePP) {
 			if (this.status == Status.ASLEEP) {
 				if (this.sleepCounter > 0) {
-					Task t = Task.addTask(Task.TEXT, this.nickname + " is fast asleep.");
+					Task t = Task.addTask(Task.TEXT, this.nickname + " is fast asleep.", this);
 					t.wipe = true;
 					this.sleepCounter--;
 					if (move == Move.SLEEP_TALK) {
@@ -2971,7 +3111,7 @@ public class Pokemon implements Serializable {
 				} else {
 					Task.addTask(Task.TEXT, this.nickname + " is confused!");
 					if (Math.random() < 1.0/3.0) {
-				        // user hits themselves
+						// user hits themselves
 						attackStat = this.getStat(1);
 						defenseStat = this.getStat(2);
 						attackStat *= this.asModifier(0);
@@ -2999,7 +3139,7 @@ public class Pokemon implements Serializable {
 				}
 			}
 			if (this.status == Status.PARALYZED && Math.random() < 0.25) {
-				Task t = Task.addTask(Task.TEXT, this.nickname + " is paralyzed! It can't move!");
+				Task t = Task.addTask(Task.TEXT, this.nickname + " is paralyzed! It can't move!", this);
 				t.wipe = true;
 				this.moveMultiplier = 1;
 				this.impressive = false;
@@ -3023,7 +3163,7 @@ public class Pokemon implements Serializable {
 				this.removeStatus(Status.FLINCHED);
 				this.consumeItem(foe);
 			} else {
-				Task t = Task.addTask(Task.TEXT, this.nickname + " flinched!");
+				Task t = Task.addTask(Task.TEXT, this.nickname + " flinched!", this);
 				t.wipe = true;
 				this.removeStatus(Status.FLINCHED);
 				this.moveMultiplier = 1;
@@ -3046,7 +3186,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (this.hasStatus(Status.RECHARGE)) {
-			Task t = Task.addTask(Task.TEXT, this.nickname + " must recharge!");
+			Task t = Task.addTask(Task.TEXT, this.nickname + " must recharge!", this);
 			t.wipe = true;
 			this.moveMultiplier = 1;
 			this.removeStatus(Status.RECHARGE);
@@ -4598,9 +4738,9 @@ public class Pokemon implements Serializable {
 	
 	private String announceMoveText(Move move, boolean announce) {
 		String msg = this.nickname + " used " + move.toString() + "!";
-        if (gp.gameState == GamePanel.SIM_BATTLE_STATE) msg = writeMoveChance(msg);
-        if (announce) Task.addTask(Task.TEXT, msg);
-        return msg;
+		if (gp.gameState == GamePanel.SIM_BATTLE_STATE) msg = writeMoveChance(msg);
+		if (announce) Task.addTask(Task.TEXT, msg);
+		return msg;
 	}
 
 	private String writeMoveChance(String msg) {
@@ -4823,48 +4963,48 @@ public class Pokemon implements Serializable {
 	}
 
 	public void awardExp(int amt) {
-	    if (this.fainted) return;
-	    if (!this.playerOwned()) return;
-	    if (this.cloned) return;
-	    Player player = this.getPlayer();
+		if (this.fainted) return;
+		if (!this.playerOwned()) return;
+		if (this.cloned) return;
+		Player player = this.getPlayer();
 
-	    player.handleExpShare();
-	    int numBattled = player.getBattled();
-	    if (numBattled == 0) return;
-	    int expPerPokemon = amt / numBattled;
-	    int remainingExp = amt % numBattled;
+		player.handleExpShare();
+		int numBattled = player.getBattled();
+		if (numBattled == 0) return;
+		int expPerPokemon = amt / numBattled;
+		int remainingExp = amt % numBattled;
 
-	    // Award experience points to each battled Pokemon
-	    for (Pokemon p : player.getTeam()) {
-	        if (p != null && p.battled) {
-	            int expAwarded = expPerPokemon;
-	            if (remainingExp > 0) {
-	                expAwarded++;
-	                remainingExp--;
-	            }
-	            if (p.level < 100 && !p.isFainted() && !((p.id == 233 || p.id == 234) && !player.flag[7][21])) {
-	            	if (p.item == Item.LUCKY_EGG) expAwarded = (int) Math.ceil(expAwarded * 1.5);
-	            	
-	            	int totalExp = p.exp + expAwarded;
-	                String flavor = p.item == Item.LUCKY_EGG ? "a boosted " : p.item == Item.EXP_SHARE && !p.visible ? "a shared " : "";
-                	Task t = Task.addTask(Task.EXP, p.nickname + " gained " + flavor + expAwarded + " experience points!", p);
-                	t.setFinish(Math.min(totalExp, expMax));
-                	
-                	while (totalExp >= p.expMax && p.level < 100) {
-                		totalExp -= p.expMax;
-                		p.levelUp(player);
-                		
-                		if (totalExp > 0 && p.level < 100) {
-                			int nextTarget = Math.min(totalExp, p.expMax);
-                			Task followUp = Task.addTask(Task.EXP, "", p);
-                			followUp.setFinish(nextTarget);
-                		}
-                	}
-                	
-                	p.exp = p.level >= 100 ? 0 : totalExp;
-	            }
-	        }
-	    }
+		// Award experience points to each battled Pokemon
+		for (Pokemon p : player.getTeam()) {
+			if (p != null && p.battled) {
+				int expAwarded = expPerPokemon;
+				if (remainingExp > 0) {
+					expAwarded++;
+					remainingExp--;
+				}
+				if (p.level < 100 && !p.isFainted() && !((p.id == 233 || p.id == 234) && !player.flag[7][21])) {
+					if (p.item == Item.LUCKY_EGG) expAwarded = (int) Math.ceil(expAwarded * 1.5);
+					
+					int totalExp = p.exp + expAwarded;
+					String flavor = p.item == Item.LUCKY_EGG ? "a boosted " : p.item == Item.EXP_SHARE && !p.visible ? "a shared " : "";
+					Task t = Task.addTask(Task.EXP, p.nickname + " gained " + flavor + expAwarded + " experience points!", p);
+					t.setFinish(Math.min(totalExp, expMax));
+					
+					while (totalExp >= p.expMax && p.level < 100) {
+						totalExp -= p.expMax;
+						p.levelUp(player);
+						
+						if (totalExp > 0 && p.level < 100) {
+							int nextTarget = Math.min(totalExp, p.expMax);
+							Task followUp = Task.addTask(Task.EXP, "", p);
+							followUp.setFinish(nextTarget);
+						}
+					}
+					
+					p.exp = p.level >= 100 ? 0 : totalExp;
+				}
+			}
+		}
 	}
 
 	public void awardHappiness(int i, boolean override) {
@@ -5042,8 +5182,8 @@ public class Pokemon implements Serializable {
 	private void secondaryEffect(Pokemon foe, Move move, boolean first, Field field) {
 		switch (move) {
 		case ABYSSAL_CHOP:
-		    foe.paralyze(false, this);
-		    break;
+			foe.paralyze(false, this);
+			break;
 		case ACID:
 			stat(foe, 3, -1, this);
 			break;
@@ -5487,9 +5627,9 @@ public class Pokemon implements Serializable {
 		case LOW_SWEEP:
 			stat(foe, 4, -1, this);
 			break;
-    	case STAFF_JAB:
-    		stat(foe, 0, -2, this);
-    		break;
+		case STAFF_JAB:
+			stat(foe, 0, -2, this);
+			break;
 		case MAGICAL_CRASH:
 			randomNum = new Random().nextInt(5);
 			switch (randomNum) {
@@ -5689,8 +5829,8 @@ public class Pokemon implements Serializable {
 			}
 			break;
 		case SUMMIT_STRIKE:
-		    stat(foe, 1, -1, this);
-		    break;
+			stat(foe, 1, -1, this);
+			break;
 		case SUNNY_BURST:
 			boolean success = field.setWeather(field.new FieldEffect(Effect.SUN), this, foe);
 			if (success && item == Item.HEAT_ROCK) field.weatherTurns = 8;
@@ -5984,10 +6124,10 @@ public class Pokemon implements Serializable {
 			break;
 		case AQUA_RING:
 			if (!(this.hasStatus(Status.AQUA_RING))) {
-			    this.addStatus(Status.AQUA_RING);
-			    Task.addTask(Task.TEXT, "A veil of water surrounded " + this.nickname + "!");
+				this.addStatus(Status.AQUA_RING);
+				Task.addTask(Task.TEXT, "A veil of water surrounded " + this.nickname + "!");
 			} else {
-			    fail = fail();
+				fail = fail();
 			}
 			break;
 		case AURORA_GLOW:
@@ -6380,10 +6520,10 @@ public class Pokemon implements Serializable {
 			break;
 		case INGRAIN:
 			if (!(this.hasStatus(Status.ROOTED))) {
-			    this.addStatus(Status.ROOTED);
-			    Task.addTask(Task.TEXT, this.nickname + " planted its roots!");
+				this.addStatus(Status.ROOTED);
+				Task.addTask(Task.TEXT, this.nickname + " planted its roots!");
 			} else {
-			    fail = fail();
+				fail = fail();
 			}
 			break;
 		case IRON_DEFENSE:
@@ -6515,15 +6655,15 @@ public class Pokemon implements Serializable {
 			break;
 		case NO_RETREAT:
 			if (!this.hasStatus(Status.NO_SWITCH)) {
-			    this.addStatus(Status.NO_SWITCH);
-			    stat(this, 0, 1, foe);
-			    stat(this, 1, 1, foe);
-			    stat(this, 2, 1, foe);
-			    stat(this, 3, 1, foe);
-			    stat(this, 4, 1, foe);
-			    Task.addTask(Task.TEXT, this.nickname + " can no longer switch out!");
+				this.addStatus(Status.NO_SWITCH);
+				stat(this, 0, 1, foe);
+				stat(this, 1, 1, foe);
+				stat(this, 2, 1, foe);
+				stat(this, 3, 1, foe);
+				stat(this, 4, 1, foe);
+				Task.addTask(Task.TEXT, this.nickname + " can no longer switch out!");
 			} else {
-			    fail = fail();
+				fail = fail();
 			}
 			break;
 		case NIGHTMARE:
@@ -6855,32 +6995,32 @@ public class Pokemon implements Serializable {
 			break;
 		case TAUNT:
 			if (!(foe.hasStatus(Status.TAUNTED))) {
-			    foe.addStatus(Status.TAUNTED);
-			    foe.tauntCount = 4;
-			    Task.addTask(Task.TEXT, foe.nickname + " was taunted!");
-			    if (foe.getItem(field) == Item.MENTAL_HERB) {
+				foe.addStatus(Status.TAUNTED);
+				foe.tauntCount = 4;
+				Task.addTask(Task.TEXT, foe.nickname + " was taunted!");
+				if (foe.getItem(field) == Item.MENTAL_HERB) {
 					Task.addTask(Task.TEXT, foe.nickname + " cured its taunt using its Mental Herb!");
 					foe.removeStatus(Status.TAUNTED);
 					foe.tauntCount = 0;
 					foe.consumeItem(this);
 				}
 			} else {
-			    fail = fail();
+				fail = fail();
 			}
 			break;
 		case TORMENT:
 			if (!(foe.hasStatus(Status.TORMENTED))) {
-			    foe.addStatus(Status.TORMENTED);
-			    foe.tormentCount = 4;
-			    Task.addTask(Task.TEXT, foe.nickname + " was tormented!");
-			    if (foe.getItem(field) == Item.MENTAL_HERB) {
+				foe.addStatus(Status.TORMENTED);
+				foe.tormentCount = 4;
+				Task.addTask(Task.TEXT, foe.nickname + " was tormented!");
+				if (foe.getItem(field) == Item.MENTAL_HERB) {
 					Task.addTask(Task.TEXT, foe.nickname + " cured its torment using its Mental Herb!");
 					foe.removeStatus(Status.TORMENTED);
 					foe.tormentCount = 0;
 					foe.consumeItem(this);
 				}
 			} else {
-			    fail = fail();
+				fail = fail();
 			}
 			break;
 		case TAIL_GLOW:
@@ -7209,76 +7349,76 @@ public class Pokemon implements Serializable {
 
 	public double asModifier(int index) {
 		double numerator = 2.0;
-        double denominator = 2.0;
+		double denominator = 2.0;
 
-        int stage = this.statStages[index];
-        if (stage < 0) {
-            denominator -= stage;
-        } else if (stage > 0) {
-            numerator += stage;
-        }
-        
-        return numerator / denominator;
+		int stage = this.statStages[index];
+		if (stage < 0) {
+			denominator -= stage;
+		} else if (stage > 0) {
+			numerator += stage;
+		}
+		
+		return numerator / denominator;
 	}
 	
 	public double asAccModifier(int accEv) {
 		double numerator = 3.0;
-        double denominator = 3.0;
+		double denominator = 3.0;
 
-        if (accEv < 0) {
-            denominator -= accEv;
-        } else if (accEv > 0) {
-            numerator += accEv;
-        }
-        
-        return numerator / denominator;
+		if (accEv < 0) {
+			denominator -= accEv;
+		} else if (accEv > 0) {
+			numerator += accEv;
+		}
+		
+		return numerator / denominator;
 	}
 
 	public boolean getImmune(Pokemon p, PType type) {
 		switch(type) {
-        case NORMAL:
-        	if (p.type1 == PType.GHOST) return true;
-        	if (p.type2 == PType.GHOST) return true;
-        	return false;
-        case ROCK: 
-            return false;
+		case NORMAL:
+			if (p.type1 == PType.GHOST) return true;
+			if (p.type2 == PType.GHOST) return true;
+			return false;
+		case ROCK: 
+			return false;
 		case BUG:
 			return false;
 		case DARK:
 			return false;
 		case DRAGON:
 			if (p.type1 == PType.MAGIC) return true;
-        	if (p.type2 == PType.MAGIC) return true;
+			if (p.type2 == PType.MAGIC) return true;
 			return false;
 		case ELECTRIC:
 			if (p.type1 == PType.GROUND) return true;
-        	if (p.type2 == PType.GROUND) return true;
-            return false;
+			if (p.type2 == PType.GROUND) return true;
+			return false;
 		case FIGHTING:
 			if (p.type1 == PType.GHOST) return true;
-        	if (p.type2 == PType.GHOST) return true;
-            return false;
+			if (p.type2 == PType.GHOST) return true;
+			return false;
 		case FIRE:
 			if (p.type1 == PType.GALACTIC) return true;
-        	if (p.type2 == PType.GALACTIC) return true;
+			if (p.type2 == PType.GALACTIC) return true;
 			return false;
 		case FLYING:
 			return false;
 		case GHOST:
 			if (p.type1 == PType.NORMAL) return true;
-        	if (p.type2 == PType.NORMAL) return true;
-            return false;
+			if (p.type2 == PType.NORMAL) return true;
+			return false;
 		case GRASS:
 			return false;
 		case GROUND:
 			if (p.type1 == PType.FLYING) return true;
-        	if (p.type2 == PType.FLYING) return true;
+			if (p.type2 == PType.FLYING) return true;
 			return false;
 		case MAGIC:
-        	return false;
+			return false;
 		case POISON:
 			if (p.type1 == PType.STEEL) return true;
-        	if (p.type2 == PType.STEEL) return true;
+			if (p.type2 == PType.STEEL) return true;
 			return false;
 		case STEEL:
 			return false;
@@ -7286,11 +7426,11 @@ public class Pokemon implements Serializable {
 			return false;
 		case LIGHT:
 			if (p.type1 == PType.GRASS) return true;
-        	if (p.type2 == PType.GRASS) return true;
+			if (p.type2 == PType.GRASS) return true;
 			return false;
 		case PSYCHIC:
 			if (p.type1 == PType.DARK) return true;
-        	if (p.type2 == PType.DARK) return true;
+			if (p.type2 == PType.DARK) return true;
 			return false;
 		case ICE:
 			return false;
@@ -7370,103 +7510,103 @@ public class Pokemon implements Serializable {
 	}
 	
 	public PType[] getResistances(PType type) {
-	    ArrayList<PType> resistantTypes = new ArrayList<>();
-	    switch(type) {
-	        case NORMAL: 
-	        	resistantTypes.add(PType.ROCK);
-	            resistantTypes.add(PType.STEEL);
-	            break;
-	        case ROCK: 
-	            resistantTypes.add(PType.FIGHTING);
-	            resistantTypes.add(PType.GROUND);
-	            resistantTypes.add(PType.STEEL);
-	            break;
+		ArrayList<PType> resistantTypes = new ArrayList<>();
+		switch(type) {
+			case NORMAL: 
+				resistantTypes.add(PType.ROCK);
+				resistantTypes.add(PType.STEEL);
+				break;
+			case ROCK: 
+				resistantTypes.add(PType.FIGHTING);
+				resistantTypes.add(PType.GROUND);
+				resistantTypes.add(PType.STEEL);
+				break;
 			case BUG:
 				resistantTypes.add(PType.FIRE);
-	            resistantTypes.add(PType.POISON);
-	            resistantTypes.add(PType.FLYING);
-	            resistantTypes.add(PType.FIGHTING);
-	            resistantTypes.add(PType.GHOST);
-	            resistantTypes.add(PType.STEEL);
-	            resistantTypes.add(PType.GALACTIC);
-	            break;
+				resistantTypes.add(PType.POISON);
+				resistantTypes.add(PType.FLYING);
+				resistantTypes.add(PType.FIGHTING);
+				resistantTypes.add(PType.GHOST);
+				resistantTypes.add(PType.STEEL);
+				resistantTypes.add(PType.GALACTIC);
+				break;
 			case DARK:
 				resistantTypes.add(PType.FIGHTING);
-	            resistantTypes.add(PType.DARK);
-	            resistantTypes.add(PType.LIGHT);
-	            resistantTypes.add(PType.GALACTIC);
-	            break;
+				resistantTypes.add(PType.DARK);
+				resistantTypes.add(PType.LIGHT);
+				resistantTypes.add(PType.GALACTIC);
+				break;
 			case DRAGON:
 				resistantTypes.add(PType.STEEL);
-	            break;
+				break;
 			case ELECTRIC:
 				resistantTypes.add(PType.ELECTRIC);
-	            resistantTypes.add(PType.GRASS);
-	            resistantTypes.add(PType.DRAGON);
-	            resistantTypes.add(PType.GHOST);
-	            break;
+				resistantTypes.add(PType.GRASS);
+				resistantTypes.add(PType.DRAGON);
+				resistantTypes.add(PType.GHOST);
+				break;
 			case FIGHTING:
 				resistantTypes.add(PType.GALACTIC);
-	            resistantTypes.add(PType.FLYING);
-	            resistantTypes.add(PType.BUG);
-	            resistantTypes.add(PType.MAGIC);
-	            resistantTypes.add(PType.PSYCHIC);
-	            break;
+				resistantTypes.add(PType.FLYING);
+				resistantTypes.add(PType.BUG);
+				resistantTypes.add(PType.MAGIC);
+				resistantTypes.add(PType.PSYCHIC);
+				break;
 			case FIRE:
 				resistantTypes.add(PType.FIRE);
-	            resistantTypes.add(PType.WATER);
-	            resistantTypes.add(PType.ROCK);
-	            resistantTypes.add(PType.DRAGON);
-	            break;
+				resistantTypes.add(PType.WATER);
+				resistantTypes.add(PType.ROCK);
+				resistantTypes.add(PType.DRAGON);
+				break;
 			case FLYING:
 				resistantTypes.add(PType.ELECTRIC);
-	            resistantTypes.add(PType.ROCK);
-	            resistantTypes.add(PType.STEEL);
-	            resistantTypes.add(PType.ICE);
-	            break;
+				resistantTypes.add(PType.ROCK);
+				resistantTypes.add(PType.STEEL);
+				resistantTypes.add(PType.ICE);
+				break;
 			case GHOST:
 				resistantTypes.add(PType.DARK);
 				resistantTypes.add(PType.LIGHT);
-	            break;
+				break;
 			case GRASS:
 				resistantTypes.add(PType.FIRE);
-	            resistantTypes.add(PType.GRASS);
-	            resistantTypes.add(PType.POISON);
-	            resistantTypes.add(PType.FLYING);
-	            resistantTypes.add(PType.BUG);
-	            resistantTypes.add(PType.DRAGON);
-	            resistantTypes.add(PType.STEEL);
-	            resistantTypes.add(PType.GALACTIC);
-	            break;
+				resistantTypes.add(PType.GRASS);
+				resistantTypes.add(PType.POISON);
+				resistantTypes.add(PType.FLYING);
+				resistantTypes.add(PType.BUG);
+				resistantTypes.add(PType.DRAGON);
+				resistantTypes.add(PType.STEEL);
+				resistantTypes.add(PType.GALACTIC);
+				break;
 			case GROUND:
 				resistantTypes.add(PType.GRASS);
-	            resistantTypes.add(PType.BUG);
-	            resistantTypes.add(PType.GALACTIC);
+				resistantTypes.add(PType.BUG);
+				resistantTypes.add(PType.GALACTIC);
 				break;
 			case MAGIC:
 				resistantTypes.add(PType.POISON);
-	            resistantTypes.add(PType.DARK);
-	            resistantTypes.add(PType.MAGIC);
+				resistantTypes.add(PType.DARK);
+				resistantTypes.add(PType.MAGIC);
 				break;
 			case POISON:
 				resistantTypes.add(PType.POISON);
-	            resistantTypes.add(PType.GROUND);
-	            resistantTypes.add(PType.ROCK);
-	            resistantTypes.add(PType.GHOST);
-	            resistantTypes.add(PType.PSYCHIC);
+				resistantTypes.add(PType.GROUND);
+				resistantTypes.add(PType.ROCK);
+				resistantTypes.add(PType.GHOST);
+				resistantTypes.add(PType.PSYCHIC);
 				break;
 			case STEEL:
 				resistantTypes.add(PType.FIRE);
-	            resistantTypes.add(PType.WATER);
-	            resistantTypes.add(PType.ELECTRIC);
-	            resistantTypes.add(PType.STEEL);
-	            resistantTypes.add(PType.MAGIC);
+				resistantTypes.add(PType.WATER);
+				resistantTypes.add(PType.ELECTRIC);
+				resistantTypes.add(PType.STEEL);
+				resistantTypes.add(PType.MAGIC);
 				break;
 			case WATER:
 				resistantTypes.add(PType.WATER);
-	            resistantTypes.add(PType.GRASS);
-	            resistantTypes.add(PType.DRAGON);
-	            resistantTypes.add(PType.POISON);
+				resistantTypes.add(PType.GRASS);
+				resistantTypes.add(PType.DRAGON);
+				resistantTypes.add(PType.POISON);
 				break;
 			case LIGHT:
 				resistantTypes.add(PType.FIRE);
@@ -7492,84 +7632,84 @@ public class Pokemon implements Serializable {
 				break;
 			default:
 				break;
-	    }
-	    PType[] toReturn = new PType[resistantTypes.size()];
-	    return resistantTypes.toArray(toReturn);
+		}
+		PType[] toReturn = new PType[resistantTypes.size()];
+		return resistantTypes.toArray(toReturn);
 	}
 	
 	public PType[] getWeaknesses(PType type) {
-	    ArrayList<PType> weakTypes = new ArrayList<>();
-	    switch(type) {
-	        case NORMAL:
-	        	weakTypes.add(PType.MAGIC);
-	            break;
-	        case ROCK: 
-	            weakTypes.add(PType.FIRE);
-	            weakTypes.add(PType.ICE);
-	            weakTypes.add(PType.FLYING);
-	            weakTypes.add(PType.BUG);
-	            weakTypes.add(PType.GALACTIC);
-	            break;
+		ArrayList<PType> weakTypes = new ArrayList<>();
+		switch(type) {
+			case NORMAL:
+				weakTypes.add(PType.MAGIC);
+				break;
+			case ROCK: 
+				weakTypes.add(PType.FIRE);
+				weakTypes.add(PType.ICE);
+				weakTypes.add(PType.FLYING);
+				weakTypes.add(PType.BUG);
+				weakTypes.add(PType.GALACTIC);
+				break;
 			case BUG:
 				weakTypes.add(PType.GRASS);
-	            weakTypes.add(PType.PSYCHIC);
-	            weakTypes.add(PType.DARK);
-	            weakTypes.add(PType.LIGHT);
-	            break;
+				weakTypes.add(PType.PSYCHIC);
+				weakTypes.add(PType.DARK);
+				weakTypes.add(PType.LIGHT);
+				break;
 			case DARK:
 				weakTypes.add(PType.PSYCHIC);
-	            weakTypes.add(PType.GHOST);
-	            break;
+				weakTypes.add(PType.GHOST);
+				break;
 			case DRAGON:
 				weakTypes.add(PType.DRAGON);
 				weakTypes.add(PType.GALACTIC);
-	            break;
+				break;
 			case ELECTRIC:
 				weakTypes.add(PType.WATER);
 				weakTypes.add(PType.STEEL);
-	            weakTypes.add(PType.FLYING);
-	            break;
+				weakTypes.add(PType.FLYING);
+				break;
 			case FIGHTING:
 				weakTypes.add(PType.NORMAL);
-	            weakTypes.add(PType.ROCK);
-	            weakTypes.add(PType.ICE);
-	            weakTypes.add(PType.DARK);
-	            weakTypes.add(PType.STEEL);
-	            break;
+				weakTypes.add(PType.ROCK);
+				weakTypes.add(PType.ICE);
+				weakTypes.add(PType.DARK);
+				weakTypes.add(PType.STEEL);
+				break;
 			case FIRE:
 				weakTypes.add(PType.GRASS);
 				weakTypes.add(PType.ICE);
-	            weakTypes.add(PType.BUG);
-	            weakTypes.add(PType.STEEL);
-	            break;
+				weakTypes.add(PType.BUG);
+				weakTypes.add(PType.STEEL);
+				break;
 			case FLYING:
 				weakTypes.add(PType.GRASS);
 				weakTypes.add(PType.FIGHTING);
-	            weakTypes.add(PType.BUG);
-	            weakTypes.add(PType.GALACTIC);
-	            break;
+				weakTypes.add(PType.BUG);
+				weakTypes.add(PType.GALACTIC);
+				break;
 			case GHOST:
 				weakTypes.add(PType.ELECTRIC);
 				weakTypes.add(PType.GHOST);
 				weakTypes.add(PType.PSYCHIC);
-	            break;
+				break;
 			case GRASS:
 				weakTypes.add(PType.WATER);
-	            weakTypes.add(PType.ROCK);
-	            weakTypes.add(PType.GROUND);
-	            weakTypes.add(PType.LIGHT);
-	            break;
+				weakTypes.add(PType.ROCK);
+				weakTypes.add(PType.GROUND);
+				weakTypes.add(PType.LIGHT);
+				break;
 			case GROUND:
 				weakTypes.add(PType.ELECTRIC);
-	            weakTypes.add(PType.FIRE);
-	            weakTypes.add(PType.POISON);
-	            weakTypes.add(PType.ROCK);
-	            weakTypes.add(PType.STEEL);
+				weakTypes.add(PType.FIRE);
+				weakTypes.add(PType.POISON);
+				weakTypes.add(PType.ROCK);
+				weakTypes.add(PType.STEEL);
 				break;
 			case MAGIC:
 				weakTypes.add(PType.NORMAL);
-	            weakTypes.add(PType.STEEL);
-	            weakTypes.add(PType.DRAGON);
+				weakTypes.add(PType.STEEL);
+				weakTypes.add(PType.DRAGON);
 				break;
 			case POISON:
 				weakTypes.add(PType.GRASS);
@@ -7579,12 +7719,12 @@ public class Pokemon implements Serializable {
 			case STEEL:
 				weakTypes.add(PType.ICE);
 				weakTypes.add(PType.ROCK);
-	            weakTypes.add(PType.LIGHT);
+				weakTypes.add(PType.LIGHT);
 				break;
 			case WATER:
 				weakTypes.add(PType.FIRE);
-	            weakTypes.add(PType.ROCK);
-	            weakTypes.add(PType.GROUND);
+				weakTypes.add(PType.ROCK);
+				weakTypes.add(PType.GROUND);
 				break;
 			case LIGHT:
 				weakTypes.add(PType.ICE);
@@ -7609,9 +7749,9 @@ public class Pokemon implements Serializable {
 				break;
 			default:
 				break;
-	    }
-	    PType[] toReturn = new PType[weakTypes.size()];
-	    return weakTypes.toArray(toReturn);
+		}
+		PType[] toReturn = new PType[weakTypes.size()];
+		return weakTypes.toArray(toReturn);
 	}
 
 	public void faint(boolean announce, Pokemon foe) {
@@ -8333,11 +8473,11 @@ public class Pokemon implements Serializable {
 		
 		if ((move == Move.SELF$DESTRUCT || move == Move.EXPLOSION || move == Move.SUPERNOVA_EXPLOSION || move == Move.STEEL_BEAM) && mode == 0) {
 			Random rand = new Random();
-		    double hpPercent = this.currentHP * 1.0 / this.getStat(0);
-		    
-		    if ((this.trainer != null && !this.trainer.hasValidMembers(foe)) || rand.nextDouble() < (hpPercent - 0.1)) {
-		        return new Pair<>(0, 0.0);
-		    }
+			double hpPercent = this.currentHP * 1.0 / this.getStat(0);
+			
+			if ((this.trainer != null && !this.trainer.hasValidMembers(foe)) || rand.nextDouble() < (hpPercent - 0.1)) {
+				return new Pair<>(0, 0.0);
+			}
 		}
 		if (move == Move.FUTURE_SIGHT) {
 			if (mode == 0) {
@@ -9027,19 +9167,19 @@ public class Pokemon implements Serializable {
 		int bp = 0;
 		switch (move) {
 		case ABYSSAL_CHOP:
-		    if (foe.status == Status.PARALYZED) {
-		        bp = 140;
-		    } else {
-		        bp = 70;
-		    }
-		    break;
+			if (foe.status == Status.PARALYZED) {
+				bp = 140;
+			} else {
+				bp = 70;
+			}
+			break;
 		case ACROBATICS:
-		    if (this.item == null && this.headbuttCrit >= 0) {
-		        bp = 110;
-		    } else {
-		        bp = 55;
-		    }
-		    break;
+			if (this.item == null && this.headbuttCrit >= 0) {
+				bp = 110;
+			} else {
+				bp = 55;
+			}
+			break;
 		case BRINE:
 			if (foe.currentHP * 1.0 / foe.getStat(0) >= 0.5) {
 				bp = 65;
@@ -9334,204 +9474,204 @@ public class Pokemon implements Serializable {
 	}
 
 	public JPanel showSummary(Field field, JPanel panel) {
-	    JPanel teamMemberPanel = new JPanel();
-	    teamMemberPanel.setLayout(new BoxLayout(teamMemberPanel, BoxLayout.Y_AXIS));
-	    
-	    JLabel spriteLabel = new JLabel();
-	    ImageIcon spriteIcon = new ImageIcon(this.getSprite());
-	    spriteLabel.setIcon(spriteIcon);
+		JPanel teamMemberPanel = new JPanel();
+		teamMemberPanel.setLayout(new BoxLayout(teamMemberPanel, BoxLayout.Y_AXIS));
+		
+		JLabel spriteLabel = new JLabel();
+		ImageIcon spriteIcon = new ImageIcon(this.getSprite());
+		spriteLabel.setIcon(spriteIcon);
 
-	    JLabel nameLabel, nicknameLabel, abilityLabel, abilityDescLabel, natureLabel, hpLabel, statusLabel;
-	    nameLabel = nicknameLabel = abilityLabel = abilityDescLabel = natureLabel = hpLabel = statusLabel = new JLabel("N/A");
-	    JLabel[] stats = new JLabel[6];
-	    JLabel[] ivs = new JLabel[6];
-	    JProgressBar[] bars = new JProgressBar[6];
-	    JPanel labelPanel = new JPanel(new GridLayout(6, 2));
-	    JPanel barPanel = new JPanel(new GridLayout(6, 1));
-	    JPanel statsPanel = new JPanel(new GridLayout(1, 2));
-	    JGradientButton type1B, type2B;
-	    JProgressBar expBar = new JProgressBar();
-	    JPanel movesPanel = new JPanel(new GridLayout(2, 2));
-	    JPanel bottomPanel = new JPanel(new GridLayout(1, 2));
-	    type1B = new JGradientButton("");
-	    type2B = new JGradientButton("");
-	    if (this != null) {
-	        nameLabel = new JLabel(this.name() + " Lv. " + this.getLevel());
-	        nameLabel.setForeground(this.type1.getColor().darker());
-	        nameLabel.setFont(new Font(nameLabel.getFont().getName(), Font.BOLD, 16));
-	        nicknameLabel = new JLabel(this.nickname);
-	        nicknameLabel.setFont(new Font(nicknameLabel.getFont().getName(), Font.BOLD, 18));
-	        hpLabel = new JLabel(this.currentHP + " / " + this.getStat(0) + " HP");
-	        hpLabel.setFont(new Font(hpLabel.getFont().getName(), Font.BOLD, 14));
-	        type1B.setText(this.type1.toString());
-	        type1B.setBackground(this.type1.getColor());
-	        if (this.type2 != null) {
-	            type2B.setText(this.type2.toString());
-	            type2B.setBackground(this.type2.getColor());
-	        }
-	        
-	        for (int i = 0; i < 6; i++) {
-	        	String type = getStatType(i, false);
-	        	stats[i] = new JLabel(type + this.getStat(i));
-	        	stats[i].setFont(new Font(stats[i].getFont().getName(), Font.BOLD, 14));
-	        	stats[i].setSize(50, stats[i].getHeight());
-	        	
-	        	if (i != 0) {
-	        	    if (this.nat.getStat(i - 1) == 1.1) {
-	        	        stats[i].setForeground(Color.red.darker().darker());
-	        	        stats[i].setText(type + this.getStat(i) + " \u2191"); // Up arrow
-	        	    } else if (this.nat.getStat(i - 1) == 0.9) {
-	        	        stats[i].setForeground(Color.blue.darker().darker());
-	        	        stats[i].setText(type + this.getStat(i) + " \u2193"); // Down arrow
-	        	    }
-	        	}
-	        	
-	        	statsPanel.add(stats[i]);
-	        	
-	        	ivs[i] = new JLabel("IV: " + this.getIVs()[i]);
-	        	
-	        	labelPanel.add(stats[i]);
-	        	labelPanel.add(ivs[i]);
-	        	
-	        	bars[i] = new JProgressBar();
-	        	bars[i].setMaximum(200);
-	        	bars[i].setValue(this.getBaseStat(i));
-	        	bars[i].setString(this.getBaseStat(i) + "");
-	        	bars[i].setUI(new CustomProgressBarUI(Color.BLACK));
-	        	bars[i].setStringPainted(true);
-	        	bars[i].setForeground(getColor(this.getBaseStat(i)));
-	        	
-	        	barPanel.add(bars[i]);
-	        	
-	        }
-	        
-	        abilityLabel = new JLabel("Ability: " + this.ability.toString());
-	        abilityDescLabel = new JLabel(this.ability.desc);
-	        abilityLabel.setFont(new Font(hpLabel.getFont().getName(), Font.BOLD, 14));
-	        natureLabel = new JLabel(this.getNature() + " Nature");
+		JLabel nameLabel, nicknameLabel, abilityLabel, abilityDescLabel, natureLabel, hpLabel, statusLabel;
+		nameLabel = nicknameLabel = abilityLabel = abilityDescLabel = natureLabel = hpLabel = statusLabel = new JLabel("N/A");
+		JLabel[] stats = new JLabel[6];
+		JLabel[] ivs = new JLabel[6];
+		JProgressBar[] bars = new JProgressBar[6];
+		JPanel labelPanel = new JPanel(new GridLayout(6, 2));
+		JPanel barPanel = new JPanel(new GridLayout(6, 1));
+		JPanel statsPanel = new JPanel(new GridLayout(1, 2));
+		JGradientButton type1B, type2B;
+		JProgressBar expBar = new JProgressBar();
+		JPanel movesPanel = new JPanel(new GridLayout(2, 2));
+		JPanel bottomPanel = new JPanel(new GridLayout(1, 2));
+		type1B = new JGradientButton("");
+		type2B = new JGradientButton("");
+		if (this != null) {
+			nameLabel = new JLabel(this.name() + " Lv. " + this.getLevel());
+			nameLabel.setForeground(this.type1.getColor().darker());
+			nameLabel.setFont(new Font(nameLabel.getFont().getName(), Font.BOLD, 16));
+			nicknameLabel = new JLabel(this.nickname);
+			nicknameLabel.setFont(new Font(nicknameLabel.getFont().getName(), Font.BOLD, 18));
+			hpLabel = new JLabel(this.currentHP + " / " + this.getStat(0) + " HP");
+			hpLabel.setFont(new Font(hpLabel.getFont().getName(), Font.BOLD, 14));
+			type1B.setText(this.type1.toString());
+			type1B.setBackground(this.type1.getColor());
+			if (this.type2 != null) {
+				type2B.setText(this.type2.toString());
+				type2B.setBackground(this.type2.getColor());
+			}
+			
+			for (int i = 0; i < 6; i++) {
+				String type = getStatType(i, false);
+				stats[i] = new JLabel(type + this.getStat(i));
+				stats[i].setFont(new Font(stats[i].getFont().getName(), Font.BOLD, 14));
+				stats[i].setSize(50, stats[i].getHeight());
+				
+				if (i != 0) {
+					if (this.nat.getStat(i - 1) == 1.1) {
+						stats[i].setForeground(Color.red.darker().darker());
+						stats[i].setText(type + this.getStat(i) + " \u2191"); // Up arrow
+					} else if (this.nat.getStat(i - 1) == 0.9) {
+						stats[i].setForeground(Color.blue.darker().darker());
+						stats[i].setText(type + this.getStat(i) + " \u2193"); // Down arrow
+					}
+				}
+				
+				statsPanel.add(stats[i]);
+				
+				ivs[i] = new JLabel("IV: " + this.getIVs()[i]);
+				
+				labelPanel.add(stats[i]);
+				labelPanel.add(ivs[i]);
+				
+				bars[i] = new JProgressBar();
+				bars[i].setMaximum(200);
+				bars[i].setValue(this.getBaseStat(i));
+				bars[i].setString(this.getBaseStat(i) + "");
+				bars[i].setUI(new CustomProgressBarUI(Color.BLACK));
+				bars[i].setStringPainted(true);
+				bars[i].setForeground(getColor(this.getBaseStat(i)));
+				
+				barPanel.add(bars[i]);
+				
+			}
+			
+			abilityLabel = new JLabel("Ability: " + this.ability.toString());
+			abilityDescLabel = new JLabel(this.ability.desc);
+			abilityLabel.setFont(new Font(hpLabel.getFont().getName(), Font.BOLD, 14));
+			natureLabel = new JLabel(this.getNature() + " Nature");
 
-	        for (int i = 0; i < 4; i++) {
-	        	JButton moveButton = new JGradientButton("");
-	            if (moveset[i] != null) {
-	                moveButton.setText(moveset[i].move.toString() + " " + moveset[i].showPP());
-	                Move move = moveset[i].move;
-	                PType mtype = move.getType(this, field);
-			        Color color = mtype.getColor();
-	                moveButton.setBackground(color);
-	                moveButton.setForeground(moveset[i].getPPColor());
-	                int index = i;
-	                moveButton.addActionListener(e -> {
-			            JOptionPane.showMessageDialog(null, moveset[index].move.getMoveSummary(this, null, field), "Move Description", JOptionPane.INFORMATION_MESSAGE);
-	                });
-	            }
-	            movesPanel.add(moveButton);
-	        }
-	        statusLabel = (this.isFainted()) ? new JLabel("Status: FAINTED") : new JLabel("Status: " + this.status.toString());
-	        if (!this.isFainted() && this.status == Status.HEALTHY) {
-	            statusLabel.setForeground(Color.GREEN.darker());
-	        } else if (this.isFainted()) {
-	            statusLabel.setForeground(Color.RED.darker());
-	        } else {
-	            statusLabel.setForeground(this.status.getColor());
-	        }
-	        expBar = new JProgressBar(0, this.expMax);
-	        expBar.setForeground(new Color(0, 128, 255));
-	        expBar.setValue(exp);
-	        expBar.setString(expMax - exp + " points to lv. up");
-	        expBar.setStringPainted(true);
-	        
-	        bottomPanel.add(expBar);
-	        bottomPanel.add(statusLabel);
-	    }
-	    
-	    JPanel nicknameLabelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	    nicknameLabelPanel.add(nicknameLabel);
-	    teamMemberPanel.add(nicknameLabelPanel);
+			for (int i = 0; i < 4; i++) {
+				JButton moveButton = new JGradientButton("");
+				if (moveset[i] != null) {
+					moveButton.setText(moveset[i].move.toString() + " " + moveset[i].showPP());
+					Move move = moveset[i].move;
+					PType mtype = move.getType(this, field);
+					Color color = mtype.getColor();
+					moveButton.setBackground(color);
+					moveButton.setForeground(moveset[i].getPPColor());
+					int index = i;
+					moveButton.addActionListener(e -> {
+						JOptionPane.showMessageDialog(null, moveset[index].move.getMoveSummary(this, null, field), "Move Description", JOptionPane.INFORMATION_MESSAGE);
+					});
+				}
+				movesPanel.add(moveButton);
+			}
+			statusLabel = (this.isFainted()) ? new JLabel("Status: FAINTED") : new JLabel("Status: " + this.status.toString());
+			if (!this.isFainted() && this.status == Status.HEALTHY) {
+				statusLabel.setForeground(Color.GREEN.darker());
+			} else if (this.isFainted()) {
+				statusLabel.setForeground(Color.RED.darker());
+			} else {
+				statusLabel.setForeground(this.status.getColor());
+			}
+			expBar = new JProgressBar(0, this.expMax);
+			expBar.setForeground(new Color(0, 128, 255));
+			expBar.setValue(exp);
+			expBar.setString(expMax - exp + " points to lv. up");
+			expBar.setStringPainted(true);
+			
+			bottomPanel.add(expBar);
+			bottomPanel.add(statusLabel);
+		}
+		
+		JPanel nicknameLabelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		nicknameLabelPanel.add(nicknameLabel);
+		teamMemberPanel.add(nicknameLabelPanel);
 
-	    JPanel nameLabelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	    nameLabelPanel.add(nameLabel);
-	    teamMemberPanel.add(nameLabelPanel);
-	    
-	    JPanel spriteLabelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	    nameLabelPanel.add(spriteLabel);
-	    teamMemberPanel.add(spriteLabelPanel);
+		JPanel nameLabelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		nameLabelPanel.add(nameLabel);
+		teamMemberPanel.add(nameLabelPanel);
+		
+		JPanel spriteLabelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		nameLabelPanel.add(spriteLabel);
+		teamMemberPanel.add(spriteLabelPanel);
 
-	    JPanel hpLabelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	    hpLabelPanel.add(hpLabel);
-	    teamMemberPanel.add(hpLabelPanel);
+		JPanel hpLabelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		hpLabelPanel.add(hpLabel);
+		teamMemberPanel.add(hpLabelPanel);
 
-	    JPanel typesPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	    typesPanel.add(type1B);
-	    typesPanel.add(type2B);
-	    teamMemberPanel.add(typesPanel);
-	    
-	    JPanel abilityLabelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	    abilityLabelPanel.add(abilityLabel);
-	    teamMemberPanel.add(abilityLabelPanel);
-	    
-	    JPanel abilityDescLabelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	    abilityDescLabelPanel.add(abilityDescLabel);
-	    teamMemberPanel.add(abilityDescLabelPanel);
+		JPanel typesPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		typesPanel.add(type1B);
+		typesPanel.add(type2B);
+		teamMemberPanel.add(typesPanel);
+		
+		JPanel abilityLabelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		abilityLabelPanel.add(abilityLabel);
+		teamMemberPanel.add(abilityLabelPanel);
+		
+		JPanel abilityDescLabelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		abilityDescLabelPanel.add(abilityDescLabel);
+		teamMemberPanel.add(abilityDescLabelPanel);
 
-	    JPanel natureLabelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	    natureLabelPanel.add(natureLabel);
-	    teamMemberPanel.add(natureLabelPanel);
-	    
-	    statsPanel.add(labelPanel);
-	    statsPanel.add(barPanel);
-	    teamMemberPanel.add(statsPanel);
-	    
-	    teamMemberPanel.add(movesPanel);
-	    
-    	JButton takeButton = new JButton("N/A");
-	    JPanel itemPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	    JPanel itemDescPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	    JLabel itemLabel = new JLabel("N/A");
-	    JLabel itemDesc = new JLabel("N/A");
-	    if (this.item != null) {
-	    	takeButton.setText("Take " + item.toString());
-	    	itemLabel.setText(item.toString());
-	    	takeButton.addActionListener(e -> {
-	    		int option = JOptionPane.showOptionDialog(null,
-	    				"Would you like to take " + this.nickname + "'s " + this.item + "?",
-	    				"Take " + this.item + "?",
-	    	            JOptionPane.YES_NO_OPTION,
-	    	            JOptionPane.QUESTION_MESSAGE,
-	    	            null, null, null);
-	    	    if (option == JOptionPane.YES_OPTION) {
-	    	    	//Item old = this.item;
+		JPanel natureLabelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		natureLabelPanel.add(natureLabel);
+		teamMemberPanel.add(natureLabelPanel);
+		
+		statsPanel.add(labelPanel);
+		statsPanel.add(barPanel);
+		teamMemberPanel.add(statsPanel);
+		
+		teamMemberPanel.add(movesPanel);
+		
+		JButton takeButton = new JButton("N/A");
+		JPanel itemPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JPanel itemDescPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JLabel itemLabel = new JLabel("N/A");
+		JLabel itemDesc = new JLabel("N/A");
+		if (this.item != null) {
+			takeButton.setText("Take " + item.toString());
+			itemLabel.setText(item.toString());
+			takeButton.addActionListener(e -> {
+				int option = JOptionPane.showOptionDialog(null,
+						"Would you like to take " + this.nickname + "'s " + this.item + "?",
+						"Take " + this.item + "?",
+						JOptionPane.YES_NO_OPTION,
+						JOptionPane.QUESTION_MESSAGE,
+						null, null, null);
+				if (option == JOptionPane.YES_OPTION) {
+					//Item old = this.item;
 					//player.bag.add(old);
-	        		this.item = null;
-	        		SwingUtilities.getWindowAncestor(teamMemberPanel).dispose();
-	        		if (panel != null) SwingUtilities.getWindowAncestor(panel).dispose();
-	    	    }
-	    	});
-	    	itemPanel.add(new JLabel(new ImageIcon(this.item.getImage())));
-	    	itemPanel.add(itemLabel);
-	    	itemDesc.setText("<html>" + Item.breakString(this.item.getDesc(), Math.max(this.ability.desc.length() - 4, 50)).replace("\n", "<br>") + "</html>");
-	    	teamMemberPanel.add(itemPanel);
-	    	itemDescPanel.add(itemDesc);
-	    	teamMemberPanel.add(itemDescPanel);
-	    }
-	    
-	    JPanel happinessPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	    happinessPanel.add(new JLabel(getHappinessDesc()));
-	    teamMemberPanel.add(happinessPanel);
-	    
-	    Pokemon p = this;
-	    happinessPanel.addMouseListener(new MouseAdapter() {
+					this.item = null;
+					SwingUtilities.getWindowAncestor(teamMemberPanel).dispose();
+					if (panel != null) SwingUtilities.getWindowAncestor(panel).dispose();
+				}
+			});
+			itemPanel.add(new JLabel(new ImageIcon(this.item.getImage())));
+			itemPanel.add(itemLabel);
+			itemDesc.setText("<html>" + Item.breakString(this.item.getDesc(), Math.max(this.ability.desc.length() - 4, 50)).replace("\n", "<br>") + "</html>");
+			teamMemberPanel.add(itemPanel);
+			itemDescPanel.add(itemDesc);
+			teamMemberPanel.add(itemDescPanel);
+		}
+		
+		JPanel happinessPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		happinessPanel.add(new JLabel(getHappinessDesc()));
+		teamMemberPanel.add(happinessPanel);
+		
+		Pokemon p = this;
+		happinessPanel.addMouseListener(new MouseAdapter() {
 			@Override
-            public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e) {
 				String happinessCap = p.happiness >= 255 ? 0 + "" : p.happinessCap + "";
-		        JOptionPane.showMessageDialog(null, "Happiness: " + p.happiness + " (" + happinessCap + " remaining)");
-            }
+				JOptionPane.showMessageDialog(null, "Happiness: " + p.happiness + " (" + happinessCap + " remaining)");
+			}
 		});
-	    
-	    teamMemberPanel.add(bottomPanel);
-	    
-	    teamMemberPanel.add(Box.createHorizontalGlue());
+		
+		teamMemberPanel.add(bottomPanel);
+		
+		teamMemberPanel.add(Box.createHorizontalGlue());
 
-	    return teamMemberPanel;
+		return teamMemberPanel;
 	}
 	
 	public String getHappinessDesc() {
@@ -9554,23 +9694,23 @@ public class Pokemon implements Serializable {
 	
 	public static Color getColor(int value) {
 		if (value == 0) return Color.BLACK;
-        if (value <= 50) {
-            return fadeBetweenColors(Color.RED, Color.YELLOW, value / 50.0f);
-        } else if (value <= 100) {
-            return fadeBetweenColors(Color.YELLOW, Color.GREEN, (value - 50) / 50.0f);
-        } else if (value <= 150) {
-            return fadeBetweenColors(Color.GREEN, new Color(0, 175, 255), (value - 100) / 50.0f);
-        } else {
-            return Color.BLUE;
-        }
-    }
+		if (value <= 50) {
+			return fadeBetweenColors(Color.RED, Color.YELLOW, value / 50.0f);
+		} else if (value <= 100) {
+			return fadeBetweenColors(Color.YELLOW, Color.GREEN, (value - 50) / 50.0f);
+		} else if (value <= 150) {
+			return fadeBetweenColors(Color.GREEN, new Color(0, 175, 255), (value - 100) / 50.0f);
+		} else {
+			return Color.BLUE;
+		}
+	}
 
-    private static Color fadeBetweenColors(Color startColor, Color endColor, float percentage) {
-        int r = (int) (startColor.getRed() + percentage * (endColor.getRed() - startColor.getRed()));
-        int g = (int) (startColor.getGreen() + percentage * (endColor.getGreen() - startColor.getGreen()));
-        int b = (int) (startColor.getBlue() + percentage * (endColor.getBlue() - startColor.getBlue()));
-        return new Color(r, g, b);
-    }
+	private static Color fadeBetweenColors(Color startColor, Color endColor, float percentage) {
+		int r = (int) (startColor.getRed() + percentage * (endColor.getRed() - startColor.getRed()));
+		int g = (int) (startColor.getGreen() + percentage * (endColor.getGreen() - startColor.getGreen()));
+		int b = (int) (startColor.getBlue() + percentage * (endColor.getBlue() - startColor.getBlue()));
+		return new Color(r, g, b);
+	}
 
 	public PType determineHPType() {
 		int sum = 0;
@@ -9585,47 +9725,47 @@ public class Pokemon implements Serializable {
 	}
 	
 	public static int[] determineOptimalIVs(PType hpType) {
-        if (hpType == PType.NORMAL || hpType == PType.UNKNOWN) {
-            return new int[] {31, 31, 31, 31, 31, 31};
-        }
-        
-        // initialization for error message
-        Pokemon tempPokemon = new Pokemon(1, 5, true, false);
-        int[] ivs = null;
-        
-        // get target index
-        int targetIndex = hpType.ordinal() - 1;
-        
-        // find range of sums that map to target type index
-        int lowerBoundSum = (targetIndex * 63) / 18;
-        int upperBoundSum = ((targetIndex + 1) * 63) / 18 - 1;
+		if (hpType == PType.NORMAL || hpType == PType.UNKNOWN) {
+			return new int[] {31, 31, 31, 31, 31, 31};
+		}
+		
+		// initialization for error message
+		Pokemon tempPokemon = new Pokemon(1, 5, true, false);
+		int[] ivs = null;
+		
+		// get target index
+		int targetIndex = hpType.ordinal() - 1;
+		
+		// find range of sums that map to target type index
+		int lowerBoundSum = (targetIndex * 63) / 18;
+		int upperBoundSum = ((targetIndex + 1) * 63) / 18 - 1;
 
-        // iterate from highest possible sum to lowest
-        for (int sum = upperBoundSum; sum >= lowerBoundSum; sum--) {
-            // create new array
-            ivs = new int[6];
-            int tempSum = sum;
+		// iterate from highest possible sum to lowest
+		for (int sum = upperBoundSum; sum >= lowerBoundSum; sum--) {
+			// create new array
+			ivs = new int[6];
+			int tempSum = sum;
 
-            // try to assign highest set of ivs
-            for (int i = 5; i >= 0; i--) {
-                if ((tempSum & (1 << i)) != 0) {
-                    ivs[i] = 31; // max iv if bit is set
-                } else {
-                    ivs[i] = 30; // highest even iv to not set the bit
-                }
-            }
+			// try to assign highest set of ivs
+			for (int i = 5; i >= 0; i--) {
+				if ((tempSum & (1 << i)) != 0) {
+					ivs[i] = 31; // max iv if bit is set
+				} else {
+					ivs[i] = 30; // highest even iv to not set the bit
+				}
+			}
 
-            // verification
-            tempPokemon.ivs = ivs;
-            if (tempPokemon.determineHPType() == hpType) {
-                return ivs;
-            }
-            
-        }
-        
-        // if no iv set is found (we're fucked)
-        throw new IllegalStateException("The algorithm returned an array of " + Arrays.toString(ivs) + " which resulted in HP " + tempPokemon.determineHPType() + " instead of " + hpType);
-    }
+			// verification
+			tempPokemon.ivs = ivs;
+			if (tempPokemon.determineHPType() == hpType) {
+				return ivs;
+			}
+			
+		}
+		
+		// if no iv set is found (we're fucked)
+		throw new IllegalStateException("The algorithm returned an array of " + Arrays.toString(ivs) + " which resulted in HP " + tempPokemon.determineHPType() + " instead of " + hpType);
+	}
 	
 	public PType determineWBType(Field field) {
 		PType result = PType.NORMAL;
@@ -9677,8 +9817,8 @@ public class Pokemon implements Serializable {
 		} else if (this.getAbility(field) == Ability.CLOUD_NINE && field.weather != null) {
 			Task.addAbilityTask(this);
 			Task t = Task.addTask(Task.WEATHER, "The weather returned to normal!");
-            t.setEffect(null);
-            field.weather = null;
+			t.setEffect(null);
+			field.weather = null;
 		} else if (this.getAbility(field) == Ability.GRASSY_SURGE && !field.equals(field.terrain, Effect.GRASSY)) {
 			Task.addAbilityTask(this);
 			field.setTerrain(field.new FieldEffect(Effect.GRASSY));
@@ -9704,12 +9844,12 @@ public class Pokemon implements Serializable {
 		} else if (this.getAbility(field) == Ability.SEABED_SIFTER && field.terrain != null) {
 			Task.addAbilityTask(this);
 			Task t = Task.addTask(Task.TERRAIN, "The terrain returned to normal!");
-            t.setEffect(null);
-            field.terrain = null;
-            int healAmt = this.getStat(0) - this.currentHP;
-            if (healAmt > 0) {
-            	this.heal(healAmt, this.nickname + "'s HP was restored!");
-            }
+			t.setEffect(null);
+			field.terrain = null;
+			int healAmt = this.getStat(0) - this.currentHP;
+			if (healAmt > 0) {
+				this.heal(healAmt, this.nickname + "'s HP was restored!");
+			}
 		} else if (this.getAbility(field) == Ability.COSMIC_WARP) {
 			Task.addAbilityTask(this);
 			FieldEffect effect = field.new FieldEffect(Effect.TRICK_ROOM);
@@ -9804,7 +9944,7 @@ public class Pokemon implements Serializable {
 		} else if (this.getAbility(field) == Ability.MOUTHWATER) {
 			if (!foe.hasStatus(Status.TAUNTED)) {
 				foe.addStatus(Status.TAUNTED);
-			    foe.tauntCount = 4;
+				foe.tauntCount = 4;
 				Task.addAbilityTask(this);
 				Task.addTask(Task.TEXT, foe.nickname + " was taunted!");
 				if (foe.getItem(field) == Item.MENTAL_HERB) {
@@ -9823,7 +9963,7 @@ public class Pokemon implements Serializable {
 				foe.type2 = null;
 				Task.addTypeTask(foe.nickname + "'s type changed to MAGIC!", foe);
 			}
-		} else if (this.getAbility(field) == Ability.ANTICIPATION) {
+		} else if (this.getAbility(field) == Ability.ANTICIPATION && !this.illusion) {
 			this.checkAnticipation(foe, field);
 		} else if (this.getAbility(field) == Ability.TRACE) {
 			if (this.getItem(field) != Item.ABILITY_SHIELD) {
@@ -9907,7 +10047,7 @@ public class Pokemon implements Serializable {
 				this.faint(true, foe);
 			}
 		}
-		if (foe.getAbility(field) == Ability.ANTICIPATION) {
+		if (foe.getAbility(field) == Ability.ANTICIPATION && !foe.illusion) {
 			foe.checkAnticipation(this, field);
 		}
 		
@@ -10246,14 +10386,14 @@ public class Pokemon implements Serializable {
 			if (m == Move.PHOTON_DRAIN) types.remove(PType.LIGHT);
 			resistances = types.toArray(new PType[0]);
 		}
-        for (PType resistance : resistances) {
-            if (this.type1 == resistance || this.type2 == resistance) {
-                multiplier /= 2;
-            }
-        }
-        
-        PType[] weaknesses = getWeaknesses(mtype);
-        if (m == Move.FREEZE$DRY || m == Move.SKY_UPPERCUT || m == Move.PHOTON_DRAIN) {
+		for (PType resistance : resistances) {
+			if (this.type1 == resistance || this.type2 == resistance) {
+				multiplier /= 2;
+			}
+		}
+		
+		PType[] weaknesses = getWeaknesses(mtype);
+		if (m == Move.FREEZE$DRY || m == Move.SKY_UPPERCUT || m == Move.PHOTON_DRAIN) {
 			PType[] temp = new PType[weaknesses.length + 1];
 			for (int i = 0; i < weaknesses.length; i++) {
 				temp[i] = weaknesses[i];
@@ -10263,11 +10403,11 @@ public class Pokemon implements Serializable {
 			if (m == Move.PHOTON_DRAIN) temp[weaknesses.length] = PType.LIGHT;
 			weaknesses = temp;
 		}
-        for (PType weakness : weaknesses) {
-            if (this.type1 == weakness || this.type2 == weakness) {
-                multiplier *= 2;
-            }
-        }
+		for (PType weakness : weaknesses) {
+			if (this.type1 == weakness || this.type2 == weakness) {
+				multiplier *= 2;
+			}
+		}
 		return multiplier;
 	}
 	
@@ -10350,19 +10490,19 @@ public class Pokemon implements Serializable {
 	}
 	
 	public void clearStatuses() {
-	    vStatuses.removeIf(effect -> effect.status != Status.ARCANE_SPELL);
+		vStatuses.removeIf(effect -> effect.status != Status.ARCANE_SPELL);
 	}
 	
 	public ArrayList<Move> movebankAsList() {
 		ArrayList<Move> movebankList = new ArrayList<>();
-        for (int i = 0; i < movebanks[id - 1].length; i++) {
-        	Node n = getNode(id, i);
-        	while (n != null) {
-        		movebankList.add(n.data);
-        		n = n.next;
-        	}
-        }
-        return movebankList;
+		for (int i = 0; i < movebanks[id - 1].length; i++) {
+			Node n = getNode(id, i);
+			while (n != null) {
+				movebankList.add(n.data);
+				n = n.next;
+			}
+		}
+		return movebankList;
 	}
 
 	private Move get150Move(Move move) {
@@ -10421,33 +10561,33 @@ public class Pokemon implements Serializable {
 	}
 	
 	public boolean arrayEquals(int[] arr1, int[] arr2) {
-        if (arr1 == arr2) return true;
-        if (arr1 == null || arr2 == null) return false;
-        if (arr1.length != arr2.length) return false;
+		if (arr1 == arr2) return true;
+		if (arr1 == null || arr2 == null) return false;
+		if (arr1.length != arr2.length) return false;
 
-        for (int i = 0; i < arr1.length; i++) {
-            if (arr1[i] != arr2[i]) {
-                return false;
-            }
-        }
+		for (int i = 0; i < arr1.length; i++) {
+			if (arr1[i] != arr2[i]) {
+				return false;
+			}
+		}
 
-        return true;
-    }
+		return true;
+	}
 	
 	public boolean arrayGreaterOrEqual(int[] arr1, int[] arr2) {
-//        if (arr1 == arr2) return true;
-//        if (arr1 == null || arr2 == null) return false;
-//        if (arr1.length != arr2.length) return false;
+//		if (arr1 == arr2) return true;
+//		if (arr1 == null || arr2 == null) return false;
+//		if (arr1.length != arr2.length) return false;
 
-        for (int i = 0; i < arr1.length; i++) {
-            if (arr1[i] < arr2[i]) {
-            	//System.out.println(getStatType(i + 1) + "arr1 is less than arr2: " + arr1[i] + " < " + arr2[i]);
-                return false;
-            }
-        }
-        //System.out.println(Arrays.toString(arr1) + " >= " + Arrays.toString(arr2));
-        return true;
-    }
+		for (int i = 0; i < arr1.length; i++) {
+			if (arr1[i] < arr2[i]) {
+				//System.out.println(getStatType(i + 1) + "arr1 is less than arr2: " + arr1[i] + " < " + arr2[i]);
+				return false;
+			}
+		}
+		//System.out.println(Arrays.toString(arr1) + " >= " + Arrays.toString(arr2));
+		return true;
+	}
 	
 	public boolean hasBoosts(int[] stages) {
 		for (int i = 0; i < stages.length; i++) {
@@ -10482,10 +10622,10 @@ public class Pokemon implements Serializable {
 						|| (this.hasStatus(Status.CHARGING) && m != this.lastMoveUsed) || (this.hasStatus(Status.SEMI_INV) && m != this.lastMoveUsed)
 						|| hasStatus(Status.HEAL_BLOCK) && m.isHealing() || m == this.disabledMove || (m == Move.PISTOL_POP && this.lastMoveUsed == Move.PISTOL_POP)
 						|| (this.playerOwned() && this.getPlayer().banBatonPass && m == Move.BATON_PASS)) {
-	            	// nothing: don't add
-	            } else {
-	            	validMoves.add(m);
-	            }
+					// nothing: don't add
+				} else {
+					validMoves.add(m);
+				}
 			}
 		}
 		
@@ -10508,108 +10648,108 @@ public class Pokemon implements Serializable {
 
 	@Override
 	public Pokemon clone() {
-	    Pokemon clonedPokemon = new Pokemon(1, 0, true, false);
-	    
-	    // Clone id fields
-	    clonedPokemon.id = this.id;
-	    clonedPokemon.uuid = this.uuid;
-	    clonedPokemon.name = this.name;
-	    clonedPokemon.nickname = this.nickname;
-	    
-	    // Clone stat fields
-	    clonedPokemon.baseStats = this.baseStats.clone();
-	    clonedPokemon.stats = this.stats.clone();
-	    clonedPokemon.level = this.level;
-	    clonedPokemon.statStages = this.statStages.clone();
-	    clonedPokemon.ivs = this.ivs.clone();
-	    clonedPokemon.nat = this.nat;
-	    clonedPokemon.weight = this.weight;
-	    clonedPokemon.catchRate = this.catchRate;
-	    clonedPokemon.happiness = this.happiness;
-	    
-	    // Clone type fields
-	    clonedPokemon.type1 = this.type1;
-	    clonedPokemon.type2 = this.type2;
-	    
-	    // Clone ability fields
-	    clonedPokemon.ability = this.ability;
-	    clonedPokemon.abilitySlot = this.abilitySlot;
-	    
-	    // Clone move fields
-	    clonedPokemon.moveset = new Moveslot[this.moveset.length];
-	    for (int i = 0; i < this.moveset.length; i++) {
-	    	if (this.moveset[i] != null) clonedPokemon.moveset[i] = this.moveset[i].clone();
-	    }
-	    
-	    // Clone status fields
-	    clonedPokemon.status = this.status;
-	    clonedPokemon.vStatuses = new ArrayList<>(this.vStatuses);
-	    clonedPokemon.fieldEffects = this.fieldEffects == null ? null : new ArrayList<>(this.fieldEffects);
-	    
-	    // Clone xp fields
-	    clonedPokemon.exp = this.exp;
-	    clonedPokemon.expMax = this.expMax;
-	    
-	    // Clone hp fields
-	    clonedPokemon.currentHP = this.currentHP;
-	    clonedPokemon.fainted = this.fainted;
-	    
-	    // Clone item fields
+		Pokemon clonedPokemon = new Pokemon(1, 0, true, false);
+		
+		// Clone id fields
+		clonedPokemon.id = this.id;
+		clonedPokemon.uuid = this.uuid;
+		clonedPokemon.name = this.name;
+		clonedPokemon.nickname = this.nickname;
+		
+		// Clone stat fields
+		clonedPokemon.baseStats = this.baseStats.clone();
+		clonedPokemon.stats = this.stats.clone();
+		clonedPokemon.level = this.level;
+		clonedPokemon.statStages = this.statStages.clone();
+		clonedPokemon.ivs = this.ivs.clone();
+		clonedPokemon.nat = this.nat;
+		clonedPokemon.weight = this.weight;
+		clonedPokemon.catchRate = this.catchRate;
+		clonedPokemon.happiness = this.happiness;
+		
+		// Clone type fields
+		clonedPokemon.type1 = this.type1;
+		clonedPokemon.type2 = this.type2;
+		
+		// Clone ability fields
+		clonedPokemon.ability = this.ability;
+		clonedPokemon.abilitySlot = this.abilitySlot;
+		
+		// Clone move fields
+		clonedPokemon.moveset = new Moveslot[this.moveset.length];
+		for (int i = 0; i < this.moveset.length; i++) {
+			if (this.moveset[i] != null) clonedPokemon.moveset[i] = this.moveset[i].clone();
+		}
+		
+		// Clone status fields
+		clonedPokemon.status = this.status;
+		clonedPokemon.vStatuses = new ArrayList<>(this.vStatuses);
+		clonedPokemon.fieldEffects = this.fieldEffects == null ? null : new ArrayList<>(this.fieldEffects);
+		
+		// Clone xp fields
+		clonedPokemon.exp = this.exp;
+		clonedPokemon.expMax = this.expMax;
+		
+		// Clone hp fields
+		clonedPokemon.currentHP = this.currentHP;
+		clonedPokemon.fainted = this.fainted;
+		
+		// Clone item fields
 		clonedPokemon.item = this.item;
 		clonedPokemon.loseItem = this.loseItem;
 		clonedPokemon.lostItem = this.lostItem;
 		clonedPokemon.ball = this.ball;
-	    
-	    // Clone counter fields
-	    clonedPokemon.confusionCounter = this.confusionCounter;
-	    clonedPokemon.sleepCounter = this.sleepCounter;
-	    clonedPokemon.perishCount = this.perishCount;
-	    clonedPokemon.moveMultiplier = this.moveMultiplier;
-	    clonedPokemon.spunCount = this.spunCount;
-	    clonedPokemon.outCount = this.outCount;
-	    clonedPokemon.rollCount = this.rollCount;
-	    clonedPokemon.metronome = this.metronome;
-	    clonedPokemon.encoreCount = this.encoreCount;
-	    clonedPokemon.disabledCount = this.disabledCount;
-	    clonedPokemon.tauntCount = this.tauntCount;
-	    clonedPokemon.tormentCount = this.tormentCount;
-	    clonedPokemon.healBlockCount = this.healBlockCount;
-	    clonedPokemon.toxic = this.toxic;
-	    clonedPokemon.headbuttCrit = this.headbuttCrit;
-	    clonedPokemon.tailCrit = this.tailCrit;
-	    clonedPokemon.spaceEat = this.spaceEat;
-	    clonedPokemon.happinessCap = this.happinessCap;
-	    clonedPokemon.fortify = this.fortify;
-	    clonedPokemon.damageTaken = this.damageTaken == null ? null : this.damageTaken.clone();
-	    
-	    // Clone boolean fields
-	    clonedPokemon.shiny = this.shiny;
-	    clonedPokemon.impressive = this.impressive;
-	    clonedPokemon.battled = this.battled;
-	    clonedPokemon.success = this.success;
-	    clonedPokemon.consumedItem = this.consumedItem;
-	    clonedPokemon.illusion = this.illusion;
-	    clonedPokemon.abilityFlag = this.abilityFlag;
-	    
-	    // Clone battle fields
-	    clonedPokemon.lastMoveUsed = this.lastMoveUsed;
-	    clonedPokemon.choiceMove = this.choiceMove;
-	    clonedPokemon.disabledMove = this.disabledMove;
-	    clonedPokemon.slot = this.slot;
+		
+		// Clone counter fields
+		clonedPokemon.confusionCounter = this.confusionCounter;
+		clonedPokemon.sleepCounter = this.sleepCounter;
+		clonedPokemon.perishCount = this.perishCount;
+		clonedPokemon.moveMultiplier = this.moveMultiplier;
+		clonedPokemon.spunCount = this.spunCount;
+		clonedPokemon.outCount = this.outCount;
+		clonedPokemon.rollCount = this.rollCount;
+		clonedPokemon.metronome = this.metronome;
+		clonedPokemon.encoreCount = this.encoreCount;
+		clonedPokemon.disabledCount = this.disabledCount;
+		clonedPokemon.tauntCount = this.tauntCount;
+		clonedPokemon.tormentCount = this.tormentCount;
+		clonedPokemon.healBlockCount = this.healBlockCount;
+		clonedPokemon.toxic = this.toxic;
+		clonedPokemon.headbuttCrit = this.headbuttCrit;
+		clonedPokemon.tailCrit = this.tailCrit;
+		clonedPokemon.spaceEat = this.spaceEat;
+		clonedPokemon.happinessCap = this.happinessCap;
+		clonedPokemon.fortify = this.fortify;
+		clonedPokemon.damageTaken = this.damageTaken == null ? null : this.damageTaken.clone();
+		
+		// Clone boolean fields
+		clonedPokemon.shiny = this.shiny;
+		clonedPokemon.impressive = this.impressive;
+		clonedPokemon.battled = this.battled;
+		clonedPokemon.success = this.success;
+		clonedPokemon.consumedItem = this.consumedItem;
+		clonedPokemon.illusion = this.illusion;
+		clonedPokemon.abilityFlag = this.abilityFlag;
+		
+		// Clone battle fields
+		clonedPokemon.lastMoveUsed = this.lastMoveUsed;
+		clonedPokemon.choiceMove = this.choiceMove;
+		clonedPokemon.disabledMove = this.disabledMove;
+		clonedPokemon.slot = this.slot;
 
-	    clonedPokemon.trainer = this.trainer;
-	    
-	    // Clone Image fields
-	    clonedPokemon.sprite = this.sprite;
-	    clonedPokemon.frontSprite = this.frontSprite;
-	    clonedPokemon.backSprite = this.backSprite;
-	    clonedPokemon.metAt = this.metAt;
-	    
-	    // Trainer
-	    clonedPokemon.trainer = this.trainer;
-	    clonedPokemon.cloned = true;
-	    
-	    return clonedPokemon;
+		clonedPokemon.trainer = this.trainer;
+		
+		// Clone Image fields
+		clonedPokemon.sprite = this.sprite;
+		clonedPokemon.frontSprite = this.frontSprite;
+		clonedPokemon.backSprite = this.backSprite;
+		clonedPokemon.metAt = this.metAt;
+		
+		// Trainer
+		clonedPokemon.trainer = this.trainer;
+		clonedPokemon.cloned = true;
+		
+		return clonedPokemon;
 	}
 
 	@Override
@@ -10637,30 +10777,30 @@ public class Pokemon implements Serializable {
 	public static String getStatType(int i, boolean big) {
 		String type = "";
 		switch (i) {
-	    	case 0:
-	    		type = "HP ";
-	    		break;
-	    	case 1:
-	    		type = big ? "Attack" : "Atk ";
-	    		break;
-	    	case 2:
-	    		type = big ? "Defense" : "Def ";
-	    		break;
-	    	case 3:
-	    		type = big ? "Special Attack" : "SpA ";
-	    		break;
-	    	case 4:
-	    		type = big ? "Special Defense" : "SpD ";
-	    		break;
-	    	case 5:
-	    		type = big ? "Speed" : "Spe ";
-	    		break;
-	    	case 6:
-	    		type = big ? "Accuracy" : "Acc ";
-	    		break;
-	    	case 7:
-	    		type = big ? "Evasion" : "Eva ";
-	    		break;
+			case 0:
+				type = "HP ";
+				break;
+			case 1:
+				type = big ? "Attack" : "Atk ";
+				break;
+			case 2:
+				type = big ? "Defense" : "Def ";
+				break;
+			case 3:
+				type = big ? "Special Attack" : "SpA ";
+				break;
+			case 4:
+				type = big ? "Special Defense" : "SpD ";
+				break;
+			case 5:
+				type = big ? "Speed" : "Spe ";
+				break;
+			case 6:
+				type = big ? "Accuracy" : "Acc ";
+				break;
+			case 7:
+				type = big ? "Evasion" : "Eva ";
+				break;
 			default:
 				type = "ERROR ";
 				break;
@@ -10853,26 +10993,26 @@ public class Pokemon implements Serializable {
 	
 	public static ArrayList<String> getEvolutionFamily(int id) {
 		// BFS to find all connected Pokemon
-	    LinkedHashSet<String> familySet = new LinkedHashSet<>();
-	    Queue<String> queue = new LinkedList<>();
-	    String startName = getName(id);
-	    
-	    queue.add(startName);
-	    familySet.add(startName);
+		LinkedHashSet<String> familySet = new LinkedHashSet<>();
+		Queue<String> queue = new LinkedList<>();
+		String startName = getName(id);
+		
+		queue.add(startName);
+		familySet.add(startName);
 
-	    while (!queue.isEmpty()) {
-	        String current = queue.poll();
-	        HashSet<String> neighbors = new HashSet<>();
-	        neighbors.addAll(forwardEvoMap.getOrDefault(current, new HashSet<String>()));
-	        neighbors.addAll(reverseEvoMap.getOrDefault(current, new HashSet<String>()));
+		while (!queue.isEmpty()) {
+			String current = queue.poll();
+			HashSet<String> neighbors = new HashSet<>();
+			neighbors.addAll(forwardEvoMap.getOrDefault(current, new HashSet<String>()));
+			neighbors.addAll(reverseEvoMap.getOrDefault(current, new HashSet<String>()));
 
-	        for (String neighbor : neighbors) {
-	            if (!familySet.contains(neighbor)) {
-	                familySet.add(neighbor);
-	                queue.add(neighbor);
-	            }
-	        }
-	    }
+			for (String neighbor : neighbors) {
+				if (!familySet.contains(neighbor)) {
+					familySet.add(neighbor);
+					queue.add(neighbor);
+				}
+			}
+		}
 
 		return new ArrayList<>(familySet);
 	}
@@ -10937,22 +11077,22 @@ public class Pokemon implements Serializable {
 	}
 	
 	public int getFinalEvolution() {
-	    ArrayList<String> family = getEvolutionFamily();
-	    String finalForm = null;
+		ArrayList<String> family = getEvolutionFamily();
+		String finalForm = null;
 
-	    for (String name : family) {
-	        HashSet<String> children = forwardEvoMap.getOrDefault(name, new HashSet<>());
-	        if (children.isEmpty()) {
-	            finalForm = name;
-	            break;
-	        }
-	    }
+		for (String name : family) {
+			HashSet<String> children = forwardEvoMap.getOrDefault(name, new HashSet<>());
+			if (children.isEmpty()) {
+				finalForm = name;
+				break;
+			}
+		}
 
-	    if (finalForm == null) {
-	        finalForm = family.get(family.size() - 1); // fallback
-	    }
+		if (finalForm == null) {
+			finalForm = family.get(family.size() - 1); // fallback
+		}
 
-	    return getIDFromName(finalForm);
+		return getIDFromName(finalForm);
 	}
 
 	public boolean isTrapped(Pokemon foe) {
@@ -10974,27 +11114,28 @@ public class Pokemon implements Serializable {
 		if (AbstractUI.faintedSprites[id - 1] != null) return AbstractUI.faintedSprites[id - 1];
 		
 		ImageFilter grayFilter = new GrayFilter(true, 25);
-        ImageFilter opacityFilter = new RGBImageFilter() {
-            // Modify the alpha value to achieve opacity
-            public int filterRGB(int x, int y, int rgb) {
-                int alpha = (rgb >> 24) & 0xFF; // Extract alpha value
-                if (alpha == 0) {
-                    return rgb; // Leave transparent pixels unchanged
-                } else {
-                    return (rgb & 0x00FFFFFF) | (128 << 24); // Apply opacity to visible pixels
-                }
-            }
-        };
-
-        ImageProducer producer = new FilteredImageSource(getSprite().getSource(), grayFilter);
-        Image grayImage = Toolkit.getDefaultToolkit().createImage(producer);
-
-        // Apply the opacity filter
-        ImageProducer opacityProducer = new FilteredImageSource(grayImage.getSource(), opacityFilter);
-        Image finalImage = Toolkit.getDefaultToolkit().createImage(opacityProducer);
-        
-        AbstractUI.faintedSprites[id - 1] = finalImage;
-        return finalImage;
+		ImageFilter opacityFilter = new RGBImageFilter() {
+			// Modify the alpha value to achieve opacity
+			public int filterRGB(int x, int y, int rgb) {
+				int alpha = (rgb >> 24) & 0xFF; // Extract alpha value
+				if (alpha == 0) {
+					return rgb; // Leave transparent pixels unchanged
+				} else {
+					return (rgb & 0x00FFFFFF) | (128 << 24); // Apply opacity to visible pixels
+				}
+			}
+		};
+		BufferedImage sprite = getSprite();
+		if (sprite == null) sprite = DocUtils.getCachedSprite(this);
+		ImageProducer producer = new FilteredImageSource(sprite.getSource(), grayFilter);
+		Image grayImage = Toolkit.getDefaultToolkit().createImage(producer);
+		
+		// Apply the opacity filter
+		ImageProducer opacityProducer = new FilteredImageSource(grayImage.getSource(), opacityFilter);
+		Image finalImage = Toolkit.getDefaultToolkit().createImage(opacityProducer);
+		
+		AbstractUI.faintedSprites[id - 1] = finalImage;
+		return finalImage;
 	}
 
 	public void setTrainer(Trainer trainer) {
@@ -11050,121 +11191,121 @@ public class Pokemon implements Serializable {
 		gp.battleUI.setupBalls();
 		
 		int randomValue = rand.nextInt(255);
-        return randomValue <= getModifiedCatchRate(foe, ball, encType, false);
+		return randomValue <= getModifiedCatchRate(foe, ball, encType, false);
 	}
 	
 	public int getModifiedCatchRate(Pokemon foe, Entry ball, char encType, boolean sim) {
-        double ballBonus = 0;
-        int catchR = foe.catchRate;
-        
-        Item ballType = ball.getItem();
-        
-        switch (ballType) {
-        case POKEBALL:
-        case PREMIER_BALL:
-        case CHERISH_BALL:
-        case HEAL_BALL:
-        case LUXURY_BALL:
-        case FRIEND_BALL:
-        	ballBonus = 1;
-        	break;
-        case GREAT_BALL:
-        	ballBonus = 1.5;
-        	break;
-        case ULTRA_BALL:
-        	ballBonus = 2;
-        	break;
-        case MASTER_BALL:
-        	return 1000;
-        case TEMPLE_BALL:
-        	if (!sim) {
-        		Puzzle puzzle = gp.puzzleM.getCurrentPuzzle(gp.currentMap);
-            	if (puzzle != null) {
-            		puzzle.update(foe);
-            	}
-        	}
-        	return 1000;
-        case BEAST_BALL:
-        	ballBonus = isUltraBeast(foe.id) ? 5 : 0.1;
-        	break;
-        case QUICK_BALL:
-        	ballBonus = field.turns == 0 ? 5 : 1;
-        	break;
-        case TIMER_BALL:
-        	ballBonus = Math.min(1 + (0.3 * field.turns), 4);
-        	break;
-        case REPEAT_BALL:
-        	ballBonus = this.getPlayer().pokedex[foe.id] == 2 ? 3.5 : 1;
-        	break;
-        case NEST_BALL:
-        	ballBonus = 8 - (0.2 * (foe.level - 1));
-        	break;
-        case DUSK_BALL:
-        	ballBonus = gp.tileM.isCave[gp.currentMap] ? 3 : 1;
-        	break;
-        case DIVE_BALL:
-        	ballBonus = encType == 'F' || encType == 'S' ? 3.5 : 1;
-        	break;
-        case NET_BALL:
-        	ballBonus = foe.isType(PType.WATER) || foe.isType(PType.BUG) ? 3.5 : 1;
-        	break;
-        case HEAVY_BALL:
-        	ballBonus = 1;
-        	if (foe.weight < 451.1) {
-        		catchR += -20;
-        	} else if (foe.weight >= 451.1 && foe.weight < 677.3) {
-        		catchR += 20;
-        	} else if (foe.weight >= 677.3 && foe.weight < 903) {
-        		catchR += 30;
-        	} else {
-        		catchR += 40;
-        	}
-        	break;
-        case LURE_BALL:
-        	ballBonus = encType == 'F' ? 5 : 1;
-        	break;
-        case LOVE_BALL:
-        	ballBonus = this.isSameSpeciesAs(foe) ? 8 : this.isCompatible(foe) ? 4 : 1;
-        	break;
-        case LEVEL_BALL:
-        	if (this.level < foe.level) {
-        		ballBonus = 1;
-        	} else if (this.level == foe.level) {
-        		ballBonus = 1.5;
-        	} else if (this.level > foe.level && this.level / 2 <= foe.level) {
-        		ballBonus = 2;
-        	} else if (this.level / 2 > foe.level && this.level / 4 <= foe.level) {
-        		ballBonus = 4;
-        	} else {
-        		ballBonus = 8;
-        	}
-        	break;
-        case FAST_BALL:
-        	ballBonus = foe.getBaseStat(5) >= 100 ? 4 : 1;
-        	break;
-        case MOON_BALL:
-        	ballBonus = (foe.canUseItem(Item.DAWN_STONE) == 1 || foe.canUseItem(Item.DUSK_STONE) == 1) ? 4 : 1;
-        	break;
-        case DREAM_BALL:
-        	ballBonus = foe.status == Status.ASLEEP ? 4 : 1;
-        	break;
+		double ballBonus = 0;
+		int catchR = foe.catchRate;
+		
+		Item ballType = ball.getItem();
+		
+		switch (ballType) {
+		case POKEBALL:
+		case PREMIER_BALL:
+		case CHERISH_BALL:
+		case HEAL_BALL:
+		case LUXURY_BALL:
+		case FRIEND_BALL:
+			ballBonus = 1;
+			break;
+		case GREAT_BALL:
+			ballBonus = 1.5;
+			break;
+		case ULTRA_BALL:
+			ballBonus = 2;
+			break;
+		case MASTER_BALL:
+			return 1000;
+		case TEMPLE_BALL:
+			if (!sim) {
+				Puzzle puzzle = gp.puzzleM.getCurrentPuzzle(gp.currentMap);
+				if (puzzle != null) {
+					puzzle.update(foe);
+				}
+			}
+			return 1000;
+		case BEAST_BALL:
+			ballBonus = isUltraBeast(foe.id) ? 5 : 0.1;
+			break;
+		case QUICK_BALL:
+			ballBonus = field.turns == 0 ? 5 : 1;
+			break;
+		case TIMER_BALL:
+			ballBonus = Math.min(1 + (0.3 * field.turns), 4);
+			break;
+		case REPEAT_BALL:
+			ballBonus = this.getPlayer().pokedex[foe.id] == 2 ? 3.5 : 1;
+			break;
+		case NEST_BALL:
+			ballBonus = 8 - (0.2 * (foe.level - 1));
+			break;
+		case DUSK_BALL:
+			ballBonus = gp.tileM.isCave[gp.currentMap] ? 3 : 1;
+			break;
+		case DIVE_BALL:
+			ballBonus = encType == 'F' || encType == 'S' ? 3.5 : 1;
+			break;
+		case NET_BALL:
+			ballBonus = foe.isType(PType.WATER) || foe.isType(PType.BUG) ? 3.5 : 1;
+			break;
+		case HEAVY_BALL:
+			ballBonus = 1;
+			if (foe.weight < 451.1) {
+				catchR += -20;
+			} else if (foe.weight >= 451.1 && foe.weight < 677.3) {
+				catchR += 20;
+			} else if (foe.weight >= 677.3 && foe.weight < 903) {
+				catchR += 30;
+			} else {
+				catchR += 40;
+			}
+			break;
+		case LURE_BALL:
+			ballBonus = encType == 'F' ? 5 : 1;
+			break;
+		case LOVE_BALL:
+			ballBonus = this.isSameSpeciesAs(foe) ? 8 : this.isCompatible(foe) ? 4 : 1;
+			break;
+		case LEVEL_BALL:
+			if (this.level < foe.level) {
+				ballBonus = 1;
+			} else if (this.level == foe.level) {
+				ballBonus = 1.5;
+			} else if (this.level > foe.level && this.level / 2 <= foe.level) {
+				ballBonus = 2;
+			} else if (this.level / 2 > foe.level && this.level / 4 <= foe.level) {
+				ballBonus = 4;
+			} else {
+				ballBonus = 8;
+			}
+			break;
+		case FAST_BALL:
+			ballBonus = foe.getBaseStat(5) >= 100 ? 4 : 1;
+			break;
+		case MOON_BALL:
+			ballBonus = (foe.canUseItem(Item.DAWN_STONE) == 1 || foe.canUseItem(Item.DUSK_STONE) == 1) ? 4 : 1;
+			break;
+		case DREAM_BALL:
+			ballBonus = foe.status == Status.ASLEEP ? 4 : 1;
+			break;
 		default:
 			break;
-        
-        }
-        
-        int quotient = 3 * foe.getStat(0) - 2 * foe.currentHP;
-        double modQuotient = quotient * catchR * ballBonus;
-        double catchRate = modQuotient / (3 * foe.getStat(0));
-        
-        double statusBonus = 1;
-        if (foe.status != Status.HEALTHY) statusBonus = 1.5;
-        if (foe.status == Status.ASLEEP) statusBonus = 2;
-        
-        catchRate *= statusBonus;
-        int modifiedCatchRate = (int) Math.round(catchRate);
-        
-       return Math.max(modifiedCatchRate, 1);
+		
+		}
+		
+		int quotient = 3 * foe.getStat(0) - 2 * foe.currentHP;
+		double modQuotient = quotient * catchR * ballBonus;
+		double catchRate = modQuotient / (3 * foe.getStat(0));
+		
+		double statusBonus = 1;
+		if (foe.status != Status.HEALTHY) statusBonus = 1.5;
+		if (foe.status == Status.ASLEEP) statusBonus = 2;
+		
+		catchRate *= statusBonus;
+		int modifiedCatchRate = (int) Math.round(catchRate);
+		
+		return Math.max(modifiedCatchRate, 1);
 	}
 	
 	public String getCatchRateFormatted(Pokemon foe, Entry ball, char encType) {
@@ -11186,14 +11327,14 @@ public class Pokemon implements Serializable {
 		if (item == null) return -1;
 		if (item.isTM()) {
 			boolean learnable = item.getLearned(this);
-	        boolean learned = this.knowsMove(item.getMove());
-	        if (!learnable) {
-	        	return 0;
-	        } else if (learned) {
-	        	return 2;
-	        } else {
-	        	return 1;
-	        }
+			boolean learned = this.knowsMove(item.getMove());
+			if (!learnable) {
+				return 0;
+			} else if (learned) {
+				return 2;
+			} else {
+				return 1;
+			}
 		} else if (item.isEvoItem()) {
 			return item.getEligible(this.id) ? 1 : 0; 
 		} else if (item.isMint()) {
@@ -11297,7 +11438,7 @@ public class Pokemon implements Serializable {
 			this.ball = Item.POKEBALL;
 		}
 		if (this.uuid == null) {
-            this.uuid = setUUID();
+			this.uuid = setUUID();
 		}
 		this.cloned = false;
 	}
@@ -11398,8 +11539,8 @@ public class Pokemon implements Serializable {
 				abilities[i][2] = Ability.valueOf(tokens[6].trim());
 				String[] baseStatsStr = tokens[7].trim().replaceAll("\\[|\\]", "").split(", ");
 				for (int j = 0; j < 6; j++) {
-			        base_stats[i][j] = Integer.parseInt(baseStatsStr[j]);
-			    }
+					base_stats[i][j] = Integer.parseInt(baseStatsStr[j]);
+				}
 				weights[i] = Double.parseDouble(tokens[8].trim());
 				catch_rates[i] = Integer.parseInt(tokens[9].trim());
 				egg_groups[i][0] = EggGroup.valueOf(tokens[10].trim());
@@ -11467,8 +11608,8 @@ public class Pokemon implements Serializable {
 		
 		// skip header
 		if (scanner.hasNextLine()) {
-	        scanner.nextLine();
-	    }
+			scanner.nextLine();
+		}
 		
 		while (scanner.hasNextLine()) {
 			String line = scanner.nextLine();
@@ -11692,14 +11833,14 @@ public class Pokemon implements Serializable {
 
 	private long generateSeed(int i, int l, Moveslot[] moveset) {
 		long seed = 31L * i + l;
-	    if (moveset != null) {
-	        for (Moveslot slot : moveset) {
-	            if (slot != null) {
-	                seed = 31L * seed + slot.move.ordinal();
-	            }
-	        }
-	    }
-	    return seed;
+		if (moveset != null) {
+			for (Moveslot slot : moveset) {
+				if (slot != null) {
+					seed = 31L * seed + slot.move.ordinal();
+				}
+			}
+		}
+		return seed;
 	}
 	
 	public boolean[] validateMoveset() {
@@ -11811,17 +11952,17 @@ public class Pokemon implements Serializable {
 	public static ArrayList<Move> getMovebankAtLevel(int id, int level) {
 		ArrayList<Move> forgottenMoves = new ArrayList<>();
 		Node[] movebank = getMovebank(id);
-        for (int i = 0; i <= level; i++) {
-        	if (i < movebank.length) {
-        		Node move = movebank[i];
-        		while (move != null) {
-        			if (!forgottenMoves.contains(move.data)) {
-        				forgottenMoves.add(move.data);
-        			}
-        			move = move.next;
-        		}
-        	}
-        }
+		for (int i = 0; i <= level; i++) {
+			if (i < movebank.length) {
+				Node move = movebank[i];
+				while (move != null) {
+					if (!forgottenMoves.contains(move.data)) {
+						forgottenMoves.add(move.data);
+					}
+					move = move.next;
+				}
+			}
+		}
 		return forgottenMoves;
 	}
 
@@ -11888,18 +12029,18 @@ public class Pokemon implements Serializable {
 	}
 	
 	public static void readEntriesFromCSV() {
-        try (Scanner scanner = new Scanner(Pokemon.class.getResourceAsStream("/info/entries.csv"))) {
+		try (Scanner scanner = new Scanner(Pokemon.class.getResourceAsStream("/info/entries.csv"))) {
 			for (int i = 0; i < MAX_POKEMON; i++) {
 				try {
 					String line = scanner.nextLine();
-			    	entries[i] = line.replace("#", getName(i + 1));
+					entries[i] = line.replace("#", getName(i + 1));
 				} catch (NoSuchElementException e) {
 					System.out.println(i);
 					e.printStackTrace();
 				}
 			}
 		}
-    }
+	}
 	
 	public static void readEncountersFromCSV() {
 		try (Scanner scanner = new Scanner(Pokemon.class.getResourceAsStream("/info/encounters.csv"))) {
@@ -12118,17 +12259,17 @@ public class Pokemon implements Serializable {
 					slowCanMove = false;
 				}
 				
-		        if (slowCanMove) {
-		        	slower.moveInit(faster, slowMove, false);
-		        	faster = faster.trainer.getCurrent();
-		        	slower = slower.trainer.getCurrent();
-		        }
-		        
-		        // Check for swap
-		        if (slower.trainer.hasValidMembers(faster) && slowCanMove && !faster.trainer.wiped() && slower.hasStatus(Status.SWITCHING)) {
-		        	slower = slower.trainer.swapOut2(faster, BattleUI.FREE_SWITCH, slower.lastMoveUsed == Move.BATON_PASS, false);
-		        }
-		    	// Check for swap
+				if (slowCanMove) {
+					slower.moveInit(faster, slowMove, false);
+					faster = faster.trainer.getCurrent();
+					slower = slower.trainer.getCurrent();
+				}
+				
+				// Check for swap
+				if (slower.trainer.hasValidMembers(faster) && slowCanMove && !faster.trainer.wiped() && slower.hasStatus(Status.SWITCHING)) {
+					slower = slower.trainer.swapOut2(faster, BattleUI.FREE_SWITCH, slower.lastMoveUsed == Move.BATON_PASS, false);
+				}
+				// Check for swap
 		 		if (faster.trainer.hasValidMembers(slower) && !slower.trainer.wiped() && faster.hasStatus(Status.SWITCHING)) {
 		 			faster = faster.trainer.swapOut2(slower, BattleUI.FREE_SWITCH, false, false);
 		 		}
@@ -12155,7 +12296,7 @@ public class Pokemon implements Serializable {
 							Task.addSwapInTask(next, false);
 							next.swapIn(foe, true);
 						} else {
-				            break;
+							break;
 						}
 					}
 				}
@@ -12725,8 +12866,8 @@ public class Pokemon implements Serializable {
 				: "'s aura flared to life!";
 			Task.addTask(Task.TEXT, this.nickname + auraMessage);
 			for (int i = 0; i < 5; i++) {
-	    		stat(this, i, this.trainer.boosts[0], null);
-	    	}
+				stat(this, i, this.trainer.boosts[0], null);
+			}
 			if (!this.cloned) this.trainer.boosts[2] = 1;
 			return true;
 		}

@@ -16,9 +16,9 @@ public class Encounter {
 	
 	public Encounter(int id, int minLevel, int maxLevel, double encounterChance) {
 		this.id = id;
-        this.minLevel = minLevel;
-        this.maxLevel = maxLevel;
-        this.encounterChance = encounterChance;
+		this.minLevel = minLevel;
+		this.maxLevel = maxLevel;
+		this.encounterChance = encounterChance;
 	}
 
 	public double getEncounterChance() {

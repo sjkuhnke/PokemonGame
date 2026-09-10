@@ -7,11 +7,11 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import java.awt.*;
 import java.util.ArrayList;
 
-import pokemon.JGradientButton;
 import pokemon.Move;
 import pokemon.Moveslot;
 import pokemon.Pokemon;
 import pokemon.Trainer;
+import util.JGradientButton;
 
 public class TrainerLookupPanel extends JPanel {
 
@@ -164,7 +164,7 @@ public class TrainerLookupPanel extends JPanel {
 		resultScroll.setPreferredSize(new Dimension(550, 450));
 		resultScroll.getVerticalScrollBar().setUnitIncrement(16);
 		resultScroll.setBorder(BorderFactory.createTitledBorder(p.getName() + " trainers"));
-        
+		
 		JOptionPane.showMessageDialog(this, resultScroll, "Trainers containing " + p.getName() + ":", JOptionPane.PLAIN_MESSAGE);
 	}
 	
