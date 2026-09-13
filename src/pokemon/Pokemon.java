@@ -936,63 +936,86 @@ public class Pokemon implements Serializable {
 		return strongest;
 	}
 	
+	private static int debugDepth = 0;
+
+	private static void debugIndent(String msg) {
+		int depth = Math.max(0, debugDepth);
+		String indent = String.join("", Collections.nCopies(depth, "  "));
+		Print.debug(indent + msg);
+	}
+	
+	private String owner() {
+		return this.playerOwned() ? "Player" : "Trainer";
+	}
+	
 	/**
 	 * Core analysis - caller supplies pre-cloned player team clones (bestMove2's hot path already
 	 * has these; avoids re-cloning the whole team per candidate move/status check).
 	 */
 	private DefensiveResponseResult analyzeDefensiveResponse(Pokemon foe, Pokemon[] playerTeamClones, Field field) {
-		Move ourStrongestMove = findStrongestMove(foe, field);
-		if (ourStrongestMove == null) {
-			return DefensiveResponseResult.NONE;
-		}
-		
-		double survivalIfStay = foe.currentHP > 0
-			? Math.max(0.0, 1.0 - Math.min(1.0, this.calcWithTypes(foe, ourStrongestMove,
-			this.getFaster(foe, ourStrongestMove.getPriority(this), 0, field) == this, field, false).getFirst()
-			/ (double) foe.currentHP))
-			: 0.0;
-		
-		double bestSwitchScore = Integer.MIN_VALUE;
-		Pokemon bestMon = null;
-		
-		if (foe.trainer != null && playerTeamClones != null) {
-			for (int i = 0; i < playerTeamClones.length; i++) {
-				Pokemon backMon = playerTeamClones[i];
-				Pokemon realBackMon = foe.trainer.team[i];
-				
-				if (backMon == null || !backMon.isValid(backMon.getPlayer(), this) || realBackMon == foe) {
-					continue;
-				}
-				
-				Field preField = field.clone();
-				Pokemon userPreClone = this.fullClone();
-				Pokemon simulatedCandidate = simulateSwitchIn(realBackMon, backMon, userPreClone, preField);
-				Move ourMoveVsCandidate = findStrongestMove(simulatedCandidate, preField);
-				
-				Pokemon thisCloneForEval = this.fullClone();
-				Field evalField = field.clone();
-				int switchScore = realBackMon.evaluateSwitchInScore(backMon, this, thisCloneForEval, evalField, ourMoveVsCandidate, true);
-				
-				if (switchScore > bestSwitchScore || bestMon == null) {
-					bestSwitchScore = switchScore;
-					bestMon = realBackMon;
+		debugIndent(">>> DEFENSE ANALYSIS: " + this.nickname + "(" + owner() + ") vs active " + foe.nickname + "(" + foe.owner() + ")\n");
+		debugDepth++;
+		try {
+			Move ourStrongestMove = findStrongestMove(foe, field);
+			if (ourStrongestMove == null) {
+				return DefensiveResponseResult.NONE;
+			}
+			
+			double survivalIfStay = foe.currentHP > 0
+				? Math.max(0.0, 1.0 - Math.min(1.0, this.calcWithTypes(foe, ourStrongestMove,
+				this.getFaster(foe, ourStrongestMove.getPriority(this), 0, field) == this, field, false).getFirst()
+				/ (double) foe.currentHP))
+				: 0.0;
+			debugIndent("If foe stays and eats it: " + String.format("%.1f%%", survivalIfStay * 100) + " HP left\n");
+			
+			double bestSwitchScore = Integer.MIN_VALUE;
+			Pokemon bestMon = null;
+			
+			if (foe.trainer != null && playerTeamClones != null) {
+				debugIndent("Checking " + foe.nickname + "(" + foe.owner() + ")'s bench as candidates:\n");
+				for (int i = 0; i < playerTeamClones.length; i++) {
+					Pokemon backMon = playerTeamClones[i];
+					Pokemon realBackMon = foe.trainer.team[i];
+					
+					if (backMon == null || !backMon.isValid(backMon.getPlayer(), this) || realBackMon == foe) {
+						continue;
+					}
+					
+					Field preField = field.clone();
+					Pokemon userPreClone = this.fullClone();
+					Pokemon simulatedCandidate = simulateSwitchIn(realBackMon, backMon, userPreClone, preField);
+					Move ourMoveVsCandidate = findStrongestMove(simulatedCandidate, preField);
+					
+					Pokemon thisCloneForEval = this.fullClone();
+					Field evalField = field.clone();
+					int switchScore = realBackMon.evaluateSwitchInScore(backMon, this, thisCloneForEval, evalField, ourMoveVsCandidate, true);
+					debugIndent("  [candidate] " + realBackMon.nickname + "(" + realBackMon.owner() + "): our best move vs them = " + ourMoveVsCandidate + ", full switch-in score = " + switchScore + "\n");
+					
+					if (switchScore > bestSwitchScore || bestMon == null) {
+						bestSwitchScore = switchScore;
+						bestMon = realBackMon;
+					}
 				}
 			}
+			
+			double bestSwitchSurvival = 0.0;
+			if (bestMon != null) {
+				Field survivalField = field.clone();
+				Pokemon userClone = this.fullClone();
+				Pokemon simulatedBest = simulateSwitchIn(bestMon, bestMon.fullClone(), userClone, survivalField);
+				boolean isFaster = userClone.getFaster(simulatedBest, ourStrongestMove.getPriority(userClone), 0, survivalField) == userClone;
+				int dmg = userClone.calcWithTypes(simulatedBest, ourStrongestMove, isFaster, survivalField, false).getFirst();
+				bestSwitchSurvival = Math.max(0.0, Math.min(1.0, 1.0 - ((double) dmg / simulatedBest.getStat(0))));
+				debugIndent("Foe's best answer: " + bestMon.nickname + "(" + bestMon.owner() + "). Our ORIGINAL move (" + ourStrongestMove + ") vs them: " + String.format("%.1f%%", bestSwitchSurvival * 100) + " HP left\n");
+			}
+			
+			Pokemon backCheckTarget = (bestMon != null && bestSwitchSurvival > survivalIfStay) ? bestMon : null;
+			debugIndent("<<< Verdict: " + (backCheckTarget != null ? "SWITCH to " + bestMon.nickname : "STAY IN") + "\n");
+			
+			return new DefensiveResponseResult(ourStrongestMove, bestMon, backCheckTarget, survivalIfStay, bestSwitchSurvival);
+		} finally {
+			debugDepth--;
 		}
-		
-		double bestSwitchSurvival = 0.0;
-		if (bestMon != null) {
-			Field survivalField = field.clone();
-			Pokemon userClone = this.fullClone();
-			Pokemon simulatedBest = simulateSwitchIn(bestMon, bestMon.fullClone(), userClone, survivalField);
-			boolean isFaster = userClone.getFaster(simulatedBest, ourStrongestMove.getPriority(userClone), 0, survivalField) == userClone;
-			int dmg = userClone.calcWithTypes(simulatedBest, ourStrongestMove, isFaster, survivalField, false).getFirst();
-			bestSwitchSurvival = Math.max(0.0, Math.min(1.0, 1.0 - ((double) dmg / simulatedBest.getStat(0))));
-		}
-		
-		Pokemon backCheckTarget = (bestMon != null && bestSwitchSurvival > survivalIfStay) ? bestMon : null;
-		
-		return new DefensiveResponseResult(ourStrongestMove, bestMon, backCheckTarget, survivalIfStay, bestSwitchSurvival);
 	}
 	
 	/** Convenience overload that clones the foe's team itself - used from scorePokemon's
@@ -1083,10 +1106,10 @@ public class Pokemon implements Serializable {
 		// Debug output for switch-in simulation
 		if (hpLost > 0 || !Arrays.equals(statsBefore, clone.statStages)) {
 			StringBuilder switchDebug = new StringBuilder();
-			switchDebug.append("	Switch-in Effects for ").append(original.nickname).append(":\n");
+			switchDebug.append("Switch-in Effects for ").append(original.nickname).append("(").append(original.owner()).append("):\n");
 			
 			if (hpLost > 0) {
-				switchDebug.append(String.format("	  HP: %d -> %d (-%d from hazards/abilities, %.1f%% remaining)\n",
+				switchDebug.append(String.format("HP: %d -> %d (-%d from hazards/abilities, %.1f%% remaining)\n",
 					hpBefore, hpAfter, hpLost, hpAfter * 100.0 / clone.getStat(0)));
 			}
 			
@@ -1095,11 +1118,11 @@ public class Pokemon implements Serializable {
 			for (int i = 0; i < 7; i++) {
 				if (statsBefore[i] != clone.statStages[i]) {
 					int change = clone.statStages[i] - statsBefore[i];
-					switchDebug.append(String.format("	  %s: %+d\n", statNames[i], change));
+					switchDebug.append(String.format("%s: %+d\n", statNames[i], change));
 				}
 			}
 			
-			Print.debug(switchDebug.toString());
+			debugIndent(switchDebug.toString());
 		}
 		
 		return clone;
@@ -1345,7 +1368,7 @@ public class Pokemon implements Serializable {
 		double matchup = matchupScore(Math.max(bestAttack, bestStatus), foeMaxDamageFracHP, !foeIsFaster);
 		score += Math.round(matchup);
 		
-		Print.debug(String.format("  [MATCHUP] %s: myMoveScore=%d foeDmg=%.0f%% (of my remaining HP) %s => %.1f\n",
+		debugIndent(String.format("[MATCHUP] %s: myMoveScore=%d foeDmg=%.0f%% (of my remaining HP) %s => %.1f\n",
 				this.nickname, Math.max(bestAttack, bestStatus), foeMaxDamageFracHP, foeIsFaster ? "outsped" : "faster", matchup));
 		
 		if (score < 0) {
@@ -2196,31 +2219,36 @@ public class Pokemon implements Serializable {
 	 * (e.g. bestMove2, which already clones the whole team up front).
 	 */
 	public int evaluateSwitchInScore(Pokemon myClone, Pokemon foe, Pokemon foeClone, Field fieldClone, Move incomingMove, boolean skipDefenseAnalysis) {
-		Pokemon simulated = simulateSwitchIn(this, myClone, foeClone, fieldClone);
-		
-		// Apply the hit we take switching in THIS turn — the foe already committed to
-		// this move against whatever's active, so assume they click it again into us.
-		// We get no action this turn (switching forfeits it), so the foe acts unopposed.
-		if (incomingMove != null && simulated.currentHP > 0) {
-			Pair<Integer, Double> switchInDmgPair = foeClone.calcWithTypes(simulated, incomingMove, true, fieldClone, false);
-			int switchInDmg = switchInDmgPair.getFirst();
-			simulated.currentHP = Math.max(0, simulated.currentHP - switchInDmg);
+		debugDepth++;
+		try {
+			Pokemon simulated = simulateSwitchIn(this, myClone, foeClone, fieldClone);
 			
-			Print.debug(String.format("  Switch-in hit from %s: %d dmg, leaves %s at %d/%d (%.1f%%)\n",
-					incomingMove, switchInDmg, simulated.nickname, simulated.currentHP,
-					simulated.getStat(0), simulated.currentHP * 100.0 / simulated.getStat(0)));
-			
-			if (simulated.currentHP <= 0) {
-				return Integer.MIN_VALUE + 1; // fainted on the switch-in itself, terrible switch
+			// Apply the hit we take switching in THIS turn — the foe already committed to
+			// this move against whatever's active, so assume they click it again into us.
+			// We get no action this turn (switching forfeits it), so the foe acts unopposed.
+			if (incomingMove != null && simulated.currentHP > 0) {
+				Pair<Integer, Double> switchInDmgPair = foeClone.calcWithTypes(simulated, incomingMove, true, fieldClone, false);
+				int switchInDmg = switchInDmgPair.getFirst();
+				simulated.currentHP = Math.max(0, simulated.currentHP - switchInDmg);
+				
+				Print.debug(String.format("  Switch-in hit from %s: %d dmg, leaves %s at %d/%d (%.1f%%)\n",
+						incomingMove, switchInDmg, simulated.nickname, simulated.currentHP,
+						simulated.getStat(0), simulated.currentHP * 100.0 / simulated.getStat(0)));
+				
+				if (simulated.currentHP <= 0) {
+					return Integer.MIN_VALUE + 1; // fainted on the switch-in itself, terrible switch
+				}
 			}
+			
+			FoeMoveResult foeMoveResult = simulated.findFoeStrongestMove(foeClone, fieldClone);
+			Move strongestMove = foeMoveResult.move;
+			Pair<Integer, Double> foeMaxDamagePair = foeMoveResult.damagePair;
+			boolean foeCanKO = foeMoveResult.canKO;
+			
+			return simulated.scorePokemon(foeClone, strongestMove, foeMaxDamagePair, foeCanKO, fieldClone, null, false, skipDefenseAnalysis);
+		} finally {
+			debugDepth--;
 		}
-		
-		FoeMoveResult foeMoveResult = simulated.findFoeStrongestMove(foeClone, fieldClone);
-		Move strongestMove = foeMoveResult.move;
-		Pair<Integer, Double> foeMaxDamagePair = foeMoveResult.damagePair;
-		boolean foeCanKO = foeMoveResult.canKO;
-		
-		return simulated.scorePokemon(foeClone, strongestMove, foeMaxDamagePair, foeCanKO, fieldClone, null, false, skipDefenseAnalysis);
 	}
 	
 	/**
@@ -4279,6 +4307,13 @@ public class Pokemon implements Serializable {
 			
 			if (this.getAbility(field) == Ability.ILLUSION && this.illusion) damage *= 1.2;
 			if (this.getAbility(field) == Ability.ANALYTIC && !first) damage *= 1.3;
+			
+			if (this.getItem(field) == Item.NORMAL_GEM && moveType == PType.NORMAL && move.critChance >= 0) {
+				damage *= 1.3;
+				Task.addTask(Task.TEXT, "The " + this.item.toString() + " strengthened the power of " + move.toString() + "!");
+				this.consumeItem(foe);
+			}
+			
 			if (move == Move.NIGHT_SHADE || move == Move.SEISMIC_TOSS || move == Move.PSYWAVE) damage = this.level;
 			if (move == Move.ENDEAVOR) {
 				if (foe.currentHP > this.currentHP) {

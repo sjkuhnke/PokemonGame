@@ -901,7 +901,11 @@ public enum Move {
 			new Pair<>(getNoComboMoves().contains(this), "No Combo"),
 			new Pair<>(getSound().contains(this), "Sound"),
 			new Pair<>(isBiting(), "Biting"),
-			new Pair<>(isHealing(), "Healing")
+			new Pair<>(isBinding(), "Binding"),
+			new Pair<>(isHealing(), "Healing"),
+			new Pair<>(isPowder(), "Powder"),
+			new Pair<>(getRecoil().contains(this), "Recoil"),
+			new Pair<>(isBallOrBomb(), "Projectile")
 		);
 		
 		for (Pair<Boolean, String> flag : moveFlags) {
@@ -1077,6 +1081,10 @@ public enum Move {
 			return true;
 		}
 		return false;
+	}
+	
+	public boolean isPowder() {
+		return this == SLEEP_POWDER || this == STUN_SPORE || this == POISON_POWDER;
 	}
 	
 	public boolean isTail() {
