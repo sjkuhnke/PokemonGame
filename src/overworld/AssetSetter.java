@@ -27,6 +27,7 @@ public class AssetSetter {
 	public HashMap<Item, Integer> itemMap = new HashMap<>();
 	public HashMap<Integer, StaticSkeleton> legendarySkeletons = new HashMap<>();
 	
+	private static final int STAR_SCIENTIST_SHOP = -44;
 	private static final int NPC_GEOLOGY = -43;
 	private static final int MINING = -42;
 	private static final int DEALER_B = -41;
@@ -359,6 +360,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(82, 28, Item.TINY_MUSHROOM, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(29, 17, Item.DAMAGED_BULB, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(81, 7, Item.PP_MAX, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(61, 26, Item.NORMAL_GEM, mapNum);
 		
 		mapNum = 4;
 		objIndex = 0;
@@ -462,6 +464,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(21, 75, Item.ABSORB_BULB, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(21, 80, Item.GRASSY_SEED, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(24, 86, Item.ABSORB_BULB, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(67, 56, Item.NORMAL_GEM, mapNum);
 		
 		mapNum = 13;
 		objIndex = 0;
@@ -678,7 +681,7 @@ public class AssetSetter {
 		
 		gp.obj[mapNum][objIndex] = ObjSetup(25, 80, Item.HYPER_POTION, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(48, 82, Item.REPEL, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(39, 75, Item.ADRENALINE_ORB, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(39, 75, Item.NORMAL_GEM, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(16, 76, Item.LEAF_STONE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(14, 39, Item.MAX_ELIXIR, mapNum);
 		gp.obj[mapNum][objIndex] = MintSetup(35, 43, mapNum);
@@ -838,7 +841,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(56, 40, Item.PUNCHING_GLOVE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(52, 58, Item.NUGGET, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(30, 43, Item.STAR_PIECE, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(83, 57, Item.DAMAGED_BULB, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(83, 57, Item.NORMAL_GEM, mapNum);
 		
 		mapNum = 83;
 		objIndex = 0;
@@ -966,7 +969,7 @@ public class AssetSetter {
 		mapNum = 105;
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = ObjSetup(33, 17, Item.FULL_HEAL, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(29, 26, Item.EUPHORIAN_GEM, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(29, 26, Item.NORMAL_GEM, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(36, 30, Item.DUSK_BALL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(39, 53, Item.NUGGET, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(20, 36, Item.TM20, mapNum); // earthquake
@@ -1049,6 +1052,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(33, 75, Item.MENTAL_HERB, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(37, 64, Item.SPARKLY_SEED, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(21, 47, Item.MAX_POTION, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(18, 83, Item.NORMAL_GEM, mapNum);
 		
 		mapNum = 115;
 		objIndex = 0;
@@ -1097,6 +1101,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(72, 46, Item.ELIXIR, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(25, 47, Item.BIG_MUSHROOM, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(55, 64, Item.BIG_NUGGET, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(67, 34, Item.NORMAL_GEM, mapNum);
 		
 		mapNum = 119;
 		objIndex = 0;
@@ -1183,6 +1188,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(45, 60, Item.PETTICOAT_GEM, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(63, 47, Item.MAX_REVIVE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(85, 56, Item.COSMIC_CORE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(92, 62, Item.NORMAL_GEM, mapNum);
 		
 		mapNum = 138;
 		objIndex = 0;
@@ -1223,6 +1229,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(45, 47, Item.STAR_PIECE, mapNum);
 		gp.obj[mapNum][objIndex] = MintSetup(67, 56, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(71, 59, Item.ROOM_SERVICE, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(69, 64, Item.NORMAL_GEM, mapNum);
 		
 		mapNum = 141;
 		objIndex = 0;
@@ -1273,7 +1280,7 @@ public class AssetSetter {
 		objIndex = 0;
 		gp.obj[mapNum][objIndex] = SetupChest(57, 62, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(52, 61, Item.STAR_PIECE, mapNum);
-		gp.obj[mapNum][objIndex] = ObjSetup(67, 62, Item.DAMAGED_MOSS, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(67, 62, Item.NORMAL_GEM, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(39, 60, Item.STAR_PIECE, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(38, 71, Item.NUGGET, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(43, 70, Item.HYPER_POTION, mapNum);
@@ -1309,6 +1316,7 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(52, 48, Item.EJECT_BUTTON, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(60, 65, Item.BIG_NUGGET, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(53, 65, Item.GOLD_BOTTLE_CAP, mapNum);
+		gp.obj[mapNum][objIndex] = ObjSetup(41, 51, Item.NORMAL_GEM, mapNum);
 		
 		mapNum = 148;
 		objIndex = 0;
@@ -1690,6 +1698,10 @@ public class AssetSetter {
 		gp.obj[mapNum][objIndex] = ObjSetup(50, 25, Item.PP_MAX, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(49, 44, Item.ICE_CRYSTAL, mapNum);
 		gp.obj[mapNum][objIndex] = ObjSetup(65, 35, Item.STAR_PIECE, mapNum);
+		
+		mapNum = 209;
+		objIndex = 0;
+		gp.obj[mapNum][objIndex] = ObjSetup(55, 51, Item.NORMAL_GEM, mapNum);
 		
 		mapNum = 213;
 		objIndex = 0;
@@ -3226,6 +3238,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(SCIENTIST_UP, "Scientist", 33, 38, "", 228.1);
 		gp.npc[mapNum][index] = NPCSetup(SCIENTIST_DOWN, "Scientist", 31, 36, "", 228.2);
 		gp.npc[mapNum][index] = NPCSetup(NPC_PC, 27, 41, "", "", -1);
+		gp.npc[mapNum][index] = SetupClerk(STAR_SCIENTIST_SHOP, 33, 41, Item.BOOSTER_ENERGY, Item.BEAST_BALL);
 		
 		mapNum = 229;
 		index = 0;
@@ -3761,6 +3774,7 @@ public class AssetSetter {
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(68, 78, DOWN, 1, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(13, 76, RIGHT, 1, mapNum, map);
 		gp.iTile[mapNum][iIndex] = SetupRockClimb(21, 51, UP, 1, mapNum, map);
+		gp.iTile[mapNum][iIndex] = SetupRockClimb(68, 35, UP, 1, mapNum, map);
 		
 		mapNum = 119;
 		iIndex = 0;
@@ -5357,6 +5371,9 @@ public class AssetSetter {
 			break;
 		case STAR_SHOP:
 			result = new NPC_Star(gp);
+			break;
+		case STAR_SCIENTIST_SHOP:
+			result = new NPC_Scientist_Star(gp);
 			break;
 		case GRUST:
 			result = new NPC_Pokemon(gp, 159, team, true, messages);

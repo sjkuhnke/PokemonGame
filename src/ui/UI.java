@@ -38,6 +38,7 @@ import overworld.PMap;
 import overworld.Sound;
 import pokemon.*;
 import pokemon.Bag.SortType;
+import pokemon.Nursery.EggGroup;
 import puzzle.Puzzle;
 import util.Pair;
 import util.Print;
@@ -81,6 +82,7 @@ public class UI extends AbstractUI {
 	public int[] dexNum = new int[4];
 	public int dexMode;
 	public int dexType;
+	public int abilityDexNum;
 	public int levelDexNum;
 	public int tmDexNum;
 	public int starAmt;
@@ -2659,60 +2661,49 @@ public class UI extends AbstractUI {
 		}
 		drawDexSummary(test, mode, levelMoveList, levelLevelList, tmList);
 		
+		int abilityCount = 2;
+		if (mode == 2) {
+			abilityCount = Pokemon.getUniqueAbilityCount(test.getID());
+		}
+		
 		if (gp.keyH.upPressed) {
 			gp.keyH.upPressed = false;
 			if (dexMode == 0) {
-				int amt;
-				if (gp.keyH.ctrlPressed) {
-					amt = 5;
-				} else {
-					amt = 1;
-				}
+				int amt = gp.keyH.ctrlPressed ? 5 : 1;
 				dexNum[dexType] -= amt;
-				if (dexNum[dexType] <= 0) {
-					dexNum[dexType] = 0;
-				}
+				if (dexNum[dexType] <= 0) dexNum[dexType] = 0;
+				abilityDexNum = 0;
 				levelDexNum = 0;
 				tmDexNum = 0;
 			} else if (dexMode == 1) {
-				if (levelDexNum > 0) {
-					levelDexNum--;
-				}
+				abilityDexNum = (abilityDexNum > 0) ? abilityDexNum - 1 : abilityCount - 1;
 			} else if (dexMode == 2) {
-				if (tmDexNum > 0) {
-					tmDexNum--;
-				}
+				if (levelDexNum > 0) levelDexNum--;
+			} else if (dexMode == 3) {
+				if (tmDexNum > 0) tmDexNum--;
 			}
 		}
 		if (gp.keyH.downPressed) {
 			gp.keyH.downPressed = false;
 			if (dexMode == 0) {
-				int amt;
-				if (gp.keyH.ctrlPressed) {
-					amt = 5;
-				} else {
-					amt = 1;
-				}
+				int amt = gp.keyH.ctrlPressed ? 5 : 1;
 				dexNum[dexType] += amt;
-				if (dexNum[dexType] >= maxShow) {
-					dexNum[dexType] = maxShow;
-				}
+				if (dexNum[dexType] >= maxShow) dexNum[dexType] = maxShow;
+				abilityDexNum = 0;
 				levelDexNum = 0;
 				tmDexNum = 0;
 			} else if (dexMode == 1) {
-				if (levelDexNum < levelMoveList.size() - 1) {
-					levelDexNum++;
-				}
+				abilityDexNum = (abilityDexNum < abilityCount - 1) ? abilityDexNum + 1 : 0;
 			} else if (dexMode == 2) {
-				if (tmDexNum < tmList.size() - 1) {
-					tmDexNum++;
-				}
+				if (levelDexNum < levelMoveList.size() - 1) levelDexNum++;
+			} else if (dexMode == 3) {
+				if (tmDexNum < tmList.size() - 1) tmDexNum++;
 			}
 		}
 		if (gp.keyH.rightPressed || gp.keyH.wPressed) {
 			gp.keyH.rightPressed = false;
 			gp.keyH.wPressed = false;
-			if (mode == 2 && dexMode < 2 && !(dexMode == 1 && tmList.size() == 0)) dexMode++;
+			if (mode == 2 && dexMode < 3 && !(dexMode == 2 && tmList.size() == 0)) dexMode++;
 		}
 		if (gp.keyH.leftPressed || gp.keyH.sPressed) {
 			gp.keyH.leftPressed = false;
@@ -2729,6 +2720,7 @@ public class UI extends AbstractUI {
 			int max = starAmt >= 5 ? 4 : gp.player.p.calculatePokedexes();
 			dexType = dexType - 1;
 			if (dexType < 0) dexType = max - 1;
+			abilityDexNum = 0;
 			levelDexNum = 0;
 			tmDexNum = 0;
 		}
@@ -2737,6 +2729,7 @@ public class UI extends AbstractUI {
 			gp.keyH.dPressed = false;
 			int max = starAmt >= 5 ? 4 : gp.player.p.calculatePokedexes();
 			dexType = (dexType + 1) % max;
+			abilityDexNum = 0;
 			levelDexNum = 0;
 			tmDexNum = 0;
 		}
@@ -2783,7 +2776,15 @@ public class UI extends AbstractUI {
 			g2.drawString('\u2605' + "", starX, infoTextY);
 		}
 		
-		String wText = dexMode == 0 ? "Moves": null;
+		String wText = null;
+		switch (dexMode) {
+		case 0:
+			wText = "Abilities";break;
+		case 1:
+			wText = "Level Moves";break;
+		case 2:
+			wText = "TM Moves";break;
+		}
 		drawToolTips(wText, "Prev", "Back", "Next");
 	}
 
@@ -2832,56 +2833,12 @@ public class UI extends AbstractUI {
 		g2.setFont(g2.getFont().deriveFont(28F));
 		x += gp.tileSize * 3.75;
 		y -= gp.tileSize;
-		String abilityLabel = "Abilities:";
-		g2.drawString(abilityLabel, getCenterAlignedTextX(abilityLabel, x), y);
-		g2.setFont(g2.getFont().deriveFont(24F));
-		y += gp.tileSize * 0.75;
-		String ability = mode == 2 ? p.ability.toString() : "???";
-		g2.drawString(ability, getCenterAlignedTextX(ability, x), y);
+		drawAbilitySection(p, mode, x, y);
 		
-		if (mode == 1) return;
-		
-		g2.setFont(g2.getFont().deriveFont(16F));
-		String[] abilityDesc = Item.breakString(p.ability.desc, 26).split("\n");
-		for (String s : abilityDesc) {
-			y += gp.tileSize / 2 - 4;
-			g2.drawString(s, getCenterAlignedTextX(s, x), y);
-		}
-		
-		g2.setFont(g2.getFont().deriveFont(24F));
-		y += gp.tileSize * 0.75;
-		p.setAbility(1);
-		String ability2 = p.ability.toString();
-		g2.drawString(ability2, getCenterAlignedTextX(ability2, x), y);
-		
-		g2.setFont(g2.getFont().deriveFont(16F));
-		String[] abilityDesc2 = Item.breakString(p.ability.desc, 26).split("\n");
-		for (String s : abilityDesc2) {
-			y += gp.tileSize / 2 - 4;
-			g2.drawString(s, getCenterAlignedTextX(s, x), y);
-		}
-		
-		g2.setFont(g2.getFont().deriveFont(28F));
-		y += gp.tileSize * 0.5;
-		String hAbilityLabel = "-----------------";
-		g2.drawString(hAbilityLabel, getCenterAlignedTextX(hAbilityLabel, x), y);
-		g2.setFont(g2.getFont().deriveFont(24F));
-		y += gp.tileSize * 0.5;
-		p.setAbility(2);
-		String ability3;
-		if (p.ability == Ability.NULL) {
-			ability3 = "N/A";
-			g2.drawString(ability3, getCenterAlignedTextX(ability3, x), y);
+		if (mode == 2) {
+			drawSpeciesInfo(p, x - gp.tileSize / 2, (int) (startY + gp.tileSize * 4.75));
 		} else {
-			ability3 = p.ability.toString();
-			g2.drawString(ability3, getCenterAlignedTextX(ability3, x), y);
-			
-			g2.setFont(g2.getFont().deriveFont(16F));
-			String[] abilityDesc3 = Item.breakString(p.ability.desc, 26).split("\n");
-			for (String s : abilityDesc3) {
-				y += gp.tileSize / 2 - 4;
-				g2.drawString(s, getCenterAlignedTextX(s, x), y);
-			}
+			return;
 		}
 		
 		// Stats
@@ -2924,6 +2881,8 @@ public class UI extends AbstractUI {
 		// Evolutions
 		int moveStartY = y + gp.tileSize;
 		y += gp.tileSize / 6;
+		g2.setFont(g2.getFont().deriveFont(Font.ITALIC, 18F));
+		g2.setColor(new Color(180, 220, 255));
 		String evolve = p.getEvolveString();
 		if (evolve == null) evolve = "Does not evolve";
 		String[] evolves = evolve.split("\n");
@@ -2931,6 +2890,8 @@ public class UI extends AbstractUI {
 			g2.drawString(s, x, y);
 			y += gp.tileSize / 3 + 2;
 		}
+		g2.setColor(Color.WHITE);
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20F));
 		
 		// Level up moves
 		y = moveStartY;
@@ -2940,7 +2901,7 @@ public class UI extends AbstractUI {
 		int moveHeight = gp.tileSize / 2;
 		Move m = null;
 		for (int i = levelDexNum; i < levelDexNum + 5; i++) {
-			if (i == levelDexNum && dexMode == 1) {
+			if (i == levelDexNum && dexMode == 2) {
 				g2.setColor(Color.RED);
 				g2.drawRoundRect(x, y, moveWidth, moveHeight, 8, 8);
 				m = levelMoveList.get(i);
@@ -2963,7 +2924,7 @@ public class UI extends AbstractUI {
 		y += 8;
 		
 		for (int i = tmDexNum; i < tmDexNum + 5; i++) {
-			if (i == tmDexNum && dexMode == 2) {
+			if (i == tmDexNum && dexMode == 3) {
 				g2.setColor(Color.RED);
 				g2.drawRoundRect(x, y, moveWidth, moveHeight, 8, 8);
 				m = tmList.get(i).getMove();
@@ -2979,9 +2940,95 @@ public class UI extends AbstractUI {
 		
 		int moveSumX = gp.tileSize * 6;
 		int moveSumY = gp.tileSize * 2;
-		if (dexMode > 0) drawMoveSummary(moveSumX, moveSumY, p, null, null, m);
+		if (dexMode > 1) drawMoveSummary(moveSumX, moveSumY, p, null, null, m);
 	}
+	
+	private void drawAbilitySection(Pokemon p, int mode, int x, int y) {
+		String abilityLabel = "Abilities:";
+		g2.setColor(Color.WHITE);
+		g2.setFont(g2.getFont().deriveFont(28F));
+		g2.drawString(abilityLabel, getCenterAlignedTextX(abilityLabel, x), y);
+		
+		if (mode < 2) {
+			y += gp.tileSize * 3/4;
+			g2.setFont(g2.getFont().deriveFont(24F));
+			String unknown = "???";
+			g2.drawString(unknown, getCenterAlignedTextX(unknown, x), y);
+			return;
+		}
+		
+		int abilityListSize = Pokemon.getUniqueAbilityCount(p.id);
+		if (abilityDexNum >= abilityListSize) abilityDexNum = abilityListSize - 1;
+		if (abilityDexNum < 0) abilityDexNum = 0;
+		
+		final int MAX_SLOTS = 3;
+		int listStartY = y + gp.tileSize / 3;
+		int buttonWidth = (int) (gp.tileSize * 3.4);
+		int buttonHeight = (int) (gp.tileSize * 0.6);
+		int buttonSpacing = gp.tileSize / 8;
+		int buttonX = x - buttonWidth / 2;
+		
+		g2.setFont(g2.getFont().deriveFont(16F));
+		for (int i = 0; i < abilityListSize; i++) {
+			int slot = Pokemon.getUniqueAbilitySlot(p.id, i);
+			Ability ab = p.getAbility(slot);
+			boolean isHidden = slot == 2;
+			boolean selected = i == abilityDexNum && dexMode == 1;
+			
+			int buttonY = listStartY + i * (buttonHeight + buttonSpacing);
+			
+			g2.setColor(isHidden ? new Color(90, 75, 10) : new Color(55, 55, 55));
+			g2.fillRoundRect(buttonX, buttonY, buttonWidth, buttonHeight, 10, 10);
+			
+			g2.setColor(isHidden ? new Color(255, 215, 0) : Color.WHITE);
+			String display = ab.toString();
+			g2.drawString(display, getCenterAlignedTextX(display, x), buttonY + buttonHeight - buttonHeight / 3);
+			
+			if (selected) {
+				g2.setColor(Color.RED);
+				g2.drawRoundRect(buttonX, buttonY, buttonWidth, buttonHeight, 10, 10);
+				g2.drawRoundRect(buttonX + 1, buttonY + 1, buttonWidth - 2, buttonHeight - 2, 9, 9); // slightly thicker outline
+			}
+		}
+		
+		int descY = listStartY + MAX_SLOTS * (buttonHeight + buttonSpacing) + gp.tileSize / 2;
+		
+		int selectedSlot = Pokemon.getUniqueAbilitySlot(p.id, abilityDexNum);
+		Ability selAbility = p.getAbility(selectedSlot);
+		
+		g2.setFont(g2.getFont().deriveFont(22F));
+		g2.setColor(selectedSlot == 2 ? new Color(255, 215, 0) : Color.WHITE);
+		String selName = selAbility.toString();
+		g2.drawString(selName, getCenterAlignedTextX(selName, x), descY);
+		
+		g2.setColor(Color.WHITE);
+		g2.setFont(g2.getFont().deriveFont(16F));
+		String[] desc = Item.breakString(selAbility.desc, 26).split("\n");
+		int lineY = descY;
+		for (String s : desc) {
+			lineY += gp.tileSize / 2 - 4;
+			g2.drawString(s, getCenterAlignedTextX(s, x), lineY);
+		}
+	}
+	
+	private void drawSpeciesInfo(Pokemon p, int x, int y) {
+		g2.setFont(g2.getFont().deriveFont(16F));
+		g2.setColor(Color.WHITE);
+		int infoX = x - gp.tileSize * 1.7 > 0 ? (int) (x - gp.tileSize * 1.7) : x;
 
+		g2.drawString("Weight: " + p.weight + " lbs", infoX, y);
+		y += gp.tileSize / 3;
+
+		g2.drawString("Catch Rate: " + p.catchRate, infoX, y);
+		y += gp.tileSize / 3;
+
+		ArrayList<EggGroup> eggGroups = Pokemon.getEggGroup(p.getID());
+		String eggGroupText = eggGroups.get(0).equals(eggGroups.get(1))
+				? eggGroups.get(0).toString()
+				: eggGroups.get(0) + ", " + eggGroups.get(1);
+		g2.drawString("Egg Group(s): " + eggGroupText, infoX, y);
+	}
+	
 	private void drawBoxScreen() {
 		int cBoxIndex = gauntlet ? -1 : gp.player.p.currentBox;
 		Pokemon[][] boxes = gp.player.p.boxes;
@@ -6373,10 +6420,14 @@ public class UI extends AbstractUI {
 	public void starShopSelect() {
 		drawDialogueScreen(true);
 		
+		boolean repair = ((NPC_Star) npc).repair;
+		int maxCommand = repair ? 2 : 1;
+		
 		int x = gp.tileSize * 11;
 		int y = gp.tileSize * 4;
 		int width = gp.tileSize * 3;
-		int height = (int) (gp.tileSize * 3.5);
+		int height = (int) (gp.tileSize * 2.5);
+		if (repair) height += gp.tileSize;
 		drawSubWindow(x, y, width, height);
 		
 		x += gp.tileSize;
@@ -6390,19 +6441,21 @@ public class UI extends AbstractUI {
 				remindNum = 0;
 			}
 		}
-		y += gp.tileSize;
-		g2.drawString("Repair", x, y);
-		if (commandNum == 1) {
-			g2.drawString(">", x-24, y);
-			if (gp.keyH.wPressed) {
-				gp.keyH.wPressed = false;
-				subState = 2;
-				remindNum = 0;
+		if (repair) {
+			y += gp.tileSize;
+			g2.drawString("Repair", x, y);
+			if (commandNum == 1) {
+				g2.drawString(">", x-24, y);
+				if (gp.keyH.wPressed) {
+					gp.keyH.wPressed = false;
+					subState = 2;
+					remindNum = 0;
+				}
 			}
 		}
 		y += gp.tileSize;
 		g2.drawString("Exit", x, y);
-		if (commandNum == 2) {
+		if (commandNum == maxCommand) {
 			g2.drawString(">", x-24, y);
 			if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
@@ -6426,13 +6479,13 @@ public class UI extends AbstractUI {
 				gp.keyH.upPressed = false;
 				commandNum--;
 				if (commandNum < 0) {
-					commandNum = 2;
+					commandNum = maxCommand;
 				}
 			}
 			if (gp.keyH.downPressed) {
 				gp.keyH.downPressed = false;
 				commandNum++;
-				if (commandNum > 2) {
+				if (commandNum > maxCommand) {
 					commandNum = 0;
 				}
 			}

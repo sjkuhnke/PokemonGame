@@ -1,7 +1,7 @@
 package pokemon;
 
 public enum Ability {
-	// useful int flag: 0 if not useful to nullify, 1 if usually useful, 2 if illusion flag is active, 3 for fortify counter, 4 if user has an item, 5 if user is full HP, 6 if user is above half HP
+	// useful int flag: 0 if not useful to nullify, 1 if usually useful, 2 if illusion flag is active, 3 for fortify counter, 4 if user has an item, 5 if user is full HP, 6 if user is above half HP, 7 if ability flag isn't active
 	ADAPTABILITY("Changes the STAB bonus from 1.5x to 2x.", 1),
 	AMBUSH("Gives +1 priority to the first move this Pokemon uses when it enters battle.", 0),
 	ANALYTIC("Boosts move power by 1.3x when the Pokemon moves last.", 1),
@@ -90,6 +90,7 @@ public enum Ability {
 	NO_GUARD("Ensures the Pokemon and its foe's attacks land.", 1),
 	NORMALIZE("All the Pokemon's moves become Normal type. The power of their moves are boosted by 1.2x.", 0), // 0 to let the AI know it's good to remove on themselves and probably isn't good to remove on the player
 	OVERGROW("Powers up GRASS moves by 20%, or 50% when at or below 1/3 of max HP.", 1),
+	PARADOX_DRIVE("Boosts highest stat on entry if SUN or ELECTRIC terrain is active, or if holding a Booster Energy. Boosts by 30%, 50% if Speed.", 0),
 	PARASOCIAL("The Pokemon steals 1/8 HP from an opposing confused, abducted, or asleep Pokemon.", 1),
 	PERISH_BODY("When hit by a contact move, the attacker will faint after three turns.", 1),
 	PICKPOCKET("Steals an item from the foe on switch-in if this Pokemon is not holding an item.", 0),
@@ -102,6 +103,7 @@ public enum Ability {
 	PROTEAN("Changes the Pokemon's type to the move type it's about to use.", 1),
 	PSYCHIC_AURA("Weakens the power of Special moves.", 1),
 	PSYCHIC_SURGE("Turns the ground into PSYCHIC TERRAIN for 5 turns when the Pokemon enters a battle.", 0),
+	PYROMANCER("Inflicts the foe with a burn when this Pokemon hits with a FIRE move.", 1),
 	RADIANT("Lowers foe's Accuracy when this Pokemon hits with a LIGHT move.", 1),
 	RAIN_DISH("The Pokemon regains 1/8 max HP in RAIN.", 1),
 	RATTLED("Getting hit by DARK, GHOST, or BUG moves boost its Speed stat.", 1),
@@ -117,8 +119,10 @@ public enum Ability {
 	SAND_VEIL("Opposing moves are 0.8x accurate while SANDSTORM is active; immune to sand damage.", 1),
 	SAP_SIPPER("Raises highest attack if hit by an GRASS move.", 1),
 	SEABED_SIFTER("Clears any terrain on entry, and if a terrain was cleared, restores HP to full.", 0),
+	SECOND_HELPING("When this Pokemon falls below 50% HP, it restores 25% of its maximum HP once.", 7),
 	SERENE_GRACE("Doubles the chance of secondary effects occurring when attacking.", 1),
 	SCALY_SKIN("Lowers the foe's Attack, and this Pokemon only takes damage from attacks.", 1),
+	SCORCHING_SPIRIT("Whenever this Pokemon is damaged by an attack, the attacker is burned.", 1),
 	SCRAPPY("The Pokemon can hit GHOST Pokemon with NORMAL and FIGHTING moves; ignores switch-in stat-lowering Abilities.", 1),
 	SHADOW_TAG("Prevents the opposing Pokemon from escaping.", 1),
 	SHADOW_VEIL("The Pokemon is protected from an attack once per battle, at the cost of 1/8 max HP.", 2),
@@ -143,12 +147,14 @@ public enum Ability {
 	SPARKLY_SURGE("Turns the ground into SPARKLY TERRAIN for 5 turns when the Pokemon enters a battle.", 0),
 	SPEED_BOOST("Its Speed stat is boosted at the end of every active turn.", 1),
 	STARBORN("Raises highest attack by 1 if Aurora Glow is active.", 1),
+	STAMINA("Raises Defense by 1 when hit by an attack.", 1),
 	STATIC("Contact with the Pokemon can cause a paralysis 30% of the time.", 1),
 	STEELWORKER("Powers up STEEL moves by 1.5x.", 1),
 	STICKY_HOLD("Protects the Pokemon from item theft.", 1),
 	STRONG_JAW("Boosts the power of its biting moves by 1.5x.", 1),
 	STURDY("It cannot be knocked out from full HP. One-hit KO moves cannot knock it out, either.", 5),
 	SUPER_LUCK("Heightens the critical-hit ratios of moves from 1/20 to 1/8.", 1),
+	SUPREME_OVERLORD("The power of its moves is boosted by 10% for each Pokemon in its party that is fainted.", 0),
 	SWARM("Powers up BUG moves by 20%, or 50% when at or below 1/3 of max HP.", 1),
 	SWIFT_SWIM("Boosts the Pokemon's Speed stat in RAIN.", 1),
 	SYNCHRONIZE("Passes a status condition or confusion to the foe when inflicted on it.", 1),

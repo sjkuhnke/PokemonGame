@@ -1284,7 +1284,7 @@ public class TileManager {
 		setup(969, false);
 		setup(970, true);
 		setup(971, true);
-		setup(972, true);
+		setup(972, true, TOP_FOURTH);
 		setup(973, false);
 
 		setup(986, false);

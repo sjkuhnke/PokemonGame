@@ -94,7 +94,7 @@
 54 |Sember       |FIRE    |null    |FLAME_BODY        |FLASH_FIRE        |UNBURDEN          |[30, 20, 40, 103, 30, 83]     |10.0  |195|FIELD       |HUMAN$LIKE  |
 55 |Kaboon       |FIRE    |FIGHTING|FLAME_BODY        |IRON_FIST         |UNBURDEN          |[45, 88, 50, 70, 54, 93]      |145.6 |100|FIELD       |HUMAN$LIKE  |
 56 |Detonape     |FIRE    |FIGHTING|FLAME_BODY        |IRON_FIST         |UNBURDEN          |[65, 120, 70, 60, 78, 123]    |195.0 |50 |FIELD       |HUMAN$LIKE  |
-191|Magmaclang   |FIRE    |GHOST   |STEELWORKER       |STEELWORKER       |STEELWORKER       |[105, 35, 120, 90, 90, 65]    |165.3 |80 |AMORPHOUS   |AMORPHOUS   |
+191|Magmaclang   |FIRE    |GHOST   |STEELWORKER       |SECOND_HELPING    |SCORCHING_SPIRIT  |[105, 35, 120, 90, 90, 65]    |165.3 |80 |AMORPHOUS   |AMORPHOUS   |
 209|Flamehox     |FIRE    |GROUND  |FLAME_BODY        |FLAME_BODY        |SAND_VEIL         |[70, 53, 70, 55, 60, 52]      |290.2 |55 |FIELD       |MONSTER     |
 210|Fireshard    |FIRE    |FLYING  |INTIMIDATE        |INTIMIDATE        |SAND_VEIL         |[75, 75, 75, 90, 75, 70]      |301.3 |35 |FIELD       |MONSTER     |
 211|Blastflames  |FIRE    |DRAGON  |LEVITATE          |LEVITATE          |SHEER_FORCE       |[95, 75, 87, 140, 80, 83]     |345.6 |15 |FIELD       |MONSTER     |
@@ -105,9 +105,9 @@
 97 |Houndoom     |FIRE    |DARK    |SOLAR_POWER       |FLASH_FIRE        |INTIMIDATE        |[75, 90, 50, 110, 80, 95]     |77.2  |45 |FIELD       |FIELD       |
 92 |Sparkdust    |MAGIC   |null    |MAGIC_GUARD       |SHIELD_DUST       |MAGIC_BOUNCE      |[40, 45, 40, 75, 65, 70]      |3.5   |100|FIELD       |FAIRY       |
 93 |Splame       |MAGIC   |FIRE    |SLEIGHT_OF_HAND   |SHIELD_DUST       |MAGIC_BOUNCE      |[85, 45, 65, 145, 110, 55]    |5.5   |50 |FIELD       |FAIRY       |
-110|Sparkitten   |FIRE    |LIGHT   |ANTICIPATION      |ANTICIPATION      |NULL              |[60, 70, 65, 70, 65, 70]      |16.0  |110|FIELD       |FIELD       |
-111|Fireblion    |FIRE    |null    |DROUGHT           |DROUGHT           |NULL              |[85, 105, 99, 40, 92, 89]     |295.5 |35 |FIELD       |FIELD       |
-112|Flamebless   |FIRE    |LIGHT   |COMPETITIVE       |COMPETITIVE       |NULL              |[70, 40, 55, 120, 115, 110]   |125.0 |35 |FIELD       |FIELD       |
+110|Sparkitten   |FIRE    |LIGHT   |ANTICIPATION      |MOODY             |BLAZE             |[60, 70, 65, 70, 65, 70]      |16.0  |110|FIELD       |FIELD       |
+111|Fireblion    |FIRE    |null    |DROUGHT           |SUPREME_OVERLORD  |STAMINA           |[85, 105, 99, 40, 92, 89]     |295.5 |35 |FIELD       |FIELD       |
+112|Flamebless   |FIRE    |LIGHT   |COMPETITIVE       |SERENE_GRACE      |PYROMANCER        |[70, 40, 55, 120, 115, 110]   |125.0 |35 |FIELD       |FIELD       |
 164|Shookwat     |ELECTRIC|null    |STATIC            |VOLT_ABSORB       |MAGNET_PULL       |[55, 62, 46, 73, 75, 49]      |11.0  |255|AMORPHOUS   |MONSTER     |
 165|Wattwo       |ELECTRIC|null    |STATIC            |ELECTRIC_SURGE    |MAGNET_PULL       |[83, 65, 92, 105, 80, 50]     |56.1  |100|AMORPHOUS   |MONSTER     |
 166|Megawatt     |ELECTRIC|STEEL   |HUGE_POWER        |ELECTRIC_SURGE    |MAGNET_PULL       |[85, 65, 120, 92, 98, 55]     |65.9  |35 |AMORPHOUS   |MONSTER     |
@@ -225,11 +225,11 @@
 -6 |Detonape-S   |FIGHTING|DARK    |GUTS              |SUPER_LUCK        |FLAME_BODY        |[115, 115, 75, 46, 90, 75]    |205.3 |50 |FIELD       |HUMAN$LIKE  |
 -7 |Ekans-S      |FLYING  |GHOST   |SHED_SKIN         |LIGHTNING_ROD     |PRESSURE          |[35, 40, 54, 65, 64, 30]      |3.9   |255|FLYING      |DRAGON      |
 -8 |Arbok-S      |FLYING  |GHOST   |SHED_SKIN         |LIGHTNING_ROD     |PRESSURE          |[80, 40, 90, 115, 90, 75]     |17.5  |90 |FLYING      |DRAGON      |
-244|Blohadel     |FIRE    |WATER   |GLASS_GUARD       |GLASS_GUARD       |NULL              |[140, 25, 150, 77, 150, 58]   |9500.4|3  |UNDISCOVERED|UNDISCOVERED|
-240|Perilyte     |ROCK    |MAGIC   |TYPE_MASTER       |TYPE_MASTER       |NULL              |[70, 125, 60, 125, 75, 145]   |820.6 |3  |UNDISCOVERED|UNDISCOVERED|
-241|Faulette     |DARK    |MAGIC   |JACKPOT           |JACKPOT           |NULL              |[80, 75, 85, 155, 85, 120]    |251.9 |3  |UNDISCOVERED|UNDISCOVERED|
-243|Sasquotta    |GROUND  |MAGIC   |TERRAFORGE        |TERRAFORGE        |NULL              |[125, 110, 130, 55, 90, 90]   |3830.3|3  |UNDISCOVERED|UNDISCOVERED|
-242|Hueduu       |POISON  |MAGIC   |PROTEAN           |PROTEAN           |NULL              |[75, 65, 90, 134, 110, 126]   |186.5 |3  |UNDISCOVERED|UNDISCOVERED|
+244|Blohadel     |FIRE    |WATER   |GLASS_GUARD       |GLASS_GUARD       |GLASS_GUARD       |[140, 25, 150, 77, 150, 58]   |9500.4|3  |UNDISCOVERED|UNDISCOVERED|
+240|Perilyte     |ROCK    |MAGIC   |TYPE_MASTER       |TYPE_MASTER       |TYPE_MASTER       |[70, 125, 60, 125, 75, 145]   |820.6 |3  |UNDISCOVERED|UNDISCOVERED|
+241|Faulette     |DARK    |MAGIC   |JACKPOT           |JACKPOT           |JACKPOT           |[80, 75, 85, 155, 85, 120]    |251.9 |3  |UNDISCOVERED|UNDISCOVERED|
+243|Sasquotta    |GROUND  |MAGIC   |TERRAFORGE        |TERRAFORGE        |TERRAFORGE        |[125, 110, 130, 55, 90, 90]   |3830.3|3  |UNDISCOVERED|UNDISCOVERED|
+242|Hueduu       |POISON  |MAGIC   |PROTEAN           |PROTEAN           |PROTEAN           |[75, 65, 90, 134, 110, 126]   |186.5 |3  |UNDISCOVERED|UNDISCOVERED|
 245|Relomidel    |ICE     |DRAGON  |COLD_HEART        |COLD_HEART        |COLD_HEART        |[120, 150, 100, 80, 130, 100] |750.5 |3  |UNDISCOVERED|UNDISCOVERED|
 246|Relopamil    |PSYCHIC |DRAGON  |WARM_HEART        |WARM_HEART        |WARM_HEART        |[120, 80, 130, 150, 100, 100] |705.2 |3  |UNDISCOVERED|UNDISCOVERED|
 247|Dragowrath   |GALACTIC|DRAGON  |WHITE_HOLE        |WHITE_HOLE        |WHITE_HOLE        |[110, 100, 100, 160, 100, 130]|956.4 |3  |UNDISCOVERED|UNDISCOVERED|
@@ -281,14 +281,14 @@
 -9 |Capsakid-S   |GRASS   |GHOST   |CHLOROPHYLL       |PICKPOCKET        |FLASH_FIRE        |[45, 67, 40, 47, 40, 65]      |3.6   |160|GRASS       |GRASS       |
 -10|Scovillain-S |GRASS   |DARK    |CHLOROPHYLL       |INSECT_FEEDER     |FLASH_FIRE        |[65, 113, 60, 103, 65, 80]    |35.1  |70 |GRASS       |GRASS       |
 -11|Despenero-S  |GRASS   |DARK    |CHLOROPHYLL       |INSECT_FEEDER     |FLASH_FIRE        |[84, 118, 75, 108, 75, 90]    |116.7 |25 |GRASS       |GRASS       |
-234|Cage Critter |GALACTIC|BUG     |BEAST_BOOST       |BEAST_BOOST       |BEAST_BOOST       |[89, 73, 97, 157, 73, 101]    |280.5 |40 |ALIEN       |ALIEN       |
-235|Icy Serpent  |ICE     |LIGHT   |BEAST_BOOST       |BEAST_BOOST       |BEAST_BOOST       |[103, 113, 139, 71, 97, 67]   |521.1 |40 |ALIEN       |ALIEN       |
-236|Shocky Spire |WATER   |STEEL   |BEAST_BOOST       |BEAST_BOOST       |BEAST_BOOST       |[233, 59, 89, 83, 67, 59]     |1200.0|40 |ALIEN       |ALIEN       |
-237|Dust Sorcerer|GROUND  |FLYING  |BEAST_BOOST       |BEAST_BOOST       |BEAST_BOOST       |[79, 61, 79, 127, 131, 113]   |101.1 |40 |ALIEN       |ALIEN       |
-238|Fever Dream  |FIRE    |ICE     |BEAST_BOOST       |BEAST_BOOST       |BEAST_BOOST       |[103, 131, 101, 79, 97, 79]   |495.3 |40 |ALIEN       |ALIEN       |
-239|Dusk Skater  |DARK    |STEEL   |BEAST_BOOST       |BEAST_BOOST       |BEAST_BOOST       |[67, 113, 59, 131, 71, 149]   |256.3 |40 |ALIEN       |ALIEN       |
-248|Necrozma     |GALACTIC|DARK    |EVENT_HORIZON     |EVENT_HORIZON     |NULL              |[97, 107, 101, 137, 89, 109]  |507.1 |3  |UNDISCOVERED|UNDISCOVERED|
-0  |Necrozma-Ult |LIGHT   |DARK    |NEUROFORCE        |NEUROFORCE        |NULL              |[97, 147, 97, 187, 97, 129]   |507.1 |3  |UNDISCOVERED|UNDISCOVERED|
+234|Cage Critter |GALACTIC|BUG     |BEAST_BOOST       |BEAST_BOOST       |PARADOX_DRIVE     |[89, 73, 97, 157, 73, 101]    |280.5 |40 |ALIEN       |ALIEN       |
+235|Icy Serpent  |ICE     |LIGHT   |BEAST_BOOST       |BEAST_BOOST       |PARADOX_DRIVE     |[103, 113, 139, 71, 97, 67]   |521.1 |40 |ALIEN       |ALIEN       |
+236|Shocky Spire |WATER   |STEEL   |BEAST_BOOST       |BEAST_BOOST       |PARADOX_DRIVE     |[233, 59, 89, 83, 67, 59]     |1200.0|40 |ALIEN       |ALIEN       |
+237|Dust Sorcerer|GROUND  |FLYING  |BEAST_BOOST       |BEAST_BOOST       |PARADOX_DRIVE     |[79, 61, 79, 127, 131, 113]   |101.1 |40 |ALIEN       |ALIEN       |
+238|Fever Dream  |FIRE    |ICE     |BEAST_BOOST       |BEAST_BOOST       |PARADOX_DRIVE     |[103, 131, 101, 79, 97, 79]   |495.3 |40 |ALIEN       |ALIEN       |
+239|Dusk Skater  |DARK    |STEEL   |BEAST_BOOST       |BEAST_BOOST       |PARADOX_DRIVE     |[67, 113, 59, 131, 71, 149]   |256.3 |40 |ALIEN       |ALIEN       |
+248|Necrozma     |GALACTIC|DARK    |EVENT_HORIZON     |EVENT_HORIZON     |EVENT_HORIZON     |[97, 107, 101, 137, 89, 109]  |507.1 |3  |UNDISCOVERED|UNDISCOVERED|
+0  |Necrozma-Ult |LIGHT   |DARK    |NEUROFORCE        |NEUROFORCE        |NEUROFORCE        |[97, 147, 97, 187, 97, 129]   |507.1 |3  |UNDISCOVERED|UNDISCOVERED|
 104|Azurill      |WATER   |NORMAL  |THICK_FAT         |HUGE_POWER        |SAP_SIPPER        |[50, 20, 40, 20, 40, 20]      |4.4   |150|WATER_1     |FAIRY       |
 105|Marill       |WATER   |NORMAL  |THICK_FAT         |HUGE_POWER        |SAP_SIPPER        |[70, 20, 50, 20, 50, 40]      |18.7  |190|WATER_1     |FAIRY       |
 106|Azumarill    |WATER   |NORMAL  |THICK_FAT         |HUGE_POWER        |SAP_SIPPER        |[100, 50, 80, 60, 80, 50]     |62.8  |75 |WATER_1     |FAIRY       |

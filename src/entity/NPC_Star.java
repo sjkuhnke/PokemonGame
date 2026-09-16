@@ -5,9 +5,12 @@ import pokemon.Item;
 import ui.UI;
 
 public class NPC_Star extends Entity {
+	public boolean repair;
+	
 	public NPC_Star(GamePanel gp) {
 		super(gp, null);
 		this.setDirection("down");
+		this.repair = true;
 		
 		getImage();
 		setDialogue();

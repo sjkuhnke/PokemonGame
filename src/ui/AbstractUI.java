@@ -2652,4 +2652,16 @@ public abstract class AbstractUI {
 			(int)(a.getBlue()  + (b.getBlue()  - a.getBlue())  * t)
 		);
 	}
+	
+	public void drawEditPrompt(int x, int y) {
+		float alpha = 0.5f + (float)(Math.sin(pulseCounter * 0.15) * 0.5);
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+		
+		g2.setFont(g2.getFont().deriveFont(Font.ITALIC, 14F));
+		ToolTip wTip = new ToolTip(gp, "", "", false, gp.config.wKey);
+		String hint = "Press " + wTip + " to edit";
+		drawOutlinedText(hint, x, y, new Color(180, 180, 180), Color.BLACK);
+		
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+	}
 }

@@ -332,6 +332,7 @@ public class TitleScreen extends AbstractUI {
 				menuState = SAVES_MENU;
 				savesMenuScroll = 0;
 			}
+			break;
 		}
 	}
 
@@ -1111,9 +1112,15 @@ public class TitleScreen extends AbstractUI {
 		contentY += gp.tileSize;
 		
 		contentY += gp.tileSize * 2 / 3;
+		
+		if (selected) { // save file name
+			drawEditPrompt(textX, textY + gp.tileSize / 3);
+		}
+		
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
 		selected = newGameMenuNum == NG_PLAYER_NAME;
 		drawOutlinedText("Player Name:", contentX, contentY, selected ? textColor : new Color(200, 200, 200), Color.BLACK);
+		
 		
 		contentY += gp.tileSize / 3;
 		
@@ -1130,7 +1137,12 @@ public class TitleScreen extends AbstractUI {
 		g2.setFont(g2.getFont().deriveFont(24F));
 		textX = contentX + gp.tileSize / 4;
 		textY = contentY + gp.tileSize * 3 / 4;
-
+		
+		if (selected) { // player name
+			drawEditPrompt(textX, textY + gp.tileSize / 3);
+		}
+		
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
 		boolean startable = !playerName.isEmpty();
 		displayText = playerName.isEmpty() ? "*required" : playerName;
 		textCol = playerName.isEmpty() ? new Color(163, 31, 21) : (selected ? textColor : new Color(200, 200, 200));
@@ -1447,11 +1459,9 @@ public class TitleScreen extends AbstractUI {
 			g2.fillRect(scrollbarX, (int)thumbY, scrollbarWidth, (int)thumbHeight);
 		}
 		
-		if (previewPlayer != null) {
-			int previewX = panelX + panelWidth / 2 + gp.tileSize / 4;
-			int previewY = listY;
-			drawSavePreview(previewX, previewY, gp.tileSize * 6);
-		}
+		int previewX = panelX + panelWidth / 2 + gp.tileSize / 4;
+		int previewY = listY;
+		drawSavePreview(previewX, previewY, gp.tileSize * 6);
 		
 		g2.setFont(g2.getFont().deriveFont(18F));
 		ArrayList<ToolTip> toolTips = new ArrayList<>();

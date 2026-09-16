@@ -85,7 +85,7 @@ public enum Item {
 	FAST_BALL(367,0,250,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that is more effective when catching Pokemon that are very quick."),
 	MOON_BALL(368,0,250,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that is more effective when catching Pokemon that can be evolved using a Dawn or Dusk Stone."),
 	DREAM_BALL(369,0,500,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that is more effective when catching Pokemon that are asleep."),
-	BEAST_BALL(370,0,1000,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that is only effective at catching Ultra Paradox Pokemon."),
+	BEAST_BALL(370,3,1000,Color.BLACK,Item.BALLS,null,"A somewhat different Poke Ball that is only effective at catching Ultra Paradox Pokemon."),
 	POTION(4,25,12,new Color(124, 0, 219),Item.MEDICINE,20,"Restores 20 HP to a Pokemon."),
 	SUPER_POTION(5,60,30,new Color(140, 24, 8),Item.MEDICINE,60,"Restores 60 HP to a Pokemon."),
 	HYPER_POTION(6,150,75,new Color(255, 0, 191),Item.MEDICINE,200,"Restores 200 HP."),
@@ -1745,6 +1745,7 @@ public enum Item {
 				new Pair<Status, JCheckBox>(Status.POSSESSED, null),
 				new Pair<Status, JCheckBox>(Status.MUTE, null),
 				new Pair<Status, JCheckBox>(Status.MAGNET_RISE, null),
+				new Pair<Status, JCheckBox>(Status.MINIMIZED, null),
 				new Pair<Status, JCheckBox>(Status.TAUNTED, null),
 				new Pair<Status, JCheckBox>(Status.TORMENTED, null),
 				new Pair<Status, JCheckBox>(Status.SMACK_DOWN, null),
@@ -1911,6 +1912,14 @@ public enum Item {
 		JTextField arcaneField = new JTextField(String.valueOf(p.getStatusNum(Status.ARCANE_SPELL)), 5);
 		statusGbc.gridx = 1;
 		statusPanel.add(arcaneField, statusGbc);
+		
+		// ===== FALLEN =====
+		statusGbc.gridx = 0;
+		statusGbc.gridy++;
+		statusPanel.add(new JLabel("Fallen:"), statusGbc);
+		JTextField fallenField = new JTextField(String.valueOf(p.getStatusNum(Status.FALLEN)), 5);
+		statusGbc.gridx = 1;
+		statusPanel.add(fallenField, statusGbc);
 
 		// Add the status panel inside the fields panel
 		fieldsGbc.gridx = 0;
@@ -2014,6 +2023,14 @@ public enum Item {
 				if (arcane > 0) p.addStatus(Status.ARCANE_SPELL, arcane);
 			} catch (NumberFormatException ex) {
 				p.removeStatus(Status.ARCANE_SPELL);
+			}
+			
+			try {
+				p.removeStatus(Status.FALLEN);
+				int fallen = Integer.parseInt(fallenField.getText());
+				if (fallen > 0) p.addStatus(Status.FALLEN, fallen);
+			} catch (NumberFormatException ex) {
+				p.removeStatus(Status.FALLEN);
 			}
 			
 			SwingUtilities.getWindowAncestor(panel).dispose();

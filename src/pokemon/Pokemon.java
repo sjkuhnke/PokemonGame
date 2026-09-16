@@ -91,6 +91,7 @@ public class Pokemon implements Serializable {
 	private static String[] names = new String[MAX_POKEMON];
 	private static PType[][] types = new PType[MAX_POKEMON][2];
 	private static Ability[][] abilities = new Ability[MAX_POKEMON][3];
+	private static byte[] unique_abilities = new byte[MAX_POKEMON];
 	private static int[][] base_stats = new int[MAX_POKEMON][6];
 	private static double[] weights = new double[MAX_POKEMON];
 	private static int[] catch_rates = new int[MAX_POKEMON];
@@ -2112,6 +2113,9 @@ public class Pokemon implements Serializable {
 		case 6:
 			if (this.currentHP >= this.getStat(0) / 2) value += 20;
 			break;
+		case 7:
+			if (!this.abilityFlag) value += 25;
+			break;
 		}
 		return value;
 	}
@@ -2445,6 +2449,22 @@ public class Pokemon implements Serializable {
 	
 	public Ability getAbility(int slot) {
 		return abilities[id - 1][slot];
+	}
+	
+	public static int getUniqueAbilityCount(int id) {
+		return Integer.bitCount(unique_abilities[id - 1]);
+	}
+	
+	public static int getUniqueAbilitySlot(int id, int index) {
+		byte mask = unique_abilities[id - 1];
+		int seen = 0;
+		for (int slot = 0; slot < 3; slot++) {
+			if ((mask & (1 << slot)) != 0) {
+				if (seen == index) return slot;
+				seen++;
+			}
+		}
+		throw new IllegalArgumentException(index + " index is illegal");
 	}
 	
 	public static boolean getLearned(int row, int col) {
@@ -4019,9 +4039,18 @@ public class Pokemon implements Serializable {
 			
 			if (this.getItem(field) == Item.LIFE_ORB) bp *= 1.3;
 			
-			if (move == Move.CHROMO_BEAM && checkSecondary(this.getAbility(field) == Ability.SERENE_GRACE || field.equals(field.terrain, Effect.SPARKLY) ? 60 : 30)) {
-				Task.insertTask(Task.createTask(Task.TEXT, this.nickname + " is going all out for this attack!"), damageIndex++);
-				bp *= 2;
+			if (this.getStatusNum(Status.FALLEN) > 0) {
+				bp *= 1 + (this.getStatusNum(Status.FALLEN) * 0.1);
+			}
+			
+			if (move == Move.CHROMO_BEAM) {
+				int chromoSec = 30;
+				if (this.getAbility(field) == Ability.SERENE_GRACE) chromoSec *= 2;
+				if (field.equals(field.terrain, Effect.SPARKLY) && this.isGrounded()) chromoSec *= 2;
+				if (checkSecondary(chromoSec)) {
+					Task.insertTask(Task.createTask(Task.TEXT, this.nickname + " is going all out for this attack!"), damageIndex++);
+					bp *= 2;
+				}
 			}
 			
 			if (move.isCrushing() && foe.hasStatus(Status.MINIMIZED)) {
@@ -4109,7 +4138,7 @@ public class Pokemon implements Serializable {
 			critChance += this.getStatusNum(Status.CRIT_CHANCE);
 			if (this.getAbility(field) == Ability.SUPER_LUCK) critChance++;
 			if (item == Item.SCOPE_LENS) critChance++;
-			if (this.getAbility(field) == Ability.MERCILESS && (foe.status == Status.POISONED || foe.status == Status.TOXIC || foe.status == Status.PARALYZED)) critChance = 4;
+			if (this.getAbility(field) == Ability.MERCILESS && (foe.status == Status.POISONED || foe.status == Status.TOXIC || foe.status == Status.PARALYZED)) critChance = 3;
 			
 			if (foeAbility != Ability.BATTLE_ARMOR
 					&& foeAbility != Ability.SHELL_ARMOR
@@ -4310,8 +4339,6 @@ public class Pokemon implements Serializable {
 			
 			if (this.getItem(field) == Item.NORMAL_GEM && moveType == PType.NORMAL && move.critChance >= 0) {
 				damage *= 1.3;
-				Task.addTask(Task.TEXT, "The " + this.item.toString() + " strengthened the power of " + move.toString() + "!");
-				this.consumeItem(foe);
 			}
 			
 			if (move == Move.NIGHT_SHADE || move == Move.SEISMIC_TOSS || move == Move.PSYWAVE) damage = this.level;
@@ -4508,13 +4535,13 @@ public class Pokemon implements Serializable {
 			
 			if (!this.isFainted() && contact && checkSecondary(30) && this.status == Status.HEALTHY) {
 				if (foeAbility == Ability.FLAME_BODY) {
-					burn(false, this, foe);
+					burn(false, foe, foe);
 				}
 				if (foeAbility == Ability.STATIC && this.status == Status.HEALTHY) {
-					paralyze(false, this, foe);
+					paralyze(false, foe, foe);
 				}
 				if (foeAbility == Ability.POISON_POINT && this.status == Status.HEALTHY) {
-					poison(false, this, foe);
+					poison(false, foe, foe);
 				}
 			}
 			
@@ -4569,6 +4596,15 @@ public class Pokemon implements Serializable {
 			if (foeAbility == Ability.GOOEY) {
 				Task.addAbilityTask(foe);
 				stat(this, 4, -1, foe);
+			}
+			
+			if (foeAbility == Ability.STAMINA) {
+				Task.addAbilityTask(foe);
+				stat(foe, 1, 1, this);
+			}
+			
+			if (foeAbility == Ability.SCORCHING_SPIRIT) {
+				this.burn(false, foe, foe);
 			}
 			
 			if (move.isPhysical()) {
@@ -4638,6 +4674,11 @@ public class Pokemon implements Serializable {
 			}
 		}
 		
+		if (this.getItem(field) == Item.NORMAL_GEM && moveType == PType.NORMAL && move.critChance >= 0) {
+			Task.addTask(Task.TEXT, "The " + this.item.toString() + " strengthened the power of " + move.toString() + "!");
+			this.consumeItem(foe);
+		}
+		
 		if (this.getAbility(field) == Ability.SERENE_GRACE) secChance *= 2;
 		
 		if (field.equals(field.terrain, Effect.SPARKLY) && isGrounded()) {
@@ -4653,6 +4694,9 @@ public class Pokemon implements Serializable {
 		if (!foe.isFainted() && this.getAbility(field) == Ability.RADIANT && moveType == PType.LIGHT) {
 			Task.addAbilityTask(this);
 			stat(foe, 5, -1, this);
+		}
+		if (!foe.isFainted() && this.getAbility(field) == Ability.PYROMANCER && moveType == PType.FIRE) {
+			foe.burn(false, foe, this);
 		}
 		
 		if (!sheer && this.getItem(field) == Item.LIFE_ORB && !this.isFainted()) {
@@ -5236,7 +5280,7 @@ public class Pokemon implements Serializable {
 			}
 			break;
 		case ARCANE_SPELL:
-			foe.incrementStatus(Status.ARCANE_SPELL, 10);
+			foe.incrementStatus(Status.ARCANE_SPELL, 10, -1);
 			Task.addTask(Task.TEXT, "The spell caused " + foe.nickname + " to become weaker!");
 			break;
 		case ASTONISH:
@@ -5858,9 +5902,9 @@ public class Pokemon implements Serializable {
 			}
 			break;
 		case STAR_STORM:
-			if (this.getStatusNum(Status.CRIT_CHANCE) < 4) {
+			if (this.getStatusNum(Status.CRIT_CHANCE) < 3) {
 				Task.addTask(Task.TEXT, this.nickname + "'s crit chance was heightened!");
-				this.incrementStatus(Status.CRIT_CHANCE, 1);
+				this.incrementStatus(Status.CRIT_CHANCE, 1, 3);
 			}
 			break;
 		case SUMMIT_STRIKE:
@@ -6014,7 +6058,7 @@ public class Pokemon implements Serializable {
 		case VITRIOLIC_HEX:
 			if (!foe.isFainted()) {
 				Task.addTask(Task.TEXT, foe.nickname + "'s crit chance was lowered!");
-				foe.incrementStatus(Status.CRIT_CHANCE, -1);
+				foe.incrementStatus(Status.CRIT_CHANCE, -1, -1);
 			}
 			break;
 		case WATER_PULSE:
@@ -6437,8 +6481,8 @@ public class Pokemon implements Serializable {
 			break;
 		case FOCUS_ENERGY:
 			int critChance = this.getStatusNum(Status.CRIT_CHANCE);
-			if (critChance < 4) {
-				this.incrementStatus(Status.CRIT_CHANCE, 2);
+			if (critChance < 3) {
+				this.incrementStatus(Status.CRIT_CHANCE, 2, 3);
 				Task.addTask(Task.TEXT, this.nickname + " is tightening its focus!");
 			} else {
 				fail = fail();
@@ -7487,16 +7531,14 @@ public class Pokemon implements Serializable {
 
 	private boolean critCheck(int m) {
 		if (m < 0) return false;
-		if (this.script && m < 4) return false;
+		if (this.script && m < 3) return false;
 		int critChance = (int)(Math.random()*100);
 		int baseCrit;
 		if (m == 1) {
 			baseCrit = 13;
 		} else if (m == 2) {
-			baseCrit = 25;
-		} else if (m == 3) {
 			baseCrit = 50;
-		} else if (m >= 4) {
+		} else if (m >= 3) {
 			return true;
 		} else {
 			baseCrit = 5;
@@ -8252,6 +8294,10 @@ public class Pokemon implements Serializable {
 		
 		if (this.getItem(field) == Item.LIFE_ORB) bp *= 1.3;
 		
+		if (this.getStatusNum(Status.FALLEN) > 0) {
+			bp *= 1 + (this.getStatusNum(Status.FALLEN) * 0.1);
+		}
+		
 		if (mode == 0 && move == Move.CHROMO_BEAM && checkSecondary(this.getAbility(field) == Ability.SERENE_GRACE || field.equals(field.terrain, Effect.SPARKLY) ? 60 : 30)) bp *= 2;
 		
 		if (move.isCrushing() && foe.hasStatus(Status.MINIMIZED)) {
@@ -8330,15 +8376,14 @@ public class Pokemon implements Serializable {
 		
 		// Crit Check
 		critChance += this.getStatusNum(Status.CRIT_CHANCE);
-		if (this.getAbility(field) == Ability.MERCILESS && (foe.status == Status.POISONED || foe.status == Status.TOXIC)) critChance = 4;
+		if (this.getAbility(field) == Ability.MERCILESS && (foe.status == Status.POISONED || foe.status == Status.TOXIC)) critChance = 3;
 		
 		if (foeAbility != Ability.BATTLE_ARMOR
 				&& foeAbility != Ability.SHELL_ARMOR
 				&& foeAbility != Ability.MAGMA_ARMOR
 				&& !field.contains(foe.getFieldEffects(), Effect.LUCKY_CHANT) &&
 				((mode == 0 && critChance >= 1 && critCheck(critChance)) ||
-				(mode != 0 && (critChance >= 4 || (crit && critChance >= 0))))) {
-			
+				(mode != 0 && (critChance >= 3 || (crit && critChance >= 0))))) {
 			isCrit = true;
 		}
 		
@@ -8475,6 +8520,9 @@ public class Pokemon implements Serializable {
 		
 		if (this.getAbility(field) == Ability.ILLUSION && this.illusion) damage *= 1.2;
 		if (this.getAbility(field) == Ability.ANALYTIC && !first) damage *= 1.3;
+		if (this.getItem(field) == Item.NORMAL_GEM && moveType == PType.NORMAL && move.critChance >= 0) {
+			damage *= 1.3;
+		}
 		if (move == Move.NIGHT_SHADE || move == Move.SEISMIC_TOSS || move == Move.PSYWAVE) damage = this.level;
 		if (move == Move.ENDEAVOR) {
 			if (foe.currentHP > this.currentHP) {
@@ -10024,6 +10072,18 @@ public class Pokemon implements Serializable {
 		} else if (this.getAbility(field) == Ability.MOLD_BREAKER) {
 			Task.addAbilityTask(this);
 			Task.addTask(Task.TEXT, this.nickname + " breaks the mold!");
+		} else if (this.getAbility(field) == Ability.SUPREME_OVERLORD) {
+			int fainted = 0;
+			if (this.trainer != null) {
+				for (Pokemon p : this.trainer.team) {
+					if (p != null && p.isFainted()) fainted++;
+				}
+			}
+			if (fainted > 0) {
+				Task.addAbilityTask(this);
+				Task.addTask(Task.TEXT, this.nickname + " harnessed the strength of the fallen!");
+				this.addStatus(Status.FALLEN, fainted);
+			}
 		}
 		this.checkSeed(foe, Item.GRASSY_SEED, Effect.GRASSY);
 		this.checkSeed(foe, Item.ELECTRIC_SEED, Effect.ELECTRIC);
@@ -10218,9 +10278,19 @@ public class Pokemon implements Serializable {
 	}
 
 	private void checkBerry(Pokemon foe) {
+		double hpRatio = this.currentHP * 1.0 / this.getStat(0);
+		
+		if (this.getAbility(field) == Ability.SECOND_HELPING && !this.abilityFlag && hpRatio <= 0.5) {
+			Task.addAbilityTask(this);
+			int healAmt = (int) this.getHPAmount(1.0/4);
+			heal(healAmt, this.nickname + " restored HP!");
+			this.abilityFlag = true;
+		}
+		
 		if (this.getItem(field) == null) return;
 		if (this.item.getPocket() != Item.BERRY) return;
-		double hpRatio = this.currentHP * 1.0 / this.getStat(0);
+		
+		hpRatio = this.currentHP * 1.0 / this.getStat(0);
 		if (hpRatio <= 0.25 && this.item.isPinchBerry()) {
 			eatBerry(this.item, true, foe);
 		} else if (hpRatio <= 0.5 && (this.getItem(field) == Item.ORAN_BERRY || this.getItem(field) == Item.SITRUS_BERRY)) {
@@ -10268,10 +10338,10 @@ public class Pokemon implements Serializable {
 				stat(this, 5, 1, foe);
 				if (consume) this.consumeItem(foe);
 			} else if (berry == Item.LANSAT_BERRY) {
-				if (this.getStatusNum(Status.CRIT_CHANCE) < 4) {
+				if (this.getStatusNum(Status.CRIT_CHANCE) < 3) {
 					Task.addTask(Task.TEXT, this.nickname + " ate its " + berry.toString() + "!");
 					Task.addTask(Task.TEXT, this.nickname + "'s crit chance was heightened!");
-					this.incrementStatus(Status.CRIT_CHANCE, 2);
+					this.incrementStatus(Status.CRIT_CHANCE, 2, 3);
 					if (consume) this.consumeItem(foe);
 				}
 			} else if (berry == Item.SPELON_BERRY) { // just here for bug bite/pluck
@@ -10490,12 +10560,16 @@ public class Pokemon implements Serializable {
 		this.vStatuses.add(new StatusEffect(status, num, move));
 	}
 	
-	public void incrementStatus(Status status, int num) {
+	public void incrementStatus(Status status, int num, int max) {
 		StatusEffect se = this.getStatus(status);
 		if (se == null) {
-			addStatus(status, num);
+			int amt = (max < 0) ? num : Math.min(num, max);
+			addStatus(status, amt);
 		} else {
 			se.num += num;
+			if (max >= 0) {
+				se.num = Math.min(se.num, max);
+			}
 		}
 	}
 	
@@ -11572,6 +11646,12 @@ public class Pokemon implements Serializable {
 				abilities[i][0] = Ability.valueOf(tokens[4].trim());
 				abilities[i][1] = Ability.valueOf(tokens[5].trim());
 				abilities[i][2] = Ability.valueOf(tokens[6].trim());
+				
+				byte mask = 0b001;
+				if (abilities[i][1] != abilities[i][0]) mask |= 0b010;
+				if (abilities[i][2] != abilities[i][0] && abilities[i][2] != abilities[i][1]) mask |= 0b100;
+				unique_abilities[i] = mask;
+				
 				String[] baseStatsStr = tokens[7].trim().replaceAll("\\[|\\]", "").split(", ");
 				for (int j = 0; j < 6; j++) {
 					base_stats[i][j] = Integer.parseInt(baseStatsStr[j]);

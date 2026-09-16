@@ -83,6 +83,7 @@ public class NPC_Mine extends Entity {
 		items.add(new Pair<>(Item.NUGGET, 8));
 		items.add(new Pair<>(Item.BIG_NUGGET, 4));
 		items.add(new Pair<>(Item.RAZOR_CLAW, 2));
+		items.add(new Pair<>(Item.NORMAL_GEM, 3));
 		
 		items.add(new Pair<>(Item.EVIOLITE, 1));
 		items.add(new Pair<>(Item.BLACK_BELT, 1));
