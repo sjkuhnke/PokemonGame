@@ -841,9 +841,9 @@ public class Pokemon implements Serializable {
 	 * since priority is the only way the foe could guarantee going first in that case.
 	 */
 	private FoeMoveResult findFoeStrongestMove(Pokemon foe, Field field) {
-		Move strongestMove = null;
+		Move strongestMove = Move.STRUGGLE;
 		int foeMaxDamage = Integer.MIN_VALUE;
-		Pair<Integer, Double> foeMaxDamagePair = null;
+		Pair<Integer, Double> foeMaxDamagePair = new Pair<>(0, 0.0);
 		boolean foeCanKO = false;
 		
 		boolean iAmFaster = this.getFaster(foe, 0, 0, field) == this;
@@ -11347,7 +11347,7 @@ public class Pokemon implements Serializable {
 			ballBonus = this.getPlayer().pokedex[foe.id] == 2 ? 3.5 : 1;
 			break;
 		case NEST_BALL:
-			ballBonus = 8 - (0.2 * (foe.level - 1));
+			ballBonus = 5 - (0.2 * (foe.level - 1));
 			break;
 		case DUSK_BALL:
 			ballBonus = gp.tileM.isCave[gp.currentMap] ? 3 : 1;
