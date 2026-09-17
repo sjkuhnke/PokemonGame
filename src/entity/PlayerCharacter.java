@@ -1196,7 +1196,7 @@ public class PlayerCharacter extends Entity {
 			p.invalidateNuzlocke("Used " + code);
 		} else if (code.equals("BALLZ")) {
 			JPanel panel = p.displayTweaker();
-			JOptionPane.showMessageDialog(null, panel);
+			JOptionPane.showMessageDialog(gp, panel);
 			p.invalidateNuzlocke("Used " + code);
 		} else if (code.equals("KANY3")) {
 			p.setMoney(1000000);

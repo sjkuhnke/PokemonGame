@@ -54,7 +54,6 @@ public class TitleScreen extends AbstractUI {
 	public static final int SORT_SAVES_MENU = 4;
 	public static final int NEW_GAME_MENU = 5;
 	
-	private boolean showMessage;
 	public int menuState = MAIN_MENU;
 	public int menuNum;
 	

@@ -807,8 +807,8 @@ public class SimBattleUI extends BattleUI {
 		p2Moves = null;
 		p1Switch = null;
 		p2Switch = null;
-		Move uMove = p1.bestMove2(p2, !fFaster, Player.HARD);
-		Move fMove = p2.bestMove2(p1, fFaster, Player.HARD);
+		Move uMove = p1.resolveDecision(p1.bestMove2(p2, !fFaster, Player.HARD));
+		Move fMove = p2.resolveDecision(p2.bestMove2(p1, fFaster, Player.HARD));
 		
 		int uP, fP;
 		uP = uMove == null ? 0 : uMove.getPriority(p1);

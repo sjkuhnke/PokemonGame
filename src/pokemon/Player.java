@@ -20,8 +20,8 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -35,6 +35,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import org.json.JSONArray;
@@ -655,17 +657,17 @@ public class Player extends Trainer implements Serializable {
 		result.add(championBox);
 		
 		nuzlockeInfo.addActionListener(e -> {
-			showNuzlockeInfo();
+			showNuzlockeInfo(result);
 		});
 		if (nuzlocke) result.add(nuzlockeInfo);
 		
 		pokedexButton.addActionListener(e -> {
-			showPokedexModifier();
+			showPokedexModifier(result);
 		});
 		result.add(pokedexButton);
 		
 		bagButton.addActionListener(e -> {
-			showBagModifier();
+			showBagModifier(result);
 		});
 		result.add(bagButton);
 		
@@ -794,7 +796,7 @@ public class Player extends Trainer implements Serializable {
 		return result;
 	}
 	
-	public void showNuzlockeInfo() {
+	public void showNuzlockeInfo(JPanel parent) {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		
@@ -855,96 +857,221 @@ public class Player extends Trainer implements Serializable {
 		if (invalid) panel.add(invalidScrollPane);
 		panel.add(encounterScrollPane);
 		
-		JOptionPane.showMessageDialog(null, panel, "Nuzlocke Info", JOptionPane.PLAIN_MESSAGE);
+		JOptionPane.showMessageDialog(parent, panel, "Nuzlocke Info", JOptionPane.PLAIN_MESSAGE);
 	}
 
-	private void showPokedexModifier() {
+	private void showPokedexModifier(JPanel parent) {
 		JPanel result = new JPanel();
 		result.setLayout(new BoxLayout(result, BoxLayout.Y_AXIS));
+		
+		int[] pokedex = this.pokedex.clone();
+		
+		// Search bar
+		JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		searchPanel.add(new JLabel("Search Pokemon:"));
+		
+		JTextField searchField = new JTextField();
+		searchField.setPreferredSize(new Dimension(200, 25));
+		searchPanel.add(searchField);
+		
+		result.add(searchPanel);
+		
+		// List
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		
-		int pokedex[] = this.pokedex.clone();
-		
-		for (int i = 1; i <= Pokemon.MAX_POKEMON; i++) {
-			JPanel member = new JPanel(new FlowLayout(FlowLayout.LEFT));
-			member.add(new JLabel(new Pokemon(i, 5, true, false).name()));
-			JRadioButton[] buttons = new JRadioButton[3];
-			String[] labels = new String[] {"0", "S", "C"};
-			ButtonGroup buttonLayout = new ButtonGroup();
-			for (int j = 0; j < 3; j++) {
-				buttons[j] = new JRadioButton(labels[j]);
-				buttonLayout.add(buttons[j]);
-				member.add(buttons[j]);
-				
-				buttons[j].setActionCommand(Integer.toString(i));
-				
-				buttons[j].addActionListener(e -> {
-					pokedex[Integer.parseInt(((AbstractButton) e.getSource()).getActionCommand())] = Arrays.asList(buttons).indexOf(e.getSource());
-				});
-			}
-			
-			buttons[this.pokedex[i]].setSelected(true);
-			
-			panel.add(member);
-		}
-		
 		JScrollPane scrollPanel = new JScrollPane(panel);
-		scrollPanel.setPreferredSize(new Dimension(300, 300));
+		scrollPanel.setPreferredSize(new Dimension(350, 300));
 		scrollPanel.getVerticalScrollBar().setUnitIncrement(8);
+		
 		result.add(scrollPanel);
+		
+		// Rebuild the list based on the search
+		Runnable updateList = () -> {
+			String search = searchField.getText().trim().toLowerCase();
+			
+			panel.removeAll();
+			
+			for (int i = 1; i <= Pokemon.MAX_POKEMON; i++) {
+				String name = Pokemon.getName(i);
+				
+				if (!search.isEmpty() && !name.toLowerCase().contains(search)) {
+					continue;
+				}
+				
+				JPanel member = new JPanel(new FlowLayout(FlowLayout.LEFT));
+				
+				member.add(new JLabel(name));
+				
+				JRadioButton[] buttons = new JRadioButton[3];
+				String[] labels = new String[] {"0", "S", "C"};
+				ButtonGroup buttonLayout = new ButtonGroup();
+				
+				for (int j = 0; j < 3; j++) {
+					final int pokemonIndex = i;
+					final int buttonIndex = j;
+					
+					buttons[j] = new JRadioButton(labels[j]);
+					buttonLayout.add(buttons[j]);
+					member.add(buttons[j]);
+					
+					buttons[j].addActionListener(e -> {
+						pokedex[pokemonIndex] = buttonIndex;
+					});
+				}
+				
+				buttons[pokedex[i]].setSelected(true);
+				
+				panel.add(member);
+			}
+			panel.add(Box.createVerticalGlue());
+			panel.revalidate();
+			panel.repaint();
+		};
+		
+		addSearchListener(searchField, updateList);
+		
+		// Populate initially
+		updateList.run();
+		
 		JButton confirmButton = new JButton("Confirm");
+		
 		confirmButton.addActionListener(e -> {
 			for (int i = 1; i <= Pokemon.MAX_POKEMON; i++) {
 				this.pokedex[i] = pokedex[i];
 			}
+			
 			SwingUtilities.getWindowAncestor(result).dispose();
 		});
+		
 		result.add(confirmButton);
-		JOptionPane.showMessageDialog(null, result);
+		
+		JOptionPane.showMessageDialog(parent, result);
 	}
 	
-	private void showBagModifier() {
+	private void showBagModifier(JPanel parent) {
 		JPanel result = new JPanel();
 		result.setLayout(new BoxLayout(result, BoxLayout.Y_AXIS));
+		
+		// Search bar
+		JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		searchPanel.add(new JLabel("Search Items:"));
+		
+		JTextField searchField = new JTextField();
+		searchField.setPreferredSize(new Dimension(200, 25));
+		searchPanel.add(searchField);
+		
+		result.add(searchPanel);
+		
+		// List
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		
+		JScrollPane scrollPanel = new JScrollPane(panel);
+		scrollPanel.setPreferredSize(new Dimension(350, 300));
+		scrollPanel.getVerticalScrollBar().setUnitIncrement(8);
+		
+		result.add(scrollPanel);
+		
 		JTextField[] counts = new JTextField[bag.count.length];
+		JPanel[] members = new JPanel[bag.count.length];
 		
 		for (int i = 0; i < counts.length; i++) {
 			final int index = i;
+			
+			String itemName = Item.getItem(i).toString();
+			
 			JPanel member = new JPanel(new FlowLayout(FlowLayout.LEFT));
-			member.add(new JLabel(Item.getItem(i).toString()));
+			
+			member.add(new JLabel(itemName));
 			
 			counts[i] = new JTextField(bag.count[i] + "");
-			counts[i].setPreferredSize(new Dimension(40, counts[i].getPreferredSize().height));
+			counts[i].setPreferredSize(
+				new Dimension(40, counts[i].getPreferredSize().height)
+			);
+			
 			counts[i].addFocusListener(new FocusAdapter() {
 				@Override
 				public void focusGained(FocusEvent e) {
 					counts[index].selectAll();
 				}
 			});
+			
 			member.add(counts[i]);
 			
-			panel.add(member);
+			members[i] = member;
 		}
 		
-		JScrollPane scrollPanel = new JScrollPane(panel);
-		scrollPanel.setPreferredSize(new Dimension(300, 300));
-		scrollPanel.getVerticalScrollBar().setUnitIncrement(8);
-		result.add(scrollPanel);
+		// Update which items are visible
+		Runnable updateList = () -> {
+			String search = searchField.getText().trim().toLowerCase();
+			
+			panel.removeAll();
+			
+			for (int i = 0; i < members.length; i++) {
+				String itemName = Item.getItem(i).toString();
+				
+				if (!search.isEmpty() &&
+						!itemName.toLowerCase().contains(search)) {
+					continue;
+				}
+				
+				panel.add(members[i]);
+			}
+			
+			panel.add(Box.createVerticalGlue());
+			panel.revalidate();
+			panel.repaint();
+		};
+		
+		addSearchListener(searchField, updateList);
+		
+		updateList.run();
+		
 		JButton confirmButton = new JButton("Confirm");
+		
 		confirmButton.addActionListener(e -> {
 			for (int i = 0; i < counts.length; i++) {
-				int count = Integer.parseInt(counts[i].getText().trim());
-				bag.count[i] = count;
+				try {
+					int count = Integer.parseInt(counts[i].getText().trim());
+					bag.count[i] = count;
+				} catch (NumberFormatException ex) {
+					bag.count[i] = 0;
+				}
 			}
+			
 			SwingUtilities.getWindowAncestor(result).dispose();
 		});
+
 		result.add(confirmButton);
-		JOptionPane.showMessageDialog(null, result);
+
+		JOptionPane.showMessageDialog(parent, result);
+	}
+	
+	private void addSearchListener(JTextField searchField, Runnable updateList) {
+		searchField.getDocument().addDocumentListener(new DocumentListener() {
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				updateList.run();
+			}
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				updateList.run();
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				updateList.run();
+			}
+		});
 		
+		searchField.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				searchField.selectAll();
+			}
+		});
 	}
 
 	public boolean hasTM(Move move) {
@@ -1128,7 +1255,7 @@ public class Player extends Trainer implements Serializable {
 					gp.ui.showMessage(p.nickname + " isn't fainted!");
 					return;
 				} else {
-					if (!allowRevives) {
+					if (nuzlocke && !allowRevives) {
 						gp.ui.showMessage("Revives are banned in your Nuzlocke settings!");
 						return;
 					}

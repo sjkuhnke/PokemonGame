@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import animation.AnimationFrame;
 import animation.AnimationFrame.Target;
@@ -24,6 +28,8 @@ import pokemon.*;
 import pokemon.Bag.Entry;
 import pokemon.Field.Effect;
 import pokemon.Field.FieldEffect;
+import pokemon.Pokemon.MoveDecision;
+import util.Print;
 import util.ToolTip;
 
 public class BattleUI extends AbstractUI {
@@ -39,6 +45,10 @@ public class BattleUI extends AbstractUI {
 	// TEMPORARY POKEMON POINTERS
 	public Pokemon tempUser;
 	public Pokemon tempFoe;
+	
+	// TRAINER AI FIELDS
+	private final ExecutorService aiExecutor = Executors.newSingleThreadExecutor();
+	private Future<MoveDecision> foeMoveFuture;
 
 	// DISPLAY STATE - USER
 	public String userName;
@@ -578,6 +588,12 @@ public class BattleUI extends AbstractUI {
 		
 		if (tasks.isEmpty() && currentTask == null) {
 			subState = IDLE_STATE;
+			
+			// start figuring out best move
+			if (foe.trainerOwned() && foeMoveFuture == null) {
+				boolean fasterGuess = user.getFaster(foe, 0, 0, field) == foe;
+				foeMoveFuture = aiExecutor.submit(() -> foe.bestMove2(user, fasterGuess, difficulty));
+			}
 		}
 	}
 
@@ -621,7 +637,6 @@ public class BattleUI extends AbstractUI {
 			}
 			currentDialogue = currentTask.message;
 			if (currentTask.wipe) {
-				//currentTask.p.spriteVisible = true; // TODO: does this break anything? needed here for self-hit confusion damage
 				if (currentTask.foe != null) currentTask.foe.spriteVisible = true;
 			}
 			if (currentTask.p == user) {
@@ -1018,6 +1033,7 @@ public class BattleUI extends AbstractUI {
 			case END_STATE:
 				if (tasks.isEmpty()) {
 					user.setVisible(false);
+					foeMoveFuture = null;
 					gp.endBattle(index, staticID, foe);
 					if (gp.gameState != GamePanel.TASK_STATE) gp.gameState = GamePanel.PLAY_STATE;
 				}
@@ -1693,7 +1709,7 @@ public class BattleUI extends AbstractUI {
 			Move move = moves[moveNum].move;
 			if (user.movesetEmpty()) move = Move.STRUGGLE;
 			
-			foeMove = foe.trainerOwned() ? foe.bestMove2(user, user.getFaster(foe, 0, 0, field) == foe, difficulty) : foe.randomMove();
+			foeMove = foe.trainerOwned() ? resolveFoeMove() : foe.randomMove();
 			
 			showMoveSummary = false;
 			turn(move, foeMove);
@@ -1729,6 +1745,18 @@ public class BattleUI extends AbstractUI {
 		}
 		if (showMoveSummary) {
 			drawMoveSummary(gp.tileSize * 3, gp.tileSize * 2, user, foe, moves[moveNum], null);
+		}
+	}
+	
+	private Move resolveFoeMove() {
+		try {
+			MoveDecision d = foeMoveFuture.get();
+			foeMoveFuture = null;
+			return foe.resolveDecision(d);
+		} catch (InterruptedException | ExecutionException e) {
+			foeMoveFuture = null;
+			Print.error("AI move computation failed", e);
+			return foe.getValidMoveset().get(0);
 		}
 	}
 	
@@ -1958,7 +1986,7 @@ public class BattleUI extends AbstractUI {
 				boolean fainted = user.isFainted();
 				if (fainted) foeMove = null;
 				if (cancellableParty && !fainted){
-					foeMove = foe.trainerOwned() ? foe.bestMove2(user, user.getFaster(foe, 0, 0, field) == foe, difficulty) : foe.randomMove();
+					foeMove = foe.trainerOwned() ? resolveFoeMove() : foe.randomMove();
 				}
 				if (baton) {
 					gp.player.p.team[partyNum].statStages = user.statStages.clone();

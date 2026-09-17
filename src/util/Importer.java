@@ -8,6 +8,7 @@ import java.awt.Dimension;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import overworld.Main;
 import pokemon.Ability;
 import pokemon.Item;
 import pokemon.Move;
@@ -344,13 +345,7 @@ public class Importer {
         JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setPreferredSize(new Dimension(650, 500));
         
-        int result = JOptionPane.showConfirmDialog(
-            Pokemon.gp,
-            scrollPane,
-            "Import Pokemon",
-            JOptionPane.OK_CANCEL_OPTION,
-            JOptionPane.PLAIN_MESSAGE
-        );
+        int result = JOptionPane.showConfirmDialog(Pokemon.gp, scrollPane, "Import Pokemon", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
         
         if (result != JOptionPane.OK_OPTION) {
             return null;
@@ -360,12 +355,7 @@ public class Importer {
             return importPokemon(textArea.getText());
 
         } catch (IllegalArgumentException e) {
-            JOptionPane.showMessageDialog(
-                null,
-                e.getMessage(),
-                "Import Error",
-                JOptionPane.ERROR_MESSAGE
-            );
+            JOptionPane.showMessageDialog(Main.gp, e.getMessage(), "Import Error", JOptionPane.ERROR_MESSAGE);
             
             return null;
         }

@@ -26,6 +26,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Queue;
@@ -458,7 +459,29 @@ public class Pokemon implements Serializable {
 		}		
 	}
 	
-	public Move bestMove2(Pokemon foe, boolean first, int difficulty) {
+	public class MoveDecision {
+		public final Move move;
+		public final List<Pair<Status, Integer>> statusApplications;
+		MoveDecision(Move move) {
+			this(move, Collections.emptyList());
+		}
+		MoveDecision(Move move, Status status, int value) {
+			this(move, Collections.singletonList(new Pair<>(status, value)));
+		}
+		MoveDecision(Move move, List<Pair<Status, Integer>> statusApplications){
+			this.move = move;
+			this.statusApplications = statusApplications;
+		}
+	}
+	
+	public Move resolveDecision(MoveDecision decision) {
+	    for (Pair<Status, Integer> app : decision.statusApplications) {
+	        this.addStatus(app.getFirst(), app.getSecond());
+	    }
+	    return decision.move;
+	}
+	
+	public MoveDecision bestMove2(Pokemon foe, boolean first, int difficulty) {
 		StringBuilder turn = new StringBuilder();
 		turn.append("\n\n====================================================\n");
 		turn.append("-------------------- TURN " + (field.turns+1) + " ------------------------\n");
@@ -469,9 +492,9 @@ public class Pokemon implements Serializable {
 		if (this.script) {
 			if (field.turns == 0) {
 				if (gp.currentMap == 160) {
-					return this.getStatusMove();
+					return new MoveDecision(this.getStatusMove());
 				} else {
-					return this.moveset[0].move;
+					return new MoveDecision(this.moveset[0].move);
 				}
 			}
 		}
@@ -522,10 +545,9 @@ public class Pokemon implements Serializable {
 					switchRsn.setFirst(this);
 					switchRsn.setSecond(rsn);
 				}
-				this.addStatus(Status.SWAP, BattleUI.NORMAL_SWITCH);
-				return Move.GROWL;
+				return new MoveDecision(Move.GROWL, Status.SWAP, BattleUI.NORMAL_SWITCH);
 			} else {
-				return Move.STRUGGLE;
+				return new MoveDecision(Move.STRUGGLE);
 			}
 		}
 		
@@ -570,6 +592,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		HashMap<Pokemon, Integer> scoreMap = new HashMap<>();
+		List<Pair<Status, Integer>> pendingSwitch = new ArrayList<>();
 		
 		if (difficulty == Player.NORMAL && canSwitch) {
 			// 100% chance to swap if perish counter == 1
@@ -585,12 +608,10 @@ public class Pokemon implements Serializable {
 				if (pivotMove != null) {
 					first = this.getFaster(foe, pivotMove.getPriority(foe, fieldClone), strongestMove.getPriority(foe, fieldClone), fieldClone) == this;
 					if (first) {
-						this.addStatus(Status.TEMP_SWITCHING, -(bestSlot + 1));
-						return pivotMove;
+						return new MoveDecision(pivotMove, Status.TEMP_SWITCHING, -(bestSlot + 1));
 					}
 				}
-				this.addStatus(Status.SWAP, bestSlot >= 0 ? bestSlot + 1 : BattleUI.NORMAL_SWITCH);
-				return Move.GROWL;
+				return new MoveDecision(Move.GROWL, Status.SWAP, bestSlot >= 0 ? bestSlot + 1 : BattleUI.NORMAL_SWITCH);
 			}
 			
 			boolean hasRealAction = validMoves.equals(new ArrayList<>(Arrays.asList(new Move[] {Move.METRONOME})));
@@ -641,12 +662,10 @@ public class Pokemon implements Serializable {
 				if (pivotMove != null) {
 					first = this.getFaster(foe, pivotMove.getPriority(foe, fieldClone), strongestMove.getPriority(foe, fieldClone), fieldClone) == this;
 					if (first) {
-						this.addStatus(Status.TEMP_SWITCHING, -(bestSlot + 1));
-						return pivotMove;
+						return new MoveDecision(pivotMove, Status.TEMP_SWITCHING, -(bestSlot + 1));
 					}
 				}
-				this.addStatus(Status.SWAP, bestSlot >= 0 ? bestSlot + 1 : BattleUI.NORMAL_SWITCH);
-				return Move.GROWL;
+				return new MoveDecision(Move.GROWL, Status.SWAP, bestSlot >= 0 ? bestSlot + 1 : BattleUI.NORMAL_SWITCH);
 			}
 		} else if (difficulty != Player.NORMAL && canSwitch) {
 			StringBuilder sb = new StringBuilder("===========================================\n");
@@ -728,12 +747,11 @@ public class Pokemon implements Serializable {
 							if (pivotMove != null) {
 								first = this.getFaster(foe, pivotMove.getPriority(foe, fieldClone), strongestMove.getPriority(foe, fieldClone), fieldClone) == this;
 								if (first) {
-									this.addStatus(Status.TEMP_SWITCHING, -(chosenSlot + 1));
-									return pivotMove;
+									return new MoveDecision(pivotMove, Status.TEMP_SWITCHING, -(chosenSlot + 1));
 								}
 							}
 						}
-						this.addStatus(Status.SWAP, chosenSlot + 1);
+						pendingSwitch.add(new Pair<>(Status.SWAP, chosenSlot + 1));
 					}
 				}
 			}
@@ -794,9 +812,9 @@ public class Pokemon implements Serializable {
 							}
 						}
 					}
-					this.addStatus(Status.TEMP_SWITCHING, -(chosenSlot + 1));
+					pendingSwitch.add(new Pair<>(Status.TEMP_SWITCHING, -(chosenSlot + 1)));
 				}
-				return chosenMove;
+				return new MoveDecision(chosenMove, pendingSwitch);
 			}
 		}
 		
@@ -811,12 +829,12 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (best != null) {
-			return best;
+			return new MoveDecision(best, pendingSwitch);
 		}
 		
 		// Fallback 2: Just pick a random valid move
 		int randomIndex = (int) (Math.random() * validMoves.size());
-		return validMoves.get(randomIndex);
+		return new MoveDecision(validMoves.get(randomIndex), pendingSwitch);
 	}
 	
 	/**
@@ -3162,8 +3180,8 @@ public class Pokemon implements Serializable {
 						// user hits themselves
 						attackStat = this.getStat(1);
 						defenseStat = this.getStat(2);
-						attackStat *= this.asModifier(0);
-						defenseStat *= this.asModifier(1);
+						attackStat *= this.asModifier(0) * this.getBoosterMod(0);
+						defenseStat *= this.asModifier(1) * this.getBoosterMod(1);
 						damage = calc(attackStat, defenseStat, 40, this.level);
 						this.damage(damage, foe, Move.STRUGGLE, this.nickname + " hit itself in confusion!", -1, false, this);
 						if (this.currentHP <= 0) {
@@ -4122,17 +4140,15 @@ public class Pokemon implements Serializable {
 			
 			double attackMod = 1.0;
 			double defenseMod = 1.0;
+			
 			double attackStatMod = 1.0;
+			double defenseStatMod = 1.0;
+			
+			double attackDriveMod = 1.0;
+			double defenseDriveMod = 1.0;
+			
 			boolean isCrit = false;
 			boolean critAnnounce = move != Move.FUTURE_SIGHT;
-			
-			if (move.isPhysical()) {
-				attackStat = this.getStat(1);
-				defenseStat = foe.getStat(2);
-			} else {
-				attackStat = this.getStat(3);
-				defenseStat = foe.getStat(4);
-			}
 			
 			// Crit Check
 			critChance += this.getStatusNum(Status.CRIT_CHANCE);
@@ -4154,37 +4170,65 @@ public class Pokemon implements Serializable {
 			}
 			
 			if (move.isPhysical()) {
-				attackStat = move == Move.BODY_PRESS ? this.getStat(2) : move == Move.FOUL_PLAY ? foe.getStat(1) : attackStat;
-				attackStatMod = move == Move.BODY_PRESS ? this.asModifier(1) : move == Move.FOUL_PLAY ? foe.asModifier(0) : this.asModifier(0);
-				if ((!isCrit || attackStatMod > 1) && foeAbility != Ability.UNAWARE)
+				if (move == Move.BODY_PRESS) {
+					attackStat = this.getStat(2);
+					attackStatMod = this.asModifier(1);
+					attackDriveMod = this.getBoosterMod(1);
+				} else if (move == Move.FOUL_PLAY) {
+					attackStat = foe.getStat(1);
+					attackStatMod = foe.asModifier(0);
+					attackDriveMod = foe.getBoosterMod(0);
+				} else {
+					attackStat = this.getStat(1);
+					attackStatMod = this.asModifier(0);
+					attackDriveMod = this.getBoosterMod(0);
+				}
+				
+				defenseStat = foe.getStat(2);
+				defenseStatMod = foe.asModifier(1);
+				defenseDriveMod = foe.getBoosterMod(1);
+				
+				if ((!isCrit || attackStatMod > 1) && foeAbility != Ability.UNAWARE) {
 					attackMod *= attackStatMod;
+				}
+				attackMod *= attackDriveMod;
 				
 				if (this.getItem(field) == Item.CHOICE_BAND) attackMod *= 1.5;
 				if (this.status == Status.BURNED && this.ability != Ability.GUTS && move != Move.FACADE) attackMod /= 2;
 				if (this.getAbility(field) == Ability.GUTS && this.status != Status.HEALTHY) attackMod *= 1.5;
 				if (this.getAbility(field) == Ability.HUGE_POWER) attackMod *= 2;
 				
-				if (!isCrit || foe.asModifier(1) < 1) {
+				if (!isCrit || defenseStatMod < 1) {
 					if (move != Move.DARKEST_LARIAT && move != Move.SACRED_SWORD && this.ability != Ability.UNAWARE)
-						defenseMod *= foe.asModifier(1);
+						defenseMod *= defenseStatMod;
 				}
+				defenseMod *= defenseDriveMod;
+				
 				if (field.equals(field.weather, Effect.SNOW, this) && foe.isType(PType.ICE)) defenseMod *= 1.5;
 				if (!isCrit && (field.contains(foe.getFieldEffects(), Effect.REFLECT) || field.contains(foe.getFieldEffects(), Effect.AURORA_VEIL))) defenseMod *= 2;
 			} else {
+				attackStat = this.getStat(3);
 				attackStatMod = this.asModifier(2);
-				if ((!isCrit || this.asModifier(2) > 1) && foeAbility != Ability.UNAWARE) {
+				attackDriveMod = this.getBoosterMod(2);
+				
+				boolean usesDef = move == Move.PSYSHOCK || move == Move.MAGIC_MISSILES;
+				defenseStat = usesDef ? foe.getStat(2) : foe.getStat(4);
+				defenseStatMod = usesDef ? foe.asModifier(1) : foe.asModifier(3);
+				defenseDriveMod = usesDef ? foe.getBoosterMod(1) : foe.getBoosterMod(3);
+				
+				if ((!isCrit || attackStatMod > 1) && foeAbility != Ability.UNAWARE) {
 					attackMod *= attackStatMod;
 				}
+				attackMod *= attackDriveMod;
+				
 				if (this.getItem(field) == Item.CHOICE_SPECS) attackMod *= 1.5;
 				if (this.status == Status.FROSTBITE) attackMod /= 2;
 				if (this.getAbility(field) == Ability.SOLAR_POWER && field.equals(field.weather, Effect.SUN, this)) attackMod *= 1.5;
 				
-				boolean usesDef = move == Move.PSYSHOCK || move == Move.MAGIC_MISSILES;
-				defenseStat = usesDef ? foe.getStat(2) : defenseStat;
-				double defenseModifier = usesDef ? foe.asModifier(1) : foe.asModifier(3);
-				if (!isCrit || defenseModifier < 1) {
-					if (this.ability != Ability.UNAWARE) defenseMod *= defenseModifier;
+				if (!isCrit || defenseStatMod < 1) {
+					if (this.ability != Ability.UNAWARE) defenseMod *= defenseStatMod;
 				}
+				defenseMod *= defenseDriveMod;
 				
 				Effect weather = usesDef ? Effect.SNOW : Effect.SANDSTORM;
 				PType weatherType = usesDef ? PType.ICE : PType.ROCK;
@@ -7276,6 +7320,8 @@ public class Pokemon implements Serializable {
 	}
 
 	private void checkSeed(Pokemon f, Item item, Effect effect) {
+		this.checkParadoxDrive(f);
+		f.checkParadoxDrive(this);
 		if (effect.isTerrain) {
 			this.checkTerraforge(f);
 			f.checkTerraforge(this);
@@ -7427,10 +7473,18 @@ public class Pokemon implements Serializable {
 	}
 
 	public double asModifier(int index) {
+		return asModifier(index, 0);
+	}
+	
+	public double asModifier(int index, int extraStages) {
+		int stage = this.statStages[index] + extraStages;
+		
+		if (stage > 6) stage = 6;
+		if (stage < -6) stage = -6;
+		
 		double numerator = 2.0;
 		double denominator = 2.0;
-
-		int stage = this.statStages[index];
+		
 		if (stage < 0) {
 			denominator -= stage;
 		} else if (stage > 0) {
@@ -8364,15 +8418,14 @@ public class Pokemon implements Serializable {
 		
 		double attackMod = 1.0;
 		double defenseMod = 1.0;
-		boolean isCrit = false;
 		
-		if (move.isPhysical()) {
-			attackStat = this.getStat(1);
-			defenseStat = foe.getStat(2);
-		} else {
-			attackStat = this.getStat(3);
-			defenseStat = foe.getStat(4);
-		}
+		double attackStatMod = 1.0;
+		double defenseStatMod = 1.0;
+		
+		double attackDriveMod = 1.0;
+		double defenseDriveMod = 1.0;
+		
+		boolean isCrit = false;
 		
 		// Crit Check
 		critChance += this.getStatusNum(Status.CRIT_CHANCE);
@@ -8388,37 +8441,66 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (move.isPhysical()) {
-			attackStat = move == Move.BODY_PRESS ? this.getStat(2) : move == Move.FOUL_PLAY ? foe.getStat(1) : attackStat;
-			double attackModifier = move == Move.BODY_PRESS ? this.asModifier(1) : move == Move.FOUL_PLAY ? foe.asModifier(0) : this.asModifier(0);
-			if ((!isCrit || attackModifier > 1) && foeAbility != Ability.UNAWARE)
-				attackMod *= attackModifier;
+			if (move == Move.BODY_PRESS) {
+				attackStat = this.getStat(2);
+				attackStatMod = this.asModifier(1);
+				attackDriveMod = this.getBoosterMod(1);
+			} else if (move == Move.FOUL_PLAY) {
+				attackStat = foe.getStat(1);
+				attackStatMod = foe.asModifier(0);
+				attackDriveMod = foe.getBoosterMod(0);
+			} else {
+				attackStat = this.getStat(1);
+				attackStatMod = this.asModifier(0);
+				attackDriveMod = this.getBoosterMod(0);
+			}
+			
+			defenseStat = foe.getStat(2);
+			defenseStatMod = foe.asModifier(1);
+			defenseDriveMod = foe.getBoosterMod(1);
+			
+			if ((!isCrit || attackStatMod > 1) && foeAbility != Ability.UNAWARE) {
+				attackMod *= attackStatMod;
+			}
+			attackMod *= attackDriveMod;
 			
 			if (this.getItem(field) == Item.CHOICE_BAND) attackMod *= 1.5;
 			if (this.status == Status.BURNED && this.ability != Ability.GUTS && move != Move.FACADE) attackMod /= 2;
 			if (this.getAbility(field) == Ability.GUTS && this.status != Status.HEALTHY) attackMod *= 1.5;
 			if (this.getAbility(field) == Ability.HUGE_POWER) attackMod *= 2;
 			
-			if (!isCrit || foe.asModifier(1) < 1) {
+			if (!isCrit || defenseStatMod < 1) {
 				if (move != Move.DARKEST_LARIAT && move != Move.SACRED_SWORD && this.ability != Ability.UNAWARE)
-					defenseMod *= foe.asModifier(1);
+					defenseMod *= defenseStatMod;
 			}
+			defenseMod *= defenseDriveMod;
+			
 			if (field.equals(field.weather, Effect.SNOW, this) && foe.isType(PType.ICE)) defenseMod *= 1.5;
 			if (!isCrit && (field.contains(foe.getFieldEffects(), Effect.REFLECT) || field.contains(foe.getFieldEffects(), Effect.AURORA_VEIL))) defenseMod *= 2;
 		} else {
-			if ((!isCrit || this.asModifier(2) > 1) && foeAbility != Ability.UNAWARE) {
-				attackMod *= this.asModifier(2);
-				if (mode == 0 && move == Move.METEOR_BEAM && this.getItem(Item.field) == Item.POWER_HERB) attackMod *= 1.5;
+			attackStat = this.getStat(3);
+			attackStatMod = this.asModifier(2);
+			if (mode == 0 && move == Move.METEOR_BEAM) attackStatMod = this.asModifier(2, 1); // calc with boost
+			attackDriveMod = this.getBoosterMod(2);
+			
+			boolean usesDef = move == Move.PSYSHOCK || move == Move.MAGIC_MISSILES;
+			defenseStat = usesDef ? foe.getStat(2) : foe.getStat(4);
+			defenseStatMod = usesDef ? foe.asModifier(1) : foe.asModifier(3);
+			defenseDriveMod = usesDef ? foe.getBoosterMod(1) : foe.getBoosterMod(3);
+			
+			if ((!isCrit || attackStatMod > 1) && foeAbility != Ability.UNAWARE) {
+				attackMod *= attackStatMod;
 			}
+			attackMod *= attackDriveMod;
+			
 			if (this.getItem(field) == Item.CHOICE_SPECS) attackMod *= 1.5;
 			if (this.status == Status.FROSTBITE) attackMod /= 2;
 			if (this.getAbility(field) == Ability.SOLAR_POWER && field.equals(field.weather, Effect.SUN, this)) attackMod *= 1.5;
 			
-			boolean usesDef = move == Move.PSYSHOCK || move == Move.MAGIC_MISSILES;
-			defenseStat = usesDef ? foe.getStat(2) : defenseStat;
-			double defenseModifier = usesDef ? foe.asModifier(1) : foe.asModifier(3);
-			if (!isCrit || defenseModifier < 1) {
-				if (this.ability != Ability.UNAWARE) defenseMod *= defenseModifier;
+			if (!isCrit || defenseStatMod < 1) {
+				if (this.ability != Ability.UNAWARE) defenseMod *= defenseStatMod;
 			}
+			defenseMod *= defenseDriveMod;
 			
 			Effect weather = usesDef ? Effect.SNOW : Effect.SANDSTORM;
 			PType weatherType = usesDef ? PType.ICE : PType.ROCK;
@@ -8934,7 +9016,7 @@ public class Pokemon implements Serializable {
 	}
 
 	public int getSpeed(Field field) {
-		double speed = this.getStat(5) * this.asModifier(4);
+		double speed = this.getStat(5) * this.asModifier(4) * this.getBoosterMod(4);
 		if (this.status == Status.PARALYZED) speed *= 0.5;
 		if (this.getItem(field) == Item.IRON_BALL) speed *= 0.5;
 		if (this.getItem(field) == Item.CHOICE_SCARF) speed *= 1.5;
@@ -9899,9 +9981,7 @@ public class Pokemon implements Serializable {
 			if (this.getItem(field) == Item.ICY_ROCK) field.weatherTurns = 8;
 		} else if (this.getAbility(field) == Ability.CLOUD_NINE && field.weather != null) {
 			Task.addAbilityTask(this);
-			Task t = Task.addTask(Task.WEATHER, "The weather returned to normal!");
-			t.setEffect(null);
-			field.weather = null;
+			field.clearWeather(this, foe);
 		} else if (this.getAbility(field) == Ability.GRASSY_SURGE && !field.equals(field.terrain, Effect.GRASSY)) {
 			Task.addAbilityTask(this);
 			field.setTerrain(field.new FieldEffect(Effect.GRASSY));
@@ -9926,9 +10006,7 @@ public class Pokemon implements Serializable {
 			Task.addTask(Task.TEXT, "Gravity is intensified!");
 		} else if (this.getAbility(field) == Ability.SEABED_SIFTER && field.terrain != null) {
 			Task.addAbilityTask(this);
-			Task t = Task.addTask(Task.TERRAIN, "The terrain returned to normal!");
-			t.setEffect(null);
-			field.terrain = null;
+			field.clearTerrain(this, foe);
 			int healAmt = this.getStat(0) - this.currentHP;
 			if (healAmt > 0) {
 				this.heal(healAmt, this.nickname + "'s HP was restored!");
@@ -10009,6 +10087,8 @@ public class Pokemon implements Serializable {
 			this.checkStarborn(foe);
 		} else if (this.getAbility(field) == Ability.TERRAFORGE) {
 			this.checkTerraforge(foe);
+		} else if (this.getAbility(field) == Ability.PARADOX_DRIVE) {
+			this.checkParadoxDrive(foe);
 		} else if (this.getAbility(field) == Ability.ILLUSION) {
 			Task.addAbilityTask(this);
 			Task.addTask(Task.TEXT, this.nickname + " casts a terrifying illusion!");
@@ -10224,6 +10304,41 @@ public class Pokemon implements Serializable {
 				this.illusion = hasTerrain;
 			}
 		}
+	}
+	
+	public void checkParadoxDrive(Pokemon foe) {
+		if (this.isFainted()) return;
+		if (this.getAbility(field) == Ability.PARADOX_DRIVE) {
+			StatusEffect activation = this.getStatus(Status.BOOSTER);
+			boolean activated = activation != null;
+			boolean hasActivation = field.equals(field.weather, Effect.SUN) || field.equals(field.terrain, Effect.ELECTRIC);
+			boolean booster = !hasActivation && this.getItem(field) == Item.BOOSTER_ENERGY; // prioritize saving booster energy
+			if (activated) {
+				if (!hasActivation && activation.move == null) { // check for null move meaning it wasn't activated by booster energy
+					this.removeStatus(Status.BOOSTER);
+					Task.addTask(Task.TEXT, "The effects of " + this.nickname + "'s " + this.ability.toString() + " wore off.");
+					activated = false;
+				}
+			}
+			
+			if (!activated && (hasActivation || booster)) {
+				int stat = this.getHighestStat();
+				this.addStatus(Status.BOOSTER, stat, booster ? Move.SPLASH : null);
+				if (booster) {
+					Task.addTask(Task.TEXT, this.nickname + " used its " + item.toString() + " to activate its " + this.ability.toString() + "!");
+					this.consumeItem(foe);
+				}
+				Task.addAbilityTask(this);
+				Task.addTask(Task.TEXT, this.nickname + "'s " + getStatType(stat+1, true) + " was heightened!");
+			}
+		}
+	}
+	
+	public double getBoosterMod(int stat) {
+		StatusEffect booster = this.getStatus(Status.BOOSTER);
+		
+		if (booster == null || booster.num != stat) return 1.0;
+		return stat == 4 ? 1.5 : 1.3;
 	}
 
 	private int damage(double amt, Pokemon foe) {
@@ -11489,7 +11604,10 @@ public class Pokemon implements Serializable {
 		ArrayList<String> result = new ArrayList<>();
 		for (StatusEffect s : vStatuses) {
 			String add = s.toString();
-			if (s.num != 0) add += " " + s.num;
+			if (s.num != 0) {
+				String num = s.status == Status.BOOSTER ? getStatType(s.num + 1, false).trim() : String.valueOf(s.num);
+				add += " " + num;
+			}
 			result.add(add);
 		}
 		if (toxic > 0) {
@@ -11509,16 +11627,18 @@ public class Pokemon implements Serializable {
 	}
 	
 	public int getHighestStat() {
-		int max = this.getStat(1);
-		int result = 1;
-		for (int i = result + 1; i < this.stats.length; i++) {
-			if (this.getStat(i) > max) {
-				max = this.stats[i];
-				result = i;
+		double max = this.getStat(1) * this.asModifier(0);
+		int result = 0;
+		
+		for (int i = 2; i < this.stats.length; i++) {
+			double stat = this.getStat(i) * this.asModifier(i - 1);
+			if (stat > max) {
+				max = stat;
+				result = i - 1;
 			}
 		}
 		
-		return --result;
+		return result;
 	}
 	
 	public int getHighestAttackingStat() {
@@ -11797,7 +11917,7 @@ public class Pokemon implements Serializable {
 				try {
 					heldItem = pokemonParts[3].equals("null") ? null : Item.valueOf(pokemonParts[3]);
 				} catch (IllegalArgumentException e) {
-					System.out.println(name + ", " + Pokemon.getName(id));
+					System.out.println(name + ", " + getName(id));
 					e.printStackTrace();
 				}
 				
@@ -12309,8 +12429,8 @@ public class Pokemon implements Serializable {
 				Pokemon p2 = t2.getCurrent();
 				boolean fFaster = p1.getFaster(p2, 0, 0, field) == p2;
 				
-				Move uMove = p1.bestMove2(p2, !fFaster, Player.HARD);
-				Move fMove = p2.bestMove2(p1, fFaster, Player.HARD);
+				Move uMove = p1.resolveDecision(p1.bestMove2(p2, !fFaster, Player.HARD));
+				Move fMove = p2.resolveDecision(p2.bestMove2(p1, fFaster, Player.HARD));
 				
 				int uP, fP;
 				uP = uMove == null ? 0 : uMove.getPriority(p1);
@@ -12610,10 +12730,19 @@ public class Pokemon implements Serializable {
 			attackStat *= mod;
 		}
 		double defenseStat = this.getStat(4);
-		defenseStat *= this.asModifier(3);
+		double defenseStatMod = this.asModifier(3);
+		double defenseDriveMod = this.getBoosterMod(3);
+		
+		if (!isCrit || defenseStatMod < 1) {
+			defenseStat *= defenseStatMod;
+		}
+		defenseStat *= defenseDriveMod;
+		
 		if (this.getItem(field) == Item.ASSAULT_VEST) defenseStat *= 1.5;
 		if (field.equals(field.weather, Effect.SANDSTORM, this) && this.isType(PType.ROCK)) defenseStat *= 1.5;
-		if (field.contains(this.getFieldEffects(), Effect.LIGHT_SCREEN) || field.contains(this.getFieldEffects(), Effect.AURORA_VEIL)) defenseStat *= 2;
+		if (!isCrit) {
+			if (field.contains(this.getFieldEffects(), Effect.LIGHT_SCREEN) || field.contains(this.getFieldEffects(), Effect.AURORA_VEIL)) defenseStat *= 2;
+		}
 		if (this.getItem(field) == Item.EVIOLITE && this.canEvolve()) defenseStat *= 1.5;
 		
 		int damage = this.calc(attackStat, defenseStat, bp, level, mode);

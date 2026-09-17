@@ -64,7 +64,6 @@ public class UI extends AbstractUI {
 	public int btY = 0;
 
 	// MESSAGE STATE
-	public boolean showMessage;
 	public boolean above;
 	public boolean showArea;
 	public int areaCounter;

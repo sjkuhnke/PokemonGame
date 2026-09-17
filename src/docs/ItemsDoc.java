@@ -24,6 +24,9 @@ import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import entity.Entity;
+import entity.NPC_Market;
+import entity.NPC_Star;
 import entity.PlayerCharacter;
 import object.ItemObj;
 import object.TreasureChest;
@@ -47,6 +50,7 @@ public class ItemsDoc {
 		writeItemsSheet(wb);
 		writeTMLocationsSheet(wb);
 		writeOverworldItemsSheet(wb, gp);
+		writeShopsSheet(wb, gp);
 
 		Path outPath = dir.resolve("ItemsInfo.xlsx");
 		try (FileOutputStream fileOut = new FileOutputStream(outPath.toFile())) {
@@ -257,7 +261,99 @@ public class ItemsDoc {
 
 		return rowIndex;
 	}
-
+	
+	// ----------------------------------------------------------------------
+	// Sheet 4: Shops - grouped by overworld location
+	// ----------------------------------------------------------------------
+	private static void writeShopsSheet(Workbook wb, GamePanel gp) {
+		Sheet sheet = wb.createSheet("Shops");
+		
+		sheet.setColumnWidth(0, 5000);  // Shop
+		sheet.setColumnWidth(1, 3500);  // Coordinates
+		sheet.setColumnWidth(2, 1200);  // Icon
+		sheet.setColumnWidth(3, 5000);  // Item
+		sheet.setColumnWidth(4, 4500);  // Cost
+		
+		// Find shops grouped by overworld location
+		Map<String, ArrayList<Entity>> shopsMap = new LinkedHashMap<>();
+		
+		for (int map = 0; map < gp.npc.length; map++) {
+			for (int index = 0; index < gp.npc[map].length; index++) {
+				
+				Entity npc = gp.npc[map][index];
+				
+				if (npc == null) continue;
+				
+				if (!(npc instanceof NPC_Market) && !(npc instanceof NPC_Star)) {
+					continue;
+				}
+				
+				int x = npc.worldX / gp.tileSize;
+				int y = npc.worldY / gp.tileSize;
+				
+				PMap.getLoc(map, x, y);
+				String location = PlayerCharacter.currentMapName;
+				
+				shopsMap.computeIfAbsent(location, k -> new ArrayList<>()).add(npc);
+			}
+		}
+		
+		int rowIndex = 0;
+		
+		for (Map.Entry<String, ArrayList<Entity>> entry : shopsMap.entrySet()) {
+			
+			String location = entry.getKey();
+			
+			rowIndex = DocUtils.writeLocationHeader(sheet, rowIndex, location, 4);
+			
+			for (Entity shop : entry.getValue()) {
+				
+				int x = shop.worldX / gp.tileSize;
+				int y = shop.worldY / gp.tileSize;
+				
+				boolean starShop = shop instanceof NPC_Star;
+				String shopName = starShop ? "Star Shop" : "Market";
+				
+				for (Item item : shop.inventory) {
+					
+					Row row = sheet.createRow(rowIndex++);
+					row.setHeightInPoints(20);
+					
+					Cell shopCell = row.createCell(0);
+					shopCell.setCellValue(shopName);
+					shopCell.setCellStyle(plainStyle(wb, true, HorizontalAlignment.LEFT));
+					
+					Cell coordCell = row.createCell(1);
+					coordCell.setCellValue(String.format("(%d, %d)", x, y));
+					coordCell.setCellStyle(plainStyle(wb, false, HorizontalAlignment.LEFT));
+					
+					insertItemIcon(sheet, item, 2, row.getRowNum());
+					
+					Cell itemCell = row.createCell(3);
+					itemCell.setCellValue(item.toString());
+					itemCell.setCellStyle(plainStyle(wb, false, HorizontalAlignment.LEFT));
+					
+					Cell costCell = row.createCell(4);
+					
+					int cost = item.getCost();
+					
+					if (cost == 0) {
+						costCell.setCellValue("--");
+					} else if (starShop) {
+						costCell.setCellValue(cost + " Star Piece(s)");
+					} else {
+						costCell.setCellValue("$" + cost);
+					}
+					
+					costCell.setCellStyle(plainStyle(wb, false, HorizontalAlignment.CENTER));
+				}
+			}
+			
+			// Blank row between locations
+			rowIndex++;
+		}
+	}
+	
 	private static void insertItemIcon(Sheet sheet, Item item, int col, int rowNum) {
 		try {
 			java.awt.image.BufferedImage icon = item.getImage();
@@ -271,10 +367,7 @@ public class ItemsDoc {
 			e.printStackTrace();
 		}
 	}
-
-	// ----------------------------------------------------------------------
-	// Moved from Main.java (formerly writeItems); output unchanged.
-	// ----------------------------------------------------------------------
+	
 	public static void writeItemsToTxt(GamePanel gp, Path dir) {
 		try {
 			Path outPath = dir.resolve("ItemsInfo.txt");
@@ -334,6 +427,7 @@ public class ItemsDoc {
 			writer.write("will show for only the save file you generated these docs for)");
 			writer.write("\n--------------------------------------\n");
 			Map<String, ArrayList<ItemObj>> itemsMap = new LinkedHashMap<>();
+			Map<String, ArrayList<Entity>> shopsMap = new LinkedHashMap<>();
 			for (int loc = 0; loc < items.length; loc++) {
 				for (int col = 0; col < items[loc].length; col++) {
 					ItemObj e = items[loc][col];
@@ -350,37 +444,108 @@ public class ItemsDoc {
 					}
 				}
 			}
-
-			for (Map.Entry<String, ArrayList<ItemObj>> e : itemsMap.entrySet()) {
-				ArrayList<ItemObj> list = e.getValue();
-				String loc = e.getKey();
-				while (loc.length() < 50) {
-					loc += "-";
+			for (int map = 0; map < gp.npc.length; map++) {
+				for (int index = 0; index < gp.npc[map].length; index++) {
+					
+					Entity npc = gp.npc[map][index];
+					
+					if (npc == null) continue;
+					
+					if (!(npc instanceof NPC_Market) && !(npc instanceof NPC_Star)) {
+						continue;
+					}
+					
+					int x = npc.worldX / gp.tileSize;
+					int y = npc.worldY / gp.tileSize;
+					
+					PMap.getLoc(map, x, y);
+					String location = PlayerCharacter.currentMapName;
+					
+					shopsMap.computeIfAbsent(location, k -> new ArrayList<>()).add(npc);
+			    }
+			}
+			
+			Map<String, Boolean> locations = new LinkedHashMap<>();
+			for (String location : itemsMap.keySet()) {
+				locations.put(location, true);
+			}
+			
+			for (String location : shopsMap.keySet()) {
+				locations.put(location, true);
+			}
+			
+			for (String loc : locations.keySet()) {
+				String locationName = loc;
+				while (locationName.length() < 50) {
+					locationName += "-";
 				}
-				writer.write("\n\n" + loc + "\n");
-
-				for (ItemObj i : list) {
-					writer.write("\n");
-
-					int x = i.worldX / gp.tileSize;
-					int y = i.worldY / gp.tileSize;
-
-					boolean chest = i instanceof TreasureChest;
-					String itemString = chest ? "Treasure Chest" : i.item.toString();
-
-					writer.write(String.format("%s (%d, %d)", itemString, x, y));
-
-					if (chest) {
-						for (Item it : i.inventory) {
-							String label = "\n  [";
-							label += it + "]";
-							while (label.length() < 26) label += " ";
-							label += "|";
-
+				writer.write("\n\n" + locationName + "\n");
+				
+				// Shops
+				ArrayList<Entity> shops = shopsMap.get(loc);
+				
+				if (shops != null) {
+					for (Entity shop : shops) {
+						writer.write("\n");
+						
+						int x = shop.worldX / gp.tileSize;
+						int y = shop.worldY / gp.tileSize;
+						
+						boolean starShop = shop instanceof NPC_Star;
+						
+						String shopName = starShop ? "Star Shop" : "Market";
+						
+						writer.write(String.format("%s (%d, %d)", shopName, x, y));
+						
+						for (Item item : shop.inventory) {
+							String label = "\n [" + item + "]";
+							while (label.length() < 30) {
+								label += " ";
+							}
+							int cost = item.getCost();
+							String price;
+							if (cost == 0) {
+								price = "--";
+							} else if (starShop) {
+								price = cost + " Star Piece(s)";
+							} else {
+								price = "$" + cost;
+							}
+							
+							label += " | " + price;
 							writer.write(label);
 						}
+						writer.write("\n");
 					}
-
+				}
+				
+				// Existing overworld items
+				ArrayList<ItemObj> list = itemsMap.get(loc);
+				
+				if (list != null) {
+					for (ItemObj i : list) {
+						writer.write("\n");
+						
+						int x = i.worldX / gp.tileSize;
+						int y = i.worldY / gp.tileSize;
+						
+						boolean chest = i instanceof TreasureChest;
+						String itemString = chest ? "Treasure Chest" : i.item.toString();
+						
+						writer.write(String.format("%s (%d, %d)", itemString, x, y));
+						
+						if (chest) {
+							for (Item it : i.inventory) {
+								String label = "\n  [";
+								label += it + "]";
+								while (label.length() < 26) label += " ";
+								label += "|";
+								
+								writer.write(label);
+							}
+						}
+						
+					}
 				}
 			}
 			writer.write("\n");

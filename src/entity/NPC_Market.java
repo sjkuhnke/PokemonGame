@@ -3,6 +3,7 @@ package entity;
 import overworld.GamePanel;
 
 public class NPC_Market extends Entity {
+	
 	public NPC_Market(GamePanel gp) {
 		super(gp, null);
 		this.setDirection("down");

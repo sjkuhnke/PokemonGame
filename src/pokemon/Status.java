@@ -57,6 +57,7 @@ public enum Status {
 	MAGNET_RISE("",Color.BLACK,Color.BLACK),
 	MINIMIZED("",Color.BLACK,Color.BLACK),
 	FALLEN("",Color.BLACK,Color.BLACK),
+	BOOSTER("",Color.BLACK,Color.BLACK),
 	;
 	
 	Status(String name, Color color, Color textColor) {

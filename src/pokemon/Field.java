@@ -453,9 +453,10 @@ public class Field {
 		if (weather != null) {
 			weatherTurns--;
 			if (weatherTurns == 0) {
-				Task t = Task.addTask(Task.WEATHER, "The weather returned to normal!");
-				t.setEffect(null);
-				weather = null;
+				clearWeather(faster, slower);
+			} else {
+				faster.checkParadoxDrive(slower);
+				slower.checkParadoxDrive(faster);
 			}
 		}
 		if (terrain != null) {
@@ -464,7 +465,9 @@ public class Field {
 				clearTerrain(faster, slower);
 			} else {
 				faster.checkTerraforge(slower);
+				faster.checkParadoxDrive(slower);
 				slower.checkTerraforge(faster);
+				slower.checkParadoxDrive(faster);
 			}
 		}
 		
@@ -509,6 +512,16 @@ public class Field {
 		turns++;
 	}
 	
+	public void clearWeather(Pokemon faster, Pokemon slower) {
+		if (weather == null) return;
+		Task t = Task.addTask(Task.WEATHER, "The weather returned to normal!");
+		t.setEffect(null);
+		weather = null;
+		weatherTurns = 0;
+		faster.checkParadoxDrive(slower);
+		slower.checkParadoxDrive(faster);
+	}
+	
 	public void clearTerrain(Pokemon faster, Pokemon slower) {
 		if (terrain == null) return;
 		Task t = Task.addTask(Task.TERRAIN, "The terrain returned to normal!");
@@ -516,6 +529,8 @@ public class Field {
 		terrain = null;
 		terrainTurns = 0;
 		faster.checkTerraforge(slower);
+		faster.checkParadoxDrive(slower);
+		slower.checkTerraforge(faster);
 		slower.checkTerraforge(faster);
 	}
 
