@@ -13,6 +13,8 @@ public class Print {
 	private static final List<String> buffer = new ArrayList<>();
 	private static final List<String> battleBuffer = new ArrayList<>();
 	private static boolean inBattle = false;
+	// Self-play / headless runs: drop DEBUG lines entirely (no buffering, no timestamps).
+	private static volatile boolean debugSuppressed = false;
 	private static final Object lock = new Object();
 
 	static {
@@ -26,7 +28,16 @@ public class Print {
 		});
 	}
 
+	public static void setDebugSuppressed(boolean suppressed) {
+		debugSuppressed = suppressed;
+	}
+
+	public static boolean isDebugSuppressed() {
+		return debugSuppressed;
+	}
+
 	public static void log(LogLevel level, String msg) {
+		if (level == LogLevel.DEBUG && debugSuppressed) return;
 		String line = format(level, msg);
 
 		// Console only in DEBUG

@@ -30,6 +30,9 @@ public class Trainer implements Serializable {
 	public int[] boosts; // index 0: boost amt, index 1: boost index, index 2: boost happened
 	public boolean eliteFour;
 	
+	/** AI engine for this trainer's Pokemon. null = TrainerAI.Config.defaultAI. Not serialized. */
+	public transient TrainerAI ai;
+	
 	transient ArrayList<FieldEffect> effects;
 	transient Item[] teamItems;
 	
@@ -190,9 +193,14 @@ public class Trainer implements Serializable {
 		return money;
 	}
 	
+	/**
+	 * KNOWN RISK (B10): when called from AI analysis, Pokemon.clone.trainer still points at the REAL
+	 * Trainer, so the oldCloned shortcut below mutates the real trainer's current. Fixed in Phase 2
+	 * (trainer shells, then delete the oldCloned branch). Until then, don't call this from new sim code.
+	 */
 	public boolean swapRandom(Pokemon foe) {
 		if (!hasValidMembers(foe)) return false;
-		Random rand = new Random();
+		Random rand = Rng.asRandom();
 		boolean oldCloned = current.cloned;
 		int index = rand.nextInt(team.length);
 		while (team[index] == null || team[index].isFainted() || team[index] == current) {
@@ -733,7 +741,7 @@ public class Trainer implements Serializable {
 		}
 		
 		// Weighted random selection
-		double r = Math.random() * totalWeight;
+		double r = Rng.next() * totalWeight;
 		for (Map.Entry<Pokemon, Double> entry : weights.entrySet()) {
 			r -= entry.getValue();
 			if (r <= 0) {

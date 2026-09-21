@@ -65,6 +65,7 @@ import util.DeepClonable;
 import util.JGradientButton;
 import util.Pair;
 import util.Print;
+import util.Rng;
 
 public class Pokemon implements Serializable {
 	/**
@@ -213,7 +214,7 @@ public class Pokemon implements Serializable {
 	public String metAt;
 	
 	public Pokemon(int i, int l, boolean o, boolean t) {
-		if (gp != null && gp.player.p != null && gp.player.p.random) i = new Random().nextInt(MAX_POKEMON) + 1;
+		if (gp != null && gp.player.p != null && gp.player.p.random) i = Rng.asRandom().nextInt(MAX_POKEMON) + 1;
 		
 		id = i;
 		uuid = setUUID();
@@ -227,14 +228,14 @@ public class Pokemon implements Serializable {
 		statStages = new int[7];
 		
 		baseStats = getBaseStats();
-		for (int j = 0; j < 6; j++) { ivs[j] = (int) (Math.random() * 32); }
+		for (int j = 0; j < 6; j++) { ivs[j] = (int) (Rng.next() * 32); }
 		setNature();
 		setStats();
 		setTypes();
 		if (t) {
 			setAbility(0);
 		} else {
-			abilitySlot = (int)Math.round(Math.random());
+			abilitySlot = (int)Math.round(Rng.next());
 			setAbility(abilitySlot);
 		}
 		this.weight = getWeight();
@@ -322,14 +323,14 @@ public class Pokemon implements Serializable {
 	public Pokemon(int i, int l, boolean isStatic) {
 		this(i, l, false, true);
 		
-		abilitySlot = (int)Math.round(Math.random());
+		abilitySlot = (int)Math.round(Rng.next());
 		setAbility(abilitySlot);
 	}
 	
 	private boolean determineShiny() {
 		if (true) return false;
 		@SuppressWarnings("unused")
-		Random random = new Random();
+		Random random = Rng.asRandom();
 		return random.nextInt() % 512 == 0;
 	}
 	
@@ -449,7 +450,7 @@ public class Pokemon implements Serializable {
 		ArrayList<Move> validMoves = this.getValidMoveset();
 
 		// Pick a random move from the validMoves list
-		Random rand = new Random();
+		Random rand = Rng.asRandom();
 		
 		if (validMoves.size() > 0) {
 			int index = rand.nextInt(validMoves.size());
@@ -481,7 +482,16 @@ public class Pokemon implements Serializable {
 	    return decision.move;
 	}
 	
+	/**
+	 * Entry point for Trainer AI decisions. Dispatches to the TrainerAI installed on this
+	 * Pokemon's trainer (Trainer.ai), or TrainerAI.Config.defaultAI (LegacyAI) if none.
+	 */
 	public MoveDecision bestMove2(Pokemon foe, boolean first, int difficulty) {
+		return TrainerAI.forPokemon(this).decide(this, foe, first, difficulty);
+	}
+	
+	/** The pre-overhaul AI, body unchanged. Only reachable through LegacyAI. */
+	MoveDecision legacyBestMove(Pokemon foe, boolean first, int difficulty) {
 		StringBuilder turn = new StringBuilder();
 		turn.append("\n\n====================================================\n");
 		turn.append("-------------------- TURN " + (field.turns+1) + " ------------------------\n");
@@ -712,7 +722,7 @@ public class Pokemon implements Serializable {
 				}
 				Print.debug(switches.toString());
 				
-				double r = Math.random() * totalWeight;
+				double r = Rng.next() * totalWeight;
 				Pokemon chosen = null;
 				int chosenSlot = Integer.MIN_VALUE;
 				int chosenScore = Integer.MIN_VALUE;
@@ -735,7 +745,7 @@ public class Pokemon implements Serializable {
 					chance = Math.max(0, chance);
 					Print.debug(String.format("%.1f%% to switch\n", chance));
 					
-					if (Math.random() * 100 <= chance) {
+					if (Rng.next() * 100 <= chance) {
 						String rsn = "[Score diff switch : " + String.format("%.1f", chance) + "%]\n";
 						Print.debug(rsn);
 						if (switchRsn != null) {
@@ -779,7 +789,7 @@ public class Pokemon implements Serializable {
 			}
 			Print.debug(brain.toString());
 			
-			double r = Math.random() * totalPositiveWeight;
+			double r = Rng.next() * totalPositiveWeight;
 			Move chosenMove = null;
 			for (Move m : validMoves) {
 				if (positiveWeights.containsKey(m)) {
@@ -833,7 +843,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		// Fallback 2: Just pick a random valid move
-		int randomIndex = (int) (Math.random() * validMoves.size());
+		int randomIndex = (int) (Rng.next() * validMoves.size());
 		return new MoveDecision(validMoves.get(randomIndex), pendingSwitch);
 	}
 	
@@ -868,7 +878,7 @@ public class Pokemon implements Serializable {
 		int strongestMovePriority = Integer.MIN_VALUE;
 		
 		ArrayList<Move> foeMoveset = foe.getValidMoveset();
-		Collections.shuffle(foeMoveset);
+		Collections.shuffle(foeMoveset, Rng.asRandom());
 		
 		for (Move m : foeMoveset) {
 			Pair<Integer, Double> damagePair = foe.calcWithTypes(this, m, true, 0, false, field, false);
@@ -1111,11 +1121,12 @@ public class Pokemon implements Serializable {
 		int[] statsBefore = clone.statStages.clone();
 		
 		// Simulate the swap in with hazards=true to trigger entry hazards
+		final boolean prevCreateTask = createTask; // B9: restore the caller's value, don't force true
 		createTask = false;
 		try {
 			clone.swapIn(foe, true, field);
 		} finally {
-			createTask = true;
+			createTask = prevCreateTask;
 		}
 		
 		// Calculate changes
@@ -1664,6 +1675,7 @@ public class Pokemon implements Serializable {
 		return (int) Math.round(score);
 	}
 	public EffectAnalysisResult analyzeMoveEffect(Pokemon foe, Move move, boolean isFaster, Field field, int damage, Pokemon likelySwitchIn, Move foeStrongestMove, double foeMaxDamagePercent) {
+		final boolean prevCreateTask = createTask; // B9
 		try {
 			for (int attempt = 0; attempt < 2; attempt++) {
 				boolean isBackCheck = (attempt > 0);
@@ -1808,7 +1820,7 @@ public class Pokemon implements Serializable {
 				}
 			}
 		} finally {
-			createTask = true;
+			createTask = prevCreateTask;
 		}
 	
 		return EffectAnalysisResult.NONE;
@@ -3072,7 +3084,7 @@ public class Pokemon implements Serializable {
 		boolean contact = move.contact;
 		boolean sheer = false;
 		
-		if (consumePP && this.playerOwned()) {
+		if (consumePP && this.playerOwned() && !this.cloned) {
 			this.getPlayer().recordTurn(this);
 		}
 		
@@ -3143,7 +3155,7 @@ public class Pokemon implements Serializable {
 								if (m != null && m != Move.SLEEP_TALK) moves.add(m);
 							}
 						}
-						move = moves.get(new Random().nextInt(moves.size()));
+						move = moves.get(Rng.asRandom().nextInt(moves.size()));
 						bp = move.basePower;
 						acc = move.accuracy;
 						secChance = move.getSecondaryChance();
@@ -3176,7 +3188,7 @@ public class Pokemon implements Serializable {
 					Task.addTask(Task.TEXT, this.nickname + " snapped out of confusion!");
 				} else {
 					Task.addTask(Task.TEXT, this.nickname + " is confused!");
-					if (Math.random() < 1.0/3.0) {
+					if (Rng.next() < 1.0/3.0) {
 						// user hits themselves
 						attackStat = this.getStat(1);
 						defenseStat = this.getStat(2);
@@ -3204,7 +3216,7 @@ public class Pokemon implements Serializable {
 					}
 				}
 			}
-			if (this.status == Status.PARALYZED && Math.random() < 0.25) {
+			if (this.status == Status.PARALYZED && Rng.next() < 0.25) {
 				Task t = Task.addTask(Task.TEXT, this.nickname + " is paralyzed! It can't move!", this);
 				t.wipe = true;
 				this.moveMultiplier = 1;
@@ -3322,7 +3334,7 @@ public class Pokemon implements Serializable {
 			if (consumePP) consumeMovePP(move, foe);
 			announceMove(move, foe, ctx);
 			Move[] moves = Move.getAllMoves();
-			Random metronome = new Random();
+			Random metronome = Rng.asRandom();
 			Move m = null;
 			while (m == null || m == Move.METRONOME) {
 				m = moves[metronome.nextInt(moves.length)];
@@ -3570,7 +3582,7 @@ public class Pokemon implements Serializable {
 		if (move == Move.OUTRAGE || move == Move.PETAL_DANCE || move == Move.THRASH) {
 			if (!this.hasStatus(Status.LOCKED)) {
 				this.addStatus(Status.LOCKED);
-				this.outCount = (int)(Math.random()*2) + 2;
+				this.outCount = (int)(Rng.next()*2) + 2;
 				this.lastMoveUsed = move;
 			}
 			this.outCount--;
@@ -3591,9 +3603,9 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (foe.hasStatus(Status.MAGIC_REFLECT)) {
-			if (move == Move.BRICK_BREAK && move == Move.MAGIC_FANG && move == Move.PSYCHIC_FANGS) {
+			if (move == Move.BRICK_BREAK || move == Move.MAGIC_FANG || move == Move.PSYCHIC_FANGS) {
 				foe.removeStatus(Status.MAGIC_REFLECT);
-				Task.addTask(Task.TEXT, foe.nickname + " broke the Magic Reflect!");
+				Task.addTask(Task.TEXT, this.nickname + " broke the Magic Reflect!");
 			} else {
 				this.move(this, move, false, false);
 				Task.addTask(Task.TEXT, move + " was reflected on itself!");
@@ -3692,7 +3704,7 @@ public class Pokemon implements Serializable {
 			}
 			
 			if (move == Move.POP_POP) {
-				if (effectiveAccuracy <= 1.0 && (!hit(effectiveAccuracy) || foe.hasStatus(Status.SEMI_INV))) {
+				if (effectiveAccuracy <= 1.0 && (!hit(effectiveAccuracy * 100) || foe.hasStatus(Status.SEMI_INV))) {
 					Task.addTask(Task.TEXT, move.getMissString(this, foe));
 					field.misses++;
 					if (this.getItem(field) == Item.BLUNDER_POLICY) {
@@ -3742,7 +3754,7 @@ public class Pokemon implements Serializable {
 			
 			if (((moveType == PType.WATER && (foeAbility == Ability.WATER_ABSORB || foeAbility == Ability.DRY_SKIN)) || (moveType == PType.ELECTRIC && foeAbility == Ability.VOLT_ABSORB)
 					|| (moveType == PType.BUG && foeAbility == Ability.INSECT_FEEDER) || ((moveType == PType.LIGHT || moveType == PType.GALACTIC) && foeAbility == Ability.BLACK_HOLE)
-					|| (moveType == PType.MAGIC && foeAbility == Ability.MYSTIC_ABSORB) || (moveType == PType.LIGHT && foeAbility == Ability.EVENT_HORIZON))
+					|| (moveType == PType.MAGIC && foeAbility == Ability.MYSTIC_ABSORB) || (moveType == PType.LIGHT && (foeAbility == Ability.EVENT_HORIZON || foeAbility == Ability.NEUROFORCE)))
 					&& !(move.cat == 2 && acc > 100)) {
 				if (foe.getItem(field) == Item.RING_TARGET) {
 					// nothing
@@ -3940,7 +3952,7 @@ public class Pokemon implements Serializable {
 			}
 			
 			if (this.getAbility(field) == Ability.JACKPOT) {
-				int dice = new Random().nextInt(6);
+				int dice = Rng.asRandom().nextInt(6);
 				if (this.getItem(field) == Item.LOADED_DICE) dice += 2;
 				dice = Math.min(5, dice);
 				double mul;
@@ -4478,7 +4490,7 @@ public class Pokemon implements Serializable {
 			int dividend = Math.min(damage, foe.currentHP);
 			if (sturdy) dividend--;
 			double percent = dividend * 100.0 / foe.getStat(0); // change dividend to damage
-			if (this.playerOwned()) {
+			if (this.playerOwned() && !this.cloned) {
 				this.getPlayer().recordDamageDealt(this, percent);
 			}
 			String formattedPercent = String.format("%.1f", percent);
@@ -4847,7 +4859,7 @@ public class Pokemon implements Serializable {
 				
 				int consumed = before - m.currentPP;
 				
-				if (this.playerOwned()) {
+				if (this.playerOwned() && !this.cloned) {
 					this.getPlayer().recordPPUse(this, move, consumed);
 				}
 				
@@ -5341,7 +5353,7 @@ public class Pokemon implements Serializable {
 		case BIND:
 			if (!foe.hasStatus(Status.SPUN) && foe.spunCount == 0 && !foe.isFainted()) {
 				foe.addStatus(Status.SPUN, this.getItem(field) == Item.BINDING_BAND ? 6 : 8, move);
-				foe.spunCount = (((int) (Math.random() * 2)) + 4);
+				foe.spunCount = (((int) (Rng.next() * 2)) + 4);
 				if (this.getItem(field) == Item.GRIP_CLAW) foe.spunCount = 7;
 				Task.addTask(Task.TEXT, foe.nickname + " was wrapped by " + this.nickname + "!");
 			}
@@ -5417,7 +5429,7 @@ public class Pokemon implements Serializable {
 			}
 			break;
 		case DESOLATE_VOID:
-			Random random = new Random();
+			Random random = Rng.asRandom();
 			int type = random.nextInt(3);
 			if (type == 0) {
 				foe.paralyze(false, this);
@@ -5428,7 +5440,7 @@ public class Pokemon implements Serializable {
 			}
 			break;
 		case DIRE_CLAW:
-			random = new Random();
+			random = Rng.asRandom();
 			type = random.nextInt(3);
 			if (type == 0) {
 				foe.paralyze(false, this);
@@ -5503,7 +5515,7 @@ public class Pokemon implements Serializable {
 			}
 			break;
 		case FIRE_FANG:
-			int randomNum = ((int) Math.random() * 3);
+			int randomNum = ((int) (Rng.next() * 3));
 			if (randomNum == 0) {
 				foe.burn(false, this);
 			} else if (randomNum == 1 && first) {
@@ -5519,7 +5531,7 @@ public class Pokemon implements Serializable {
 		case FIRE_SPIN:
 			if (!foe.hasStatus(Status.SPUN) && foe.spunCount == 0 && !foe.isFainted()) {
 				foe.addStatus(Status.SPUN, this.getItem(field) == Item.BINDING_BAND ? 6 : 8, move);
-				foe.spunCount = (((int) (Math.random() * 2)) + 4);
+				foe.spunCount = (((int) (Rng.next() * 2)) + 4);
 				if (this.getItem(field) == Item.GRIP_CLAW) foe.spunCount = 7;
 				Task.addTask(Task.TEXT, foe.nickname + " was trapped in a fiery vortex!");
 			}
@@ -5527,7 +5539,7 @@ public class Pokemon implements Serializable {
 		case MAGMA_STORM:
 			if (!foe.hasStatus(Status.SPUN) && foe.spunCount == 0 && !foe.isFainted()) {
 				foe.addStatus(Status.SPUN, this.getItem(field) == Item.BINDING_BAND ? 6 : 8, move);
-				foe.spunCount = (((int) (Math.random() * 2)) + 4);
+				foe.spunCount = (((int) (Rng.next() * 2)) + 4);
 				if (this.getItem(field) == Item.GRIP_CLAW) foe.spunCount = 7;
 				Task.addTask(Task.TEXT, foe.nickname + " was trapped in a fiery vortex!");
 			}
@@ -5535,7 +5547,7 @@ public class Pokemon implements Serializable {
 		case WHIRLPOOL:
 			if (!foe.hasStatus(Status.SPUN) && foe.spunCount == 0 && !foe.isFainted()) {
 				foe.addStatus(Status.SPUN, this.getItem(field) == Item.BINDING_BAND ? 6 : 8, move);
-				foe.spunCount = (((int) (Math.random() * 2)) + 4);
+				foe.spunCount = (((int) (Rng.next() * 2)) + 4);
 				if (this.getItem(field) == Item.GRIP_CLAW) foe.spunCount = 7;
 				Task.addTask(Task.TEXT, foe.nickname + " was trapped in a whirlpool vortex!");
 			}
@@ -5543,7 +5555,7 @@ public class Pokemon implements Serializable {
 		case WRAP:
 			if (!foe.hasStatus(Status.SPUN) && foe.spunCount == 0 && !foe.isFainted()) {
 				foe.addStatus(Status.SPUN, this.getItem(field) == Item.BINDING_BAND ? 6 : 8, move);
-				foe.spunCount = (((int) (Math.random() * 2)) + 4);
+				foe.spunCount = (((int) (Rng.next() * 2)) + 4);
 				if (this.getItem(field) == Item.GRIP_CLAW) foe.spunCount = 7;
 				Task.addTask(Task.TEXT, foe.nickname + " was wrapped by " + this.nickname + "!");
 			}
@@ -5579,7 +5591,7 @@ public class Pokemon implements Serializable {
 			foe.freeze(false, this);
 			break;
 		case GALAXY_BLAST:
-			boolean stat = new Random().nextBoolean();
+			boolean stat = Rng.asRandom().nextBoolean();
 			stat(foe, stat ? 2 : 3, -1, this);
 			break;
 		case GLACIATE:
@@ -5613,7 +5625,7 @@ public class Pokemon implements Serializable {
 			}
 			break;
 		case HOCUS_POCUS:
-			randomNum = new Random().nextInt(5);
+			randomNum = Rng.asRandom().nextInt(5);
 			switch (randomNum) {
 			case 0:
 				foe.burn(false, this);
@@ -5625,7 +5637,7 @@ public class Pokemon implements Serializable {
 				foe.paralyze(false, this);
 				break;
 			case 3:
-				boolean result = new Random().nextBoolean();
+				boolean result = Rng.asRandom().nextBoolean();
 				if (result) {
 					foe.poison(false, this);
 				} else {
@@ -5643,7 +5655,7 @@ public class Pokemon implements Serializable {
 			foe.confuse(false, this);
 			break;
 		case HYDRO_VORTEX:
-			boolean rand = new Random().nextBoolean();
+			boolean rand = Rng.asRandom().nextBoolean();
 			if (rand) {
 				foe.confuse(false, this);
 			} else {
@@ -5665,7 +5677,7 @@ public class Pokemon implements Serializable {
 			foe.freeze(false, this);
 			break;
 		case ICE_FANG:
-			randomNum = ((int) Math.random() * 3);
+			randomNum = ((int) (Rng.next() * 3));
 			if (randomNum == 0) {
 				foe.freeze(false, this);
 			} else if (randomNum == 1 && first) {
@@ -5695,7 +5707,7 @@ public class Pokemon implements Serializable {
 		case INFESTATION:
 			if (!foe.hasStatus(Status.SPUN) && foe.spunCount == 0 && !foe.isFainted()) {
 				foe.addStatus(Status.SPUN, this.getItem(field) == Item.BINDING_BAND ? 6 : 8, move);
-				foe.spunCount = (((int) (Math.random() * 2)) + 4);
+				foe.spunCount = (((int) (Rng.next() * 2)) + 4);
 				if (this.getItem(field) == Item.GRIP_CLAW) foe.spunCount = 7;
 				Task.addTask(Task.TEXT, foe.nickname + " was infested by " + this.nickname + "!");
 			}
@@ -5728,7 +5740,7 @@ public class Pokemon implements Serializable {
 				foe.ability = Ability.NULL;
 				Task.addTask(Task.TEXT, foe.nickname + "'s Ability was suppressed!");	
 			}
-			double chance = (int) (Math.random()*100 + 1);
+			double chance = (int) (Rng.next()*100 + 1);
 			if (chance <= 30) {
 				foe.burn(false, this);
 			}
@@ -5754,7 +5766,7 @@ public class Pokemon implements Serializable {
 			stat(foe, 0, -2, this);
 			break;
 		case MAGICAL_CRASH:
-			randomNum = new Random().nextInt(5);
+			randomNum = Rng.asRandom().nextInt(5);
 			switch (randomNum) {
 			case 0:
 				foe.burn(false, this);
@@ -5766,7 +5778,7 @@ public class Pokemon implements Serializable {
 				foe.paralyze(false, this);
 				break;
 			case 3:
-				boolean result = new Random().nextBoolean();
+				boolean result = Rng.asRandom().nextBoolean();
 				if (result) {
 					foe.poison(false, this);
 				} else {
@@ -5800,7 +5812,7 @@ public class Pokemon implements Serializable {
 			}
 			break;
 		case MANA_PUNCH:
-			randomNum = new Random().nextInt(8);
+			randomNum = Rng.asRandom().nextInt(8);
 			if (randomNum < 7) {
 				stat(this, randomNum, 1, foe);
 			} else {
@@ -6039,7 +6051,7 @@ public class Pokemon implements Serializable {
 			foe.paralyze(false, this);
 			break;
 		case THUNDER_FANG:
-			randomNum = ((int) Math.random() * 3);
+			randomNum = ((int) (Rng.next() * 3));
 			if (randomNum == 0) {
 				foe.paralyze(false, this);
 			} else if (randomNum == 1 && first) {
@@ -6056,7 +6068,7 @@ public class Pokemon implements Serializable {
 			foe.paralyze(false, this);
 			break;
 		case TRI$ATTACK:
-			randomNum = ((int) Math.random() * 3);
+			randomNum = ((int) (Rng.next() * 3));
 			if (randomNum == 0) {
 				foe.burn(false, this);
 			} else if (randomNum == 1) {
@@ -6085,7 +6097,7 @@ public class Pokemon implements Serializable {
 			foe.paralyze(false, this);
 			break;
 		case VENOSTEEL_CROSSCUT:
-			random = new Random();
+			random = Rng.asRandom();
 			boolean bool = random.nextBoolean();
 			if (bool) {
 				foe.paralyze(false, this);
@@ -6157,7 +6169,7 @@ public class Pokemon implements Serializable {
 
 	private boolean checkSecondary(int secondary) {
 		if (this.script) return secondary > 50;
-		return (int)(Math.random() * 100 + 1) <= secondary;
+		return (int)(Rng.next() * 100 + 1) <= secondary;
 	}
 	
 	private void statusEffect(Pokemon foe, Move move, Field field) {
@@ -6198,12 +6210,12 @@ public class Pokemon implements Serializable {
 			if (this.hasMaxedStatStages(true)) {
 				fail = fail();
 			} else {
-				Random random = new Random();
+				Random random = Rng.asRandom();
 				int stat;
 				do {
 					stat = random.nextInt(7);
 				} while(this.statStages[stat] >= 6);
-				stat(this, new Random().nextInt(7), 2, foe);
+				stat(this, Rng.asRandom().nextInt(7), 2, foe);
 			}
 			break;
 		case AGILITY:
@@ -7064,7 +7076,7 @@ public class Pokemon implements Serializable {
 		case SPELLBIND:
 			if (!foe.hasStatus(Status.SPELLBIND) && foe.spunCount == 0 && !foe.isFainted()) {
 				foe.addStatus(Status.SPELLBIND, this.getItem(field) == Item.BINDING_BAND ? -2 : -1);
-				foe.spunCount = (((int) (Math.random() * 2)) + 4);
+				foe.spunCount = (((int) (Rng.next() * 2)) + 4);
 				if (this.getItem(field) == Item.GRIP_CLAW) foe.spunCount = 7;
 				Task.addTask(Task.TEXT, foe.nickname + " was spellbound by " + this.nickname + "!");
 			} else {
@@ -7579,14 +7591,14 @@ public class Pokemon implements Serializable {
 		if (this.script) {
 			return acc >= 50;
 		}
-		double roll = Math.random() * 100.0;
+		double roll = Rng.next() * 100.0;
 		return roll < acc;
 	}
 
 	private boolean critCheck(int m) {
 		if (m < 0) return false;
 		if (this.script && m < 3) return false;
-		int critChance = (int)(Math.random()*100);
+		int critChance = (int)(Rng.next()*100);
 		int baseCrit;
 		if (m == 1) {
 			baseCrit = 13;
@@ -7935,9 +7947,9 @@ public class Pokemon implements Serializable {
 		
 		foe.awardExp(getxpReward());
 		if (!this.cloned) field.knockouts++;
-		if (foe != null && foe.playerOwned()) {
+		if (!this.cloned && foe != null && foe.playerOwned()) {
 			foe.getPlayer().recordKill(foe, this);
-		} else if (this.playerOwned()) {
+		} else if (!this.cloned && this.playerOwned()) {
 			this.getPlayer().recordDeath(this, foe);
 		}
 	}
@@ -8008,7 +8020,7 @@ public class Pokemon implements Serializable {
 		double damageDouble = Math.floor(num * bp * stat);
 		damageDouble += 2;
 		
-		Random roll = new Random();
+		Random roll = Rng.asRandom();
 		double rollAmt = roll.nextInt(16);
 		rollAmt += 85;
 		rollAmt /= 100;
@@ -8429,7 +8441,7 @@ public class Pokemon implements Serializable {
 		
 		// Crit Check
 		critChance += this.getStatusNum(Status.CRIT_CHANCE);
-		if (this.getAbility(field) == Ability.MERCILESS && (foe.status == Status.POISONED || foe.status == Status.TOXIC)) critChance = 3;
+		if (this.getAbility(field) == Ability.MERCILESS && (foe.status == Status.POISONED || foe.status == Status.TOXIC || foe.status == Status.PARALYZED)) critChance = 3;
 		
 		if (foeAbility != Ability.BATTLE_ARMOR
 				&& foeAbility != Ability.SHELL_ARMOR
@@ -8637,7 +8649,7 @@ public class Pokemon implements Serializable {
 		if (mode == 0 && damage < foe.currentHP && move == Move.SWORD_OF_DAWN && this.getItem(field) != Item.POWER_HERB) bp *= 0.5;
 		
 		if ((move == Move.SELF$DESTRUCT || move == Move.EXPLOSION || move == Move.SUPERNOVA_EXPLOSION || move == Move.STEEL_BEAM) && mode == 0) {
-			Random rand = new Random();
+			Random rand = Rng.asRandom();
 			double hpPercent = this.currentHP * 1.0 / this.getStat(0);
 			
 			if ((this.trainer != null && !this.trainer.hasValidMembers(foe)) || rand.nextDouble() < (hpPercent - 0.1)) {
@@ -8649,7 +8661,7 @@ public class Pokemon implements Serializable {
 				if (field.contains(foe.getFieldEffects(), Effect.FUTURE_SIGHT)) {
 					return new Pair<>(-1, 0.0);
 				} else {
-					return new Random().nextInt(4) == 1 ? new Pair<>(0, 0.0) : new Pair<>(damage, damagePercent);
+					return Rng.asRandom().nextInt(4) == 1 ? new Pair<>(0, 0.0) : new Pair<>(damage, damagePercent);
 				}
 			}
 		}
@@ -8662,8 +8674,7 @@ public class Pokemon implements Serializable {
 		int[] userStages = this.statStages.clone();
 		
 		if (this.getAbility(field) == Ability.SHED_SKIN && this.status != Status.HEALTHY) {
-			boolean r = (int)(Math.random()) % 2 == 0;
-			if (r) {
+			if (Rng.chance(0.5)) {
 				Task.addAbilityTask(this);
 				this.status = Status.HEALTHY;
 				this.toxic = 0;
@@ -8739,8 +8750,9 @@ public class Pokemon implements Serializable {
 			int hp = (int) getHPAmount(1.0/8);
 			if (hp >= this.currentHP) hp = this.currentHP;
 			int damage = this.damage(hp, f, f.nickname + " sucked health from " + this.nickname + "!");
-			if (f.getItem(field) == Item.BIG_ROOT) hp *= 1.3;
-			f.heal(damage, "");
+			double healAmt = damage; // B12: Big Root scales the heal, not the (already dealt) damage
+			if (f.getItem(field) == Item.BIG_ROOT) healAmt *= 1.3;
+			f.heal(healAmt, "");
 			if (this.currentHP <= 0) {
 				this.faint(true, f);
 				return;
@@ -8940,7 +8952,7 @@ public class Pokemon implements Serializable {
 			Task.addAbilityTask(this);
 			boolean ignoreRaise = this.hasMaxedStatStages(false);
 			
-			Random random = new Random();
+			Random random = Rng.asRandom();
 			int raise = 0;
 			if (!ignoreRaise) {
 				do {
@@ -9039,7 +9051,7 @@ public class Pokemon implements Serializable {
 		
 		Pokemon faster = speed1 > speed2 ? this : other;
 		if (speed1 == speed2) {
-			Random random = new Random();
+			Random random = Rng.asRandom();
 			boolean isHeads = random.nextBoolean();
 			faster = isHeads ? this : other;
 		}
@@ -9075,7 +9087,7 @@ public class Pokemon implements Serializable {
 		}
 		if (!this.hasStatus(Status.CONFUSED)) {
 			this.addStatus(Status.CONFUSED);
-			this.confusionCounter = (int)(Math.random() * 4) + 1;
+			this.confusionCounter = (int)(Rng.next() * 4) + 1;
 			Task.addAbilityTask(ability);
 			Task.addTask(Task.TEXT, this.nickname + " became confused!");
 			if (this.getAbility(field) == Ability.SYNCHRONIZE && this != foe && foe != null) {
@@ -9145,7 +9157,7 @@ public class Pokemon implements Serializable {
 	}
 	
 	public void setSleepCounter() {
-		this.sleepCounter = (int)(Math.random() * 3) + 1;
+		this.sleepCounter = (int)(Rng.next() * 3) + 1;
 		if (this.script) this.sleepCounter = 1;
 	}
 
@@ -9467,7 +9479,7 @@ public class Pokemon implements Serializable {
 			}
 			break;
 		case MAGNITUDE:
-			int mag = (int) (Math.random()*100 + 1);
+			int mag = (int) (Rng.next()*100 + 1);
 			if (mag <= 5) {
 				bp = 10;
 				if (announce) Task.addTask(Task.TEXT, "Magnitude 4!");
@@ -10385,7 +10397,7 @@ public class Pokemon implements Serializable {
 				move != Move.THIEF && move != Move.COVET) || thisAbility == Ability.STICKY_HOLD) this.checkBerry(foe);
 		
 		int amount = start - Math.max(0, this.currentHP);
-		if (this.playerOwned()) {
+		if (this.playerOwned() && !this.cloned) {
 			double percent = amount * 100.0 / this.getStat(0);
 			this.getPlayer().recordDamageTaken(this, percent);
 		}
@@ -10446,7 +10458,7 @@ public class Pokemon implements Serializable {
 				if (consume) this.consumeItem(foe);
 			} else if (berry == Item.STARF_BERRY) {
 				Task.addTask(Task.TEXT, this.nickname + " ate its " + berry.toString() + "!");
-				stat(this, new Random().nextInt(7), 2, foe);
+				stat(this, Rng.asRandom().nextInt(7), 2, foe);
 				if (consume) this.consumeItem(foe);
 			} else if (berry == Item.MICLE_BERRY) {
 				Task.addTask(Task.TEXT, this.nickname + " ate its " + berry.toString() + "!");
@@ -11370,7 +11382,7 @@ public class Pokemon implements Serializable {
 	public int checkQuickClaw(int priority) {
 		int result = priority;
 		if (item == Item.QUICK_CLAW) {
-			Random rand = new Random();
+			Random rand = Rng.asRandom();
 			int num = rand.nextInt(10);
 			if (num < 2) {
 				result++;
@@ -11409,7 +11421,7 @@ public class Pokemon implements Serializable {
 	}
 	
 	public boolean getCapture(Pokemon foe, Entry ball, char encType) {
-		Random rand = new Random();
+		Random rand = Rng.asRandom();
 		this.getPlayer().bag.remove(ball.getItem());
 		
 		gp.battleUI.setupBalls();
@@ -12044,7 +12056,7 @@ public class Pokemon implements Serializable {
 
 	public void setStaticIVs(boolean notSet) {
 		long seed = generateSeed(this.id, this.level, this.moveset);
-		Random rand = notSet ? new Random() : new Random(seed);
+		Random rand = notSet ? Rng.asRandom() : new Random(seed);
 		for (int j = 0; j < 6; j++) { this.ivs[j] = rand.nextInt(32); }
 		if (id == 233 || id == 234) {
 			this.ivs[0] = 31;
@@ -12373,7 +12385,7 @@ public class Pokemon implements Serializable {
 	}
 	
 	public static Pokemon generateCompetitivePokemon() {
-		Random rand = new Random();
+		Random rand = Rng.asRandom();
 		int id;
 		boolean sprite = false;
 		do {
@@ -12398,7 +12410,7 @@ public class Pokemon implements Serializable {
 	}
 
 	public static Pokemon generateCompetitivePokemon(ArrayList<Pokemon> team) {
-		Random rand = new Random();
+		Random rand = Rng.asRandom();
 		int id = 0;
 		do {
 			id = compIDs.get(rand.nextInt(compIDs.size()));
@@ -12823,7 +12835,7 @@ public class Pokemon implements Serializable {
 				int dividend = Math.min(damage, this.currentHP);
 				if (sturdy) dividend--;
 				double percent = dividend * 100.0 / this.getStat(0); // change dividend to damage
-				if (foe.playerOwned()) {
+				if (foe.playerOwned() && !foe.cloned) {
 					foe.getPlayer().recordDamageDealt(foe, percent);
 				}
 				String formattedPercent = String.format("%.1f", percent);
