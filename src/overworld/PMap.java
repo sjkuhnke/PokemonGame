@@ -516,10 +516,10 @@ public class PMap extends JPanel {
 		if (!gp.player.p.flag[1][2]) return;
 		boolean canFly = gp.canFly();
 		if (!canFly) {
-			JOptionPane.showMessageDialog(null, "A weird energy is rendering the teleporter obsolete here!");
+			JOptionPane.showMessageDialog(this, "A weird energy is rendering the teleporter obsolete here!");
 			return;
 		}
-		int answer = JOptionPane.showOptionDialog(null,
+		int answer = JOptionPane.showOptionDialog(this,
 				"Would you like to warp to " + loc + "?",
 	            "Fly?",
 	            JOptionPane.YES_NO_OPTION,
