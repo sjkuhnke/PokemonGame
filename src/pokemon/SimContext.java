@@ -22,8 +22,27 @@ import util.Rng;
 public final class SimContext {
 	private static int depth;
 	private static SimPolicy policy = SimPolicy.DEFAULT;
+	private static Integer forcedSwitchIndex;
 
 	private SimContext() {}
+	
+	/**
+	 * Phase 2 (spec 7.7): steer Trainer.swapRandom's next pick to this team index instead of
+	 * drawing from Rng. Used to fan a random-target move (Whirlwind, Roar, Dragon Tail, Circle
+	 * Throw, Red Card) out into one branch per eligible candidate. Consumed (cleared) by the
+	 * first swapRandom call that runs after this is set, whether or not it ends up using it.
+	 * Game thread only.
+	 */
+	public static void forceNextSwitch(int teamIndex) {
+		forcedSwitchIndex = teamIndex;
+	}
+
+	/** Consumes and returns the forced index, or null if none is set. */
+	static Integer consumeForcedSwitch() {
+		Integer i = forcedSwitchIndex;
+		forcedSwitchIndex = null;
+		return i;
+	}
 
 	public static boolean active() {
 		return depth > 0;
@@ -50,8 +69,7 @@ public final class SimContext {
 		policy = p;
 		return s;
 	}
-
-	@SuppressWarnings("try")
+	
 	public static void run(SimPolicy p, Runnable r) {
 		try (Scope s = enter(p)) {
 			r.run();

@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Map;
 import java.util.Random;
 
@@ -194,34 +196,38 @@ public class Trainer implements Serializable {
 	}
 	
 	/**
-	 * KNOWN RISK (B10): when called from AI analysis, Pokemon.clone.trainer still points at the REAL
-	 * Trainer, so the oldCloned shortcut below mutates the real trainer's current. Fixed in Phase 2
-	 * (trainer shells, then delete the oldCloned branch). Until then, don't call this from new sim code.
+	 * B10 fixed (§7.2): trainer shells give simulated callers their own team[]/current to
+	 * mutate, so the old "don't really swap, just repoint current" shortcut for cloned
+	 * Pokemon is gone. Phase 2 (§7.7): under a SimContext scope, SimContext.forceNextSwitch
+	 * can steer the pick instead of drawing — this is how the simulator explores every
+	 * candidate of a Whirlwind/Roar/Dragon Tail/Circle Throw/Red Card instead of getting
+	 * one arbitrary outcome from the isolated stream.
 	 */
 	public boolean swapRandom(Pokemon foe) {
 		if (!hasValidMembers(foe)) return false;
-		Random rand = Rng.asRandom();
-		boolean oldCloned = current.cloned;
-		int index = rand.nextInt(team.length);
-		while (team[index] == null || team[index].isFainted() || team[index] == current) {
+
+		Integer forced = SimContext.active() ? SimContext.consumeForcedSwitch() : null;
+		int index;
+		if (forced != null) {
+			index = forced;
+		} else {
+			Random rand = Rng.asRandom();
 			index = rand.nextInt(team.length);
+			while (team[index] == null || team[index].isFainted() || team[index] == current) {
+				index = rand.nextInt(team.length);
+			}
 		}
-		if (oldCloned) { // for AI seeing if Whirlwind/Roar work
-			this.current = team[index];
-			return true;
-		}
-		
+
 		Pokemon user = Pokemon.gp != null ? Pokemon.gp.gameState == GamePanel.BATTLE_STATE ? Pokemon.gp.battleUI.user :
 			Pokemon.gp.gameState == GamePanel.SIM_BATTLE_STATE ? Pokemon.gp.simBattleUI.user : null : null;
 		boolean hasUser = this.hasUser(user);
-		
+
 		swap(current, team[index], hasUser, foe);
 		foe.removeStatus(Status.TRAPPED);
 		foe.removeStatus(Status.SPUN);
 		foe.removeStatus(Status.SPELLBIND);
 		current.swapIn(foe, true);
 		return true;
-		
 	}
 	
 	public boolean hasValidMembers(Pokemon foe) {
@@ -506,7 +512,7 @@ public class Trainer implements Serializable {
 		result.catchable = this.catchable;
 		result.effects = DeepClonable.deepCloneList(this.effects);
 		result.cloned = true;
-		result.boosts = this.boosts.clone();
+		if (this.boosts != null) result.boosts = this.boosts.clone();
 		
 		return result;
 	}
@@ -760,6 +766,54 @@ public class Trainer implements Serializable {
 		}
 		
 		return best != null ? best : current;
+	}
+	
+	/**
+	 * Full trainer shell for SimState.snapshot (§7.2): every team slot gets an
+	 * independent Pokemon clone re-pointed at a fresh shell Trainer. Real team[],
+	 * current, and effects are never touched.
+	 */
+	public Trainer simShell() {
+		Set<Integer> all = new HashSet<>();
+		for (int i = 0; i < team.length; i++) all.add(i);
+		return simShell(all);
+	}
+
+	/**
+	 * Copy-on-write trainer shell for SimState.fork (§7.2). Slots in touchedSlots,
+	 * plus the currently active slot (always), get an independent Pokemon clone
+	 * re-pointed at a NEW shell Trainer. Every other slot keeps the SAME Pokemon
+	 * reference as this trainer's team — shared and read-only for the caller's cell
+	 * (enforced only by convention/T3, not by the type system).
+	 *
+	 * this.team, this.current, and this.effects are never mutated by this call, on
+	 * either this trainer or the shell it was itself built from.
+	 */
+	public Trainer simShell(Set<Integer> touchedSlots) {
+		Pokemon[] newTeam = new Pokemon[this.team.length];
+		int activeIdx = this.indexOf(this.current);
+
+		Trainer shell = new Trainer(this.name, newTeam, this.money, this.item, this.flagIndex, false);
+		shell.cloned = true;
+		if (shell.boosts != null) shell.boosts = this.boosts.clone();
+		if (this.effects == null) this.effects = new ArrayList<>();
+		shell.effects = DeepClonable.deepCloneList(this.effects);
+
+		for (int i = 0; i < this.team.length; i++) {
+			if (this.team[i] == null) continue;
+			boolean touch = touchedSlots.contains(i) || i == activeIdx;
+			if (touch) {
+				Pokemon c = this.team[i].clone();
+				c.vStatuses = DeepClonable.deepCloneList(this.team[i].vStatuses);
+				c.cloned = true;
+				c.trainer = shell;
+				newTeam[i] = c;
+			} else {
+				newTeam[i] = this.team[i];
+			}
+		}
+		shell.setCurrent(activeIdx >= 0 ? newTeam[activeIdx] : null);
+		return shell;
 	}
 
 	public boolean isGymOrE4() {

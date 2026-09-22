@@ -33,7 +33,23 @@ public class PlayerCharacter extends Entity {
 
 	private int cooldown;
 	public boolean isRunning;
-	public BufferedImage surf1, surf2, surf3, surf4, fight;
+	
+	private PlayerSpriteSet normalSprites;
+	private PlayerSpriteSet visorSprites;
+	private PlayerSpriteSet currentSprites;
+	public BufferedImage fight;
+
+	public class PlayerSpriteSet {
+		public final BufferedImage[] walk;
+		public final BufferedImage[] surf;
+		public final BufferedImage[] lava;
+		
+		public PlayerSpriteSet(BufferedImage[] walk, BufferedImage[] surf, BufferedImage[] lava) {
+			this.walk = walk;
+			this.surf = surf;
+			this.lava = lava;
+		}
+	}
 	
 	public static String currentMapName;
 	private int SPEED_1 = gp.tileSize / 12;
@@ -64,12 +80,9 @@ public class PlayerCharacter extends Entity {
 		direction = "down";
 	}
 	public void getPlayerImage() {
-		setupPlayerImages(false);
-		
-		surf1 = setup("/player/surf1");
-		surf2 = setup("/player/surf2");
-		surf3 = setup("/player/surf3");
-		surf4 = setup("/player/surf4");
+		normalSprites = loadPlayerSprites(false);
+		visorSprites = loadPlayerSprites(true);
+		currentSprites = normalSprites;
 		fight = setup("/player/fight");
 	}
 	
@@ -345,8 +358,14 @@ public class PlayerCharacter extends Entity {
 		if (keyH.calcPressed) {
 			keyH.calcPressed = false;
 			//Item.useCalc(p.getCurrent(), null, null, true); TODO: for testing
-			Phase0Tests.runAll();
-			Phase1Tests.runAll();
+			Pokemon aiMon = Trainer.trainers[536].current;
+			Pokemon playerMon = p.current;
+			
+			List<Action> aiActions = Phase2Tests.buildActions(aiMon);
+			List<Action> playerActions = Phase2Tests.buildActions(playerMon);
+			
+			Phase2Tests.runSmokeTest(aiMon, playerMon, 1000);
+			Phase2Tests.runInvarianceCheck(aiMon, playerMon, aiActions, playerActions, 1000);
 		}
 		
 		checkHotkeys();
@@ -1099,46 +1118,45 @@ public class PlayerCharacter extends Entity {
 	}
 
 	public void draw(Graphics2D g2) {
-		BufferedImage image = null;
+		BufferedImage image = getCurrentSprite();
 		
-		switch(direction) {
-		case "up":
-			if (spriteNum == 1) image = up1;
-			if (spriteNum == 2) image = up2;
-			if (spriteNum == 3) image = up3;
-			if (spriteNum == 4) image = up4;
-			if (p.surf || p.lavasurf) image = surf2;
-			break;
-		case "down":
-			if (spriteNum == 1) image = down1;
-			if (spriteNum == 2) image = down2;
-			if (spriteNum == 3) image = down3;
-			if (spriteNum == 4) image = down4;
-			if (p.surf || p.lavasurf) image = surf1;
-			break;
-		case "left":
-			if (spriteNum == 1) image = left1;
-			if (spriteNum == 2) image = left2;
-			if (spriteNum == 3) image = left3;
-			if (spriteNum == 4) image = left4;
-			if (p.surf || p.lavasurf) image = surf3;
-			break;
-		case "right":
-			if (spriteNum == 1) image = right1;
-			if (spriteNum == 2) image = right2;
-			if (spriteNum == 3) image = right3;
-			if (spriteNum == 4) image = right4;
-			if (p.surf || p.lavasurf) image = surf4;
-			break;
-		}
-		
+		int width = image.getWidth() * gp.scale;
+		int wOffset = (width - gp.tileSize) / 2;
 		int height = image.getHeight() * gp.scale;
-		int offset = height - gp.tileSize;
-		int drawX = screenX + gp.offsetX;
-		int drawY = screenY - offset + gp.offsetY;
+		int hOffset = height - gp.tileSize;
+		int drawX = screenX - wOffset;
+		int drawY = screenY - hOffset;
 		
 		drawReflection(g2, image, drawX, drawY, gp.tileSize, height);
-		g2.drawImage(image, drawX, drawY, gp.tileSize, height, null);
+		g2.drawImage(image, drawX, drawY, width, height, null);
+	}
+	
+	private int getDirectionIndex() {
+		switch(direction) {
+		case "down":
+			return 0;
+		case "up":
+			return 1;
+		case "left":
+			return 2;
+		case "right":
+			return 3;
+		default:
+			return 0;
+		}
+	}
+	
+	private BufferedImage getCurrentSprite() {
+		int directionIndex = getDirectionIndex();
+		if (p.surf) {
+			int frame = (spriteNum - 1) / 2;
+			return currentSprites.surf[directionIndex * 2 + frame];
+		}
+		if (p.lavasurf) {
+			int frame = (spriteNum - 1) / 2;
+			return currentSprites.lava[directionIndex * 2 + frame];
+		}
+		return currentSprites.walk[directionIndex * 4 + (spriteNum - 1)];
 	}
 	
 	public Item[] getItems() {
@@ -1370,41 +1388,33 @@ public class PlayerCharacter extends Entity {
 	}
 
 	public void setupPlayerImages(boolean visor) {
-		if (visor) {
-			up1 = setup("/player/redV2");
-			up2 = setup("/player/redV2_1");
-			up3 = setup("/player/redV2_2");
-			up4 = setup("/player/redV2_3");
-			down1 = setup("/player/redV1");
-			down2 = setup("/player/redV1_1");
-			down3 = setup("/player/redV1_2");
-			down4 = setup("/player/redV1_3");
-			left1 = setup("/player/redV3");
-			left2 = setup("/player/redV3_1");
-			left3 = setup("/player/redV3_2");
-			left4 = setup("/player/redV3_3");
-			right1 = setup("/player/redV4");
-			right2 = setup("/player/redV4_1");
-			right3 = setup("/player/redV4_2");
-			right4 = setup("/player/redV4_3");
-		} else {
-			up1 = setup("/player/red2");
-			up2 = setup("/player/red2_1");
-			up3 = setup("/player/red2_2");
-			up4 = setup("/player/red2_3");
-			down1 = setup("/player/red1");
-			down2 = setup("/player/red1_1");
-			down3 = setup("/player/red1_2");
-			down4 = setup("/player/red1_3");
-			left1 = setup("/player/red3");
-			left2 = setup("/player/red3_1");
-			left3 = setup("/player/red3_2");
-			left4 = setup("/player/red3_3");
-			right1 = setup("/player/red4");
-			right2 = setup("/player/red4_1");
-			right3 = setup("/player/red4_2");
-			right4 = setup("/player/red4_3");
+		currentSprites = visor ? visorSprites : normalSprites;
+	}
+	
+	private PlayerSpriteSet loadPlayerSprites(boolean visor) {
+		String v = visor ? "V" : "";
+		BufferedImage[] walk = new BufferedImage[16];
+		BufferedImage[] surf = new BufferedImage[8];
+		BufferedImage[] lava = new BufferedImage[8];
+		
+		for (int d = 1; d <= 4; d++) {
+			int offset = (d - 1) * 4;
+			String base = "/player/red" + v + d;
+			walk[offset] = setup(base);
+			walk[offset + 1] = setup(base + "_1");
+			walk[offset + 2] = setup(base + "_2");
+			walk[offset + 3] = setup(base + "_3");
 		}
+		for (int d = 1; d <= 4; d++) {
+			int offset = (d - 1) * 2;
+			String surfBase = "/player/surf" + v + d;
+			String lavaBase = "/player/lava" + v + d;
+			surf[offset] = setup(surfBase);
+			surf[offset + 1] = setup(surfBase + "_1");
+			lava[offset] = setup(lavaBase);
+			lava[offset + 1] = setup(lavaBase + "_1");
+		}
+		return new PlayerSpriteSet(walk, surf, lava);
 	}
 
 	public static String getMetAt() {
