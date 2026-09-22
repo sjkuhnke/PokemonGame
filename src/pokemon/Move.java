@@ -18,6 +18,7 @@ import javax.swing.*;
 import pokemon.Field.Effect;
 import util.JGradientButton;
 import util.Pair;
+import util.Rng;
 
 public enum Move {
 	ABDUCT(0,100,0,0,2,0,PType.GALACTIC,"Abducts the foe and forces their next move to be used on themselves. Can be used once every other turn, and not on the first turn out.",false,5),
@@ -950,32 +951,16 @@ public enum Move {
 		
 		return result;
 	}
-	public int getNumHits(Pokemon user, Pokemon[] team) {
+	
+	public double[] hitProbabilities(Pokemon user, Pokemon[] team) {
 		if (this == Move.DOUBLE_SLAP || this == Move.FURY_ATTACK ||this == Move.FURY_SWIPES || this == Move.ICICLE_SPEAR ||
 				this == Move.PIN_MISSILE || this == Move.ROCK_BLAST|| this == Move.SCALE_SHOT || this == Move.SPIKE_CANNON ||
 				this == Move.SHOOTING_STARS || this == Move.BULLET_SEED || this == Move.FLASH_DARTS || this == Move.MAGIC_MISSILES) {
-			if (user.getAbility(Pokemon.field) == Ability.SKILL_LINK) return 5;
-			int randomNum = (int) (Math.random() * 100) + 1; // Generate a random number between 1 and 100 (inclusive)
-			if (user.getItem(Pokemon.field) == Item.LOADED_DICE) {
-				if (randomNum <= 50) {
-					return 4;
-				} else {
-					return 5;
-				}
-			} else {
-				if (randomNum <= 35) {
-					return 2; // 2 hits with 35% probability
-				} else if (randomNum <= 70) {
-					return 3; // 3 hits with 35% probability
-				} else if (randomNum <= 85) {
-					return 4; // 4 hits with 15% probability
-				} else {
-					return 5; // 5 hits with 15% probability
-				}
-			}
-			
+			if (user.getAbility(Pokemon.field) == Ability.SKILL_LINK) return new double[] { 0, 0, 0, 0, 0, 1.0 };
+			if (user.getItem(Pokemon.field) == Item.LOADED_DICE) return new double[] { 0, 0, 0, 0, 0.5, 0.5 };
+			return new double[] { 0, 0, 0.35, 0.35, 0.15, 0.15 };
 		} else if (this == Move.DOUBLE_KICK || this == Move.DRAGON_DARTS || this == Move.DUAL_CHOP || this == Move.DOUBLE_HIT || this == Move.TWINEEDLE || this == Move.POP_POP) {
-			return 2;
+			return new double[] { 0, 0, 1.0 };
 		} else if (this == Move.BEAT_UP) {
 			int result = 0;
 			if (team == null) {
@@ -987,11 +972,47 @@ public enum Move {
 					result++;
 				}
 			}
-			return result;
+			double[] p = new double[result + 1];
+			p[result] = 1.0;
+			return p;
 		} else {
-			return 1;
+			return new double[] { 0, 1.0 };
 		}
 	}
+	
+	public double expectedHits(Pokemon user, Pokemon[] team) {
+		double[] p = hitProbabilities(user, team);
+		double e = 0;
+		for (int n = 0; n < p.length; n++) {
+			e += n * p[n];
+		}
+		return e;
+	}
+	
+	/**
+	* Hits landed by one use. Fixed distributions return without drawing; the 2 to 5 hit moves draw once from {@code Rng}
+	* (was {@code Math.random()}, which no seed could reproduce). Under a simulation scope: the expected count, no draw.
+	*/
+	public int getNumHits(Pokemon user, Pokemon[] team) {
+		double[] p = hitProbabilities(user, team);
+		int only = -1, spread = 0;
+		for (int n = 0; n < p.length; n++) {
+			if (p[n] > 0) {
+				spread++;
+				only = n;
+			}
+		}
+		if (spread == 1) return only;
+		if (SimContext.active()) return SimContext.policy().multiHitCount(expectedHits(user, team));
+		int randomNum = (int) (Rng.next() * 100) + 1; // 1 to 100 inclusive
+		double cumulative = 0;
+		for (int n = 0; n < p.length; n++) {
+			cumulative += p[n] * 100;
+			if (p[n] > 0 && randomNum <= Math.round(cumulative)) return n;
+		}
+		return only;
+	}
+	
 	public ImageIcon getScaledIcon(double scale) {
 		ImageIcon originalSprite = new ImageIcon(getCategoryIcon());
 		Image originalImage = originalSprite.getImage();

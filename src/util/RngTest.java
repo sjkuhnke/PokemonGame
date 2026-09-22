@@ -53,6 +53,24 @@ public final class RngTest {
 		Rng.setSeed(2);
 		check("setSeed() sets the seeded flag and records the seed", Rng.isSeeded() && Rng.getSeed() == 2);
 
+		Rng.setSeed(50);
+		double real1 = Rng.next();
+		Rng.setSeed(50);
+		Rng.pushIsolated(9);
+		double isoA = Rng.next();
+		Rng.next();
+		Rng.asRandom().nextInt(5);
+		long accesses = Rng.isolatedAccesses();
+		boolean flagged = Rng.isIsolated();
+		Rng.popIsolated();
+		double real2 = Rng.next();
+		check("isolated draws leave the real stream untouched", real1 == real2);
+		check("isolated stream is flagged and counted (3 accesses)", flagged && !Rng.isIsolated() && accesses == 3);
+		Rng.pushIsolated(9);
+		double isoB = Rng.next();
+		Rng.popIsolated();
+		check("same isolated seed replays the same draw", isoA == isoB);
+
 		System.out.println(failed == 0 ? "ALL PASS" : failed + " FAILED");
 		if (failed != 0) System.exit(1);
 	}

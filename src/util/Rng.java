@@ -17,6 +17,11 @@ public final class Rng {
 	private static volatile long seed;
 	private static volatile boolean seeded;
 
+	// Isolated stream for simulations (Phase 1). Non-null while a SimContext scope is open.
+	private static final Random ISO = new Random();
+	private static Random current = RND;
+	private static long isolatedAccesses;
+
 	private Rng() {}
 
 	/** Reseeds the shared stream; the same seed always replays the same sequence. */
@@ -41,9 +46,37 @@ public final class Rng {
 		return seed;
 	}
 
+	/**
+	 * Diverts every draw to a separate stream seeded with {@code s} until {@link #popIsolated()}. The real stream is not
+	 * touched, so simulating does not change what the real battle rolls. Called by {@code SimContext}; not nested.
+	 */
+	public static void pushIsolated(long s) {
+		ISO.setSeed(s);
+		isolatedAccesses = 0;
+		current = ISO;
+	}
+
+	public static void popIsolated() {
+		current = RND;
+	}
+
+	public static boolean isIsolated() {
+		return current != RND;
+	}
+
+	/** Number of draws (and {@link #asRandom()} hand-outs) served by the isolated stream since it was pushed. */
+	public static long isolatedAccesses() {
+		return isolatedAccesses;
+	}
+
+	private static Random cur() {
+		if (current != RND) isolatedAccesses++;
+		return current;
+	}
+
 	/** Uniform double in [0, 1). Drop-in for {@code Math.random()}. */
 	public static double next() {
-		return RND.nextDouble();
+		return cur().nextDouble();
 	}
 
 	/** True with probability p (p <= 0 never, p >= 1 always). */
@@ -53,19 +86,23 @@ public final class Rng {
 
 	/** Uniform int in [0, n). */
 	public static int nextInt(int n) {
-		return RND.nextInt(n);
+		return cur().nextInt(n);
 	}
 
 	public static boolean nextBoolean() {
-		return RND.nextBoolean();
+		return cur().nextBoolean();
 	}
 
 	public static double nextGaussian() {
-		return RND.nextGaussian();
+		return cur().nextGaussian();
 	}
 
-	/** The shared stream as a java.util.Random. Do not construct your own Random in battle code. */
+	/**
+	 * The shared stream as a java.util.Random. Do not construct your own Random in battle code.
+	 * While a simulation scope is open this is the isolated stream, so fetch it at the point of use; do not cache it
+	 * across a scope boundary.
+	 */
 	public static Random asRandom() {
-		return RND;
+		return cur();
 	}
 }

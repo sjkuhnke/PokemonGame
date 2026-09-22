@@ -345,7 +345,8 @@ public class PlayerCharacter extends Entity {
 		if (keyH.calcPressed) {
 			keyH.calcPressed = false;
 			//Item.useCalc(p.getCurrent(), null, null, true); TODO: for testing
-			SelfPlay.run(new SelfPlay.Config());
+			Phase0Tests.runAll();
+			Phase1Tests.runAll();
 		}
 		
 		checkHotkeys();

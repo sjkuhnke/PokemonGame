@@ -3084,7 +3084,7 @@ public class Pokemon implements Serializable {
 		boolean contact = move.contact;
 		boolean sheer = false;
 		
-		if (consumePP && this.playerOwned() && !this.cloned) {
+		if (consumePP && this.playerOwned() && this.recordsStats()) {
 			this.getPlayer().recordTurn(this);
 		}
 		
@@ -3655,7 +3655,7 @@ public class Pokemon implements Serializable {
 			ctx.shouldAnimate = false;
 			announceMove(move, foe, ctx);
 			Task.addTask(Task.TEXT, move.getMissString(this, foe));
-			field.misses++;
+			if (recordsStats()) field.misses++;
 			if (move == Move.HI_JUMP_KICK) {
 				this.damage(this.getStat(0) / 2.0, foe, this.nickname + " kept going and crashed!");
 				if (this.currentHP < 0) {
@@ -3706,7 +3706,7 @@ public class Pokemon implements Serializable {
 			if (move == Move.POP_POP) {
 				if (effectiveAccuracy <= 1.0 && (!hit(effectiveAccuracy * 100) || foe.hasStatus(Status.SEMI_INV))) {
 					Task.addTask(Task.TEXT, move.getMissString(this, foe));
-					field.misses++;
+					if (recordsStats()) field.misses++;
 					if (this.getItem(field) == Item.BLUNDER_POLICY) {
 						stat(this, 4, 2, foe);
 						this.consumeItem(foe);
@@ -4163,10 +4163,7 @@ public class Pokemon implements Serializable {
 			boolean critAnnounce = move != Move.FUTURE_SIGHT;
 			
 			// Crit Check
-			critChance += this.getStatusNum(Status.CRIT_CHANCE);
-			if (this.getAbility(field) == Ability.SUPER_LUCK) critChance++;
-			if (item == Item.SCOPE_LENS) critChance++;
-			if (this.getAbility(field) == Ability.MERCILESS && (foe.status == Status.POISONED || foe.status == Status.TOXIC || foe.status == Status.PARALYZED)) critChance = 3;
+			critChance = applyCritStage(critChance, foe, field);
 			
 			if (foeAbility != Ability.BATTLE_ARMOR
 					&& foeAbility != Ability.SHELL_ARMOR
@@ -4176,7 +4173,7 @@ public class Pokemon implements Serializable {
 				
 				isCrit = true;
 				if (critAnnounce) Task.addTask(Task.TEXT, "A critical hit!");
-				field.crits++;
+				if (recordsStats()) field.crits++;
 				if (foe.trainerOwned() && move == Move.HEADBUTT) headbuttCrit++;
 				if (foe.trainerOwned() && move.isTail()) tailCrit++;
 			}
@@ -4369,7 +4366,7 @@ public class Pokemon implements Serializable {
 			
 			if (multiplier > 1) {
 				Task.addTask(Task.TEXT, multiplier > 2 ? "It's extremely effective!" : "It's super effective!");
-				field.superEffective++;
+				if (recordsStats()) field.superEffective++;
 				if (foeAbility == Ability.SOLID_ROCK || foeAbility == Ability.FILTER) damage /= 2;
 				if (foeAbility == Ability.ANTICIPATION && foe.illusion) {
 					damage /= 2;
@@ -4490,7 +4487,7 @@ public class Pokemon implements Serializable {
 			int dividend = Math.min(damage, foe.currentHP);
 			if (sturdy) dividend--;
 			double percent = dividend * 100.0 / foe.getStat(0); // change dividend to damage
-			if (this.playerOwned() && !this.cloned) {
+			if (this.playerOwned() && this.recordsStats()) {
 				this.getPlayer().recordDamageDealt(this, percent);
 			}
 			String formattedPercent = String.format("%.1f", percent);
@@ -4859,7 +4856,7 @@ public class Pokemon implements Serializable {
 				
 				int consumed = before - m.currentPP;
 				
-				if (this.playerOwned() && !this.cloned) {
+				if (this.playerOwned() && this.recordsStats()) {
 					this.getPlayer().recordPPUse(this, move, consumed);
 				}
 				
@@ -4873,7 +4870,7 @@ public class Pokemon implements Serializable {
 	
 	private String announceMoveText(Move move, boolean announce) {
 		String msg = this.nickname + " used " + move.toString() + "!";
-		if (gp.gameState == GamePanel.SIM_BATTLE_STATE) msg = writeMoveChance(msg);
+		if (gp.gameState == GamePanel.SIM_BATTLE_STATE && !SimContext.active()) msg = writeMoveChance(msg);
 		if (announce) Task.addTask(Task.TEXT, msg);
 		return msg;
 	}
@@ -5097,10 +5094,18 @@ public class Pokemon implements Serializable {
 		return Math.min(1.0, accuracy);
 	}
 
+	/**
+	 * True when what this mon does is real: it is not an AI clone and no simulation scope is open. Gates everything that
+	 * reaches outside the battle: player recorders, pokedex and save-scum hooks, shared field counters, exp.
+	 */
+	private boolean recordsStats() {
+		return !this.cloned && !SimContext.active();
+	}
+	
 	public void awardExp(int amt) {
 		if (this.fainted) return;
 		if (!this.playerOwned()) return;
-		if (this.cloned) return;
+		if (!this.recordsStats()) return;
 		Player player = this.getPlayer();
 
 		player.handleExpShare();
@@ -6169,6 +6174,7 @@ public class Pokemon implements Serializable {
 
 	private boolean checkSecondary(int secondary) {
 		if (this.script) return secondary > 50;
+		if (SimContext.active()) return SimContext.policy().secondaryProcs(secondary);
 		return (int)(Rng.next() * 100 + 1) <= secondary;
 	}
 	
@@ -7012,7 +7018,7 @@ public class Pokemon implements Serializable {
 				setTypes();
 				t.types = new PType[] {this.type1, this.type2};
 				setAbility();
-				if (this.playerOwned()) this.getPlayer().pokedex[237] = 2;
+				if (this.playerOwned() && this.recordsStats()) this.getPlayer().pokedex[237] = 2;
 				this.swapIn(foe, false);
 			} else if (id == 237) {
 				stat(this, 0, 1, foe);
@@ -7591,6 +7597,7 @@ public class Pokemon implements Serializable {
 		if (this.script) {
 			return acc >= 50;
 		}
+		if (SimContext.active()) return SimContext.policy().accuracyHits(acc);
 		double roll = Rng.next() * 100.0;
 		return roll < acc;
 	}
@@ -7598,6 +7605,7 @@ public class Pokemon implements Serializable {
 	private boolean critCheck(int m) {
 		if (m < 0) return false;
 		if (this.script && m < 3) return false;
+		if (SimContext.active()) return m >= 3; // simulations never roll a crit; a guaranteed one still lands (chance-based crits live in DamageRange)
 		int critChance = (int)(Rng.next()*100);
 		int baseCrit;
 		if (m == 1) {
@@ -7923,7 +7931,7 @@ public class Pokemon implements Serializable {
 			setTypes();
 			t.types = new PType[] {this.type1, this.type2};
 			setAbility();
-			if (this.playerOwned()) this.getPlayer().pokedex[291] = 2;
+			if (this.playerOwned() && this.recordsStats()) this.getPlayer().pokedex[291] = 2;
 			this.statStages = new int[7];
 			foe.statStages = new int[7];
 			Task.addTask(Task.TEXT, "All stat changes were eliminated!");
@@ -7937,19 +7945,19 @@ public class Pokemon implements Serializable {
 		foe.removeStatus(Status.SPUN);
 		foe.removeStatus(Status.SPELLBIND);
 		foe.removeStatus(Status.TRAPPED);
-		if (this.trainer != null && this.playerOwned()) {
+		if (this.trainer != null && this.playerOwned() && this.recordsStats()) {
 			Player player = (Player) this.trainer;
 			player.setBattled(player.getBattled() - 1);
 		}
 		if (announce) Task.addTask(Task.FAINT, this.nickname + " fainted!", this);
 		
-		if (this.playerOwned() && this.getPlayer().nuzlocke) gp.saveScum(this.toString() + " died to " + foe.toString() + (foe.trainerOwned() ? " (" + foe.trainer.getName() + ")": "" + " (Save Scum)"));
+		if (this.playerOwned() && this.recordsStats() && this.getPlayer().nuzlocke) gp.saveScum(this.toString() + " died to " + foe.toString() + (foe.trainerOwned() ? " (" + foe.trainer.getName() + ")": "" + " (Save Scum)"));
 		
 		foe.awardExp(getxpReward());
-		if (!this.cloned) field.knockouts++;
-		if (!this.cloned && foe != null && foe.playerOwned()) {
+		if (this.recordsStats()) field.knockouts++;
+		if (this.recordsStats() && foe != null && foe.playerOwned()) {
 			foe.getPlayer().recordKill(foe, this);
-		} else if (!this.cloned && this.playerOwned()) {
+		} else if (this.recordsStats() && this.playerOwned()) {
 			this.getPlayer().recordDeath(this, foe);
 		}
 	}
@@ -8015,18 +8023,29 @@ public class Pokemon implements Serializable {
 	}
 	
 	public int calc(double attackStat, double defenseStat, double bp, int level, int mode) {
+		double rollAmt;
+		if (SimContext.active()) {
+			// Simulation: no draw. +-1 keep their meaning; anything else uses the policy roll (0.925 by default).
+			rollAmt = mode == -1 ? 0.85 : mode == 1 ? 1.0 : SimContext.policy().damageRoll;
+		} else {
+			// Legacy: the draw happens even for mode +-1, so the RNG stream is consumed exactly as before Phase 1.
+			Random roll = Rng.asRandom();
+			rollAmt = roll.nextInt(16);
+			rollAmt += 85;
+			rollAmt /= 100;
+			
+			if (mode == -1) rollAmt = 0.85;
+			if (mode == 1) rollAmt = 1.0;
+		}
+		return calcRoll(attackStat, defenseStat, bp, level, rollAmt);
+	}
+	
+	/** The damage formula at an exact roll multiplier. Never draws. {@code calc} and {@code computeDamage} both end here. */
+	public int calcRoll(double attackStat, double defenseStat, double bp, int level, double rollAmt) {
 		double num = 2* (double) level / 5 + 2;
 		double stat = attackStat / defenseStat / 50;
 		double damageDouble = Math.floor(num * bp * stat);
 		damageDouble += 2;
-		
-		Random roll = Rng.asRandom();
-		double rollAmt = roll.nextInt(16);
-		rollAmt += 85;
-		rollAmt /= 100;
-		
-		if (mode == -1) rollAmt = 0.85;
-		if (mode == 1) rollAmt = 1.0;
 		// Roll
 		damageDouble *= rollAmt;
 		// Convert to integer
@@ -8039,6 +8058,16 @@ public class Pokemon implements Serializable {
 	}
 	
 	public Pair<Integer, Double> calcWithTypes(Pokemon foe, Move move, boolean first, int mode, boolean crit, Field field, boolean checkAcc) {
+		DamageResult r = computeDamage(foe, move, first, field, DamageMode.legacy(mode, crit, checkAcc));
+		return new Pair<>(r.first, r.second);
+	}
+	
+	/**
+	 * The one damage implementation (spec 7.3). {@code calcWithTypes} (legacy sentinels) and {@code calcRange} (deterministic
+	 * ranges) both call it; {@code dm} says which rules apply. With a legacy mode it behaves exactly as calcWithTypes always did.
+	 */
+	DamageResult computeDamage(Pokemon foe, Move move, boolean first, Field field, DamageMode dm) {
+		final boolean engine = dm.engine;
 		double attackStat;
 		double defenseStat;
 		int damage = 0;
@@ -8051,7 +8080,7 @@ public class Pokemon implements Serializable {
 		boolean contact = move.contact;
 		
 		if (this.hasStatus(Status.TORMENTED) && move == this.lastMoveUsed) {
-			return new Pair<>(0, 0.0);
+			return DamageResult.unusable(0);
 		}
 		
 		if (id == 237) {
@@ -8063,9 +8092,9 @@ public class Pokemon implements Serializable {
 			contact = move.contact;
 		}
 		
-		if (mode == 0 && (move == Move.FIRST_IMPRESSION || move == Move.BELCH)) {
+		if (engine && (move == Move.FIRST_IMPRESSION || move == Move.BELCH)) {
 			if (!this.impressive) {
-				return new Pair<>(-1, 0.0);
+				return DamageResult.unusable(-1);
 			} else {
 				bp *= 2;
 			}
@@ -8076,24 +8105,24 @@ public class Pokemon implements Serializable {
 			foeAbility = Ability.NULL;
 		}
 		
-		if (mode == 0 && (move == Move.UNSEEN_STRANGLE || move == Move.FAKE_OUT)) {
+		if (engine && (move == Move.UNSEEN_STRANGLE || move == Move.FAKE_OUT)) {
 			if (!this.impressive || foeAbility == Ability.SHIELD_DUST || foeAbility == Ability.INNER_FOCUS || foe.getItem(field) == Item.MENTAL_HERB || foe.getItem(field) == Item.COVERT_CLOAK) {
-				return new Pair<>(-1, 0.0);
+				return DamageResult.unusable(-1);
 			} else {
 				bp *= 6;
 			}
 		}
 		
 		if (this.hasStatus(Status.HEAL_BLOCK) && move.isHealing()) {
-			return new Pair<>(0, 0.0);
+			return DamageResult.unusable(0);
 		}
 		
 		if (this.hasStatus(Status.MUTE) && Move.getSound().contains(move)) {
-			return new Pair<>(0, 0.0);
+			return DamageResult.unusable(0);
 		}
 		
 		if (move == this.disabledMove) {
-			return new Pair<>(0, 0.0);
+			return DamageResult.unusable(0);
 		}
 		
 		if (this.getAbility(field) == Ability.COMPOUND_EYES) acc *= 1.3;
@@ -8118,9 +8147,9 @@ public class Pokemon implements Serializable {
 		if (move == Move.THUNDER_WAVE && this.isType(PType.ELECTRIC)) acc = 100;
 		if (move == Move.TOXIC && this.isType(PType.POISON)) acc = 1000;
 		
-		if (foeAbility == Ability.WONDER_SKIN && move.cat == 2 && (acc <= 100 || move == Move.PERISH_SONG || move == Move.DEFOG)) return new Pair<>(-1, 0.0);
+		if (foeAbility == Ability.WONDER_SKIN && move.cat == 2 && (acc <= 100 || move == Move.PERISH_SONG || move == Move.DEFOG)) return DamageResult.unusable(-1);
 		
-		if (checkAcc && mode == 0 && this.ability != Ability.NO_GUARD && foeAbility != Ability.NO_GUARD && acc < 100) {
+		if (dm.checkAcc && this.ability != Ability.NO_GUARD && foeAbility != Ability.NO_GUARD && acc < 100) {
 			int accEv = this.statStages[5] - foe.statStages[6];
 			if (move == Move.DARKEST_LARIAT || move == Move.SACRED_SWORD) accEv += foe.statStages[6];
 			accEv = accEv > 6 ? 6 : accEv;
@@ -8129,7 +8158,7 @@ public class Pokemon implements Serializable {
 			if ((field.equals(field.weather, Effect.SANDSTORM, this) && foeAbility == Ability.SAND_VEIL) ||
 					(field.equals(field.weather, Effect.SNOW, this) && foeAbility == Ability.SNOW_CLOAK)) accuracy *= 0.8;
 			if (!hit(accuracy)) {
-				return new Pair<>(1, 0.0);
+				return DamageResult.accFail();
 			}
 		}
 		
@@ -8171,57 +8200,45 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (foe.hasStatus(Status.MAGIC_REFLECT) && (move != Move.BRICK_BREAK && move != Move.MAGIC_FANG && move != Move.PSYCHIC_FANGS)) {
-			Pair<Integer, Double> dmg = this.calcWithTypes(this, move, false, mode, crit, field, true);
-			if (mode == 0) {
-				dmg.setFirst(1 - dmg.getFirst());
-				return dmg;
-			} else {
-				return dmg;
-			}
+			return this.computeDamage(this, move, false, field, dm.forReflect()).reflectedOnto(dm.random());
 		}
 		if (this.hasStatus(Status.POSSESSED) && this != foe) {
-			Pair<Integer, Double> dmg = this.calcWithTypes(this, move, false, mode, crit, field, true);
-			if (mode == 0) {
-				dmg.setFirst(1 - dmg.getFirst());
-				return dmg;
-			} else {
-				return dmg;
-			}
+			return this.computeDamage(this, move, false, field, dm.forReflect()).reflectedOnto(dm.random());
 		}
 		
 		if (moveType == PType.FIRE && foeAbility == Ability.FLASH_FIRE) {
-			if (foe.getItem(field) != Item.RING_TARGET) return new Pair<>(0, 0.0);
+			if (foe.getItem(field) != Item.RING_TARGET) return DamageResult.immune();
 		}
 		
 		if (move.isBallOrBomb() && foeAbility == Ability.BULLETPROOF) {
-			return new Pair<>(0, 0.0);
+			return DamageResult.immune();
 		}
 		
 		if (Move.getSound().contains(move) && foeAbility == Ability.SOUNDPROOF) {
-			return new Pair<>(0, 0.0);
+			return DamageResult.immune();
 		}
 		
 		if ((moveType == PType.GHOST && foeAbility == Ability.FRIENDLY_GHOST) ||
 				(moveType == PType.ICE && foeAbility == Ability.WARM_HEART) ||
 				(moveType == PType.PSYCHIC && foeAbility == Ability.COLD_HEART) ||
 				(moveType == PType.DRAGON && foeAbility == Ability.WHITE_HOLE)) {
-			if (foe.getItem(field) != Item.RING_TARGET) return new Pair<>(0, 0.0);
+			if (foe.getItem(field) != Item.RING_TARGET) return DamageResult.immune();
 		}
 		
 		if ((moveType == PType.WATER && (foeAbility == Ability.WATER_ABSORB || foeAbility == Ability.DRY_SKIN)) || (moveType == PType.ELECTRIC && foeAbility == Ability.VOLT_ABSORB) ||
 				(moveType == PType.BUG && foeAbility == Ability.INSECT_FEEDER) || ((moveType == PType.LIGHT || moveType == PType.GALACTIC) && foeAbility == Ability.BLACK_HOLE) ||
 				(moveType == PType.MAGIC && foeAbility == Ability.MYSTIC_ABSORB) || (moveType == PType.LIGHT && (foeAbility == Ability.EVENT_HORIZON || foeAbility == Ability.NEUROFORCE))) {
-			if (foe.getItem(field) != Item.RING_TARGET) return new Pair<>(0, 0.0);
+			if (foe.getItem(field) != Item.RING_TARGET) return DamageResult.immune();
 		}
 		
 		if ((moveType == PType.ELECTRIC && (foeAbility == Ability.MOTOR_DRIVE || foeAbility == Ability.LIGHTNING_ROD)) ||
 				(moveType == PType.GRASS && foeAbility == Ability.SAP_SIPPER) || (moveType == PType.FIRE && foeAbility == Ability.HEAT_COMPACTION) ||
 				(moveType == PType.MAGIC && foeAbility == Ability.DJINN1S_FAVOR)) {
-			if (foe.getItem(field) != Item.RING_TARGET) return new Pair<>(0, 0.0);
+			if (foe.getItem(field) != Item.RING_TARGET) return DamageResult.immune();
 		}
 		
 		if (moveType == PType.GROUND && !foe.isGrounded(field, foeAbility) && move.cat != 2) {
-			return new Pair<>(0, 0.0);
+			return DamageResult.immune();
 		}
 		
 		if (moveType != PType.GROUND && (move.cat != 2 || move == Move.THUNDER_WAVE)) {
@@ -8232,36 +8249,36 @@ public class Pokemon implements Serializable {
 					// Nothing: scrappy allows normal and fighting type moves to hit ghosts
 				} else if (this.getAbility(field) == Ability.CORROSION && moveType == PType.POISON) {
 					// Nothing: corrosion allows poison moves to hit steel
-				} else if (mode == 0 && (move == Move.COUNTER || move == Move.MIRROR_COAT || move == Move.METAL_BURST)) {
-					return new Pair<>(-1, 0.0);
+				} else if (engine && (move == Move.COUNTER || move == Move.MIRROR_COAT || move == Move.METAL_BURST)) {
+					return DamageResult.unusable(-1);
 				} else {
-					return new Pair<>(0, 0.0);
+					return DamageResult.immune();
 				}
 			}
 		}
 		
-		if (move == Move.COUNTER || move == Move.MIRROR_COAT || move == Move.METAL_BURST) return new Pair<>(0, 0.0);
+		if (move == Move.COUNTER || move == Move.MIRROR_COAT || move == Move.METAL_BURST) return DamageResult.noDamage();
 		
 		if (field.equals(field.terrain, Effect.PSYCHIC) && foe.isGrounded(field, foeAbility) && move.hasPriority(this) && move != Move.GRAVITY_PUNCH) {
-			return new Pair<>(0, 0.0);
+			return DamageResult.immune();
 		}
 		
-		if (mode == 0 && move == Move.DREAM_EATER && foe.status != Status.ASLEEP) {
-			return new Pair<>(-1, 0.0);
+		if (engine && move == Move.DREAM_EATER && foe.status != Status.ASLEEP) {
+			return DamageResult.unusable(-1);
 		}
 		
 		if (move == Move.POLTERGEIST && foe.item == null) {
-			return new Pair<>(0, 0.0);
+			return DamageResult.unusable(0);
 		}
 		
 		if (move.cat == 2) {
-			return new Pair<>(0, 0.0);
+			return DamageResult.noDamage();
 		}
 		
 		if ((moveType == PType.WATER && (foe.getItem(field) == Item.ABSORB_BULB || foe.getItem(field) == Item.LUMINOUS_MOSS))
 				|| (moveType == PType.ELECTRIC && foe.getItem(field) == Item.CELL_BATTERY)
 				|| (moveType == PType.ICE && foe.getItem(field) == Item.SNOWBALL)) {
-			return new Pair<>(0, 0.0);
+			return DamageResult.immune();
 		}
 		
 		if (move.basePower < 0) {
@@ -8364,7 +8381,7 @@ public class Pokemon implements Serializable {
 			bp *= 1 + (this.getStatusNum(Status.FALLEN) * 0.1);
 		}
 		
-		if (mode == 0 && move == Move.CHROMO_BEAM && checkSecondary(this.getAbility(field) == Ability.SERENE_GRACE || field.equals(field.terrain, Effect.SPARKLY) ? 60 : 30)) bp *= 2;
+		if (engine && move == Move.CHROMO_BEAM && (dm.chromo == DamageMode.CHROMO_YES || (dm.chromo == DamageMode.CHROMO_RANDOM && checkSecondary(this.getAbility(field) == Ability.SERENE_GRACE || field.equals(field.terrain, Effect.SPARKLY) ? 60 : 30)))) bp *= 2;
 		
 		if (move.isCrushing() && foe.hasStatus(Status.MINIMIZED)) {
 			bp *= 2;
@@ -8426,7 +8443,7 @@ public class Pokemon implements Serializable {
 		if (moveType == PType.STEEL && this.hasStatus(Status.LOADED)) bp *= 2;
 		
 		// Multi hit moves calc to use
-		if (mode == 0) bp *= move.getNumHits(this, this.trainer == null ? null : this.trainer.team);
+		if (engine && dm.hitsInBp) bp *= move.getNumHits(this, this.trainer == null ? null : this.trainer.team);
 		
 		double attackMod = 1.0;
 		double defenseMod = 1.0;
@@ -8440,16 +8457,22 @@ public class Pokemon implements Serializable {
 		boolean isCrit = false;
 		
 		// Crit Check
-		critChance += this.getStatusNum(Status.CRIT_CHANCE);
-		if (this.getAbility(field) == Ability.MERCILESS && (foe.status == Status.POISONED || foe.status == Status.TOXIC || foe.status == Status.PARALYZED)) critChance = 3;
+		critChance = applyCritStage(critChance, foe, field);
 		
-		if (foeAbility != Ability.BATTLE_ARMOR
-				&& foeAbility != Ability.SHELL_ARMOR
-				&& foeAbility != Ability.MAGMA_ARMOR
-				&& !field.contains(foe.getFieldEffects(), Effect.LUCKY_CHANT) &&
-				((mode == 0 && critChance >= 1 && critCheck(critChance)) ||
-				(mode != 0 && (critChance >= 3 || (crit && critChance >= 0))))) {
-			isCrit = true;
+		boolean critBlocked = foeAbility == Ability.BATTLE_ARMOR
+				|| foeAbility == Ability.SHELL_ARMOR
+				|| foeAbility == Ability.MAGMA_ARMOR
+				|| field.contains(foe.getFieldEffects(), Effect.LUCKY_CHANT);
+		if (!critBlocked) {
+			if (dm.crit == DamageMode.CRIT_NEVER) {
+				isCrit = false;
+			} else if (dm.crit == DamageMode.CRIT_FORCE) {
+				isCrit = true;
+			} else if (dm.random()) {
+				isCrit = critChance >= 1 && critCheck(critChance);
+			} else {
+				isCrit = critChance >= 3 || (dm.legacyCrit && critChance >= 0);
+			}
 		}
 		
 		if (move.isPhysical()) {
@@ -8492,7 +8515,7 @@ public class Pokemon implements Serializable {
 		} else {
 			attackStat = this.getStat(3);
 			attackStatMod = this.asModifier(2);
-			if (mode == 0 && move == Move.METEOR_BEAM) attackStatMod = this.asModifier(2, 1); // calc with boost
+			if (engine && move == Move.METEOR_BEAM) attackStatMod = this.asModifier(2, 1); // calc with boost
 			attackDriveMod = this.getBoosterMod(2);
 			
 			boolean usesDef = move == Move.PSYSHOCK || move == Move.MAGIC_MISSILES;
@@ -8525,7 +8548,8 @@ public class Pokemon implements Serializable {
 		
 		if (foe.getItem(field) == Item.EVIOLITE && foe.canEvolve()) defenseMod *= 1.5;
 		
-		damage = calc(attackStat * attackMod, defenseStat * defenseMod, bp, this.level, mode);
+		damage = dm.isLegacy() ? calc(attackStat * attackMod, defenseStat * defenseMod, bp, this.level, dm.legacyMode)
+				: calcRoll(attackStat * attackMod, defenseStat * defenseMod, bp, this.level, dm.roll);
 		if (isCrit) {
 			damage *= 1.5;
 			if (this.getAbility(field) == Ability.SNIPER) damage *= 1.5;
@@ -8581,7 +8605,7 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (foeAbility == Ability.WONDER_GUARD && multiplier <= 1 && moveType != PType.UNKNOWN) {
-			if (foe.getItem(field) != Item.RING_TARGET) return new Pair<>(0, 0.0);
+			if (foe.getItem(field) != Item.RING_TARGET) return DamageResult.immune();
 		}
 		
 		if (foeAbility == Ability.FLUFFY && moveType == PType.FIRE) multiplier *= 2;
@@ -8600,17 +8624,17 @@ public class Pokemon implements Serializable {
 		
 		if (multiplier > 1) {
 			if (foeAbility == Ability.SOLID_ROCK || foeAbility == Ability.FILTER) damage /= 2;
-			if (mode != 0 && foeAbility == Ability.ANTICIPATION && foe.illusion) damage /= 2;
+			if (dm.predictOneShots && foeAbility == Ability.ANTICIPATION && foe.illusion) damage /= 2;
 			if (item == Item.EXPERT_BELT) damage *= 1.2;
 			if (this.getAbility(field) == Ability.NEUROFORCE) damage *= 1.5;
-			if (mode != 0 && foe.getItem(field) != null && foe.checkTypeResistBerry(moveType)) damage /= 2;
+			if (dm.predictOneShots && foe.getItem(field) != null && foe.checkTypeResistBerry(moveType)) damage /= 2;
 		}
 		
 		if (multiplier < 1) {
 			if (ability == Ability.TINTED_LENS) damage *= 2;
 		}
 		
-		if (mode == 0 && this.getItem(field) == Item.THROAT_SPRAY && Move.getSound().contains(move)) damage *= 1.5;
+		if (engine && this.getItem(field) == Item.THROAT_SPRAY && Move.getSound().contains(move)) damage *= 1.5;
 		
 		if (this.getAbility(field) == Ability.ILLUSION && this.illusion) damage *= 1.2;
 		if (this.getAbility(field) == Ability.ANALYTIC && !first) damage *= 1.3;
@@ -8621,18 +8645,18 @@ public class Pokemon implements Serializable {
 		if (move == Move.ENDEAVOR) {
 			if (foe.currentHP > this.currentHP) {
 				damage = foe.currentHP - this.currentHP;
-			} else { return new Pair<>(0, 0.0); } }
+			} else { return DamageResult.unusable(0); } }
 		if (move == Move.SUPER_FANG) damage = foe.currentHP / 2;
 		if (move == Move.DRAGON_RAGE) damage = 40;
-		if (mode == 0 && (move == Move.HORN_DRILL || move == Move.SHEER_COLD || move == Move.GUILLOTINE || move == Move.FISSURE)) {
+		if (engine && (move == Move.HORN_DRILL || move == Move.SHEER_COLD || move == Move.GUILLOTINE || move == Move.FISSURE)) {
 			if ((move == Move.SHEER_COLD && foe.isType(PType.ICE)) || foeAbility == Ability.STURDY || foe.level > this.level) {
-				return new Pair<>(0, 0.0);
+				return DamageResult.immune();
 			}
 			damage = foe.currentHP;
 		}
 		
 		damage = Math.max(damage, 1);
-		if (mode == 0 && foeAbility == Ability.SHADOW_VEIL && foe.illusion) {
+		if (engine && foeAbility == Ability.SHADOW_VEIL && foe.illusion) {
 			damage = (int) foe.getHPAmount(1.0/8);
 		}
 		double damagePercent = damage * 100.0 / foe.getStat(0);
@@ -8644,28 +8668,120 @@ public class Pokemon implements Serializable {
 			sturdy = true;
 		}
 
-		if (mode == 0 && damage >= foe.currentHP) damage = foe.currentHP; // Check for kill
-		if (mode == 0 && sturdy) damage--;
-		if (mode == 0 && damage < foe.currentHP && move == Move.SWORD_OF_DAWN && this.getItem(field) != Item.POWER_HERB) bp *= 0.5;
+		if (engine && dm.capAtHp && damage >= foe.currentHP) damage = foe.currentHP; // Check for kill
+		if (engine && dm.capAtHp && sturdy) damage--;
+		if (engine && dm.capAtHp && damage < foe.currentHP && move == Move.SWORD_OF_DAWN && this.getItem(field) != Item.POWER_HERB) bp *= 0.5;
 		
-		if ((move == Move.SELF$DESTRUCT || move == Move.EXPLOSION || move == Move.SUPERNOVA_EXPLOSION || move == Move.STEEL_BEAM) && mode == 0) {
+		if ((move == Move.SELF$DESTRUCT || move == Move.EXPLOSION || move == Move.SUPERNOVA_EXPLOSION || move == Move.STEEL_BEAM) && engine && dm.random()) {
 			Random rand = Rng.asRandom();
 			double hpPercent = this.currentHP * 1.0 / this.getStat(0);
 			
 			if ((this.trainer != null && !this.trainer.hasValidMembers(foe)) || rand.nextDouble() < (hpPercent - 0.1)) {
-				return new Pair<>(0, 0.0);
+				return DamageResult.noDamage();
 			}
 		}
-		if (move == Move.FUTURE_SIGHT) {
-			if (mode == 0) {
-				if (field.contains(foe.getFieldEffects(), Effect.FUTURE_SIGHT)) {
-					return new Pair<>(-1, 0.0);
-				} else {
-					return Rng.asRandom().nextInt(4) == 1 ? new Pair<>(0, 0.0) : new Pair<>(damage, damagePercent);
+		if (move == Move.FUTURE_SIGHT && engine) {
+			if (field.contains(foe.getFieldEffects(), Effect.FUTURE_SIGHT)) {
+				return DamageResult.unusable(-1);
+			}
+			if (dm.random() && Rng.asRandom().nextInt(4) == 1) {
+				return DamageResult.noDamage();
+			}
+		}
+		return DamageResult.dealt(damage, damagePercent, isCrit, critChance, critBlocked,
+				foeAbility == Ability.STURDY || foe.getItem(field) == Item.FOCUS_SASH, move == Move.FALSE_SWIPE);
+	}
+
+	/** Crit stage after status, Super Luck, Scope Lens and Merciless. Shared by move() and computeDamage so the two cannot drift (T1). */
+	private int applyCritStage(int critChance, Pokemon foe, Field field) {
+		critChance += this.getStatusNum(Status.CRIT_CHANCE);
+		if (this.getAbility(field) == Ability.SUPER_LUCK) critChance++;
+		if (item == Item.SCOPE_LENS) critChance++;
+		if (this.getAbility(field) == Ability.MERCILESS && (foe.status == Status.POISONED || foe.status == Status.TOXIC || foe.status == Status.PARALYZED)) critChance = 3;
+		return critChance;
+	}
+	
+	/** Chance of a crit at a stage: exactly what {@code critCheck} rolls ((base + 1) / 100 for stages 0 to 2, 1 from stage 3). */
+	static double critProbability(int stage, boolean script) {
+		if (stage < 0) return 0.0;
+		if (script && stage < 3) return 0.0;
+		if (stage >= 3) return 1.0;
+		return (stage == 1 ? 14 : stage == 2 ? 51 : 6) / 100.0;
+	}
+	
+	/** Effective accuracy in [0, 1] as move() applies it: never-miss = 1.0, a semi-invulnerable target dodges anything that can miss. */
+	private double rangeAccuracy(Pokemon foe, Move move, boolean first, Field field) {
+		double acc = getEffectiveAccuracy(move, foe, field, foe.getAbility(field), first);
+		if (move == Move.POP_POP) acc = 1.1;
+		if (acc > 1.0) return 1.0;
+		if (foe.hasStatus(Status.SEMI_INV)) return 0.0;
+		return acc;
+	}
+	
+	private int[] rollDamages(Pokemon foe, Move move, boolean first, Field field, int critMode, int chromoMode) {
+		int[] d = new int[16];
+		for (int i = 0; i < 16; i++) {
+			d[i] = computeDamage(foe, move, first, field, DamageMode.det(RollMode.roll(i), critMode, chromoMode)).first;
+		}
+		return d;
+	}
+	
+	/**
+	 * Deterministic damage description (spec 7.3): the 16 rolls, the crit mixture, accuracy and expected hits. Never draws
+	 * from any random stream and changes no state. Uses the same {@code computeDamage} as {@code calcWithTypes}.
+	 */
+	public DamageRange calcRange(Pokemon foe, Move move, boolean first, Field field) {
+		DamageMode base0 = DamageMode.det(RollMode.roll(0), DamageMode.CRIT_NEVER, DamageMode.CHROMO_NO);
+		DamageResult probe = computeDamage(foe, move, first, field, base0);
+		switch (probe.kind) {
+		case UNUSABLE:
+			return DamageRange.unusable();
+		case IMMUNE:
+			return DamageRange.immune();
+		case NO_DAMAGE:
+			return DamageRange.noDamage(rangeAccuracy(foe, move, first, field));
+		default:
+			break;
+		}
+		
+		double accuracy = rangeAccuracy(foe, move, first, field);
+		double critProb = probe.critBlocked ? 0.0 : critProbability(probe.critStage, this.script);
+		double pBoost = 0.0; // Chromo Beam doubles its power with its secondary chance
+		if (move == Move.CHROMO_BEAM) {
+			int chance = this.getAbility(field) == Ability.SERENE_GRACE || field.equals(field.terrain, Effect.SPARKLY) ? 60 : 30;
+			pBoost = this.script ? (chance > 50 ? 1.0 : 0.0) : chance / 100.0;
+		}
+		
+		int[] plain = rollDamages(foe, move, first, field, DamageMode.CRIT_NEVER, DamageMode.CHROMO_NO);
+		double min = Double.MAX_VALUE, max = 0, sum = 0;
+		for (int d : plain) {
+			min = Math.min(min, d);
+			max = Math.max(max, d);
+			sum += d;
+		}
+		
+		double[] vals = new double[64];
+		double[] probs = new double[64];
+		int n = 0;
+		for (int v = 0; v < 2; v++) {
+			double pv = v == 0 ? 1.0 - pBoost : pBoost;
+			if (pv <= 0) continue;
+			int chromoMode = v == 0 ? DamageMode.CHROMO_NO : DamageMode.CHROMO_YES;
+			for (int c = 0; c < 2; c++) {
+				double pc = c == 0 ? 1.0 - critProb : critProb;
+				if (pc <= 0) continue;
+				int[] d = v == 0 && c == 0 ? plain : rollDamages(foe, move, first, field, c == 0 ? DamageMode.CRIT_NEVER : DamageMode.CRIT_FORCE, chromoMode);
+				for (int i = 0; i < 16; i++) {
+					vals[n] = d[i];
+					probs[n] = pv * pc / 16.0;
+					n++;
 				}
 			}
 		}
-		return new Pair<>(damage, damagePercent);
+		
+		double[] hitProb = move.hitProbabilities(this, this.trainer == null ? null : this.trainer.team);
+		return DamageRange.of(java.util.Arrays.copyOf(vals, n), java.util.Arrays.copyOf(probs, n), min, sum / 16.0, max, critProb, accuracy,
+				hitProb, foe.getStat(0), probe.endureAtFull, probe.neverKills, probe.reflected);
 	}
 
 	public void endOfTurn(Pokemon f) {
@@ -10186,7 +10302,7 @@ public class Pokemon implements Serializable {
 			Task.addTask(Task.TEXT, this.nickname + " floated on its Air Balloon!");
 		}
 		if (hazards) {
-			if (this.playerOwned() && !this.cloned) {
+			if (this.playerOwned() && this.recordsStats()) {
 				this.getPlayer().recordSwitchIn(this);
 			}
 			if (this.currentHP < this.getStat(0) && field.contains(this.getFieldEffects(), Effect.HEALING_CIRCLE)) {
@@ -10262,7 +10378,7 @@ public class Pokemon implements Serializable {
 			foe.handleEjectPack(userStages, this);
 		}
 		
-		if (gp != null && gp.gameState != GamePanel.SIM_BATTLE_STATE && gp.player.p.pokedex[this.id] < 1) gp.player.p.pokedex[this.id] = 1;
+		if (gp != null && gp.gameState != GamePanel.SIM_BATTLE_STATE && this.recordsStats() && gp.player.p.pokedex[this.id] < 1) gp.player.p.pokedex[this.id] = 1;
 		
 	}
 	
@@ -10397,7 +10513,7 @@ public class Pokemon implements Serializable {
 				move != Move.THIEF && move != Move.COVET) || thisAbility == Ability.STICKY_HOLD) this.checkBerry(foe);
 		
 		int amount = start - Math.max(0, this.currentHP);
-		if (this.playerOwned() && !this.cloned) {
+		if (this.playerOwned() && this.recordsStats()) {
 			double percent = amount * 100.0 / this.getStat(0);
 			this.getPlayer().recordDamageTaken(this, percent);
 		}
@@ -10578,6 +10694,7 @@ public class Pokemon implements Serializable {
 		Task t = Task.createTask(Task.DAMAGE, message, this);
 		currentHP += amt;
 		verifyHP();
+		if (SimContext.active()) return; // no task lists, real or sim UI, from inside a simulation
 		if (gp.gameState == GamePanel.BATTLE_STATE) {
 			t.setFinish(currentHP);
 			gp.battleUI.tasks.add(t);
@@ -12806,7 +12923,7 @@ public class Pokemon implements Serializable {
 		} else {
 			if (multiplier > 1) {
 				if (mode == 0) Task.addTask(Task.TEXT, multiplier > 2 ? "It's extremely effective!" : "It's super effective!");
-				if (mode == 0) field.superEffective++;
+				if (mode == 0 && recordsStats()) field.superEffective++;
 				if (this.getAbility(field) == Ability.SOLID_ROCK || this.getAbility(field) == Ability.FILTER) damage /= 2;
 				if (this.getItem(field) != null && this.checkTypeResistBerry(Move.FUTURE_SIGHT.mtype)) {
 					if (mode == 0) {
@@ -12835,7 +12952,7 @@ public class Pokemon implements Serializable {
 				int dividend = Math.min(damage, this.currentHP);
 				if (sturdy) dividend--;
 				double percent = dividend * 100.0 / this.getStat(0); // change dividend to damage
-				if (foe.playerOwned() && !foe.cloned) {
+				if (foe.playerOwned() && foe.recordsStats()) {
 					foe.getPlayer().recordDamageDealt(foe, percent);
 				}
 				String formattedPercent = String.format("%.1f", percent);

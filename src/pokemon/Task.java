@@ -266,6 +266,11 @@ public class Task {
 	}
 	
 	public static Task addTask(int type, Status status, String string, Pokemon p) {
+		if (SimContext.active()) {
+			Task t = createTask(type, string, p); // detached: callers may still set fields on it
+			t.status = status;
+			return t;
+		}
 		if (gp != null && gp.gameState != GamePanel.BATTLE_STATE && gp.gameState != GamePanel.SIM_BATTLE_STATE) return null;
 		Task t = addTask(type, string, p);
 		t.status = status;
@@ -273,6 +278,7 @@ public class Task {
 	}
 	
 	public static Task addTask(int type, String string, Pokemon p) {
+		if (SimContext.active()) return createTask(type, string, p); // simulation: never queued, never shown
 		if (gp != null && gp.gameState == GamePanel.BATTLE_STATE) {
 			Task t = createTask(type, string, p);
 			if (Pokemon.createTask) {
@@ -373,6 +379,7 @@ public class Task {
 	}
 	
 	public static void addSwapInTask(Pokemon p, boolean playerSide) {
+		if (SimContext.active()) return;
 		if (gp == null || (gp.gameState != GamePanel.BATTLE_STATE && gp.gameState != GamePanel.SIM_BATTLE_STATE)) return;
 		String message = p.playerOwned() ? "Go! " + p.nickname + "!" : p.trainer.toString() + " sends out " + p.nickname + "!";
 		Task t = addTask(Task.SWAP_IN, message, p);
@@ -386,7 +393,7 @@ public class Task {
 	}
 	
 	public static void addSwapOutTask(Pokemon p, boolean playerSide) {
-		if (!Pokemon.createTask) return;
+		if (!Pokemon.createTask || SimContext.active()) return;
 		String message = p.playerOwned() ? p.nickname + ", come back!" : p.trainer.toString() + " withdrew " + p.nickname + "!";
 		if (gp.gameState == GamePanel.SIM_BATTLE_STATE) {
 			String rsn = "";
@@ -412,18 +419,21 @@ public class Task {
 	}
 	
 	public static void setTask(int index, Task task) {
+		if (SimContext.active()) return;
 		ArrayList<Task> tasks = gp.gameState == GamePanel.BATTLE_STATE ? gp.battleUI.tasks : gp.simBattleUI.tasks;
 		if (tasks.size() == 0) return;
 		tasks.set(index, task);
 	}
 	
 	public static Task getTask(int index) {
+		if (SimContext.active()) return null;
 		ArrayList<Task> tasks = gp.gameState == GamePanel.BATTLE_STATE ? gp.battleUI.tasks : gp.simBattleUI.tasks;
 		if (tasks.size() == 0) return null;
 		return tasks.get(index);
 	}
 	
 	public static void insertTask(Task t, int index) {
+		if (SimContext.active()) return;
 		if (gp.gameState == GamePanel.BATTLE_STATE) {
 			gp.battleUI.tasks.add(index, t);
 		} else if (gp.gameState == GamePanel.SIM_BATTLE_STATE) {
@@ -471,6 +481,13 @@ public class Task {
 	}
 	
 	public static Task addMoveAnimTask(Move move, String msg, Pokemon attacker, Pokemon defender, String phase, PType resolvedType) {
+		if (SimContext.active()) { // no animation objects inside a simulation
+			Task t = createTask(USE_MOVE, msg);
+			t.move = move;
+			t.p = attacker;
+			t.foe = defender;
+			return t;
+		}
 		Task t = addTask(USE_MOVE, msg);
 		t.move = move;
 		t.p = attacker;
@@ -497,6 +514,12 @@ public class Task {
 	}
 	
 	public static Task addProtectAnimTask(String msg, Pokemon attacker, Pokemon defender) {
+		if (SimContext.active()) {
+			Task t = createTask(USE_MOVE, msg, attacker);
+			t.foe = defender;
+			t.wipe = true;
+			return t;
+		}
 		Task t = addTask(USE_MOVE, msg, attacker);
 		t.foe = defender;
 		t.animation = BattleAnimationManager.getInstance().getProtectAnimation();
