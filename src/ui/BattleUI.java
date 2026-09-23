@@ -28,7 +28,6 @@ import pokemon.*;
 import pokemon.Bag.Entry;
 import pokemon.Field.Effect;
 import pokemon.Field.FieldEffect;
-import pokemon.Pokemon.MoveDecision;
 import util.Print;
 import util.ToolTip;
 

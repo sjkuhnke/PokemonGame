@@ -3675,9 +3675,9 @@ public class UI extends AbstractUI {
 						Moveslot m = currentPokemon.moveset[moveOption - 1];
 						if (m.currentPP != m.maxPP) {
 							m.currentPP = m.maxPP;
-		showMessage(m.move.toString() + "'s PP was restored!");
-		gp.player.p.bag.remove(currentItem);
-		moveOption = -1;
+							showMessage(m.move.toString() + "'s PP was restored!");
+							gp.player.p.bag.remove(currentItem);
+							moveOption = -1;
 							currentItems = gp.player.p.getItems(currentPocket);
 						} else {
 							showMessage("It won't have any effect.");

@@ -12,7 +12,7 @@ public interface TrainerAI {
 	 *
 	 * @param difficulty Player.NORMAL / Player.HARD / Player.EXTREME
 	 */
-	Pokemon.MoveDecision decide(Pokemon self, Pokemon foe, boolean first, int difficulty);
+	MoveDecision decide(Pokemon self, Pokemon foe, boolean first, int difficulty);
 
 	String getName();
 
@@ -24,7 +24,7 @@ public interface TrainerAI {
 
 	/** Global default. Stays LegacyAI until the new engine ships behind a flag (Phase 3). */
 	final class Config {
-		public static volatile TrainerAI defaultAI = LegacyAI.INSTANCE;
+		public static volatile TrainerAI defaultAI = AIV2.INSTANCE;
 
 		private Config() {}
 	}

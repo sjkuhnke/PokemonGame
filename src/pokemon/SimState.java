@@ -75,7 +75,7 @@ public class SimState {
 			h = fold(h, p.id);
 			h = fold(h, p.currentHP);
 			h = fold(h, p.fainted ? 1 : 0);
-			h = fold(h, p.status == null ? -1 : p.status.ordinal());
+			h = fold(h, p.status == Status.HEALTHY ? -1 : p.status.ordinal());
 			for (int s : p.statStages) h = fold(h, s);
 			h = fold(h, p.perishCount);
 		}

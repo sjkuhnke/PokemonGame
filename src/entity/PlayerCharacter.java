@@ -358,14 +358,7 @@ public class PlayerCharacter extends Entity {
 		if (keyH.calcPressed) {
 			keyH.calcPressed = false;
 			//Item.useCalc(p.getCurrent(), null, null, true); TODO: for testing
-			Pokemon aiMon = Trainer.trainers[536].current;
-			Pokemon playerMon = p.current;
-			
-			List<Action> aiActions = Phase2Tests.buildActions(aiMon);
-			List<Action> playerActions = Phase2Tests.buildActions(playerMon);
-			
-			Phase2Tests.runSmokeTest(aiMon, playerMon, 1000);
-			Phase2Tests.runInvarianceCheck(aiMon, playerMon, aiActions, playerActions, 1000);
+			Phase3Tests.runAll();
 		}
 		
 		checkHotkeys();

@@ -7,7 +7,7 @@ public final class LegacyAI implements TrainerAI {
 	private LegacyAI() {}
 
 	@Override
-	public Pokemon.MoveDecision decide(Pokemon self, Pokemon foe, boolean first, int difficulty) {
+	public MoveDecision decide(Pokemon self, Pokemon foe, boolean first, int difficulty) {
 		return self.legacyBestMove(foe, first, difficulty);
 	}
 

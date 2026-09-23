@@ -460,21 +460,6 @@ public class Pokemon implements Serializable {
 		}		
 	}
 	
-	public class MoveDecision {
-		public final Move move;
-		public final List<Pair<Status, Integer>> statusApplications;
-		MoveDecision(Move move) {
-			this(move, Collections.emptyList());
-		}
-		MoveDecision(Move move, Status status, int value) {
-			this(move, Collections.singletonList(new Pair<>(status, value)));
-		}
-		MoveDecision(Move move, List<Pair<Status, Integer>> statusApplications){
-			this.move = move;
-			this.statusApplications = statusApplications;
-		}
-	}
-	
 	public Move resolveDecision(MoveDecision decision) {
 	    for (Pair<Status, Integer> app : decision.statusApplications) {
 	        this.addStatus(app.getFirst(), app.getSecond());
@@ -2047,7 +2032,7 @@ public class Pokemon implements Serializable {
 		}
 	}
 	
-	private double scoreWeatherValue(Effect weather, Pokemon foe) {
+	public double scoreWeatherValue(Effect weather, Pokemon foe) {
 		PType boosted = null, weakened = null;
 		switch (weather) {
 		case SUN: boosted = PType.FIRE; weakened = PType.WATER; break;
@@ -2092,7 +2077,7 @@ public class Pokemon implements Serializable {
 		}
 	}
 	
-	private double scoreScreenValue(Effect screen, Pokemon activeFoe, Pokemon likelySwitchIn) {
+	public double scoreScreenValue(Effect screen, Pokemon activeFoe, Pokemon likelySwitchIn) {
 		double value = 0;
 		if (screen == Effect.LIGHT_SCREEN || screen == Effect.AURORA_VEIL) {
 			if (activeFoe.hasSpecialMoves(this)) value += 20;
@@ -2290,7 +2275,7 @@ public class Pokemon implements Serializable {
 	 * whether we're deciding if SETTING the hazard on the foe's team is worth it, or if REMOVING
 	 * it from our own team (via Rapid Spin/Defog) is worth it.
 	 */
-	private double calcHazardTeamValue(Move hazardMove, Trainer team, Field field) {
+	public double calcHazardTeamValue(Move hazardMove, Trainer team, Field field) {
 		if (team == null) return 0;
 		double value = 0;
 		for (Pokemon mon : team.team) {
@@ -2310,7 +2295,7 @@ public class Pokemon implements Serializable {
 
 	/** Maps a currently-active hazard Effect back to its setting Move, so removal scoring can reuse
 	 *  calcHazardTeamValue. Mirrors the switch in isHazardUseful. */
-	private Move hazardMoveForEffect(Effect effect) {
+	public Move hazardMoveForEffect(Effect effect) {
 		if (effect == null) return null;
 		switch (effect) {
 		case STEALTH_ROCKS: return Move.STEALTH_ROCK;
@@ -13056,7 +13041,7 @@ public class Pokemon implements Serializable {
 		return false;
 	}
 	
-	private Move getStatusMove() {
+	public Move getStatusMove() {
 		for (Moveslot m : this.moveset) {
 			if (m.move.cat == 2) return m.move;
 		}
