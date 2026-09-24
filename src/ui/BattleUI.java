@@ -1987,7 +1987,7 @@ public class BattleUI extends AbstractUI {
 				if (cancellableParty && !fainted){
 					foeMove = foe.trainerOwned() ? resolveFoeMove() : foe.randomMove();
 				}
-				if (baton) {
+				if (baton && !gp.player.p.isDryPassing()) {
 					gp.player.p.team[partyNum].statStages = user.statStages.clone();
 					gp.player.p.team[partyNum].vStatuses = new ArrayList<>(user.vStatuses);
 					gp.player.p.team[partyNum].removeStatus(Status.SWITCHING);

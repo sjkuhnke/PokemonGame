@@ -152,7 +152,7 @@ public class MovesDoc {
 		ppCell.setCellValue(m.pp);
 		ppCell.setCellStyle(plainStyle(wb, false, HorizontalAlignment.CENTER));
 
-		String desc = m.getDescription();
+		String desc = m.getDescription(null);
 		Cell descCell = row.createCell(COL_DESC);
 		descCell.setCellValue(desc);
 		descCell.setCellStyle(descStyle(wb));
@@ -241,7 +241,7 @@ public class MovesDoc {
 					while (pp.length() < 7) {
 						pp += " ";
 					}
-					writer.write(String.format("%s|%s|%s|%s|%s: %s\n", move, cat, bp, acc, pp, m.getDescription()));
+					writer.write(String.format("%s|%s|%s|%s|%s: %s\n", move, cat, bp, acc, pp, m.getDescription(null)));
 				}
 			}
 

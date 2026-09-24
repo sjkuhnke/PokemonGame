@@ -4069,7 +4069,7 @@ public class UI extends AbstractUI {
 				Task.addTask(Task.PARTY, "Teach # a move?", Task.REMIND);
 				bagState = 0;
 			}
-		} else if (item == Item.TM13 && gp.player.p.banBatonPass) { // baton pass
+		} else if (item == Item.TM13 && gp.player.p.nuzlocke && gp.player.p.banBatonPass && !gp.player.p.allowDryPass) { // baton pass
 			showMessage("Baton Pass is banned in your Nuzlocke rules!");
 		} else if (!item.isUsable()) {
 			// do nothing
@@ -6041,7 +6041,7 @@ public class UI extends AbstractUI {
 			
 			textY += 38;
 			g2.setFont(g2.getFont().deriveFont(24F));
-			String desc = current.isTM() ? current.getMove().getDescription() : current.getDesc();
+			String desc = current.isTM() ? current.getMove().getDescription(gp.player.p) : current.getDesc();
 			
 			for (String line : Item.breakString(desc, 58).split("\n")) {
 				g2.drawString(line, textX, textY);
@@ -6601,7 +6601,7 @@ public class UI extends AbstractUI {
 			
 		textY += 38;
 		g2.setFont(g2.getFont().deriveFont(24F));
-		String desc = current.isTM() ? current.getMove().getDescription() : current.getDesc();
+		String desc = current.isTM() ? current.getMove().getDescription(gp.player.p) : current.getDesc();
 		
 		for (String line : Item.breakString(desc, 58).split("\n")) {
 			g2.drawString(line, textX, textY);
@@ -6772,7 +6772,7 @@ public class UI extends AbstractUI {
 			
 		textY += 38;
 		g2.setFont(g2.getFont().deriveFont(24F));
-		String desc = current.isTM() ? current.getMove().getDescription() : current.getDesc();
+		String desc = current.isTM() ? current.getMove().getDescription(gp.player.p) : current.getDesc();
 		
 		for (String line : Item.breakString(desc, 58).split("\n")) {
 			g2.drawString(line, textX, textY);

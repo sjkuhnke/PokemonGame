@@ -1,22 +1,34 @@
 package pokemon;
 
 /**
- * §7.14.1 v1. HP-independent, per-team-slot value weights, computed once per decision from the
+ * §7.14.1. HP-independent, per-team-slot value weights, computed once per decision from the
  * root snapshot and never recomputed inside matrix cells. Indexed by team-array slot (not by
  * Pokemon reference), since forked/cloned SimStates give bench mons new object identities but
  * keep slot indices stable.
  * <p>
- * v1 scope (per PHASE2_CHANGES.md's own precedent of flagging deferred work): only {@code
- * contribution} is implemented. {@code unique} (only-answer bonus), {@code utility} (hazard
- * setter/absorber/etc.) and {@code aceMultiplier} are explicitly Phase 5 per §7.14.1 and the
- * spec's "Finalize computeMonWeights" task there - implementing them now would risk diverging
- * from Phase 5's real definition of GAP/UNIQUE_W without seeing it exercised by the sacking
- * tests (T18-T21) that are Phase 5's acceptance criteria.
+ * raw[m] = BASE_W + contribution[m] + UNIQUE_W * unique[m] + utility[m], normalized to mean 1.0 over the side's alive
+ * mons and clamped to [MIN_W, MAX_W].
+ * <ul>
+ * <li>{@code contribution}: how much of the opposing team a mon handles, weighted by how dangerous each foe is.</li>
+ * <li>{@code unique} (Phase 5): the only good answer to a dangerous foe (best edge, above 0, and more than {@link #GAP}
+ * clear of the runner-up). Pure math in {@link #uniqueBonuses}.</li>
+ * <li>{@code utility} (Phase 5): small capped terms for what a mon does beyond trading hits (hazards, screens, cleric,
+ * Healing Wish, speed control), see {@link #utility}.</li>
+ * </ul>
+ * There is deliberately NO ace multiplier: a mon is valuable because the evaluation says it answers threats or does a
+ * job the team needs, not because it was labeled an ace. The same weights price sacks (who is worth keeping), the
+ * material term in eval, and the future-value term of {@link ReplacementChooser}.
  */
 public final class MonWeights {
 	private static final double BASE_T = 1.0;
 	private static final double BASE_W = 1.0;
 	private static final double MIN_W = 0.25, MAX_W = 3.0;
+	/** Phase 5: scale of the only-answer bonus (edge units are about [-1, +1]; threat is about 1..2). Tuned in Phase 8. */
+	static final double UNIQUE_W = 0.75;
+	/** Phase 5: how far ahead of the runner-up a mon's edge must be to count as the only answer. Tuned in Phase 8. */
+	static final double GAP = 0.3;
+	/** Phase 5: cap on the summed utility terms, so utility nudges but never outweighs answering threats. */
+	static final double UTILITY_MAX = 0.6;
 
 	public final double[] ai;
 	public final double[] player;
@@ -27,50 +39,151 @@ public final class MonWeights {
 	}
 
 	public static MonWeights compute(SimState root) {
-		double[] aiW = computeSide(root.ai, root.player, root.field);
-		double[] plW = computeSide(root.player, root.ai, root.field);
+		double[] aiW = forSide(root.ai, root.player, root.field);
+		double[] plW = forSide(root.player, root.ai, root.field);
 		return new MonWeights(aiW, plW);
 	}
 
-	private static double[] computeSide(SideState mine, SideState theirs, Field field) {
+	/** One side's weights (mirrored formula for the other side). Also used by {@link ReplacementChooser}. */
+	static double[] forSide(SideState mine, SideState theirs, Field field) {
 		Pokemon[] myTeam = mine.bench();
 		Pokemon[] theirTeam = theirs.bench();
 		int n = myTeam.length, m = theirTeam.length;
 
+		boolean[] myAlive = new boolean[n], theirAlive = new boolean[m];
+		for (int i = 0; i < n; i++) myAlive[i] = myTeam[i] != null && !myTeam[i].isFainted();
+		for (int j = 0; j < m; j++) theirAlive[j] = theirTeam[j] != null && !theirTeam[j].isFainted();
+
 		double[][] edge = new double[n][m];
 		for (int i = 0; i < n; i++) {
-			if (myTeam[i] == null || myTeam[i].isFainted()) continue;
+			if (!myAlive[i]) continue;
 			for (int j = 0; j < m; j++) {
-				if (theirTeam[j] == null || theirTeam[j].isFainted()) continue;
+				if (!theirAlive[j]) continue;
 				edge[i][j] = baseEdge(myTeam[i], theirTeam[j], field);
 			}
 		}
 
 		double[] threat = new double[m];
 		for (int j = 0; j < m; j++) {
-			if (theirTeam[j] == null || theirTeam[j].isFainted()) continue;
+			if (!theirAlive[j]) continue;
 			double sum = 0;
 			int count = 0;
 			for (int i = 0; i < n; i++) {
-				if (myTeam[i] == null || myTeam[i].isFainted()) continue;
+				if (!myAlive[i]) continue;
 				sum += Math.max(0, -edge[i][j]);
 				count++;
 			}
 			threat[j] = BASE_T + (count > 0 ? sum / count : 0);
 		}
 
+		double[] unique = uniqueBonuses(edge, threat, myAlive, theirAlive);
+
 		double[] raw = new double[n];
-		for (int i = 0; i < n; i++) {
-			if (myTeam[i] == null || myTeam[i].isFainted()) continue;
-			double contribution = 0;
-			for (int j = 0; j < m; j++) {
-				if (theirTeam[j] == null || theirTeam[j].isFainted()) continue;
-				contribution += threat[j] * squash(edge[i][j]);
+		try (SimContext.Scope sc = SimContext.enter(SimPolicy.DEFAULT)) {
+			for (int i = 0; i < n; i++) {
+				if (!myAlive[i]) continue;
+				double contribution = 0;
+				for (int j = 0; j < m; j++) {
+					if (!theirAlive[j]) continue;
+					contribution += threat[j] * squash(edge[i][j]);
+				}
+				raw[i] = BASE_W + contribution + UNIQUE_W * unique[i] + utility(myTeam[i], mine, theirs, field);
 			}
-			// unique[]/utility[]/aceMultiplier deferred to Phase 5, see class doc.
-			raw[i] = BASE_W + contribution;
 		}
 		return normalize(raw, myTeam);
+	}
+
+	/**
+	 * Pure. unique[i] = sum over alive foes j of threat[j], for every foe j where mon i has the best edge, that edge is
+	 * above 0 (it actually beats the foe), and it is more than {@link #GAP} ahead of the second-best alive mon. A side
+	 * with a single alive mon has no runner-up, so nothing is unique.
+	 */
+	public static double[] uniqueBonuses(double[][] edge, double[] threat, boolean[] myAlive, boolean[] theirAlive) {
+		int n = edge.length;
+		double[] out = new double[n];
+		if (n == 0) return out;
+		int m = edge[0].length;
+		for (int j = 0; j < m; j++) {
+			if (!theirAlive[j]) continue;
+			int bestI = -1;
+			double best = Double.NEGATIVE_INFINITY, second = Double.NEGATIVE_INFINITY;
+			for (int i = 0; i < n; i++) {
+				if (!myAlive[i]) continue;
+				double e = edge[i][j];
+				if (e > best) {
+					second = best;
+					best = e;
+					bestI = i;
+				} else if (e > second) {
+					second = e;
+				}
+			}
+			if (bestI < 0 || second == Double.NEGATIVE_INFINITY) continue;
+			if (best > 0 && best - second > GAP) out[bestI] += threat[j];
+		}
+		return out;
+	}
+
+	/**
+	 * Small additive value for jobs a mon does beyond trading hits. Each term needs its move AND a situation where it
+	 * matters right now (a remover only counts while hazards are on the mon's own side, a cleric only while a teammate
+	 * is statused, ...). Summed and capped at {@link #UTILITY_MAX}. Caller holds a SimContext scope.
+	 */
+	public static double utility(Pokemon m, SideState mine, SideState theirs, Field field) {
+		if (m == null || m.moveset == null) return 0;
+		double u = 0;
+
+		Pokemon foeAnchor = firstAlive(theirs);
+		if (foeAnchor != null) {
+			for (Moveslot ms : m.moveset) {
+				if (ms == null || ms.move == null || !ms.move.isHazard()) continue;
+				if (m.isHazardUseful(ms.move, foeAnchor, field)) {
+					u += 0.2;
+					break;
+				}
+			}
+		}
+
+		if (has(m, Move.RAPID_SPIN, Move.TORNADO_SPIN, Move.MORTAL_SPIN, Move.DEFOG)) {
+			for (Field.FieldEffect fe : mine.shell.getFieldEffectList()) {
+				if (m.hazardMoveForEffect(fe.effect) != null) {
+					u += 0.2;
+					break;
+				}
+			}
+		}
+
+		if (has(m, Move.REFLECT, Move.LIGHT_SCREEN, Move.AURORA_VEIL)) u += 0.1;
+		if (has(m, Move.TRICK_ROOM, Move.TAILWIND)) u += 0.1;
+
+		boolean cleric = has(m, Move.HEAL_BELL, Move.AROMATHERAPY);
+		boolean wisher = has(m, Move.HEALING_WISH, Move.LUNAR_DANCE);
+		if (cleric || wisher) {
+			for (Pokemon p : mine.bench()) {
+				if (p == null || p == m || p.isFainted()) continue;
+				boolean statused = p.status != null && p.status != Status.HEALTHY;
+				boolean hurt = p.currentHP * 1.0 / p.getStat(0) < 0.6;
+				if (cleric && statused) u += 0.15;
+				if (wisher && (statused || hurt)) u += 0.1;
+				if ((cleric && statused) || (wisher && (statused || hurt))) break;
+			}
+		}
+		return Math.min(UTILITY_MAX, u);
+	}
+
+	private static boolean has(Pokemon p, Move... moves) {
+		for (Moveslot ms : p.moveset) {
+			if (ms == null || ms.move == null) continue;
+			for (Move x : moves) if (ms.move == x) return true;
+		}
+		return false;
+	}
+
+	private static Pokemon firstAlive(SideState side) {
+		Pokemon a = side.active();
+		if (a != null && !a.isFainted()) return a;
+		for (Pokemon p : side.bench()) if (p != null && !p.isFainted()) return p;
+		return null;
 	}
 
 	/** Bounded contribution multiplier from a raw edge score. */

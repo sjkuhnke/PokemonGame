@@ -146,22 +146,15 @@ public class Trainer implements Serializable {
 		return current;
 	}
 	
+	/**
+	 * Phase 5 (§7.14.3): the forced replacement after a faint / free switch, at every difficulty. One non-recursive chooser
+	 * ({@link ReplacementChooser}) shared with the simulator, so the replacement the AI plans for (a sack's free
+	 * replacement, a "lose the matchup, then bring the answer" line) is the one that actually comes out. Null if no alive
+	 * teammate remains.
+	 */
 	private Pokemon getNext2(Pokemon other) {
-		int bestScore = Integer.MIN_VALUE;
-		Pokemon next = null;
-		StringBuilder sb = new StringBuilder("\n______________\nFREE SWITCH\n______________\n");
-		for (Pokemon p : team) {
-			if (!p.isFainted() && p != current) {
-				int score = p.evaluateSwitchInScore(other, Pokemon.field);
-				sb.append("[" + p + ": " + score + "], ");
-				if (score > bestScore) {
-					bestScore = score;
-					next = p;
-				}
-			}
-		}
-		Print.debug(sb.toString() + "\n\n");
-		return next;
+		int idx = ReplacementChooser.pickSlot(this, other, Pokemon.field);
+		return idx < 0 ? null : team[idx];
 	}
 	
 	private Pokemon getNext(Pokemon other) {

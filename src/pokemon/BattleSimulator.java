@@ -401,7 +401,7 @@ public class BattleSimulator {
 
 		if (defender.hasStatus(Status.SWITCHING) && !defender.isFainted()) {
 			defender.removeStatus(Status.SWITCHING);
-			int slot = cheapReplacementSlot(otherSide, attacker);
+			int slot = ReplacementChooser.pickSlot(otherSide.shell, attacker, br.state.field); // Phase 5: same chooser as the real battle
 			if (slot >= 0) performSwitch(otherSide, slot, attacker);
 		}
 
@@ -446,33 +446,16 @@ public class BattleSimulator {
 	// ---- Step 4: replacement for fainted actives ----
 
 	private static void resolveReplacements(SimState s) {
-		resolveReplacementsForSide(s.ai, s.player.active());
-		resolveReplacementsForSide(s.player, s.ai.active());
+		resolveReplacementsForSide(s.ai, s.player.active(), s.field);
+		resolveReplacementsForSide(s.player, s.ai.active(), s.field);
 	}
 
-	private static void resolveReplacementsForSide(SideState side, Pokemon foe) {
+	/** Phase 5 (§7.14.3): the forced replacement is {@link ReplacementChooser#pickSlot}, the SAME function Trainer.getNext2 uses in the real battle (T22). */
+	private static void resolveReplacementsForSide(SideState side, Pokemon foe, Field field) {
 		if (!side.active().isFainted()) return;
 		if (!side.shell.hasValidMembers(foe)) return;
-		int slot = cheapReplacementSlot(side, foe);
+		int slot = ReplacementChooser.pickSlot(side.shell, foe, field);
 		if (slot >= 0) performSwitch(side, slot, foe);
-	}
-
-	/** §7.6 placeholder for aiReplacementHeuristic/playerReplacementHeuristic (non-recursive;
-	 *  Phase 5 unifies this with the real battle's chooseReplacement). */
-	static int cheapReplacementSlot(SideState side, Pokemon foe) {
-		int best = -1;
-		double bestScore = Double.NEGATIVE_INFINITY;
-		Pokemon[] team = side.bench();
-		for (int i = 0; i < team.length; i++) {
-			Pokemon p = team[i];
-			if (p == null || p.isFainted() || p == side.active()) continue;
-			double hpFrac = p.currentHP * 1.0 / p.getStat(0);
-			double matchup = 1.0 - Trainer.getEffective(p, foe, foe.type1, null, false);
-			if (foe.type2 != null) matchup += 1.0 - Trainer.getEffective(p, foe, foe.type2, null, false);
-			double score = matchup * 2.0 + hpFrac;
-			if (score > bestScore) { bestScore = score; best = i; }
-		}
-		return best;
 	}
 
 	// ---- Merge ----

@@ -53,7 +53,7 @@ public enum Move {
 	AURORA_VEIL(0,1000,0,0,2,0,PType.ICE,"Can only be used in SNOW, reduces both physical and special damage on user's team recieved for 5 turns",false,10),
 	AUTOTOMIZE(0,1000,0,0,2,0,PType.STEEL,"Raises user's Speed by 2 and reduces user's weight by 220 lbs",false,15),
 	BABY$DOLL_EYES(0,100,0,0,2,1,PType.LIGHT,"Lowers foe's Attack by 1, increased priority",false,30),
-	BATON_PASS(0,1000,0,0,2,0,PType.NORMAL,"Causes user to switch and passes all stat changes with it",false,3),
+	BATON_PASS(0,1000,0,0,2,0,PType.NORMAL,"Causes user to switch and passes all stat changes and volatile status conditions with it",false,3),
 	BEAT_UP(12,100,0,0,0,0,PType.DARK,"Attacks once per healthy Pokemon on your team",false,10),
 	BEEFY_BASH(100,85,50,0,0,-1,PType.FIGHTING,"% chance to paralyze foe, moves last",true,5),
 	BELCH(120,100,0,0,1,0,PType.POISON,"Only works on the first turn out",false,10),
@@ -699,6 +699,7 @@ public enum Move {
 	
 	private static int globalID = 0;
 	public static final int DUMMY_MOVES_AMOUNT = 47;
+	public static final String DRY_BATON_PASS_DESC = "Causes user to switch. Dry Pass is on: no stat changes or status conditions are passed";
 	
 	public static Move[] getAllMoves() {
 		Move[] allMoves = values();
@@ -826,7 +827,8 @@ public enum Move {
 		return image;
 	}
 	
-	public String getDescription() {
+	public String getDescription(Player p) {
+		if (this == BATON_PASS && p != null && p.isDryPassing()) return DRY_BATON_PASS_DESC;
 		int secChance = getSecondaryChance();
 		if (secChance > 0) {
 			return secChance + desc;
@@ -884,7 +886,7 @@ public enum Move {
 
 		// Description
 		JLabel descriptionLabel = new JLabel();
-		String text = Item.breakString(getDescription(), 65);
+		String text = Item.breakString(getDescription(user.getPlayer()), 65);
 		text = text.replace("\n", "<br>");
 		descriptionLabel.setText("<html>" + text + "</html>");
 		descriptionLabel.setOpaque(false);

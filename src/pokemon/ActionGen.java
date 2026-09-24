@@ -7,7 +7,9 @@ import java.util.Set;
 
 /**
  * §7.4 genAIActions/genPlayerActions (Phase 4: + §9 usefulRows filter), §7.13.1 switchRowsAllowed/deadTurn, §7.14.2
- * candidateBench/sackCandidates (v1 - see class-level notes below and PHASE3_CHANGES.md).
+ * candidateBench/sackCandidates. Phase 5: {@link #benchPlan} keeps the answers/sacks split (the min-gain guard needs to
+ * know which rows are sack-only), sack candidates honor {@code cfg.enableSacking}, and the player's sack column is only
+ * kept while the AI actually threatens the player's active.
  */
 public final class ActionGen {
 	/** deadTurn's "did anything change" threshold (§7.13.1). */
@@ -24,15 +26,14 @@ public final class ActionGen {
 		List<Move> validMoves = usefulRows(self, foe, root.field, self.getValidMoveset());
 		boolean canSwitch = self.trainer.canSwitch(foe);
 
-		List<Integer> switchTargets = canSwitch ? candidateBench(root, cfg, weights) : java.util.Collections.emptyList();
+		List<Integer> switchTargets = canSwitch ? benchPlan(root, cfg, weights).all() : java.util.Collections.emptyList();
 		Ability foeAbility = canSwitch ? foe.getAbility(root.field) : null;
 
 		for (Move m : validMoves) {
 			// A pivot move whose switch-in is already covered by explicit MOVE_THEN_SWITCH rows
-			// below is NOT also added plain: plain-pivot's post-move replacement falls through to
-			// BattleSimulator.cheapReplacementSlot in the matrix but Trainer.getNext2/
-			// evaluateSwitchInScore for real if ever chosen - two different, non-matrix heuristics
-			// deciding the switch instead of the AI. See PHASE3_CHANGES.md addendum.
+			// below is NOT also added plain: a plain pivot's post-move replacement is the forced-replacement
+			// chooser (ReplacementChooser, Phase 5: the same function the real battle uses), not a switch
+			// the AI planned in the matrix - so the explicit rows are the only way the AI picks the target.
 			boolean pivotCoveredBySwitchRows = canSwitch && !switchTargets.isEmpty()
 					&& m.isPivotMove() && self.isUsefulPivot(foe, foeAbility, m);
 			if (!pivotCoveredBySwitchRows) A.add(new Action(m));
@@ -52,6 +53,11 @@ public final class ActionGen {
 
 	/** considerPlayerSwitches is true at every difficulty per §7.4; infoMode FULL only this phase (REVEALED_ONLY is Phase 6). */
 	public static List<Action> genPlayerActions(SimState root, AIConfig cfg) {
+		return genPlayerActions(root, cfg, MonWeights.compute(root));
+	}
+
+	/** Phase 5: takes the decision's weights so the player sack column does not recompute them. */
+	public static List<Action> genPlayerActions(SimState root, AIConfig cfg, MonWeights weights) {
 		List<Action> P = new ArrayList<>();
 		Pokemon player = root.player.active();
 		Pokemon aiMon = root.ai.active();
@@ -59,7 +65,7 @@ public final class ActionGen {
 		for (Move m : validMoves) P.add(new Action(m));
 
 		if (player.trainer.canSwitch(aiMon)) {
-			List<Integer> switchCols = playerSwitchColumns(root, cfg);
+			List<Integer> switchCols = playerSwitchColumns(root, cfg, weights);
 			for (int slot : switchCols) P.add(new Action(slot));
 			Ability aiAbility = aiMon.getAbility(root.field);
 			for (Move m : validMoves) {
@@ -130,12 +136,43 @@ public final class ActionGen {
 		return v;
 	}
 
-	// ---- §7.14.2 (v1: no SACK_MIN_GAIN guard yet - see class doc) ----
+	// ---- §7.14.2 ----
 
-	static List<Integer> sackCandidates(SimState root, AIConfig cfg, MonWeights weights) {
+	/** candidateBench split: the capped top-N "answers", and the never-pruned sack candidates. */
+	public static final class BenchPlan {
+		final List<Integer> answers;
+		public final List<Integer> sacks;
+
+		BenchPlan(List<Integer> answers, List<Integer> sacks) {
+			this.answers = answers;
+			this.sacks = sacks;
+		}
+
+		/** answers first, then sacks not already in answers. */
+		List<Integer> all() {
+			Set<Integer> u = new LinkedHashSet<>(answers);
+			u.addAll(sacks);
+			return new ArrayList<>(u);
+		}
+
+		/** Sack candidates that are NOT also answers: the only rows the min-gain guard may drop. */
+		public Set<Integer> sackOnly() {
+			Set<Integer> s = new LinkedHashSet<>(sacks);
+			s.removeAll(answers);
+			return s;
+		}
+	}
+
+	/**
+	 * valueOf(m) = weight * hpFrac (§7.14.1). Candidates: alive bench mons worth strictly less than
+	 * sackRatio * value(active), lowest two. Empty when {@code cfg.enableSacking} is false or the active is worth nothing.
+	 */
+	public static List<Integer> sackCandidates(SimState root, AIConfig cfg, MonWeights weights) {
+		if (!cfg.enableSacking) return new ArrayList<>();
 		Pokemon[] team = root.ai.bench();
 		int activeIdx = indexOf(team, root.ai.active());
 		double activeValue = valueOf(weights.ai, team, activeIdx);
+		if (activeValue <= 0) return new ArrayList<>();
 
 		List<Integer> c = new ArrayList<>();
 		for (int i = 0; i < team.length; i++) {
@@ -147,7 +184,7 @@ public final class ActionGen {
 		return c.size() > 2 ? new ArrayList<>(c.subList(0, 2)) : c;
 	}
 
-	static List<Integer> candidateBench(SimState root, AIConfig cfg, MonWeights weights) {
+	public static BenchPlan benchPlan(SimState root, AIConfig cfg, MonWeights weights) {
 		Pokemon[] team = root.ai.bench();
 		Pokemon foeActive = root.player.active();
 		int activeIdx = indexOf(team, root.ai.active());
@@ -159,19 +196,27 @@ public final class ActionGen {
 		int n = Math.max(0, cfg.maxAISwitchRows - 2);
 		alive.sort((i, j) -> Double.compare(cheapMatchup(team[j], foeActive, root.field), cheapMatchup(team[i], foeActive, root.field)));
 
-		Set<Integer> result = new LinkedHashSet<>();
-		for (int idx : alive) {
-			if (result.size() >= n) break;
-			result.add(idx);
-		}
 		// any bench mon resistant/immune to the foe's likely move types is already ranked highly by
-		// cheapMatchup and so is naturally included by the topN cut above (§7.14.2's third clause).
-		result.addAll(sackCandidates(root, cfg, weights)); // never pruned
-		return new ArrayList<>(result);
+		// cheapMatchup and so is naturally included by the topN cut (§7.14.2's third clause).
+		List<Integer> answers = new ArrayList<>();
+		for (int idx : alive) {
+			if (answers.size() >= n) break;
+			answers.add(idx);
+		}
+		return new BenchPlan(answers, sackCandidates(root, cfg, weights)); // sacks are never pruned
 	}
 
-	/** Keeps the player's top matchup-answers plus their lowest-weighted-value bench mon (a human sacks too, §7.14.2). */
-	private static List<Integer> playerSwitchColumns(SimState root, AIConfig cfg) {
+	/** answers ∪ sack candidates (§7.14.2). */
+	static List<Integer> candidateBench(SimState root, AIConfig cfg, MonWeights weights) {
+		return benchPlan(root, cfg, weights).all();
+	}
+
+	/**
+	 * Keeps the player's top matchup-answers, plus (Phase 5, §7.14.2) their lowest-weighted-value bench mon as a sack
+	 * column when the AI threatens the player's active and that mon is worth less than sackRatio * value(active): a human
+	 * sacks too, and predicting it lets the AI punish it. No threat, no sack column.
+	 */
+	private static List<Integer> playerSwitchColumns(SimState root, AIConfig cfg, MonWeights weights) {
 		Pokemon[] team = root.player.bench();
 		Pokemon aiActive = root.ai.active();
 		int activeIdx = indexOf(team, root.player.active());
@@ -188,8 +233,8 @@ public final class ActionGen {
 			if (result.size() >= cap) break;
 			result.add(idx);
 		}
-		if (!alive.isEmpty()) {
-			MonWeights weights = MonWeights.compute(root);
+		if (!alive.isEmpty() && SackAnalysis.threatens(aiActive, root.player.active(), root.field)) {
+			double activeVal = valueOf(weights.player, team, activeIdx);
 			int lowest = alive.get(0);
 			double lowestVal = valueOf(weights.player, team, lowest);
 			for (int idx : alive) {
@@ -199,12 +244,13 @@ public final class ActionGen {
 					lowest = idx;
 				}
 			}
-			if (!result.contains(lowest)) result.add(lowest);
+			if (lowestVal < cfg.sackRatio * activeVal && !result.contains(lowest)) result.add(lowest);
 		}
 		return result;
 	}
 
-	private static double valueOf(double[] w, Pokemon[] team, int i) {
+	/** weight * hpFrac (§7.14.1); 0 for a missing slot. */
+	public static double valueOf(double[] w, Pokemon[] team, int i) {
 		if (i < 0) return 0;
 		Pokemon p = team[i];
 		double hpFrac = p.currentHP * 1.0 / p.getStat(0);

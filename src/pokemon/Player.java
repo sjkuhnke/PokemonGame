@@ -2489,4 +2489,8 @@ public class Player extends Trainer implements Serializable {
 		this.isValidNuzlocke = true;
 		this.invalidReasons = new ArrayList<>();
 	}
+
+	public boolean isDryPassing() {
+		return nuzlocke && banBatonPass && allowDryPass;
+	}
 }

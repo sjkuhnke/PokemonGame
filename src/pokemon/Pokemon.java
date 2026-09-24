@@ -9252,7 +9252,7 @@ public class Pokemon implements Serializable {
 						|| (this.hasStatus(Status.LOCKED) && m != this.lastMoveUsed) || (this.hasStatus(Status.ENCORED) && m != this.lastMoveUsed)
 						|| (this.hasStatus(Status.CHARGING) && m != this.lastMoveUsed) || (this.hasStatus(Status.SEMI_INV) && m != this.lastMoveUsed)
 						|| hasStatus(Status.HEAL_BLOCK) && m.isHealing() || m == this.disabledMove || (m == Move.PISTOL_POP && this.lastMoveUsed == Move.PISTOL_POP)
-						|| (this.playerOwned() && this.getPlayer().banBatonPass && m == Move.BATON_PASS)) {
+						|| (this.playerOwned() && this.getPlayer().banBatonPass && !this.getPlayer().allowDryPass && m == Move.BATON_PASS)) {
 					// nothing: don't add
 				} else {
 					validMoves.add(m);
@@ -11481,7 +11481,7 @@ public class Pokemon implements Serializable {
 				move.put("name", m.move.toString());
 				move.put("pp", m.currentPP);
 				move.put("maxPP", m.maxPP);
-				move.put("desc", m.move.getDescription());
+				move.put("desc", m.move.getDescription(this.getPlayer()));
 				move.put("type", m.move == Move.HIDDEN_POWER || m.move == Move.RETURN ? this.determineHPType() : m.move.mtype);
 				move.put("cat", m.move.cat);
 				move.put("bp", m.move.getbp(this, null, field));
