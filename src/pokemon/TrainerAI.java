@@ -22,7 +22,7 @@ public interface TrainerAI {
 		return Config.defaultAI;
 	}
 
-	/** Global default. Stays LegacyAI until the new engine ships behind a flag (Phase 3). */
+	/** Global default engine. (The legacy engine was removed in Phase 4.) */
 	final class Config {
 		public static volatile TrainerAI defaultAI = AIV2.INSTANCE;
 

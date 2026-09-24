@@ -6,10 +6,19 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-/** §7.5-7.7. Turn simulation on top of SimState. Moves and switches only (Phase 2 scope). */
+/**
+ * §7.5-7.7. Turn simulation on top of SimState. Phase 4 adds: secondary-effect branching for status/flinch
+ * (§7.5, {@link SecondaryKinds}), a Metronome expected-value fan-out (§9), and copy-on-write ownership of any bench
+ * mon a switch brings in ({@link Trainer#ownSlot}), which fixes a Phase 2 aliasing bug (see PHASE4_CHANGES.md).
+ */
 public class BattleSimulator {
 
 	private static final double ACC_LOW = 0.05, ACC_HIGH = 0.95;
+	/** §7.5 Phase 4: split a status/flinch secondary only when its chance is in [0.1, 0.9]; outside that MAJORITY is close enough. */
+	private static final double SEC_LOW = 0.10, SEC_HIGH = 0.90;
+	/** §9 Metronome: number of evenly spaced moves from Move.getAllMoves() a Metronome cell is averaged over. */
+	private static final int METRONOME_SAMPLES = 4;
+	private static List<Move> metronomeSample;
 	/** Status moves (no damage) whose own effect is an unconditional random switch of the
 	 *  DEFENDER's side, resolved in statusEffect(): Pokemon.java ~7281. */
 	private static final Set<Move> STATUS_RANDOM_SWITCH_MOVES = new HashSet<>(Arrays.asList(Move.WHIRLWIND, Move.ROAR));
@@ -82,7 +91,16 @@ public class BattleSimulator {
 	}
 
 	private static void performSwitch(SideState side, int slot0Based, Pokemon foe) {
+		side.shell.ownSlot(slot0Based); // Phase 4: never switch in a Pokemon object shared with another branch/cell/root
 		side.shell.swapOut2(foe, slot0Based + 1, false, false);
+	}
+
+	/** Makes every alive bench mon of this shell its own clone (before a random-target switch may pick any of them). */
+	private static void ownAllBench(Trainer shell) {
+		for (int i = 0; i < shell.team.length; i++) {
+			Pokemon p = shell.team[i];
+			if (p != null && !p.isFainted()) shell.ownSlot(i);
+		}
 	}
 
 	// ---- Step 2: moves in priority/speed order ----
@@ -198,7 +216,7 @@ public class BattleSimulator {
 			Branch b = withPolicy(br, p);
 			b.likelyHit = range.accuracy >= 0.5;
 			result.add(b);
-			return result;
+			return splitSecondary(result, attacker, defender, move, first, br.state.field, ko, range);
 		}
 
 		if (splitAcc) {
@@ -222,7 +240,37 @@ public class BattleSimulator {
 			hitBr.likelyHit = true;
 			result.add(hitBr);
 		}
-		return result;
+		return splitSecondary(result, attacker, defender, move, first, br.state.field, ko, range);
+	}
+
+	/**
+	 * §7.5 Phase 4: splits each connecting branch of a damaging move into "secondary procs" / "secondary doesn't",
+	 * weighted by the effective chance, when the effect is a status or flinch ({@link SecondaryKinds}) and the chance is
+	 * in [SEC_LOW, SEC_HIGH]. Not split: KO branches (the target is gone, so the effect is moot), a target that is
+	 * KO'd with near certainty anyway, reflected damage, flinch when the mover goes second, and status moves.
+	 */
+	private static List<Branch> splitSecondary(List<Branch> in, Pokemon attacker, Pokemon defender, Move move, boolean first,
+			Field field, double ko, DamageRange range) {
+		if (move.cat == 2 || range.reflected || ko >= ACC_HIGH || !SecondaryKinds.isStatusOrFlinch(move)) return in;
+		if (SecondaryKinds.isFlinchOnly(move) && !first) return in;
+		double chance = SecondaryKinds.effectiveChance(attacker, defender, move, field) / 100.0;
+		if (chance < SEC_LOW || chance > SEC_HIGH) return in;
+
+		List<Branch> out = new ArrayList<>();
+		for (Branch b : in) {
+			SimPolicy base = b.policy != null ? b.policy : SimPolicy.DEFAULT;
+			if (!b.likelyHit || base.damageRoll >= 1.0) { // miss, or the KO branch (damageRoll 1.00 in expandDamageBranches)
+				out.add(b);
+				continue;
+			}
+			Branch proc = withPolicy(rebranch(b, b.prob * chance), base.withSecondary(SimPolicy.Secondary.PROC));
+			proc.likelyHit = true;
+			Branch none = withPolicy(rebranch(b, b.prob * (1 - chance)), base.withSecondary(SimPolicy.Secondary.NO_PROC));
+			none.likelyHit = true;
+			out.add(proc);
+			out.add(none);
+		}
+		return out;
 	}
 
 	private static Branch rebranch(Branch br, double prob) {
@@ -254,6 +302,8 @@ public class BattleSimulator {
 		Pokemon attacker = moverSide.active();
 		Pokemon defender = otherSide.active();
 
+		if (act.move == Move.METRONOME) return fanOutMetronome(br, mover, act, first);
+
 		if (br.likelyHit) {
 			boolean statusSwitch = STATUS_RANDOM_SWITCH_MOVES.contains(act.move) && defender.trainer != null && !defender.hasStatus(Status.ROOTED);
 			boolean damageSwitch = DAMAGE_RANDOM_SWITCH_MOVES.contains(act.move) && defender.trainer != null && !defender.hasStatus(Status.ROOTED);
@@ -266,6 +316,33 @@ public class BattleSimulator {
 			}
 		}
 		return runOneMoveInit(br, mover, act, first, null);
+	}
+
+	/** §9: a Metronome cell is the average over a small fixed sample of moves (same sample every cell, so rows stay comparable). */
+	private static List<Branch> fanOutMetronome(Branch br, Side mover, Action act, boolean first) {
+		List<Move> sample = metronomeSample();
+		List<Branch> out = new ArrayList<>();
+		for (Move sm : sample) {
+			Branch sub = rebranch(br, br.prob / sample.size());
+			sub.policy = br.policy;
+			sub.likelyHit = br.likelyHit;
+			out.addAll(runOneMoveInit(sub, mover, act, first, null, sm));
+		}
+		return out;
+	}
+
+	private static List<Move> metronomeSample() {
+		if (metronomeSample == null) {
+			Move[] all = Move.getAllMoves();
+			List<Move> s = new ArrayList<>();
+			for (int i = 0; i < METRONOME_SAMPLES; i++) {
+				int idx = (int) ((i + 0.5) * all.length / METRONOME_SAMPLES);
+				while (all[idx] == Move.METRONOME) idx = (idx + 1) % all.length;
+				s.add(all[idx]);
+			}
+			metronomeSample = s;
+		}
+		return metronomeSample;
 	}
 
 	private static boolean isRedCardEligible(Pokemon attacker, Pokemon defender) {
@@ -287,11 +364,22 @@ public class BattleSimulator {
 	}
 
 	private static List<Branch> runOneMoveInit(Branch br, Side mover, Action act, boolean first, Integer forcedSwitchTarget) {
+		return runOneMoveInit(br, mover, act, first, forcedSwitchTarget, null);
+	}
+
+	private static List<Branch> runOneMoveInit(Branch br, Side mover, Action act, boolean first, Integer forcedSwitchTarget,
+			Move forcedMetronome) {
 		enterField(br.state);
 		SideState moverSide = mover == Side.AI ? br.state.ai : br.state.player;
 		SideState otherSide = mover == Side.AI ? br.state.player : br.state.ai;
 		Pokemon attacker = moverSide.active();
 		Pokemon defender = otherSide.active();
+
+		// Phase 4 copy-on-write: whichever bench mons a random-target switch / Red Card can bring in must be this shell's own.
+		if (STATUS_RANDOM_SWITCH_MOVES.contains(act.move) || DAMAGE_RANDOM_SWITCH_MOVES.contains(act.move)) ownAllBench(otherSide.shell);
+		if (defender.getItem(Pokemon.field) == Item.RED_CARD) ownAllBench(moverSide.shell);
+		// Team-wide moves mutate every member (Heal Bell / Aromatherapy cure the whole bench).
+		if (act.move == Move.HEAL_BELL || act.move == Move.AROMATHERAPY) ownAllBench(moverSide.shell);
 
 		if (act.kind == ActionKind.MOVE_THEN_SWITCH) {
 			attacker.addStatus(Status.TEMP_SWITCHING, act.slot + 1);
@@ -300,7 +388,9 @@ public class BattleSimulator {
 		SimPolicy policy = br.policy != null ? br.policy : SimPolicy.DEFAULT;
 		try (SimContext.Scope s = SimContext.enter(policy)) {
 			if (forcedSwitchTarget != null) SimContext.forceNextSwitch(forcedSwitchTarget);
+			if (forcedMetronome != null) SimContext.forceNextMetronome(forcedMetronome);
 			attacker.moveInit(defender, act.move, first);
+			SimContext.forceNextMetronome(null); // never leak a forced Metronome into a later cell
 		}
 
 		if (attacker.hasStatus(Status.SWITCHING) && !attacker.isFainted()) {
@@ -340,6 +430,12 @@ public class BattleSimulator {
 
 		Pokemon faster = aMon.getFaster(pMon, 0, 0, s.field);
 		Pokemon slower = faster == aMon ? pMon : aMon;
+		// Aurora Glow's end-of-turn handler touches the whole team (Field.FieldEffect.handleAurora).
+		for (SideState side : new SideState[] { s.ai, s.player }) {
+			for (Field.FieldEffect fe : side.shell.getFieldEffectList()) {
+				if (fe.effect == Field.Effect.AURORA_GLOW) ownAllBench(side.shell);
+			}
+		}
 		try (SimContext.Scope scope = SimContext.enter(SimPolicy.DEFAULT)) {
 			faster.endOfTurn(slower);
 			if (!slower.isFainted() && !faster.isFainted()) slower.endOfTurn(faster);

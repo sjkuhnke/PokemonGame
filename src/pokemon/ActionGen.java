@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * §7.4 genAIActions/genPlayerActions, §7.13.1 switchRowsAllowed/deadTurn, §7.14.2
+ * §7.4 genAIActions/genPlayerActions (Phase 4: + §9 usefulRows filter), §7.13.1 switchRowsAllowed/deadTurn, §7.14.2
  * candidateBench/sackCandidates (v1 - see class-level notes below and PHASE3_CHANGES.md).
  */
-final class ActionGen {
+public final class ActionGen {
 	/** deadTurn's "did anything change" threshold (§7.13.1). */
 	private static final double DEAD_EPS = 1.0;
 
@@ -17,35 +17,45 @@ final class ActionGen {
 
 	// ---- §7.4 ----
 
-	static List<Action> genAIActions(SimState root, AIConfig cfg, MonWeights weights) {
+	public static List<Action> genAIActions(SimState root, AIConfig cfg, MonWeights weights) {
 		List<Action> A = new ArrayList<>();
 		Pokemon self = root.ai.active();
 		Pokemon foe = root.player.active();
-		ArrayList<Move> validMoves = self.getValidMoveset();
-		for (Move m : validMoves) A.add(new Action(m));
+		List<Move> validMoves = usefulRows(self, foe, root.field, self.getValidMoveset());
+		boolean canSwitch = self.trainer.canSwitch(foe);
 
-		if (self.trainer.canSwitch(foe)) {
-			List<Integer> switchTargets = candidateBench(root, cfg, weights);
+		List<Integer> switchTargets = canSwitch ? candidateBench(root, cfg, weights) : java.util.Collections.emptyList();
+		Ability foeAbility = canSwitch ? foe.getAbility(root.field) : null;
+
+		for (Move m : validMoves) {
+			// A pivot move whose switch-in is already covered by explicit MOVE_THEN_SWITCH rows
+			// below is NOT also added plain: plain-pivot's post-move replacement falls through to
+			// BattleSimulator.cheapReplacementSlot in the matrix but Trainer.getNext2/
+			// evaluateSwitchInScore for real if ever chosen - two different, non-matrix heuristics
+			// deciding the switch instead of the AI. See PHASE3_CHANGES.md addendum.
+			boolean pivotCoveredBySwitchRows = canSwitch && !switchTargets.isEmpty()
+					&& m.isPivotMove() && self.isUsefulPivot(foe, foeAbility, m);
+			if (!pivotCoveredBySwitchRows) A.add(new Action(m));
+			if (pivotCoveredBySwitchRows) {
+				for (int slot : switchTargets) A.add(new Action(m, slot));
+			}
+		}
+
+		if (canSwitch) {
 			boolean voluntaryOK = switchRowsAllowed(root, cfg, weights);
 			if (voluntaryOK) {
 				for (int slot : switchTargets) A.add(new Action(slot));
-			}
-			Ability foeAbility = foe.getAbility(root.field);
-			for (Move m : validMoves) {
-				if (m.isPivotMove() && self.isUsefulPivot(foe, foeAbility, m)) {
-					for (int slot : switchTargets) A.add(new Action(m, slot));
-				}
 			}
 		}
 		return A;
 	}
 
 	/** considerPlayerSwitches is true at every difficulty per §7.4; infoMode FULL only this phase (REVEALED_ONLY is Phase 6). */
-	static List<Action> genPlayerActions(SimState root, AIConfig cfg) {
+	public static List<Action> genPlayerActions(SimState root, AIConfig cfg) {
 		List<Action> P = new ArrayList<>();
 		Pokemon player = root.player.active();
 		Pokemon aiMon = root.ai.active();
-		ArrayList<Move> validMoves = player.getValidMoveset();
+		List<Move> validMoves = usefulRows(player, aiMon, root.field, player.getValidMoveset());
 		for (Move m : validMoves) P.add(new Action(m));
 
 		if (player.trainer.canSwitch(aiMon)) {
@@ -61,9 +71,31 @@ final class ActionGen {
 		return P;
 	}
 
+	// ---- §9 row filter (Phase 4) ----
+
+	/**
+	 * Drops rows that provably do nothing this turn, so they neither cost matrix cells nor split probability mass:
+	 * Fake Out / First Impression / Dream Eater and friends when {@code calcRange} says unusable (damaging moves only:
+	 * for those {@code usable=false} always means "cannot be used now"), Sleep Talk / Snore while awake, and hazard moves
+	 * that {@code isHazardUseful} rejects. Never returns an empty list: if everything would be dropped the unfiltered
+	 * list is returned (the sim then plays it out as a failed move).
+	 */
+	public static List<Move> usefulRows(Pokemon self, Pokemon foe, Field field, List<Move> valid) {
+		List<Move> out = new ArrayList<>(valid.size());
+		try (SimContext.Scope sc = SimContext.enter(SimPolicy.DEFAULT)) {
+			for (Move m : valid) {
+				if ((m == Move.SLEEP_TALK || m == Move.SNORE) && self.status != Status.ASLEEP) continue;
+				if (m.isHazard() && !self.isHazardUseful(m, foe, field)) continue;
+				if (m.cat != 2 && !self.calcRange(foe, m, true, field).usable) continue;
+				out.add(m);
+			}
+		}
+		return out.isEmpty() ? valid : out;
+	}
+
 	// ---- §7.13.1 ----
 
-	static boolean switchRowsAllowed(SimState root, AIConfig cfg, MonWeights weights) {
+	public static boolean switchRowsAllowed(SimState root, AIConfig cfg, MonWeights weights) {
 		if (cfg.allowVoluntarySwitch) return true; // HARD / EXTREME
 		Pokemon self = root.ai.active();
 		if (self.perishCount == 1) return true;
@@ -72,7 +104,7 @@ final class ActionGen {
 	}
 
 	/** Deliberately checks only the active foe (no back-check) - preserves the existing hasRealAction contract. */
-	static boolean deadTurn(SimState root, AIConfig cfg) {
+	public static boolean deadTurn(SimState root, AIConfig cfg) {
 		double baseline = evalAfter(root, Action.PASS, Action.PASS, cfg);
 		Pokemon self = root.ai.active();
 		Pokemon foe = root.player.active();
@@ -85,7 +117,7 @@ final class ActionGen {
 		return true;
 	}
 
-	/** Mirrors the existing skip rule at Pokemon.legacyBestMove ~line 649: don't count clicking a status move as a real action for an unlocked Choice holder. */
+	/** Mirrors the pre-overhaul skip rule (legacy AI removed in Phase 4): don't count clicking a status move as a real action for an unlocked Choice holder. */
 	private static boolean choiceLockSkip(Pokemon self, Move m, Pokemon foe, Ability foeAbility, Field field) {
 		return m.cat == 2 && self.item != null && self.getItem(field).isChoiceItem()
 				&& !m.isMagicBounceEffected(self, foe, foeAbility, m.accuracy);

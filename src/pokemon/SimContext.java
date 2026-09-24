@@ -23,6 +23,7 @@ public final class SimContext {
 	private static int depth;
 	private static SimPolicy policy = SimPolicy.DEFAULT;
 	private static Integer forcedSwitchIndex;
+	private static Move forcedMetronome;
 
 	private SimContext() {}
 	
@@ -42,6 +43,22 @@ public final class SimContext {
 		Integer i = forcedSwitchIndex;
 		forcedSwitchIndex = null;
 		return i;
+	}
+
+	/**
+	 * Phase 4 (spec 9, Metronome): steer the next Metronome call to this move instead of drawing from Rng, so the
+	 * simulator can average a cell over a fixed sample of moves. Consumed (cleared) by the first Metronome call; the
+	 * simulator also clears it after moveInit in case the sampled cell never reached the Metronome branch.
+	 */
+	public static void forceNextMetronome(Move m) {
+		forcedMetronome = m;
+	}
+
+	/** Consumes and returns the forced Metronome move, or null if none is set. */
+	public static Move consumeForcedMetronome() {
+		Move m = forcedMetronome;
+		forcedMetronome = null;
+		return m;
 	}
 
 	public static boolean active() {

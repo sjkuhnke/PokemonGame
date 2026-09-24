@@ -1,8 +1,10 @@
-package pokemon;
+package test;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import pokemon.Field;
+import pokemon.*;
 import util.Print;
 
 public class Phase2Tests {

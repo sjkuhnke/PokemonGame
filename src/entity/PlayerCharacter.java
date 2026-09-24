@@ -16,6 +16,7 @@ import overworld.*;
 import util.*;
 import pokemon.*;
 import puzzle.Puzzle;
+import test.*;
 import ui.UI;
 
 public class PlayerCharacter extends Entity {
@@ -358,7 +359,7 @@ public class PlayerCharacter extends Entity {
 		if (keyH.calcPressed) {
 			keyH.calcPressed = false;
 			//Item.useCalc(p.getCurrent(), null, null, true); TODO: for testing
-			Phase3Tests.runAll();
+			Phase4Tests.runAll();
 		}
 		
 		checkHotkeys();

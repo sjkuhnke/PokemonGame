@@ -1,4 +1,4 @@
-package pokemon;
+package test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Locale;
 
 import overworld.GamePanel;
+import pokemon.Field;
+import pokemon.*;
 import util.Print;
 import util.Rng;
 

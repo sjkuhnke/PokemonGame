@@ -16,7 +16,7 @@ import util.Rng;
  * The turn loop deliberately mirrors {@code Pokemon.simulateBattle} (the betting sim), which resolves
  * turns in TASK_STATE with tasks going to {@code gp.ui.tasks}. Run it on the game thread with no battle
  * on screen, e.g. from a debug key. It blocks until finished (or {@code maxSeconds}), so expect the game
- * to freeze while it runs. Legacy think time is ~1s/decision, so start with a small battle count.
+ * to freeze while it runs. Start with a small battle count and watch the reported think time per decision.
  */
 public final class SelfPlay {
 	private SelfPlay() {}
@@ -34,8 +34,8 @@ public final class SelfPlay {
 		public long baseSeed = 20260921L;
 		public int maxTurns = 300;
 		public double maxSeconds = 0;          // 0 = no limit
-		public TrainerAI aiA = LegacyAI.INSTANCE;
-		public TrainerAI aiB = LegacyAI.INSTANCE;
+		public TrainerAI aiA = AIV2.INSTANCE;
+		public TrainerAI aiB = AIV2.INSTANCE;
 		public int difficultyA = Player.HARD;
 		public int difficultyB = Player.HARD;
 		public TeamSource teams;               // null = storyTrainers()
@@ -79,7 +79,7 @@ public final class SelfPlay {
 		};
 	}
 
-	static List<Trainer> buildPool() {
+	public static List<Trainer> buildPool() {
 		List<Trainer> pool = new ArrayList<>();
 		for (Trainer t : Trainer.trainers) {
 			if (t == null || t.team == null || t.team.length == 0 || t.current == null) continue;

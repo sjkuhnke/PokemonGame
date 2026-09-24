@@ -10,13 +10,14 @@ import java.util.Arrays;
  * yet (predict() just returns the raw equilibrium y this phase) - so only the plain variant is
  * implemented here.
  */
-final class Solver {
+public final class Solver {
 	private static final int DEFAULT_ITERS = 500;
 
 	private Solver() {}
 
-	static final class Result {
-		final double[] x, y;
+	public static final class Result {
+		public final double[] x;
+		public final double[] y;
 
 		Result(double[] x, double[] y) {
 			this.x = x;
@@ -24,11 +25,11 @@ final class Solver {
 		}
 	}
 
-	static Result solveZeroSum(double[][] M) {
+	public static Result solveZeroSum(double[][] M) {
 		return solveZeroSum(M, DEFAULT_ITERS);
 	}
 
-	static Result solveZeroSum(double[][] M, int iters) {
+	public static Result solveZeroSum(double[][] M, int iters) {
 		int n = M.length;
 		int m = n == 0 ? 0 : M[0].length;
 		if (n == 0 || m == 0) return new Result(new double[n], new double[m]);

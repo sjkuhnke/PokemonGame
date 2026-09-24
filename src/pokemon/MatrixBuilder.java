@@ -9,10 +9,10 @@ import java.util.List;
  * fast path, and switch-in/damage-range memoization are explicitly deferred to Phase 8 profiling
  * work (§9, §12 Phase 8) - correct-but-slow now, tuned later, per §0's "correctness first."
  */
-final class MatrixBuilder {
+public final class MatrixBuilder {
 	private MatrixBuilder() {}
 
-	static double[][] buildMatrix(SimState root, List<Action> A, List<Action> P, AIConfig cfg, MonWeights weights) {
+	public static double[][] buildMatrix(SimState root, List<Action> A, List<Action> P, AIConfig cfg, MonWeights weights) {
 		double[][] M = new double[A.size()][P.size()];
 		for (int i = 0; i < A.size(); i++) {
 			Action a = A.get(i);

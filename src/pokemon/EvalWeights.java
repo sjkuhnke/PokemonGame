@@ -8,8 +8,15 @@ package pokemon;
  */
 public final class EvalWeights {
 	public final double wMaterial, wMatchup, wHazard, wStatus, wField, wTempo;
+	/** Phase 4: pending Wish/Healing Wish/Lunar Dance value and the action-set restriction penalty (Taunt/Disable/Encore/Torment). */
+	public final double wPending;
 
 	public EvalWeights(double wMaterial, double wMatchup, double wHazard, double wStatus, double wField, double wTempo) {
+		this(wMaterial, wMatchup, wHazard, wStatus, wField, wTempo, 1.0);
+	}
+
+	public EvalWeights(double wMaterial, double wMatchup, double wHazard, double wStatus, double wField, double wTempo, double wPending) {
+		this.wPending = wPending;
 		this.wMaterial = wMaterial;
 		this.wMatchup = wMatchup;
 		this.wHazard = wHazard;

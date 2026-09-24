@@ -816,6 +816,22 @@ public class Trainer implements Serializable {
 		return shell;
 	}
 
+	/**
+	 * Phase 4 (sim shells only, spec 7.2 copy-on-write): makes team[i] this shell's OWN clone if it is still the object
+	 * shared with the shell this one was forked from. simShell(touched) shares every untouched bench slot (and leaves its
+	 * {@code trainer} pointing at the source shell); swapping such a mon in would mutate the shared object (hazard damage,
+	 * Intimidate, ...) and read the wrong shell's hazards. Call before any swap that can bring team[i] in. Idempotent.
+	 */
+	void ownSlot(int i) {
+		Pokemon p = team[i];
+		if (p == null || p.trainer == this) return;
+		Pokemon c = p.clone();
+		c.vStatuses = DeepClonable.deepCloneList(p.vStatuses);
+		c.cloned = true;
+		c.trainer = this;
+		team[i] = c;
+	}
+
 	public boolean isGymOrE4() {
 		return money == 500 || eliteFour;
 	}

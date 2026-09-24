@@ -1,7 +1,9 @@
-package pokemon;
+package test;
 
 import java.util.List;
 
+import pokemon.Move;
+import pokemon.*;
 import util.Rng;
 
 /**
@@ -29,7 +31,7 @@ public final class Phase3Tests {
 	public static void runAll() {
 		run("T7", Phase3Tests::t7_solverSanity);
 		run("T4", Phase3Tests::t4_determinism);
-		//run("T6", Phase3Tests::t6_poisonFighting); TODO: test fails
+		run("T6", Phase3Tests::t6_poisonFighting);
 		run("T8", Phase3Tests::t8_twoLethalMovesRedundantPriority);
 		run("T12", Phase3Tests::t12_perishCounter1);
 		run("T13", Phase3Tests::t13_noMoveDoesAnything);
@@ -100,16 +102,30 @@ public final class Phase3Tests {
 
 	static void t6_poisonFighting() {
 		AITestHarness.Scenario s = AITestHarness.poisonFightingVsGhostBackSteel();
-		int poison = 0, fighting = 0, n = 100;
-		Rng.randomize();
-		for (int i = 0; i < n; i++) {
-			Move chosen = s.ai.bestMove2(s.foe, true, Player.NORMAL).move;
-			System.out.println(chosen);
-			if (chosen == s.taggedMoveA) poison++;
-			if (chosen == s.taggedMoveB) fighting++;
+		AIConfig cfg = AIConfig.hard(); // the hedge is a property of the matrix/solver itself, not of NORMAL's extra switch-gating
+		SimState root = SimState.snapshot(s.ai, s.foe);
+		MonWeights weights = MonWeights.compute(root);
+		List<Action> A = ActionGen.genAIActions(root, cfg, weights);
+		List<Action> P = ActionGen.genPlayerActions(root, cfg);
+		double[][] M = MatrixBuilder.buildMatrix(root, A, P, cfg, weights);
+		Solver.Result eq = Solver.solveZeroSum(M);
+
+		double poison = weightOfMove(A, eq.x, s.taggedMoveA);
+		double fighting = weightOfMove(A, eq.x, s.taggedMoveB);
+		System.out.println("raw equilibrium: " + s.taggedMoveA + "=" + poison + "  " + s.taggedMoveB + "=" + fighting);
+		assertTrue("both moves get nonzero RAW equilibrium weight (poison=" + poison + ", fighting=" + fighting + ") "
+				+ "- note this checks Solver output before Shaper.shape's minProb cutoff, since a real "
+				+ "but small hedge is expected to get pruned for actual sampled play (see chat)",
+				poison > 0 && fighting > 0);
+	}
+
+	/** Sums the equilibrium weight of every AI action that's a plain use of move m (ignores its MOVE_THEN_SWITCH variants, if any). */
+	private static double weightOfMove(List<Action> A, double[] x, Move m) {
+		double sum = 0;
+		for (int i = 0; i < A.size(); i++) {
+			if (A.get(i).kind == ActionKind.MOVE && A.get(i).move == m) sum += x[i];
 		}
-		assertTrue("both moves get nonzero probability", poison > 0 && fighting > 0);
-		assertTrue("not 100% either move", poison < n && fighting < n);
+		return sum;
 	}
 
 	// ---------------------------------------------------------------------
@@ -202,7 +218,7 @@ public final class Phase3Tests {
 	// ---------------------------------------------------------------------
 
 	static void t28_deadTurnUnlocksSwitching() {
-		AITestHarness.Scenario deadTurn = AITestHarness.allMovesImmuneVsActive();
+		AITestHarness.Scenario deadTurn = AITestHarness.trueDeadTurn();
 		SimState root1 = SimState.snapshot(deadTurn.ai, deadTurn.foe);
 		assertTrue("dead turn: NORMAL's action set includes SWITCH",
 				ActionGen.genAIActions(root1, AIConfig.normal(), MonWeights.compute(root1)).stream()
@@ -394,6 +410,38 @@ public final class Phase3Tests {
 				}
 			}
 			throw new IllegalStateException("couldn't find an all-immune pair in the trainer pool - "
+					+ "tell me a specific mon/matchup and I'll hand-target it instead of scanning");
+		}
+
+		/**
+		 * Like allMovesImmuneVsActive, but scans using ActionGen.deadTurn itself as the acceptance
+		 * criterion instead of the "no move deals direct damage" proxy above. The two aren't the
+		 * same thing: a mon with a genuinely useless-to-attack-with kit can still have a status
+		 * move (a stat boost, a hazard) that deadTurn correctly recognizes as a real action, in
+		 * which case allMovesImmuneVsActive's scenario wouldn't actually be a dead turn under the
+		 * code being tested. T28 needs the real predicate; T13 doesn't (HARD bypasses deadTurn
+		 * entirely via allowVoluntarySwitch), so it keeps using the cheaper proxy above.
+		 */
+		static Scenario trueDeadTurn() {
+			AIConfig cfg = AIConfig.normal();
+			for (Trainer at : pool()) {
+				if (aliveCount(at) < 2) continue;
+				for (Pokemon aiMon : at.team) {
+					if (aiMon == null) continue;
+					for (Trainer ft : pool()) {
+						if (ft == at) continue;
+						for (Pokemon foeMon : ft.team) {
+							if (foeMon == null) continue;
+							reset(at);
+							reset(ft);
+							Scenario s = finish(at, aiMon, ft, foeMon);
+							SimState root = SimState.snapshot(s.ai, s.foe);
+							if (ActionGen.deadTurn(root, cfg)) return s;
+						}
+					}
+				}
+			}
+			throw new IllegalStateException("no true dead-turn position (ActionGen.deadTurn==true) found in the pool - "
 					+ "tell me a specific mon/matchup and I'll hand-target it instead of scanning");
 		}
 

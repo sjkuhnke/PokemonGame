@@ -1,10 +1,11 @@
-package pokemon;
+package test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import overworld.GamePanel;
+import pokemon.*;
 import util.Print;
 import util.Rng;
 
@@ -225,18 +226,16 @@ public final class Phase0Tests {
 			tf.boosts = new int[3];
 			Pokemon.field.clear(ally.trainer, tf);
 
+			// Phase 4: the legacy simulateSwitchIn/analyzeMoveEffect are gone; evaluateSwitchInScore now runs in a SimContext
+			// (Task calls are no-ops there), so the B9 invariant is simply "createTask is never changed".
 			Pokemon.createTask = false;
 			ally.evaluateSwitchInScore(foe, Pokemon.field);
-			check("B9 simulateSwitchIn (via evaluateSwitchInScore) restores createTask=false", !Pokemon.createTask, "createTask=" + Pokemon.createTask);
-
-			Pokemon.createTask = false;
-			ally.analyzeMoveEffect(foe, Move.GROWL, true, Pokemon.field, 0, null, Move.HEADBUTT, 50.0);
-			check("B9 analyzeMoveEffect restores createTask=false", !Pokemon.createTask, "createTask=" + Pokemon.createTask);
+			check("B9 evaluateSwitchInScore leaves createTask=false alone", !Pokemon.createTask, "createTask=" + Pokemon.createTask);
 
 			Pokemon.createTask = true;
 			ally.evaluateSwitchInScore(foe, Pokemon.field);
-			ally.analyzeMoveEffect(foe, Move.GROWL, true, Pokemon.field, 0, null, Move.HEADBUTT, 50.0);
 			check("B9 createTask stays true when it was true", Pokemon.createTask, "");
+			Pokemon.createTask = false;
 		});
 	}
 

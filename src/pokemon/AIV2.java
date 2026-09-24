@@ -40,6 +40,8 @@ public final class AIV2 implements TrainerAI {
 	public static boolean AI_DEBUG = false;
 	/** Full A x P payoff matrix. Verbose - leave off unless you're chasing a specific decision. */
 	public static boolean AI_DEBUG_MATRIX = true;
+	/** Per-action resulting branch state (HP/status/stages/fainted) vs one fixed player action. See logBranchDetail. */
+	public static boolean AI_DEBUG_BRANCHES = true;
 
 	private AIV2() {}
 
@@ -86,6 +88,7 @@ public final class AIV2 implements TrainerAI {
 		double[][] M = MatrixBuilder.buildMatrix(root, A, P, cfg, weights);
 		logMatrix(self, A, P, M);
 		logEvalBreakdown(self, root, cfg, weights);
+		logBranchDetail(self, root, A, P, cfg);
 
 		// predict()/finalStrategy() (§7.11): no player model this phase, see class doc.
 		Solver.Result eq = Solver.solveZeroSum(M);
@@ -99,7 +102,7 @@ public final class AIV2 implements TrainerAI {
 		return toMoveDecision(chosenAct);
 	}
 
-	/** Action -> MoveDecision, converting the 0-based Action.slot into MoveDecision's 1-based/negative switch encoding (see Pokemon.legacyBestMove for the same conventions). */
+	/** Action -> MoveDecision, converting the 0-based Action.slot into MoveDecision's 1-based/negative switch encoding (same conventions as Pokemon.resolveDecision). */
 	private MoveDecision toMoveDecision(Action act) {
 		switch (act.kind) {
 		case MOVE:
@@ -141,7 +144,7 @@ public final class AIV2 implements TrainerAI {
 
 	/**
 	 * §7.12 reporting: derives simBattleUI.p1Moves/p2Moves (moves only, renormalized) and
-	 * p1Switch/p2Switch reasons from x, mirroring legacyBestMove's own "fill p1 slot if empty,
+	 * p1Switch/p2Switch reasons from x, mirroring the pre-overhaul "fill p1 slot if empty,
 	 * else p2" pattern so the existing sim-UI probability displays keep working unmodified.
 	 */
 	private void report(Pokemon self, List<Action> A, double[] x, Action chosenAct, double chosenProb) {
@@ -191,6 +194,37 @@ public final class AIV2 implements TrainerAI {
 			sb.append(String.format(Locale.ROOT, "%-24s", trunc(A.get(i).label(), 23)));
 			for (int j = 0; j < P.size(); j++) sb.append(String.format(Locale.ROOT, "%12.1f", M[i][j]));
 			sb.append('\n');
+		}
+		Print.debug(sb.toString());
+	}
+
+	/**
+	 * Diagnostic: for every AI action, dumps the resulting branch(es) against ONE fixed player
+	 * action (P.get(0)) - HP, status, stat stages, fainted, for both sides. Off by default
+	 * (AI_DEBUG_BRANCHES); this exists specifically to check whether two differently-labeled
+	 * actions that get identical matrix payoffs are actually producing identical post-turn
+	 * states (a real bug) or just coincidentally identical eval() numbers from different states.
+	 */
+	private void logBranchDetail(Pokemon self, SimState root, List<Action> A, List<Action> P, AIConfig cfg) {
+		if (!AI_DEBUG || !AI_DEBUG_BRANCHES || P.isEmpty()) return;
+		Action p0 = P.get(0);
+		StringBuilder sb = new StringBuilder("[AIV2] branch detail for ").append(self)
+				.append(" vs player action '").append(p0.label()).append("':\n");
+		for (Action a : A) {
+			List<Branch> branches = BattleSimulator.simulateTurn(root, a, p0, cfg);
+			sb.append(String.format(Locale.ROOT, "  %-24s -> %d branch(es)\n", a.label(), branches.size()));
+			for (Branch br : branches) {
+				Pokemon aiMon = br.state.ai.active();
+				Pokemon foeMon = br.state.player.active();
+				sb.append(String.format(Locale.ROOT,
+						"      p=%.2f  self hp=%d/%d status=%s stages=%s fainted=%b  |  foe hp=%d/%d status=%s fainted=%b\n",
+						br.prob,
+						aiMon == null ? -1 : aiMon.currentHP, aiMon == null ? -1 : aiMon.getStat(0),
+						aiMon == null ? "?" : aiMon.status, aiMon == null ? "?" : java.util.Arrays.toString(aiMon.statStages),
+						aiMon != null && aiMon.fainted,
+						foeMon == null ? -1 : foeMon.currentHP, foeMon == null ? -1 : foeMon.getStat(0),
+						foeMon == null ? "?" : foeMon.status, foeMon != null && foeMon.fainted));
+			}
 		}
 		Print.debug(sb.toString());
 	}
