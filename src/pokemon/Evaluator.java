@@ -61,7 +61,7 @@ public final class Evaluator {
 	 * the existing matchupScore formula (unchanged constants) - matches §7.8's "myR.frac,
 	 * foeR.frac" naming: expectedCapped/hp, not just the max roll.
 	 */
-	static double activeMatchup(SimState s) {
+	public static double activeMatchup(SimState s) {
 		Pokemon aiMon = s.ai.active(), plMon = s.player.active();
 		if (aiMon == null || plMon == null || aiMon.isFainted() || plMon.isFainted()) return 0;
 
@@ -153,7 +153,7 @@ public final class Evaluator {
 	}
 
 	/** fieldValue(s) = net weather value (AI perspective, already nets both sides) + AI screens - player screens. */
-	static double fieldValue(SimState s) {
+	public static double fieldValue(SimState s) {
 		Pokemon aiAnchor = s.ai.active(), plAnchor = s.player.active();
 		if (aiAnchor == null || plAnchor == null) return 0;
 
@@ -182,7 +182,7 @@ public final class Evaluator {
 	}
 
 	/** tempo(s) = small bonus for holding initiative (faster, or foe recharging/trapped); negative if not. */
-	static double tempo(SimState s) {
+	public static double tempo(SimState s) {
 		Pokemon a = s.ai.active(), p = s.player.active();
 		if (a == null || p == null || a.isFainted() || p.isFainted()) return 0;
 		boolean aiFaster = a.getFaster(p, 0, 0, s.field) == a;
@@ -216,7 +216,7 @@ public final class Evaluator {
 	 * Wish alike, since both cure it). Wish: the heal the active mon will get, capped at its missing HP.
 	 * A Healing Wish sacrifice is a MOVE row that KOs the user; this term is what pays for it (§9).
 	 */
-	static double pendingValue(SimState s, double[] aiWeights, double[] playerWeights) {
+	public static double pendingValue(SimState s, double[] aiWeights, double[] playerWeights) {
 		double v = pendingRecovery(s.ai, aiWeights, s.field) - pendingRecovery(s.player, playerWeights, s.field);
 		v -= restrictionCost(s.ai, s.field);
 		v += restrictionCost(s.player, s.field);

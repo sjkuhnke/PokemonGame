@@ -65,6 +65,7 @@ public class TitleScreen extends AbstractUI {
 	public int difficultyLevel;
 	public boolean banShedinja;
 	public boolean banBatonPass;
+	public boolean allowDryPass;
 	public boolean allowRevives;
 	public boolean buyableRevives;
 	public int levelCapBonus;
@@ -111,10 +112,11 @@ public class TitleScreen extends AbstractUI {
 	public static final int NG_DIFFICULTY = 3;
 	public static final int NG_BAN_SHEDINJA = 4;
 	public static final int NG_BAN_BATON_PASS = 5;
-	public static final int NG_ALLOW_REVIVES = 6;
-	public static final int NG_BUYABLE_REVIVES = 7;
-	public static final int NG_LEVEL_CAP = 8;
-	public static final int NG_START = 9;
+	public static final int NG_DRY_PASS = 6;
+	public static final int NG_ALLOW_REVIVES = 7;
+	public static final int NG_BUYABLE_REVIVES = 8;
+	public static final int NG_LEVEL_CAP = 9;
+	public static final int NG_START = 10;
 	
 	// NEW GAME SCROLL
 	private int newGameMenuScroll = 0;
@@ -343,6 +345,7 @@ public class TitleScreen extends AbstractUI {
 		difficultyLevel = 1;
 		banShedinja = false;
 		banBatonPass = false;
+		allowDryPass = true;
 		allowRevives = true;
 		buyableRevives = false;
 		levelCapBonus = 0;
@@ -783,6 +786,10 @@ public class TitleScreen extends AbstractUI {
 					if (!nuzlockeMode && (newGameMenuNum >= NG_BAN_SHEDINJA && newGameMenuNum <= NG_LEVEL_CAP)) {
 						newGameMenuNum = NG_DIFFICULTY;
 					}
+					// skip dry passing if baton pass isn't banned
+					if (newGameMenuNum == NG_DRY_PASS && !banBatonPass) {
+						newGameMenuNum = NG_BAN_BATON_PASS;
+					}
 					// skip buyable revives if allow revives is off
 					if (newGameMenuNum == NG_BUYABLE_REVIVES && !allowRevives) {
 						newGameMenuNum = NG_ALLOW_REVIVES;
@@ -809,6 +816,10 @@ public class TitleScreen extends AbstractUI {
 					// skip disabled options
 					if (!nuzlockeMode && (newGameMenuNum >= NG_BAN_SHEDINJA && newGameMenuNum <= NG_LEVEL_CAP)) {
 						newGameMenuNum = NG_START;
+					}
+					// skip dry passing if baton pass isn't banned
+					if (newGameMenuNum == NG_DRY_PASS && !banBatonPass) {
+						newGameMenuNum = NG_ALLOW_REVIVES;
 					}
 					// skip buyable revives if allow revives is off
 					if (newGameMenuNum == NG_BUYABLE_REVIVES && !allowRevives) {
@@ -910,18 +921,35 @@ public class TitleScreen extends AbstractUI {
 					banShedinja = !banShedinja;
 				}
 				break;
+				
 			case NG_BAN_BATON_PASS:
-				if (gp.keyH.wPressed || gp.keyH.leftPressed || gp.keyH.rightPressed) {
-					gp.keyH.wPressed = false;
-					gp.keyH.leftPressed = false;
-					gp.keyH.rightPressed = false;
-					if (banBatonPass) {
-						gp.playSFX(Sound.S_MENU_CAN);
-					} else {
-						gp.playSFX(Sound.S_MENU_CON);
-					}
-					banBatonPass = !banBatonPass;
-				}
+			    if (gp.keyH.wPressed || gp.keyH.leftPressed || gp.keyH.rightPressed) {
+			        gp.keyH.wPressed = false;
+			        gp.keyH.leftPressed = false;
+			        gp.keyH.rightPressed = false;
+			        if (banBatonPass) {
+			            gp.playSFX(Sound.S_MENU_CAN);
+			            allowDryPass = true; // reset to default when the ban is turned off
+			        } else {
+			            gp.playSFX(Sound.S_MENU_CON);
+			        }
+			        banBatonPass = !banBatonPass;
+			    }
+			    break;
+			    
+			case NG_DRY_PASS:
+			    if (gp.keyH.wPressed || gp.keyH.leftPressed || gp.keyH.rightPressed) {
+			        gp.keyH.wPressed = false;
+			        gp.keyH.leftPressed = false;
+			        gp.keyH.rightPressed = false;
+			        if (allowDryPass) {
+			            gp.playSFX(Sound.S_MENU_CAN);
+			        } else {
+			            gp.playSFX(Sound.S_MENU_CON);
+			        }
+			        allowDryPass = !allowDryPass;
+			    }
+			    break;
 				
 			case NG_ALLOW_REVIVES:
 				if (gp.keyH.wPressed || gp.keyH.leftPressed || gp.keyH.rightPressed) {
@@ -950,6 +978,7 @@ public class TitleScreen extends AbstractUI {
 					}
 					buyableRevives = !buyableRevives;
 				}
+				break;
 				
 			case NG_LEVEL_CAP:
 				if (gp.keyH.leftPressed) {
@@ -1008,6 +1037,9 @@ public class TitleScreen extends AbstractUI {
 	
 	private boolean isOptionVisible(int option) {
 		if (!nuzlockeMode && (option >= NG_BAN_SHEDINJA && option <= NG_LEVEL_CAP)) {
+			return false;
+		}
+		if (!banBatonPass && option == NG_DRY_PASS) {
 			return false;
 		}
 		if (!allowRevives && option == NG_BUYABLE_REVIVES) {
@@ -1257,6 +1289,25 @@ public class TitleScreen extends AbstractUI {
 			
 			contentY += (int)(gp.tileSize * 0.75);
 			
+			if (banBatonPass) {
+			    g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));
+			    selected = newGameMenuNum == NG_DRY_PASS;
+
+			    drawOutlinedText("\u2022 Allow Dry Passing:", contentX + gp.tileSize / 4, contentY, selected ? textColor : new Color(200, 200, 200), Color.BLACK);
+
+			    drawToggleSwitch(contentX + gp.tileSize * 4, contentY - gp.tileSize / 4, allowDryPass, selected);
+
+			    if (selected) {
+			        int tipY = contentY - gp.tileSize / 8;
+			        g2.setFont(g2.getFont().deriveFont(Font.ITALIC, 14F));
+			        drawOutlinedText("Baton Pass can still be used to switch out,", tipX, tipY, new Color(180, 180, 180), Color.BLACK);
+			        tipY += gp.tileSize / 4;
+			        drawOutlinedText("but passes no stat boosts or status effects.", tipX, tipY, new Color(180, 180, 180), Color.BLACK);
+			    }
+
+			    contentY += (int)(gp.tileSize * 0.75);
+			}
+			
 			g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));
 			selected = newGameMenuNum == NG_ALLOW_REVIVES;
 			drawOutlinedText("Allow Revives:", contentX + gp.tileSize / 4, contentY, selected ? textColor : new Color(200, 200, 200), Color.BLACK);
@@ -1323,7 +1374,8 @@ public class TitleScreen extends AbstractUI {
 			
 			float thumbHeight = scrollbarHeight * ((float)MAX_VISIBLE_NG_OPTIONS / totalOptions);
 			float maxScroll = totalOptions - getMaxVisibleOptions();
-			float thumbY = scrollbarY + (scrollbarHeight - thumbHeight) * (newGameMenuScroll / maxScroll);
+			float scrollRatio = maxScroll > 0 ? Math.min(1f, newGameMenuScroll / maxScroll) : 0f;
+			float thumbY = scrollbarY + (scrollbarHeight - thumbHeight) * scrollRatio;
 			
 			g2.setColor(textColor);
 			g2.fillRect(scrollbarX, (int)thumbY, scrollbarWidth, (int)thumbHeight);
@@ -1378,6 +1430,7 @@ public class TitleScreen extends AbstractUI {
 			else if (i == NG_NUZLOCKE_TOGGLE) offset += (int)(gp.tileSize * 0.5);
 			else if (i == NG_DIFFICULTY) offset += gp.tileSize;
 			else if (!nuzlockeMode && i >= NG_BAN_SHEDINJA && i <= NG_LEVEL_CAP) continue;
+			else if (!banBatonPass && i == NG_DRY_PASS) continue;
 			else if (!allowRevives && i == NG_BUYABLE_REVIVES) continue;
 			else offset += (int)(gp.tileSize * 0.75);
 		}

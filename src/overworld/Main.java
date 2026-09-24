@@ -139,6 +139,7 @@ public class Main {
 		int difficulty = gp.titleScreen.difficultyLevel;
 		boolean banShedinja = gp.titleScreen.banShedinja;
 	    boolean banBatonPass = gp.titleScreen.banBatonPass;
+	    boolean allowDryPass = gp.titleScreen.allowDryPass;
 	    boolean allowRevives = gp.titleScreen.allowRevives;
 	    boolean buyableRevives = gp.titleScreen.buyableRevives;
 	    int levelCapBonus = gp.titleScreen.levelCapBonus;
@@ -170,7 +171,7 @@ public class Main {
 				} else {
 					loader.setProgress(5, "Creating new player...");
 					gp.player.p = new Player(gp, playerName);
-					if (nuzlocke) gp.player.p.setupNuzlocke(banShedinja, banBatonPass, allowRevives, buyableRevives, levelCapBonus);
+					if (nuzlocke) gp.player.p.setupNuzlocke(banShedinja, banBatonPass, allowDryPass, allowRevives, buyableRevives, levelCapBonus);
 					gp.player.p.difficulty = difficulty;
 					gp.player.p.flag[0][23] = true;
 				}

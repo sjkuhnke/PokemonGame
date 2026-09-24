@@ -126,6 +126,7 @@ public class Player extends Trainer implements Serializable {
 	// settings
 	public boolean banShedinja;
 	public boolean banBatonPass;
+	public boolean allowDryPass;
 	public boolean allowRevives;
 	public boolean buyableRevives;
 	public int levelCapBonus;
@@ -211,7 +212,7 @@ public class Player extends Trainer implements Serializable {
 		return this.id;
 	}
 	
-	public void setupNuzlocke(boolean banShedinja, boolean banBatonPass, boolean allowRevives, boolean buyableRevives, int levelCapBonus) {
+	public void setupNuzlocke(boolean banShedinja, boolean banBatonPass, boolean allowDryPass, boolean allowRevives, boolean buyableRevives, int levelCapBonus) {
 		this.nuzlocke = true;
 		this.nuzlockeStarted = false;
 		this.isValidNuzlocke = true;
@@ -229,6 +230,7 @@ public class Player extends Trainer implements Serializable {
 		// SETTINGS
 		this.banShedinja = banShedinja;
 		this.banBatonPass = banBatonPass;
+		this.allowDryPass = allowDryPass;
 		this.allowRevives = allowRevives;
 		this.buyableRevives = buyableRevives;
 		this.levelCapBonus = levelCapBonus;

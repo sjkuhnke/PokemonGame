@@ -1,7 +1,10 @@
-package pokemon;
+package test;
 
 import java.util.List;
 import java.util.Locale;
+
+import pokemon.*;
+import test.Phase4Tests.Duel;
 
 /**
  * Debug output for a matrix cell: which eval TERM produced the number. Use it when a matrix-shaped test (T9/T10/T11) fails
@@ -17,7 +20,7 @@ final class Phase4Debug {
 	private Phase4Debug() {}
 
 	static void t9(boolean foeAtOneHp) {
-		Phase4Tests.Duel d = foeAtOneHp ? Phase4Tests.boostDuel(Move.NASTY_PLOT) : Phase4Tests.ohkoDuel(Move.NASTY_PLOT);
+		Duel d = foeAtOneHp ? Phase4Tests.boostDuel(Move.NASTY_PLOT) : Phase4Tests.ohkoDuel(Move.NASTY_PLOT);
 		if (foeAtOneHp) d.f.currentHP = 1;
 		explain(d, Move.NASTY_PLOT, Move.FLAMETHROWER);
 	}

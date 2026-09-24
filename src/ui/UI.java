@@ -5093,31 +5093,44 @@ public class UI extends AbstractUI {
 		contentY += gp.tileSize;
 
 		// settings
-		contentX += gp.tileSize * 4;
-		labelX = contentX + gp.tileSize / 4;
+		int settingsX = contentX + gp.tileSize * 3;
+		labelX = settingsX + gp.tileSize / 4;
 		contentY = startY;
 		
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
-		drawOutlinedText("Settings:", contentX, contentY, textColor, Color.BLACK);
+		drawOutlinedText("Settings:", settingsX, contentY, textColor, Color.BLACK);
 		contentY += (int)(gp.tileSize * 0.75);
-
+		
 		g2.setFont(g2.getFont().deriveFont(20F));
-		drawOutlinedText("Ban Shedinja: " + (p.banShedinja ? "Yes" : "No"), labelX, contentY, new Color(200, 200, 200), Color.BLACK);
-		contentY += (int)(gp.tileSize * 0.6);
-
-		drawOutlinedText("Ban Baton Pass: " + (p.banBatonPass ? "Yes" : "No"), labelX, contentY, new Color(200, 200, 200), Color.BLACK);
-		contentY += (int)(gp.tileSize * 0.6);
-
-		drawOutlinedText("Allow Revives: " + (p.allowRevives ? "Yes" : "No"), labelX, contentY, new Color(200, 200, 200), Color.BLACK);
-		contentY += (int)(gp.tileSize * 0.6);
-
-		if (p.allowRevives) {
-			drawOutlinedText("\u2022 Buyable Revives: " + (p.buyableRevives ? "Yes" : "No"), labelX, contentY, new Color(180, 180, 180), Color.BLACK);
-			contentY += (int)(gp.tileSize * 0.6);
+		int rowH = (int)(gp.tileSize * 0.6);
+		Color mainColor = new Color(200, 200, 200);
+		Color subColor = new Color(180, 180, 180);
+		
+		drawOutlinedText("Ban Shedinja: " + (p.banShedinja ? "Yes" : "No"), labelX, contentY, mainColor, Color.BLACK);
+		contentY += rowH;
+		
+		// Ban Baton Pass, with its sub-setting on the same row
+		String batonText = "Ban Baton Pass: " + (p.banBatonPass ? "Yes" : "No");
+		drawOutlinedText(batonText, labelX, contentY, mainColor, Color.BLACK);
+		if (p.banBatonPass) {
+			g2.setFont(g2.getFont().deriveFont(16F));
+			drawOutlinedText("\u2022 Dry Pass: " + (p.allowDryPass ? "Yes" : "No"), (int) (labelX + gp.tileSize * 3.5), contentY - 1, subColor, Color.BLACK);
+			g2.setFont(g2.getFont().deriveFont(20F));
 		}
-
-		drawOutlinedText("Level Cap Bonus: +" + p.levelCapBonus, labelX, contentY, new Color(200, 200, 200), Color.BLACK);
-		contentX -= gp.tileSize * 4;
+		contentY += rowH;
+		
+		// Allow Revives, with its sub-setting on the same row
+		String revivesText = "Allow Revives: " + (p.allowRevives ? "Yes" : "No");
+		drawOutlinedText(revivesText, labelX, contentY, mainColor, Color.BLACK);
+		if (p.allowRevives) {
+			g2.setFont(g2.getFont().deriveFont(16F));
+			drawOutlinedText("\u2022 Buyable: " + (p.buyableRevives ? "Yes" : "No"), (int) (labelX + gp.tileSize * 3.5), contentY - 1, subColor, Color.BLACK);
+			g2.setFont(g2.getFont().deriveFont(20F));
+		}
+		contentY += rowH;
+		
+		drawOutlinedText("Level Cap Bonus: +" + p.levelCapBonus, labelX, contentY, mainColor, Color.BLACK);
+		
 		contentY = startY + (int) (gp.tileSize * 2.75);
 
 		// encounters

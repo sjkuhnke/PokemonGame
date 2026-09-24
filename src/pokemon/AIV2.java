@@ -37,7 +37,7 @@ public final class AIV2 implements TrainerAI {
 	public static final AIV2 INSTANCE = new AIV2();
 
 	/** One line per action + its sampling probability, and the chosen action. */
-	public static boolean AI_DEBUG = false;
+	public static boolean AI_DEBUG = true;
 	/** Full A x P payoff matrix. Verbose - leave off unless you're chasing a specific decision. */
 	public static boolean AI_DEBUG_MATRIX = true;
 	/** Per-action resulting branch state (HP/status/stages/fainted) vs one fixed player action. See logBranchDetail. */
@@ -171,7 +171,7 @@ public final class AIV2 implements TrainerAI {
 	private void logDecision(Pokemon self, List<Action> A, double[] x, Action chosenAct, double chosenProb) {
 		if (!AI_DEBUG) return;
 		StringBuilder sb = new StringBuilder();
-		sb.append("[AIV2] ").append(self).append(" (turn ").append(Pokemon.field.turns).append(")\n");
+		sb.append("[AIV2] ").append(self).append(" (turn ").append(Pokemon.field.turns + 1).append(")\n");
 		Integer[] order = new Integer[A.size()];
 		for (int i = 0; i < order.length; i++) order[i] = i;
 		java.util.Arrays.sort(order, (i, j) -> Double.compare(x[j], x[i])); // highest probability first
