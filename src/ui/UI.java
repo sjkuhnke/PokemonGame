@@ -5308,6 +5308,10 @@ public class UI extends AbstractUI {
 			g2.drawString(">", x-24, y);
 			if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
+				// end log for current save in case 
+				Print.endSave();
+				gp.titleScreen.previewCache.remove(gp.player.currentSave);
+				gp.titleScreen.previewPlayer = null;
 				gp.titleScreen.loadSaveFiles();
 				gp.titleScreen.menuState = TitleScreen.MAIN_MENU;
 				gp.titleScreen.menuNum = TitleScreen.MAIN_CONTINUE;

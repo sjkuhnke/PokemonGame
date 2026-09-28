@@ -1,6 +1,5 @@
 package overworld;
 import java.awt.Desktop;
-import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
@@ -96,36 +95,30 @@ public class Main {
 	}
 
 	public static void loadIcon(JFrame window, int image) {
-		try {
-			BufferedImage icon = null;
-			if (icons[image - 1] != null) {
-				icon = icons[image - 1];
-			} else {
-				URL iconURL = Main.class.getResource("/gen/icon" + image + ".png");
-				if (iconURL != null) {
-			        icon = ImageIO.read(iconURL);
-				}
-				icons[image - 1] = icon;
-			}
-		    if (icon != null) {
-		        window.setIconImage(icon);
-		        
-		        if (icon != null && System.getProperty("os.name").toLowerCase().contains("mac")) {
-		            try {
-		                // Reflectively load Apple EAWT Application class (safe even if not on mac)
-		                Class<?> appClass = Class.forName("com.apple.eawt.Application");
-		                Object appInstance = appClass.getMethod("getApplication").invoke(null);
-		                appClass.getMethod("setDockIconImage", Image.class).invoke(appInstance, icon);
-		            } catch (Exception e) {
-		                System.out.println("Unable to set dock icon on macOS: " + e.getMessage());
-		            }
-		        }
-		    } else {
-		        System.out.println("Icon resource not found!");
-		    }
-		} catch (IOException e) {
-		    e.printStackTrace();
-		}
+	    try {
+	        BufferedImage icon = null;
+
+	        if (icons[image - 1] != null) {
+	            icon = icons[image - 1];
+	        } else {
+	            URL iconURL = Main.class.getResource("/gen/icon" + image + ".png");
+
+	            if (iconURL != null) {
+	                icon = ImageIO.read(iconURL);
+	            }
+
+	            icons[image - 1] = icon;
+	        }
+
+	        if (icon != null) {
+	            window.setIconImage(icon);
+	        } else {
+	            System.out.println("Icon resource not found!");
+	        }
+
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
 	}
 	
 	public static void loadGame(String fileName, String playerName) {
@@ -294,6 +287,7 @@ public class Main {
 					gp.aSetter.updateNPC(gp.currentMap);
 					gp.player.p.setupPuzzles(gp, gp.currentMap);
 					gp.player.currentSave = fileName;
+					Print.setSaveFile(fileName);
 					gp.setGameState(GamePanel.PLAY_STATE);
 				});
 				

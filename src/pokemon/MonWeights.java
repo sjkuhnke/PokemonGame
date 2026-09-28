@@ -129,7 +129,7 @@ public final class MonWeights {
 	 * matters right now (a remover only counts while hazards are on the mon's own side, a cleric only while a teammate
 	 * is statused, ...). Summed and capped at {@link #UTILITY_MAX}. Caller holds a SimContext scope.
 	 */
-	public static double utility(Pokemon m, SideState mine, SideState theirs, Field field) {
+	static double utility(Pokemon m, SideState mine, SideState theirs, Field field) {
 		if (m == null || m.moveset == null) return 0;
 		double u = 0;
 
@@ -144,7 +144,7 @@ public final class MonWeights {
 			}
 		}
 
-		if (has(m, Move.RAPID_SPIN, Move.TORNADO_SPIN, Move.MORTAL_SPIN, Move.DEFOG)) {
+		if (has(m, Move.RAPID_SPIN, Move.DEFOG)) {
 			for (Field.FieldEffect fe : mine.shell.getFieldEffectList()) {
 				if (m.hazardMoveForEffect(fe.effect) != null) {
 					u += 0.2;
@@ -223,6 +223,17 @@ public final class MonWeights {
 		return c;
 	}
 
+	/**
+	 * Phase 5 fix: offset-from-mean, not ratio-to-mean. raw[m] = BASE_W(1.0) + terms that can go negative (a mon with
+	 * no offense and a bad matchup has contribution well below 0), so the whole side's raw values can legitimately sum
+	 * to zero or less - a team that is collectively struggling, not a special case to special-case away. A RATIO to a
+	 * non-positive mean is undefined (or, worse, silently INVERTS the ordering: dividing two negative raws by a
+	 * negative mean flips which one comes out higher), so the old code fell back to a flat 1.0 for every mon whenever
+	 * mean <= 0 - discarding any real differentiation between them, which is what let T26-adjacent scenarios pass
+	 * while masking this. w[i] = 1.0 + (raw[i] - mean) still averages to exactly 1.0 over the alive mons (since the
+	 * mean of raw[i]-mean is 0 by construction) and preserves relative ordering unconditionally, whatever sign mean
+	 * has.
+	 */
 	private static double[] normalize(double[] raw, Pokemon[] team) {
 		double sum = 0;
 		int alive = 0;
@@ -231,14 +242,14 @@ public final class MonWeights {
 			sum += raw[i];
 			alive++;
 		}
-		double mean = alive > 0 ? sum / alive : 1.0;
+		double mean = alive > 0 ? sum / alive : 0.0;
 		double[] out = new double[raw.length];
 		for (int i = 0; i < raw.length; i++) {
 			if (team[i] == null || team[i].isFainted()) {
 				out[i] = 0;
 				continue;
 			}
-			double w = mean > 0 ? raw[i] / mean : 1.0;
+			double w = 1.0 + (raw[i] - mean);
 			out[i] = Math.max(MIN_W, Math.min(MAX_W, w));
 		}
 		return out;

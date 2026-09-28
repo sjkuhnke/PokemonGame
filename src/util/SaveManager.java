@@ -173,4 +173,29 @@ public class SaveManager {
 			e.printStackTrace();
 		}
 	}
+	
+	public static Path getLogsDirectory() {
+		Path logsPath = getDocsDirectory().getParent().resolve("logs");
+		
+		try {
+			Files.createDirectories(logsPath);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return logsPath;
+	}
+	
+	public static Path getSaveLogsDirectory(String fileName) {
+		String folderName = fileName.replaceFirst("\\.dat$", "");
+		Path logsPath = getLogsDirectory().resolve(folderName);
+		
+		try {
+			Files.createDirectories(logsPath);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return logsPath;
+	}
 }

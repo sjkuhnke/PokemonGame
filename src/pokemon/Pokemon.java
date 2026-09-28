@@ -3382,7 +3382,7 @@ public class Pokemon implements Serializable {
 	public void awardExp(int amt) {
 		if (this.fainted) return;
 		if (!this.playerOwned()) return;
-		if (!this.recordsStats()) return;
+		if (this.cloned) return;
 		Player player = this.getPlayer();
 
 		player.handleExpShare();
@@ -5005,6 +5005,16 @@ public class Pokemon implements Serializable {
 			}
 			break;
 		case MAGIC_POWDER:
+			if (foe.isType(PType.GRASS) || foe.getItem(field) == Item.SAFETY_GOGGLES) {
+				if (foe.getItem(field) == Item.SAFETY_GOGGLES) {
+					Task.addTask(Task.TEXT, "It doesn't effect " + foe.nickname + " due to its Safety Goggles!");
+				} else {
+					Task.addTask(Task.TEXT, "It doesn't effect " + foe.nickname + "...");
+				}
+				success = false;
+				fail = true;
+				return;
+			}
 			foe.type1 = PType.MAGIC;
 			foe.type2 = null;
 			Task.addTypeTask(foe.nickname + "'s type changed to MAGIC!", foe);
@@ -5062,8 +5072,10 @@ public class Pokemon implements Serializable {
 			}
 			break;
 		case MUD_SPORT:
-			field.setEffect(field.new FieldEffect(Effect.MUD_SPORT));
-			Task.addTask(Task.TEXT, "Electric's power was weakened!");
+			if (!field.contains(fieldEffects, Effect.MUD_SPORT)) {
+				field.setEffect(field.new FieldEffect(Effect.MUD_SPORT));
+				Task.addTask(Task.TEXT, "Electric's power was weakened!");
+			}
 			break;
 		case NASTY_PLOT:
 			stat(this, 2, 2, foe);
@@ -5553,8 +5565,10 @@ public class Pokemon implements Serializable {
 			}
 			break;
 		case WATER_SPORT:
-			field.setEffect(field.new FieldEffect(Effect.WATER_SPORT));
-			Task.addTask(Task.TEXT, "Fire's power was weakened!");
+			if (!field.contains(fieldEffects, Effect.WATER_SPORT)) {
+				field.setEffect(field.new FieldEffect(Effect.WATER_SPORT));
+				Task.addTask(Task.TEXT, "Fire's power was weakened!");
+			}
 			break;
 		case WHIRLWIND:
 		case ROAR:
@@ -11418,6 +11432,7 @@ public class Pokemon implements Serializable {
 		
 		this.clearVolatile(null);
 		if (this.ability == Ability.ILLUSION) this.illusion = true; // just here for calc
+		if (this.ability == Ability.ANTICIPATION) this.illusion = false;
 		if (this.status == Status.ASLEEP) this.setSleepCounter();
 		this.vStatuses.clear();
 		this.abilityFlag = false;

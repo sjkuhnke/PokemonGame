@@ -73,8 +73,8 @@ public class TitleScreen extends AbstractUI {
 	// SAVE FILE DATA
 	private ArrayList<String> saveFiles;
 	private int selectedSaveIndex = 0;
-	private Player previewPlayer;
-	private final Map<String, Player> previewCache = new ConcurrentHashMap<>();
+	public Player previewPlayer;
+	public Map<String, Player> previewCache = new ConcurrentHashMap<>();
 	public final ThreadPoolExecutor previewExecutor = new ThreadPoolExecutor(
 			1, 1, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(),
 			r -> {
@@ -195,6 +195,7 @@ public class TitleScreen extends AbstractUI {
 			saveFiles.sort(Comparator.reverseOrder());
 			break;
 		case SORT_REFRESH:
+			previewCache.clear();
 			loadSaveFiles();
 			break;
 		}

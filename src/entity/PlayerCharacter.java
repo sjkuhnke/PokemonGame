@@ -1118,8 +1118,8 @@ public class PlayerCharacter extends Entity {
 		int wOffset = (width - gp.tileSize) / 2;
 		int height = image.getHeight() * gp.scale;
 		int hOffset = height - gp.tileSize;
-		int drawX = screenX - wOffset;
-		int drawY = screenY - hOffset;
+		int drawX = screenX - wOffset + gp.offsetX;
+		int drawY = screenY - hOffset + gp.offsetY;
 		
 		drawReflection(g2, image, drawX, drawY, gp.tileSize, height);
 		g2.drawImage(image, drawX, drawY, width, height, null);

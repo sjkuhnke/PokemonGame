@@ -110,11 +110,26 @@ public final class SackAnalysis {
 				keep.add(i);
 				continue;
 			}
-			double g = 0;
-			for (int j = 0; j < nCols; j++) if (threat[j]) g += M[i][j] - stay[j];
-			g = nThreat > 0 ? g / nThreat : Double.NEGATIVE_INFINITY;
+			double g;
+			if (nThreat > 0) {
+				double sum = 0;
+				for (int j = 0; j < nCols; j++) if (threat[j]) sum += M[i][j] - stay[j];
+				g = sum / nThreat;
+			} else {
+				// No player move threatens an outright KO this turn - the guard's safety check (§7.14.2's "don't
+				// throw a mon away for nothing") has no acute crisis to weigh against, so it judges the sack
+				// against the OVERALL matchup instead of reflexively vetoing it: the mean gain over every player
+				// column, not just threat ones. A genuinely bad sack still gets dropped here (its mean gain stays
+				// below minGain); a genuinely good one - a low-value mon in a clearly bad long-run matchup - can
+				// now survive without needing an imminent one-hit-KO to justify it. Previously this branch was a
+				// hard -Infinity (always drop), which was closer to a blanket ban on sacking outside OHKO
+				// emergencies than the safety check the spec describes - see PHASE5_CHANGES.md.
+				double sum = 0;
+				for (int j = 0; j < nCols; j++) sum += M[i][j] - stay[j];
+				g = nCols > 0 ? sum / nCols : Double.NEGATIVE_INFINITY;
+			}
 			gain[i] = g;
-			if (nThreat > 0 && g >= minGain) keep.add(i);
+			if (g >= minGain) keep.add(i);
 			else dropped.add(a);
 		}
 		if (keep.isEmpty() || keep.size() == nRows) return new Filtered(A, M, new ArrayList<Action>(), gain);

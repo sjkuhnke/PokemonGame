@@ -1,6 +1,5 @@
 package pokemon;
 
-import java.util.HashMap;
 import java.util.Locale;
 
 import util.Print;
@@ -18,16 +17,15 @@ import util.Print;
  * the less valuable one comes in and the more valuable one is kept for later. A candidate that faints on entry scores
  * {@link SwitchInScorer#ENTRY_FAINT_SCORE} (finite, no sentinel semantics).
  * <p>
- * Weights are computed from the two shells in the state being chosen in (fainted mons excluded), so the real battle and
- * the simulator see identical inputs. They are cached by team composition (species, stats, item, ability, moves, types,
- * fainted flags, weather) because a matrix can ask for many replacements over a handful of distinct compositions.
- * Game thread only, like the rest of the battle code.
+ * {@code MonWeights.forSide} is recomputed on every call, uncached (Phase 4 note: no caching this phase - correctness
+ * first, tune in Phase 8). A per-decision cache was tried and dropped: its key did not (and, short of hashing the two
+ * sides' full hazard/screen lists and every bench mon's status, cannot cheaply) capture everything {@code forSide}'s
+ * utility term reads, so a stale hit was a live risk - not worth it for a call this infrequent (once per faint / free
+ * switch). Game thread only, like the rest of the battle code.
  */
 public final class ReplacementChooser {
 	/** Points of matchupScore one unit of (weight * hpFrac) is worth when ranking replacements. Tuned in Phase 8. */
 	public static final double FUTURE_W = 8.0;
-	private static final int CACHE_MAX = 128;
-	private static final HashMap<Long, double[]> cache = new HashMap<>();
 
 	private ReplacementChooser() {}
 
@@ -43,8 +41,14 @@ public final class ReplacementChooser {
 		for (int i = 0; i < team.length; i++) {
 			Pokemon p = team[i];
 			if (p == null || p.isFainted() || p == side.current) continue;
-			double s = score(side, i, foe, field, w);
-			if (log) sb.append(String.format(Locale.ROOT, "[%s: %.1f], ", p, s));
+			int entry = SwitchInScorer.scoreOn(side, i, foe, field);
+			double hpFrac = p.currentHP * 1.0 / p.getStat(0);
+			double weight = (w != null && i < w.length) ? w[i] : 1.0;
+			double s = combine(entry, weight, hpFrac);
+			// Phase 5 diagnostic (T22): breaks the combined score into its two halves, so a run that disagrees with an
+			// earlier one on the SAME position shows which half moved - entry (SwitchInScorer, the matchup-after-entry
+			// term) or weight (MonWeights.forSide, the future-value term). Remove once T22 is settled.
+			if (log) sb.append(String.format(Locale.ROOT, "[%s: entry=%d weight=%.3f hpFrac=%.3f -> %.1f], ", p, entry, weight, hpFrac, s));
 			if (s > bestScore) {
 				bestScore = s;
 				best = i;
@@ -66,49 +70,24 @@ public final class ReplacementChooser {
 		return entryScore - FUTURE_W * weight * hpFrac;
 	}
 
-	/** side's per-slot weights in the current state, or null when the foe has no trainer (wild battle: every weight 1). */
+	/**
+	 * side's per-slot weights in the current state, freshly computed; null when the foe has no trainer (wild battle:
+	 * every weight 1). Pins the static {@link Pokemon#field} to {@code field} for the duration, the same way
+	 * {@link SwitchInScorer} pins it for entry scoring: MonWeights.forSide's damage/type calls go through ordinary
+	 * Pokemon methods that read the static field, not only the explicit parameter, so a caller deep inside
+	 * {@link BattleSimulator#simulateTurn} (where the static field can have drifted from this specific branch's field
+	 * by the time replacements are resolved) needs it pinned explicitly - a direct call from outside the simulator
+	 * happens to work without this only because nothing else has touched the static field yet.
+	 */
 	private static double[] futureWeights(Trainer side, Pokemon foe, Field field) {
 		Trainer foeTrainer = foe.trainer;
 		if (foeTrainer == null || field == null) return null;
-		long k = key(side, foeTrainer, field);
-		double[] w = cache.get(k);
-		if (w == null) {
-			w = MonWeights.forSide(new SideState(side), new SideState(foeTrainer), field);
-			if (cache.size() >= CACHE_MAX) cache.clear();
-			cache.put(k, w);
+		Field prevField = Pokemon.field;
+		try {
+			Pokemon.field = field;
+			return MonWeights.forSide(new SideState(side), new SideState(foeTrainer), field);
+		} finally {
+			Pokemon.field = prevField;
 		}
-		return w;
-	}
-
-	private static long key(Trainer a, Trainer b, Field field) {
-		long h = 1125899906842597L;
-		h = foldTeam(h, a);
-		h = foldTeam(h, b);
-		return fold(h, field.weather == null ? -1 : field.weather.effect.ordinal());
-	}
-
-	private static long foldTeam(long h, Trainer t) {
-		for (Pokemon p : t.team) {
-			if (p == null) {
-				h = fold(h, -7);
-				continue;
-			}
-			h = fold(h, p.id);
-			h = fold(h, p.fainted ? 1 : 0);
-			for (int s = 0; s < 6; s++) h = fold(h, p.getStat(s));
-			h = fold(h, p.type1 == null ? -1 : p.type1.ordinal());
-			h = fold(h, p.type2 == null ? -1 : p.type2.ordinal());
-			h = fold(h, p.item == null ? -1 : p.item.ordinal());
-			h = fold(h, p.ability == null ? -1 : p.ability.ordinal());
-			if (p.moveset != null) {
-				for (Moveslot ms : p.moveset) h = fold(h, ms == null || ms.move == null ? -1 : ms.move.ordinal() * 2 + (ms.currentPP > 0 ? 1 : 0));
-			}
-		}
-		return h;
-	}
-
-	private static long fold(long h, long v) {
-		h ^= v + 0x9E3779B97F4A7C15L + (h << 6) + (h >>> 2);
-		return h;
 	}
 }

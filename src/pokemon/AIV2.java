@@ -48,7 +48,7 @@ public final class AIV2 implements TrainerAI {
 	/** Full A x P payoff matrix. Verbose - leave off unless you're chasing a specific decision. */
 	public static boolean AI_DEBUG_MATRIX = true;
 	/** Per-action resulting branch state (HP/status/stages/fainted) vs one fixed player action. See logBranchDetail. */
-	public static boolean AI_DEBUG_BRANCHES = false;
+	public static boolean AI_DEBUG_BRANCHES = true;
 
 	private final boolean sackingEnabled;
 
@@ -253,7 +253,7 @@ public final class AIV2 implements TrainerAI {
 		}
 		for (Action a : plan.guard.dropped) sb.append("    DROPPED by min-gain guard: ").append(a.label()).append('\n');
 		for (int i = 0; i < plan.guard.gain.length; i++) {
-			if (!Double.isNaN(plan.guard.gain[i])) sb.append(String.format(Locale.ROOT, "    row %d gain vs Stay in threat columns: %.1f%n", i, plan.guard.gain[i]));
+			if (!Double.isNaN(plan.guard.gain[i])) sb.append(String.format(Locale.ROOT, "    row %d gain vs best Stay (mean over threat columns, or over ALL columns when there is none): %.1f%n", i, plan.guard.gain[i]));
 		}
 		Print.debug(sb.toString());
 	}

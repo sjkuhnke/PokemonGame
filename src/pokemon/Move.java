@@ -1107,7 +1107,7 @@ public enum Move {
 	}
 	
 	public boolean isPowder() {
-		return this == SLEEP_POWDER || this == STUN_SPORE || this == POISON_POWDER;
+		return this == SLEEP_POWDER || this == STUN_SPORE || this == POISON_POWDER || this == MAGIC_POWDER;
 	}
 	
 	public boolean isTail() {

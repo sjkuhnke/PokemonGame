@@ -85,3 +85,30 @@ Fields assumed on `Pokemon`: `id`, `fainted`, `type1/type2` (enum, `.ordinal()`)
 
 ## Not in Phase 5 (deliberately)
 Player model, `predict()`, `finalStrategy()`, the T21 probability half, difficulty-tuned mistakes (Phase 6); lead selection and retiring `pickLead`/`predictPlayerLeads` (Phase 7); Tier 0/1 pruning, chooser/weights caching beyond the simple cache, tuning of every placeholder (Phase 8).
+
+
+## Follow-up fixes (after first Phase5Tests.runAll() run)
+
+Your run surfaced 3 real issues; here's what changed:
+
+- **T18 SKIP** was expected behavior, not a bug: `sackScenario` only searched for a foe move that KOs both the ace and the
+  scrub, never checking that the ace's *own* move clears `ActionGen.deadTurn`'s threshold. `sackScenario` now also
+  requires `!ActionGen.deadTurn(d.root(), AIConfig.normal())`, so a scenario where NORMAL would legitimately unlock
+  switching for an unrelated reason is never selected.
+- **T20 FAILED** on an assertion that was too strong: the min-gain guard only judges *sack-only* rows (`BenchPlan.sackOnly`).
+  A low-HP mon that is also a type-matchup answer is never sack-only, so the solver can still favor switching into it on
+  ordinary matchup grounds - correct behavior, unrelated to sacking. T20 now only asserts when the target is genuinely
+  sack-only (SKIPs otherwise) and drops the old "Stay holds most of the probability" check.
+- **`utility remover` test FAILED** (`[1.0, 1.0, 1.0]` - the Defog bonus added nothing): root cause not confirmed by
+  execution (no engine here to run it against). `utilityRemover` now prints three diagnostic lines - the real trainer's
+  hazard list, the SAME list read back through the `SimState` the weight calc actually uses, and whether the cloned Defog
+  mon still has `DEFOG` in its moveset - so the next run pinpoints exactly where the hazard (or the move) goes missing.
+  Remove the three `System.out.println` lines once it's green.
+- **T22 FAILED** (simulator's internal replacement disagreed with the identical direct call): the one new, unproven piece
+  of machinery here was `ReplacementChooser`'s static weight cache - global across the whole test run, keyed without
+  either side's hazard/screen list. Rather than chase a possible collision, **the cache is removed**: `pickSlot` now calls
+  `MonWeights.forSide` fresh every time. This is a single call per faint/free-switch, cheap enough uncached; Phase 8 owns
+  real caching/tuning if profiling ever shows it's needed.
+
+Re-run `Phase5Tests.runAll()`. T18/T19/T20/T21 should pass or SKIP with a clear reason; T22 should now agree end-to-end.
+If `utility remover` still fails, paste back the three `[diag]` lines and I can pin the exact break point.
