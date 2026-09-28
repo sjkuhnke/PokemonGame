@@ -6254,22 +6254,6 @@ public class Pokemon implements Serializable {
 		}
 	}
 
-//	private Pokemon[] getActivePokemon() {
-//		Pokemon[] result = new Pokemon[2];
-//		switch (gp.gameState) {
-//			case GamePanel.BATTLE_STATE:
-//				result[0] = gp.battleUI.user;
-//				result[1] = gp.battleUI.foe;
-//				break;
-//			case GamePanel.SIM_BATTLE_STATE:
-//				result[0] = gp.simBattleUI.user;
-//				result[1] = gp.simBattleUI.foe;
-//				break;
-//		}
-//		
-//		return result;
-//	}
-
 	public void clearVolatile(Pokemon foe) {
 		if (field != null && this.ability == Ability.NEUTRALIZING_GAS && field.contains(field.fieldEffects, Effect.NEUTRALIZING_GAS) && (foe == null || foe.ability != Ability.NEUTRALIZING_GAS)) {
 			Task.addAbilityTask(this);

@@ -533,27 +533,27 @@ public class Player extends Trainer implements Serializable {
 	
 	public boolean swapRandom(Pokemon foe) {
 		if (!hasValidMembers(foe)) return false;
-		Random rand = new Random();
-		boolean oldCloned = current.cloned;
-		int index = rand.nextInt(team.length);
-		while (team[index] == null || team[index].isFainted() || team[index] == current) {
+
+		Integer forced = SimContext.active() ? SimContext.consumeForcedSwitch() : null;
+		int index;
+		if (forced != null) {
+			index = forced;
+		} else {
+			Random rand = Rng.asRandom();
 			index = rand.nextInt(team.length);
-		}
-		if (oldCloned) { // for AI seeing if Whirlwind/Roar work
-			Pokemon lead = current;
-			this.team[0] = this.team[index];
-			this.team[index] = lead;
-			this.current = this.team[0];
-			return true;
+			while (team[index] == null || team[index].isFainted() || team[index] == current) {
+				index = rand.nextInt(team.length);
+			}
 		}
 		
 		swapToFront(team[index], index, foe);
 		
 		Task.addTask(Task.TEXT, current.nickname + " was dragged out!");
-		current.swapIn(foe, true);
+		
 		foe.removeStatus(Status.TRAPPED);
 		foe.removeStatus(Status.SPUN);
 		foe.removeStatus(Status.SPELLBIND);
+		current.swapIn(foe, true);
 		return true;
 		
 	}

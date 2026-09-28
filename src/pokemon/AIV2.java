@@ -63,24 +63,28 @@ public final class AIV2 implements TrainerAI {
 
 	/** Everything decide() computes before sampling; package-private so tests run the exact production pipeline. */
 	public static final class Plan {
-		public final List<Action> A;
-		public final List<Action> P;
+		public final List<Action> A, P;
 		public final double[][] M;
 		public final MonWeights weights;
 		/** Sack-only slots (sack candidates that are not also answers); empty when the AI cannot switch or sacking is off. */
 		public final Set<Integer> sackOnly;
+		/** ALL sack candidates (§7.14.2's ActionGen.BenchPlan.sacks), including ones that are ALSO top-N answers. This
+		 * is what decides the [Sack: ...] label (chosen row switches into ANY sack candidate) - sackOnly above is
+		 * narrower (only what the min-gain guard actually judges) and stays separate for that reporting. */
+		public final Set<Integer> sacks;
 		/** Min-gain guard result, null when there were no sack-only rows to judge. A/M above are already filtered. */
 		public final SackAnalysis.Filtered guard;
 		public final Solver.Result eq;
 		public final double[] x;
 
-		Plan(List<Action> A, List<Action> P, double[][] M, MonWeights weights, Set<Integer> sackOnly, SackAnalysis.Filtered guard,
-				Solver.Result eq, double[] x) {
+		Plan(List<Action> A, List<Action> P, double[][] M, MonWeights weights, Set<Integer> sackOnly, Set<Integer> sacks,
+				SackAnalysis.Filtered guard, Solver.Result eq, double[] x) {
 			this.A = A;
 			this.P = P;
 			this.M = M;
 			this.weights = weights;
 			this.sackOnly = sackOnly;
+			this.sacks = sacks;
 			this.guard = guard;
 			this.eq = eq;
 			this.x = x;
@@ -98,9 +102,12 @@ public final class AIV2 implements TrainerAI {
 		double[][] M = MatrixBuilder.buildMatrix(root, A, P, cfg, weights);
 
 		Set<Integer> sackOnly = Collections.emptySet();
+		Set<Integer> sacks = Collections.emptySet();
 		SackAnalysis.Filtered guard = null;
 		if (cfg.enableSacking && root.ai.active().trainer.canSwitch(root.player.active())) {
-			sackOnly = ActionGen.benchPlan(root, cfg, weights).sackOnly();
+			ActionGen.BenchPlan bp = ActionGen.benchPlan(root, cfg, weights);
+			sackOnly = bp.sackOnly();
+			sacks = new java.util.LinkedHashSet<>(bp.sacks);
 			if (!sackOnly.isEmpty()) {
 				boolean[] threat = SackAnalysis.threatColumns(root, P);
 				guard = SackAnalysis.applyMinGain(A, M, threat, sackOnly, cfg.sackMinGain);
@@ -112,7 +119,7 @@ public final class AIV2 implements TrainerAI {
 		// predict()/finalStrategy() (§7.11): no player model yet, see class doc.
 		Solver.Result eq = Solver.solveZeroSum(M);
 		double[] x = Shaper.shape(eq.x, cfg);
-		return new Plan(A, P, M, weights, sackOnly, guard, eq, x);
+		return new Plan(A, P, M, weights, sackOnly, sacks, guard, eq, x);
 	}
 
 	@Override
@@ -157,7 +164,7 @@ public final class AIV2 implements TrainerAI {
 
 		int chosen = Shaper.sample(x);
 		Action chosenAct = A.get(chosen);
-		SackAnalysis.Label label = chosenAct.kind == ActionKind.MOVE ? null : SackAnalysis.classify(root, chosenAct, P, plan.eq.y, cfg);
+		SackAnalysis.Label label = chosenAct.kind == ActionKind.MOVE ? null : SackAnalysis.classify(root, chosenAct, P, plan.eq.y, cfg, plan.sacks);
 		logDecision(self, A, x, chosenAct, x[chosen]);
 		report(self, A, x, chosenAct, x[chosen], label);
 
@@ -233,9 +240,13 @@ public final class AIV2 implements TrainerAI {
 	static String reason(Pokemon self, Action chosenAct, double chosenProb, SackAnalysis.Label label) {
 		Pokemon target = self.trainer.team[chosenAct.slot];
 		if (label != null && label.sack) {
-			String repl = label.replacementSlot >= 0 ? String.valueOf(self.trainer.team[label.replacementSlot]) : "?";
-			return String.format(Locale.ROOT, "[Sack: %s for %s | replacement plan: %s | P(target faints) = %.0f%%]\n",
-					target, self, repl, label.pTargetFaints * 100);
+			// Replacement plan is only meaningful when the target actually tends to faint (SackAnalysis.SACK_LABEL_P);
+			// otherwise there is no "free replacement" to plan for, so the segment is left out rather than shown as "?".
+			String replSegment = label.replacementSlot >= 0
+					? String.format(Locale.ROOT, " | replacement plan: %s", self.trainer.team[label.replacementSlot])
+					: "";
+			return String.format(Locale.ROOT, "[Sack: %s for %s%s | P(target faints) = %.0f%%]\n",
+					target, self, replSegment, label.pTargetFaints * 100);
 		}
 		return String.format(Locale.ROOT, "[Matrix: switch to %s %.0f%%]\n", target, chosenProb * 100);
 	}

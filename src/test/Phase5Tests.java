@@ -451,9 +451,15 @@ public final class Phase5Tests {
 		check("HARD: the sack row gets meaningful probability (x=" + Arrays.toString(p.x) + ")", p.x[row] >= 0.3);
 
 		Action chosen = p.A.get(row);
-		SackAnalysis.Label label = SackAnalysis.classify(root, chosen, p.P, p.eq.y, hard);
-		check("classified as a sack (P(target faints) = " + label.pTargetFaints + ")", label.sack);
-		check("replacement plan is a different, alive teammate (slot " + label.replacementSlot + ")", label.replacementSlot >= 0 && label.replacementSlot != 1);
+		SackAnalysis.Label label = SackAnalysis.classify(root, chosen, p.P, p.eq.y, hard, p.sacks);
+		check("classified as a sack (switch into a sack candidate, whether or not it faints)", label.sack);
+		// Replacement plan is only reported when the target actually tends to faint (SackAnalysis.SACK_LABEL_P) - not
+		// required for T18: sacking a low-value mon with real probability is the thing being tested here, whether or
+		// not that mon happens to survive the hit (see SackAnalysis's class doc). Still validated when present.
+		if (label.replacementSlot >= 0) {
+			check("when a replacement is planned, it is a different, alive teammate (slot " + label.replacementSlot + ")",
+					label.replacementSlot != 1);
+		}
 
 		AIConfig normal = AIConfig.normal();
 		if (ActionGen.deadTurn(root, normal)) throw new Skip("dead turn unlocks switching in NORMAL for this position");
