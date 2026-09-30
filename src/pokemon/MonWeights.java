@@ -29,6 +29,14 @@ public final class MonWeights {
 	static final double GAP = 0.3;
 	/** Phase 5: cap on the summed utility terms, so utility nudges but never outweighs answering threats. */
 	static final double UTILITY_MAX = 0.6;
+	/**
+	 * Normalization sharpness: w ~ exp(NORM_K * z), z = (raw - mean) / max(sd, NORM_SD_FLOOR). 0.5 turns a raw spread of one
+	 * standard deviation into about a 1.65x weight ratio; a lone standout on a six-mon team lands near 2.5x the average.
+	 * Untuned placeholder; Phase 8.
+	 */
+	static final double NORM_K = 0.5;
+	/** Raw units are comparable across teams (contribution/unique/utility are absolute), so a near-uniform team must not have tiny noise stretched to full scale: sd is floored here. */
+	static final double NORM_SD_FLOOR = 1.0;
 
 	public final double[] ai;
 	public final double[] player;
@@ -224,15 +232,17 @@ public final class MonWeights {
 	}
 
 	/**
-	 * Phase 5 fix: offset-from-mean, not ratio-to-mean. raw[m] = BASE_W(1.0) + terms that can go negative (a mon with
-	 * no offense and a bad matchup has contribution well below 0), so the whole side's raw values can legitimately sum
-	 * to zero or less - a team that is collectively struggling, not a special case to special-case away. A RATIO to a
-	 * non-positive mean is undefined (or, worse, silently INVERTS the ordering: dividing two negative raws by a
-	 * negative mean flips which one comes out higher), so the old code fell back to a flat 1.0 for every mon whenever
-	 * mean <= 0 - discarding any real differentiation between them, which is what let T26-adjacent scenarios pass
-	 * while masking this. w[i] = 1.0 + (raw[i] - mean) still averages to exactly 1.0 over the alive mons (since the
-	 * mean of raw[i]-mean is 0 by construction) and preserves relative ordering unconditionally, whatever sign mean
-	 * has.
+	 * z-score + exponential, then rescale to mean 1.0 over the alive mons, then clamp to [MIN_W, MAX_W].
+	 * <ul>
+	 * <li>Sign-safe: raw can be negative on a struggling team (BASE_W + contributions that go below 0). Ratio-to-mean broke
+	 * there (mean &lt;= 0 gave a flat 1.0 or inverted order); z-scores do not care about sign.</li>
+	 * <li>Scale-safe: the previous offset-from-mean (1 + raw - mean) put raw-unit differences straight into a [0.25, 3.0]
+	 * window, so any raw spread over about 0.75 pinned nearly every mon to a clamp (four at 0.25 and one at 3.0 in real
+	 * logs), erasing the differences between the weaker mons and with them the price of a sack.</li>
+	 * <li>Monotone in raw, so ordering is preserved and the Defog/utility bonuses still lift a mon.</li>
+	 * <li>Averages exactly 1.0 before the clamp (T26). With NORM_K = 0.5 the clamp is rarely reached.</li>
+	 * <li>One alive mon: weight 1.0. Fainted mons: 0.</li>
+	 * </ul>
 	 */
 	private static double[] normalize(double[] raw, Pokemon[] team) {
 		double sum = 0;
@@ -242,15 +252,30 @@ public final class MonWeights {
 			sum += raw[i];
 			alive++;
 		}
-		double mean = alive > 0 ? sum / alive : 0.0;
 		double[] out = new double[raw.length];
+		if (alive == 0) return out;
+		double mean = sum / alive;
+		double var = 0;
+		for (int i = 0; i < raw.length; i++) {
+			if (team[i] == null || team[i].isFainted()) continue;
+			var += (raw[i] - mean) * (raw[i] - mean);
+		}
+		double sd = Math.max(Math.sqrt(var / alive), NORM_SD_FLOOR);
+
+		double[] e = new double[raw.length];
+		double eSum = 0;
+		for (int i = 0; i < raw.length; i++) {
+			if (team[i] == null || team[i].isFainted()) continue;
+			e[i] = Math.exp(NORM_K * (raw[i] - mean) / sd);
+			eSum += e[i];
+		}
+		double eMean = eSum / alive;
 		for (int i = 0; i < raw.length; i++) {
 			if (team[i] == null || team[i].isFainted()) {
 				out[i] = 0;
 				continue;
 			}
-			double w = 1.0 + (raw[i] - mean);
-			out[i] = Math.max(MIN_W, Math.min(MAX_W, w));
+			out[i] = alive == 1 ? 1.0 : Math.max(MIN_W, Math.min(MAX_W, e[i] / eMean));
 		}
 		return out;
 	}

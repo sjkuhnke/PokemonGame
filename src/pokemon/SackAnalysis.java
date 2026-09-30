@@ -76,12 +76,26 @@ public final class SackAnalysis {
 		public final List<Action> dropped;
 		/** Per ORIGINAL row: mean gain over Stay in the threat columns for sack rows, NaN for every other row. */
 		public final double[] gain;
+		/** Rows and payoffs BEFORE filtering (§7.14.4 diagnostics: a dropped row's own cells aren't in A/M above, since
+		 * those are already filtered). originalA.indexOf(droppedAction) finds a dropped row's index into originalM. */
+		public final List<Action> originalA;
+		public final double[][] originalM;
+		/** Per player column: the best payoff among plain Stay (MOVE) rows, same figure "gain" was computed against. */
+		public final double[] stay;
+		/** Per player column: whether it was a threat column (§7.14.2, KO chance >= THREAT_KO) - context for "gain",
+		 * which averages over threat columns when any exist, or over all columns otherwise. */
+		public final boolean[] threat;
 
-		Filtered(List<Action> A, double[][] M, List<Action> dropped, double[] gain) {
+		public Filtered(List<Action> A, double[][] M, List<Action> dropped, double[] gain, List<Action> originalA, double[][] originalM,
+				double[] stay, boolean[] threat) {
 			this.A = A;
 			this.M = M;
 			this.dropped = dropped;
 			this.gain = gain;
+			this.originalA = originalA;
+			this.originalM = originalM;
+			this.stay = stay;
+			this.threat = threat;
 		}
 	}
 
@@ -139,7 +153,7 @@ public final class SackAnalysis {
 			if (g >= minGain) keep.add(i);
 			else dropped.add(a);
 		}
-		if (keep.isEmpty() || keep.size() == nRows) return new Filtered(A, M, new ArrayList<Action>(), gain);
+		if (keep.isEmpty() || keep.size() == nRows) return new Filtered(A, M, new ArrayList<Action>(), gain, A, M, stay, threat);
 
 		List<Action> A2 = new ArrayList<>(keep.size());
 		double[][] M2 = new double[keep.size()][];
@@ -147,7 +161,47 @@ public final class SackAnalysis {
 			A2.add(A.get(keep.get(k)));
 			M2[k] = M[keep.get(k)];
 		}
-		return new Filtered(A2, M2, dropped, gain);
+		return new Filtered(A2, M2, dropped, gain, A, M, stay, threat);
+	}
+
+	// ---- diagnostics (§7.14.4): per-column detail for a DROPPED sack-only row ----
+
+	/** One player column's outcome for a specific AI row, from re-simulating it (not read off the matrix, which only
+	 * holds the already-weighted eval score). */
+	public static final class ColumnOutcome {
+		/** P(the target - the row's switch destination - is fainted at the end of this specific column). */
+		public double pFaint;
+		/** Mean remaining HP fraction of the target IN THE BRANCHES WHERE IT SURVIVES. NaN if it always faints. */
+		public double avgHpFracAlive;
+	}
+
+	/**
+	 * Per player column, what actually happens if {@code row} (a SWITCH or MOVE_THEN_SWITCH) is played against that
+	 * column: does the target faint, and if not, how much HP does it keep. One simulateTurn per column - meant for a
+	 * handful of DROPPED rows in a debug log, not the hot path. Rows that don't switch don't have a "target", so this
+	 * is only meaningful for SWITCH/MOVE_THEN_SWITCH.
+	 */
+	public static ColumnOutcome[] columnOutcomes(SimState root, Action row, List<Action> P, AIConfig cfg) {
+		ColumnOutcome[] out = new ColumnOutcome[P.size()];
+		int slot = row.slot;
+		for (int j = 0; j < P.size(); j++) {
+			ColumnOutcome co = new ColumnOutcome();
+			double total = 0, faintW = 0, hpSum = 0, hpW = 0;
+			for (Branch br : BattleSimulator.simulateTurn(root, row, P.get(j), cfg)) {
+				total += br.prob;
+				Pokemon t = br.state.ai.bench()[slot];
+				if (t == null || t.isFainted()) {
+					faintW += br.prob;
+				} else {
+					hpSum += br.prob * (t.currentHP * 1.0 / t.getStat(0));
+					hpW += br.prob;
+				}
+			}
+			co.pFaint = total > 0 ? faintW / total : 0;
+			co.avgHpFracAlive = hpW > 0 ? hpSum / hpW : Double.NaN;
+			out[j] = co;
+		}
+		return out;
 	}
 
 	// ---- classification (§7.14.4) ----
@@ -159,7 +213,7 @@ public final class SackAnalysis {
 		public boolean sack;
 		/** P(the switched-in target is fainted at the end of the turn) over the predicted player distribution.
 		 * Informational only (see class doc) - does not gate {@link #sack}. */
-		double pTargetFaints;
+		public double pTargetFaints;
 		/** Team index of the most likely replacement in the branches where the target fainted. -1 when the target
 		 * doesn't tend to faint (pTargetFaints below SACK_LABEL_P) - there's no meaningful "free replacement" to
 		 * report in that case, so callers should omit the replacement-plan line rather than print "unknown". */

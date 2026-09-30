@@ -412,6 +412,22 @@ public final class Phase5Tests {
 				SideState after = bs.get(0).state.ai;
 				int simSlot = after.shell.indexOf(after.active());
 
+				// Diagnostic (T22): does a PASS/PASS turn's endOfTurnPhase actually change anything about the bench
+				// before a replacement is even chosen? If yes, `sim` is legitimately scoring a different position
+				// than `direct`/`real` (who see the raw pre-turn root), not exhibiting more of the same bug. Remove
+				// once T22 is settled.
+				for (int i = 0; i < root.ai.bench().length; i++) {
+					Pokemon before = root.ai.bench()[i], afterP = after.bench()[i];
+					if (before == null || afterP == null) continue;
+					if (before.currentHP != afterP.currentHP || before.status != afterP.status
+							|| !Arrays.equals(before.statStages, afterP.statStages)) {
+						System.out.println("    [diag] foe " + id + " variant " + variant + ": bench[" + i + "] " + before
+								+ " changed by endOfTurnPhase: HP " + before.currentHP + "->" + afterP.currentHP
+								+ ", status " + before.status + "->" + afterP.status
+								+ ", stages " + Arrays.toString(before.statStages) + "->" + Arrays.toString(afterP.statStages));
+					}
+				}
+
 				int direct = ReplacementChooser.pickSlot(d.ai, d.f, d.field);
 				// Diagnostic: the SAME call again, nothing in between, bypassing Trainer.next() entirely. If this
 				// disagrees with `direct`, the non-determinism is inside ReplacementChooser/MonWeights itself, not
@@ -491,19 +507,37 @@ public final class Phase5Tests {
 	 * of a forced -Infinity. This test verifies the FALLBACK ITSELF (the guard's gain matches an independently
 	 * recomputed mean-over-all-columns figure) and that the keep/drop decision is consistent with that gain vs
 	 * sackMinGain - not that the row is unconditionally dropped, which was the old (too restrictive) behavior.
+	 * <p>
+	 * Hand-built scenario, not scanned: needs (1) no player move >= 30% one-hit-KO chance against the ace this turn -
+	 * base power matters more than level here, so use a WEAK foe move, not one from STRONG; (2) the scrub (slot 1)
+	 * genuinely sack-only - low value AND not a top-3 type-matchup answer; (3) the ace has a plain move to Stay with.
+	 * Replace the species/level/move placeholders below with your own; the SKIPs report exactly which condition your
+	 * scenario didn't satisfy, and the guard fix isn't sanity-checked without this test actually running.
 	 */
 	private static void t20() {
-		Scen sc = sackScenario(0.15, false, 1, false, true);
-		if (sc == null) throw new Skip("every scanned foe/move threatens the ace even at level 1");
-		SimState root = sc.d.root();
+		// ---- customize this block ----
+		Pokemon ace = Phase4Tests.mk(6, 50, Move.FLASH_CANNON);          // active; must NOT be threatened below
+		Pokemon scrub = Phase4Tests.mk(3, 50, Move.EARTHQUAKE);        // low value target; give it a BAD matchup vs foe
+		Pokemon filler1 = Phase4Tests.mk(162, 50, Move.POLTERGEIST);      // 3 mons with a BETTER matchup than scrub,
+		Pokemon filler2 = Phase4Tests.mk(157, 50, Move.SHADOW_BALL);      // so scrub is pushed out of the top-3 answers
+		Pokemon answer = Phase4Tests.mk(100, 50, Move.FLAMETHROWER);
+		Pokemon foe = Phase4Tests.mk(37, 50, Move.BUG_BUZZ);                 // WEAK move, not from STRONG - shouldn't threaten
+		// ---- end customizable block ----
+
+		scrub.currentHP = Math.max(1, (int) Math.round(scrub.getStat(0) * 0.15));
+		Phase4Tests.Duel d = build(new Pokemon[] { ace, scrub, filler1, filler2, answer }, foeTeam(foe));
+		SimState root = d.root();
 		AIConfig hard = AIConfig.hard();
+		if (ActionGen.deadTurn(root, AIConfig.normal())) throw new Skip("ace's own move doesn't clear deadTurn - pick a move/level that actually does something");
+		if (SackAnalysis.threatens(foe, ace, d.field)) throw new Skip("foe's move still threatens the ace - pick a weaker move or bigger level gap");
+
 		MonWeights w = MonWeights.compute(root);
 		ActionGen.BenchPlan plan = ActionGen.benchPlan(root, hard, w);
 		// The guard only judges SACK-ONLY rows: if slot 1 also qualifies as an ordinary type-matchup answer
 		// (ActionGen.BenchPlan.answers), the solver may still favor switching into it on pure matchup grounds -
 		// that is correct AI behavior, unrelated to sacking, and not what this test checks.
 		if (!plan.sackOnly().contains(1)) {
-			throw new Skip("slot 1 is not sack-only in this generated scenario (also a type-matchup answer) - nothing sack-specific to assert");
+			throw new Skip("slot 1 is not sack-only in this scenario (also a type-matchup answer, or too valuable) - adjust scrub's matchup/HP or the fillers'");
 		}
 
 		List<Action> A = ActionGen.genAIActions(root, hard, w);
@@ -511,7 +545,7 @@ public final class Phase5Tests {
 		if (P.isEmpty()) P = Collections.singletonList(Action.PASS);
 		double[][] M = MatrixBuilder.buildMatrix(root, A, P, hard, w);
 		boolean[] threat = SackAnalysis.threatColumns(root, P);
-		for (boolean b : threat) if (b) throw new Skip("this scenario turned out to have a threat column after all");
+		for (boolean b : threat) if (b) throw new Skip("threatColumns found a threat despite the direct check above - inconsistent, investigate");
 
 		int row = switchRow(A, 1);
 		check("slot 1's switch row exists before the guard", row >= 0);

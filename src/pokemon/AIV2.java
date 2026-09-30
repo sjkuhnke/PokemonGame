@@ -157,15 +157,16 @@ public final class AIV2 implements TrainerAI {
 		List<Action> P = plan.P;
 		double[] x = plan.x;
 
-		logMatrix(self, A, P, plan.M);
+		logMatrix(self, plan);
 		logEvalBreakdown(self, root, cfg, plan.weights);
 		logBranchDetail(self, root, A, P, cfg);
-		logSack(self, root, plan);
+		logSack(self, root, plan, cfg);
 
 		int chosen = Shaper.sample(x);
 		Action chosenAct = A.get(chosen);
 		SackAnalysis.Label label = chosenAct.kind == ActionKind.MOVE ? null : SackAnalysis.classify(root, chosenAct, P, plan.eq.y, cfg, plan.sacks);
-		logDecision(self, A, x, chosenAct, x[chosen]);
+		logDecision(self, A, x, chosenAct, x[chosen], plan.sacks);
+		logSackChosen(self, chosenAct, x[chosen], label);
 		report(self, A, x, chosenAct, x[chosen], label);
 
 		return toMoveDecision(chosenAct);
@@ -252,25 +253,68 @@ public final class AIV2 implements TrainerAI {
 	}
 
 	/** §7.14.4 debug: sack-only candidates with weighted values, and each judged row's payoff gap vs Stay (mean over threat columns). Off unless AI_DEBUG. */
-	private void logSack(Pokemon self, SimState root, Plan plan) {
-		if (!AI_DEBUG || plan.guard == null) return;
+	/**
+	 * Phase 5 (§7.14.4) sack-candidate summary, plus a per-column breakdown for each row the min-gain guard actually
+	 * dropped: the matrix payoff and the best Stay payoff it was compared against (same figures "gain" is built from),
+	 * and - re-simulated, not read off the matrix, since the matrix only holds the final weighted eval score - whether
+	 * the target faints in that column and, when it survives, how much HP it keeps. This is what a dropped row's own
+	 * numbers look like, since a dropped row's cells aren't in the post-filter plan.A/plan.M at all.
+	 */
+	private void logSack(Pokemon self, SimState root, Plan plan, AIConfig cfg) {
+		if (!AI_DEBUG || plan.sacks.isEmpty()) return;
 		Pokemon[] team = root.ai.bench();
 		int activeIdx = -1;
 		for (int i = 0; i < team.length; i++) if (team[i] == root.ai.active()) activeIdx = i;
 		StringBuilder sb = new StringBuilder("[AIV2] sack candidates for ").append(self).append(String.format(Locale.ROOT,
 				" (active value %.2f, sackRatio via cfg):%n", ActionGen.valueOf(plan.weights.ai, team, activeIdx)));
-		for (int slot : plan.sackOnly) {
-			sb.append(String.format(Locale.ROOT, "    slot %d %s value %.2f%n", slot, team[slot], ActionGen.valueOf(plan.weights.ai, team, slot)));
+		for (int slot : plan.sacks) {
+			sb.append(String.format(Locale.ROOT, "    slot %d %s value %.2f (%s)%n", slot, team[slot], ActionGen.valueOf(plan.weights.ai, team, slot),
+					plan.sackOnly.contains(slot) ? "sack-only: min-gain guard judges its rows" : "also a top-N answer: guard does not judge it"));
+		}
+		if (plan.guard == null) {
+			Print.debug(sb.toString());
+			return;
 		}
 		for (Action a : plan.guard.dropped) sb.append("    DROPPED by min-gain guard: ").append(a.label()).append('\n');
 		for (int i = 0; i < plan.guard.gain.length; i++) {
-			if (!Double.isNaN(plan.guard.gain[i])) sb.append(String.format(Locale.ROOT, "    row %d gain vs best Stay (mean over threat columns, or over ALL columns when there is none): %.1f%n", i, plan.guard.gain[i]));
+			if (Double.isNaN(plan.guard.gain[i])) continue;
+			Action orig = plan.guard.originalA.get(i);
+			boolean dropped = plan.guard.dropped.contains(orig);
+			sb.append(String.format(Locale.ROOT, "    %s %s gain vs best Stay (mean over threat columns, or over ALL columns when there is none): %.1f (minGain %.1f)%n",
+					dropped ? "DROPPED" : "KEPT   ", orig.label(), plan.guard.gain[i], cfg.sackMinGain));
+		}
+		for (Action a : plan.guard.dropped) {
+			int origRow = plan.guard.originalA.indexOf(a);
+			if (origRow < 0) continue; // defensive; should always be found
+			Pokemon target = team[a.slot];
+			sb.append("    breakdown for ").append(a.label()).append(" (target ").append(target).append("):\n");
+			SackAnalysis.ColumnOutcome[] outcomes = SackAnalysis.columnOutcomes(root, a, plan.P, cfg);
+			for (int j = 0; j < plan.P.size(); j++) {
+				double m = plan.guard.originalM[origRow][j];
+				double stayJ = plan.guard.stay[j];
+				SackAnalysis.ColumnOutcome co = outcomes[j];
+				String hp = Double.isNaN(co.avgHpFracAlive) ? "-" : String.format(Locale.ROOT, "%.0f%%", co.avgHpFracAlive * 100);
+				sb.append(String.format(Locale.ROOT, "        %-22s%s row=%7.1f  stay=%7.1f  diff=%7.1f  P(faints)=%3.0f%%  HP if alive=%s%n",
+						trunc(plan.P.get(j).label(), 21), plan.guard.threat[j] ? "*" : " ", m, stayJ, m - stayJ, co.pFaint * 100, hp));
+			}
 		}
 		Print.debug(sb.toString());
 	}
 
+	/** Row label with a "[sack]" tag when the row switches (or pivot-switches) into a sack candidate. */
+	private static String rowLabel(Action a, Set<Integer> sacks) {
+		boolean sackRow = (a.kind == ActionKind.SWITCH || a.kind == ActionKind.MOVE_THEN_SWITCH) && sacks != null && sacks.contains(a.slot);
+		return sackRow ? a.label() + " [sack]" : a.label();
+	}
+
+	/** The chosen row when it is labeled a sack: the same text the sim UI gets, plus the row's sampling probability. Debug only. */
+	private void logSackChosen(Pokemon self, Action chosenAct, double chosenProb, SackAnalysis.Label label) {
+		if (!AI_DEBUG || label == null || !label.sack) return;
+		Print.debug(String.format(Locale.ROOT, "[AIV2] SACK CHOSEN (%s, %.1f%%): %s", chosenAct.label(), chosenProb * 100, reason(self, chosenAct, chosenProb, label)));
+	}
+
 	/** One line per action and its sampling probability, plus the pick. Guarded by AI_DEBUG so the string building is skipped entirely when off. */
-	private void logDecision(Pokemon self, List<Action> A, double[] x, Action chosenAct, double chosenProb) {
+	private void logDecision(Pokemon self, List<Action> A, double[] x, Action chosenAct, double chosenProb, Set<Integer> sacks) {
 		if (!AI_DEBUG) return;
 		StringBuilder sb = new StringBuilder();
 		sb.append("[AIV2] ").append(self).append(" (turn ").append(Pokemon.field.turns).append(")\n");
@@ -278,24 +322,37 @@ public final class AIV2 implements TrainerAI {
 		for (int i = 0; i < order.length; i++) order[i] = i;
 		java.util.Arrays.sort(order, (i, j) -> Double.compare(x[j], x[i])); // highest probability first
 		for (int idx : order) {
-			sb.append(String.format(Locale.ROOT, "    %-28s %5.1f%%\n", A.get(idx).label(), x[idx] * 100));
+			sb.append(String.format(Locale.ROOT, "    %-34s %5.1f%%\n", rowLabel(A.get(idx), sacks), x[idx] * 100));
 		}
-		sb.append(String.format(Locale.ROOT, "  -> %s (%.1f%%)\n", chosenAct.label(), chosenProb * 100));
+		sb.append(String.format(Locale.ROOT, "  -> %s (%.1f%%)\n", rowLabel(chosenAct, sacks), chosenProb * 100));
 		Print.debug(sb.toString());
 	}
 
 	/** Full A x P payoff matrix. Verbose - off unless AI_DEBUG_MATRIX is also set. */
-	private void logMatrix(Pokemon self, List<Action> A, List<Action> P, double[][] M) {
+	private void logMatrix(Pokemon self, Plan plan) {
 		if (!AI_DEBUG || !AI_DEBUG_MATRIX) return;
+		List<Action> A = plan.A, P = plan.P;
+		double[][] M = plan.M;
 		StringBuilder sb = new StringBuilder();
 		sb.append("[AIV2] payoff matrix for ").append(self).append(":\n");
-		sb.append(String.format(Locale.ROOT, "%-24s", ""));
+		sb.append(String.format(Locale.ROOT, "%-30s", ""));
 		for (Action p : P) sb.append(String.format(Locale.ROOT, "%12s", trunc(p.label(), 11)));
 		sb.append('\n');
 		for (int i = 0; i < A.size(); i++) {
-			sb.append(String.format(Locale.ROOT, "%-24s", trunc(A.get(i).label(), 23)));
+			sb.append(String.format(Locale.ROOT, "%-30s", trunc(rowLabel(A.get(i), plan.sacks), 29)));
 			for (int j = 0; j < P.size(); j++) sb.append(String.format(Locale.ROOT, "%12.1f", M[i][j]));
 			sb.append('\n');
+		}
+		// Rows the min-gain guard removed before solving: shown with their ORIGINAL payoffs so they are not silently absent.
+		if (plan.guard != null && !plan.guard.dropped.isEmpty()) {
+			sb.append("  -- dropped by min-gain guard (not in the solve or in the probabilities below) --\n");
+			for (Action a : plan.guard.dropped) {
+				int r = plan.guard.originalA.indexOf(a);
+				if (r < 0) continue;
+				sb.append(String.format(Locale.ROOT, "%-30s", trunc("x " + rowLabel(a, plan.sacks), 29)));
+				for (int j = 0; j < P.size(); j++) sb.append(String.format(Locale.ROOT, "%12.1f", plan.guard.originalM[r][j]));
+				sb.append('\n');
+			}
 		}
 		Print.debug(sb.toString());
 	}
@@ -342,9 +399,16 @@ public final class AIV2 implements TrainerAI {
 		double tempo = Evaluator.tempo(root);
 		double forced = Evaluator.forcedTurnPenalty(root);
 		double total = Evaluator.eval(root, cfg.style, weights.ai, weights.player);
+		Print.debug("[AIV2] weights ai=" + fmtW(weights.ai) + " player=" + fmtW(weights.player));
 		Print.debug(String.format(Locale.ROOT,
 				"[AIV2] eval(root)=%.1f  material=%.1f matchup=%.1f hazard=%.1f status=%.1f field=%.1f tempo=%.1f forced=%.1f%n",
 				total, mat, matchup, hazard, status, field, tempo, forced));
+	}
+
+	private static String fmtW(double[] w) {
+		StringBuilder sb = new StringBuilder("[");
+		for (int i = 0; i < w.length; i++) sb.append(i == 0 ? "" : ", ").append(String.format(Locale.ROOT, "%.2f", w[i]));
+		return sb.append(']').toString();
 	}
 
 	private static String trunc(String s, int n) {

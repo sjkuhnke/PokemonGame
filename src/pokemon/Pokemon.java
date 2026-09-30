@@ -6263,6 +6263,7 @@ public class Pokemon implements Serializable {
 		}
 		if (this.getAbility(field) == Ability.NATURAL_CURE) this.status = Status.HEALTHY;
 		if (this.getAbility(field) == Ability.TERRAFORGE) this.illusion = false;
+		if (this.getAbility(field) == Ability.ANTICIPATION) this.illusion = false;
 		confusionCounter = 0;
 		toxic = 0;
 		perishCount = 0;
@@ -6327,10 +6328,6 @@ public class Pokemon implements Serializable {
 		// Convert to integer
 		int damage = (int) Math.floor(damageDouble);
 		return damage;
-	}
-	
-	public Pair<Integer, Double> calcWithTypes(Pokemon foe, Move move, boolean first, Field field, boolean checkAcc) {
-		return calcWithTypes(foe, move, first, 0, false, field, checkAcc);
 	}
 	
 	public Pair<Integer, Double> calcWithTypes(Pokemon foe, Move move, boolean first, int mode, boolean crit, Field field, boolean checkAcc) {
