@@ -1257,9 +1257,7 @@ public enum Move {
 			pr++;
 		}
 		
-		if ((this.mtype == PType.MAGIC || p.lastMoveUsed == Move.VANISHING_ACT)
-			&& p.getAbility(field) == Ability.SLEIGHT_OF_HAND
-			&& p.currentHP == p.getStat(0)) {
+		if ((this.mtype == PType.MAGIC || p.lastMoveUsed == Move.VANISHING_ACT) && p.getAbility(field) == Ability.SLEIGHT_OF_HAND && p.currentHP > p.getStat(0) / 2) {
 			pr++;
 		}
 		

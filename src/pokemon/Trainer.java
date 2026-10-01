@@ -788,7 +788,7 @@ public class Trainer implements Serializable {
 
 		Trainer shell = new Trainer(this.name, newTeam, this.money, this.item, this.flagIndex, false);
 		shell.cloned = true;
-		if (shell.boosts != null) shell.boosts = this.boosts.clone();
+		if (this.boosts != null) shell.boosts = this.boosts.clone();
 		if (this.effects == null) this.effects = new ArrayList<>();
 		shell.effects = DeepClonable.deepCloneList(this.effects);
 

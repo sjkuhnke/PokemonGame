@@ -108,11 +108,20 @@ public final class AIV2 implements TrainerAI {
 			ActionGen.BenchPlan bp = ActionGen.benchPlan(root, cfg, weights);
 			sackOnly = bp.sackOnly();
 			sacks = new java.util.LinkedHashSet<>(bp.sacks);
-			if (!sackOnly.isEmpty()) {
+			if (!sacks.isEmpty()) {
 				boolean[] threat = SackAnalysis.threatColumns(root, P);
-				guard = SackAnalysis.applyMinGain(A, M, threat, sackOnly, cfg.sackMinGain);
-				A = guard.A;
-				M = guard.M;
+				if (!sackOnly.isEmpty()) {
+					guard = SackAnalysis.applyMinGain(A, M, threat, sackOnly, cfg.sackMinGain);
+					A = guard.A;
+					M = guard.M;
+				}
+				// Second layer: no sack that only returns the same mon to the same position (see SackAnalysis.dropSameMonReturns).
+				SackAnalysis.Filtered sm = SackAnalysis.dropSameMonReturns(root, A, M, P, threat, sacks, cfg, guard);
+				if (sm != null) {
+					guard = sm;
+					A = sm.A;
+					M = sm.M;
+				}
 			}
 		}
 
@@ -159,7 +168,7 @@ public final class AIV2 implements TrainerAI {
 
 		logMatrix(self, plan);
 		logEvalBreakdown(self, root, cfg, plan.weights);
-		logBranchDetail(self, root, A, P, cfg);
+		logBranchDetail(self, root, A, P, cfg, plan.eq.y, plan.weights);
 		logSack(self, root, plan, cfg);
 
 		int chosen = Shaper.sample(x);
@@ -275,7 +284,12 @@ public final class AIV2 implements TrainerAI {
 			Print.debug(sb.toString());
 			return;
 		}
-		for (Action a : plan.guard.dropped) sb.append("    DROPPED by min-gain guard: ").append(a.label()).append('\n');
+		for (Action a : plan.guard.dropped) {
+			String why = plan.guard.dropReason.get(a);
+			sb.append(why == null ? "    DROPPED by min-gain guard: " : "    DROPPED by same-mon-return rule: ").append(a.label());
+			if (why != null) sb.append(" (").append(why).append(')');
+			sb.append('\n');
+		}
 		for (int i = 0; i < plan.guard.gain.length; i++) {
 			if (Double.isNaN(plan.guard.gain[i])) continue;
 			Action orig = plan.guard.originalA.get(i);
@@ -358,34 +372,68 @@ public final class AIV2 implements TrainerAI {
 	}
 
 	/**
-	 * Diagnostic: for every AI action, dumps the resulting branch(es) against ONE fixed player
-	 * action (P.get(0)) - HP, status, stat stages, fainted, for both sides. Off by default
-	 * (AI_DEBUG_BRANCHES); this exists specifically to check whether two differently-labeled
-	 * actions that get identical matrix payoffs are actually producing identical post-turn
-	 * states (a real bug) or just coincidentally identical eval() numbers from different states.
+	 * Diagnostic (AI_DEBUG_BRANCHES): for every AI action, the resulting branch(es) against player columns that explain the decision:
+	 * the column the equilibrium expects most, plus (when different) the highest-expected column in which some AI row takes the foe
+	 * active's life, so a KO line can be compared with a chip line term by term. Each branch carries its eval() split into terms;
+	 * START is the real state before the turn, since every other line is a projection AFTER it.
 	 */
-	private void logBranchDetail(Pokemon self, SimState root, List<Action> A, List<Action> P, AIConfig cfg) {
+	private void logBranchDetail(Pokemon self, SimState root, List<Action> A, List<Action> P, AIConfig cfg, double[] y, MonWeights w) {
 		if (!AI_DEBUG || !AI_DEBUG_BRANCHES || P.isEmpty()) return;
-		Action p0 = P.get(0);
-		StringBuilder sb = new StringBuilder("[AIV2] branch detail for ").append(self)
-				.append(" vs player action '").append(p0.label()).append("':\n");
-		for (Action a : A) {
-			List<Branch> branches = BattleSimulator.simulateTurn(root, a, p0, cfg);
-			sb.append(String.format(Locale.ROOT, "  %-24s -> %d branch(es)\n", a.label(), branches.size()));
-			for (Branch br : branches) {
-				Pokemon aiMon = br.state.ai.active();
-				Pokemon foeMon = br.state.player.active();
-				sb.append(String.format(Locale.ROOT,
-						"      p=%.2f  self hp=%d/%d status=%s stages=%s fainted=%b  |  foe hp=%d/%d status=%s fainted=%b\n",
-						br.prob,
-						aiMon == null ? -1 : aiMon.currentHP, aiMon == null ? -1 : aiMon.getStat(0),
-						aiMon == null ? "?" : aiMon.status, aiMon == null ? "?" : java.util.Arrays.toString(aiMon.statStages),
-						aiMon != null && aiMon.fainted,
-						foeMon == null ? -1 : foeMon.currentHP, foeMon == null ? -1 : foeMon.getStat(0),
-						foeMon == null ? "?" : foeMon.status, foeMon != null && foeMon.fainted));
+		int col = 0;
+		if (y != null) for (int j = 1; j < P.size() && j < y.length; j++) if (y[j] > y[col]) col = j;
+		List<Integer> cols = new ArrayList<>();
+		cols.add(col);
+		int koCol = firstKoColumn(root, A, P, cfg, y);
+		if (koCol >= 0 && koCol != col) cols.add(koCol);
+
+		Pokemon a0 = root.ai.active(), f0 = root.player.active();
+		StringBuilder sb = new StringBuilder("[AIV2] branch detail for ").append(self).append(":\n");
+		sb.append(String.format(Locale.ROOT, "  START  self hp=%d/%d status=%s stages=%s magicReflect=%b  |  foe hp=%d/%d status=%s stages=%s magicReflect=%b\n",
+				a0.currentHP, a0.getStat(0), a0.status, java.util.Arrays.toString(a0.statStages), a0.hasStatus(Status.MAGIC_REFLECT),
+				f0.currentHP, f0.getStat(0), f0.status, java.util.Arrays.toString(f0.statStages), f0.hasStatus(Status.MAGIC_REFLECT)));
+		for (int c : cols) {
+			Action p0 = P.get(c);
+			double yc = (y != null && c < y.length) ? y[c] : Double.NaN;
+			sb.append(String.format(Locale.ROOT, "  -- vs player action '%s' (expected %.0f%% by the equilibrium)%s --\n", p0.label(), yc * 100,
+					c == col ? "" : "; shown because an AI row takes the foe's life here"));
+			for (Action a : A) {
+				List<Branch> branches = BattleSimulator.simulateTurn(root, a, p0, cfg);
+				sb.append(String.format(Locale.ROOT, "  %-24s -> %d branch(es)\n", a.label(), branches.size()));
+				for (Branch br : branches) {
+					Pokemon aiMon = br.state.ai.active();
+					Pokemon foeMon = br.state.player.active();
+					sb.append(String.format(Locale.ROOT,
+							"      p=%.2f  self hp=%d/%d status=%s stages=%s fainted=%b  |  foe hp=%d/%d status=%s fainted=%b\n",
+							br.prob,
+							aiMon == null ? -1 : aiMon.currentHP, aiMon == null ? -1 : aiMon.getStat(0),
+							aiMon == null ? "?" : aiMon.status, aiMon == null ? "?" : java.util.Arrays.toString(aiMon.statStages),
+							aiMon != null && aiMon.fainted,
+							foeMon == null ? -1 : foeMon.currentHP, foeMon == null ? -1 : foeMon.getStat(0),
+							foeMon == null ? "?" : foeMon.status, foeMon != null && foeMon.fainted));
+					sb.append("          ").append(evalTerms(br.state, cfg, w)).append('\n');
+				}
 			}
 		}
 		Print.debug(sb.toString());
+	}
+
+	/** Highest-expected player column in which some AI row leaves the foe's current active fainted (-1 if none). Debug only (re-simulates). */
+	private static int firstKoColumn(SimState root, List<Action> A, List<Action> P, AIConfig cfg, double[] y) {
+		int foeIdx = root.player.shell.indexOf(root.player.active());
+		if (foeIdx < 0) return -1;
+		Integer[] order = new Integer[P.size()];
+		for (int j = 0; j < order.length; j++) order[j] = j;
+		final double[] yy = y;
+		java.util.Arrays.sort(order, (p, q) -> Double.compare(yy != null && q < yy.length ? yy[q] : 0, yy != null && p < yy.length ? yy[p] : 0));
+		for (int j : order) {
+			for (Action a : A) {
+				for (Branch br : BattleSimulator.simulateTurn(root, a, P.get(j), cfg)) {
+					Pokemon t = br.state.player.bench()[foeIdx];
+					if (br.prob > 0.3 && (t == null || t.isFainted())) return j;
+				}
+			}
+		}
+		return -1;
 	}
 
 	/** Breaks eval() down into its terms at the (unmodified) root state, so a suspiciously large/uniform matrix can be traced to a specific term instead of guessed at. */
@@ -399,10 +447,23 @@ public final class AIV2 implements TrainerAI {
 		double tempo = Evaluator.tempo(root);
 		double forced = Evaluator.forcedTurnPenalty(root);
 		double total = Evaluator.eval(root, cfg.style, weights.ai, weights.player);
-		Print.debug("[AIV2] weights ai=" + fmtW(weights.ai) + " player=" + fmtW(weights.player));
+		Print.debug("[AIV2] weights ai=" + fmtW(weights.ai) + " player=" + fmtW(weights.player) + "\n");
 		Print.debug(String.format(Locale.ROOT,
 				"[AIV2] eval(root)=%.1f  material=%.1f matchup=%.1f hazard=%.1f status=%.1f field=%.1f tempo=%.1f forced=%.1f%n",
 				total, mat, matchup, hazard, status, field, tempo, forced));
+	}
+
+	/** One branch state's eval() split into its terms (same terms as the root breakdown), so a KO row can be compared with a chip row term by term. */
+	private static String evalTerms(SimState s, AIConfig cfg, MonWeights w) {
+		double total = Evaluator.eval(s, cfg.style, w.ai, w.player);
+		double mat = Evaluator.material(s.ai, w.ai) - Evaluator.material(s.player, w.player);
+		double matchup = Evaluator.activeMatchup(s);
+		double hazard = Evaluator.hazardPain(s.player, s.field) - Evaluator.hazardPain(s.ai, s.field);
+		double status = Evaluator.benchStatusValue(s.player, s.field) - Evaluator.benchStatusValue(s.ai, s.field);
+		double field = Evaluator.fieldValue(s);
+		double tempo = Evaluator.tempo(s);
+		return String.format(Locale.ROOT, "eval=%.1f  [material=%.1f matchup=%.1f hazard=%.1f status=%.1f field=%.1f tempo=%.1f]",
+				total, mat, matchup, hazard, status, field, tempo);
 	}
 
 	private static String fmtW(double[] w) {

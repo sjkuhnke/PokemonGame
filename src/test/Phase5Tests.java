@@ -395,8 +395,8 @@ public final class Phase5Tests {
 			for (int id : FOE_IDS) {
 				Pokemon foe = Phase4Tests.mk(id, Move.FLAMETHROWER);
 				Phase4Tests.Duel d = build(
-						new Pokemon[] { Phase4Tests.mk(1, Move.FLAMETHROWER), Phase4Tests.mk(2, Move.FLAMETHROWER), Phase4Tests.mk(3, Move.FLAMETHROWER),
-								Phase4Tests.mk(7, Move.FLAMETHROWER) },
+						new Pokemon[] { Phase4Tests.mk(98, Move.FLAMETHROWER), Phase4Tests.mk(99, Move.FLAMETHROWER), Phase4Tests.mk(100, Move.FLAMETHROWER),
+								Phase4Tests.mk(97, Move.FLAMETHROWER) },
 						foeTeam(foe));
 				if (variant == 1) d.ai.getFieldEffectList().add(effect(Effect.STEALTH_ROCKS, 1)); // entry hazards on the replacement
 				if (variant == 2) { // the foe is already hurt and burned: the chooser must score against the POST-turn foe
@@ -412,20 +412,43 @@ public final class Phase5Tests {
 				SideState after = bs.get(0).state.ai;
 				int simSlot = after.shell.indexOf(after.active());
 
-				// Diagnostic (T22): does a PASS/PASS turn's endOfTurnPhase actually change anything about the bench
-				// before a replacement is even chosen? If yes, `sim` is legitimately scoring a different position
-				// than `direct`/`real` (who see the raw pre-turn root), not exhibiting more of the same bug. Remove
-				// once T22 is settled.
+				// Diagnostic (T22): does a PASS/PASS turn's endOfTurnPhase actually change anything before a
+				// replacement is even chosen? Widened after MonWeights' (accidentally ungated) debug prints showed
+				// `sim`'s raw weight array genuinely differs from `direct`'s, including a sign flip on one entry -
+				// real evidence `sim` is scoring a different position, not a repeat of the earlier shared-mutation
+				// bug. The AI's own bench alone (checked previously) showed nothing, so widen to the foe's bench and
+				// field weather/terrain, both of which feed MonWeights.forSide's edge computation too. Remove once
+				// T22 is settled.
+				SideState afterFoe = bs.get(0).state.player;
 				for (int i = 0; i < root.ai.bench().length; i++) {
 					Pokemon before = root.ai.bench()[i], afterP = after.bench()[i];
 					if (before == null || afterP == null) continue;
 					if (before.currentHP != afterP.currentHP || before.status != afterP.status
 							|| !Arrays.equals(before.statStages, afterP.statStages)) {
-						System.out.println("    [diag] foe " + id + " variant " + variant + ": bench[" + i + "] " + before
+						System.out.println("    [diag] foe " + id + " variant " + variant + ": AI bench[" + i + "] " + before
 								+ " changed by endOfTurnPhase: HP " + before.currentHP + "->" + afterP.currentHP
 								+ ", status " + before.status + "->" + afterP.status
 								+ ", stages " + Arrays.toString(before.statStages) + "->" + Arrays.toString(afterP.statStages));
 					}
+				}
+				for (int i = 0; i < root.player.bench().length; i++) {
+					Pokemon before = root.player.bench()[i], afterP = afterFoe.bench()[i];
+					if (before == null || afterP == null) continue;
+					if (before.currentHP != afterP.currentHP || before.status != afterP.status
+							|| !Arrays.equals(before.statStages, afterP.statStages)) {
+						System.out.println("    [diag] foe " + id + " variant " + variant + ": FOE bench[" + i + "] " + before
+								+ " changed by endOfTurnPhase: HP " + before.currentHP + "->" + afterP.currentHP
+								+ ", status " + before.status + "->" + afterP.status
+								+ ", stages " + Arrays.toString(before.statStages) + "->" + Arrays.toString(afterP.statStages));
+					}
+				}
+				Field fBefore = root.field, fAfter = bs.get(0).state.field;
+				boolean weatherChanged = fBefore.weather != fAfter.weather || fBefore.weatherTurns != fAfter.weatherTurns;
+				boolean terrainChanged = fBefore.terrain != fAfter.terrain || fBefore.terrainTurns != fAfter.terrainTurns;
+				if (weatherChanged || terrainChanged) {
+					System.out.println("    [diag] foe " + id + " variant " + variant + ": FIELD changed by endOfTurnPhase - weather "
+							+ fBefore.weather + "(" + fBefore.weatherTurns + ")->" + fAfter.weather + "(" + fAfter.weatherTurns
+							+ "), terrain " + fBefore.terrain + "(" + fBefore.terrainTurns + ")->" + fAfter.terrain + "(" + fAfter.terrainTurns + ")");
 				}
 
 				int direct = ReplacementChooser.pickSlot(d.ai, d.f, d.field);

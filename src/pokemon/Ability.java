@@ -134,7 +134,7 @@ public enum Ability {
 	SHIELD_DUST("Blocks the secondary effects of attacks taken and is immune to entry hazards.", 1),
 	SIMPLE("The stat changes the Pokemon receives are doubled.", 1),
 	SKILL_LINK("Makes multi-hit moves always hit the maximum amount.", 1),
-	SLEIGHT_OF_HAND("Gives +1 priority to MAGIC moves when at full HP.", 5),
+	SLEIGHT_OF_HAND("Gives +1 priority to MAGIC moves when above half HP.", 6),
 	SLIPSTREAM("Switches the Pokemon out when its HP becomes half or less.", 6),
 	SLUSH_RUSH("Doubles the Pokemon's Speed stat in SNOW.", 1),
 	SMOKE_SESSION("Lowers the foe's Evasion stat on switch-in and on contact.", 1),

@@ -1342,8 +1342,12 @@ public class Pokemon implements Serializable {
 		}
 		this.realFoe = null;
 	}
-
+	
 	public void move(Pokemon foe, Move move, boolean first, boolean consumePP) {
+		move(foe, move, first, consumePP, false);
+	}
+	
+	public void move(Pokemon foe, Move move, boolean first, boolean consumePP, boolean bounced) {
 		if (this.fainted) return;
 		if (this.realFoe == null) this.realFoe = foe;
 		boolean noTarget = foe == null || foe.fainted;
@@ -1871,15 +1875,15 @@ public class Pokemon implements Serializable {
 			foeAbility = Ability.NULL;
 		}
 		
-		if (move.isMagicBounceEffected(this, foe, foeAbility, acc)) {
+		if (!bounced && move.isMagicBounceEffected(this, foe, foeAbility, acc)) {
 			announceMove(move, foe, ctx);
 			Task.addAbilityTask(foe);
-			foe.move(this, move, false, false);
+			foe.move(this, move, false, false, true);
 			Task.addTask(Task.TEXT, foe.nickname + " bounced the " + move + " back!");
 			return;
 		}
 		
-		if (foe.hasStatus(Status.MAGIC_REFLECT)) {
+		if (!bounced && foe.hasStatus(Status.MAGIC_REFLECT)) {
 			if (move == Move.BRICK_BREAK || move == Move.MAGIC_FANG || move == Move.PSYCHIC_FANGS) {
 				foe.removeStatus(Status.MAGIC_REFLECT);
 				Task.addTask(Task.TEXT, this.nickname + " broke the Magic Reflect!");
@@ -7440,6 +7444,7 @@ public class Pokemon implements Serializable {
 		
 		Pokemon faster = speed1 > speed2 ? this : other;
 		if (speed1 == speed2) {
+			System.out.println("Speed tie between " + this.nickname + " and " + other.nickname + "!");
 			Random random = Rng.asRandom();
 			boolean isHeads = random.nextBoolean();
 			faster = isHeads ? this : other;

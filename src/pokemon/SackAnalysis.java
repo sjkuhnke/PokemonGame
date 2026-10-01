@@ -85,6 +85,8 @@ public final class SackAnalysis {
 		/** Per player column: whether it was a threat column (§7.14.2, KO chance >= THREAT_KO) - context for "gain",
 		 * which averages over threat columns when any exist, or over all columns otherwise. */
 		public final boolean[] threat;
+		/** Why a row was dropped, when the reason is more specific than the min-gain guard (e.g. the same-mon-return rule). */
+		public final Map<Action, String> dropReason = new HashMap<>();
 
 		public Filtered(List<Action> A, double[][] M, List<Action> dropped, double[] gain, List<Action> originalA, double[][] originalM,
 				double[] stay, boolean[] threat) {
@@ -162,6 +164,116 @@ public final class SackAnalysis {
 			M2[k] = M[keep.get(k)];
 		}
 		return new Filtered(A2, M2, dropped, gain, A, M, stay, threat);
+	}
+
+	// ---- same-mon-return rule (Phase 5 follow-up) ----
+
+	/**
+	 * A sack is only worth a mon if the free switch-in does something. When NO player move threatens a KO this turn, a
+	 * sack whose target faints and whose replacement is the mon that was already out just re-presents the same position
+	 * one mon poorer: the "saved" HP is banked value the same threat takes back next turn (the Soldrota/Gyarados loop,
+	 * where Dompster-S and then Zurroaratr-S were burned to dodge a Waterfall that was still coming). Such a row is
+	 * dropped unless the reset itself helps ({@link #resetValue} &gt; 0: it clears negative stages or bad volatiles by
+	 * more than it costs in boosts).
+	 * <p>
+	 * Not applied when a threat column exists: sparing the active from a real KO is the §7.14 case (T18), even though the
+	 * active is the one coming back.
+	 * <p>
+	 * Pure filter over the (already min-gain-filtered) rows. Returns null when nothing changed, otherwise a Filtered whose
+	 * A/M are the surviving rows and whose dropped/originalA/originalM also carry the earlier guard's results.
+	 */
+	public static Filtered dropSameMonReturns(SimState root, List<Action> A, double[][] M, List<Action> P, boolean[] threat,
+			Set<Integer> sackCandidates, AIConfig cfg, Filtered prior) {
+		for (boolean b : threat) if (b) return null;
+		Pokemon active = root.ai.active();
+		int activeIdx = root.ai.shell.indexOf(active);
+		double reset = resetValue(active);
+		if (reset > 0 || activeIdx < 0) return null;
+
+		List<Integer> keep = new ArrayList<>();
+		List<Action> dropped = new ArrayList<>();
+		Map<Action, String> reasons = new HashMap<>();
+		for (int i = 0; i < A.size(); i++) {
+			Action a = A.get(i);
+			boolean sackRow = (a.kind == ActionKind.SWITCH || a.kind == ActionKind.MOVE_THEN_SWITCH) && sackCandidates.contains(a.slot);
+			double share = sackRow ? sameMonShare(root, a, P, cfg, activeIdx) : -1;
+			if (share >= 0.5) {
+				dropped.add(a);
+				reasons.put(a, String.format(java.util.Locale.ROOT,
+						"same-mon return: the target faints and the replacement is %s in %.0f%% of those branches; no KO threat this turn; resetting %s gains nothing (reset value %.1f)",
+						active, share * 100, active, reset));
+			} else {
+				keep.add(i);
+			}
+		}
+		if (dropped.isEmpty() || keep.isEmpty()) return null;
+
+		List<Action> A2 = new ArrayList<>(keep.size());
+		double[][] M2 = new double[keep.size()][];
+		for (int k = 0; k < keep.size(); k++) {
+			A2.add(A.get(keep.get(k)));
+			M2[k] = M[keep.get(k)];
+		}
+		List<Action> allDropped = new ArrayList<>();
+		if (prior != null) allDropped.addAll(prior.dropped);
+		allDropped.addAll(dropped);
+
+		double[] gain, stay;
+		List<Action> origA;
+		double[][] origM;
+		if (prior != null) {
+			gain = prior.gain;
+			stay = prior.stay;
+			origA = prior.originalA;
+			origM = prior.originalM;
+		} else {
+			origA = A;
+			origM = M;
+			gain = new double[A.size()];
+			java.util.Arrays.fill(gain, Double.NaN);
+			stay = new double[threat.length];
+			java.util.Arrays.fill(stay, Double.NEGATIVE_INFINITY);
+			for (int i = 0; i < A.size(); i++) {
+				if (A.get(i).kind != ActionKind.MOVE || A.get(i).move == null) continue;
+				for (int j = 0; j < threat.length; j++) stay[j] = Math.max(stay[j], M[i][j]);
+			}
+		}
+		Filtered f = new Filtered(A2, M2, allDropped, gain, origA, origM, stay, threat);
+		if (prior != null) f.dropReason.putAll(prior.dropReason);
+		f.dropReason.putAll(reasons);
+		return f;
+	}
+
+	/** Weight of the row's target-faints branches (uniform over player columns) in which the free replacement is the mon that was already active. -1 when the target never faints (not a same-mon return). */
+	static double sameMonShare(SimState root, Action row, List<Action> P, AIConfig cfg, int activeIdx) {
+		double faintW = 0, sameW = 0;
+		for (int j = 0; j < P.size(); j++) {
+			for (Branch br : BattleSimulator.simulateTurn(root, row, P.get(j), cfg)) {
+				Pokemon t = br.state.ai.bench()[row.slot];
+				if (t == null || !t.isFainted()) continue;
+				faintW += br.prob;
+				if (br.state.ai.shell.indexOf(br.state.ai.active()) == activeIdx) sameW += br.prob;
+			}
+		}
+		return faintW > 1e-9 ? sameW / faintW : -1;
+	}
+
+	/**
+	 * What resetting {@code m} by switching it out gains minus what it loses, in rough stat-stage units: each negative
+	 * stage cleared is +1, each positive stage lost is -1, and each bad volatile that switching clears is +2 (Taunt,
+	 * Encore, Torment, Disable, confusion, Leech Seed, Curse, Nightmare, Yawn/Drowsy, Heal Block, Mute, a running Perish
+	 * count) plus Natural Cure on a statused mon.
+	 */
+	public static double resetValue(Pokemon m) {
+		double v = 0;
+		for (int s : m.statStages) v += -s;
+		Status[] bad = { Status.TAUNTED, Status.ENCORED, Status.TORMENTED, Status.CONFUSED, Status.LEECHED, Status.CURSED,
+				Status.NIGHTMARE, Status.YAWNING, Status.DROWSY, Status.HEAL_BLOCK, Status.MUTE };
+		for (Status b : bad) if (m.hasStatus(b)) v += 2;
+		if (m.disabledMove != null) v += 2;
+		if (m.perishCount > 0) v += 2;
+		if (m.status != null && m.status != Status.HEALTHY && m.getAbility(Pokemon.field) == Ability.NATURAL_CURE) v += 2;
+		return v;
 	}
 
 	// ---- diagnostics (§7.14.4): per-column detail for a DROPPED sack-only row ----

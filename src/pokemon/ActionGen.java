@@ -227,6 +227,25 @@ public final class ActionGen {
 		}
 		alive.sort((i, j) -> Double.compare(cheapMatchup(team[j], aiActive, root.field), cheapMatchup(team[i], aiActive, root.field)));
 
+		// Status.MAGIC_REFLECT (the volatile on the mon; NOT the Reflect screen, Field.Effect.REFLECT) is lost when its
+		// holder leaves, so a player does not throw it away without a reason. The AI attacking into it just hurts the AI,
+		// and an AI break (Brick Break etc.) shows up as a real threat below. The one plausible reason to switch is
+		// predicting a status move that would burn the Reflect: the player then brings in their best answer for free. So
+		// with no threat: no switch columns if the AI has no usable status move, otherwise only the single best answer.
+		Pokemon playerActive = root.player.active();
+		if (playerActive.hasStatus(Status.MAGIC_REFLECT) && !SackAnalysis.threatens(aiActive, playerActive, root.field)) {
+			boolean aiHasStatusMove = false;
+			for (Move m : usefulRows(aiActive, playerActive, root.field, aiActive.getValidMoveset())) {
+				if (m.cat == 2) {
+					aiHasStatusMove = true;
+					break;
+				}
+			}
+			List<Integer> only = new ArrayList<>();
+			if (aiHasStatusMove && !alive.isEmpty()) only.add(alive.get(0));
+			return only;
+		}
+
 		List<Integer> result = new ArrayList<>();
 		int cap = Math.max(1, cfg.maxPlayerSwitchCols);
 		for (int idx : alive) {
