@@ -101,6 +101,15 @@ public final class DamageRange {
 		return usable && !immune && !reflected && vals.length > 0 && vals[vals.length - 1] > 0;
 	}
 
+	/**
+	 * True when a lethal hit on a target with {@code hp} HP would leave it standing at 1 HP: a never-kills move (False Swipe),
+	 * or Sturdy / Focus Sash while the target is at full HP. {@link #expectedCapped} and {@link #koProb} already honor this;
+	 * the evaluator uses it to stop crediting such a hit as a KO.
+	 */
+	public boolean endures(double hp) {
+		return neverKills || (endureAtFull && hp >= foeMaxHp);
+	}
+
 	/** Mean damage of one hit over the crit / bonus mixture (before accuracy and hit count). */
 	public double expectedPerHit() {
 		double s = 0;

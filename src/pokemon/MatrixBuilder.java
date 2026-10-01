@@ -20,7 +20,7 @@ public final class MatrixBuilder {
 				Action p = P.get(j);
 				List<Branch> branches = BattleSimulator.simulateTurn(root, a, p, cfg);
 				double v = 0;
-				for (Branch br : branches) v += br.prob * Evaluator.eval(br.state, cfg.style, weights.ai, weights.player);
+				for (Branch br : branches) v += br.prob * Evaluator.eval(br.state, cfg.style, weights);
 				M[i][j] = v;
 			}
 		}

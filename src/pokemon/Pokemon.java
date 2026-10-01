@@ -7444,10 +7444,22 @@ public class Pokemon implements Serializable {
 		
 		Pokemon faster = speed1 > speed2 ? this : other;
 		if (speed1 == speed2) {
-			System.out.println("Speed tie between " + this.nickname + " and " + other.nickname + "!");
-			Random random = Rng.asRandom();
-			boolean isHeads = random.nextBoolean();
-			faster = isHeads ? this : other;
+			if (SimContext.active()) {
+		        // Phase 5 fix: a real Rng draw here is correct for actual gameplay (ties should be a genuine coin flip), but
+		        // WRONG during simulation - this tiebreak runs AFTER baseEdge's own try-with-resources has already closed,
+		        // so whether SimContext.active() is true at this exact line depends entirely on whatever scope a CALLER
+		        // further up the stack happens to still have open, not on anything this method controls. A direct top-level
+		        // call draws from the real RND stream (nothing open); a call nested inside BattleSimulator.simulateTurn
+		        // draws from the isolated stream at whatever position that turn's prior move processing left it. Same tied
+		        // pair, two different, context-dependent answers - exactly the non-determinism that broke Phase 5's T22.
+		        // A stable, id-based tiebreak removes the dependency on Rng state entirely: same pair, same answer, no
+		        // matter where it's called from.
+		        faster = this.id <= other.id ? this : other;
+		    } else {
+		        Random random = Rng.asRandom();
+		        boolean isHeads = random.nextBoolean();
+		        faster = isHeads ? this : other;
+		    }
 		}
 		if (field.contains(field.fieldEffects, Effect.TRICK_ROOM)) {
 			faster = faster == this ? other : this;

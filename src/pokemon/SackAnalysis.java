@@ -169,22 +169,25 @@ public final class SackAnalysis {
 	// ---- same-mon-return rule (Phase 5 follow-up) ----
 
 	/**
-	 * A sack is only worth a mon if the free switch-in does something. When NO player move threatens a KO this turn, a
-	 * sack whose target faints and whose replacement is the mon that was already out just re-presents the same position
-	 * one mon poorer: the "saved" HP is banked value the same threat takes back next turn (the Soldrota/Gyarados loop,
-	 * where Dompster-S and then Zurroaratr-S were burned to dodge a Waterfall that was still coming). Such a row is
-	 * dropped unless the reset itself helps ({@link #resetValue} &gt; 0: it clears negative stages or bad volatiles by
-	 * more than it costs in boosts).
-	 * <p>
-	 * Not applied when a threat column exists: sparing the active from a real KO is the §7.14 case (T18), even though the
-	 * active is the one coming back.
+	 * A sack is only worth a mon if the free switch-in does something. A sack whose target faints and whose replacement is the
+	 * mon that was already out puts that mon back into the position it just left, one mon poorer; it only helps if that position
+	 * is better the second time, i.e. the thing that forced the sack is gone. So such a row is dropped unless:
+	 * <ul>
+	 * <li>resetting the active helps ({@link #resetValue} &gt; 0: it clears negative stages or bad volatiles by more than it costs in
+	 * boosts), or</li>
+	 * <li>the sack was spared a real KO (some player move threatens one this turn) AND that threat does not come back: after the
+	 * turn the foe in play no longer threatens the returned mon (it fainted, was replaced, ...). If the same foe still threatens
+	 * the same mon, the KO is merely postponed one turn at the price of a mon (a sack loop: Gulpin and Rockmite in the logs).</li>
+	 * </ul>
+	 * Without a KO threat this turn the second condition cannot rescue the row (there was nothing to be spared).
 	 * <p>
 	 * Pure filter over the (already min-gain-filtered) rows. Returns null when nothing changed, otherwise a Filtered whose
 	 * A/M are the surviving rows and whose dropped/originalA/originalM also carry the earlier guard's results.
 	 */
 	public static Filtered dropSameMonReturns(SimState root, List<Action> A, double[][] M, List<Action> P, boolean[] threat,
 			Set<Integer> sackCandidates, AIConfig cfg, Filtered prior) {
-		for (boolean b : threat) if (b) return null;
+		boolean anyThreat = false;
+		for (boolean b : threat) if (b) anyThreat = true;
 		Pokemon active = root.ai.active();
 		int activeIdx = root.ai.shell.indexOf(active);
 		double reset = resetValue(active);
@@ -196,12 +199,25 @@ public final class SackAnalysis {
 		for (int i = 0; i < A.size(); i++) {
 			Action a = A.get(i);
 			boolean sackRow = (a.kind == ActionKind.SWITCH || a.kind == ActionKind.MOVE_THEN_SWITCH) && sackCandidates.contains(a.slot);
-			double share = sackRow ? sameMonShare(root, a, P, cfg, activeIdx) : -1;
-			if (share >= 0.5) {
+			double[] st = sackRow ? sameMonStats(root, a, P, cfg, activeIdx) : null; // {share returning the same mon, share of those where it is threatened again}; null/-1 = n/a
+			boolean drop = false;
+			String why = null;
+			if (st != null && st[0] >= 0.5) {
+				if (!anyThreat) {
+					drop = true;
+					why = String.format(java.util.Locale.ROOT,
+							"same-mon return: the target faints and the replacement is %s in %.0f%% of those branches; no KO threat this turn to be spared; resetting %s gains nothing (reset value %.1f)",
+							active, st[0] * 100, active, reset);
+				} else if (st[1] >= 0.5) {
+					drop = true;
+					why = String.format(java.util.Locale.ROOT,
+							"same-mon return: the target faints and the replacement is %s in %.0f%% of those branches; the KO it is spared this turn comes back (%s is threatened again in %.0f%% of them); resetting gains nothing (reset value %.1f)",
+							active, st[0] * 100, active, st[1] * 100, reset);
+				}
+			}
+			if (drop) {
 				dropped.add(a);
-				reasons.put(a, String.format(java.util.Locale.ROOT,
-						"same-mon return: the target faints and the replacement is %s in %.0f%% of those branches; no KO threat this turn; resetting %s gains nothing (reset value %.1f)",
-						active, share * 100, active, reset));
+				reasons.put(a, why);
 			} else {
 				keep.add(i);
 			}
@@ -244,18 +260,31 @@ public final class SackAnalysis {
 		return f;
 	}
 
-	/** Weight of the row's target-faints branches (uniform over player columns) in which the free replacement is the mon that was already active. -1 when the target never faints (not a same-mon return). */
-	static double sameMonShare(SimState root, Action row, List<Action> P, AIConfig cfg, int activeIdx) {
-		double faintW = 0, sameW = 0;
+	/**
+	 * Over the row's branches (uniform over player columns) in which its target faints: [0] = the weight share where the free
+	 * replacement is the mon that was already active; [1] = of THOSE, the share where the foe in play still threatens the returned
+	 * mon with a KO (threatens(), evaluated on the post-turn state). {-1, 0} when the target never faints (not a same-mon return).
+	 */
+	static double[] sameMonStats(SimState root, Action row, List<Action> P, AIConfig cfg, int activeIdx) {
+		double faintW = 0, sameW = 0, recurW = 0;
 		for (int j = 0; j < P.size(); j++) {
 			for (Branch br : BattleSimulator.simulateTurn(root, row, P.get(j), cfg)) {
 				Pokemon t = br.state.ai.bench()[row.slot];
 				if (t == null || !t.isFainted()) continue;
 				faintW += br.prob;
-				if (br.state.ai.shell.indexOf(br.state.ai.active()) == activeIdx) sameW += br.prob;
+				if (br.state.ai.shell.indexOf(br.state.ai.active()) != activeIdx) continue;
+				sameW += br.prob;
+				Field prev = Pokemon.field;
+				try {
+					Pokemon.field = br.state.field;
+					if (threatens(br.state.player.active(), br.state.ai.active(), br.state.field)) recurW += br.prob;
+				} finally {
+					Pokemon.field = prev;
+				}
 			}
 		}
-		return faintW > 1e-9 ? sameW / faintW : -1;
+		if (faintW <= 1e-9) return new double[] { -1, 0 };
+		return new double[] { sameW / faintW, sameW > 1e-9 ? recurW / sameW : 0 };
 	}
 
 	/**

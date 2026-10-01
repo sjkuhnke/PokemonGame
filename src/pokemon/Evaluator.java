@@ -23,14 +23,36 @@ public final class Evaluator {
 	static final double WIN = 1000;
 	static final double ALIVE_BONUS = 20;
 
+	/**
+	 * Matchup credit is capped by what the foe can escape to: when I am winning the active duel, the foe can switch to its best
+	 * answer on the bench at the price of the free hit it takes, so the credit is at most (that answer's edge against my active)
+	 * + this cost. Without the cap the evaluator books "I kill the foe's active before it acts" (about +90) as an asset that no
+	 * real opponent leaves standing, and a real KO (material for the dead mon, but the credit resets against the replacement)
+	 * scores no better than a chip that leaves the credit in place. Eval points (same scale as matchupScore, about -90..+90).
+	 */
+	static final double ESCAPE_COST = 30;
+	/** A wounded bench mon is a worse answer: its edge is worsened by this many points per missing fraction of its HP. */
+	static final double HURT_ANSWER_PENALTY = 60;
+	/** A hit that would be lethal but is endured (Sturdy / Focus Sash at full HP, False Swipe) counts as at most this fraction of the target's HP in the matchup: it takes a second hit. */
+	static final double ENDURE_FRAC = 0.5;
+
 	private Evaluator() {}
 
 	public static double eval(SimState s, EvalWeights style, double[] aiWeights, double[] playerWeights) {
+		return evalCore(s, style, aiWeights, playerWeights, null);
+	}
+
+	/** Eval with the decision's {@link MonWeights}: mon weights plus the escape-capped matchup (see {@link #ESCAPE_COST}). */
+	public static double eval(SimState s, EvalWeights style, MonWeights w) {
+		return evalCore(s, style, w.ai, w.player, w);
+	}
+
+	private static double evalCore(SimState s, EvalWeights style, double[] aiWeights, double[] playerWeights, MonWeights ctx) {
 		if (s.player.shell.wiped()) return WIN;
 		if (s.ai.shell.wiped()) return -WIN;
 
 		double v = style.wMaterial * (material(s.ai, aiWeights) - material(s.player, playerWeights));
-		v += style.wMatchup * activeMatchup(s);
+		v += style.wMatchup * matchupTerm(s, ctx);
 		v += style.wHazard * (hazardPain(s.player, s.field) - hazardPain(s.ai, s.field));
 		v += style.wStatus * (benchStatusValue(s.player, s.field) - benchStatusValue(s.ai, s.field));
 		v += style.wField * fieldValue(s);
@@ -76,6 +98,32 @@ public final class Evaluator {
 		return aiMon.matchupScore((int) Math.round(myFrac * 100), foeFrac * 100, iAmFaster);
 	}
 
+	/**
+	 * The matchup term of eval: {@link #activeMatchup} (live: current HP, stages, status), capped at the foe's best escape:
+	 * min(live, min over the foe's alive bench of (the AI active's full-HP edge against that mon * 90, worsened for a wounded mon)
+	 * + {@link #ESCAPE_COST}). The cap applies at every sign of live, so the term is monotone in the live matchup: a slightly
+	 * winning duel is never scored below a losing one. With no context, or no foe bench, it is the live matchup. The AI's own escape
+	 * from a bad matchup is deliberately not credited (it keeps the pressure to switch out of one).
+	 */
+	public static double matchupTerm(SimState s, MonWeights ctx) {
+		double live = activeMatchup(s);
+		if (ctx == null || ctx.edge == null) return live;
+		Pokemon aiMon = s.ai.active(), plMon = s.player.active();
+		if (aiMon == null || plMon == null) return live;
+		int ai = s.ai.shell.indexOf(aiMon), pl = s.player.shell.indexOf(plMon);
+		if (ai < 0 || pl < 0 || ai >= ctx.edge.length) return live;
+		double best = Double.POSITIVE_INFINITY;
+		Pokemon[] foeTeam = s.player.bench();
+		for (int j = 0; j < foeTeam.length && j < ctx.edge[ai].length; j++) {
+			Pokemon p = foeTeam[j];
+			if (j == pl || p == null || p.isFainted()) continue;
+			double hpFrac = p.currentHP * 1.0 / p.getStat(0);
+			best = Math.min(best, ctx.edge[ai][j] * 90 + (1 - hpFrac) * HURT_ANSWER_PENALTY);
+		}
+		if (best == Double.POSITIVE_INFINITY) return live; // the foe has nothing to escape to
+		return Math.min(live, best + ESCAPE_COST);
+	}
+
 	/** Attacker's best valid move against defender, ranked by expected-capped damage. Null if nothing lands. */
 	static DamageRange bestRange(Pokemon attacker, Pokemon defender, Field field) {
 		DamageRange best = null;
@@ -94,7 +142,11 @@ public final class Evaluator {
 
 	static double fracOf(DamageRange r, double hp) {
 		if (r == null || hp <= 0) return 0;
-		return Math.min(1.0, r.expectedCapped(hp) / hp);
+		double f = Math.min(1.0, r.expectedCapped(hp) / hp);
+		// A lethal hit that is endured (Focus Sash / Sturdy at full HP, False Swipe) is not a KO: expectedCapped stops it at hp - 1,
+		// which would read as ~100%. Count it as needing a second hit. Chip that removes the full-HP condition restores the credit.
+		if (r.endures(hp) && Math.max(r.max, r.avg * r.hits) >= hp) f = Math.min(f, ENDURE_FRAC);
+		return f;
 	}
 
 	/** hazardPain(side) = Sum over active hazard effects on side's own field: calcHazardTeamValue, scaled by layers (v1, see class doc). */

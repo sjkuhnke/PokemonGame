@@ -118,6 +118,7 @@ public class Egg extends Pokemon {
 			}
 		}
 		Pokemon p = this.clone();
+		p.cloned = false;
 		p.setSprites();
 		p.nickname = p.name();
 		p.metAt = metAt;

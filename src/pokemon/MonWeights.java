@@ -40,20 +40,29 @@ public final class MonWeights {
 
 	public final double[] ai;
 	public final double[] player;
+	/** AI-perspective full-HP edge[aiSlot][playerSlot] (about -1..+1; 0 for pairs not both alive at the root), the table the weights are built from. Used by {@link Evaluator#matchupTerm}. */
+	public final double[][] edge;
 
-	private MonWeights(double[] ai, double[] player) {
+	private MonWeights(double[] ai, double[] player, double[][] edge) {
 		this.ai = ai;
 		this.player = player;
+		this.edge = edge;
 	}
 
 	public static MonWeights compute(SimState root) {
-		double[] aiW = forSide(root.ai, root.player, root.field);
-		double[] plW = forSide(root.player, root.ai, root.field);
-		return new MonWeights(aiW, plW);
+		double[][][] edgeOut = new double[1][][];
+		double[] aiW = forSide(root.ai, root.player, root.field, edgeOut);
+		double[] plW = forSide(root.player, root.ai, root.field, null);
+		return new MonWeights(aiW, plW, edgeOut[0]);
 	}
 
 	/** One side's weights (mirrored formula for the other side). Also used by {@link ReplacementChooser}. */
 	static double[] forSide(SideState mine, SideState theirs, Field field) {
+		return forSide(mine, theirs, field, null);
+	}
+
+	/** As above; when {@code edgeOut} is non-null, edgeOut[0] receives this side's edge table (mine x theirs). */
+	private static double[] forSide(SideState mine, SideState theirs, Field field, double[][][] edgeOut) {
 		Pokemon[] myTeam = mine.bench();
 		Pokemon[] theirTeam = theirs.bench();
 		int n = myTeam.length, m = theirTeam.length;
@@ -70,6 +79,8 @@ public final class MonWeights {
 				edge[i][j] = baseEdge(myTeam[i], theirTeam[j], field);
 			}
 		}
+
+		if (edgeOut != null) edgeOut[0] = edge;
 
 		double[] threat = new double[m];
 		for (int j = 0; j < m; j++) {

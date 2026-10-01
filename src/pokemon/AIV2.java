@@ -440,30 +440,32 @@ public final class AIV2 implements TrainerAI {
 	private void logEvalBreakdown(Pokemon self, SimState root, AIConfig cfg, MonWeights weights) {
 		if (!AI_DEBUG) return;
 		double mat = Evaluator.material(root.ai, weights.ai) - Evaluator.material(root.player, weights.player);
-		double matchup = Evaluator.activeMatchup(root);
+		double matchup = Evaluator.matchupTerm(root, weights);
+		double matchupLive = Evaluator.activeMatchup(root);
 		double hazard = Evaluator.hazardPain(root.player, root.field) - Evaluator.hazardPain(root.ai, root.field);
 		double status = Evaluator.benchStatusValue(root.player, root.field) - Evaluator.benchStatusValue(root.ai, root.field);
 		double field = Evaluator.fieldValue(root);
 		double tempo = Evaluator.tempo(root);
 		double forced = Evaluator.forcedTurnPenalty(root);
-		double total = Evaluator.eval(root, cfg.style, weights.ai, weights.player);
+		double total = Evaluator.eval(root, cfg.style, weights);
 		Print.debug("[AIV2] weights ai=" + fmtW(weights.ai) + " player=" + fmtW(weights.player) + "\n");
 		Print.debug(String.format(Locale.ROOT,
-				"[AIV2] eval(root)=%.1f  material=%.1f matchup=%.1f hazard=%.1f status=%.1f field=%.1f tempo=%.1f forced=%.1f%n",
-				total, mat, matchup, hazard, status, field, tempo, forced));
+				"[AIV2] eval(root)=%.1f  material=%.1f matchup=%.1f (live %.1f) hazard=%.1f status=%.1f field=%.1f tempo=%.1f forced=%.1f%n",
+				total, mat, matchup, matchupLive, hazard, status, field, tempo, forced));
 	}
 
 	/** One branch state's eval() split into its terms (same terms as the root breakdown), so a KO row can be compared with a chip row term by term. */
 	private static String evalTerms(SimState s, AIConfig cfg, MonWeights w) {
-		double total = Evaluator.eval(s, cfg.style, w.ai, w.player);
+		double total = Evaluator.eval(s, cfg.style, w);
 		double mat = Evaluator.material(s.ai, w.ai) - Evaluator.material(s.player, w.player);
-		double matchup = Evaluator.activeMatchup(s);
+		double matchup = Evaluator.matchupTerm(s, w);
+		double matchupLive = Evaluator.activeMatchup(s);
 		double hazard = Evaluator.hazardPain(s.player, s.field) - Evaluator.hazardPain(s.ai, s.field);
 		double status = Evaluator.benchStatusValue(s.player, s.field) - Evaluator.benchStatusValue(s.ai, s.field);
 		double field = Evaluator.fieldValue(s);
 		double tempo = Evaluator.tempo(s);
-		return String.format(Locale.ROOT, "eval=%.1f  [material=%.1f matchup=%.1f hazard=%.1f status=%.1f field=%.1f tempo=%.1f]",
-				total, mat, matchup, hazard, status, field, tempo);
+		return String.format(Locale.ROOT, "eval=%.1f  [material=%.1f matchup=%.1f (live %.1f) hazard=%.1f status=%.1f field=%.1f tempo=%.1f]",
+				total, mat, matchup, matchupLive, hazard, status, field, tempo);
 	}
 
 	private static String fmtW(double[] w) {
