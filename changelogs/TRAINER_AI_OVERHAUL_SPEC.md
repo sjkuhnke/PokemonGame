@@ -976,7 +976,7 @@ Tasks
 - Gate on `selectLead`; honor `fixedLead`; keep `if (!foe.playerOwned()) return current`.
 - No new UI: the team-preview and lead-select screens already exist. Only confirm the AI's lead is computed before the player's selection is committed.
 Acceptance: T23, T24, T25, T32, T33; the AI's lead is computed independently of the player's selection; decision time within budget; non-EXTREME battles are unchanged.
-Upload: `Trainer.java` (`pickLead` and its callers), the battle-initiation code that calls `pickLead`, how `Trainer` orders its team and sets `current`, and the preview UI code (already shared).
+Upload: `Trainer.java` (`pickLead` and its callers), the battle-initiation code that calls `pickLead`, how `Trainer` orders its team and sets `current`, and the preview UI code.
 
 ### Phase 8: Tuning, performance, cleanup
 Tasks

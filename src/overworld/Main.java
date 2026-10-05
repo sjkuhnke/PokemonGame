@@ -319,7 +319,7 @@ public class Main {
 								"a wild " + gp.battleUI.foe.getName()));
 					}
 					Print.flush();
-					Sound.disposeAll();
+					GamePanel.audioExec.execute(Sound::disposeAll);
 					gp.titleScreen.previewExecutor.shutdown();
 					System.exit(0);
 				}

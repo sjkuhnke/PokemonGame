@@ -1204,9 +1204,7 @@ public class PlayerCharacter extends Entity {
 			ui.showMessage("Walk-through-walls mode was turned " + onoff);
 			p.invalidateNuzlocke("Used " + code);
 		} else if (code.equals("LIGMA")) {
-			for (Pokemon pokemon : p.team) {
-				if (pokemon != null) pokemon.heal();
-			}
+			p.heal();
 			p.invalidateNuzlocke("Used " + code);
 		} else if (code.equals("BALLZ")) {
 			JPanel panel = p.displayTweaker();

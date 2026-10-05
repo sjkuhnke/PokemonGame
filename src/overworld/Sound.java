@@ -2,15 +2,21 @@ package overworld;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
 import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineEvent;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.Mixer;
 
 public class Sound {
 	
@@ -20,6 +26,7 @@ public class Sound {
 	FloatControl fc;
 	float volume;
 	int index;
+	private static Mixer workingMixer;
 	
 	// Clip Pool
 	private static Map<Integer, List<Clip>> clipPools = new HashMap<>();
@@ -64,10 +71,7 @@ public class Sound {
 				}
 			}
 			if (availableClip == null && pool.size() < CLIPS_PER_SOUND) {
-				AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[i]);
-				availableClip = AudioSystem.getClip();
-				availableClip.open(ais);
-				pool.add(availableClip);
+				availableClip = openClip(AudioSystem.getAudioInputStream(soundURL[i]));
 				
 				availableClip.addLineListener(event -> {
 					if (event.getType() == LineEvent.Type.STOP) {
@@ -88,8 +92,12 @@ public class Sound {
 			
 			if (clip != null) {
 				clip.setFramePosition(0);
-				fc = (FloatControl)clip.getControl(FloatControl.Type.MASTER_GAIN);
-				checkVolume();
+				if (clip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
+			        fc = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+			        checkVolume();
+			    } else {
+			        fc = null;
+			    }
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -97,11 +105,11 @@ public class Sound {
 	}
 	
 	public void play() {
-		clip.start();
+		if (clip != null) clip.start();
 	}
 	
 	public void loop() {
-		clip.loop(Clip.LOOP_CONTINUOUSLY);
+		if (clip != null) clip.loop(Clip.LOOP_CONTINUOUSLY);
 	}
 	
 	public void stop() {
@@ -131,6 +139,46 @@ public class Sound {
 		case 4: volume = 1f; break;
 		case 5: volume = 6f; break;
 		}
-		fc.setValue(volume);
+		if (fc != null) fc.setValue(volume);
+	}
+	
+	private static int mixerRank(Mixer.Info mi) {
+	    String n = mi.getName().toLowerCase();
+	    if (n.contains("pulse") || n.contains("pipewire") || n.startsWith("default")) return 0;
+	    if (n.contains("plughw")) return 1;
+	    if (n.contains("hw:")) return 3; // raw hardware, usually exclusive
+	    return 2;
+	}
+
+	private static Clip openClip(AudioInputStream ais) throws Exception {
+	    AudioFormat fmt = ais.getFormat();
+	    byte[] data = ais.readAllBytes(); // a failed open() consumes the stream, so read once
+	    DataLine.Info info = new DataLine.Info(Clip.class, fmt);
+
+	    if (workingMixer != null) {
+	        Clip c = (Clip) workingMixer.getLine(info);
+	        c.open(fmt, data, 0, data.length);
+	        return c;
+	    }
+
+	    List<Mixer.Info> infos = new ArrayList<>(Arrays.asList(AudioSystem.getMixerInfo()));
+	    infos.removeIf(mi -> mi.getName().startsWith("Port"));
+	    infos.sort(Comparator.comparingInt(Sound::mixerRank));
+
+	    Exception last = null;
+	    for (Mixer.Info mi : infos) {
+	        try {
+	            Mixer m = AudioSystem.getMixer(mi);
+	            if (!m.isLineSupported(info)) continue;
+	            Clip c = (Clip) m.getLine(info);
+	            c.open(fmt, data, 0, data.length);
+	            workingMixer = m;
+	            System.out.println("Audio mixer in use: " + mi.getName());
+	            return c;
+	        } catch (Exception e) {
+	            last = e;
+	        }
+	    }
+	    throw last != null ? last : new LineUnavailableException("No usable mixer");
 	}
 }

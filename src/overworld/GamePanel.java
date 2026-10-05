@@ -16,6 +16,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 import javax.swing.JFrame;
@@ -75,7 +77,7 @@ public class GamePanel extends JPanel implements Runnable {
 	// CONSTANTS
 	public static final int MAX_MAP = 240;
 	public static final int MAX_FLAG = 25; // should not be >31
-	public static final String GAME_VERSION = "0.8.91";
+	public static final String GAME_VERSION = "0.8.98";
 	public static boolean DEBUG = true;
 	
 	// SYSTEM
@@ -90,6 +92,12 @@ public class GamePanel extends JPanel implements Runnable {
 	public boolean loaded;
 	public Font marumonica;
 	public boolean screenshotRequested;
+	public static final ExecutorService audioExec =
+		    Executors.newSingleThreadExecutor(r -> {
+		        Thread t = new Thread(r, "audio");
+		        t.setDaemon(true);
+		        return t;
+		    });
 	
 	Thread gameThread;
 	
@@ -460,19 +468,23 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 	
 	public void playMusic(int i) {
-		music.stop();
-		music.setFile(i);
-		music.play();
-		music.loop();
+	    audioExec.execute(() -> {
+	        music.stop();
+	        music.setFile(i);
+	        music.play();
+	        music.loop();
+	    });
 	}
-	
+
 	public void stopMusic() {
-		music.stop();
+	    audioExec.execute(music::stop);
 	}
-	
+
 	public void playSFX(int i) {
-		sfx.setFile(i);
-		sfx.play();
+	    audioExec.execute(() -> {
+	        sfx.setFile(i);
+	        sfx.play();
+	    });
 	}
 	
 	public void openBox(NPC_PC target) {
