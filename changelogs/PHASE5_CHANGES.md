@@ -352,3 +352,216 @@ deadTurn, the foe's move must not threaten the ace (checked directly with SackAn
 scanning), and the scrub must land outside the top-3 type-matchup answers. Placeholder species/moves are filled in
 (ids 1/2/3 for ace/scrub/answer+fillers, id 4 with Move.TACKLE for a deliberately weak foe) - replace with your own
 if TACKLE or these IDs don't fit the dex, and the SKIP messages will tell you exactly which condition still isn't met.
+
+## Twelfth: T22 solved - speed-tie coin flip was reading the wrong Rng stream
+
+Root cause, found by tracing every remaining non-deterministic input one at a time until only `Pokemon.getFaster()`
+was left unverified: its speed-tie coin flip (`Rng.asRandom().nextBoolean()`) runs with no `SimContext` gating of its
+own, and it's called from `MonWeights.baseEdge` *after* that method's own `try-with-resources` block has already
+closed. So whether the coin flip draws from the real stream or the isolated one depends entirely on whatever scope a
+caller further up the stack happens to still have open - not on anything `getFaster()` controls:
+
+- `direct`/`real`, called straight from the test or from `Trainer.next()`, have nothing open above them → draws from
+  the real, shared `RND` stream.
+- `sim`'s internal replacement call happens from *inside* `BattleSimulator.simulateTurn`'s still-open scope → draws
+  from the isolated stream, at whatever position that turn's own move processing already left it.
+
+Same tied pair, two completely different, context-dependent answers. Confirmed directly: Torgged/Tortugis/Lizish
+(species 2/3/7) tie on speed, and swapping in species that don't tie (98/99/100/97) made the failure disappear
+immediately. This also explains the "different result on every run" symptom from several rounds back - `RND`'s state
+at the moment of a tie depends on everything else that happened to run earlier in that JVM session.
+
+**Fix (`getFaster_fix.md`):** mirrors `calc()`'s existing pattern exactly - `SimContext.active()` now selects a
+deterministic, id-based tiebreak instead of drawing from `Rng`; real gameplay (no scope open) is completely
+unchanged, still a genuine coin flip, as it should be. This was a pre-existing engine bug, not something Phase 5
+introduced, but Phase 5's AI runs enough extra simulated turns per decision that it was the first thing to expose it
+through a hard, reproducible test failure.
+
+**`ReplacementChooser.pickSlot`'s `log` flag** is restored to `!SimContext.active() && !Print.isDebugSuppressed()`
+(you had hardcoded it to `true` to capture the simulator's internal call for this investigation). The entry/weight
+breakdown in that log line is kept as a standing feature now, not just a T22-specific diagnostic - it's generally
+useful for seeing which half (entry quality vs. future value) drove a replacement.
+
+**`Phase5Tests.java`** had its T22-investigation scaffolding removed: the bench/field diff prints (confirmed a dead
+end - `endOfTurnPhase` wasn't the cause) and the back-to-back `direct`/`direct2` comparison (confirmed `pickSlot` is
+deterministic on its own once `getFaster` is fixed) are both gone. T22 is back to the clean three-way check it was
+always meant to be.
+
+## Also fixed this round, found via a real crash during playtesting (`move_bounce_fix.md`)
+
+`Pokemon.move()` had a pre-existing, unrelated recursion bug: Magic Bounce (ability) and Magic Reflect (status) each
+redirect a move back at its original user via a recursive `move()` call with no guard against the *redirected* move
+being bounced again - if the new target also has Magic Bounce/Magic Reflect up, it redirects right back, forever
+(`StackOverflowError`, crashed a real battle mid-playthrough). Also not a Phase 5 bug in origin, but the same
+"more simulated turns per decision" effect likely made it far more likely to surface. Fixed with a `bounced` flag
+on a new private overload of `move()`; the public 4-arg signature every other caller in the codebase uses is
+untouched.
+
+## MonWeights.normalize() - rewritten (your change, logged for the record)
+
+You replaced the offset-from-mean normalization with a z-score + exponential scheme (`NORM_K`, `NORM_SD_FLOOR`):
+`w ~ exp(NORM_K * z)`, rescaled to mean 1.0, then clamped to `[MIN_W, MAX_W]`. This addresses a real limitation in
+the offset-from-mean version: putting raw-unit differences straight into the `[0.25, 3.0]` window meant any raw
+spread over about 0.75 pinned nearly every mon to a clamp at once (seen directly in earlier logs - four mons at 0.25
+and one at 3.0), erasing the distinctions between the weaker mons and, with them, the price of sacking any specific
+one of them. The z-score version keeps everything sign-safe (still doesn't care if raw goes negative) and scale-safe
+(spread is judged relative to the team's own standard deviation, not an absolute raw-unit window), so the clamp is
+only reached by genuine outliers now rather than routinely. `NORM_K`/`NORM_SD_FLOOR` are untuned placeholders like
+every other Phase 5 constant - Phase 8.
+
+## Phase 5 status
+
+Every test passes or SKIPs for a documented, reproducible reason (T26 and T20's original scan both SKIP by design,
+not by accident). The two real production bugs this phase's testing surfaced - the min-gain guard's "no threat means
+never sack" default, and this speed-tie Rng-stream bug - were both things no amount of staring at the algorithm
+would have caught without the tests actually running against real positions and real playtesting. Phase 5 is closed.
+
+
+---
+
+# Session 2: weights, sack loop, Magic Reflect, KO valuation
+
+Everything below was made in a later working session (not the one that wrote the sections above). Nothing here has been
+compiled against the engine by the author; the first batch was run by you (tests still passed, sacks fired), the last
+batch (marked **untested**) was not. Files: `MonWeights`, `AIV2`, `SackAnalysis`, `ActionGen`, `Evaluator`, `DamageRange`,
+`MatrixBuilder`. Your own change from this session, noted for the record: the Trainer's boosts are now applied in the sim
+shell (the Alakazam omniboost fix).
+
+Note on the "MonWeights.normalize() - rewritten" section above: that z-score + exponential rewrite is item 1 below (the exact
+formula and the reason are recorded here).
+
+## Decisions taken (yours, this session)
+1. **No `minProb` change.** Tail draws (a 10% move) are healthy variation; the equilibrium's mixing stays as is.
+2. **Same-mon sack rule, not a type-resist guard scope.** A resist is not what matters, damage taken is; the guard's
+   "top-N answer" exemption was left alone and a separate rule drops pointless sacks.
+3. **Magic Reflect:** drop the player's switch columns while their active holds `Status.MAGIC_REFLECT`, with one exception
+   (a player predicting a status move that would burn the Reflect switches in an answer for free).
+4. **Fixes 1 and 2 on KO valuation** (escape-capped matchup, endure-aware hits) approved and applied.
+
+## 1. `MonWeights.normalize()` (z-score + exponential)
+- **Problem (seen in logs):** the offset-from-mean version put raw-unit differences straight into the `[0.25, 3.0]` window.
+  Raw arrays like `[-2.3, -4.6, -4.3, -2.9, -4.2, +6.0]` normalized to `[0.74, 0.25, 0.25, 0.25, 0.25, 3.0]`: four mons on the
+  floor, one on the ceiling, every `REPLACEMENT` line showed it. With flat 0.25 weights a sack was worth about 11 points, right at
+  `sackMinGain`, so sacks almost never fired and the logs showed no sack rows.
+- **Now:** `w = exp(NORM_K * z) / mean(exp(NORM_K * z))` over alive mons, `z = (raw - mean) / max(sd, NORM_SD_FLOOR)`, then
+  clamped to `[MIN_W, MAX_W]`. `NORM_K = 0.5`, `NORM_SD_FLOOR = 1.0` (placeholders, Phase 8). Sign-safe, scale-safe, monotone in raw,
+  mean exactly 1.0 before the clamp (T26 holds), one alive mon = 1.0, fainted = 0. The same arrays now give
+  `[0.82, 0.61, 0.63, 0.76, 0.64, 2.54]`.
+- The `Raw array` / `Mean` debug prints (dozens per decision, `forSide` runs per sim cell) were removed, along with the now unused
+  `Print`/`Arrays` imports (`java.util.Arrays` is still used fully qualified in `baseline`).
+
+## 2. Sack logging (`AIV2`; logging only)
+- `logSack` now prints whenever the AI has any sack candidate (before: only when the min-gain guard had something to judge, which hid
+  every sack that was also a top-N answer). Each candidate says "sack-only: guard judges its rows" or "also a top-N answer: guard
+  does not judge it". Guarded rows print `KEPT` / `DROPPED` with their gain and the `minGain` bar.
+- Rows that switch (or pivot-switch) into a sack candidate carry `[sack]` in the matrix and the probability list
+  (`rowLabel`). Rows the guard dropped are shown at the end of the matrix with their original payoffs
+  ("dropped by min-gain guard").
+- `SACK CHOSEN (...)` debug line when the chosen row is labeled a sack (the same text the sim UI gets).
+- `[AIV2] weights ai=[...] player=[...]` once per decision.
+- Matrix/decision logs take the plan (`logMatrix(self, plan)`, `logDecision(..., plan.sacks)`).
+
+## 3. Same-mon-return sack rule (`SackAnalysis.dropSameMonReturns`, wired in `AIV2.plan`)
+- **Why:** the Soldrota/Gyarados fight. With the weights fixed, sacks fired, but the AI burned Dompster-S then Zurroaratr-S to
+  dodge a Waterfall, and the same mon came back into the same position each time. The matrix's 100% was a pure best response to a
+  100% Waterfall prediction (correct prediction), but a 1-ply eval books "the mon is unhurt" as banked value the same threat takes
+  back next turn. Staying in already is a sack of the active, so the sack only costs a mon and gains nothing.
+- **Rule:** a sack row (switch or pivot-switch into any sack candidate, answer or not) is dropped, before solving, when its
+  target faints and the free replacement is the mon that was already active in at least 50% of those branches, unless:
+  - `resetValue(active) > 0` (switching out clears negative stages or bad volatiles by more than it costs in boosts; each negative
+    stage +1, each positive stage -1, each of Taunt/Encore/Torment/Confusion/Leech Seed/Curse/Nightmare/Yawn/Drowsy/Heal Block/Mute,
+    a disabled move, a running Perish count, or Natural Cure on a statused mon +2), or
+  - **(untested, see item 9)** a real KO threat exists this turn and that threat does not come back after the turn.
+- Pure filter, runs whenever `sacks` is non-empty, after the min-gain guard. `Filtered.dropReason` carries the reason, printed as
+  `DROPPED by same-mon-return rule: ...`. Re-simulates only the sack rows (about 4 rows x |P| sims).
+
+## 4. Magic Reflect (`ActionGen.playerSwitchColumns`)
+- `Status.MAGIC_REFLECT` (the volatile on a mon; reflects the opponent's next non-breaking move, status moves included, lost when the
+  holder leaves) is not `Field.Effect.REFLECT` (the side screen). Only the status is touched.
+- While the player's active holds it and the AI has no real threat to it (a breaker such as Brick Break counts as a threat; a reflected
+  attack does not, because `koProb` is 0 for reflected hits), the player gets no switch columns, except one column (their best
+  matchup answer) when the AI has a usable status move (the "predicts the burn, switches in for free" case).
+- Why: the equilibrium gave the player a 63% switch column on turn 3; a player does not throw away an unspent Reflect, so the AI's
+  attack rows looked artificially good against a switch that costs the player their Reflect. Both observed switch chains were mostly
+  tail draws from mixes whose mode was an attack.
+
+## 5. Branch-detail diagnostics (`AIV2`; logging only)
+- `START` line with the real state before the turn (every other line is a projection after it; two analysis mistakes came from
+  reading projections as starting HP).
+- Prints the column the equilibrium expects most (not the arbitrary first column), plus the highest-expected column in which some AI
+  row takes the foe's life (so a KO line can be compared with a chip line).
+- Every branch carries its `eval()` split into terms (`evalTerms`); the root breakdown and branches show `matchup=<used> (live <raw>)`.
+
+## 6. KO valuation: escape-capped matchup and endure-aware hits (`Evaluator`, `DamageRange`, `MonWeights`, `MatrixBuilder`)
+- **Finding:** `matchupScore` credits about `KILL_VALUE` (~90) whenever the AI's best move kills the foe's active before it acts.
+  That credit exists before the KO. A real KO turns it into material (the dead mon's value) and the credit resets against the
+  replacement, so net a KO was worth almost nothing next to a chip that kept the credit. Numbers from the logs: Necrozma KO of Grust
+  +84.8 material - 61.2 matchup = +24 against a 34 chip line; Sneasler KO of the Steel mon +97 - 85 = +12; a 13-HP Fake Out (-20.6)
+  outscored a KO (-26.1). The held credit also assumed the foe cannot switch away, which is exactly what the equilibrium predicts.
+- **Fix 1, escape-capped matchup:** `Evaluator.matchupTerm(s, ctx)` = `min(live, min over the foe's alive bench of (full-HP edge of the
+  AI's active vs that mon * 90 + (1 - hpFrac) * HURT_ANSWER_PENALTY) + ESCAPE_COST)`. `ESCAPE_COST = 30`, `HURT_ANSWER_PENALTY = 60`
+  (placeholders). The AI's own escape from a bad matchup is deliberately not credited. No foe bench, or no context, gives the live value.
+- **Fix 2, endure-aware hits:** `DamageRange.endures(hp)` (`neverKills || (endureAtFull && hp >= foeMaxHp)`); `Evaluator.fracOf` caps a
+  lethal-but-endured hit at `ENDURE_FRAC = 0.5` (needs a second hit), so a Sash/Sturdy foe at full HP no longer reads as dead and chip
+  that removes the full-HP condition gains value. `SwitchInScorer` shares `fracOf`, so entry scores against Sash/Sturdy foes shift too.
+- **Plumbing:** `MonWeights.edge` (the AI-perspective full-HP edge table `forSide` already built, now exposed); `compute` uses a private
+  4-arg `forSide`, the 3-arg `forSide` (used by `ReplacementChooser`) is unchanged. `Evaluator.eval(s, style, MonWeights)` is the new
+  entry used by `MatrixBuilder`; the old `eval(s, style, aiW, plW)` is unchanged and still used by `ActionGen.evalAfter` and tests
+  (no context = old behavior).
+- **Checks run by the author:** re-solving the logged turn-0 Sneasler matrix with the capped hold lines reproduced the old log (Fake Out 53%,
+  Dire Claw 47%) and gives Close Combat about 58%, Dire Claw 42%, Fake Out 0% afterwards. Not a game run.
+
+## 7. Matchup cap made monotone (**untested**)
+- **Bug in item 6 (mine):** the cap was applied only when `live > 0`. A slightly winning duel capped at a strong foe answer (e.g. `-60.0
+  (live 14.5)`) then scored worse than a losing duel left uncapped (`-31.0 (live -31.0)`), so the term was not monotone in the live
+  matchup. In Gulpin's turn 11 the returned Gulpin looked 29 points better on matchup alone than the free replacement.
+- **Now:** the cap applies at every sign of `live`.
+
+## 8. Findings that did not lead to code (corrections and retractions)
+- **"Phantom heal" claim retracted.** Branch-detail HP is the projection after the turn, not the start; the sim's replacement path
+  and clones were correct. My T22 suspicion tied to it is withdrawn. T22 stays as closed above (the `getFaster` tie-break).
+- **"Zurroaratr loses 10% every turn" was a misread:** it had already been chipped; Toxic/Switcheroo leave HP unchanged.
+- **Evaluator did not mishandle Magic Reflect:** `DamageRange` zeroes `expectedCapped`/`koProb`/`dealsDamage` for reflected hits, so matchup
+  sees no offense into a Reflect. (Side note: `BattleSimulator`'s reflected-damage KO split is unreachable because a reflected range
+  has `dealsDamage() == false`; reflected hits branch on accuracy only. Left alone.)
+- **"Stat stages unpriced" was only true where the matchup saturates at 90;** unsaturated, +2 Atk was worth about +34.
+- **`BattleSimulator`/`ReplacementChooser`:** the sim's free replacement is the real chooser (the best entry for either side), no penalty for the
+  free entry itself.
+- Flamigo/Superchargo: Close Combat leaving the lead at 1 HP was the Focus Sash (the AI sees items in FULL info mode, Phase 6).
+- Minipede (4 near-identical level 2-5 mons vs one-shotting foes): unrelated to sacks. Every row loses exactly one mon, rows tie to the
+  point, and probability is split across tied rows, so sampling reads as random switching; small differences come from slightly
+  unequal weights (1.07 vs 0.98) and which replacement the chooser picks.
+
+## 9. Recurrence-aware same-mon rule (**untested**)
+- **Why:** Gulpin (66/140, KO'd by Extrasensory) sacked Gurdurr, and Rockmite (44/102, KO'd by Smart Strike) sacked Blobmo, each
+  with the same mon returning. The rule in item 3 did not fire because a KO threat existed (the old exception). The next turn
+  the same KO came back (every row `-1000`). Delayed by one turn, one mon lost, nothing gained.
+- **Now:** with a KO threat this turn, a same-mon sack is still dropped when, in at least 50% of its same-mon-return branches, the foe in
+  play after the turn still threatens a KO on the returned mon (`SackAnalysis.threatens` on the post-turn state, with
+  `Pokemon.field` pinned to that branch's field). It is kept when the threat goes away (foe fainted or replaced). With no threat
+  this turn, the item-3 condition applies unchanged. `sameMonStats` returns `{share returning the same mon, share of those threatened
+  again}`.
+- **Tests:** T18/T21 build 9-mon benches, so the free replacement there should be a different mon and not hit this rule; not verified.
+  With only two mons left the replacement is forced to be the active, which is where the rule bites.
+
+## Behaviour changes worth knowing about
+- **Matrix values shift broadly** after item 6: states that read `matchup=90` are capped (for example 34.9). Tests that assert exact
+  `eval`/matchup numbers, or `SwitchInScorer` scores against Sash/Sturdy foes, may move.
+- Weights are no longer pinned to the clamps, so sack candidates now include healthy bench mons whenever the active is high-value; the
+  guard and the same-mon rule are what keep that from becoming sack spam.
+- Phase 6's player model remains the real fix for the equilibrium's worst-case play (a 70% predicted switch every time, a 100%
+  predicted KO move); several complaints here (Flamigo double switch, Sneasler 0/6) are that, not payoff bugs.
+
+## Open items / not done
+| Item | Note |
+|---|---|
+| Minipede-style ties | Proposed, not applied: a small tie-break so equal-payoff switch rows lose to staying in (for example a 1-2 point switch tax), and a larger `NORM_SD_FLOOR` so near-identical mons get near-equal weights |
+| AI's own matchup escape | Not credited (items 6/7); revisit if it switches out of bad matchups too eagerly or not enough |
+| T18 / T21 / `Phase4Tests` / `Phase3Tests` | Re-run after items 6, 7 and 9; list any that assert eval numbers |
+| Placeholders (Phase 8) | `NORM_K` 0.5, `NORM_SD_FLOOR` 1.0, `ESCAPE_COST` 30, `HURT_ANSWER_PENALTY` 60, `ENDURE_FRAC` 0.5, `sackMinGain` 10 |
+| Lead selection | The champion now leads Alakazam almost every time because the boost is applied in the sim shell; `selectLead` is Phase 7 |
+| Info mode | The AI reads your items/abilities (FULL); `REVEALED_ONLY` is Phase 6 |
+
+## Phase 5 status (updated)
+Reopened for tuning only. The logic is in place and playtested through item 6; items 7 and 9 need a re-run of `Phase5Tests.runAll()` and a few
+endgame fights (2 mons left) to confirm the pointless sacks are gone.

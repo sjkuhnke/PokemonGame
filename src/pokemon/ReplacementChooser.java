@@ -45,9 +45,9 @@ public final class ReplacementChooser {
 			double hpFrac = p.currentHP * 1.0 / p.getStat(0);
 			double weight = (w != null && i < w.length) ? w[i] : 1.0;
 			double s = combine(entry, weight, hpFrac);
-			// Phase 5 diagnostic (T22): breaks the combined score into its two halves, so a run that disagrees with an
-			// earlier one on the SAME position shows which half moved - entry (SwitchInScorer, the matchup-after-entry
-			// term) or weight (MonWeights.forSide, the future-value term). Remove once T22 is settled.
+			// Breaks the combined score into entry (SwitchInScorer, the matchup-after-entry term) and weight
+			// (MonWeights.forSide, the future-value term), so a replacement that looks surprising can be traced to
+			// which half drove it.
 			if (log) sb.append(String.format(Locale.ROOT, "[%s: entry=%d weight=%.3f hpFrac=%.3f -> %.1f], ", p, entry, weight, hpFrac, s));
 			if (s > bestScore) {
 				bestScore = s;

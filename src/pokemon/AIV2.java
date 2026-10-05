@@ -20,17 +20,21 @@ import util.Print;
  * This phase's simplifications relative to the full spec (each is a deliberately deferred later
  * phase, not an oversight - see PHASE3_CHANGES.md):
  * <ul>
- * <li>{@code predict()} (§7.11) is un-implemented: no player model yet, so {@code y_hat} is just
- * the raw equilibrium {@code solveZeroSum(M).y}.</li>
- * <li>{@code finalStrategy()} (§7.11) is likewise just the raw equilibrium {@code x_eq} - no
- * exploit blending, since that needs the player model above.</li>
+ * <li>(Was: {@code predict()}/{@code finalStrategy()} un-implemented. Both landed in Phase 6, see below.)</li>
  * <li>Tier 0/1 pruning and switch-in caching are Phase 8. (The {@code chooseReplacement} unification of §7.14.3 landed
  * in Phase 5: {@link ReplacementChooser}, shared with the real battle.)</li>
  * </ul>
  * <p>
  * Phase 5 (sacking, §7.14): {@link #plan} runs the whole matrix pipeline including the SACK_MIN_GAIN guard, and
- * {@link #decide} labels a chosen switch row as a sack (P(target faints) >= 0.5) with a replacement plan. {@code y_hat}
- * is still the raw equilibrium y until Phase 6's player model, so the label reflects the equilibrium, not a prediction.
+ * {@link #decide} labels a chosen switch row as a sack (P(target faints) >= 0.5) with a replacement plan.
+ * <p>
+ * Phase 6 (§7.11, player model): {@link #plan(SimState, AIConfig, PlayerModel)} solves the equilibrium as before, then
+ * predicts the player's mix from their observed habits ({@link PlayerModel#predict}, {@code y_hat}) and blends
+ * {@code x = alphaEff * x_eq + (1 - alphaEff) * x_exploit} ({@link PlayerModel#finalStrategy}). The model lives on the
+ * player ({@code Trainer.playerModel()}, saved with {@code Player}) and is read/updated only in {@link #decide}; with an
+ * empty model, or the two-argument {@code plan}, the result is exactly the Phase 5 equilibrium. The sack label and the
+ * branch log now use {@code y_hat}. Every difficulty uses the model identically (it only gets more to work with as the
+ * run goes on); {@link AIConfig#forDifficulty} is the one place difficulty is decided.
  * <p>
  * Debug output: set {@link #AI_DEBUG} for a one-line-per-action probability dump (via {@link
  * Print#debug}, same channel as everything else, so {@code SelfPlay}'s existing {@code
@@ -39,9 +43,11 @@ import util.Print;
  * #AI_DEBUG} is on.
  */
 public final class AIV2 implements TrainerAI {
-	public static final AIV2 INSTANCE = new AIV2(true);
+	public static final AIV2 INSTANCE = new AIV2(true, true);
 	/** Phase 5 self-play baseline: identical to INSTANCE but the AI never generates sack candidates (cfg.enableSacking=false). */
-	public static final AIV2 NO_SACK = new AIV2(false);
+	public static final AIV2 NO_SACK = new AIV2(false, true);
+	/** Phase 6 self-play baseline: identical to INSTANCE but pure equilibrium, no player model (cfg.useHistoryModel=false). */
+	public static final AIV2 NO_HISTORY = new AIV2(true, false);
 
 	/** One line per action + its sampling probability, and the chosen action. */
 	public static boolean AI_DEBUG = true;
@@ -51,14 +57,19 @@ public final class AIV2 implements TrainerAI {
 	public static boolean AI_DEBUG_BRANCHES = true;
 
 	private final boolean sackingEnabled;
+	private final boolean historyEnabled;
 
-	private AIV2(boolean sackingEnabled) {
+	private AIV2(boolean sackingEnabled, boolean historyEnabled) {
 		this.sackingEnabled = sackingEnabled;
+		this.historyEnabled = historyEnabled;
 	}
 
 	@Override
 	public String getName() {
-		return sackingEnabled ? "AI_V2 (Phase 5)" : "AI_V2 (Phase 5, no sack)";
+		String n = "AI_V2 (Phase 6";
+		if (!sackingEnabled) n += ", no sack";
+		if (!historyEnabled) n += ", no history";
+		return n + ")";
 	}
 
 	/** Everything decide() computes before sampling; package-private so tests run the exact production pipeline. */
@@ -76,9 +87,14 @@ public final class AIV2 implements TrainerAI {
 		public final SackAnalysis.Filtered guard;
 		public final Solver.Result eq;
 		public final double[] x;
+		/** Phase 6: the predicted player mix (eq.y itself when there is no model or no history), and the reading it came from (null without a model). */
+		public final double[] yHat;
+		public final PlayerReader.Read read;
+		/** Phase 6: weight of the equilibrium in the blend (1.0 = pure equilibrium). */
+		public final double alphaEff;
 
 		Plan(List<Action> A, List<Action> P, double[][] M, MonWeights weights, Set<Integer> sackOnly, Set<Integer> sacks,
-				SackAnalysis.Filtered guard, Solver.Result eq, double[] x) {
+				SackAnalysis.Filtered guard, Solver.Result eq, double[] x, double[] yHat, PlayerReader.Read read, double alphaEff) {
 			this.A = A;
 			this.P = P;
 			this.M = M;
@@ -88,11 +104,23 @@ public final class AIV2 implements TrainerAI {
 			this.guard = guard;
 			this.eq = eq;
 			this.x = x;
+			this.yHat = yHat;
+			this.read = read;
+			this.alphaEff = alphaEff;
 		}
 	}
 
-	/** Rows, columns, payoff matrix, SACK_MIN_GAIN guard, equilibrium and shaped strategy for one decision. No RNG is drawn. Null if there are no rows. */
+	/** Phase 3-5 pipeline with no player model: x is the equilibrium, y_hat is eq.y. Kept so earlier tests and self-play baselines are untouched. */
 	public static Plan plan(SimState root, AIConfig cfg) {
+		return plan(root, cfg, null);
+	}
+
+	/**
+	 * Rows, columns, payoff matrix, SACK_MIN_GAIN guard, equilibrium, player prediction and shaped strategy for one
+	 * decision. No RNG is drawn and {@code model} is not modified (pure given the model's counts). Null if there are no
+	 * rows. A null {@code model}, {@code cfg.useHistoryModel == false} or an empty model gives the plain equilibrium.
+	 */
+	public static Plan plan(SimState root, AIConfig cfg, PlayerModel model) {
 		MonWeights weights = MonWeights.compute(root);
 		List<Action> A = ActionGen.genAIActions(root, cfg, weights);
 		List<Action> P = ActionGen.genPlayerActions(root, cfg, weights);
@@ -125,16 +153,36 @@ public final class AIV2 implements TrainerAI {
 			}
 		}
 
-		// predict()/finalStrategy() (§7.11): no player model yet, see class doc.
 		Solver.Result eq = Solver.solveZeroSum(M);
-		double[] x = Shaper.shape(eq.x, cfg);
-		return new Plan(A, P, M, weights, sackOnly, sacks, guard, eq, x);
+
+		// §7.11 predict() + finalStrategy(). read() is computed whenever there is a model (decide() needs its situation to
+		// start observing even while w is still 0); the blend only changes anything once the model has data.
+		PlayerReader.Read read = model != null && cfg.useHistoryModel ? PlayerReader.read(model, root, P, M, eq.x) : null;
+		double[] yHat = eq.y;
+		double[] xRaw = eq.x;
+		double alphaEff = 1.0;
+		if (read != null && read.w > 0) {
+			yHat = PlayerModel.predict(eq.y, read.classes, read.hist, read.w);
+			alphaEff = PlayerModel.alphaEff(cfg.alpha, read.w);
+			xRaw = PlayerModel.finalStrategy(M, eq.x, yHat, alphaEff, cfg.temperatureExploit);
+		}
+		double[] x = Shaper.shape(xRaw, cfg);
+		return new Plan(A, P, M, weights, sackOnly, sacks, guard, eq, x, yHat, read, alphaEff);
 	}
 
 	@Override
 	public MoveDecision decide(Pokemon self, Pokemon foe, boolean first, int difficulty) {
-		AIConfig cfg = difficulty == Player.NORMAL ? AIConfig.normal() : AIConfig.hard();
+		AIConfig cfg = AIConfig.forDifficulty(difficulty);
 		cfg.enableSacking = sackingEnabled;
+		cfg.useHistoryModel = historyEnabled;
+
+		// Phase 6: learn what the player did last turn BEFORE anything below can return, so a forced-action turn does
+		// not leave a gap. The model belongs to the player's trainer (saved with Player); null without a trainer.
+		PlayerModel model = cfg.useHistoryModel && foe.trainer != null ? foe.trainer.playerModel() : null;
+		if (model != null) {
+			PlayerModel.ActionClass seen = PlayerReader.observe(model, self, foe);
+			if (seen != null && AI_DEBUG) Print.debug(String.format(Locale.ROOT, "[AIV2] observed the player: %s -> model %s\n", seen, model.summary()));
+		}
 
 		// ---- §7.13 forced pre-checks (kept from existing code) ----
 		if (self.script && Pokemon.field.turns == 0) {
@@ -160,20 +208,22 @@ public final class AIV2 implements TrainerAI {
 
 		// ---- §5 decide() pipeline ----
 		SimState root = SimState.snapshot(self, foe);
-		Plan plan = plan(root, cfg);
+		Plan plan = plan(root, cfg, model);
 		if (plan == null) return new MoveDecision(Move.STRUGGLE); // defensive; validMoves was non-empty above
+		if (model != null && plan.read != null) PlayerReader.begin(model, self, foe, plan.read);
 		List<Action> A = plan.A;
 		List<Action> P = plan.P;
 		double[] x = plan.x;
 
 		logMatrix(self, plan);
 		logEvalBreakdown(self, root, cfg, plan.weights);
-		logBranchDetail(self, root, A, P, cfg, plan.eq.y, plan.weights);
+		logRead(self, plan);
+		logBranchDetail(self, root, A, P, cfg, plan.yHat, plan.weights);
 		logSack(self, root, plan, cfg);
 
 		int chosen = Shaper.sample(x);
 		Action chosenAct = A.get(chosen);
-		SackAnalysis.Label label = chosenAct.kind == ActionKind.MOVE ? null : SackAnalysis.classify(root, chosenAct, P, plan.eq.y, cfg, plan.sacks);
+		SackAnalysis.Label label = chosenAct.kind == ActionKind.MOVE ? null : SackAnalysis.classify(root, chosenAct, P, plan.yHat, cfg, plan.sacks);
 		logDecision(self, A, x, chosenAct, x[chosen], plan.sacks);
 		logSackChosen(self, chosenAct, x[chosen], label);
 		report(self, A, x, chosenAct, x[chosen], label);
@@ -343,6 +393,12 @@ public final class AIV2 implements TrainerAI {
 	}
 
 	/** Full A x P payoff matrix. Verbose - off unless AI_DEBUG_MATRIX is also set. */
+	/** Phase 6: situation, trust and per-class history / equilibrium / prediction. Silent without a model or with no history yet. */
+	private void logRead(Pokemon self, Plan plan) {
+		if (!AI_DEBUG || plan.read == null) return;
+		Print.debug(String.format(Locale.ROOT, "[AIV2] %s: %s\n", self, PlayerReader.describe(plan.read, plan.eq.y, plan.yHat, plan.alphaEff)));
+	}
+
 	private void logMatrix(Pokemon self, Plan plan) {
 		if (!AI_DEBUG || !AI_DEBUG_MATRIX) return;
 		List<Action> A = plan.A, P = plan.P;

@@ -43,6 +43,12 @@ public final class SelfPlay {
 		public int determinismSample = 3;      // replay this many of the first battles and compare; 0 = off
 		public int progressEvery = 10;
 		public boolean aiTrace = false;        // true = keep Print.debug output (slow, huge log)
+		/**
+		 * Phase 6: carry each engine's player model across battles, the way a real player's habits persist across a run.
+		 * Off = every battle starts with an empty model (the models then never get past a single battle's worth of data).
+		 * One model per engine describes how the OTHER engine has learned to read it, whichever seat it sits in.
+		 */
+		public boolean persistModels = false;
 	}
 
 	public static final class BattleResult {
@@ -123,6 +129,7 @@ public final class SelfPlay {
 		int d1, d2;
 		long seed;
 		BattleResult result;
+		PlayerModel on1, on2; // snapshots of the carried models taken BEFORE this battle (a replay must start from them)
 	}
 
 	public static SelfPlayReport run(Config cfg) {
@@ -136,6 +143,7 @@ public final class SelfPlay {
 
 		TeamSource source = cfg.teams != null ? cfg.teams : storyTrainers();
 		Random sched = new Random(cfg.baseSeed); // matchmaking only; never used by battle/AI code
+		final PlayerModel learnedAboutA = new PlayerModel(), learnedAboutB = new PlayerModel(); // what each engine's opponent has seen of it
 		List<Replay> replays = new ArrayList<>();
 		long start = System.nanoTime();
 
@@ -158,7 +166,15 @@ public final class SelfPlay {
 					int d2 = swapped ? cfg.difficultyA : cfg.difficultyB;
 					long seed = cfg.baseSeed + 7919L * battle;
 
-					BattleResult r = playBattle(m[0], m[1], ai1, ai2, d1, d2, seed, cfg.maxTurns);
+					PlayerModel on1 = null, on2 = null; // the model stored on a seat's trainer is what ITS opponent learns about it
+					if (cfg.persistModels) {
+						on1 = swapped ? learnedAboutB : learnedAboutA;
+						on2 = swapped ? learnedAboutA : learnedAboutB;
+					}
+					PlayerModel snap1 = on1 != null && replays.size() < cfg.determinismSample ? on1.copy() : null;
+					PlayerModel snap2 = on2 != null && replays.size() < cfg.determinismSample ? on2.copy() : null;
+
+					BattleResult r = playBattle(m[0], m[1], ai1, ai2, d1, d2, seed, cfg.maxTurns, on1, on2);
 
 					if (r.error != null) {
 						rep.addCrash("battle " + battle + " (seed " + seed + "): " + describe(r.error));
@@ -171,7 +187,7 @@ public final class SelfPlay {
 					}
 					if (replays.size() < cfg.determinismSample) {
 						Replay rp = new Replay();
-						rp.x = m[0]; rp.y = m[1]; rp.ai1 = ai1; rp.ai2 = ai2; rp.d1 = d1; rp.d2 = d2; rp.seed = seed; rp.result = r;
+						rp.x = m[0]; rp.y = m[1]; rp.ai1 = ai1; rp.ai2 = ai2; rp.d1 = d1; rp.d2 = d2; rp.seed = seed; rp.result = r; rp.on1 = snap1; rp.on2 = snap2;
 						replays.add(rp);
 					}
 					battle++;
@@ -184,7 +200,8 @@ public final class SelfPlay {
 
 			for (Replay rp : replays) {
 				if (rp.result.error != null) continue;
-				BattleResult again = playBattle(rp.x, rp.y, rp.ai1, rp.ai2, rp.d1, rp.d2, rp.seed, cfg.maxTurns);
+				BattleResult again = playBattle(rp.x, rp.y, rp.ai1, rp.ai2, rp.d1, rp.d2, rp.seed, cfg.maxTurns,
+						rp.on1 == null ? null : rp.on1.copy(), rp.on2 == null ? null : rp.on2.copy());
 				rep.determinismChecked++;
 				if (again.error != null || again.winner != rp.result.winner || again.turns != rp.result.turns
 						|| again.checksum != rp.result.checksum) {
@@ -224,6 +241,15 @@ public final class SelfPlay {
 	 */
 	public static BattleResult playBattle(Trainer src1, Trainer src2, TrainerAI ai1, TrainerAI ai2,
 			int diff1, int diff2, long seed, int maxTurns) {
+		return playBattle(src1, src2, ai1, ai2, diff1, diff2, seed, maxTurns, null, null);
+	}
+
+	/**
+	 * Phase 6: as above, with the player models to install on the two seats' trainers (what the OPPONENT of that seat has
+	 * learned about it; null = a fresh empty model). The models are mutated as the battle is played.
+	 */
+	public static BattleResult playBattle(Trainer src1, Trainer src2, TrainerAI ai1, TrainerAI ai2,
+			int diff1, int diff2, long seed, int maxTurns, PlayerModel on1, PlayerModel on2) {
 		BattleResult r = new BattleResult();
 		final GamePanel gp = Pokemon.gp;
 		final int prevState = gp.gameState;
@@ -242,6 +268,8 @@ public final class SelfPlay {
 			Trainer t2 = src2.clone();
 			t1.ai = ai1;
 			t2.ai = ai2;
+			if (on1 != null) t1.sessionModel = on1;
+			if (on2 != null) t2.sessionModel = on2;
 			Field field = new Field();
 			Pokemon.field = field;
 			field.clear(t1, t2);

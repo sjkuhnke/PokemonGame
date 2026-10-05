@@ -4,15 +4,31 @@ package pokemon;
  * §6/§8. Difficulty gates and tuning knobs. Phase 2 added only branchBudget; Phase 3 adds the
  * fields it actually reads (§0 rule 5 - no drive-by additions): allowVoluntarySwitch,
  * deadTurnForcesSwitch, sackRatio, maxPlayerSwitchCols, maxAISwitchRows, minProb, epsilon,
- * style, useFullSim. Still NOT added: selectLead (Phase 7), useHistoryModel/infoMode (Phase 6),
- * temperature/alpha (Phase 6's finalStrategy exploit-blending - Phase 3's predict()/
- * finalStrategy() are the un-blended equilibrium only, see AIV2).
+ * style, useFullSim. Still NOT added: selectLead (Phase 7). infoMode (§8.2) is deliberately never added: battles are
+ * open-team-sheet, the AI always sees the player's full sets, so there is no REVEALED_ONLY to configure. The solver
+ * temperature (§7.10 quantal response) is not added either: Phase 6 ships the exploit blend, not a QRE solver.
+ * <p>
+ * Phase 6 adds useHistoryModel, alpha and temperatureExploit (§7.11) and the {@link #forDifficulty} factory.
  * <p>
  * Phase 5 adds sackMinGain (the §7.14.2 min-gain guard) and enableSacking (developer A/B switch for the
  * "HARD with sacking vs HARD without" self-play measurement; NOT a difficulty gate, identical for NORMAL and HARD).
  */
 public class AIConfig {
 	public int branchBudget = 4;
+
+	/**
+	 * Phase 6 (§7.11): use the player model (what this player tends to do) to blend an exploit into the equilibrium.
+	 * false = pure equilibrium; exists so self-play can A/B it. true at every difficulty.
+	 */
+	public boolean useHistoryModel = true;
+	/**
+	 * Phase 6 (§8.2): weight of the equilibrium in {@code x = alpha * x_eq + (1 - alpha) * x_exploit} once the model is
+	 * fully confident; with little data it is pulled toward 1 ({@link PlayerModel#alphaEff}). So 0.7 means at most 30% of
+	 * the mix chases the read - the main "how hard does the AI punish habits" knob. Placeholder; Phase 8.
+	 */
+	public double alpha = 0.7;
+	/** Phase 6: sharpness of the exploit softmax over the rows' payoff against y_hat (payoffs scaled by their range, so unit-free). Placeholder; Phase 8. */
+	public double temperatureExploit = 6.0;
 
 	/** NORMAL=false (pivot moves and Perish-in-1 still allowed); HARD/EXTREME=true. */
 	public boolean allowVoluntarySwitch = true;
@@ -49,5 +65,13 @@ public class AIConfig {
 
 	public static AIConfig hard() {
 		return new AIConfig();
+	}
+
+	/**
+	 * The one place difficulty is decided: NORMAL gets {@link #normal()}, everything else {@link #hard()}. EXTREME has no
+	 * in-battle difference from HARD until Phase 7 adds lead selection (the only EXTREME gate in §6).
+	 */
+	public static AIConfig forDifficulty(int difficulty) {
+		return difficulty == Player.NORMAL ? normal() : hard();
 	}
 }

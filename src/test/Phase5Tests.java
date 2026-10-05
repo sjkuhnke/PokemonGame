@@ -121,7 +121,7 @@ public final class Phase5Tests {
 		return new Pokemon[] { foe, Phase4Tests.mk(5, Move.FLAMETHROWER), Phase4Tests.mk(6, Move.FLAMETHROWER) };
 	}
 
-	private static final class Scen {
+	static final class Scen {
 		final Phase4Tests.Duel d;
 		final Move foeMove;
 		Scen(Phase4Tests.Duel d, Move foeMove) { this.d = d; this.foeMove = foeMove; }
@@ -154,7 +154,7 @@ public final class Phase5Tests {
 	// real 6-mon roster would ever be - if this doesn't find enough separation, widen the pool further.
 	private static final int[] FILLER_CANDIDATE_IDS = { 5, 8, 11, 14, 17, 20 };
 
-	private static Scen sackScenario(double scrubHp, boolean twin, int foeLevel, boolean kill, boolean requireSackOnly) {
+	static Scen sackScenario(double scrubHp, boolean twin, int foeLevel, boolean kill, boolean requireSackOnly) {
 		for (int id : FOE_IDS) {
 			for (Move mv : STRONG) {
 				Pokemon ace = Phase4Tests.mk(1, 20, Move.FLAMETHROWER);
@@ -201,7 +201,7 @@ public final class Phase5Tests {
 		return null;
 	}
 
-	private static int switchRow(List<Action> A, int slot) {
+	static int switchRow(List<Action> A, int slot) {
 		for (int i = 0; i < A.size(); i++) if (A.get(i).kind == ActionKind.SWITCH && A.get(i).slot == slot) return i;
 		return -1;
 	}

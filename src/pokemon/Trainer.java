@@ -35,6 +35,13 @@ public class Trainer implements Serializable {
 	/** AI engine for this trainer's Pokemon. null = TrainerAI.Config.defaultAI. Not serialized. */
 	public transient TrainerAI ai;
 	
+	/**
+	 * Phase 6 (§7.11): session-only habit model for a non-Player trainer that an AI is fighting (self-play, the betting
+	 * sim). {@code Player} overrides {@link #playerModel()} with a saved one. Package-private so SelfPlay can carry one
+	 * across battles; not serialized.
+	 */
+	transient PlayerModel sessionModel;
+	
 	transient ArrayList<FieldEffect> effects;
 	transient Item[] teamItems;
 	
@@ -824,7 +831,13 @@ public class Trainer implements Serializable {
 		c.trainer = this;
 		team[i] = c;
 	}
-
+	
+	/** What the Trainer AI has learned about how THIS trainer plays; created on first use. See {@link PlayerModel}. */
+	public PlayerModel playerModel() {
+		if (sessionModel == null) sessionModel = new PlayerModel();
+		return sessionModel;
+	}
+	
 	public boolean isGymOrE4() {
 		return money == 500 || eliteFour;
 	}

@@ -61,6 +61,11 @@ public class Player extends Trainer implements Serializable {
 	public Pokemon[] gauntletBox;
 	public String[] boxLabels;
 	public Pokemon[] tempTeam;
+	/**
+	 * Phase 6 (§7.11): what the Trainer AI has learned about how this player plays - a fixed ~0.6 KB table, saved with
+	 * the player so trainers get harder over the run. null in saves from before Phase 6 (created on first use).
+	 */
+	public PlayerModel habits;
 	private int numBattled;
 	private int posX;
 	private int posY;
@@ -2481,7 +2486,13 @@ public class Player extends Trainer implements Serializable {
 		
 		return export;
 	}
-
+	
+	@Override
+	public PlayerModel playerModel() {
+		if (habits == null) habits = new PlayerModel();
+		return habits;
+	}
+	
 	/**
 	 * Method only for testing purposes
 	 */
@@ -2492,5 +2503,11 @@ public class Player extends Trainer implements Serializable {
 
 	public boolean isDryPassing() {
 		return nuzlocke && banBatonPass && allowDryPass;
+	}
+	
+	@Override
+	public void heal() {
+		super.heal();
+		Print.debug(this.playerModel().report());
 	}
 }
