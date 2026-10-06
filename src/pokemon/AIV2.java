@@ -180,8 +180,10 @@ public final class AIV2 implements TrainerAI {
 		// not leave a gap. The model belongs to the player's trainer (saved with Player); null without a trainer.
 		PlayerModel model = cfg.useHistoryModel && foe.trainer != null ? foe.trainer.playerModel() : null;
 		if (model != null) {
-			PlayerModel.ActionClass seen = PlayerReader.observe(model, self, foe);
-			if (seen != null && AI_DEBUG) Print.debug(String.format(Locale.ROOT, "[AIV2] observed the player: %s -> model %s\n", seen, model.summary()));
+			PlayerReader.Observation seen = PlayerReader.observe(model, self, foe);
+			if (seen != null && AI_DEBUG) {
+				Print.debug(String.format(Locale.ROOT, "[AIV2] observed the player: %s (%s) -> model %s\n", seen.cls, seen.note, model.summary()));
+			}
 		}
 
 		// ---- §7.13 forced pre-checks (kept from existing code) ----

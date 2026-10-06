@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ import animation.AnimationFrame.Target;
 import animation.BattleAnimation;
 import animation.BattleAnimationManager;
 import animation.EffectParticle;
+import animation.ShinySparkle;
 import animation.StatParticle;
 import entity.PlayerCharacter;
 import overworld.GamePanel;
@@ -125,6 +128,9 @@ public class BattleUI extends AbstractUI {
 	private int currentAnimFrame;
 	private List<EffectParticle> activeEffects;
 	private List<StatParticle> statParticles;
+	private final List<ShinySparkle> shinySparkles = new ArrayList<>();
+	private long shinyStartTime = 0;
+	private long shinyLastSpawn = 0;
 
 	// STATE CONSTANTS
 	public static final int STARTING_STATE = -1;
@@ -858,6 +864,9 @@ public class BattleUI extends AbstractUI {
 		case Task.STAT:
 			drawStatChange();
 			currentDialogue = currentTask.message.contains("\n") ? currentTask.message : Item.breakString(currentTask.message, 63);
+			break;
+		case Task.SHINY:
+			drawShinySparkle();
 			break;
 		}
 	}
@@ -2549,6 +2558,53 @@ public class BattleUI extends AbstractUI {
 			} else {
 				particle.draw(g2);
 			}
+		}
+	}
+	
+	private void drawShinySparkle() {
+		long now = System.currentTimeMillis();
+		if (shinyStartTime == 0) {
+			shinyStartTime = now;
+			shinyLastSpawn = 0;
+			shinySparkles.clear();
+		}
+		long elapsed = now - shinyStartTime;
+
+		boolean isUser = currentTask.p == user;
+		Image sprite = isUser ? currentTask.p.getBackSprite() : currentTask.p.getFrontSprite();
+		int[] sc = currentTask.p.getSpriteCenter();
+		int cx = (isUser ? userX : foeX) + sc[0] * 2;
+		int cy = (isUser ? userY : foeY) + sc[1] * 2;
+		int rx = sprite != null ? sprite.getWidth(null) / 2 : 60;
+		int ry = sprite != null ? sprite.getHeight(null) / 2 : 60;
+
+		// Spawn new sparkles randomly across the sprite's footprint
+		if (elapsed < 900 && now - shinyLastSpawn >= 35) {
+			shinyLastSpawn = now;
+			for (int i = 0; i < 2; i++) {
+				double angle = Math.random() * Math.PI * 2;
+				double dist = Math.sqrt(Math.random()); // sqrt = even spread, not clustered in the middle
+				float x = (float) (cx + Math.cos(angle) * dist * rx);
+				float y = (float) (cy + Math.sin(angle) * dist * ry);
+				float size = 7 + (float) Math.random() * 9;
+				long life = 350 + (long) (Math.random() * 350);
+				shinySparkles.add(new ShinySparkle(x, y, size, life, now));
+			}
+		}
+
+		Object oldAA = g2.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		Iterator<ShinySparkle> it = shinySparkles.iterator();
+		while (it.hasNext()) {
+			if (!it.next().draw(g2, now)) it.remove();
+		}
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				oldAA == null ? RenderingHints.VALUE_ANTIALIAS_DEFAULT : oldAA);
+
+		if (elapsed >= 1400) {
+			shinySparkles.clear();
+			shinyStartTime = 0;
+			endTask();
 		}
 	}
 }

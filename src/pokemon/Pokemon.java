@@ -325,7 +325,7 @@ public class Pokemon implements Serializable {
 	}
 	
 	private boolean determineShiny() {
-		if (true) return false;
+		if (true) return true;
 		@SuppressWarnings("unused")
 		Random random = Rng.asRandom();
 		return random.nextInt() % 512 == 0;
@@ -354,7 +354,7 @@ public class Pokemon implements Serializable {
 	public BufferedImage setSprite() {
 		BufferedImage image = null;
 		
-		String folder = shiny ? "/shiny/" : "/sprites/";
+		String folder = shiny ? "/shiny1/" : "/sprites/";
 		
 		String imageName = id + "";
 		while (imageName.length() < 3) imageName = "0" + imageName;

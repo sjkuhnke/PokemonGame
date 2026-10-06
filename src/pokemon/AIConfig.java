@@ -47,7 +47,7 @@ public class AIConfig {
 	 * compare sacking on/off; every difficulty leaves it true.
 	 */
 	public boolean enableSacking = true;
-	public int maxPlayerSwitchCols = 3;
+	public int maxPlayerSwitchCols = 4;
 	public int maxAISwitchRows = 5;
 	/** shape() cutoff: entries below this are zeroed and the rest renormalized. */
 	public double minProb = 0.02;
@@ -56,6 +56,11 @@ public class AIConfig {
 	public EvalWeights style = EvalWeights.BALANCED;
 	/** Tier 2 (full move() sim) always on this phase; Tier 0/1 fast paths are Phase 8. */
 	public boolean useFullSim = true;
+	/** Phase 7 (§7.15, §8.1): EXTREME only. The AI picks its own lead from the player's team before turn 1. */
+	public boolean selectLead = false;
+	/** Phase 7: how many top rows / columns of the static lead matrix get a one-turn game value. Placeholder; Phase 8. */
+	public int leadRefineKAi = 3;
+	public int leadRefineKPlayer = 3;
 
 	public static AIConfig normal() {
 		AIConfig c = new AIConfig();
@@ -66,12 +71,35 @@ public class AIConfig {
 	public static AIConfig hard() {
 		return new AIConfig();
 	}
+	
+	/** Phase 7: the cheaper config the lead refinement builds each one-turn matrix with (no sacking, no history, small caps). */
+	public AIConfig leadLite() {
+		AIConfig c = new AIConfig();
+		c.branchBudget = 2;
+		c.useHistoryModel = false;
+		c.enableSacking = false;
+		c.allowVoluntarySwitch = allowVoluntarySwitch;
+		c.deadTurnForcesSwitch = deadTurnForcesSwitch;
+		c.maxAISwitchRows = Math.min(maxAISwitchRows, 4);
+		c.maxPlayerSwitchCols = Math.min(maxPlayerSwitchCols, 2);
+		c.sackRatio = sackRatio;
+		c.sackMinGain = sackMinGain;
+		c.alpha = alpha;
+		c.temperatureExploit = temperatureExploit;
+		c.minProb = minProb;
+		c.epsilon = 0;
+		c.style = style;
+		c.useFullSim = useFullSim;
+		return c;
+	}
 
 	/**
 	 * The one place difficulty is decided: NORMAL gets {@link #normal()}, everything else {@link #hard()}. EXTREME has no
 	 * in-battle difference from HARD until Phase 7 adds lead selection (the only EXTREME gate in §6).
 	 */
 	public static AIConfig forDifficulty(int difficulty) {
-		return difficulty == Player.NORMAL ? normal() : hard();
+		AIConfig c = difficulty == Player.NORMAL ? normal() : hard();
+		c.selectLead = difficulty == Player.EXTREME; // the second and last difficulty gate (§1.1, §8.1)
+		return c;
 	}
 }

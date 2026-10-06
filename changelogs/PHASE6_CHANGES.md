@@ -11,6 +11,23 @@ Scope kept to Phase 6. Nothing from Phase 7 (lead selection) or 8 (tuning, cachi
 > no longer touched. Anything saved by revision 1 should be reset (`player.playerModel().reset()`): its counts mean
 > something different.
 
+> **Revision 3 — first real-battle log.** Three findings from a champion fight:
+> 1. *SWITCH_BEST never fired.* Recomputing the best switch from the logged matrices: on three switches the top two
+>    columns were 0.8, 0.2 and 4.4 eval points apart, and a single winner took "best" by a hair. "Best" is now a **band**:
+>    every column within `PlayerReader.BEST_TOL` (5 eval points) of the lowest counts. Separately, on two other switches
+>    the AI's active mon was the same on consecutive turns and the player's switch columns were identical, so the mon the
+>    player switched to had **no column** (`ActionGen` keeps only the top 3 by type chart + one sack column). The
+>    observation log line now says which case it was.
+> 2. *Protect was recorded as STAY_OTHER.* Protect-family moves (`PROTECT, DETECT, LAVA_LAIR, OBSTRUCT, SPIKY_SHIELD,
+>    AQUA_VEIL`, the group in `Pokemon.move`) are now their own class, `STAY_PROTECT`, and "a Protect move is available"
+>    is a bit in the situation, so the rate is measured over turns the player could have protected. Whether the player
+>    was threatened is already in the bucket, which is how a scouting Protect (not threatened) is told apart from a
+>    defensive one (threatened) without the AI having to guess intent.
+> 3. *"Turn 0 observed STAY_OTHER".* Not a bug: the line prints at the start of the next decision and reports the click
+>    from the turn before. It was your Protect.
+>
+> Layout change: 5 classes, 48 fine buckets, ~1.1 KB serialized. A save written by revision 2 loads as an empty model.
+
 ## What this phase does, in one paragraph
 
 The AI now keeps a small, saved record of **how the player plays**: when the AI threatens their active, do they
@@ -27,7 +44,7 @@ model the output is **exactly** the Phase 5 equilibrium.
 | §8.2 `infoMode` FULL / REVEALED_ONLY | **Not added** | Open team sheets: the AI always sees the player's full sets. |
 | §8.2 trainer style profiles | **Not added** | You want difficulty to come from accumulated data, not per-trainer labels. |
 | §7.11 history via `Player.recordTurn` | **Own observation** (`PlayerReader.observe`) | `recordTurn` feeds the battle-log upload and exists only for the human seat. The AI diffs the player's active mon and PP between its own decisions, so it also works against self-play opponents. |
-| §7.11 per-battle history | **Cross-battle, saved with `Player`** | Your requirement. Fixed-size table, ~0.5 KB serialized. |
+| §7.11 per-battle history | **Cross-battle, saved with `Player`** | Your requirement. Fixed-size table, ~1.1 KB serialized. |
 | §7.10 quantal-response solver (`temperature`) | **Not added** | Off by default in the spec and not requested; the exploit softmax has its own `temperatureExploit`. Candidate for Phase 8 if you want it. |
 | T27 EXTREME half | **Deferred to Phase 7** | EXTREME's only gate is `selectLead`. `forDifficulty(EXTREME)` returns HARD's config for now. |
 
@@ -77,12 +94,14 @@ on what the model has learned (tested).
   says switching is the player's better reply. False when the player cannot switch (no switch columns).
 - **HP band** of the player's active: under 1/3, under 2/3, or above.
 - **AI outspeeds** the player's active.
+- **Protect available**: the player has a Protect-family move among their columns.
 
-2 x 2 x 3 x 2 = **24 fine buckets**; (threatened, switchBetter) gives **4 coarse buckets**; plus **1 global**.
+2 x 2 x 3 x 2 x 2 = **48 fine buckets**; (threatened, switchBetter) gives **4 coarse buckets**; plus **1 global**.
 
 ### Action classes (what the AI learns)
-`STAY_BEST`, `STAY_OTHER`, `SWITCH_BEST`, `SWITCH_OTHER`. A pivot move counts as a stay (classed by its move); a switch to
-a mon that has no column is `SWITCH_OTHER`. What a player's habits look like in this table:
+`STAY_BEST`, `STAY_OTHER`, `SWITCH_BEST`, `SWITCH_OTHER`, `STAY_PROTECT`. "Best" is a band (within 5 eval points of the
+lowest AI payoff, separately for non-Protect stays and for switches). A pivot move counts as a stay (classed by its
+move); a switch to a mon that has no column is `SWITCH_OTHER`. What a player's habits look like in this table:
 
 - plays it safe = switches in buckets where switching is better, and also over-switches where staying is better
 - plays it right = `*_BEST` almost everywhere (the AI's own good play; the AI cannot gain much by exploiting that)
@@ -156,7 +175,7 @@ determinism replays start from copies of the models taken before the original ba
 
 Pure: shrinkage / confidence / decay · predict math · wrong-read bound over 150 random matrices + average exploit gain ·
 scripted always-switch 2x2 · serialization round trip, size < 1 KB, pending not saved · **T27** config diff by reflection.
-Engine: per-trainer model identity · classes come from the matrix and never from the model · observe classification end to end through `bestMove2` · empty model == Phase 5
+Engine: per-trainer model identity · classes come from the matrix (as a band) and never from the model · Protect is its own class and a situation bit · observe classification end to end through `bestMove2` · empty model == Phase 5
 exactly · plan purity (T3/T4 with the model on) · exploit at decision level (shifts toward the habit, bounded when wrong) ·
 **T21 probability half** (sack row's probability falls when a switch is expected).
 Re-run unchanged and expected green: Phase3Tests (T16, T17, T28, T29, T30), Phase4Tests, Phase5Tests.
@@ -170,7 +189,8 @@ under 5%) rather than a per-case claim that would be false.
 
 - **Run here:** `PlayerModel` compiled and exercised standalone: shrinkage, decay cap (33.33), predict, the wrong-read
   bound on 200 random matrices (0 violations), the scripted-switcher case (equilibrium 5.0 vs blend 11.2 against an
-  always-switcher), serialization (541 bytes, round trip exact, `pending` not serialized).
+  always-switcher), serialization (1,137 bytes, round trip exact, `pending` not serialized). The best-band finding was
+  checked by recomputing column values from the matrices printed in your battle log.
 - **Not run:** everything touching the engine (including Revision 2's matrix-based classification). The uploaded sources don't include `Move`, `Field`, `ActionKind`,
   `SimPolicy`, `Moveslot`, so `PlayerReader`, `ScriptedAI`, `Phase6Tests` and the edited files could only be checked for
   syntax and for non-missing-symbol type errors: none found. `Phase6Tests` is therefore unrun; expect to fix small
@@ -205,6 +225,15 @@ under 5%) rather than a per-case claim that would be false.
    think time per decision should not noticeably grow (the model adds one threat check, two matchup scans and up to
    four damage calcs per decision).
 7. Determinism: the `determinismMismatches` count in the self-play reports stays 0 with `persistModels = true`.
+
+## If SWITCH_BEST still looks low after the band fix
+
+Read the `[AIV2] observed the player: SWITCH_...` lines: each says whether the switch target was in the best band, had a
+column outside the band, or had **no column**. If "NO column" is common, the cause is `ActionGen.playerSwitchColumns`
+(top `AIConfig.maxPlayerSwitchCols` = 3 by type chart, plus one sack column), which is also a blind spot for the AI's
+planning in general. Raising `maxPlayerSwitchCols` to 4 or 5 is a one-line experiment; the cost is matrix width (each
+extra column is another full simulation per AI row, and pivot columns multiply with it), so check think time first.
+I did not change it without data.
 
 ## Not done / for later
 

@@ -54,6 +54,7 @@ public final class Phase6Tests {
 			// engine
 			run("per-trainer model identity", Phase6Tests::modelIdentity);
 			run("classes come from the matrix (and never from the model)", Phase6Tests::matrixDefinesBest);
+			run("Protect is its own class and a situation bit", Phase6Tests::protectIsItsOwnClass);
 			run("observe: classes of what the player did, noise ignored", Phase6Tests::observeEndToEnd);
 			run("empty model == Phase 5 equilibrium exactly", Phase6Tests::emptyModelIsPhase5);
 			run("plan() is pure given the model (T3/T4 with the model on)", Phase6Tests::planIsPure);
@@ -112,7 +113,7 @@ public final class Phase6Tests {
 		PlayerModel m = new PlayerModel();
 		PlayerModel.Estimate e = m.estimate(5);
 		check("empty model: no confidence", e.eff == 0 && PlayerModel.blendWeight(e.eff) == 0);
-		close("empty model: uniform", e.dist[0], 0.25, 1e-12);
+		close("empty model: uniform", e.dist[0], 1.0 / PlayerModel.CLASSES, 1e-12);
 
 		m.record(5, ActionClass.SWITCH_BEST);
 		e = m.estimate(5);
@@ -120,7 +121,7 @@ public final class Phase6Tests {
 
 		PlayerModel.Estimate unseen = m.estimate(23);
 		check("unseen situation borrows at most K_PARENT observations", unseen.eff > 0 && unseen.eff <= PlayerModel.K_PARENT + 1e-9);
-		check("and leans toward the player's general habit", unseen.dist[ActionClass.SWITCH_BEST.ordinal()] > 0.25);
+		check("and leans toward the player's general habit", unseen.dist[ActionClass.SWITCH_BEST.ordinal()] > 1.0 / PlayerModel.CLASSES);
 
 		PlayerModel capped = trained(3, ActionClass.STAY_OTHER, 2000);
 		close("decay caps a slot at 1/(1-DECAY) observations", capped.total(), 1 / (1 - PlayerModel.DECAY), 0.1);
@@ -136,7 +137,8 @@ public final class Phase6Tests {
 	private static void predictMath() {
 		double[] y = { 0.5, 0.3, 0.2 };
 		ActionClass[] cls = { ActionClass.STAY_BEST, ActionClass.STAY_OTHER, ActionClass.SWITCH_BEST };
-		double[] hist = { 0.0, 0.0, 1.0, 0.0 };
+		double[] hist = new double[PlayerModel.CLASSES];
+		hist[ActionClass.SWITCH_BEST.ordinal()] = 1.0;
 
 		check("w = 0 returns y exactly", Arrays.equals(PlayerModel.predict(y, cls, hist, 0), y));
 		double[] full = PlayerModel.predict(y, cls, hist, 1.0);
@@ -216,7 +218,7 @@ public final class Phase6Tests {
 		try (ObjectOutputStream oo = new ObjectOutputStream(bo)) {
 			oo.writeObject(m);
 		}
-		check("save cost stays tiny (" + bo.size() + " bytes < 1024)", bo.size() < 1024);
+		check("save cost stays tiny (" + bo.size() + " bytes < 2048)", bo.size() < 2048);
 		PlayerModel back = (PlayerModel) new ObjectInputStream(new ByteArrayInputStream(bo.toByteArray())).readObject();
 		check("round trip keeps every count", back.sameCounts(m));
 		close("and the estimate", back.estimate(7).dist[ActionClass.SWITCH_BEST.ordinal()], m.estimate(7).dist[ActionClass.SWITCH_BEST.ordinal()], 1e-12);
@@ -293,28 +295,73 @@ public final class Phase6Tests {
 		double bestStay = Double.MAX_VALUE, bestSwitch = Double.MAX_VALUE;
 		for (int j = 0; j < cols; j++) {
 			for (int i = 0; i < p.eq.x.length; i++) v[j] += p.eq.x[i] * p.M[i][j];
-			if (p.P.get(j).kind == ActionKind.SWITCH) bestSwitch = Math.min(bestSwitch, v[j]); else bestStay = Math.min(bestStay, v[j]);
+			if (p.P.get(j).kind == ActionKind.SWITCH) bestSwitch = Math.min(bestSwitch, v[j]);
+			else if (!PlayerReader.isProtectLike(p.P.get(j).move)) bestStay = Math.min(bestStay, v[j]);
 		}
 		int stayBest = 0, switchBest = 0;
 		for (int j = 0; j < cols; j++) {
+			Action a = p.P.get(j);
 			ActionClass c = p.read.classes[j];
-			if (c == ActionClass.STAY_BEST) {
-				stayBest++;
-				check("STAY_BEST column has the lowest AI payoff among stays", v[j] <= bestStay + 1e-9);
-			}
-			if (c == ActionClass.SWITCH_BEST) {
-				switchBest++;
-				check("SWITCH_BEST column has the lowest AI payoff among switches", v[j] <= bestSwitch + 1e-9);
+			if (a.kind == ActionKind.SWITCH) {
+				boolean inBand = v[j] <= bestSwitch + PlayerReader.BEST_TOL;
+				check("switch column " + j + " is SWITCH_BEST exactly when it is within BEST_TOL of the lowest AI payoff", (c == ActionClass.SWITCH_BEST) == inBand);
+				if (inBand) switchBest++;
+			} else if (PlayerReader.isProtectLike(a.move)) {
+				check("a Protect-family move is STAY_PROTECT, whatever its payoff", c == ActionClass.STAY_PROTECT);
+			} else {
+				boolean inBand = a.move != null && v[j] <= bestStay + PlayerReader.BEST_TOL;
+				check("stay column " + j + " is STAY_BEST exactly when it is within BEST_TOL of the lowest non-Protect stay", (c == ActionClass.STAY_BEST) == inBand);
+				if (inBand) stayBest++;
 			}
 		}
 		boolean anyStay = false, anySwitch = false;
-		for (Action a : p.P) { if (a.kind == ActionKind.SWITCH) anySwitch = true; else anyStay = true; }
-		check("a best stay is marked whenever there is a stay column", !anyStay || stayBest >= 1);
-		check("a best switch is marked whenever there is a switch column", !anySwitch || switchBest == 1);
+		for (Action a : p.P) {
+			if (a.kind == ActionKind.SWITCH) anySwitch = true;
+			else if (!PlayerReader.isProtectLike(a.move)) anyStay = true;
+		}
+		check("a best stay is marked whenever there is a non-Protect stay column", !anyStay || stayBest >= 1);
+		check("a best switch is marked whenever there is a switch column", !anySwitch || switchBest >= 1);
 
 		// the model must not feed back into the classes
 		AIV2.Plan q = AIV2.plan(root, hard, trained(p.read.fine, ActionClass.SWITCH_BEST, 40));
 		check("classes and situation are identical with a trained model", Arrays.equals(p.read.classes, q.read.classes) && p.read.fine == q.read.fine);
+	}
+
+	/** Protect is its own class and "a Protect move is available" is part of the situation. */
+	private static void protectIsItsOwnClass() {
+		Pokemon[] pt = { Phase4Tests.mk(10, Move.EARTHQUAKE, Move.PROTECT), Phase4Tests.mk(5, Move.FLAMETHROWER), Phase4Tests.mk(6, Move.FLAMETHROWER) };
+		Phase4Tests.Duel d = build(aiTeam(), pt);
+		AIV2.Plan p = AIV2.plan(d.root(), AIConfig.hard(), new PlayerModel());
+		boolean found = false;
+		for (int j = 0; j < p.P.size(); j++) {
+			if (p.P.get(j).kind != ActionKind.SWITCH && p.P.get(j).move == Move.PROTECT) {
+				found = true;
+				check("the Protect column is STAY_PROTECT", p.read.classes[j] == ActionClass.STAY_PROTECT);
+			} else {
+				check("no other column is STAY_PROTECT", p.read.classes[j] != ActionClass.STAY_PROTECT);
+			}
+		}
+		check("the player's Protect produced a column", found);
+		check("the situation records that Protect is available (lowest bit of the bucket)", (p.read.fine & 1) == 1);
+
+		PlayerModel model = d.pl.playerModel();
+		Rng.setSeed(5);
+		d.a.bestMove2(d.f, true, Player.HARD);
+		for (int i = 0; i < pt[0].moveset.length; i++) if (pt[0].moveset[i] != null && pt[0].moveset[i].move == Move.PROTECT) pt[0].moveset[i].currentPP--;
+		Rng.setSeed(6);
+		d.a.bestMove2(d.f, true, Player.HARD);
+		check("clicking Protect is recorded as STAY_PROTECT: " + model.summary(), model.summary().contains("STAY_PROTECT=100%"));
+
+		// the history makes the AI expect Protect: its predicted mass on the Protect column rises
+		AIV2.Plan trained = AIV2.plan(d.root(), AIConfig.hard(), trained(p.read.fine, ActionClass.STAY_PROTECT, 40));
+		double before = 0, after = 0;
+		for (int j = 0; j < p.P.size(); j++) {
+			if (p.read.classes[j] == ActionClass.STAY_PROTECT) {
+				before += p.yHat[j];
+				after += trained.yHat[j];
+			}
+		}
+		check("a Protect habit raises the predicted Protect mass (" + before + " -> " + after + ")", after > before + 0.1 || before > 0.9);
 	}
 
 	private static Pokemon[] aiTeam() {
@@ -343,16 +390,20 @@ public final class Phase6Tests {
 		Phase4Tests.Duel d = build(aiTeam(), pt);
 		PlayerModel model = d.pl.playerModel();
 
-		// which of the player's moves does the matrix call best? (it is not necessarily the damaging one)
+		// which of the player's moves are in the matrix's best band, and which are not? (not necessarily the damaging one)
 		AIV2.Plan bp = AIV2.plan(d.root(), AIConfig.hard(), new PlayerModel());
-		Move bestMove = null;
-		for (int j = 0; j < bp.P.size(); j++) if (bp.read.classes[j] == ActionClass.STAY_BEST) { bestMove = bp.P.get(j).move; break; }
+		Move bestMove = null, otherMove = null;
+		for (int j = 0; j < bp.P.size(); j++) {
+			if (bestMove == null && bp.read.classes[j] == ActionClass.STAY_BEST) bestMove = bp.P.get(j).move;
+			if (otherMove == null && bp.read.classes[j] == ActionClass.STAY_OTHER && bp.P.get(j).kind != ActionKind.SWITCH) otherMove = bp.P.get(j).move;
+		}
 		int bestIdx = -1, otherIdx = -1;
 		for (int i = 0; i < pt[0].moveset.length; i++) {
 			if (pt[0].moveset[i] == null || pt[0].moveset[i].move == null) continue;
-			if (pt[0].moveset[i].move == bestMove) bestIdx = i; else if (otherIdx < 0) otherIdx = i;
+			if (pt[0].moveset[i].move == bestMove) bestIdx = i;
+			if (pt[0].moveset[i].move == otherMove) otherIdx = i;
 		}
-		check("found the best and another move slot", bestIdx >= 0 && otherIdx >= 0);
+		check("found a best-band move slot and an outside-band move slot", bestIdx >= 0 && otherIdx >= 0);
 
 		Rng.setSeed(11);
 		d.a.bestMove2(d.f, true, Player.HARD); // begins observing: remembers the situation
@@ -377,7 +428,7 @@ public final class Phase6Tests {
 		d.a.bestMove2(d.f, true, Player.HARD); // nothing changed
 		close("no PP spent, same mon: nothing observable", model.total(), before, 1e-9);
 
-		// switching: of bench slots 1 and 2 exactly one is the matrix-best switch; the other is "other"
+		// switching: both bench slots have a column, and the best band always holds at least one of them
 		String[] seen = new String[2];
 		for (int s = 1; s <= 2; s++) {
 			Pokemon[] ept = playerTeam(id, strong);
@@ -390,9 +441,11 @@ public final class Phase6Tests {
 			e.a.bestMove2(ept[s], true, Player.HARD);
 			seen[s - 1] = em.summary();
 		}
-		boolean oneBest = seen[0].contains("SWITCH_BEST=100%") != seen[1].contains("SWITCH_BEST=100%");
-		boolean oneOther = seen[0].contains("SWITCH_OTHER=100%") != seen[1].contains("SWITCH_OTHER=100%");
-		check("a switch is recorded, and exactly one bench slot is the matrix-best switch: " + seen[0] + " | " + seen[1], oneBest && oneOther);
+		boolean recorded0 = seen[0].contains("SWITCH_BEST=100%") || seen[0].contains("SWITCH_OTHER=100%");
+		boolean recorded1 = seen[1].contains("SWITCH_BEST=100%") || seen[1].contains("SWITCH_OTHER=100%");
+		boolean someBest = seen[0].contains("SWITCH_BEST=100%") || seen[1].contains("SWITCH_BEST=100%"); // the best band is never empty
+		check("a switch is recorded for either bench slot, and at least one of them is in the best band: " + seen[0] + " | " + seen[1],
+				recorded0 && recorded1 && someBest);
 
 		// a different AI trainer = a different battle: the pending turn is discarded, nothing is recorded
 		Pokemon[] opt = playerTeam(id, strong);

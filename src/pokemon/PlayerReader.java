@@ -1,7 +1,9 @@
 package pokemon;
 
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import pokemon.PlayerModel.ActionClass;
 
@@ -12,12 +14,15 @@ import pokemon.PlayerModel.ActionClass;
  * {@code Player.recordTurn} (that one feeds the battle-log upload): the AI diffs the player's active mon and its PP
  * between two of its own decisions.
  * <p>
- * <b>"Best" comes from the matrix, not from a type chart.</b> For each player column j the AI's payoff against its own
- * equilibrium mix is {@code v[j] = sum_i x_eq[i] * M[i][j]}; the player wants it low. Their best stay is the stay column
- * (any move or pivot column) with the lowest v, their best switch the switch column with the lowest v. So "best" means
- * what the full simulation (damage, speed, items, KO chances, status, setup) says is their best reply, and a player who
- * keeps picking it is playing the AI's own idea of good play. The equilibrium (not the blended strategy) is used so
- * classes never depend on what the model has learned.
+ * <b>"Best" comes from the matrix, not from a type chart, and it is a band.</b> For each player column j the AI's
+ * payoff against its own equilibrium mix is {@code v[j] = sum_i x_eq[i] * M[i][j]}; the player wants it low. Their best
+ * stays are the non-Protect stay columns within {@link #BEST_TOL} eval points of the lowest v, their best switches the
+ * switch columns within {@link #BEST_TOL} of the lowest switch v. A single winner was too brittle: two columns 0.2
+ * points apart are the same decision. The equilibrium (not the blended strategy) is used so classes never depend on what
+ * the model has learned.
+ * <p>
+ * <b>Protect</b> (see {@link #isProtectLike}) is its own class, and "a Protect move is available" is part of the
+ * situation, so a scouting habit is measured over the turns the player could have protected.
  * <p>
  * Nothing here mutates battle state. {@code read} is pure given the model and the matrix; {@code begin} and
  * {@code observe} only touch the model's own per-battle bookkeeping.
@@ -27,6 +32,8 @@ public final class PlayerReader {
 
 	/** Switching counts as the better reply when the best switch beats the best stay by more than this fraction of the matrix's payoff range. */
 	static final double SWITCH_MARGIN = 0.05;
+	/** Columns within this many eval points (~HP points; 100 ~ one healthy mon) of the lowest AI payoff all count as "best". Placeholder; Phase 8. */
+	public static final double BEST_TOL = 5.0;
 
 	/** One decision's reading of the player: situation, class of every column, history for that situation and how much to trust it. */
 	public static final class Read {
@@ -40,20 +47,44 @@ public final class PlayerReader {
 		public final double eff;
 		/** {@code blendWeight(eff)}: 0 for an empty model, so everything downstream reduces to the equilibrium. */
 		public final double w;
-		/** The move of the player's best stay column, or null. */
-		final Move bestMove;
-		/** Team index of the player's best switch column, or -1. */
-		final int bestBack;
+		/** Moves of the player's best non-Protect stay columns. */
+		final Set<Move> bestMoves;
+		/** Bit i = team slot i is one of the player's best switch columns. */
+		final long bestBackMask;
+		/** Bit i = team slot i had a switch column this turn. */
+		final long switchColMask;
 
-		Read(int fine, ActionClass[] classes, double[] hist, double eff, double w, Move bestMove, int bestBack) {
+		Read(int fine, ActionClass[] classes, double[] hist, double eff, double w, Set<Move> bestMoves, long bestBackMask, long switchColMask) {
 			this.fine = fine;
 			this.classes = classes;
 			this.hist = hist;
 			this.eff = eff;
 			this.w = w;
-			this.bestMove = bestMove;
-			this.bestBack = bestBack;
+			this.bestMoves = bestMoves;
+			this.bestBackMask = bestBackMask;
+			this.switchColMask = switchColMask;
 		}
+	}
+
+	/** What {@link #observe} concluded: the class that was recorded, and a one-line reason for the decision log. */
+	public static final class Observation {
+		public final ActionClass cls;
+		public final String note;
+
+		Observation(ActionClass cls, String note) {
+			this.cls = cls;
+			this.note = note;
+		}
+	}
+
+	/**
+	 * The Protect family as this engine implements it (the {@code case DETECT / PROTECT / LAVA_LAIR / OBSTRUCT /
+	 * SPIKY_SHIELD / AQUA_VEIL} group in {@code Pokemon.move}): moves that give the user {@code Status.PROTECT} for the turn.
+	 * Add a new variant here when you add one to that group.
+	 */
+	public static boolean isProtectLike(Move m) {
+		return m == Move.PROTECT || m == Move.DETECT || m == Move.LAVA_LAIR || m == Move.OBSTRUCT || m == Move.SPIKY_SHIELD
+				|| m == Move.AQUA_VEIL;
 	}
 
 	// ---- reading a decision ----
@@ -85,34 +116,54 @@ public final class PlayerReader {
 			for (int i = 0; i < xEq.length; i++) s += xEq[i] * M[i][j];
 			v[j] = s;
 		}
-		int bestStay = -1, bestSwitch = -1; // first column wins ties
+
+		boolean protectAvailable = false;
+		double bestStayAll = Double.POSITIVE_INFINITY, bestStay = Double.POSITIVE_INFINITY, bestSwitch = Double.POSITIVE_INFINITY;
+		long switchColMask = 0;
 		for (int j = 0; j < cols; j++) {
-			if (P.get(j).kind == ActionKind.SWITCH) {
-				if (bestSwitch < 0 || v[j] < v[bestSwitch]) bestSwitch = j;
+			Action a = P.get(j);
+			if (a.kind == ActionKind.SWITCH) {
+				bestSwitch = Math.min(bestSwitch, v[j]);
+				switchColMask |= 1L << a.slot;
 			} else {
-				if (bestStay < 0 || v[j] < v[bestStay]) bestStay = j;
+				bestStayAll = Math.min(bestStayAll, v[j]);
+				if (isProtectLike(a.move)) protectAvailable = true;
+				else bestStay = Math.min(bestStay, v[j]);
 			}
 		}
-		boolean switchBetter = bestSwitch >= 0 && (bestStay < 0 || v[bestStay] - v[bestSwitch] > SWITCH_MARGIN * (hi - lo));
-		Move bestMove = bestStay >= 0 ? P.get(bestStay).move : null;
-		int bestBack = bestSwitch >= 0 ? P.get(bestSwitch).slot : -1;
+
+		Set<Move> bestMoves = EnumSet.noneOf(Move.class);
+		long bestBackMask = 0;
+		for (int j = 0; j < cols; j++) {
+			Action a = P.get(j);
+			if (a.kind == ActionKind.SWITCH) {
+				if (v[j] <= bestSwitch + BEST_TOL) bestBackMask |= 1L << a.slot;
+			} else if (a.move != null && !isProtectLike(a.move) && v[j] <= bestStay + BEST_TOL) {
+				bestMoves.add(a.move);
+			}
+		}
+
+		boolean anySwitch = switchColMask != 0;
+		boolean switchBetter = anySwitch && (bestStayAll == Double.POSITIVE_INFINITY || bestStayAll - bestSwitch > SWITCH_MARGIN * (hi - lo));
 
 		double hpFrac = pl.currentHP * 1.0 / pl.getStat(0);
 		int hpBand = hpFrac < 1.0 / 3 ? 0 : hpFrac < 2.0 / 3 ? 1 : 2;
 		boolean aiFaster = ai.getFaster(pl, 0, 0, field) == ai;
-		int fine = PlayerModel.fineIndex(threatened, switchBetter, hpBand, aiFaster);
+		int fine = PlayerModel.fineIndex(threatened, switchBetter, hpBand, aiFaster, protectAvailable);
 
 		ActionClass[] classes = new ActionClass[cols];
-		for (int j = 0; j < cols; j++) classes[j] = classOf(P.get(j), bestMove, bestBack);
+		for (int j = 0; j < cols; j++) classes[j] = classOf(P.get(j), bestMoves, bestBackMask);
 
 		PlayerModel.Estimate e = model.estimate(fine);
-		return new Read(fine, classes, e.dist, e.eff, PlayerModel.blendWeight(e.eff), bestMove, bestBack);
+		return new Read(fine, classes, e.dist, e.eff, PlayerModel.blendWeight(e.eff), bestMoves, bestBackMask, switchColMask);
 	}
 
-	/** A pivot column is a stay (it is classed by its move); a plain switch by whether it goes to the best switch column's mon. */
-	static ActionClass classOf(Action p, Move bestMove, int bestBack) {
-		if (p.kind == ActionKind.SWITCH) return p.slot == bestBack ? ActionClass.SWITCH_BEST : ActionClass.SWITCH_OTHER;
-		return p.move != null && p.move == bestMove ? ActionClass.STAY_BEST : ActionClass.STAY_OTHER;
+	/** A pivot column is a stay (classed by its move); Protect-family moves are their own class; a switch is best if its slot is in the best band. */
+	static ActionClass classOf(Action p, Set<Move> bestMoves, long bestBackMask) {
+		if (p.kind == ActionKind.SWITCH) return (bestBackMask & (1L << p.slot)) != 0 ? ActionClass.SWITCH_BEST : ActionClass.SWITCH_OTHER;
+		if (p.move == null) return ActionClass.STAY_OTHER;
+		if (isProtectLike(p.move)) return ActionClass.STAY_PROTECT;
+		return bestMoves.contains(p.move) ? ActionClass.STAY_BEST : ActionClass.STAY_OTHER;
 	}
 
 	// ---- remembering and observing ----
@@ -124,8 +175,9 @@ public final class PlayerReader {
 		p.prev = foe;
 		p.turn = Pokemon.field == null ? 0 : Pokemon.field.turns;
 		p.fine = read.fine;
-		p.bestMove = read.bestMove;
-		p.bestBack = read.bestBack;
+		p.bestMoves = read.bestMoves;
+		p.bestBackMask = read.bestBackMask;
+		p.switchColMask = read.switchColMask;
 		p.pp = ppOf(foe);
 		model.pending = p;
 	}
@@ -136,20 +188,24 @@ public final class PlayerReader {
 	 * <ul>
 	 * <li>a different AI trainer, or {@code Field.turns} lower than at decision time: a new battle, discarded;</li>
 	 * <li>same mon and no PP spent: nothing observable (flinch, sleep, or this is a second decision in the same turn);</li>
-	 * <li>a move's PP dropped: a stay by that move's class, even if the mon then pivoted or fainted;</li>
-	 * <li>different mon, no PP spent, previous mon not fainted: a switch, by whether it went to the best back (a forced
-	 * phaze before the player moved looks the same, and a switch-in KO'd the same turn is classed by its replacement:
-	 * rare noise in the best-back vs other split only);</li>
+	 * <li>a move's PP dropped: a stay by that move's class (Protect family, best band, or other), even if the mon then
+	 * pivoted or fainted;</li>
+	 * <li>different mon, no PP spent, previous mon not fainted: a switch, best band or other (a forced phaze before the
+	 * player moved looks the same, and a switch-in KO'd the same turn is classed by its replacement: rare noise);</li>
 	 * <li>different mon, previous mon fainted without moving: a KO, not a decision.</li>
 	 * </ul>
+	 *
+	 * @return what was recorded and why, or null when nothing was
 	 */
-	public static ActionClass observe(PlayerModel model, Pokemon self, Pokemon foe) {
+	@SuppressWarnings("unchecked")
+	public static Observation observe(PlayerModel model, Pokemon self, Pokemon foe) {
 		PlayerModel.Pending p = model.pending;
 		if (p == null) return null;
 		model.pending = null; // consumed whatever happens below
 		if (p.ai != self.trainer || Pokemon.field == null || Pokemon.field.turns < p.turn) return null;
 
 		Pokemon prev = (Pokemon) p.prev;
+		Set<Move> bestMoves = (Set<Move>) p.bestMoves;
 		int[] now = ppOf(prev);
 		int used = -1;
 		for (int i = 0; i < now.length && i < p.pp.length; i++) {
@@ -160,19 +216,42 @@ public final class PlayerReader {
 		}
 
 		ActionClass cls;
+		String note;
 		if (used >= 0) {
 			Move m = prev.moveset[used].move;
-			cls = m != null && m == p.bestMove ? ActionClass.STAY_BEST : ActionClass.STAY_OTHER;
+			if (m != null && isProtectLike(m)) {
+				cls = ActionClass.STAY_PROTECT;
+				note = "used " + m + " (a Protect move)";
+			} else if (m != null && bestMoves.contains(m)) {
+				cls = ActionClass.STAY_BEST;
+				note = "used " + m + ", in the best band " + bestMoves;
+			} else {
+				cls = ActionClass.STAY_OTHER;
+				note = "used " + m + ", outside the best band " + bestMoves;
+			}
 		} else if (prev == foe) {
 			return null;
 		} else if (prev.isFainted()) {
 			return null;
 		} else {
 			int idx = foe.trainer == null ? -1 : foe.trainer.indexOf(foe);
-			cls = idx >= 0 && idx == p.bestBack ? ActionClass.SWITCH_BEST : ActionClass.SWITCH_OTHER;
+			boolean hadColumn = idx >= 0 && (p.switchColMask & (1L << idx)) != 0;
+			boolean best = idx >= 0 && (p.bestBackMask & (1L << idx)) != 0;
+			cls = best ? ActionClass.SWITCH_BEST : ActionClass.SWITCH_OTHER;
+			note = "switched to " + foe + " (slot " + idx + "): "
+					+ (best ? "in the best switch band" : hadColumn ? "had a column but outside the best band" : "had NO column this turn (pruned by ActionGen)")
+					+ "; best slots " + maskToString(p.bestBackMask) + ", column slots " + maskToString(p.switchColMask);
 		}
 		model.record(p.fine, cls);
-		return cls;
+		return new Observation(cls, note);
+	}
+
+	private static String maskToString(long mask) {
+		StringBuilder sb = new StringBuilder("[");
+		for (int i = 0; i < 64; i++) {
+			if ((mask & (1L << i)) != 0) sb.append(sb.length() > 1 ? "," : "").append(i);
+		}
+		return sb.append(']').toString();
 	}
 
 	private static int[] ppOf(Pokemon p) {

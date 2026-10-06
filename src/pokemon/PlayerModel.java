@@ -14,8 +14,8 @@ import java.util.Locale;
  * more of the player's run they have seen. "Best" is always the AI's own payoff matrix against its equilibrium mix
  * (see {@link PlayerReader}), never a type-chart proxy.
  * <p>
- * <b>Storage.</b> A fixed table of {@code (24 fine + 4 coarse + 1 global) situation slots x 4 action classes} floats
- * (about 0.6 KB serialized), kept on {@code Player} and saved with it. It cannot grow: every observation decays the
+ * <b>Storage.</b> A fixed table of {@code (48 fine + 4 coarse + 1 global) situation slots x 5 action classes} floats
+ * (about 1.2 KB serialized), kept on {@code Player} and saved with it. It cannot grow: every observation decays the
  * slots it touches by {@link #DECAY}, so a slot holds at most {@code 1 / (1 - DECAY)} observations' worth and old
  * habits fade if the player changes style.
  * <p>
@@ -32,23 +32,35 @@ public final class PlayerModel implements Serializable {
 	/**
 	 * What the player did on a turn, as far as the AI can hedge on it. "Best" = the player column with the lowest AI payoff
 	 * against the AI's equilibrium mix, i.e. the reply the full simulation likes most for them. A pivot move counts as a
-	 * stay (classed by its move). The order is part of the saved layout: append, never reorder.
+	 * stay (classed by its move). "Best" is a band, not a single winner: every column within
+	 * {@link PlayerReader#BEST_TOL} eval points of the lowest counts, so near-ties are all best. The order is part of the
+	 * saved layout: append, never reorder.
 	 */
 	public enum ActionClass {
-		/** Stayed in and used the move of the player's best stay column. */
+		/** Stayed in and used a move from the player's best stay columns (Protect-family moves excluded, see STAY_PROTECT). */
 		STAY_BEST,
-		/** Stayed in and used any other move. */
+		/** Stayed in and used any other non-Protect move. */
 		STAY_OTHER,
-		/** Switched to the mon of the player's best switch column. */
+		/** Switched to a mon from the player's best switch columns. */
 		SWITCH_BEST,
-		/** Switched to any other mon. */
-		SWITCH_OTHER
+		/** Switched to any other mon (including one the AI had no column for). */
+		SWITCH_OTHER,
+		/**
+		 * Stayed in and used a Protect-family move. Its own class because it is a different decision (scouting, stalling,
+		 * burning a move) whose meaning comes from the situation it was clicked in, notably whether the AI threatened
+		 * anything that turn, which is already part of the bucket.
+		 */
+		STAY_PROTECT
 	}
 
 	public static final int CLASSES = ActionClass.values().length;
-	/** 2 (AI threatens the player's active) x 2 (the simulation says switching is the player's better reply) x 3 (player active's HP band) x 2 (AI outspeeds). */
-	public static final int FINE = 24;
-	/** The (threatened, switchBetter) pair: fine / 6. */
+	/**
+	 * 2 (AI threatens the player's active) x 2 (the simulation says switching is the player's better reply) x 3 (player
+	 * active's HP band) x 2 (AI outspeeds) x 2 (the player has a Protect-family move available, so a Protect habit is
+	 * measured per turn it COULD protect and not diluted by mons without one).
+	 */
+	public static final int FINE = 48;
+	/** The (threatened, switchBetter) pair: fine / 12. */
 	public static final int COARSE = 4;
 	static final int COARSE_BASE = FINE;
 	static final int GLOBAL = FINE + COARSE;
@@ -72,8 +84,9 @@ public final class PlayerModel implements Serializable {
 		Object prev;        // the player's active Pokemon at decision time
 		int turn;           // Field.turns at decision time (it going DOWN means a new battle)
 		int fine;           // situation bucket at decision time
-		Object bestMove;    // the move of the player's best stay column (a Move), or null
-		int bestBack;       // team index of the player's best switch column, or -1
+		Object bestMoves;   // the moves of the player's best stay columns (a Set of Move), never null
+		long bestBackMask;  // bit i set = team slot i is one of the player's best switch columns
+		long switchColMask; // bit i set = team slot i had a switch column at all this turn
 		int[] pp;           // prev's per-move-slot PP, -1 for an empty slot
 	}
 
@@ -81,9 +94,9 @@ public final class PlayerModel implements Serializable {
 
 	// ---- situation index ----
 
-	public static int fineIndex(boolean threatened, boolean switchBetter, int hpBand, boolean aiFaster) {
+	public static int fineIndex(boolean threatened, boolean switchBetter, int hpBand, boolean aiFaster, boolean protectAvailable) {
 		if (hpBand < 0 || hpBand > 2) throw new IllegalArgumentException("hpBand " + hpBand);
-		return (((threatened ? 1 : 0) * 2 + (switchBetter ? 1 : 0)) * 3 + hpBand) * 2 + (aiFaster ? 1 : 0);
+		return ((((threatened ? 1 : 0) * 2 + (switchBetter ? 1 : 0)) * 3 + hpBand) * 2 + (aiFaster ? 1 : 0)) * 2 + (protectAvailable ? 1 : 0);
 	}
 
 	// ---- recording ----
@@ -92,7 +105,7 @@ public final class PlayerModel implements Serializable {
 	public void record(int fine, ActionClass c) {
 		checkFine(fine);
 		bump(fine, c);
-		bump(COARSE_BASE + fine / 6, c);
+		bump(COARSE_BASE + fine / 12, c);
 		bump(GLOBAL, c);
 	}
 
@@ -145,7 +158,7 @@ public final class PlayerModel implements Serializable {
 		for (int k = 0; k < CLASSES; k++) pg[k] = counts[GLOBAL * CLASSES + k] / ng;
 		double eg = ng;
 
-		int c = COARSE_BASE + fine / 6;
+		int c = COARSE_BASE + fine / 12;
 		double nc = slotTotal(c);
 		double[] pc = blend(c, nc, pg);
 		double ec = nc + K_PARENT * eg / (eg + K_PARENT);
@@ -297,7 +310,7 @@ public final class PlayerModel implements Serializable {
 	 */
 	public String report() {
 		String[] names = { "not threatened, staying is better", "not threatened, switching is better", "threatened, staying is better", "threatened, switching is better" };
-		String[] shortName = { "best move", "other move", "best switch", "other switch" };
+		String[] shortName = { "best move", "other move", "best switch", "other switch", "protect" };
 		StringBuilder sb = new StringBuilder("Player habits (" + summary() + ")\n");
 		for (int c = 0; c < COARSE; c++) {
 			double n = slotTotal(COARSE_BASE + c);

@@ -52,6 +52,40 @@ public class BattleSimulator {
 			Pokemon.field = prevField;
 		}
 	}
+	
+	/**
+	 * Phase 7 (§7.15): the start-of-turn-1 state for one lead pair. Forks {@code start}, makes the two slots current and
+	 * mirrors BattleUI.setStartingTasks: Neutralizing Gas first, then swapIn faster-first with hazards=true on a field with
+	 * none. NO end of turn: the real battle runs none before turn 1 either, so the first endOfTurn happens inside the
+	 * lead refinement's own simulateTurn. {@code applyEntryEffects=false} returns the same pair with nothing applied
+	 * (the baseline T25 compares against). Does not touch {@code start}.
+	 */
+	public static SimState simulateEntry(SimState start, int aiSlot, int playerSlot, boolean applyEntryEffects) {
+		Field prevField = Pokemon.field;
+		try (SimContext.Scope sc = SimContext.enter(SimPolicy.DEFAULT)) {
+			SimState s = start.fork(java.util.Collections.singleton(aiSlot), java.util.Collections.singleton(playerSlot));
+			s.ai.shell.setCurrent(s.ai.shell.team[aiSlot]);
+			s.player.shell.setCurrent(s.player.shell.team[playerSlot]);
+			s.turn = 0;
+			if (!applyEntryEffects) return s;
+
+			Pokemon.field = s.field;
+			Pokemon ai = s.ai.active(), pl = s.player.active();
+			if (pl.getAbility(s.field) == Ability.NEUTRALIZING_GAS || ai.getAbility(s.field) == Ability.NEUTRALIZING_GAS) {
+				s.field.setEffect(s.field.new FieldEffect(Field.Effect.NEUTRALIZING_GAS), false);
+			}
+			Pokemon faster = pl.getFaster(ai, 0, 0, s.field); // the player is "user" in the real order
+			Pokemon slower = faster == pl ? ai : pl;
+			faster.swapIn(slower, true, s.field);
+			slower.swapIn(faster, true, s.field);
+			// Eject Pack-style entry switches are not simulated (flagged, PHASE7_CHANGES.md D5).
+			if (ai.hasStatus(Status.SWITCHING)) ai.removeStatus(Status.SWITCHING);
+			if (pl.hasStatus(Status.SWITCHING)) pl.removeStatus(Status.SWITCHING);
+			return s;
+		} finally {
+			Pokemon.field = prevField;
+		}
+	}
 
 	private static void enterField(SimState s) { Pokemon.field = s.field; }
 
