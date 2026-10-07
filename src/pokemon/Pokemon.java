@@ -325,8 +325,6 @@ public class Pokemon implements Serializable {
 	}
 	
 	private boolean determineShiny() {
-		if (true) return true;
-		@SuppressWarnings("unused")
 		Random random = Rng.asRandom();
 		return random.nextInt() % 512 == 0;
 	}
@@ -339,10 +337,6 @@ public class Pokemon implements Serializable {
 		return sprite;
 	}
 	
-	public static BufferedImage getSprite(int id) {
-		return new Pokemon(id, 5, false, false).sprite;
-	}
-	
 	public Image getFrontSprite() {
 		return frontSprite;
 	}
@@ -352,23 +346,26 @@ public class Pokemon implements Serializable {
 	}
 	
 	public BufferedImage setSprite() {
+		String folder = shiny ? "/shiny/" : "/sprites/";
+		
+		return getSprite(folder, id);
+	}
+	
+	public static BufferedImage getSprite(String folder, int id) {
 		BufferedImage image = null;
-		
-		String folder = shiny ? "/shiny1/" : "/sprites/";
-		
-		String imageName = id + "";
+				String imageName = id + "";
 		while (imageName.length() < 3) imageName = "0" + imageName;
 		
 		try {
-			image = ImageIO.read(getClass().getResourceAsStream(folder + imageName + ".png"));
+			image = ImageIO.read(Pokemon.class.getResourceAsStream(folder + imageName + ".png"));
 		} catch (Exception e) {
 			try {
-				image = ImageIO.read(getClass().getResourceAsStream("/sprites/000.png"));
+				image = ImageIO.read(Pokemon.class.getResourceAsStream("/sprites/000.png"));
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
 		}
-		return image;
+		return image;	
 	}
 	
 	protected Image setFrontSprite() {
@@ -9769,7 +9766,7 @@ public class Pokemon implements Serializable {
 			}
 		};
 		BufferedImage sprite = getSprite();
-		if (sprite == null) sprite = DocUtils.getCachedSprite(this);
+		if (sprite == null) sprite = DocUtils.getCachedSprite(this.id, this.shiny);
 		ImageProducer producer = new FilteredImageSource(sprite.getSource(), grayFilter);
 		Image grayImage = Toolkit.getDefaultToolkit().createImage(producer);
 		

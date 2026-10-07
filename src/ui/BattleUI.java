@@ -10,8 +10,10 @@ import java.awt.RenderingHints;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -122,6 +124,7 @@ public class BattleUI extends AbstractUI {
 	protected BufferedImage statusedIcon;
 	protected BufferedImage faintedIcon;
 	protected BufferedImage emptyIcon;
+	private final Map<Pokemon, BufferedImage> shownPartyIcons = new IdentityHashMap<>();
 	
 	// ANIMATION
 	private long animStartTime;
@@ -129,8 +132,9 @@ public class BattleUI extends AbstractUI {
 	private List<EffectParticle> activeEffects;
 	private List<StatParticle> statParticles;
 	private final List<ShinySparkle> shinySparkles = new ArrayList<>();
-	private long shinyStartTime = 0;
-	private long shinyLastSpawn = 0;
+	private long shinyStartTime;
+	private long shinyLastSpawn;
+	private double shinySpawnAngle;
 
 	// STATE CONSTANTS
 	public static final int STARTING_STATE = -1;
@@ -867,6 +871,7 @@ public class BattleUI extends AbstractUI {
 			break;
 		case Task.SHINY:
 			drawShinySparkle();
+			currentDialogue = currentTask.message;
 			break;
 		}
 	}
@@ -967,18 +972,27 @@ public class BattleUI extends AbstractUI {
 			BufferedImage image;
 			if (p == null || p instanceof Egg) {
 				image = emptyIcon;
-			} else if (p.isFainted() && !p.isVisible()) {
-				image = faintedIcon;
 			} else if (p.isVisible()) {
 				image = currentIcon;
-			} else if (p.status != Status.HEALTHY) {
-				image = statusedIcon;
+			} else if (hasPendingSwapIn(p)) {
+				// hasn't been sent out on screen yet: keep showing the pre-turn icon
+				image = shownPartyIcons.getOrDefault(p, ballIcon);
 			} else {
-				image = ballIcon;
+				image = p.isFainted() ? faintedIcon : p.status != Status.HEALTHY ? statusedIcon : ballIcon;
+				shownPartyIcons.put(p, image);
 			}
 			g2.drawImage(image, x, y, null);
 			x += width;
 		}
+	}
+	
+	private boolean hasPendingSwapIn(Pokemon p) {
+		if (currentTask != null && currentTask.type == Task.SWAP_IN && currentTask.p == p) return true;
+		for (int i = 0; i < tasks.size(); i++) {
+			Task t = tasks.get(i);
+			if (t.type == Task.SWAP_IN && t.p == p) return true;
+		}
+		return false;
 	}
 	
 	protected void drawFoeParty() {
@@ -1058,6 +1072,7 @@ public class BattleUI extends AbstractUI {
 	}
 	
 	protected void setStartingTasks() {
+		shownPartyIcons.clear();
 		if (gp.player.p.difficulty == Player.EXTREME && !selectedLead && foe.trainerOwned()) {
 			subState = CHOOSE_LEAD_STATE;
 			return;
@@ -1100,6 +1115,10 @@ public class BattleUI extends AbstractUI {
 		if (foe.trainerOwned() && staticID == -1) {
 			Task.addSwapInTask(foe, false);
 			foeFainted = foe.trainer.getNumFainted();
+		} else {
+			if (foe.shiny) {
+				Task.addTask(Task.SHINY, currentDialogue, foe);
+			}
 		}
 		foe.checkOmniBoost();
 		Task.addSwapInTask(user, true);
@@ -2566,6 +2585,7 @@ public class BattleUI extends AbstractUI {
 		if (shinyStartTime == 0) {
 			shinyStartTime = now;
 			shinyLastSpawn = 0;
+			shinySpawnAngle = Math.random() * Math.PI * 2;
 			shinySparkles.clear();
 		}
 		long elapsed = now - shinyStartTime;
@@ -2578,17 +2598,18 @@ public class BattleUI extends AbstractUI {
 		int rx = sprite != null ? sprite.getWidth(null) / 2 : 60;
 		int ry = sprite != null ? sprite.getHeight(null) / 2 : 60;
 
-		// Spawn new sparkles randomly across the sprite's footprint
-		if (elapsed < 900 && now - shinyLastSpawn >= 35) {
+		// Spawn sparkles in opposite pairs, rotating the spawn angle so they form spiral arms
+		if (elapsed < 800 && now - shinyLastSpawn >= 35) {
 			shinyLastSpawn = now;
+			shinySpawnAngle += 0.9;
 			for (int i = 0; i < 2; i++) {
-				double angle = Math.random() * Math.PI * 2;
-				double dist = Math.sqrt(Math.random()); // sqrt = even spread, not clustered in the middle
-				float x = (float) (cx + Math.cos(angle) * dist * rx);
-				float y = (float) (cy + Math.sin(angle) * dist * ry);
+				float angle = (float) (shinySpawnAngle + i * Math.PI);
+				float startR = 0.15f + (float) Math.random() * 0.25f;  // begin near the center...
+				float endR = 0.8f + (float) Math.random() * 0.3f;      // ...and spiral out past the edge
+				float spin = 3f + (float) Math.random() * 1.5f;      // radians per second
 				float size = 7 + (float) Math.random() * 9;
-				long life = 350 + (long) (Math.random() * 350);
-				shinySparkles.add(new ShinySparkle(x, y, size, life, now));
+				long life = 500 + (long) (Math.random() * 300);
+				shinySparkles.add(new ShinySparkle(angle, startR, endR, spin, size, life, now));
 			}
 		}
 
@@ -2596,12 +2617,12 @@ public class BattleUI extends AbstractUI {
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		Iterator<ShinySparkle> it = shinySparkles.iterator();
 		while (it.hasNext()) {
-			if (!it.next().draw(g2, now)) it.remove();
+			if (!it.next().draw(g2, now, cx, cy, rx, ry)) it.remove();
 		}
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				oldAA == null ? RenderingHints.VALUE_ANTIALIAS_DEFAULT : oldAA);
 
-		if (elapsed >= 1400) {
+		if (elapsed >= 1600) {
 			shinySparkles.clear();
 			shinyStartTime = 0;
 			endTask();

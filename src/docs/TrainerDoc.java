@@ -284,7 +284,7 @@ public class TrainerDoc {
 					spriteRow.getRowNum(), spriteRow2.getRowNum(), col, col + 1
 				));
 				
-				byte[] spriteBytes = DocUtils.imageToBytes(DocUtils.getCachedSprite(p), "png");
+				byte[] spriteBytes = DocUtils.imageToBytes(DocUtils.getCachedSprite(p.id, false), "png");
 				if (spriteBytes != null) {
 					// Insert sprite as 2x2 image
 					DocUtils.insertImage(sheet, spriteBytes, col, spriteRow.getRowNum(), 2, 2, 1, 1);

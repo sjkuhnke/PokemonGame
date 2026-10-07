@@ -16,7 +16,7 @@ import util.Rng;
  * Not compiled against your project. Guessed names (fix if the compiler complains): {@code Move.TACKLE},
  * {@code Move.EARTHQUAKE}, {@code Move.FLAMETHROWER}, {@code Ability.INTIMIDATE}, {@code Ability.DRIZZLE},
  * {@code Status.PARALYZED}, {@code Pokemon.setTrainer}, {@code Egg(int)}. A name that does not match is a compile error, not a false pass.
- * T24 is proven on the matrix layer (hand-built lead matrices through the production solve+shape); the engine-level
+ * T24 and the softening are proven on the matrix layer (hand-built lead matrices through the production solve+shape); the engine-level
  * "one lead beats most of the team but is countered by one mon" scenario is a manual step (see PHASE7_CHANGES.md).
  */
 public final class Phase7Tests {
@@ -36,6 +36,7 @@ public final class Phase7Tests {
 			run("T23 no peek: same seed + teams, any player current -> same AI lead; no Pokemon parameter", Phase7Tests::t23);
 			run("T24 not counterable: mixed when countered, near-certain when dominant", Phase7Tests::t24);
 			run("T25 entry effects: Intimidate / weather lead differs from the no-entry baseline", Phase7Tests::t25);
+			run("softening: a thin saddle is not a certainty", Phase7Tests::softening);
 			run("T33 real battle-start state changes payoffs; all-negative matrix is not uniform", Phase7Tests::t33);
 			run("T27 EXTREME differs from HARD only in selectLead", Phase7Tests::t27);
 			run("pickLead: non-player foe returns current; plan is pure (T3-style fingerprint)", Phase7Tests::wrapperAndPurity);
@@ -183,30 +184,59 @@ public final class Phase7Tests {
 	}
 
 	private static void t25() {
-		Pokemon intim = mk(1, Move.FLAMETHROWER);
+		// Weak single-move mons on both sides so no hit is a KO: matchupScore saturates at +-90 once a duel is decided,
+		// and a saturated score cannot show an entry effect. (The first version of this test used Earthquake and failed that way.)
+		Pokemon intim = mk(1, Move.TACKLE);
 		intim.ability = Ability.INTIMIDATE;
-		Pokemon plain = mk(2, Move.FLAMETHROWER);
-		Pokemon rain = mk(3, Move.FLAMETHROWER);
+		Pokemon plain = mk(2, Move.TACKLE);
+		Pokemon rain = mk(3, Move.TACKLE);
 		rain.ability = Ability.DRIZZLE;
 		Trainer ai = trainerOf("P7-ai", intim, plain, rain);
-		Trainer pl = trainerOf("P7-pl", mk(4, Move.EARTHQUAKE, Move.TACKLE), mk(5, Move.FLAMETHROWER));
+		Trainer pl = trainerOf("P7-pl", mk(4, Move.TACKLE), mk(5, Move.FLAMETHROWER));
 		AIConfig cfg = extreme();
 
 		SimState start = LeadSelection.startState(ai, pl);
 		Pokemon.field = start.field;
 		MonWeights w = MonWeights.compute(start);
-
 		long startFp = start.fingerprint();
-		SimState e = BattleSimulator.simulateEntry(start, 0, 0, true);
-		check("Intimidate dropped the player's Attack on entry (turn 0, no end of turn)", e.player.active().statStages[0] == -1);
-		check("the entry state is a start-of-turn-1 state", e.turn == 0 && e.field.turns == 0);
-		check("Intimidate lead: eval differs from the no-entry baseline", Math.abs(LeadSelection.entryDelta(start, 0, 0, cfg, w)) > 1e-6);
+
+		// Intimidate vs the Tackle column (0)
+		SimState with = BattleSimulator.simulateEntry(start, 0, 0, true);
+		SimState without = BattleSimulator.simulateEntry(start, 0, 0, false);
+		check("Intimidate dropped the player's Attack on entry (turn 0, no end of turn)", with.player.active().statStages[0] == -1);
+		check("the entry state is a start-of-turn-1 state", with.turn == 0 && with.field.turns == 0);
+		Pokemon.field = with.field;
+		double liveWith = Evaluator.activeMatchup(with);
+		Pokemon.field = without.field;
+		double liveWithout = Evaluator.activeMatchup(without);
+		double d = LeadSelection.entryDelta(start, 0, 0, cfg, w);
+		check("Intimidate: live matchup moves (" + liveWithout + " -> " + liveWith + "), and the static value moves with it (delta " + d + ")",
+				Math.abs(liveWith - liveWithout) > 1e-6 && Math.abs(d) > 1e-6);
+		check("static value follows the live matchup in sign", Math.signum(d) == Math.signum(liveWith - liveWithout));
 		check("control: a lead with no entry effect equals its baseline exactly", Math.abs(LeadSelection.entryDelta(start, 1, 0, cfg, w)) < 1e-9);
 
-		SimState r = BattleSimulator.simulateEntry(start, 2, 0, true);
+		// Drizzle vs the Flamethrower column (1): rain halves the player's fire damage
+		SimState r = BattleSimulator.simulateEntry(start, 2, 1, true);
 		check("Drizzle lead set rain", r.field.weather != null && r.field.weather.effect == Field.Effect.RAIN);
-		check("Drizzle lead: eval differs from the baseline", Math.abs(LeadSelection.entryDelta(start, 2, 0, cfg, w)) > 1e-6);
+		double dr = LeadSelection.entryDelta(start, 2, 1, cfg, w);
+		check("Drizzle lead vs a fire attacker: static value differs from the baseline (delta " + dr + ")", Math.abs(dr) > 1e-6);
 		check("entry simulation leaves the start state untouched (fingerprint)", start.fingerprint() == startFp);
+	}
+
+	/** The fix for "100% Icy Serpent": a saddle-point matrix with a thin margin must not be a certainty. */
+	private static void softening() {
+		AIConfig cfg = extreme();
+		// Row 0 is the saddle (best reply to the player's best lead, column 0) by 6 points, row 1 is far better against everything else.
+		double[][] saddle = { { -15, -5, -7, 5 }, { -21, 32, 17, 29 }, { -46, 7, -2, 7 }, { -43, -43, -43, -73 } };
+		double[] raw = Solver.solveZeroSum(saddle).x;
+		double[] x = LeadSelection.solveLeads(saddle, cfg);
+		check("raw equilibrium is the degenerate pure row this fix exists for: " + Arrays.toString(raw), raw[0] > 0.9);
+		check("softened: the saddle row still leads but does not take everything: " + Arrays.toString(x), x[0] > 0.3 && x[0] < 0.8 && x[1] > 0.1);
+		check("softened: a clearly bad row stays rare: " + Arrays.toString(x), x[3] < 0.08);
+		double s = 0;
+		for (double v : x) s += v;
+		check("sums to 1", Math.abs(s - 1) < 1e-9);
+		check("a constant matrix is uniform, not NaN", Math.abs(LeadSelection.solveLeads(new double[][] { { 3, 3 }, { 3, 3 } }, cfg)[0] - 0.5) < 1e-9);
 	}
 
 	private static void t33() {

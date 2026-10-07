@@ -39,10 +39,11 @@ public final class LeadSelection {
 		/** Raw equilibrium row / column strategies of L, and the shaped sampling distribution over the rows. */
 		public final double[] xRaw, y, x;
 		public final MonWeights weights;
-		public final long millis;
+		/** Total, and its two big parts: the static entry pass (36 sims at 6v6) and the one-turn refinement. */
+		public final long millis, staticMs, refineMs;
 
 		Plan(List<Integer> aiSlots, List<Integer> playerSlots, double[][] staticL, double[][] L, boolean[][] refined, double shift,
-				double[] xRaw, double[] y, double[] x, MonWeights weights, long millis) {
+				double[] xRaw, double[] y, double[] x, MonWeights weights, long millis, long staticMs, long refineMs) {
 			this.aiSlots = aiSlots;
 			this.playerSlots = playerSlots;
 			this.staticL = staticL;
@@ -54,6 +55,8 @@ public final class LeadSelection {
 			this.x = x;
 			this.weights = weights;
 			this.millis = millis;
+			this.staticMs = staticMs;
+			this.refineMs = refineMs;
 		}
 	}
 
@@ -97,10 +100,11 @@ public final class LeadSelection {
 				if (n > 1) for (int i = 1; i < n; i++) if (w.ai[aiSlots.get(i)] > w.ai[aiSlots.get(pick)]) pick = i;
 				x[pick] = 1.0;
 				return new Plan(aiSlots, pSlots, new double[n][m], new double[n][m], new boolean[n][m], 0, x.clone(), new double[m], x, w,
-						(System.nanoTime() - t0) / 1_000_000);
+						(System.nanoTime() - t0) / 1_000_000, 0, 0);
 			}
 
 			// ---- static pass ----
+			long tStatic = System.nanoTime();
 			SimState[][] entry = new SimState[n][m];
 			double[][] S = new double[n][m];
 			for (int i = 0; i < n; i++) {
@@ -110,7 +114,10 @@ public final class LeadSelection {
 				}
 			}
 
+			long staticMs = (System.nanoTime() - tStatic) / 1_000_000;
+
 			// ---- refine the plausible region ----
+			long tRefine = System.nanoTime();
 			boolean[][] refined = new boolean[n][m];
 			double[][] L = new double[n][m];
 			double gapSum = 0;
@@ -137,10 +144,12 @@ public final class LeadSelection {
 			double shift = gapCount > 0 ? gapSum / gapCount : 0;
 			for (int i = 0; i < n; i++) for (int j = 0; j < m; j++) L[i][j] = refined[i][j] ? R[i][j] : S[i][j] + shift;
 
-			// ---- solve + shape ----
+			long refineMs = (System.nanoTime() - tRefine) / 1_000_000;
+
+			// ---- solve + soften + shape ----
 			Solver.Result eq = Solver.solveZeroSum(L);
-			double[] x = Shaper.shape(eq.x, cfg);
-			Plan plan = new Plan(aiSlots, pSlots, S, L, refined, shift, eq.x, eq.y, x, w, (System.nanoTime() - t0) / 1_000_000);
+			double[] x = softLeads(L, eq.y, cfg);
+			Plan plan = new Plan(aiSlots, pSlots, S, L, refined, shift, eq.x, eq.y, x, w, (System.nanoTime() - t0) / 1_000_000, staticMs, refineMs);
 			log(ai, player, plan);
 			return plan;
 		} finally {
@@ -156,9 +165,39 @@ public final class LeadSelection {
 		return ai.team[p.aiSlots.get(k)];
 	}
 
-	/** Pure. Shaped row strategy for a lead matrix (solve, then {@link Shaper#shape}). Exposed so T24/T33 can test the math on hand-built matrices. */
+	/** Pure. Sampling distribution for a lead matrix (solve, soften, shape). Exposed so T24/T33 can test the math on hand-built matrices. */
 	public static double[] solveLeads(double[][] L, AIConfig cfg) {
-		return Shaper.shape(Solver.solveZeroSum(L).x, cfg);
+		return softLeads(L, Solver.solveZeroSum(L).y, cfg);
+	}
+
+	/**
+	 * Phase 7 fix: a logit response to the equilibrium column strategy instead of sampling the raw equilibrium row.
+	 * u_i = sum_j L[i][j] * y[j] (each row's payoff against the player's equilibrium leads);
+	 * x_i ~ exp(leadTemperature * (u_i - max u) / (max L - min L)); then {@link Shaper#shape} (minProb cut, epsilon).
+	 * <p>
+	 * Why: a lead matrix is built from noisy one-turn evals, and its equilibrium is often a pure saddle (one row
+	 * is the best reply to the player's single best lead), which the raw solution plays 100% of the time on a 6-point margin.
+	 * The logit keeps the ordering (a strictly dominant lead still gets ~99%) but lets near-ties share the mass in proportion
+	 * to how much they give up, scaled by the matrix range so it is unit-free. Cost: for rows that are all best replies to y
+	 * (a mixed equilibrium) the equilibrium weights become equal; each is equally good against y, so only an off-equilibrium
+	 * player could tell. Trade-off documented in PHASE7_CHANGES.md (D8).
+	 */
+	public static double[] softLeads(double[][] L, double[] y, AIConfig cfg) {
+		int n = L.length;
+		double[] u = new double[n];
+		double lo = Double.POSITIVE_INFINITY, hi = Double.NEGATIVE_INFINITY, uMax = Double.NEGATIVE_INFINITY;
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < L[i].length; j++) {
+				u[i] += L[i][j] * y[j];
+				lo = Math.min(lo, L[i][j]);
+				hi = Math.max(hi, L[i][j]);
+			}
+			uMax = Math.max(uMax, u[i]);
+		}
+		double range = hi - lo;
+		double[] x = new double[n];
+		for (int i = 0; i < n; i++) x[i] = range < 1e-9 ? 1.0 : Math.exp(cfg.leadTemperature * (u[i] - uMax) / range);
+		return Shaper.shape(x, cfg);
 	}
 
 	/**
@@ -208,11 +247,17 @@ public final class LeadSelection {
 		}
 	}
 
+	/**
+	 * Static entry value: eval WITHOUT the escape cap (the 4-arg overload, no MonWeights context). The cap limits a winning
+	 * duel's credit to the foe's worst bench answer measured at full HP and zero stages, which at lead time flattened every
+	 * row to one number per AI mon and hid entry effects (omniboost, Intimidate): live matchups of -25..90 all collapsed to
+	 * -33. The one-turn refinement already models the foe's escape, so the cap is not needed here.
+	 */
 	private static double evalPinned(SimState s, AIConfig cfg, MonWeights w) {
 		Field prev = Pokemon.field;
 		try {
 			Pokemon.field = s.field;
-			return Evaluator.eval(s, cfg.style, w);
+			return Evaluator.eval(s, cfg.style, w.ai, w.player);
 		} finally {
 			Pokemon.field = prev;
 		}
@@ -255,7 +300,7 @@ public final class LeadSelection {
 	private static void log(Trainer ai, Trainer player, Plan p) {
 		if (!AIV2.AI_DEBUG || Print.isDebugSuppressed()) return;
 		StringBuilder sb = new StringBuilder("\n______________\nLEAD SELECTION (EXTREME)\n______________\n");
-		sb.append(String.format(Locale.ROOT, "rows=%d cols=%d refinedShift=%.1f time=%d ms%n", p.aiSlots.size(), p.playerSlots.size(), p.shift, p.millis));
+		sb.append(String.format(Locale.ROOT, "rows=%d cols=%d refinedShift=%.1f time=%d ms (static %d, refine %d)%n", p.aiSlots.size(), p.playerSlots.size(), p.shift, p.millis, p.staticMs, p.refineMs));
 		sb.append("                    ");
 		for (int j : p.playerSlots) sb.append(String.format(Locale.ROOT, "%-14.14s", player.team[j]));
 		sb.append('\n');

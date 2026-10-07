@@ -28,6 +28,14 @@ Scope kept to Phase 6. Nothing from Phase 7 (lead selection) or 8 (tuning, cachi
 >
 > Layout change: 5 classes, 48 fine buckets, ~1.1 KB serialized. A save written by revision 2 loads as an empty model.
 
+> **Revision 4 — slot numbers go stale on a real player.** `Player.swapToFront` reorders `team[]` when the player switches
+> (the new active mon moves to slot 0), while `Trainer.swap`, the AI's, does not. The model remembered the best switch
+> columns as slot numbers at decision time, so by the time a switch was observed the number pointed at a different mon
+> (the log showed it expecting slot 3 while Grust, switched to, was now slot 0). It now remembers the mons themselves, by
+> identity, built from the real team at decision time. Nothing else the model carries across turns is index-based (the
+> bucket, per-move PP and `Move` values are all stable). New test: a Player-style reordered team must classify exactly
+> like an unreordered one.
+
 ## What this phase does, in one paragraph
 
 The AI now keeps a small, saved record of **how the player plays**: when the AI threatens their active, do they

@@ -387,7 +387,7 @@ public class Task {
 			t.wipe = playerSide;
 			t.foe = p.clone();
 			if (p.shiny) {
-				addTask(Task.SHINY, "", p);
+				addTask(Task.SHINY, message, p);
 			}
 		}
 	}

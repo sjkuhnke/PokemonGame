@@ -85,8 +85,11 @@ public final class PlayerModel implements Serializable {
 		int turn;           // Field.turns at decision time (it going DOWN means a new battle)
 		int fine;           // situation bucket at decision time
 		Object bestMoves;   // the moves of the player's best stay columns (a Set of Move), never null
-		long bestBackMask;  // bit i set = team slot i is one of the player's best switch columns
-		long switchColMask; // bit i set = team slot i had a switch column at all this turn
+		// WHICH MONS, by identity, never slot numbers: Player.swapToFront reorders team[] when the player switches (the
+		// active mon always moves to slot 0), so a slot index remembered from decision time points at a different mon by
+		// the time the switch is observed. Trainer.swap (the AI) does not reorder, which is why only a real player hit this.
+		Object bestBackMons; // identity Set<Pokemon>: the mons of the player's best switch columns
+		Object switchColMons; // identity Set<Pokemon>: every mon that had a switch column this turn
 		int[] pp;           // prev's per-move-slot PP, -1 for an empty slot
 	}
 

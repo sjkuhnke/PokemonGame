@@ -223,12 +223,11 @@ public class EncounterDoc {
 
 	private static int writeEncounterRows(Workbook wb, Sheet sheet, ArrayList<Encounter> encounters, int rowIndex) {
 		for (Encounter enc : encounters) {
-			Pokemon p = new Pokemon(enc.getId(), 5, false, false);
 			Row row = sheet.createRow(rowIndex++);
 			row.setHeightInPoints(20);
 
 			try {
-				byte[] spriteBytes = DocUtils.imageToBytes(DocUtils.getCachedSprite(p), "png");
+				byte[] spriteBytes = DocUtils.imageToBytes(DocUtils.getCachedSprite(enc.getId(), false), "png");
 				if (spriteBytes != null) {
 					DocUtils.insertImage(sheet, spriteBytes, 0, row.getRowNum(), 1, 1, 0.6, 0.6);
 				}
@@ -237,7 +236,7 @@ public class EncounterDoc {
 			}
 
 			Cell nameCell = row.createCell(1);
-			nameCell.setCellValue(p.name());
+			nameCell.setCellValue(Pokemon.getName(enc.getId()));
 			nameCell.setCellStyle(plainStyle(wb, true, HorizontalAlignment.LEFT));
 			sheet.addMergedRegion(new CellRangeAddress(row.getRowNum(), row.getRowNum(), 1, 3));
 
@@ -280,17 +279,12 @@ public class EncounterDoc {
 	}
 
 	private static int writeGiftRows(Workbook wb, Sheet sheet, GiftEncounter g, int rowIndex) {
-		ArrayList<Pokemon> options = new ArrayList<>();
 		for (int id : g.possibleIds) {
-			options.add(new Pokemon(id, 5, false, false));
-		}
-
-		for (Pokemon p : options) {
 			Row row = sheet.createRow(rowIndex++);
 			row.setHeightInPoints(20);
 
 			try {
-				byte[] spriteBytes = DocUtils.imageToBytes(DocUtils.getCachedSprite(p), "png");
+				byte[] spriteBytes = DocUtils.imageToBytes(DocUtils.getCachedSprite(id, false), "png");
 				if (spriteBytes != null) {
 					DocUtils.insertImage(sheet, spriteBytes, 0, row.getRowNum(), 1, 1, 0.6, 0.6);
 				}
@@ -299,7 +293,7 @@ public class EncounterDoc {
 			}
 
 			Cell nameCell = row.createCell(1);
-			nameCell.setCellValue(p.name());
+			nameCell.setCellValue(Pokemon.getName(id));
 			nameCell.setCellStyle(plainStyle(wb, true, HorizontalAlignment.LEFT));
 			sheet.addMergedRegion(new CellRangeAddress(row.getRowNum(), row.getRowNum(), 1, 3));
 

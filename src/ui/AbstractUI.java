@@ -8,6 +8,10 @@ import java.awt.FontMetrics;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Path2D;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -449,6 +453,97 @@ public abstract class AbstractUI {
 		g2.drawOval(x, y, 36, 36);
 		g2.setStroke(new BasicStroke(5));
 	}
+	
+	/** Draws a small gold sparkle (big star + tiny companion) centered at (cx, cy). */
+	public void drawShinyIcon(int cx, int cy, int size) {
+		Object oldAA = g2.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+		float pulse = 1f + 0.12f * (float) Math.sin(pulseCounter * 0.1); // gentle twinkle
+		float r = size * pulse;
+		drawSparkleStar(cx, cy, r);
+		drawSparkleStar(cx + r * 0.9f, cy - r * 0.8f, r * 0.45f);
+
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				oldAA == null ? RenderingHints.VALUE_ANTIALIAS_DEFAULT : oldAA);
+	}
+
+	private void drawSparkleStar(float cx, float cy, float r) {
+		g2.setColor(new Color(255, 225, 90));          // gold outer star
+		g2.fill(createStarPath(cx, cy, r, r * 0.22f));
+		g2.setColor(Color.WHITE);                      // white core
+		g2.fill(createStarPath(cx, cy, r * 0.55f, r * 0.14f));
+	}
+
+	private Path2D.Float createStarPath(float cx, float cy, float outer, float inner) {
+		Path2D.Float path = new Path2D.Float();
+		for (int i = 0; i < 8; i++) {
+			double a = Math.PI / 4 * i - Math.PI / 2;
+			float rad = (i % 2 == 0) ? outer : inner;
+			float px = cx + (float) Math.cos(a) * rad;
+			float py = cy + (float) Math.sin(a) * rad;
+			if (i == 0) path.moveTo(px, py); else path.lineTo(px, py);
+		}
+		path.closePath();
+		return path;
+	}
+	
+	/** Draws a gold crown medal centered at (cx, cy). size = medal diameter in pixels. */
+	public void drawChampionIcon(int cx, int cy, int size) {
+		Object oldAA = g2.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+		float r = size / 2f;
+		Color gold = new Color(255, 215, 0);
+
+		// Soft pulsing glow
+		float glow = 0.5f + 0.5f * (float) Math.sin(pulseCounter * 0.08);
+		g2.setStroke(new BasicStroke(4));
+		g2.setColor(new Color(255, 215, 0, (int) (50 + 80 * glow)));
+		g2.draw(new Ellipse2D.Float(cx - r - 2, cy - r - 2, size + 4, size + 4));
+
+		// Dark backing disc so it reads on any background
+		g2.setColor(new Color(20, 20, 20, 215));
+		g2.fill(new Ellipse2D.Float(cx - r, cy - r, size, size));
+		g2.setStroke(new BasicStroke(2));
+		g2.setColor(gold);
+		g2.draw(new Ellipse2D.Float(cx - r, cy - r, size, size));
+
+		// Crown
+		float w = size * 0.6f;
+		float h = size * 0.42f;
+		float left = cx - w / 2;
+		float right = cx + w / 2;
+		float top = cy - h / 2;
+		float bottom = cy + h / 2;
+
+		Path2D.Float crown = new Path2D.Float();
+		crown.moveTo(left, bottom);
+		crown.lineTo(left, top + h * 0.1f);           // left peak
+		crown.lineTo(left + w * 0.27f, top + h * 0.5f); // valley
+		crown.lineTo(cx, top);                          // center peak
+		crown.lineTo(right - w * 0.27f, top + h * 0.5f);
+		crown.lineTo(right, top + h * 0.1f);           // right peak
+		crown.lineTo(right, bottom);
+		crown.closePath();
+		g2.setColor(gold);
+		g2.fill(crown);
+
+		// Band
+		g2.setColor(new Color(200, 150, 0));
+		g2.fill(new Rectangle2D.Float(left, bottom - h * 0.22f, w, h * 0.22f));
+
+		// Jewels on the peaks
+		float j = size * 0.05f;
+		g2.setColor(Color.WHITE);
+		g2.fill(new Ellipse2D.Float(left - j, top + h * 0.1f - j, j * 2, j * 2));
+		g2.fill(new Ellipse2D.Float(right - j, top + h * 0.1f - j, j * 2, j * 2));
+		g2.setColor(new Color(220, 40, 60));
+		g2.fill(new Ellipse2D.Float(cx - j * 1.2f, top - j * 1.2f, j * 2.4f, j * 2.4f));
+
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				oldAA == null ? RenderingHints.VALUE_ANTIALIAS_DEFAULT : oldAA);
+	}
 
 	public Color getHPBarColor(double hpRatio) {
 		if (hpRatio < 0.25) {
@@ -483,6 +578,12 @@ public abstract class AbstractUI {
 		g2.setColor(p.getDexNoColor());
 		g2.setFont(g2.getFont().deriveFont(20F));
 		g2.drawString(p.getFormattedDexNo(), x, y);
+		
+		// Shiny icon, just to the right of the dex number
+		if (p.shiny && !egg) {
+			int starX = x + g2.getFontMetrics().stringWidth(p.getFormattedDexNo()) + 16;
+			drawShinyIcon(starX, y - 7, 9);
+		}
 		
 		g2.setColor(Color.WHITE);
 		

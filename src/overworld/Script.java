@@ -3624,7 +3624,7 @@ public class Script {
 				p.team[1].fainted = false;
 				p.team[1].script = false;
 				p.heal();
-				int id = p.flag[7][14] ? 233 : 234;
+				int id = p.flag[7][14] ? 234 : 233;
 				int removeIndex = p.team[0].id == id ? 0 : p.team[1].id == id ? 1 : -1;
 				if (removeIndex >= 0) {
 					p.team[removeIndex] = null;

@@ -101,6 +101,12 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	Thread gameThread;
 	
+	// PLAYTIME
+	private static final long PLAYTIME_IDLE_CUTOFF_NANOS = 5L * 60 * 1_000_000_000L;
+	private static final long PLAYTIME_MAX_STEP_NANOS = 2L * 1_000_000_000L;
+	private long lastPlaytimeNanos = System.nanoTime();
+	private volatile long lastInputNanos = System.nanoTime();
+	
 	// ENTITY AND OBJECT
 	public AssetSetter aSetter;
 	public EventHandler eHandler;
@@ -283,6 +289,7 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 	
 	public void update() {
+		updatePlaytime();
 		if (gameState == PLAY_STATE) {
 			ticks++;
 			if (ticks >= 12) {
@@ -1070,6 +1077,7 @@ public class GamePanel extends JPanel implements Runnable {
 		Player temp = SaveManager.loadPlayer(player.currentSave);
 		if (temp != null) {
 			temp.invalidateNuzlocke(reason);
+			temp.playTimeNanos = player.p.playTimeNanos;
 			saveGame(temp, false);
 		}
 	}
@@ -1153,6 +1161,37 @@ public class GamePanel extends JPanel implements Runnable {
 	    if (displayScreen == null) {
 	        displayScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
 	    }
+	}
+	
+	public void registerActivity() {
+		lastInputNanos = System.nanoTime();
+	}
+	
+	private boolean countsTowardPlaytime(long now) {
+		if (player == null || player.p == null) return false;
+		switch (gameState) {
+		case LOADING_STATE:
+		case TITLE_STATE:
+			return false;
+		}
+		if (window != null && !window.isFocused()) return false;
+		return now - lastInputNanos <= PLAYTIME_IDLE_CUTOFF_NANOS;
+	}
+	
+	private void updatePlaytime() {
+		long now = System.nanoTime();
+		long dt = now - lastPlaytimeNanos;
+		lastPlaytimeNanos = now; // always advance so gaps never pile up
+
+		// Held movement keys may not generate repeat key events on every platform
+		if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
+			lastInputNanos = now;
+		}
+
+		if (dt <= 0 || dt > PLAYTIME_MAX_STEP_NANOS) return;
+		if (countsTowardPlaytime(now)) {
+			player.p.playTimeNanos += dt;
+		}
 	}
 
 }

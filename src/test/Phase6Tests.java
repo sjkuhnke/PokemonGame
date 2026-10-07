@@ -364,6 +364,24 @@ public final class Phase6Tests {
 		check("a Protect habit raises the predicted Protect mass (" + before + " -> " + after + ")", after > before + 0.1 || before > 0.9);
 	}
 
+	/** Plays one switch to bench slot {@code s} and returns the model's summary; {@code reorder} mimics Player.swapToFront. */
+	private static String switchSummary(int id, Move strong, int s, boolean reorder) {
+		Pokemon[] ept = playerTeam(id, strong);
+		Phase4Tests.Duel e = build(aiTeam(), ept);
+		PlayerModel em = e.pl.playerModel();
+		Rng.setSeed(20 + s);
+		e.a.bestMove2(e.f, true, Player.HARD);
+		Pokemon target = ept[s], lead = ept[0];
+		e.pl.setCurrent(target);
+		if (reorder) {
+			ept[0] = target; // same array the Trainer holds (its constructor keeps the reference)
+			ept[s] = lead;
+		}
+		Rng.setSeed(30 + s);
+		e.a.bestMove2(target, true, Player.HARD);
+		return em.summary();
+	}
+
 	private static Pokemon[] aiTeam() {
 		return new Pokemon[] { Phase4Tests.mk(1, Move.FLAMETHROWER), Phase4Tests.mk(2, Move.FLAMETHROWER), Phase4Tests.mk(3, Move.FLAMETHROWER) };
 	}
@@ -428,24 +446,21 @@ public final class Phase6Tests {
 		d.a.bestMove2(d.f, true, Player.HARD); // nothing changed
 		close("no PP spent, same mon: nothing observable", model.total(), before, 1e-9);
 
-		// switching: both bench slots have a column, and the best band always holds at least one of them
-		String[] seen = new String[2];
+		// switching: both bench mons have a column, and the best band always holds at least one of them
+		String[] seen = new String[2], seenReordered = new String[2];
 		for (int s = 1; s <= 2; s++) {
-			Pokemon[] ept = playerTeam(id, strong);
-			Phase4Tests.Duel e = build(aiTeam(), ept);
-			PlayerModel em = e.pl.playerModel();
-			Rng.setSeed(20 + s);
-			e.a.bestMove2(e.f, true, Player.HARD);
-			e.pl.setCurrent(ept[s]);
-			Rng.setSeed(30 + s);
-			e.a.bestMove2(ept[s], true, Player.HARD);
-			seen[s - 1] = em.summary();
+			seen[s - 1] = switchSummary(id, strong, s, false);
+			seenReordered[s - 1] = switchSummary(id, strong, s, true);
 		}
 		boolean recorded0 = seen[0].contains("SWITCH_BEST=100%") || seen[0].contains("SWITCH_OTHER=100%");
 		boolean recorded1 = seen[1].contains("SWITCH_BEST=100%") || seen[1].contains("SWITCH_OTHER=100%");
 		boolean someBest = seen[0].contains("SWITCH_BEST=100%") || seen[1].contains("SWITCH_BEST=100%"); // the best band is never empty
 		check("a switch is recorded for either bench slot, and at least one of them is in the best band: " + seen[0] + " | " + seen[1],
 				recorded0 && recorded1 && someBest);
+		// Player.swapToFront moves the new active mon to team[0] and the old lead into its slot. The classification must
+		// not care: it is about WHICH MON was switched to, not which index it had when the AI decided.
+		check("a Player-style reordered team classifies the same: " + seenReordered[0] + " | " + seenReordered[1],
+				seen[0].equals(seenReordered[0]) && seen[1].equals(seenReordered[1]));
 
 		// a different AI trainer = a different battle: the pending turn is discarded, nothing is recorded
 		Pokemon[] opt = playerTeam(id, strong);

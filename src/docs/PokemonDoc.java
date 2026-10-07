@@ -145,7 +145,7 @@ public class PokemonDoc {
 		typeIconRow.setHeight((short) 384); // 18.75pt / ~25px
 
 		try {
-			byte[] spriteBytes = DocUtils.imageToBytes(DocUtils.getCachedSprite(p), "png");
+			byte[] spriteBytes = DocUtils.imageToBytes(DocUtils.getCachedSprite(p.id, false), "png");
 			if (spriteBytes != null) {
 				DocUtils.insertImage(sheet, spriteBytes, 0, headerRow.getRowNum(), 1, 2, 1, 1);
 			}

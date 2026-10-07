@@ -29,6 +29,7 @@ public class KeyHandler implements KeyListener {
 	
 	@Override
 	public void keyPressed(KeyEvent e) {
+		gp.registerActivity();
 		int code = e.getKeyCode();
 		if (config == null) config = gp.config;
 		

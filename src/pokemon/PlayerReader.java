@@ -1,6 +1,8 @@
 package pokemon;
 
+import java.util.Collections;
 import java.util.EnumSet;
+import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -176,8 +178,18 @@ public final class PlayerReader {
 		p.turn = Pokemon.field == null ? 0 : Pokemon.field.turns;
 		p.fine = read.fine;
 		p.bestMoves = read.bestMoves;
-		p.bestBackMask = read.bestBackMask;
-		p.switchColMask = read.switchColMask;
+		// The masks are team INDICES as of this decision. Turn them into the actual mons now: the player's team[] is
+		// reordered when they switch (Player.swapToFront), so indices would be stale next turn.
+		Set<Pokemon> bestMons = Collections.newSetFromMap(new IdentityHashMap<>());
+		Set<Pokemon> colMons = Collections.newSetFromMap(new IdentityHashMap<>());
+		Pokemon[] team = foe.trainer == null || foe.trainer.team == null ? new Pokemon[0] : foe.trainer.team;
+		for (int i = 0; i < team.length && i < 64; i++) {
+			if (team[i] == null) continue;
+			if ((read.bestBackMask & (1L << i)) != 0) bestMons.add(team[i]);
+			if ((read.switchColMask & (1L << i)) != 0) colMons.add(team[i]);
+		}
+		p.bestBackMons = bestMons;
+		p.switchColMons = colMons;
 		p.pp = ppOf(foe);
 		model.pending = p;
 	}
@@ -206,6 +218,8 @@ public final class PlayerReader {
 
 		Pokemon prev = (Pokemon) p.prev;
 		Set<Move> bestMoves = (Set<Move>) p.bestMoves;
+		Set<Pokemon> bestMons = (Set<Pokemon>) p.bestBackMons;
+		Set<Pokemon> colMons = (Set<Pokemon>) p.switchColMons;
 		int[] now = ppOf(prev);
 		int used = -1;
 		for (int i = 0; i < now.length && i < p.pp.length; i++) {
@@ -234,23 +248,20 @@ public final class PlayerReader {
 		} else if (prev.isFainted()) {
 			return null;
 		} else {
-			int idx = foe.trainer == null ? -1 : foe.trainer.indexOf(foe);
-			boolean hadColumn = idx >= 0 && (p.switchColMask & (1L << idx)) != 0;
-			boolean best = idx >= 0 && (p.bestBackMask & (1L << idx)) != 0;
+			boolean hadColumn = colMons.contains(foe);
+			boolean best = bestMons.contains(foe);
 			cls = best ? ActionClass.SWITCH_BEST : ActionClass.SWITCH_OTHER;
-			note = "switched to " + foe + " (slot " + idx + "): "
+			note = "switched to " + foe + ": "
 					+ (best ? "in the best switch band" : hadColumn ? "had a column but outside the best band" : "had NO column this turn (pruned by ActionGen)")
-					+ "; best slots " + maskToString(p.bestBackMask) + ", column slots " + maskToString(p.switchColMask);
+					+ "; best band " + names(bestMons) + ", columns " + names(colMons);
 		}
 		model.record(p.fine, cls);
 		return new Observation(cls, note);
 	}
 
-	private static String maskToString(long mask) {
+	private static String names(Set<Pokemon> mons) {
 		StringBuilder sb = new StringBuilder("[");
-		for (int i = 0; i < 64; i++) {
-			if ((mask & (1L << i)) != 0) sb.append(sb.length() > 1 ? "," : "").append(i);
-		}
+		for (Pokemon m : mons) sb.append(sb.length() > 1 ? ", " : "").append(m);
 		return sb.append(']').toString();
 	}
 

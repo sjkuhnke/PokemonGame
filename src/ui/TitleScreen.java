@@ -37,6 +37,7 @@ import overworld.Main;
 import overworld.PMap;
 import overworld.Sound;
 import pokemon.BattleRecord;
+import pokemon.Egg;
 import pokemon.Player;
 import pokemon.Pokemon;
 import util.SaveManager;
@@ -1611,7 +1612,7 @@ public class TitleScreen extends AbstractUI {
 		for (int i = 0; i < 6; i++) {
 			Pokemon p = previewPlayer.team[i];
 			if (p != null) {
-				Image sprite = p.isFainted() ? p.getFaintedSprite() : DocUtils.getCachedSprite(p);
+				Image sprite = p.isFainted() && !(p instanceof Egg) ? p.getFaintedSprite() : DocUtils.getCachedSprite(p.id, p.shiny);
 				if (sprite != null) {
 					int spriteX = contentX + (i % 3) * (width / 3);
 					int spriteY = contentY + (i / 3) * iconSize;
@@ -1647,6 +1648,11 @@ public class TitleScreen extends AbstractUI {
 		int badgeX = x + width - badgeBoxWidth;
 		int badgeY = y + height - badgeBoxHeight;
 		drawBadgesWindow(badgeX, badgeY, badgeBoxWidth, badgeBoxHeight, previewPlayer, gp, false);
+		
+		// Champion medal in the preview box's top-right corner (drawn last so it's on top)
+		if (previewPlayer.champion) {
+			drawChampionIcon(x + width - 22, y + 22, 32);
+		}
 	}
 	
 	private void drawLoadingPreview(int x, int y, int width) {

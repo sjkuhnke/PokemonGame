@@ -29,6 +29,7 @@ import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 import javax.swing.SwingUtilities;
 
+import docs.DocUtils;
 import entity.*;
 import object.*;
 import overworld.Fog;
@@ -159,6 +160,7 @@ public class UI extends AbstractUI {
 	private int hofPhotoIndex = 0;	// how many team members have been revealed
 	private int hofPhotoCounter = 0;  // frame counter for current animation step
 	private float hofCreditsY = 0; // y-offset for credits scroll (starts at screenHeight)
+	private long hofPlayTimeNanos; // playtime captured when the team photo begins
 	private static final int HOF_POKEMON_DISPLAY_TIME = 180; // 5 seconds at 60fps
 	private static final int HOF_PHOTO_SLIDE_TIME = 60; // frames for one mon to slide+settle
 	private static final int HOF_PHOTO_GAP_TIME   = 15; // pause after settling before next starts
@@ -4890,6 +4892,11 @@ public class UI extends AbstractUI {
 			g2.drawImage(playerSprite, leftColX, leftColY, 128, 128, null);
 		}
 		
+		// Champion medal on the sprite's top-right corner
+		if (p.champion) {
+			drawChampionIcon(leftColX - 6, leftColY - gp.tileSize / 2 + 6, 40);
+		}
+		
 		// Player name below sprite
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 32F));
 		String playerName = gp.player.getName();
@@ -4927,8 +4934,16 @@ public class UI extends AbstractUI {
 		leftColY += gp.tileSize * 0.75;
 		
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 28F));
-		drawOutlinedText(Player.DIFFICULTIES[p.difficulty], leftColX + gp.tileSize / 4, leftColY, 
-			Player.DIFFICULTY_COLORS[p.difficulty], Color.BLACK);
+		drawOutlinedText(Player.DIFFICULTIES[p.difficulty], leftColX + gp.tileSize / 4, leftColY, Player.DIFFICULTY_COLORS[p.difficulty], Color.BLACK);
+		
+		// Play time
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));
+		FontMetrics fm = g2.getFontMetrics();
+		String ptLabel = "Play Time: ";
+		String ptValue = Player.formatPlayTime(p.playTimeNanos);
+		int ptY = (int) (leftColY + gp.tileSize * 0.75);
+		drawOutlinedText(ptLabel, leftColX, ptY, new Color(200, 200, 200), Color.BLACK);
+		drawOutlinedText(ptValue, leftColX + fm.stringWidth(ptLabel), ptY, textColor, Color.BLACK);
 		
 		// === RIGHT COLUMN ===
 		int rightColX = (int) (contentX + gp.tileSize * 3.75);
@@ -5036,11 +5051,9 @@ public class UI extends AbstractUI {
 		
 		boolean cheatSelected = p.nuzlocke ? commandNum == 1 : commandNum == 0;
 		if (cheatSelected) {
-			drawPanelWithBorder(cheatButtonX, cheatButtonY, buttonWidth, buttonHeight, 
-				backgroundOpacity + 50, textColor);
+			drawPanelWithBorder(cheatButtonX, cheatButtonY, buttonWidth, buttonHeight, backgroundOpacity + 50, textColor);
 		} else {
-			drawPanelWithBorder(cheatButtonX, cheatButtonY, buttonWidth, buttonHeight, 
-				backgroundOpacity - 30, new Color(100, 100, 100));
+			drawPanelWithBorder(cheatButtonX, cheatButtonY, buttonWidth, buttonHeight, backgroundOpacity - 30, new Color(100, 100, 100));
 		}
 		
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 22F));
@@ -5056,11 +5069,9 @@ public class UI extends AbstractUI {
 		
 		boolean backSelected = p.nuzlocke ? commandNum == 2 : commandNum == 1;
 		if (backSelected) {
-			drawPanelWithBorder(backButtonX, backButtonY, buttonWidth, buttonHeight, 
-				backgroundOpacity + 50, textColor);
+			drawPanelWithBorder(backButtonX, backButtonY, buttonWidth, buttonHeight, backgroundOpacity + 50, textColor);
 		} else {
-			drawPanelWithBorder(backButtonX, backButtonY, buttonWidth, buttonHeight, 
-				backgroundOpacity - 30, new Color(100, 100, 100));
+			drawPanelWithBorder(backButtonX, backButtonY, buttonWidth, buttonHeight, backgroundOpacity - 30, new Color(100, 100, 100));
 		}
 		
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
@@ -6971,12 +6982,11 @@ public class UI extends AbstractUI {
 			for (int i = 0; i < es.size(); i++) {
 				Encounter e = es.get(i);
 				int id = e.getId();
-				Pokemon p = new Pokemon(id, 5, false, false);
 				if (gp.player.p.nuzlocke ? gp.player.p.isDupes(id) : gp.player.p.pokedex[id] == 2) {
-					g2.drawImage(p.getSprite(), x, y, null);
+					g2.drawImage(DocUtils.getCachedSprite(id, false), x, y, null);
 				} else {
 					all = false;
-					g2.drawImage(getSilhouette(p), x, y, null);
+					g2.drawImage(getSilhouette(id), x, y, null);
 				}
 				
 				g2.setFont(g2.getFont().deriveFont(16F));
@@ -7017,13 +7027,13 @@ public class UI extends AbstractUI {
 		drawToolTips(null, null, "Back", null);
 	}
 	
-	private BufferedImage getSilhouette(Pokemon p) {
+	private BufferedImage getSilhouette(int id) {
 		if (AbstractUI.silhouettes == null) silhouettes = new BufferedImage[Pokemon.MAX_POKEMON];
-		if (AbstractUI.silhouettes[p.id - 1] != null) return silhouettes[p.id - 1];
-		BufferedImage sprite = p.getSprite();
+		if (AbstractUI.silhouettes[id - 1] != null) return silhouettes[id - 1];
+		BufferedImage sprite = DocUtils.getCachedSprite(id, false);
 		
 		BufferedImage result = makeSilhouette(sprite);
-		AbstractUI.silhouettes[p.id - 1] = result;
+		AbstractUI.silhouettes[id - 1] = result;
 		return result;
 	}
 
@@ -7597,6 +7607,7 @@ public class UI extends AbstractUI {
 		
 		// All shown → move to credits
 		if (hofPokemonIndex >= team.length) {
+			hofPlayTimeNanos = gp.player.p.playTimeNanos;
 			hofPhase = 1;
 			hofCreditsY = gp.screenHeight;
 			hofCounter = 0;
@@ -7723,6 +7734,11 @@ public class UI extends AbstractUI {
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 42F));
 		String header = "★  Champions  ★";
 		drawOutlinedText(header, getCenterAlignedTextX(header, gp.screenWidth / 2), gp.tileSize, headerColor, Color.BLACK);
+		
+		// Play time (frozen snapshot so screenshots are stable)
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 26F));
+		String playTime = "Play Time: " + Player.formatPlayTime(hofPlayTimeNanos);
+		drawOutlinedText(playTime, getCenterAlignedTextX(playTime, gp.screenWidth / 2), gp.tileSize * 2, HOF_CREAM, Color.BLACK);
 
 		// Row layout: player, then each team member spaced evenly
 		int slots = teamCount + 1;

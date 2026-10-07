@@ -59,8 +59,9 @@ public class AIConfig {
 	/** Phase 7 (§7.15, §8.1): EXTREME only. The AI picks its own lead from the player's team before turn 1. */
 	public boolean selectLead = false;
 	/** Phase 7: how many top rows / columns of the static lead matrix get a one-turn game value. Placeholder; Phase 8. */
-	public int leadRefineKAi = 3;
-	public int leadRefineKPlayer = 3;
+	public int leadRefineKAi = 2;
+	public int leadRefineKPlayer = 2;
+	public double leadTemperature = 10.0;
 
 	public static AIConfig normal() {
 		AIConfig c = new AIConfig();
@@ -80,8 +81,8 @@ public class AIConfig {
 		c.enableSacking = false;
 		c.allowVoluntarySwitch = allowVoluntarySwitch;
 		c.deadTurnForcesSwitch = deadTurnForcesSwitch;
-		c.maxAISwitchRows = Math.min(maxAISwitchRows, 4);
-		c.maxPlayerSwitchCols = Math.min(maxPlayerSwitchCols, 2);
+		c.maxAISwitchRows = Math.min(maxAISwitchRows, 3);
+		c.maxPlayerSwitchCols = 1;
 		c.sackRatio = sackRatio;
 		c.sackMinGain = sackMinGain;
 		c.alpha = alpha;

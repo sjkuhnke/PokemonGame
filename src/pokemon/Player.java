@@ -78,6 +78,7 @@ public class Player extends Trainer implements Serializable {
 	public boolean[] trainersBeat;
 	public boolean[][] itemsCollected;
 	public boolean[][] flag;
+	public long playTimeNanos;
 	
 	/**
 	 * This field is deprecated and should not be used in new code.
@@ -2117,6 +2118,7 @@ public class Player extends Trainer implements Serializable {
 		newPlayer.random = random;
 		newPlayer.ghost = ghost;
 		newPlayer.steps = steps;
+		newPlayer.playTimeNanos = playTimeNanos;
 		newPlayer.repel = repel;
 		newPlayer.surf = surf;
 		newPlayer.lavasurf = lavasurf;
@@ -2509,5 +2511,13 @@ public class Player extends Trainer implements Serializable {
 	public void heal() {
 		super.heal();
 		Print.debug(this.playerModel().report());
+	}
+	
+	public static String formatPlayTime(long nanos) {
+	    long totalSeconds = nanos / 1_000_000_000L;
+	    long hours = totalSeconds / 3600;
+	    long minutes = (totalSeconds / 60) % 60;
+	    long seconds = totalSeconds % 60;
+	    return String.format("%d:%02d:%02d", hours, minutes, seconds);
 	}
 }
