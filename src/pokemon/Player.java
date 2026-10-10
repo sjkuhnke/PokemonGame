@@ -271,8 +271,8 @@ public class Player extends Trainer implements Serializable {
 			index = 0;
 		}
 		if (!egg) pokedex[p.id] = 2;
-		if (item == Item.HEAL_BALL) p.heal();
-		if (item == Item.FRIEND_BALL) p.happiness = Math.max(200, p.happiness);
+		if (ball == Item.HEAL_BALL) p.heal();
+		if (ball == Item.FRIEND_BALL) p.happiness = Math.max(200, p.happiness);
 		
 		int place = addPokemon(p);
 		if (place == 0) { // party
@@ -2199,7 +2199,7 @@ public class Player extends Trainer implements Serializable {
 		tasks.removeIf(task -> task.type == Task.EVO && task.p.slot == p.slot && task.start == oldID);
 		for (int j = 1; j < tasks.size(); j++) {
 			Task t = tasks.get(j);
-			if (t.message.contains(oldNickname)) {
+			if (t.message.contains(oldNickname) && (t.p == null || t.p.playerOwned())) {
 				t.message = t.message.replace(oldNickname, p.nickname);
 			}
 		}

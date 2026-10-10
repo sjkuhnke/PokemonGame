@@ -2599,7 +2599,7 @@ public class BattleUI extends AbstractUI {
 		int ry = sprite != null ? sprite.getHeight(null) / 2 : 60;
 
 		// Spawn sparkles in opposite pairs, rotating the spawn angle so they form spiral arms
-		if (elapsed < 800 && now - shinyLastSpawn >= 35) {
+		if (elapsed < 500 && now - shinyLastSpawn >= 30) {
 			shinyLastSpawn = now;
 			shinySpawnAngle += 0.9;
 			for (int i = 0; i < 2; i++) {
@@ -2608,7 +2608,7 @@ public class BattleUI extends AbstractUI {
 				float endR = 0.8f + (float) Math.random() * 0.3f;      // ...and spiral out past the edge
 				float spin = 3f + (float) Math.random() * 1.5f;      // radians per second
 				float size = 7 + (float) Math.random() * 9;
-				long life = 500 + (long) (Math.random() * 300);
+				long life = 300 + (long) (Math.random() * 200);
 				shinySparkles.add(new ShinySparkle(angle, startR, endR, spin, size, life, now));
 			}
 		}
@@ -2622,10 +2622,10 @@ public class BattleUI extends AbstractUI {
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				oldAA == null ? RenderingHints.VALUE_ANTIALIAS_DEFAULT : oldAA);
 
-		if (elapsed >= 1600) {
+		if (elapsed >= 1000) {
 			shinySparkles.clear();
 			shinyStartTime = 0;
-			endTask();
+			currentTask = null;
 		}
 	}
 }

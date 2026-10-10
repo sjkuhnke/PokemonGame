@@ -93,6 +93,7 @@ public class UI extends AbstractUI {
 	
 	// PLAYER
 	public int nuzlockeSection;
+	public Pokemon[] starters;
 
 	// MOVE REMINDER
 	public int remindNum;
@@ -6871,12 +6872,6 @@ public class UI extends AbstractUI {
 		}
 		
 		if (!showMessage) {
-			if (gp.keyH.sPressed || gp.keyH.dPressed) {
-				gp.keyH.sPressed = false;
-				gp.keyH.dPressed = false;
-				gp.gameState = GamePanel.PLAY_STATE;
-				commandNum = 0;
-			}
 			if (gp.keyH.upPressed || gp.keyH.downPressed) {
 				gp.keyH.upPressed = false;
 				gp.keyH.downPressed = false;
@@ -7152,7 +7147,10 @@ public class UI extends AbstractUI {
 		
 		int gap = gp.tileSize;
 		
-		Pokemon[] starters = new Pokemon[] {new Pokemon(1, 5, true, false), new Pokemon(4, 5, true, false), new Pokemon(7, 5, true, false)};
+		if (starters == null) {
+			starters = new Pokemon[] {new Pokemon(1, 5, true, false), new Pokemon(4, 5, true, false), new Pokemon(7, 5, true, false)};
+			commandNum = 0;
+		}
 		
 		for (int i = 0; i < 3; i++) {
 			int startX = x;

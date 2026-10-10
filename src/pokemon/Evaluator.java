@@ -35,6 +35,8 @@ public final class Evaluator {
 	static final double HURT_ANSWER_PENALTY = 60;
 	/** A hit that would be lethal but is endured (Sturdy / Focus Sash at full HP, False Swipe) counts as at most this fraction of the target's HP in the matchup: it takes a second hit. */
 	static final double ENDURE_FRAC = 0.5;
+	/** Fraction of a telegraphed charge that still lands: the foe can switch, Protect, or KO the charger first. Placeholder; tune in self-play. */
+	static final double CHARGE_HOLD = 0.75;
 
 	private Evaluator() {}
 
@@ -58,6 +60,7 @@ public final class Evaluator {
 		v += style.wField * fieldValue(s);
 		v += style.wTempo * tempo(s);
 		v += forcedTurnPenalty(s);
+		v += chargeCredit(s.ai, s.player, s.field, playerWeights) - chargeCredit(s.player, s.ai, s.field, aiWeights);
 		v += style.wPending * pendingValue(s, aiWeights, playerWeights);
 		return v;
 	}
@@ -318,5 +321,29 @@ public final class Evaluator {
 		if (total == 0 || valid >= total) return 0;
 		if (valid == 0) return RESTRICTION_MAX; // Struggle-only
 		return RESTRICTION_MAX * (1.0 - valid * 1.0 / total);
+	}
+	
+	/** Value of the attack a charging mon releases next turn, in the same units as material. */
+	private static double chargeCredit(SideState atkSide, SideState defSide, Field f, double[] defW) {
+	    Pokemon atk = atkSide.active(), def = defSide.active();
+	    if (atk == null || def == null || atk.isFainted() || def.isFainted()) return 0;
+	    if (!atk.hasStatus(Status.CHARGING) && !atk.hasStatus(Status.SEMI_INV)) return 0;
+	    Move m = atk.lastMoveUsed;
+	    if (m == null) return 0;
+
+	    double hold = CHARGE_HOLD;
+	    DamageRange out, back;
+	    try (SimContext.Scope sc = SimContext.enter(SimPolicy.DEFAULT)) {
+	        out  = atk.calcRange(def, m, true, f);
+	        back = bestRange(def, atk, f);                       // what the foe threatens in the meantime
+	    }
+	    // If the foe moves first next turn and can KO the charger, the beam never leaves.
+	    if (back != null && def.getFaster(atk, 0, 0, f) == def)
+	        hold *= 1 - Math.min(1.0, back.accuracy * back.koProb(atk.currentHP));
+
+	    double dmg = out.expectedCapped(def.currentHP);
+	    int idx = defSide.shell.indexOf(def);
+	    double w = (defW != null && idx >= 0 && idx < defW.length) ? defW[idx] : 1.0;
+	    return 100.0 * dmg / def.getStat(0) * w * hold;
 	}
 }

@@ -1,3 +1,13 @@
+Sprite changes:
+Fearomoth: Back wings different colors/shading bc of perspective
+Sparkitten: Ears more to side? Face shape, collar perspective/angle
+Benglow: Collar tweaks/general fixing
+Sheltor/Shelnado: Perspective/angle tweaking
+Minishoo: adding highlights
+Glittleshoo: good luck
+Diggie: tweak left foot
+Drillatron: tweak shading
+
 Arthra Team:
 Butterfree-X Bronzong-X Hissimitar Suvinero Bouncerog Winagrow
 Unused Boss Pokemon:

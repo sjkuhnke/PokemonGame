@@ -1174,7 +1174,6 @@ public class GamePanel extends JPanel implements Runnable {
 		case TITLE_STATE:
 			return false;
 		}
-		if (window != null && !window.isFocused()) return false;
 		return now - lastInputNanos <= PLAYTIME_IDLE_CUTOFF_NANOS;
 	}
 	

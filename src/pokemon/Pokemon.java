@@ -3381,7 +3381,6 @@ public class Pokemon implements Serializable {
 	}
 	
 	public void awardExp(int amt) {
-		if (this.fainted) return;
 		if (!this.playerOwned()) return;
 		if (this.cloned) return;
 		Player player = this.getPlayer();
@@ -5073,9 +5072,11 @@ public class Pokemon implements Serializable {
 			}
 			break;
 		case MUD_SPORT:
-			if (!field.contains(fieldEffects, Effect.MUD_SPORT)) {
+			if (!field.contains(field.fieldEffects, Effect.MUD_SPORT)) {
 				field.setEffect(field.new FieldEffect(Effect.MUD_SPORT));
 				Task.addTask(Task.TEXT, "Electric's power was weakened!");
+			} else {
+				fail = fail();
 			}
 			break;
 		case NASTY_PLOT:
@@ -5566,9 +5567,11 @@ public class Pokemon implements Serializable {
 			}
 			break;
 		case WATER_SPORT:
-			if (!field.contains(fieldEffects, Effect.WATER_SPORT)) {
+			if (!field.contains(field.fieldEffects, Effect.WATER_SPORT)) {
 				field.setEffect(field.new FieldEffect(Effect.WATER_SPORT));
 				Task.addTask(Task.TEXT, "Fire's power was weakened!");
+			} else {
+				fail = fail();
 			}
 			break;
 		case WHIRLWIND:
