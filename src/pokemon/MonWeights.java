@@ -50,9 +50,11 @@ public final class MonWeights {
 	}
 
 	public static MonWeights compute(SimState root) {
+		long t0 = Perf.start();
 		double[][][] edgeOut = new double[1][][];
 		double[] aiW = forSide(root.ai, root.player, root.field, edgeOut);
 		double[] plW = forSide(root.player, root.ai, root.field, null);
+		Perf.stop(Perf.W_COMPUTE, t0);
 		return new MonWeights(aiW, plW, edgeOut[0]);
 	}
 
@@ -63,6 +65,7 @@ public final class MonWeights {
 
 	/** As above; when {@code edgeOut} is non-null, edgeOut[0] receives this side's edge table (mine x theirs). */
 	private static double[] forSide(SideState mine, SideState theirs, Field field, double[][][] edgeOut) {
+		long tFs = Perf.start();
 		Pokemon[] myTeam = mine.bench();
 		Pokemon[] theirTeam = theirs.bench();
 		int n = myTeam.length, m = theirTeam.length;
@@ -72,14 +75,33 @@ public final class MonWeights {
 		for (int j = 0; j < m; j++) theirAlive[j] = theirTeam[j] != null && !theirTeam[j].isFainted();
 
 		double[][] edge = new double[n][m];
+		long fKey = SimCache.fieldKey(field);
+		long[] myKey = new long[n], theirKey = new long[m];
+		Pokemon[] myBase = new Pokemon[n], theirBase = new Pokemon[m]; // baselines are built lazily, once per mon (was once per PAIR)
+		for (int i = 0; i < n; i++) if (myAlive[i]) myKey[i] = SimCache.monKey(myTeam[i], false);
+		for (int j = 0; j < m; j++) if (theirAlive[j]) theirKey[j] = SimCache.monKey(theirTeam[j], false);
 		for (int i = 0; i < n; i++) {
 			if (!myAlive[i]) continue;
 			for (int j = 0; j < m; j++) {
 				if (!theirAlive[j]) continue;
-				edge[i][j] = baseEdge(myTeam[i], theirTeam[j], field);
+				long k = SimCache.edgeKey(myKey[i], theirKey[j], fKey);
+				Double cached = SimCache.edgeGet(k);
+				if (cached != null && !SimCache.VERIFY) {
+					Perf.count(Perf.EDGE_HIT);
+					edge[i][j] = cached;
+					continue;
+				}
+				Perf.count(Perf.EDGE_MISS);
+				if (myBase[i] == null) myBase[i] = baseline(myTeam[i]);
+				if (theirBase[j] == null) theirBase[j] = baseline(theirTeam[j]);
+				double[] d = duel(myBase[i], theirBase[j], field);
+				SimCache.edgePut(k, d[0]);
+				SimCache.edgePut(SimCache.edgeKey(theirKey[j], myKey[i], fKey), d[1]); // the other side's table needs the mirror entry
+				if (cached != null) SimCache.verifyEdge(cached, d[0]);
+				edge[i][j] = d[0];
 			}
 		}
-
+		
 		if (edgeOut != null) edgeOut[0] = edge;
 
 		double[] threat = new double[m];
@@ -109,7 +131,9 @@ public final class MonWeights {
 				raw[i] = BASE_W + contribution + UNIQUE_W * unique[i] + utility(myTeam[i], mine, theirs, field);
 			}
 		}
-		return normalize(raw, myTeam);
+		double[] out = normalize(raw, myTeam);
+		Perf.stop(Perf.W_FORSIDE, tFs);
+		return out;
 	}
 
 	/**
@@ -211,21 +235,24 @@ public final class MonWeights {
 	}
 
 	/**
-	 * matchupScore at full HP, no stages, no status (§7.14.1), normalized by /90 to land roughly
-	 * in [-1, +1] the way the spec's edge[] is defined.
+	 * Both directions of one full-HP duel from ONE pair of best-range computations: {edge(m vs q), edge(q vs m)}, each as
+	 * matchupScore / 90. (The old baseEdge ran the same two bestRange calls once per side, plus two fullClones each time.)
+	 * getFaster runs inside the scope so a speed tie is the deterministic id tiebreak, never a real Rng draw.
 	 */
-	private static double baseEdge(Pokemon m, Pokemon q, Field field) {
-		Pokemon mBase = baseline(m);
-		Pokemon qBase = baseline(q);
+	private static double[] duel(Pokemon mBase, Pokemon qBase, Field field) {
 		DamageRange mine, theirs;
+		boolean mFaster, qFaster;
 		try (SimContext.Scope sc = SimContext.enter(SimPolicy.DEFAULT)) {
-			mine = Evaluator.bestRange(mBase, qBase, field);
-			theirs = Evaluator.bestRange(qBase, mBase, field);
+			mine = Evaluator.bestRangeRaw(mBase, qBase, field);
+			theirs = Evaluator.bestRangeRaw(qBase, mBase, field);
+			mFaster = mBase.getFaster(qBase, 0, 0, field) == mBase;
+			qFaster = qBase.getFaster(mBase, 0, 0, field) == qBase;
 		}
-		double myFrac = mine == null ? 0 : Math.min(1.0, mine.expectedCapped(qBase.getStat(0)) / qBase.getStat(0));
-		double foeFrac = theirs == null ? 0 : Math.min(1.0, theirs.expectedCapped(mBase.getStat(0)) / mBase.getStat(0));
-		boolean faster = mBase.getFaster(qBase, 0, 0, field) == mBase;
-		return mBase.matchupScore((int) Math.round(myFrac * 100), foeFrac * 100, faster) / 90.0;
+		double mFrac = mine == null ? 0 : Math.min(1.0, mine.expectedCapped(qBase.getStat(0)) / qBase.getStat(0));
+		double qFrac = theirs == null ? 0 : Math.min(1.0, theirs.expectedCapped(mBase.getStat(0)) / mBase.getStat(0));
+		return new double[] {
+				mBase.matchupScore((int) Math.round(mFrac * 100), qFrac * 100, mFaster) / 90.0,
+				qBase.matchupScore((int) Math.round(qFrac * 100), mFrac * 100, qFaster) / 90.0 };
 	}
 
 	/**

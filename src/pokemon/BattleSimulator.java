@@ -28,6 +28,7 @@ public class BattleSimulator {
 
 	public static List<Branch> simulateTurn(SimState root, Action aAct, Action pAct, AIConfig cfg) {
 		Field prevField = Pokemon.field;
+		long t0 = Perf.start();
 		try (SimContext.Scope outer = SimContext.enter(SimPolicy.DEFAULT)) {
 			SimState s0 = root.fork(touchedSlots(aAct), touchedSlots(pAct));
 			Pokemon.field = s0.field;
@@ -49,6 +50,7 @@ public class BattleSimulator {
 
 			return mergeSimilar(branches, cfg.branchBudget);
 		} finally {
+			Perf.stop(Perf.SIM_TURN, t0);
 			Pokemon.field = prevField;
 		}
 	}
@@ -207,7 +209,7 @@ public class BattleSimulator {
 		List<Branch> result = new ArrayList<>();
 		DamageRange range;
 		try (SimContext.Scope s = SimContext.enter(SimPolicy.DEFAULT)) {
-			range = attacker.calcRange(defender, move, first, br.state.field);
+			range = SimCache.calcRange(attacker, defender, move, first, br.state.field);
 		}
 
 		if (!range.usable || range.immune) {
@@ -218,10 +220,9 @@ public class BattleSimulator {
 		}
 
 		boolean splitAcc = range.accuracy > ACC_LOW && range.accuracy < ACC_HIGH;
+		final double p0 = br.prob;
 
 		if (!range.dealsDamage()) {
-			// Status-effect / no-direct-damage moves (Whirlwind, Roar, Counter family, ...):
-			// only accuracy matters.
 			if (!splitAcc) {
 				SimPolicy p = SimPolicy.DEFAULT.withAccuracy(range.accuracy >= ACC_HIGH ? SimPolicy.Accuracy.HIT
 						: range.accuracy <= ACC_LOW ? SimPolicy.Accuracy.MISS : SimPolicy.Accuracy.MAJORITY);
@@ -230,16 +231,16 @@ public class BattleSimulator {
 				result.add(b);
 				return result;
 			}
-			Branch miss = withPolicy(rebranch(br, br.prob * (1 - range.accuracy)), SimPolicy.DEFAULT.withAccuracy(SimPolicy.Accuracy.MISS));
+			Branch miss = withPolicy(rebranch(br, p0 * (1 - range.accuracy)), SimPolicy.DEFAULT.withAccuracy(SimPolicy.Accuracy.MISS));
 			miss.likelyHit = false;
-			Branch hit = withPolicy(rebranch(br, br.prob * range.accuracy), SimPolicy.DEFAULT.withAccuracy(SimPolicy.Accuracy.HIT));
+			br.prob = p0 * range.accuracy; // br itself becomes the hit branch (its state is not touched until moveInit)
+			Branch hit = withPolicy(br, SimPolicy.DEFAULT.withAccuracy(SimPolicy.Accuracy.HIT));
 			hit.likelyHit = true;
 			result.add(miss);
 			result.add(hit);
 			return result;
 		}
 
-		// Damaging moves: accuracy, then KO-roll.
 		Pokemon target = range.reflected ? attacker : defender;
 		double ko = range.koProb(target.currentHP);
 		boolean splitKO = ko > ACC_LOW && ko < ACC_HIGH;
@@ -254,7 +255,7 @@ public class BattleSimulator {
 		}
 
 		if (splitAcc) {
-			Branch miss = withPolicy(rebranch(br, br.prob * (1 - range.accuracy)), SimPolicy.DEFAULT.withAccuracy(SimPolicy.Accuracy.MISS));
+			Branch miss = withPolicy(rebranch(br, p0 * (1 - range.accuracy)), SimPolicy.DEFAULT.withAccuracy(SimPolicy.Accuracy.MISS));
 			miss.likelyHit = false;
 			result.add(miss);
 		}
@@ -263,14 +264,16 @@ public class BattleSimulator {
 		if (splitKO) {
 			SimPolicy koPolicy = SimPolicy.DEFAULT.withAccuracy(accForHit).withDamageRoll(1.00);
 			SimPolicy survivePolicy = SimPolicy.DEFAULT.withAccuracy(accForHit).withDamageRoll(0.85);
-			Branch koBr = withPolicy(rebranch(br, br.prob * hitProb * ko), koPolicy);
+			Branch koBr = withPolicy(rebranch(br, p0 * hitProb * ko), koPolicy);
 			koBr.likelyHit = true;
-			Branch surviveBr = withPolicy(rebranch(br, br.prob * hitProb * (1 - ko)), survivePolicy);
+			br.prob = p0 * hitProb * (1 - ko);
+			Branch surviveBr = withPolicy(br, survivePolicy);
 			surviveBr.likelyHit = true;
 			result.add(koBr);
 			result.add(surviveBr);
 		} else {
-			Branch hitBr = withPolicy(rebranch(br, br.prob * hitProb), SimPolicy.DEFAULT.withAccuracy(accForHit));
+			br.prob = p0 * hitProb;
+			Branch hitBr = withPolicy(br, SimPolicy.DEFAULT.withAccuracy(accForHit));
 			hitBr.likelyHit = true;
 			result.add(hitBr);
 		}
@@ -297,9 +300,11 @@ public class BattleSimulator {
 				out.add(b);
 				continue;
 			}
-			Branch proc = withPolicy(rebranch(b, b.prob * chance), base.withSecondary(SimPolicy.Secondary.PROC));
+			double pb = b.prob;
+			Branch proc = withPolicy(rebranch(b, pb * chance), base.withSecondary(SimPolicy.Secondary.PROC));
 			proc.likelyHit = true;
-			Branch none = withPolicy(rebranch(b, b.prob * (1 - chance)), base.withSecondary(SimPolicy.Secondary.NO_PROC));
+			b.prob = pb * (1 - chance);
+			Branch none = withPolicy(b, base.withSecondary(SimPolicy.Secondary.NO_PROC));
 			none.likelyHit = true;
 			out.add(proc);
 			out.add(none);

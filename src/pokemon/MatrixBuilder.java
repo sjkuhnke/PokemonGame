@@ -17,11 +17,13 @@ public final class MatrixBuilder {
 		for (int i = 0; i < A.size(); i++) {
 			Action a = A.get(i);
 			for (int j = 0; j < P.size(); j++) {
+				long t0 = Perf.start();
 				Action p = P.get(j);
 				List<Branch> branches = BattleSimulator.simulateTurn(root, a, p, cfg);
 				double v = 0;
 				for (Branch br : branches) v += br.prob * Evaluator.eval(br.state, cfg.style, weights);
 				M[i][j] = v;
+				Perf.stop(Perf.CELL, t0);
 			}
 		}
 		return M;

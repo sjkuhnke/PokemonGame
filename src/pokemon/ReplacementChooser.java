@@ -31,6 +31,7 @@ public final class ReplacementChooser {
 
 	/** Team index of the best alive non-current member of {@code side} against {@code foe}, or -1 if there is none. */
 	public static int pickSlot(Trainer side, Pokemon foe, Field field) {
+		long t0 = Perf.start();
 		Pokemon[] team = side.team;
 		double[] w = futureWeights(side, foe, field);
 		boolean log = !SimContext.active() && !Print.isDebugSuppressed();
@@ -55,6 +56,7 @@ public final class ReplacementChooser {
 			}
 		}
 		if (log) Print.debug(sb.append("\n\n").toString());
+		Perf.stop(Perf.PICK, t0);
 		return best;
 	}
 

@@ -109,7 +109,9 @@ public final class LeadSelection {
 			double[][] S = new double[n][m];
 			for (int i = 0; i < n; i++) {
 				for (int j = 0; j < m; j++) {
+					long te = Perf.start();
 					entry[i][j] = BattleSimulator.simulateEntry(start, aiSlots.get(i), pSlots.get(j), true);
+					Perf.stop(Perf.ENTRY, te);
 					S[i][j] = evalPinned(entry[i][j], cfg, w);
 				}
 			}

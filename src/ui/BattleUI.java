@@ -870,8 +870,8 @@ public class BattleUI extends AbstractUI {
 			currentDialogue = currentTask.message.contains("\n") ? currentTask.message : Item.breakString(currentTask.message, 63);
 			break;
 		case Task.SHINY:
-			drawShinySparkle();
 			currentDialogue = currentTask.message;
+			drawShinySparkle();
 			break;
 		}
 	}

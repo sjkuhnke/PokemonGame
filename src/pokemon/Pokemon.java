@@ -324,6 +324,17 @@ public class Pokemon implements Serializable {
 		setAbility(abilitySlot);
 	}
 	
+	/**
+	 * Phase 8: used only by clone(). The old path called new Pokemon(1, 0, true, false), whose t == false branch runs
+	 * setSprites() (PNG decode + scaled + flipped images) and ~9 Rng draws per clone. clone() overwrites every field except
+	 * the ones set here, so nothing else is needed.
+	 */
+	private Pokemon(boolean fieldCopyOnly) {
+		spriteVisible = true;
+		vStatuses = new ArrayList<StatusEffect>();
+		fieldEffects = new ArrayList<>();
+	}
+	
 	private boolean determineShiny() {
 		Random random = Rng.asRandom();
 		return random.nextInt() % 512 == 0;
@@ -469,7 +480,6 @@ public class Pokemon implements Serializable {
 		return TrainerAI.forPokemon(this).decide(this, foe, first, difficulty);
 	}
 	
-	
 	public boolean isUsefulPivot(Pokemon foe, Ability foeAbility, Move m) {
 		if (this.trainer == null || !this.trainer.hasValidMembers(null)) return false;
 		if (m.cat == 2) {
@@ -492,8 +502,6 @@ public class Pokemon implements Serializable {
 		}
 		return false;
 	}
-
-
 	
 	private boolean hasPhysicalMoves(Pokemon foe) {
 		for (Move m : this.getValidMoveset()) {
@@ -5956,7 +5964,22 @@ public class Pokemon implements Serializable {
 		}
 	}
 	
+	private static final PType[][] RESIST_CACHE = new PType[PType.values().length][];
+	private static final PType[][] WEAK_CACHE = new PType[PType.values().length][];
+	
 	public PType[] getResistances(PType type) {
+		PType[] c = RESIST_CACHE[type.ordinal()];
+		if (c == null) c = RESIST_CACHE[type.ordinal()] = resistancesUncached(type);
+		return c;
+	}
+	
+	public PType[] getWeaknesses(PType type) {
+		PType[] c = WEAK_CACHE[type.ordinal()];
+		if (c == null) c = WEAK_CACHE[type.ordinal()] = weaknessesUncached(type);
+		return c;
+	}
+	
+	public PType[] resistancesUncached(PType type) {
 		ArrayList<PType> resistantTypes = new ArrayList<>();
 		switch(type) {
 			case NORMAL: 
@@ -6084,7 +6107,7 @@ public class Pokemon implements Serializable {
 		return resistantTypes.toArray(toReturn);
 	}
 	
-	public PType[] getWeaknesses(PType type) {
+	public PType[] weaknessesUncached(PType type) {
 		ArrayList<PType> weakTypes = new ArrayList<>();
 		switch(type) {
 			case NORMAL:
@@ -7008,6 +7031,7 @@ public class Pokemon implements Serializable {
 	 * from any random stream and changes no state. Uses the same {@code computeDamage} as {@code calcWithTypes}.
 	 */
 	public DamageRange calcRange(Pokemon foe, Move move, boolean first, Field field) {
+		Perf.count(Perf.CALC_RANGE);
 		DamageMode base0 = DamageMode.det(RollMode.roll(0), DamageMode.CRIT_NEVER, DamageMode.CHROMO_NO);
 		DamageResult probe = computeDamage(foe, move, first, field, base0);
 		switch (probe.kind) {
@@ -9291,7 +9315,8 @@ public class Pokemon implements Serializable {
 
 	@Override
 	public Pokemon clone() {
-		Pokemon clonedPokemon = new Pokemon(1, 0, true, false);
+		Perf.count(Perf.CLONE);
+		Pokemon clonedPokemon = new Pokemon(true);
 		
 		// Clone id fields
 		clonedPokemon.id = this.id;

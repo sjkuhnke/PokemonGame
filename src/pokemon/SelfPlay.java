@@ -104,6 +104,9 @@ public final class SelfPlay {
 			}
 
 			private Trainer make(String name, int index) {
+				if (Pokemon.sets.isEmpty()) {
+					Pokemon.loadCompetitiveSets();
+				}
 				ArrayList<Pokemon> team = new ArrayList<>();
 				ArrayList<Item> items = new ArrayList<>();
 				for (int i = 0; i < teamSize; i++) {
@@ -151,6 +154,7 @@ public final class SelfPlay {
 			int battle = 0, pair = 0;
 			outer:
 			while (battle < cfg.battles) {
+				if (Perf.ON) Perf.reset();
 				Rng.setSeed(cfg.baseSeed + 1_000_003L * pair); // team generation is reproducible too
 				Trainer[] m = source.next(pair, sched);
 				int seatings = cfg.swapSeats ? 2 : 1;
@@ -215,6 +219,7 @@ public final class SelfPlay {
 		}
 
 		System.out.println(rep);
+		if (Perf.ON) System.out.println(Perf.report());
 		return rep;
 	}
 
@@ -258,6 +263,7 @@ public final class SelfPlay {
 		long h = 1469598103934665603L;
 
 		try {
+			SimCache.clear();
 			gp.gameState = GamePanel.TASK_STATE; // Task.addTask needs a task-capable state while createTask is true
 			Pokemon.createTask = true;
 			Rng.setSeed(seed);

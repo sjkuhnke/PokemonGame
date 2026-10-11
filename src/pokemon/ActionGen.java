@@ -92,7 +92,7 @@ public final class ActionGen {
 			for (Move m : valid) {
 				if ((m == Move.SLEEP_TALK || m == Move.SNORE) && self.status != Status.ASLEEP) continue;
 				if (m.isHazard() && !self.isHazardUseful(m, foe, field)) continue;
-				if (m.cat != 2 && !self.calcRange(foe, m, true, field).usable) continue;
+				if (m.cat != 2 && !SimCache.calcRange(self, foe, m, true, field).usable) continue;
 				out.add(m);
 			}
 		}

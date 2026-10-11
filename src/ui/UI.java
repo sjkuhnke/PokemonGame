@@ -1531,6 +1531,7 @@ public class UI extends AbstractUI {
 	private void startBattle() {
 		gp.player.p.setSlots();
 		gp.keyH.resetKeys(false);
+		SimCache.clear();
 		
 		transitionBuffer = new BufferedImage(gp.screenWidth, gp.screenHeight, BufferedImage.TYPE_INT_ARGB);
 		gp.gameState = GamePanel.START_BATTLE_STATE;
@@ -1564,6 +1565,7 @@ public class UI extends AbstractUI {
 	
 	private void startSim() {
 		gp.keyH.resetKeys(false);
+		SimCache.clear();
 		
 		transitionBuffer = new BufferedImage(gp.screenWidth, gp.screenHeight, BufferedImage.TYPE_INT_ARGB);
 		gp.gameState = GamePanel.SIM_START_BATTLE_STATE;

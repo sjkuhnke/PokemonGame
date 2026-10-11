@@ -46,7 +46,12 @@ public final class Evaluator {
 
 	/** Eval with the decision's {@link MonWeights}: mon weights plus the escape-capped matchup (see {@link #ESCAPE_COST}). */
 	public static double eval(SimState s, EvalWeights style, MonWeights w) {
-		return evalCore(s, style, w.ai, w.player, w);
+		long t0 = Perf.start();
+		try {
+			return evalCore(s, style, w.ai, w.player, w);
+		} finally {
+			Perf.stop(Perf.EVAL, t0);
+		}
 	}
 
 	private static double evalCore(SimState s, EvalWeights style, double[] aiWeights, double[] playerWeights, MonWeights ctx) {
@@ -126,9 +131,14 @@ public final class Evaluator {
 		if (best == Double.POSITIVE_INFINITY) return live; // the foe has nothing to escape to
 		return Math.min(live, best + ESCAPE_COST);
 	}
-
-	/** Attacker's best valid move against defender, ranked by expected-capped damage. Null if nothing lands. */
+	
+	/** Attacker's best valid move against defender, ranked by expected-capped damage. Null if nothing lands. Cached (Phase 8). */
 	static DamageRange bestRange(Pokemon attacker, Pokemon defender, Field field) {
+		return SimCache.bestRange(attacker, defender, field);
+	}
+	
+	/** The uncached computation (SimCache and MonWeights.duel call this). */
+	static DamageRange bestRangeRaw(Pokemon attacker, Pokemon defender, Field field) {
 		DamageRange best = null;
 		double bestScore = -1;
 		for (Move m : attacker.getValidMoveset()) {
@@ -142,7 +152,7 @@ public final class Evaluator {
 		}
 		return best;
 	}
-
+	
 	static double fracOf(DamageRange r, double hp) {
 		if (r == null || hp <= 0) return 0;
 		double f = Math.min(1.0, r.expectedCapped(hp) / hp);
