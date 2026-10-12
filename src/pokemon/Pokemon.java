@@ -4056,30 +4056,18 @@ public class Pokemon implements Serializable {
 			stat(foe, 0, -2, this);
 			break;
 		case MAGICAL_CRASH:
-			randomNum = Rng.asRandom().nextInt(5);
-			switch (randomNum) {
-			case 0:
-				foe.burn(false, this);
-				break;
-			case 1:
-				foe.sleep(false, this);
-				break;
-			case 2:
-				foe.paralyze(false, this);
-				break;
-			case 3:
-				boolean result = Rng.asRandom().nextBoolean();
-				if (result) {
-					foe.poison(false, this);
-				} else {
-					foe.toxic(false, this);
+			ArrayList<Integer> options = new ArrayList<>();
+			for (int i = 0; i < 5; i++) options.add(i);
+			boolean inflicted = false;
+			while (!inflicted && !options.isEmpty()) {
+				int pick = options.remove(Rng.asRandom().nextInt(options.size()));
+				switch (pick) {
+				case 0: inflicted = foe.burn(false, this); break;
+				case 1: inflicted = foe.sleep(false, this); break;
+				case 2: inflicted = foe.paralyze(false, this); break;
+				case 3: inflicted = Rng.asRandom().nextBoolean() ? foe.poison(false, this) : foe.toxic(false, this); break;
+				case 4: inflicted = foe.freeze(false, this); break;
 				}
-				break;
-			case 4:
-				foe.freeze(false, this);
-				break;
-			default:
-				return;
 			}
 			break;
 		case MAGIC_FANG:
@@ -7523,7 +7511,7 @@ public class Pokemon implements Serializable {
 			if (this.getAbility(field) == Ability.SYNCHRONIZE && this != foe && foe != null) {
 				foe.confuse(false, this, this);
 			}
-			if (foe != null && this.getItem(field) == Item.PERSIM_BERRY || this.getItem(field) == Item.LUM_BERRY) {
+			if (foe != null && (this.getItem(field) == Item.PERSIM_BERRY || this.getItem(field) == Item.LUM_BERRY)) {
 				Task.addTask(Task.TEXT, this.nickname + " ate its " + this.item.toString() + " to cure its confusion!");
 				this.removeStatus(Status.CONFUSED);
 				this.confusionCounter = 0;
@@ -7534,31 +7522,31 @@ public class Pokemon implements Serializable {
 		}
 	}
 	
-	public void sleep(boolean announce, Pokemon foe) {
-		sleep(announce, foe, null, null);
+	public boolean sleep(boolean announce, Pokemon foe) {
+		return sleep(announce, foe, null, null);
 	}
 	
-	public void sleep(boolean announce, Pokemon foe, Pokemon ability) {
-		sleep(announce, foe, null, ability);
+	public boolean sleep(boolean announce, Pokemon foe, Pokemon ability) {
+		return sleep(announce, foe, null, ability);
 	}
 	
-	public void sleep(boolean announce, Pokemon foe, Move move) {
-		sleep(announce, foe, move, null);
+	public boolean sleep(boolean announce, Pokemon foe, Move move) {
+		return sleep(announce, foe, move, null);
 	}
 	
-	public void sleep(boolean announce, Pokemon foe, Move move, Pokemon ability) {
-		if (this.isFainted()) return;
+	public boolean sleep(boolean announce, Pokemon foe, Move move, Pokemon ability) {
+		if (this.isFainted()) return false;
 		if (move != Move.REST && field.contains(this.getFieldEffects(), Effect.SAFEGUARD)) {
 			if (announce) Task.addTask(Task.TEXT, this.nickname + " is protected by the Safeguard!");
-			return;
+			return false;
 		}
 		if (isGrounded() && field.equals(field.terrain, Effect.ELECTRIC)) {
 			if (announce) Task.addTask(Task.TEXT, this.nickname + " is protected by the Electric Terrain!");
-			return;
+			return false;
 		}
 		if (move != Move.REST && this.isType(PType.PSYCHIC)) {
 			if (announce) Task.addTask(Task.TEXT, "It doesn't effect " + this.nickname + "...\n(In this game, Psychic is immune to sleep)");
-			return;
+			return false;
 		}
 		if (this.status == Status.HEALTHY) {
 			if (this.getAbility(field) == Ability.INSOMNIA) {
@@ -7566,7 +7554,7 @@ public class Pokemon implements Serializable {
 					Task.addAbilityTask(this);
 					Task.addTask(Task.TEXT, "It doesn't effect " + nickname + "...");
 				}
-				return;
+				return false;
 			}
 			this.status = Status.ASLEEP;
 			this.setSleepCounter();
@@ -7581,8 +7569,10 @@ public class Pokemon implements Serializable {
 				this.sleepCounter = 0;
 				this.consumeItem(foe);
 			}
+			return true;
 		} else {
 			if (announce) fail();
+			return false;
 		}
 	}
 	
@@ -7591,19 +7581,19 @@ public class Pokemon implements Serializable {
 		if (this.script) this.sleepCounter = 1;
 	}
 
-	public void paralyze(boolean announce, Pokemon foe) {
-		this.paralyze(announce, foe, null);
+	public boolean paralyze(boolean announce, Pokemon foe) {
+		return this.paralyze(announce, foe, null);
 	}
 	
-	public void paralyze(boolean announce, Pokemon foe, Pokemon ability) {
-		if (this.isFainted()) return;
+	public boolean paralyze(boolean announce, Pokemon foe, Pokemon ability) {
+		if (this.isFainted()) return false;
 		if (field.contains(this.getFieldEffects(), Effect.SAFEGUARD)) {
 			if (announce) Task.addTask(Task.TEXT, this.nickname + " is protected by the Safeguard!");
-			return;
+			return false;
 		}
 		if (this.isType(PType.ELECTRIC)) {
 			if (announce) Task.addTask(Task.TEXT, "It doesn't effect " + this.nickname + "...");
-			return;
+			return false;
 		}
 		if (this.status == Status.HEALTHY) {
 			this.status = Status.PARALYZED;
@@ -7617,28 +7607,30 @@ public class Pokemon implements Serializable {
 				this.status = Status.HEALTHY;
 				this.consumeItem(foe);
 			}
+			return true;
 		} else {
 			if (announce) fail();
+			return false;
 		}
 	}
 	
-	public void burn(boolean announce, Pokemon foe) {
-		this.burn(announce, foe, null);
+	public boolean burn(boolean announce, Pokemon foe) {
+		return this.burn(announce, foe, null);
 	}
 
-	public void burn(boolean announce, Pokemon foe, Pokemon ability) {
-		if (this.isFainted()) return;
+	public boolean burn(boolean announce, Pokemon foe, Pokemon ability) {
+		if (this.isFainted()) return false;
 		if (field.contains(this.getFieldEffects(), Effect.SAFEGUARD)) {
 			if (announce) Task.addTask(Task.TEXT, this.nickname + " is protected by the Safeguard!");
-			return;
+			return false;
 		}
 		if (this.isType(PType.FIRE)) {
 			if (announce) Task.addTask(Task.TEXT, "It doesn't effect " + this.nickname + "...");
-			return;
+			return false;
 		}
 		if (field.equals(field.weather, Effect.SNOW, this)) {
 			if (announce) Task.addTask(Task.TEXT, "It doesn't effect " + this.nickname + "...\n(In this game, Snow blocks Burn)");
-			return;
+			return false;
 		}
 		if (this.status == Status.HEALTHY) {
 			if (this.getAbility(field) == Ability.WATER_VEIL || this.getAbility(field) == Ability.FLAME_BODY) {
@@ -7646,7 +7638,7 @@ public class Pokemon implements Serializable {
 					Task.addAbilityTask(this);
 					Task.addTask(Task.TEXT, "It doesn't effect " + nickname + "...");
 				}
-				return;
+				return false;
 			}
 			this.status = Status.BURNED;
 			Task.addAbilityTask(ability);
@@ -7659,24 +7651,26 @@ public class Pokemon implements Serializable {
 				this.status = Status.HEALTHY;
 				this.consumeItem(foe);
 			}
+			return true;
 		} else {
 			if (announce) fail();
+			return false;
 		}
 	}
 	
-	public void poison(boolean announce, Pokemon foe) {
-		this.poison(announce, foe, null);
+	public boolean poison(boolean announce, Pokemon foe) {
+		return this.poison(announce, foe, null);
 	}
 	
-	public void poison(boolean announce, Pokemon foe, Pokemon ability) {
-		if (this.isFainted()) return;
+	public boolean poison(boolean announce, Pokemon foe, Pokemon ability) {
+		if (this.isFainted()) return false;
 		if (field.contains(this.getFieldEffects(), Effect.SAFEGUARD)) {
 			if (announce) Task.addTask(Task.TEXT, this.nickname + " is protected by the Safeguard!");
-			return;
+			return false;
 		}
 		if ((foe == null || foe.getAbility(field) != Ability.CORROSION) && (this.isType(PType.POISON) || this.isType(PType.STEEL))) {
 			if (announce) Task.addTask(Task.TEXT, "It doesn't effect " + this.nickname + "...");
-			return;
+			return false;
 		}
 		if (this.status == Status.HEALTHY) {
 			this.status = Status.POISONED;
@@ -7690,20 +7684,22 @@ public class Pokemon implements Serializable {
 				this.status = Status.HEALTHY;
 				this.consumeItem(foe);
 			}
+			return true;
 		} else {
 			if (announce) fail();
+			return false;
 		}
 	}
 	
-	public void toxic(boolean announce, Pokemon foe) {
-		if (this.isFainted()) return;
+	public boolean toxic(boolean announce, Pokemon foe) {
+		if (this.isFainted()) return false;
 		if (field.contains(this.getFieldEffects(), Effect.SAFEGUARD)) {
 			if (announce) Task.addTask(Task.TEXT, this.nickname + " is protected by the Safeguard!");
-			return;
+			return false;
 		}
 		if ((foe == null || foe.getAbility(field) != Ability.CORROSION) && (this.isType(PType.POISON) || this.isType(PType.STEEL))) {
 			if (announce) Task.addTask(Task.TEXT, "It doesn't effect " + this.nickname + "...");
-			return;
+			return false;
 		}
 		if (this.status == Status.HEALTHY) {
 			this.status = Status.TOXIC;
@@ -7717,24 +7713,26 @@ public class Pokemon implements Serializable {
 				this.status = Status.HEALTHY;
 				this.consumeItem(foe);
 			}
+			return true;
 		} else {
 			if (announce) fail();
+			return false;
 		}
 	}
 	
-	public void freeze(boolean announce, Pokemon foe) {
-		if (this.isFainted()) return;
+	public boolean freeze(boolean announce, Pokemon foe) {
+		if (this.isFainted()) return false;
 		if (field.contains(this.getFieldEffects(), Effect.SAFEGUARD)) {
 			if (announce) Task.addTask(Task.TEXT, this.nickname + " is protected by the Safeguard!");
-			return;
+			return false;
 		}
 		if (this.isType(PType.ICE)) {
 			if (announce) Task.addTask(Task.TEXT, "It doesn't effect " + this.nickname + "...");
-			return;
+			return false;
 		}
 		if (field.equals(field.weather, Effect.SUN, this)) {
 			if (announce) Task.addTask(Task.TEXT, "It doesn't effect " + this.nickname + "...\n(In this game, Harsh Sunlight blocks Frostbite)");
-			return;
+			return false;
 		}
 		if (this.status == Status.HEALTHY) {
 			if (this.getAbility(field) == Ability.MAGMA_ARMOR) {
@@ -7742,7 +7740,7 @@ public class Pokemon implements Serializable {
 					Task.addAbilityTask(this);
 					Task.addTask(Task.TEXT, "It doesn't effect " + nickname + "...");
 				}
-				return;
+				return false;
 			}
 			this.status = Status.FROSTBITE;
 			Task.addTask(Task.STATUS, Status.FROSTBITE, this.nickname + " was frostbitten!", this);
@@ -7755,8 +7753,10 @@ public class Pokemon implements Serializable {
 				this.status = Status.HEALTHY;
 				this.consumeItem(foe);
 			}
+			return true;
 		} else {
 			if (announce) fail();
+			return false;
 		}
 	}
 	
