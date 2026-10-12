@@ -110,7 +110,7 @@
 112|Flamebless   |FIRE    |LIGHT   |COMPETITIVE       |SERENE_GRACE      |PYROMANCER        |[70, 40, 55, 120, 115, 110]   |125.0 |35 |FIELD       |FIELD       |
 164|Shookwat     |ELECTRIC|null    |STATIC            |VOLT_ABSORB       |MAGNET_PULL       |[55, 62, 46, 73, 75, 49]      |11.0  |255|AMORPHOUS   |MONSTER     |
 165|Wattwo       |ELECTRIC|null    |STATIC            |ELECTRIC_SURGE    |MAGNET_PULL       |[83, 65, 92, 105, 80, 50]     |56.1  |100|AMORPHOUS   |MONSTER     |
-166|Megawatt     |ELECTRIC|STEEL   |HUGE_POWER        |ELECTRIC_SURGE    |MAGNET_PULL       |[85, 65, 120, 92, 98, 55]     |65.9  |35 |AMORPHOUS   |MONSTER     |
+166|Megawatt     |ELECTRIC|STEEL   |HUGE_POWER        |ELECTRIC_SURGE    |MAGNET_PULL       |[85, 65, 120, 92, 98, 55]     |215.9 |35 |AMORPHOUS   |MONSTER     |
 139|Elelamb      |ELECTRIC|GROUND  |STATIC            |FLUFFY            |UNERODIBLE        |[54, 32, 53, 65, 58, 33]      |40.1  |255|FIELD       |FIELD       |
 140|Electroram   |ELECTRIC|GROUND  |STATIC            |FLUFFY            |UNERODIBLE        |[65, 80, 55, 45, 60, 50]      |76.0  |120|FIELD       |FIELD       |
 141|Superchargo  |ELECTRIC|GROUND  |SPEED_BOOST       |FLUFFY            |UNERODIBLE        |[85, 128, 72, 60, 77, 98]     |91.3  |45 |FIELD       |FIELD       |

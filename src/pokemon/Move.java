@@ -488,7 +488,7 @@ public enum Move {
 	SLUDGE_BOMB(90,100,30,0,1,0,PType.POISON,"% to Poison foe",false,10),
 	SLUDGE_WAVE(95,100,10,0,1,0,PType.POISON,"% chance to Poison foe",false,10),
 	SMACK_DOWN(50,100,100,0,0,0,PType.ROCK,"% to ground foe, meaning they can be hit by GROUND moves",false,15),
-	SMART_STRIKE(70,1000,0,0,0,0,PType.STEEL,"This attack never misses",false,10),
+	SMART_STRIKE(70,1000,0,0,0,0,PType.STEEL,"This attack never misses",true,10),
 	SMOG(20,70,50,0,1,0,PType.POISON,"% to Poison foe",false,30),
 	SMOKESCREEN(0,100,0,0,2,0,PType.NORMAL,"Lowers foe's accuracy by 1",false,20),
 	SNARL(55,95,100,0,1,0,PType.DARK,"% chance to lower foe's Sp.Atk",false,15),

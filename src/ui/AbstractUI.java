@@ -3,6 +3,7 @@ package ui;
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Composite;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.GradientPaint;
@@ -26,6 +27,7 @@ import entity.Entity;
 import overworld.GamePanel;
 import overworld.Sound;
 import pokemon.*;
+import pokemon.Nursery.EggGroup;
 import util.Pair;
 import util.ToolTip;
 
@@ -1395,51 +1397,6 @@ public abstract class AbstractUI {
 		}
 	}
 	
-	public void drawEvolution(Task t) {
-		currentDialogue = t.message;
-		drawDialogueScreen(true);
-		
-		int x = gp.tileSize * 11;
-		int y = gp.tileSize * 4;
-		int width = gp.tileSize * 3;
-		int height = (int) (gp.tileSize * 2.5);
-		drawSubWindow(x, y, width, height);
-		
-		x += gp.tileSize;
-		y += gp.tileSize;
-		g2.drawString("Yes", x, y);
-		if (commandNum == 0) {
-			g2.drawString(">", x-24, y);
-			if (gp.keyH.wPressed) {
-				gp.keyH.wPressed = false;
-				gp.player.p.evolve(t.p, t.counter, gp);
-				currentTask = null;
-			}
-		}
-		y += gp.tileSize;
-		g2.drawString("No", x, y);
-		if (commandNum == 1) {
-			g2.drawString(">", x-24, y);
-			if (gp.keyH.wPressed) {
-				gp.keyH.wPressed = false;
-				Task text = Task.createTask(Task.TEXT, t.p.nickname + " did not evolve.");
-				Task.insertTask(text, 0);
-				currentTask = null;
-				commandNum = 0;
-			}
-		}
-		
-		if (gp.keyH.upPressed) {
-			gp.keyH.upPressed = false;
-			commandNum = 1 - commandNum;
-		}
-		
-		if (gp.keyH.downPressed) {
-			gp.keyH.downPressed = false;
-			commandNum = 1 - commandNum;
-		}
-	}
-	
 	public void handleKeyInput(char keyChar) {
 		if (nickname.length() < 12) {
 			nickname.append(keyChar);
@@ -2765,5 +2722,853 @@ public abstract class AbstractUI {
 		drawOutlinedText(hint, x, y, new Color(180, 180, 180), Color.BLACK);
 		
 		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+	}
+	
+	
+	// =====================================================================
+	// Paste into AbstractUI.java (inside the class body)
+	//
+	// Extra imports needed in AbstractUI.java:
+	//   import java.awt.Composite;
+	//   import java.awt.event.KeyEvent;
+	//   import pokemon.Nursery.EggGroup;
+	// =====================================================================
+
+	// POKEDEX REGISTRATION STATE
+	private Task dexRegTask;                 // task the cached data below belongs to
+	private Pokemon dexRegDisplay;           // lv 5 copy used for base stats / abilities (same setup as the Pokedex screen)
+	private BufferedImage dexRegSilhouette;
+	private int dexRegFrame;                 // frames since the screen began opening
+	private int dexRegCloseFrame = -1;       // -1 = not closing
+
+	private static final int DEX_REG_OPEN_FRAMES = 24;
+	private static final int DEX_REG_CLOSE_FRAMES = 14;
+	private static final int DEX_REG_REVEAL_DELAY = 30;   // frames the silhouette is held after opening
+	private static final int DEX_REG_REVEAL_FRAMES = 30;  // frames to fade silhouette -> sprite
+
+	/**
+	 * Draws the "new Pokedex entry" card for currentTask.p.
+	 * Call every frame while currentTask.type == Task.POKEDEX.
+	 * Pressing the W or S key closes it.
+	 * @return true once the close animation has finished; the caller should then end the task.
+	 */
+	public boolean drawPokedexRegistration() {
+		if (currentTask == null || currentTask.p == null) return true;
+		if (!gp.player.p.flag[0][2]) return true;
+		Pokemon caught = currentTask.p;
+
+		if (dexRegTask != currentTask) initPokedexRegistration(caught);
+
+		boolean closing = dexRegCloseFrame >= 0;
+		double open = closing ? 1.0 - Math.min(1.0, dexRegCloseFrame / (double) DEX_REG_CLOSE_FRAMES) : Math.min(1.0, dexRegFrame / (double) DEX_REG_OPEN_FRAMES);
+		double eased = closing ? open * open : 1.0 - Math.pow(1.0 - open, 3);
+
+		// Dim the scene behind the card
+		g2.setColor(new Color(0, 0, 0, (int) (170 * eased)));
+		g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+
+		// The card "opens" from a thin slit at the center, like a Pokedex cover
+		int bandH = (int) (gp.screenHeight * eased);
+		int bandY = (gp.screenHeight - bandH) / 2;
+		java.awt.Shape oldClip = g2.getClip();
+		g2.setClip(gp.tileSize, bandY, gp.tileSize * 14, bandH);
+		drawDexRegCard(caught, dexRegDisplay);
+		g2.setClip(oldClip);
+
+		if (eased < 1.0) {
+			g2.setColor(new Color(220, 40, 40));
+			g2.setStroke(new BasicStroke(4));
+			g2.drawLine(gp.tileSize, bandY, gp.tileSize * 14, bandY);
+			g2.drawLine(gp.tileSize, bandY + bandH, gp.tileSize * 14, bandY + bandH);
+		}
+
+		if (!closing && dexRegFrame >= DEX_REG_OPEN_FRAMES) {
+			drawToolTips("Continue", null, "Continue", null);
+		}
+
+		if (closing) {
+			dexRegCloseFrame++;
+			if (dexRegCloseFrame > DEX_REG_CLOSE_FRAMES) {
+				finishPokedexRegistration();
+				return true;
+			}
+		} else {
+			dexRegFrame++;
+			if (dexRegFrame >= DEX_REG_OPEN_FRAMES && (gp.keyH.wPressed || gp.keyH.sPressed)) {
+				gp.keyH.wPressed = false;
+				gp.keyH.sPressed = false;
+				dexRegCloseFrame = 0;
+			}
+		}
+		return false;
+	}
+
+	private void initPokedexRegistration(Pokemon caught) {
+		dexRegTask = currentTask;
+		dexRegFrame = 0;
+		dexRegCloseFrame = -1;
+
+		// Don't let the keypress that triggered this task skip the screen
+		gp.keyH.wPressed = false;
+		gp.keyH.sPressed = false;
+
+		Pokemon d = new Pokemon(caught.id, 5, false, false);
+		d.abilitySlot = 0;
+		d.headbuttCrit = -1;
+		d.setAbility(d.abilitySlot);
+		dexRegDisplay = d;
+
+		// Black silhouette for the reveal
+		dexRegSilhouette = null;
+		Image sprite = caught.getSprite();
+		if (sprite != null) {
+			int w = sprite.getWidth(null);
+			int h = sprite.getHeight(null);
+			if (w > 0 && h > 0) {
+				BufferedImage s = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+				Graphics2D sg = s.createGraphics();
+				sg.drawImage(sprite, 0, 0, null);
+				sg.setComposite(AlphaComposite.SrcAtop);
+				sg.setColor(new Color(20, 20, 30));
+				sg.fillRect(0, 0, w, h);
+				sg.dispose();
+				dexRegSilhouette = s;
+			}
+		}
+	}
+
+	private void finishPokedexRegistration() {
+		dexRegTask = null;
+		dexRegDisplay = null;
+		dexRegSilhouette = null;
+		dexRegFrame = 0;
+		dexRegCloseFrame = -1;
+	}
+	
+	private void drawDexRegCard(Pokemon caught, Pokemon d) {
+		int cardX = gp.tileSize;
+		int cardY = gp.tileSize / 2;
+		int cardW = gp.tileSize * 14;
+		int cardH = gp.tileSize * 11;
+		int pad = (int) (gp.tileSize * 0.75);
+		int ix = cardX + pad;               // inner left edge
+		int iw = cardW - pad * 2;           // inner width
+		int cx = cardX + cardW / 2;
+		drawSubWindow(cardX, cardY, cardW, cardH, 235);
+
+		// ---- Banner ----
+		int bannerY = cardY + 10;
+		int bannerH = (int) (gp.tileSize * 0.8);
+		g2.setPaint(new GradientPaint(cardX, bannerY, new Color(200, 40, 40), cardX, bannerY + bannerH, new Color(130, 20, 20)));
+		g2.fillRoundRect(cardX + 10, bannerY, cardW - 20, bannerH, 20, 20);
+		String header = "NEW POKEDEX ENTRY";
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 26F));
+		g2.setColor(new Color(255, 230, 120));
+		int headerX = getCenterAlignedTextX(header, cx);
+		int headerW = g2.getFontMetrics().stringWidth(header);
+		g2.drawString(header, headerX, bannerY + (int) (bannerH * 0.72));
+		if (ballIcon != null) {
+			int by = bannerY + (bannerH - ballIcon.getHeight()) / 2;
+			g2.drawImage(ballIcon, headerX - ballIcon.getWidth() - 12, by, null);
+			g2.drawImage(ballIcon, headerX + headerW + 12, by, null);
+		}
+
+		// ---- Hero: sprite on the left ----
+		int heroTop = (int) (gp.tileSize * 1.65);
+		int boxSize = (int) (gp.tileSize * 3.4);
+		int boxX = ix;
+		int boxY = heroTop;
+		Color tc = d.type1.getColor();
+		g2.setColor(new Color(tc.getRed(), tc.getGreen(), tc.getBlue(), 90));
+		g2.fillRoundRect(boxX, boxY, boxSize, boxSize, 30, 30);
+		g2.setColor(new Color(255, 255, 255, 160));
+		g2.setStroke(new BasicStroke(3));
+		g2.drawRoundRect(boxX, boxY, boxSize, boxSize, 30, 30);
+
+		Image sprite = caught.getSprite();
+		if (sprite != null) {
+			int sw = sprite.getWidth(null);
+			int sh = sprite.getHeight(null);
+			if (sw > 0 && sh > 0) {
+				double scale = Math.min((boxSize * 0.85) / sw, (boxSize * 0.85) / sh);
+				int dw = (int) (sw * scale);
+				int dh = (int) (sh * scale);
+				double reveal = Math.max(0.0, Math.min(1.0,
+						(dexRegFrame - DEX_REG_REVEAL_DELAY) / (double) DEX_REG_REVEAL_FRAMES));
+				int bob = reveal >= 1.0 ? (int) Math.round(Math.sin(dexRegFrame * 0.08) * 3) : 0;
+				int dx = boxX + (boxSize - dw) / 2;
+				int dy = boxY + (boxSize - dh) / 2 + bob;
+
+				Object oldHint = g2.getRenderingHint(RenderingHints.KEY_INTERPOLATION);
+				g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
+				if (reveal < 1.0 && dexRegSilhouette != null) {
+					g2.drawImage(dexRegSilhouette, dx, dy, dw, dh, null);
+				}
+				if (reveal > 0.0) {
+					Composite oldComp = g2.getComposite();
+					g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) reveal));
+					g2.drawImage(sprite, dx, dy, dw, dh, null);
+					g2.setComposite(oldComp);
+				}
+				if (oldHint != null) g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, oldHint);
+			}
+		}
+
+		// ---- Hero: identity on the right ----
+		int rx = boxX + boxSize + (int) (gp.tileSize * 0.5);
+		int rw = ix + iw - rx;
+
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20F));
+		g2.setColor(d.getDexNoColor());
+		g2.drawString(Pokemon.getFormattedDexNo(d.getDexNo()), rx, heroTop + (int) (gp.tileSize * 0.45));
+
+		float nameSize = 38F;
+		String name = d.name();
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, nameSize));
+		while (nameSize > 20F && g2.getFontMetrics().stringWidth(name) > rw) {
+			nameSize -= 2F;
+			g2.setFont(g2.getFont().deriveFont(Font.PLAIN, nameSize));
+		}
+		g2.setColor(Color.WHITE);
+		g2.drawString(name, rx, heroTop + (int) (gp.tileSize * 1.25));
+
+		// Types
+		int typeH = (int) (gp.tileSize * 0.75);
+		int typeY = heroTop + (int) (gp.tileSize * 1.5);
+		int typeX = rx;
+		typeX += drawDexRegTypeIcon(d.type1.getImage2(), typeX, typeY, typeH) + 12;
+		if (d.type2 != null) drawDexRegTypeIcon(d.type2.getImage2(), typeX, typeY, typeH);
+
+		// Ability chips (names only, hidden ability in gold)
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 18F));
+		g2.setColor(new Color(200, 200, 200));
+		g2.drawString("Abilities", rx, heroTop + (int) (gp.tileSize * 2.75));
+
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 15F));
+		FontMetrics fm = g2.getFontMetrics();
+		int chipH = (int) (gp.tileSize * 0.5);
+		int chipGap = 8;
+		int chipX = rx;
+		int chipY = heroTop + (int) (gp.tileSize * 2.9);
+		int abilityCount = Pokemon.getUniqueAbilityCount(d.id);
+		for (int i = 0; i < abilityCount; i++) {
+			int slot = Pokemon.getUniqueAbilitySlot(d.id, i);
+			boolean hidden = slot == 2;
+			String abName = d.getAbility(slot).toString();
+			int chipW = fm.stringWidth(abName) + 20;
+			if (chipX + chipW > rx + rw && chipX > rx) {
+				chipX = rx;
+				chipY += chipH + chipGap;
+			}
+			g2.setColor(hidden ? new Color(90, 75, 10) : new Color(55, 55, 55));
+			g2.fillRoundRect(chipX, chipY, chipW, chipH, 12, 12);
+			g2.setColor(hidden ? new Color(255, 215, 0) : Color.WHITE);
+			g2.drawString(abName, chipX + 10, chipY + chipH - (chipH - fm.getAscent()) / 2 - 2);
+			chipX += chipW + chipGap;
+		}
+
+		// ---- Description band ----
+		int descY = (int) (gp.tileSize * 5.7);
+		int descH = (int) (gp.tileSize * 1.35);
+		g2.setColor(new Color(0, 0, 0, 120));
+		g2.fillRoundRect(ix, descY, iw, descH, 16, 16);
+		String entry = Pokemon.getDexEntry(caught.id);
+		if (entry == null) entry = "";
+		ArrayList<String> lines = null;
+		int lineH = 0;
+		for (float size : new float[] {20F, 18F, 16F, 14F}) {
+			g2.setFont(g2.getFont().deriveFont(Font.PLAIN, size));
+			lines = wrapToWidth(entry, iw - 28);
+			lineH = (int) (size * 1.2);
+			if (lines.size() * lineH <= descH - 12) break;
+		}
+		g2.setColor(Color.WHITE);
+		int ly = descY + (descH - lines.size() * lineH) / 2 + (int) (lineH * 0.8);
+		for (String s : lines) {
+			g2.drawString(s, getCenterAlignedTextX(s, cx), ly);
+			ly += lineH;
+		}
+
+		// ---- Stat columns (bars grow in after the card opens) ----
+		int colW = iw / 7;
+		int barW = (int) (gp.tileSize * 0.8);
+		int baseY = (int) (gp.tileSize * 8.85);
+		int maxBarH = (int) (gp.tileSize * 1.15);
+		for (int i = 0; i < 6; i++) {
+			int colX = ix + colW * i + colW / 2;
+			int stat = d.getBaseStat(i);
+			double prog = Math.max(0.0, Math.min(1.0, (dexRegFrame - DEX_REG_OPEN_FRAMES - i * 4) / 20.0));
+			int fullH = (int) (maxBarH * Math.min(stat / 200.0, 1.0));
+			int h = (int) (fullH * prog);
+
+			g2.setColor(new Color(255, 255, 255, 40));
+			g2.fillRoundRect(colX - barW / 2, baseY - maxBarH, barW, maxBarH, 8, 8);
+			if (h > 0) {
+				g2.setColor(Pokemon.getColor(stat));
+				g2.fillRoundRect(colX - barW / 2, baseY - h, barW, h, Math.min(8, h), Math.min(8, h));
+			}
+
+			g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20F));
+			g2.setColor(Color.WHITE);
+			String val = stat + "";
+			g2.drawString(val, getCenterAlignedTextX(val, colX), baseY - maxBarH - 6);
+
+			g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 18F));
+			g2.setColor(new Color(200, 200, 200));
+			String label = Pokemon.getStatType(i, false);
+			g2.drawString(label, getCenterAlignedTextX(label, colX), baseY + (int) (gp.tileSize * 0.35));
+		}
+		// Total
+		int totalX = ix + colW * 6 + colW / 2;
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 28F));
+		g2.setColor(new Color(255, 215, 0));
+		String bst = d.getBST() + "";
+		g2.drawString(bst, getCenterAlignedTextX(bst, totalX), baseY - maxBarH / 2 + 10);
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 18F));
+		g2.setColor(new Color(200, 200, 200));
+		g2.drawString("Total", getCenterAlignedTextX("Total", totalX), baseY + (int) (gp.tileSize * 0.35));
+
+		// ---- Species info strip ----
+		ArrayList<EggGroup> eggGroups = Pokemon.getEggGroup(d.getID());
+		String eggGroupText = eggGroups.get(0).equals(eggGroups.get(1))
+				? eggGroups.get(0).toString()
+				: eggGroups.get(0) + ", " + eggGroups.get(1);
+		String species = "Weight: " + d.weight + " lbs     \u2022     Catch Rate: " + d.catchRate
+				+ "     \u2022     Egg Group(s): " + eggGroupText;
+		float speciesSize = 18F;
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, speciesSize));
+		while (speciesSize > 12F && g2.getFontMetrics().stringWidth(species) > iw) {
+			speciesSize -= 1F;
+			g2.setFont(g2.getFont().deriveFont(Font.PLAIN, speciesSize));
+		}
+		g2.setColor(Color.WHITE);
+		g2.drawString(species, getCenterAlignedTextX(species, cx), (int) (gp.tileSize * 9.85));
+
+		// ---- Evolution method ----
+		String evolve = d.getEvolveString();
+		if (evolve == null) evolve = "Does not evolve";
+		int evoTop = (int) (gp.tileSize * 10.0);
+		int evoAvail = (int) (gp.tileSize * 11.3) - evoTop;
+		String[] evoLines = evolve.split("\n");
+		ArrayList<String> evoOut;
+		g2.setFont(g2.getFont().deriveFont(Font.ITALIC, 16F));
+		int evoLineH = (int) (16 * 1.2);
+		if (evoLines.length * evoLineH <= evoAvail) {
+			evoOut = new ArrayList<>(Arrays.asList(evoLines));
+		} else {
+			// Lots of evolutions (Eevee-style): fold them into one wrapped paragraph
+			String joined = String.join("  \u2022  ", evoLines);
+			evoOut = null;
+			for (float size : new float[] {15F, 14F, 13F, 12F}) {
+				g2.setFont(g2.getFont().deriveFont(Font.ITALIC, size));
+				evoOut = wrapToWidth(joined, iw);
+				evoLineH = (int) (size * 1.2);
+				if (evoOut.size() * evoLineH <= evoAvail) break;
+			}
+		}
+		g2.setColor(new Color(180, 220, 255));
+		int ey = evoTop + (int) (evoLineH * 0.8);
+		for (String s : evoOut) {
+			g2.drawString(s, getCenterAlignedTextX(s, cx), ey);
+			ey += evoLineH;
+		}
+	}
+
+	/** Draws a type icon scaled to the given height; returns the drawn width. */
+	private int drawDexRegTypeIcon(Image img, int x, int y, int h) {
+		if (img == null) return 0;
+		int w0 = img.getWidth(null);
+		int h0 = img.getHeight(null);
+		if (w0 <= 0 || h0 <= 0) return 0;
+		int w = (int) (w0 * (h / (double) h0));
+		g2.drawImage(img, x, y, w, h, null);
+		return w;
+	}
+
+	private ArrayList<String> wrapToWidth(String text, int maxWidth) {
+		ArrayList<String> lines = new ArrayList<>();
+		FontMetrics fm = g2.getFontMetrics();
+		for (String para : text.split("\n")) {
+			StringBuilder line = new StringBuilder();
+			for (String word : para.split(" ")) {
+				String test = line.length() == 0 ? word : line + " " + word;
+				if (line.length() > 0 && fm.stringWidth(test) > maxWidth) {
+					lines.add(line.toString());
+					line = new StringBuilder(word);
+				} else {
+					line = new StringBuilder(test);
+				}
+			}
+			lines.add(line.toString());
+		}
+		return lines;
+	}
+	
+	// =====================================================================
+	// REPLACES the old AbstractUI.drawEvolution(Task t) (the Yes/No prompt).
+	// Paste this block into AbstractUI.java and delete the old method.
+	//
+	// Needs the same extra imports as the Pokedex screen:
+	//   import java.awt.Composite;
+	//   import java.awt.event.KeyEvent;
+	// =====================================================================
+
+	// EVOLUTION CUTSCENE STATE
+	private Task evoTask;                       // task the cached data below belongs to
+	private Image evoOldSprite;
+	private Image evoNewSprite;
+	private BufferedImage evoOldWhite;          // white silhouettes used for the morph
+	private BufferedImage evoNewWhite;
+	private String evoOldName = "";
+	private String evoNewName = "";
+	private PType evoNewType1;
+	private PType evoNewType2;
+	private int evoPhase;
+	private int evoFrame;                       // frames spent in the current phase
+	private boolean evoCancelled;
+	private boolean evoShowNew;                 // which silhouette the morph flicker is showing
+	private int evoToggleTimer;
+	private final ArrayList<EvoParticle> evoParticles = new ArrayList<>();
+	private final java.util.Random evoRandom = new java.util.Random();
+
+	private static final int EVO_PHASE_FADE_IN = 0;   // screen fades to black (no cancel yet)
+	private static final int EVO_PHASE_INTRO = 1;     // "What? X is evolving!" (S cancels)
+	private static final int EVO_PHASE_MORPH = 2;     // glow + silhouette flicker (S cancels)
+	private static final int EVO_PHASE_FLASH = 3;     // point of no return, screen whites out
+	private static final int EVO_PHASE_REVEAL = 4;    // new form, sparkles, name + types
+	private static final int EVO_PHASE_FADE_OUT = 5;  // back to the game
+	private static final int EVO_PHASE_CANCEL = 6;    // cancelled: hold on the old form + message at full opacity
+
+	// Timings in frames (assumes ~60 fps)
+	private static final int EVO_FADE_IN_FRAMES = 30;
+	private static final int EVO_INTRO_FRAMES = 90;
+	private static final int EVO_MORPH_FRAMES = 210;
+	private static final int EVO_FLASH_FRAMES = 20;
+	private static final int EVO_REVEAL_FRAMES = 130;
+	private static final int EVO_FADE_OUT_FRAMES = 30;
+	private static final int EVO_CANCEL_FRAMES = 90;   // how long the cancel message is held (W/S skips after 30)
+
+	private static class EvoParticle {
+		float x, y, vx, vy, size;
+		int life, maxLife;
+		Color color;
+	}
+
+	/**
+	 * Task.EVO cutscene. Call every frame while currentTask.type == Task.EVO.
+	 * Plays the evolution; S cancels any time after the fade-in, up until the final flash.
+	 * When it finishes it either calls Player.evolve (which queues the EVOLUTION text and the
+	 * POKEDEX screen) or queues a "did not evolve" message, then clears currentTask itself.
+	 */
+	public void drawEvolution(Task t) {
+		if (evoTask != t) initEvolution(t);
+
+		updateEvolution(t);
+		if (evoTask != t) return; // finished and reset this frame
+
+		drawEvolutionFrame();
+		evoFrame++;
+	}
+
+	private void initEvolution(Task t) {
+		evoTask = t;
+		evoPhase = EVO_PHASE_FADE_IN;
+		evoFrame = 0;
+		evoCancelled = false;
+		evoShowNew = false;
+		evoToggleTimer = 0;
+		evoParticles.clear();
+
+		// Don't let the keypress that triggered this cutscene cancel/skip it
+		gp.keyH.sPressed = false;
+		gp.keyH.wPressed = false;
+
+		Pokemon p = t.p;
+		evoOldName = p.nickname;
+		evoOldSprite = p.getSprite();
+
+		// Build the evolved form on a throwaway clone so the real Pokemon stays untouched
+		// until the cutscene commits (so it can still be cancelled).
+		evoNewSprite = null;
+		evoNewName = "";
+		evoNewType1 = null;
+		evoNewType2 = null;
+		try {
+			Pokemon preview = p.clone();
+			preview.evolve(t.counter);
+			preview.setSprites();
+			evoNewSprite = preview.getSprite();
+			evoNewName = preview.name();
+			evoNewType1 = preview.type1;
+			evoNewType2 = preview.type2;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (evoNewSprite == null) evoNewSprite = evoOldSprite; // fall back so the cutscene still plays
+
+		evoOldWhite = makeEvoSilhouette(evoOldSprite);
+		evoNewWhite = makeEvoSilhouette(evoNewSprite);
+	}
+
+	private void resetEvolution() {
+		evoTask = null;
+		evoOldSprite = null;
+		evoNewSprite = null;
+		evoOldWhite = null;
+		evoNewWhite = null;
+		evoNewType1 = null;
+		evoNewType2 = null;
+		evoParticles.clear();
+		evoFrame = 0;
+	}
+
+	private void setEvoPhase(int phase) {
+		evoPhase = phase;
+		evoFrame = 0;
+	}
+
+	private BufferedImage makeEvoSilhouette(Image sprite) {
+		if (sprite == null) return null;
+		int w = sprite.getWidth(null);
+		int h = sprite.getHeight(null);
+		if (w <= 0 || h <= 0) return null;
+		BufferedImage s = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D sg = s.createGraphics();
+		sg.drawImage(sprite, 0, 0, null);
+		sg.setComposite(AlphaComposite.SrcAtop);
+		sg.setColor(Color.WHITE);
+		sg.fillRect(0, 0, w, h);
+		sg.dispose();
+		return s;
+	}
+
+	// ---------------------------------------------------------------------
+	// UPDATE: input, phase changes, particles
+	// ---------------------------------------------------------------------
+	private void updateEvolution(Task t) {
+		final int cx = gp.screenWidth / 2;
+		final int cy = (int) (gp.tileSize * 4.0);
+		final double k = gp.tileSize / 48.0;
+
+		for (int i = evoParticles.size() - 1; i >= 0; i--) {
+			EvoParticle p = evoParticles.get(i);
+			p.x += p.vx;
+			p.y += p.vy;
+			if (--p.life <= 0) evoParticles.remove(i);
+		}
+
+		switch (evoPhase) {
+		case EVO_PHASE_FADE_IN:
+			if (evoFrame >= EVO_FADE_IN_FRAMES) setEvoPhase(EVO_PHASE_INTRO);
+			break;
+
+		case EVO_PHASE_INTRO:
+			if (checkEvoCancel(t)) break;
+			if (evoFrame >= EVO_INTRO_FRAMES) {
+				setEvoPhase(EVO_PHASE_MORPH);
+				evoToggleTimer = 24;
+			}
+			break;
+
+		case EVO_PHASE_MORPH: {
+			if (checkEvoCancel(t)) break;
+			double prog = evoFrame / (double) EVO_MORPH_FRAMES;
+
+			// Energy streaming in toward the Pokemon, getting denser over time
+			int count = 1 + evoFrame / 50;
+			for (int i = 0; i < count; i++) {
+				double ang = evoRandom.nextDouble() * Math.PI * 2;
+				double dist = gp.tileSize * (4.0 + evoRandom.nextDouble() * 1.5);
+				int life = 35 + evoRandom.nextInt(25);
+				float sx = (float) (cx + Math.cos(ang) * dist);
+				float sy = (float) (cy + Math.sin(ang) * dist);
+				addEvoParticle(sx, sy, (cx - sx) / life, (cy - sy) / life, life,
+						3 + evoRandom.nextFloat() * 3, new Color(200, 225, 255));
+			}
+
+			// Silhouette flicker between old and new form that speeds up over time
+			if (evoFrame >= 25 && --evoToggleTimer <= 0) {
+				evoShowNew = !evoShowNew;
+				evoToggleTimer = 2 + (int) (22 * (1.0 - prog) * (1.0 - prog));
+			}
+			if (evoFrame >= EVO_MORPH_FRAMES) {
+				evoShowNew = true;
+				setEvoPhase(EVO_PHASE_FLASH);
+			}
+			break;
+		}
+
+		case EVO_PHASE_FLASH:
+			if (evoFrame >= EVO_FLASH_FRAMES) {
+				setEvoPhase(EVO_PHASE_REVEAL);
+				evoParticles.clear();
+				for (int i = 0; i < 80; i++) {
+					double ang = evoRandom.nextDouble() * Math.PI * 2;
+					double speed = (3 + evoRandom.nextDouble() * 7) * k;
+					int life = 40 + evoRandom.nextInt(40);
+					Color c = evoRandom.nextBoolean() ? new Color(255, 235, 140) : new Color(210, 230, 255);
+					addEvoParticle(cx, cy, (float) (Math.cos(ang) * speed), (float) (Math.sin(ang) * speed),
+							life, 4 + evoRandom.nextFloat() * 4, c);
+				}
+			}
+			break;
+
+		case EVO_PHASE_REVEAL: {
+			if (evoFrame < 60 && evoFrame % 3 == 0) { // gentle sparkle trickle around the new form
+				double ang = evoRandom.nextDouble() * Math.PI * 2;
+				double dist = gp.tileSize * (0.5 + evoRandom.nextDouble() * 2.0);
+				addEvoParticle((float) (cx + Math.cos(ang) * dist), (float) (cy + Math.sin(ang) * dist),
+						0f, (float) (-0.6 * k), 35, 3 + evoRandom.nextFloat() * 3, new Color(255, 240, 170));
+			}
+			boolean skip = evoFrame > 40 && (gp.keyH.wPressed || gp.keyH.sPressed);
+			if (evoFrame >= EVO_REVEAL_FRAMES || skip) {
+				gp.keyH.wPressed = false;
+				gp.keyH.sPressed = false;
+				commitEvolution(t);
+				setEvoPhase(EVO_PHASE_FADE_OUT);
+			}
+			break;
+		}
+
+		case EVO_PHASE_CANCEL: {
+			boolean skip = evoFrame > 30 && (gp.keyH.wPressed || gp.keyH.sPressed);
+			if (evoFrame >= EVO_CANCEL_FRAMES || skip) {
+				gp.keyH.wPressed = false;
+				gp.keyH.sPressed = false;
+				commitEvolution(t);
+				setEvoPhase(EVO_PHASE_FADE_OUT);
+			}
+			break;
+		}
+
+		case EVO_PHASE_FADE_OUT:
+			if (evoFrame >= EVO_FADE_OUT_FRAMES) {
+				resetEvolution();
+				currentTask = null;
+			}
+			break;
+		}
+	}
+
+	private boolean checkEvoCancel(Task t) {
+		if (!gp.keyH.sPressed) return false;
+		if (t.wipe) return false;
+		gp.keyH.sPressed = false;
+		evoCancelled = true;
+		evoShowNew = false;
+		evoParticles.clear();
+		setEvoPhase(EVO_PHASE_CANCEL); // the "did not evolve" message is queued when this phase ends
+		return true;
+	}
+
+	/** Applies the outcome. Done as the fade-out starts so the scene underneath already shows the result. */
+	private void commitEvolution(Task t) {
+		if (!evoCancelled) {
+			gp.player.p.evolve(t.p, t.counter, gp); // queues the EVOLUTION text + the POKEDEX screen
+		}
+	}
+
+	private void addEvoParticle(float x, float y, float vx, float vy, int life, float size, Color color) {
+		EvoParticle p = new EvoParticle();
+		p.x = x;
+		p.y = y;
+		p.vx = vx;
+		p.vy = vy;
+		p.life = life;
+		p.maxLife = life;
+		p.size = size;
+		p.color = color;
+		evoParticles.add(p);
+	}
+
+	// ---------------------------------------------------------------------
+	// DRAW
+	// ---------------------------------------------------------------------
+	private void drawEvolutionFrame() {
+		final int W = gp.screenWidth;
+		final int H = gp.screenHeight;
+		final int T = gp.tileSize;
+		final double k = T / 48.0;
+		final int cx = W / 2;
+		final int cy = (int) (T * 4.0);
+		final int box = (int) (T * 5.0);
+
+		// Opacity of the whole cutscene (fades in at the start, out at the end)
+		float bg = 1f;
+		if (evoPhase == EVO_PHASE_FADE_IN) bg = evoFrame / (float) EVO_FADE_IN_FRAMES;
+		else if (evoPhase == EVO_PHASE_FADE_OUT) bg = 1f - evoFrame / (float) EVO_FADE_OUT_FRAMES;
+		bg = Math.max(0f, Math.min(1f, bg));
+
+		Composite oldComp = g2.getComposite();
+		java.awt.Stroke oldStroke = g2.getStroke();
+
+		// Backdrop
+		int ba = (int) (255 * bg);
+		g2.setPaint(new GradientPaint(0, 0, new Color(8, 8, 36, ba), 0, H, new Color(0, 0, 0, ba)));
+		g2.fillRect(0, 0, W, H);
+
+		// How the Pokemon should look in the current phase
+		double glow = 0.12;
+		double white = 0.0;
+		double scale = 1.0;
+		int bob = 0;
+		switch (evoPhase) {
+		case EVO_PHASE_INTRO:
+			bob = (int) (Math.sin(evoFrame * 0.07) * 4);
+			break;
+		case EVO_PHASE_MORPH: {
+			double prog = evoFrame / (double) EVO_MORPH_FRAMES;
+			glow = 0.12 + 0.88 * prog * prog;
+			white = Math.min(1.0, evoFrame / 25.0);
+			scale = 1.0 + 0.07 * Math.sin(evoFrame * 0.45) * white;
+			break;
+		}
+		case EVO_PHASE_FLASH:
+			glow = 1.0;
+			white = 1.0;
+			scale = 1.08;
+			break;
+		case EVO_PHASE_REVEAL:
+			glow = Math.max(0.12, 1.0 - evoFrame / 60.0);
+			white = Math.max(0.0, 1.0 - evoFrame / 40.0);
+			scale = 1.0 + 0.25 * Math.pow(Math.max(0.0, 1.0 - evoFrame / 30.0), 2);
+			if (evoFrame > 60) bob = (int) (Math.sin(evoFrame * 0.07) * 3);
+			break;
+		case EVO_PHASE_CANCEL:
+			white = Math.max(0.0, 1.0 - evoFrame / 12.0); // silhouette settles back to the normal sprite
+			bob = (int) (Math.sin(evoFrame * 0.07) * 4);
+			break;
+		case EVO_PHASE_FADE_OUT:
+			if (evoCancelled) bob = (int) (Math.sin((EVO_CANCEL_FRAMES + evoFrame) * 0.07) * 4);
+			else bob = (int) (Math.sin((EVO_REVEAL_FRAMES + evoFrame) * 0.07) * 3);
+			break;
+		}
+
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, bg));
+
+		drawEvoGlow(cx, cy, glow);
+		drawEvoSprite(cx, cy, box, white, scale, bob, bg);
+
+		// Particles
+		for (EvoParticle p : evoParticles) {
+			float a = p.life / (float) p.maxLife;
+			g2.setColor(new Color(p.color.getRed(), p.color.getGreen(), p.color.getBlue(),
+					(int) (255 * Math.min(1f, a * 1.5f))));
+			int s = Math.max(2, (int) (p.size * (0.5f + 0.5f * a) * k));
+			g2.fillOval((int) p.x - s / 2, (int) p.y - s / 2, s, s);
+		}
+
+		// Shockwave ring on the reveal
+		if (evoPhase == EVO_PHASE_REVEAL && evoFrame < 45) {
+			float ra = 1f - evoFrame / 45f;
+			int r = (int) (evoFrame * 11 * k);
+			g2.setStroke(new BasicStroke(6f));
+			g2.setColor(new Color(255, 255, 255, (int) (200 * ra)));
+			g2.drawOval(cx - r, cy - r, r * 2, r * 2);
+		}
+
+		// New name + types
+		if (!evoCancelled && !evoNewName.isEmpty() && (evoPhase == EVO_PHASE_REVEAL || evoPhase == EVO_PHASE_FADE_OUT)) {
+			float pa = evoPhase == EVO_PHASE_REVEAL ? Math.max(0f, Math.min(1f, (evoFrame - 25) / 25f)) : 1f;
+			if (pa > 0f) {
+				g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, pa * bg));
+				g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 44F));
+				int nx = getCenterAlignedTextX(evoNewName, cx);
+				int ny = (int) (T * 7.6);
+				g2.setColor(new Color(0, 0, 0, 200));
+				g2.drawString(evoNewName, nx + 2, ny + 2);
+				g2.setColor(Color.WHITE);
+				g2.drawString(evoNewName, nx, ny);
+
+				int th = (int) (T * 0.8);
+				Image i1 = evoNewType1 != null ? evoNewType1.getImage2() : null;
+				Image i2 = evoNewType2 != null ? evoNewType2.getImage2() : null;
+				int w1 = evoIconWidth(i1, th);
+				int w2 = evoIconWidth(i2, th);
+				int gap = 12;
+				int tx = cx - (w1 + (w2 > 0 ? gap + w2 : 0)) / 2;
+				int ty = (int) (T * 7.85);
+				if (w1 > 0) g2.drawImage(i1, tx, ty, w1, th, null);
+				if (w2 > 0) g2.drawImage(i2, tx + w1 + gap, ty, w2, th, null);
+				g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, bg));
+			}
+		}
+
+		// Dialogue box
+		String line = null;
+		if (evoPhase == EVO_PHASE_INTRO || evoPhase == EVO_PHASE_MORPH) {
+			line = "What? " + evoOldName + " is evolving!";
+		} else if (evoCancelled && (evoPhase == EVO_PHASE_CANCEL || evoPhase == EVO_PHASE_FADE_OUT)) {
+			line = "Huh? " + evoOldName + " stopped evolving!";
+		}
+		if (line != null) {
+			currentDialogue = line;
+			drawDialogueScreen(false);
+		}
+
+		g2.setComposite(oldComp);
+		g2.setStroke(oldStroke);
+
+		// Full-screen white flash (builds up before the swap, burns off during the reveal)
+		float fa = 0f;
+		if (evoPhase == EVO_PHASE_FLASH) fa = evoFrame / (float) EVO_FLASH_FRAMES;
+		else if (evoPhase == EVO_PHASE_REVEAL) fa = Math.max(0f, 1f - evoFrame / 35f);
+		if (fa > 0f) {
+			g2.setColor(new Color(255, 255, 255, (int) (255 * Math.min(1f, fa))));
+			g2.fillRect(0, 0, W, H);
+		}
+		
+		drawToolTips(null, null, "Cancel", null);
+	}
+
+	private void drawEvoGlow(int cx, int cy, double intensity) {
+		if (intensity <= 0) return;
+		float r = (float) (gp.tileSize * (2.5 + 3.5 * Math.min(1.0, intensity)));
+		int a = (int) (Math.min(1.0, intensity) * 190);
+		java.awt.RadialGradientPaint paint = new java.awt.RadialGradientPaint(
+				new java.awt.geom.Point2D.Float(cx, cy), r, new float[] {0f, 1f},
+				new Color[] {new Color(220, 235, 255, a), new Color(220, 235, 255, 0)});
+		g2.setPaint(paint);
+		g2.fillOval(cx - (int) r, cy - (int) r, (int) r * 2, (int) r * 2);
+	}
+
+	/**
+	 * Draws whichever form is currently showing. white = 0 draws the normal sprite,
+	 * white = 1 draws a pure white silhouette, in between blends the two.
+	 */
+	private void drawEvoSprite(int cx, int cy, int box, double white, double scaleMul, int bob, float alpha) {
+		Image img = evoShowNew ? evoNewSprite : evoOldSprite;
+		BufferedImage sil = evoShowNew ? evoNewWhite : evoOldWhite;
+		if (img == null) return;
+		int sw = img.getWidth(null);
+		int sh = img.getHeight(null);
+		if (sw <= 0 || sh <= 0) return;
+
+		double scale = Math.min((double) box / sw, (double) box / sh) * scaleMul;
+		int dw = (int) (sw * scale);
+		int dh = (int) (sh * scale);
+		int dx = cx - dw / 2;
+		int dy = cy - dh / 2 + bob;
+
+		Object oldHint = g2.getRenderingHint(RenderingHints.KEY_INTERPOLATION);
+		g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
+		if (white < 1.0) {
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+			g2.drawImage(img, dx, dy, dw, dh, null);
+		}
+		if (white > 0.0 && sil != null) {
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) (alpha * Math.min(1.0, white))));
+			g2.drawImage(sil, dx, dy, dw, dh, null);
+		}
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+		if (oldHint != null) g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, oldHint);
+	}
+
+	private int evoIconWidth(Image img, int h) {
+		if (img == null) return 0;
+		int w0 = img.getWidth(null);
+		int h0 = img.getHeight(null);
+		if (w0 <= 0 || h0 <= 0) return 0;
+		return (int) (w0 * (h / (double) h0));
 	}
 }

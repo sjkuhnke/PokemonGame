@@ -59,6 +59,7 @@ public class BattleUI extends AbstractUI {
 	public PType[] userType;
 	public int userHP;
 	public int maxUserHP;
+	public double userBarHP;
 	public Status userStatus;
 	public int userExp;
 	public int userExpMax;
@@ -72,6 +73,7 @@ public class BattleUI extends AbstractUI {
 	public PType[] foeType;
 	public int foeHP;
 	public int maxFoeHP;
+	public double foeBarHP;
 	public Status foeStatus;
 	public int foeLevel;
 	public Move foeMove;
@@ -245,7 +247,8 @@ public class BattleUI extends AbstractUI {
 		}
 		
 		if (subState != IDLE_STATE && subState != MOVE_SELECTION_STATE && subState != INFO_STATE &&
-				(currentTask == null || (currentTask.type != Task.MOVE && currentTask.type != Task.PARLAY))) {
+				(currentTask == null ||
+				(currentTask.type != Task.MOVE && currentTask.type != Task.PARLAY && currentTask.type != Task.POKEDEX && currentTask.type != Task.EVO))) {
 			drawDialogueScreen(false);
 		}
 		
@@ -649,15 +652,15 @@ public class BattleUI extends AbstractUI {
 				if (currentTask.foe != null) currentTask.foe.spriteVisible = true;
 			}
 			if (currentTask.p == user) {
-				if (userHP > currentTask.finish) userHP--;
-				if (userHP < currentTask.finish) userHP++;
-				if (userHP == currentTask.finish) {
+				userBarHP = stepBar(userHP, userBarHP, maxUserHP, currentTask.finish);
+				userHP = (int) Math.ceil(userBarHP);
+				if (userBarHP == currentTask.finish) {
 					endTask();
 				}
 			} else {
-				if (foeHP > currentTask.finish) foeHP--;
-				if (foeHP < currentTask.finish) foeHP++;
-				if (foeHP == currentTask.finish) {
+				foeBarHP = stepBar(foeHP, foeBarHP, maxFoeHP, currentTask.finish);
+				foeHP = (int) Math.ceil(foeBarHP);
+				if (foeBarHP == currentTask.finish) {
 					endTask();
 				}
 			}
@@ -762,8 +765,9 @@ public class BattleUI extends AbstractUI {
 			if (counter >= 75) {
 				counter = 0;
 				if (currentTask.wipe) {
+					boolean caughtBefore = gp.player.p.pokedex[foe.id] == 2;
 					boolean caught = user.getPlayer().catchPokemon(foe, true, currentTask.item);
-					if (caught) setNicknaming(true);
+					if (caught && caughtBefore) setNicknaming(true);
 				} else {
 					currentTask.p.setVisible(true);
 					Task.addTask(Task.TEXT, "Oh no, " + foe.name() + " broke free!");
@@ -776,6 +780,10 @@ public class BattleUI extends AbstractUI {
 		case Task.NICKNAME:
 			currentDialogue = currentTask.message;
 			setNickname(currentTask.p, true);
+			if (currentTask.wipe) {
+				currentTask.wipe = false;
+				setNicknaming(true);
+			}
 			if (nicknaming == 0) {
 				if (gp.keyH.wPressed) {
 					gp.keyH.wPressed = false;
@@ -873,6 +881,9 @@ public class BattleUI extends AbstractUI {
 			currentDialogue = currentTask.message;
 			drawShinySparkle();
 			break;
+		case Task.POKEDEX:
+			if (drawPokedexRegistration()) currentTask = null;
+			break;
 		}
 	}
 	
@@ -932,7 +943,7 @@ public class BattleUI extends AbstractUI {
 		if (draw == null) return;
 		if (draw.spriteVisible) drawUserSprite(draw);
 		drawHPImage(draw);
-		drawHPBar(draw, userHP, maxUserHP);
+		drawHPBar(draw, barValue(userHP, userBarHP), maxUserHP);
 		drawNameLabel(draw, userName, userLevel);
 		drawUserHP();
 		drawStatus(draw);
@@ -945,12 +956,24 @@ public class BattleUI extends AbstractUI {
 		Pokemon draw = foe.trainerOwned() ? foe.trainer.findVisiblePokemon() : foe;
 		if (draw == null || !draw.isVisible()) return;
 		drawHPImage(draw);
-		drawHPBar(draw, foeHP, maxFoeHP);
+		drawHPBar(draw, barValue(foeHP, foeBarHP), maxFoeHP);
 		drawNameLabel(draw, foeName, foeLevel);
 		if (draw.spriteVisible) drawFoeSprite(draw);
 		drawStatus(draw);
 		drawTypes(draw);
 		drawCaughtIndicator();
+	}
+	
+	private double barValue(int hp, double bar) {
+		return Math.ceil(bar) == hp ? bar : hp;
+	}
+	
+	private double stepBar(int hp, double bar, int maxHP, int finish) {
+		double cur = barValue(hp, bar);
+		double step = maxHP <= 1 ? 1.0 / 40.0 : 1.0;
+		if (cur > finish) cur = Math.max(finish, cur - step);
+		else if (cur < finish) cur = Math.min(finish, cur + step);
+		return cur;
 	}
 
 	protected void drawCaughtIndicator() {

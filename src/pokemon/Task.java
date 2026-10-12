@@ -32,7 +32,7 @@ public class Task {
 	public static final int EXP = 12;
 	public static final int LEVEL_UP = 13;
 	public static final int MOVE = 14;
-	public static final int EVO = 15;
+	public static final int EVO = 15; // wipe: uncancellable
 	public static final int WEATHER = 16;
 	public static final int TERRAIN = 17;
 	public static final int CLOSE = 18;
@@ -40,7 +40,7 @@ public class Task {
 	public static final int REMIND = 20;
 	public static final int FOSSIL = 21;
 	public static final int HP = 22;
-	public static final int EVO_ITEM = 23;
+	public static final int EVO_ITEM = 23; // TODO UNUSED
 	public static final int SPRITE = 24;
 	public static final int CONFIRM = 25; // counter: 0 = gauntlet at mt. splinkty
 	public static final int TELEPORT = 26;
@@ -92,6 +92,7 @@ public class Task {
 	public static final int HAPPINESS = 72; // for lowering happiness
 	public static final int MINE = 73;
 	public static final int MINING_CHANCES = 74;
+	public static final int POKEDEX = 75;
 	
 	public static GamePanel gp;
 	
@@ -199,7 +200,7 @@ public class Task {
 		case REMIND: return "REMIND";
 		case FOSSIL: return "FOSSIL";
 		case HP: return "HP";
-		case EVO_ITEM: return "EVO_ITEM";
+		case EVO_ITEM: return "UNUSED";
 		case SPRITE: return "SPRITE";
 		case CONFIRM: return "CONFIRM";
 		case TELEPORT: return "TELEPORT";
@@ -332,7 +333,7 @@ public class Task {
 	}
 	
 	public static void addEvoTask(Pokemon p, int result, int index) {
-		Task t = createTask(Task.EVO, p.nickname + " is evolving!\nDo you want to evolve your " + p.nickname + "?", p);
+		Task t = createTask(Task.EVO, p.nickname + "", p);
 		t.counter = result;
 		t.start = p.id;
 		insertTask(t, index);

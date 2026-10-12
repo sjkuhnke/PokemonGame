@@ -246,7 +246,7 @@ public class Player extends Trainer implements Serializable {
 		if (p == null) return false;
 		boolean egg = p instanceof Egg;
 		if (p.isFainted() && !egg) return false;
-		int index = 1;
+		int index = 0;
 		Task t = null;
 		String metAt = PlayerCharacter.getMetAt();
 		p.reset();
@@ -258,15 +258,20 @@ public class Player extends Trainer implements Serializable {
 		p.trainer = this;
 		p.metAt = metAt;
 		if (nickname) {
+			if (!egg && pokedex[p.id] < 2) {
+				t = Task.createTask(Task.POKEDEX, "", p);
+				Task.insertTask(t, index++);
+			}
 			if (nuzlocke && !canCatchPokemonHere(metAt, p)) {
 				String s = egg ? "receive " : "catch ";
 				String reason = isDupes(p) ? p.name() + " is a dupe!" : "you've already gotten an encounter at " + metAt + "!";
 				t = Task.createTask(Task.END, Item.breakString("Cannot " + s + p.name() + ", " + reason , UI.MAX_TEXTBOX));
-				Task.insertTask(t, 0);
+				Task.insertTask(t, index++);
 				return false;
 			}
 			t = Task.createTask(Task.NICKNAME, "Would you like to nickname " + p.name() + "?", p);
-			if (Pokemon.gp.gameState != GamePanel.PLAY_STATE) Task.insertTask(t, 0);
+			t.wipe = true;
+			if (Pokemon.gp.gameState != GamePanel.PLAY_STATE) Task.insertTask(t, index++);
 		} else {
 			index = 0;
 		}
@@ -1349,8 +1354,9 @@ public class Player extends Trainer implements Serializable {
 					return;
 				} else {
 					gp.gameState = GamePanel.RARE_CANDY_STATE;
-					Task t = Task.addTask(Task.EVO_ITEM, "", p);
+					Task t = Task.addTask(Task.EVO, "", p);
 					t.counter = p.getEvolved(item);
+					t.wipe = true; // uncancellable evo
 					Task.addTask(Task.CLOSE, "");
 				}
 				break;
@@ -2169,9 +2175,14 @@ public class Player extends Trainer implements Serializable {
 		int oldID = p.id;
 		p.evolve(counter);
 		
+		int index = 0;
+		if (pokedex[p.id] < 2) {
+			Task dex = Task.createTask(Task.POKEDEX, "", p);
+			Task.insertTask(dex, index++);
+		}
 		Task text = Task.createTask(Task.EVOLUTION, oldNickname + " evolved into " + p.name() + "!", p);
 		text.types = new PType[] {p.type1, p.type2};
-		Task.insertTask(text, 0);
+		Task.insertTask(text, index++);
 		pokedex[p.id] = 2;
 		if (oldID == 129 && !banShedinja) {
 			Pokemon shedinja = p.clone();
@@ -2192,12 +2203,13 @@ public class Player extends Trainer implements Serializable {
 			gp.battleUI.userHP = p.currentHP;
 			gp.battleUI.maxUserHP = p.getStat(0);
 		}
-		int i = p.checkMove(1, 0);
-		p.checkMove(i, p.level);
+		int nameIndex = index;
+		index = p.checkMove(index, 0);
+		p.checkMove(index, p.level);
 		
 		ArrayList<Task> tasks = gp.getTasks();
 		tasks.removeIf(task -> task.type == Task.EVO && task.p.slot == p.slot && task.start == oldID);
-		for (int j = 1; j < tasks.size(); j++) {
+		for (int j = nameIndex; j < tasks.size(); j++) {
 			Task t = tasks.get(j);
 			if (t.message.contains(oldNickname) && (t.p == null || t.p.playerOwned())) {
 				t.message = t.message.replace(oldNickname, p.nickname);

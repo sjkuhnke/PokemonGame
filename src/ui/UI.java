@@ -405,13 +405,8 @@ public class UI extends AbstractUI {
 			currentPokemon = currentTask.p;
 			showMoveOptions = true;
 			break;
-		case Task.EVO_ITEM:
-			gp.player.p.evolve(currentTask.p, currentTask.counter, gp);
-			currentTask = null;
-			break;
 		case Task.EVO:
 			drawEvolution(currentTask);
-			drawToolTips("OK", null, null, null);
 			break;
 		case Task.CLOSE:
 			if (tasks.size() != 0) {
@@ -426,9 +421,10 @@ public class UI extends AbstractUI {
 			break;
 		case Task.GIFT:
 			// currentTask.wipe = gift is egg
+			boolean caughtBefore = gp.player.p.pokedex[currentTask.p.id] == 2;
 			boolean result = gp.player.p.catchPokemon(currentTask.p, !currentTask.wipe);
 			currentTask.p.item = currentTask.item;
-			if (!currentTask.wipe && result) setNicknaming(true);
+			if (!currentTask.wipe && result && caughtBefore) setNicknaming(true);
 			currentTask = null;
 			break;
 		case Task.NICKNAME:
@@ -760,6 +756,10 @@ public class UI extends AbstractUI {
 			break;
 		case Task.MINING_CHANCES:
 			drawMineChances();
+			break;
+		case Task.POKEDEX:
+			if (drawPokedexRegistration()) currentTask = null;
+			break;
 		}
 	}
 
@@ -3650,7 +3650,8 @@ public class UI extends AbstractUI {
 			drawTask();
 		}
 		
-		if ((gp.keyH.sPressed || gp.keyH.dPressed) && !showMoveOptions && !showMessage) {
+		if ((gp.keyH.sPressed || gp.keyH.dPressed) && !showMoveOptions && !showMessage && (currentTask == null ||
+				(currentTask.type != Task.POKEDEX && currentTask.type != Task.EVO))) {
 			gp.keyH.sPressed = false;
 			gp.keyH.dPressed = false;
 			goBackInBag();
