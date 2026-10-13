@@ -277,7 +277,7 @@ public class Player extends Trainer implements Serializable {
 		} else {
 			index = 0;
 		}
-		if (!egg) registerDex(p);
+		if (!egg) registerDex(p, true);
 		if (ball == Item.HEAL_BALL) p.heal();
 		if (ball == Item.FRIEND_BALL) p.happiness = Math.max(200, p.happiness);
 		
@@ -1814,6 +1814,19 @@ public class Player extends Trainer implements Serializable {
 		return result;
 	}
 	
+	public Pair<Integer, Boolean> getShinyAmount() {
+		int result = 0;
+		boolean allShiny = true;
+		for (int i = 0; i < this.shinyDex.length; i++) {
+			if (this.shinyDex[i]) {
+				result++;
+			} else {
+				allShiny = false;
+			}
+		}
+		return new Pair<>(result, allShiny);
+	}
+	
 	public String[] setupBoxLabels() {
 		String[] result = new String[MAX_BOXES];
 		for (int i = 0; i < MAX_BOXES; i++) {
@@ -1913,9 +1926,9 @@ public class Player extends Trainer implements Serializable {
 	}
 
 	/** Marks a Pokemon's species/form (and its shininess) as registered. Use this instead of writing pokedex[] directly. */
-	public void registerDex(Pokemon p) {
+	public void registerDex(Pokemon p, boolean registered) {
 		if (p == null || p instanceof Egg) return;
-		pokedex[p.id] = 2;
+		pokedex[p.id] = registered && pokedex[p.id] < 2 ? 2 : 1;
 		if (shinyDex == null) shinyDex = new boolean[Pokemon.MAX_POKEMON + 1];
 		if (p.shiny) shinyDex[p.id] = true;
 	}
@@ -2244,7 +2257,7 @@ public class Player extends Trainer implements Serializable {
 		Task text = Task.createTask(Task.EVOLUTION, oldNickname + " evolved into " + p.name() + "!", p);
 		text.types = new PType[] {p.type1, p.type2};
 		Task.insertTask(text, index++);
-		registerDex(p);
+		registerDex(p, true);
 		if (oldID == 129 && !banShedinja) {
 			Pokemon shedinja = p.clone();
 			shedinja.cloned = false;
@@ -2255,7 +2268,7 @@ public class Player extends Trainer implements Serializable {
 			for (Pokemon pok : team) {
 				if (pok != null) {
 					pok.convertToNonMeteorForm();
-					registerDex(pok);
+					registerDex(pok, true);
 				}
 			}
 		}

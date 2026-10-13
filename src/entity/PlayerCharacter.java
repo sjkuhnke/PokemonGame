@@ -177,7 +177,7 @@ public class PlayerCharacter extends Entity {
 							if (p.pokedex[h.id] < 2) {
 								Task.addTask(Task.POKEDEX, "", h);
 							}
-							p.registerDex(h);
+							p.registerDex(h, true);
 							Task t = Task.addTask(Task.NICKNAME, "Would you like to nickname " + h.name() + "?", h);
 							t.wipe = true; // to reset the nickname when the task gets up	
 						}

@@ -5316,7 +5316,7 @@ public class Pokemon implements Serializable {
 				t.types = new PType[] {this.type1, this.type2};
 				setAbility();
 				if (this.recordsStats() && (this.playerOwned() || foe.playerOwned())) {
-					gp.player.p.registerDex(this);
+					gp.player.p.registerDex(this, this.playerOwned());
 				}
 				this.swapIn(foe, false);
 			} else if (id == 237) {
@@ -6250,7 +6250,7 @@ public class Pokemon implements Serializable {
 			t.types = new PType[] {this.type1, this.type2};
 			setAbility();
 			if (this.recordsStats() && (this.playerOwned() || foe.playerOwned())) {
-				gp.player.p.registerDex(this);
+				gp.player.p.registerDex(this, this.playerOwned());
 			}
 			this.statStages = new int[7];
 			foe.statStages = new int[7];
@@ -8717,7 +8717,7 @@ public class Pokemon implements Serializable {
 			foe.handleEjectPack(userStages, this);
 		}
 		
-		if (gp != null && gp.gameState != GamePanel.SIM_BATTLE_STATE && this.recordsStats() && gp.player.p.pokedex[this.id] < 1) gp.player.p.pokedex[this.id] = 1;
+		if (gp != null && gp.gameState != GamePanel.SIM_BATTLE_STATE && this.recordsStats()) gp.player.p.registerDex(this, false);
 		
 	}
 	
