@@ -1043,9 +1043,7 @@ public abstract class AbstractUI {
 		x += gp.tileSize * 3.5;
 		y -= gp.tileSize * 0.75;
 		PType type = move.mtype;
-		if (p != null && p.headbuttCrit >= 0) {
-			type = move.getType(p, Pokemon.field);
-		}
+		if (p != null) type = move.getType(p, Pokemon.field);
 		g2.drawImage(type.getImage2(), x, y, null);
 		
 		x += gp.tileSize * 1.5;
@@ -1098,11 +1096,11 @@ public abstract class AbstractUI {
 		x = (int) (startX - (gp.tileSize * 0.75));
 		x += gp.tileSize * 5;
 		y += gp.tileSize;
-		String[] desc = Item.breakString(move.getDescription(p.getPlayer()), 46).split("\n");
+		String[] desc = Item.breakString(move.getDescription(p == null ? gp.player.p : p.getPlayer()), 46).split("\n");
 		int offset = (int) (gp.tileSize * 0.6);
 		if (desc.length > 3) {
 			g2.setFont(g2.getFont().deriveFont(20F));
-			desc = Item.breakString(move.getDescription(p.getPlayer()), 56).split("\n");
+			desc = Item.breakString(move.getDescription(p == null ? gp.player.p : p.getPlayer()), 56).split("\n");
 			offset = (int) (gp.tileSize * 0.5);
 		}
 		y += (3 - desc.length) * (gp.tileSize / 4);

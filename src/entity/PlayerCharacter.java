@@ -169,12 +169,15 @@ public class PlayerCharacter extends Entity {
 							Task.addTask(Task.TEXT, Item.breakString("Oh... the Egg is trying to hatch, but " + message, UI.MAX_TEXTBOX));
 							e.cycles = 1;
 						} else {
-							p.pokedex[h.id] = 2;
 							p.team[index] = h;
 							if (index == 0) gp.player.p.setCurrent(h);
 							gp.setTaskState();
 							Task.addTask(Task.TEXT, "Oh?");
 							Task.addTask(Task.TEXT, h.name() + " hatched from the egg!");
+							if (p.pokedex[h.id] < 2) {
+								Task.addTask(Task.POKEDEX, "", h);
+							}
+							p.registerDex(h);
 							Task t = Task.addTask(Task.NICKNAME, "Would you like to nickname " + h.name() + "?", h);
 							t.wipe = true; // to reset the nickname when the task gets up	
 						}

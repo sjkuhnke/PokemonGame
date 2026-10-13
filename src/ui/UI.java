@@ -9,6 +9,7 @@ import java.awt.FontFormatException;
 import java.awt.FontMetrics;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
@@ -85,6 +86,9 @@ public class UI extends AbstractUI {
 	public int abilityDexNum;
 	public int levelDexNum;
 	public int tmDexNum;
+	public int dexVariant;
+	private int dexBaseID;
+	private int dexBaseNo;
 	public int starAmt;
 	public int premier;
 	public Item tmCheck;
@@ -2635,16 +2639,19 @@ public class UI extends AbstractUI {
 			}
 		}
 		
-		int mode = gp.player.p.pokedex[dex[dexNum[dexType]].id];
+		int baseID = dex[dexNum[dexType]].id;
+		int mode = gp.player.p.pokedex[baseID];
+		dexBaseID = baseID;
+		dexBaseNo = dex[dexNum[dexType]].getDexNo();
+		ArrayList<Player.DexVariant> variants = mode == 2 ? gp.player.p.getDexVariants(baseID) : null;
+		dexVariant = variants == null ? 0 : Math.max(0, Math.min(dexVariant, variants.size() - 1));
+		Player.DexVariant variant = variants == null ? new Player.DexVariant(baseID, false) : variants.get(dexVariant);
 		ArrayList<Move> levelMoveList = new ArrayList<>();
 		ArrayList<String> levelLevelList = new ArrayList<>();
 		ArrayList<Item> tmList = new ArrayList<>();
-		Pokemon test = new Pokemon(dex[dexNum[dexType]].id, 5, false, false);
-		test.abilitySlot = 0;
-		test.headbuttCrit = -1;
-		test.setAbility(test.abilitySlot);
+		int id = variant.id;
 		if (mode == 2) {
-			Node[] movebank = test.getMovebank();
+			Node[] movebank = Pokemon.getMovebank(id);
 			if (movebank != null) {
 				for (int i = 0; i < movebank.length; i++) {
 					Node move = movebank[i];
@@ -2658,16 +2665,16 @@ public class UI extends AbstractUI {
 			
 			for (int i = 93; i < 200; i++) {
 				Item testItem = Item.getItem(i);
-				if (testItem.getLearned(test)) {
+				if (testItem.getLearned(id)) {
 					tmList.add(testItem);
 				}
 			}
 		}
-		drawDexSummary(test, mode, levelMoveList, levelLevelList, tmList);
+		drawDexSummary(variant, mode, levelMoveList, levelLevelList, tmList, variants);
 		
 		int abilityCount = 2;
 		if (mode == 2) {
-			abilityCount = Pokemon.getUniqueAbilityCount(test.getID());
+			abilityCount = Pokemon.getUniqueAbilityCount(variant.id);
 		}
 		
 		if (gp.keyH.upPressed) {
@@ -2676,6 +2683,7 @@ public class UI extends AbstractUI {
 				int amt = gp.keyH.ctrlPressed ? 5 : 1;
 				dexNum[dexType] -= amt;
 				if (dexNum[dexType] <= 0) dexNum[dexType] = 0;
+				dexVariant = 0;
 				abilityDexNum = 0;
 				levelDexNum = 0;
 				tmDexNum = 0;
@@ -2693,6 +2701,7 @@ public class UI extends AbstractUI {
 				int amt = gp.keyH.ctrlPressed ? 5 : 1;
 				dexNum[dexType] += amt;
 				if (dexNum[dexType] >= maxShow) dexNum[dexType] = maxShow;
+				dexVariant = 0;
 				abilityDexNum = 0;
 				levelDexNum = 0;
 				tmDexNum = 0;
@@ -2724,6 +2733,7 @@ public class UI extends AbstractUI {
 			int max = starAmt >= 5 ? 4 : gp.player.p.calculatePokedexes();
 			dexType = dexType - 1;
 			if (dexType < 0) dexType = max - 1;
+			dexVariant = 0;
 			abilityDexNum = 0;
 			levelDexNum = 0;
 			tmDexNum = 0;
@@ -2733,9 +2743,20 @@ public class UI extends AbstractUI {
 			gp.keyH.dPressed = false;
 			int max = starAmt >= 5 ? 4 : gp.player.p.calculatePokedexes();
 			dexType = (dexType + 1) % max;
+			dexVariant = 0;
 			abilityDexNum = 0;
 			levelDexNum = 0;
 			tmDexNum = 0;
+		}
+		
+		if (gp.keyH.calcPressed) {
+			gp.keyH.calcPressed = false;
+			if (variants != null && variants.size() > 1) {
+				dexVariant = (dexVariant + 1) % variants.size();
+				abilityDexNum = 0;
+				levelDexNum = 0;
+				tmDexNum = 0;
+			}
 		}
 		
 		int infoX = 0;
@@ -2783,17 +2804,265 @@ public class UI extends AbstractUI {
 		String wText = null;
 		switch (dexMode) {
 		case 0:
-			wText = "Abilities";break;
+			wText = "Details";break;
 		case 1:
 			wText = "Level Moves";break;
 		case 2:
 			wText = "TM Moves";break;
 		}
-		drawToolTips(wText, "Prev", "Back", "Next");
+		drawToolTips(wText, "Prev", "Back", "Next", variants != null && variants.size() > 1 ? "Form/Shiny" : null);
 	}
-
-	private void drawDexSummary(Pokemon p, int mode, ArrayList<Move> levelMoveList, ArrayList<String> levelLevelList, ArrayList<Item> tmList) {
+	
+	/** TODO: species category for this Pokemon, e.g. "Mouse Pokemon" for Pikachu. Return "" until wired in. */
+	private String getDexSpecies(int id) {
+		return "Pokemon";
+	}
+	
+	private void drawDexSpecies(int id, int x, int y) {
+		String species = getDexSpecies(id);
+		if (species == null || species.isEmpty()) return;
+		g2.setFont(g2.getFont().deriveFont(Font.ITALIC, 18F));
+		g2.setColor(new Color(180, 180, 180));
+		g2.drawString(species, x, y);
+		g2.setColor(Color.WHITE);
+	}
+	
+	private String getDexVariantLabel(Player.DexVariant v) {
+		boolean isForm = v.id != dexBaseID;
+		String name = isForm ? Pokemon.getFormLabel(v.id) : (v.shiny ? "Shiny" : "Normal");
+		return v.shiny ? "\u2605 " + name : name;
+	}
+	
+	/** Small chip showing which variant is displayed and which key cycles it. Only drawn when there's more than one. */
+	private void drawDexVariantChip(ArrayList<Player.DexVariant> variants, int rightX) {
+		if (variants == null || variants.size() < 2) return;
+		Player.DexVariant v = variants.get(Math.min(dexVariant, variants.size() - 1));
+		String text = "[" + gp.config.getKeyName(gp.config.keys[gp.config.calcKey]) + "] " + getDexVariantLabel(v)
+				+ "  " + (dexVariant + 1) + "/" + variants.size();
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 16F));
+		FontMetrics fm = g2.getFontMetrics();
+		int w = fm.stringWidth(text) + 20;
+		int h = (int) (gp.tileSize * 0.5);
+		int x = rightX - w;
+		int y = (int) (gp.tileSize * 0.3);
+		g2.setColor(v.shiny ? new Color(90, 75, 10) : new Color(55, 55, 55));
+		g2.fillRoundRect(x, y, w, h, 12, 12);
+		g2.setColor(v.shiny ? new Color(255, 215, 0) : Color.WHITE);
+		g2.drawString(text, x + 10, y + h - (h - fm.getAscent()) / 2 - 2);
+		g2.setColor(Color.WHITE);
+	}
+	
+	/** Draws an image scaled to fit ~85% of a square box, centered on (cx, cy). */
+	private void drawDexSprite(Image img, int cx, int cy, int box) {
+		if (img == null) return;
+		int sw = img.getWidth(null);
+		int sh = img.getHeight(null);
+		if (sw <= 0 || sh <= 0) return;
+		double scale = Math.min((box * 0.85) / sw, (box * 0.85) / sh);
+		int dw = (int) (sw * scale);
+		int dh = (int) (sh * scale);
+		Object oldHint = g2.getRenderingHint(RenderingHints.KEY_INTERPOLATION);
+		g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
+		g2.drawImage(img, cx - dw / 2, cy - dh / 2, dw, dh, null);
+		if (oldHint != null) g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, oldHint);
+	}
+	
+	/** Draws a type icon scaled to the given height; returns the drawn width. */
+	private int drawDexTypeIcon(Image img, int x, int y, int h) {
+		if (img == null) return 0;
+		int w0 = img.getWidth(null);
+		int h0 = img.getHeight(null);
+		if (w0 <= 0 || h0 <= 0) return 0;
+		int w = (int) (w0 * (h / (double) h0));
+		g2.drawImage(img, x, y, w, h, null);
+		return w;
+	}
+	
+	/** Word-wraps text to a pixel width using the current font. */
+	private ArrayList<String> wrapDexText(String text, int maxWidth) {
+		ArrayList<String> lines = new ArrayList<>();
+		FontMetrics fm = g2.getFontMetrics();
+		for (String para : text.split("\n")) {
+			StringBuilder line = new StringBuilder();
+			for (String word : para.split(" ")) {
+				String test = line.length() == 0 ? word : line + " " + word;
+				if (line.length() > 0 && fm.stringWidth(test) > maxWidth) {
+					lines.add(line.toString());
+					line = new StringBuilder(word);
+				} else {
+					line = new StringBuilder(test);
+				}
+			}
+			lines.add(line.toString());
+		}
+		return lines;
+	}
+	
+	/**
+	 * Overview page, shown while browsing the list (dexMode == 0) for a caught entry:
+	 * identity, sprite, types, ability names, description, stats, species info and evolution.
+	 * Pressing W/Right flips to the Details page (abilities + moves) as before.
+	 */
+	private void drawDexOverview(Player.DexVariant variant, ArrayList<Player.DexVariant> variants) {
+		int panelX = gp.tileSize * 7;
+		int panelW = gp.tileSize * 9;
+		drawSubWindow(panelX, 0, panelW, gp.tileSize * 12);
+		
+		int left = panelX + gp.tileSize / 2;
+		int right = panelX + panelW - gp.tileSize / 2;
+		int innerW = right - left;
+		
+		// Dex number + variant chip
+		g2.setColor(Pokemon.getDexNoColor(variant.id));
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20F));
+		g2.drawString(Pokemon.getFormattedDexNo(gp.keyH.shiftPressed ? variant.id : dexBaseNo), left, (int) (gp.tileSize * 0.75));
+		drawDexVariantChip(variants, right);
+		
+		// Name + species
+		g2.setColor(Color.WHITE);
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 36F));
+		g2.drawString(Pokemon.getName(variant.id), left, (int) (gp.tileSize * 1.5));
+		drawDexSpecies(variant.id, left, (int) (gp.tileSize * 1.9));
+		
+		// Sprite box tinted by the first type
+		int boxSize = (int) (gp.tileSize * 3.0);
+		int boxY = (int) (gp.tileSize * 2.15);
+		Color tc = Pokemon.getType1(variant.id).getColor();
+		g2.setColor(new Color(tc.getRed(), tc.getGreen(), tc.getBlue(), 90));
+		g2.fillRoundRect(left, boxY, boxSize, boxSize, 30, 30);
+		g2.setColor(new Color(255, 255, 255, 160));
+		g2.setStroke(new BasicStroke(3));
+		g2.drawRoundRect(left, boxY, boxSize, boxSize, 30, 30);
+		drawDexSprite(DocUtils.getCachedSprite(variant.id, variant.shiny), left + boxSize / 2, boxY + boxSize / 2, boxSize);
+		
+		// Types + ability names (descriptions live on the Details page)
+		int rx = left + boxSize + (int) (gp.tileSize * 0.4);
+		int rw = right - rx;
+		int tx = rx;
+		int typeH = (int) (gp.tileSize * 0.7);
+		tx += drawDexTypeIcon(Pokemon.getType1(variant.id).getImage2(), tx, boxY, typeH) + 10;
+		if (Pokemon.getType2(variant.id) != null) drawDexTypeIcon(Pokemon.getType2(variant.id).getImage2(), tx, boxY, typeH);
+		
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 18F));
+		g2.setColor(new Color(200, 200, 200));
+		g2.drawString("Abilities", rx, boxY + (int) (gp.tileSize * 1.25));
+		
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 16F));
+		FontMetrics fm = g2.getFontMetrics();
+		int chipH = (int) (gp.tileSize * 0.5);
+		int chipY = boxY + (int) (gp.tileSize * 1.4);
+		int abilityCount = Pokemon.getUniqueAbilityCount(variant.id);
+		for (int i = 0; i < abilityCount; i++) {
+			int slot = Pokemon.getUniqueAbilitySlot(variant.id, i);
+			boolean hidden = slot == 2;
+			String abName = Pokemon.getAbility(variant.id, slot).toString();
+			g2.setColor(hidden ? new Color(90, 75, 10) : new Color(55, 55, 55));
+			g2.fillRoundRect(rx, chipY, rw, chipH, 12, 12);
+			g2.setColor(hidden ? new Color(255, 215, 0) : Color.WHITE);
+			g2.drawString(abName, getCenterAlignedTextX(abName, rx + rw / 2), chipY + chipH - (chipH - fm.getAscent()) / 2 - 2);
+			chipY += chipH + 6;
+		}
+		
+		// Description
+		int descY = (int) (gp.tileSize * 5.5);
+		int descH = (int) (gp.tileSize * 1.3);
+		g2.setColor(new Color(255, 255, 255, 30));
+		g2.fillRoundRect(left, descY, innerW, descH, 16, 16);
+		String entry = Pokemon.getDexEntry(variant.id);
+		if (entry != null && !entry.isEmpty()) {
+			ArrayList<String> lines = null;
+			int lineH = 0;
+			for (float size : new float[] {18F, 16F, 14F}) {
+				g2.setFont(g2.getFont().deriveFont(Font.PLAIN, size));
+				lines = wrapDexText(entry, innerW - 28);
+				lineH = (int) (size * 1.2);
+				if (lines.size() * lineH <= descH - 10) break;
+			}
+			g2.setColor(Color.WHITE);
+			int ly = descY + (descH - lines.size() * lineH) / 2 + (int) (lineH * 0.8);
+			for (String line : lines) {
+				g2.drawString(line, getCenterAlignedTextX(line, left + innerW / 2), ly);
+				ly += lineH;
+			}
+		}
+		
+		// Stat bars
+		int statY0 = (int) (gp.tileSize * 7.25);
+		int barX = left + (int) (gp.tileSize * 0.75);
+		int barW = 3 * gp.tileSize;
+		int barH = gp.tileSize / 2;
+		for (int i = 0; i < 6; i++) {
+			int rowY = statY0 + i * (gp.tileSize / 2);
+			g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 24F));
+			g2.setColor(Color.WHITE);
+			g2.drawString(Pokemon.getStatType(i, false), left, rowY);
+			
+			int barY = rowY - (barH - 4);
+			int stat = Pokemon.getBaseStats(variant.id)[i];
+			g2.setColor(Color.BLACK);
+			g2.fillRect(barX, barY, barW, barH);
+			g2.setColor(Color.WHITE);
+			g2.fillRect(barX + 2, barY + 2, barW - 4, barH - 4);
+			g2.setColor(Pokemon.getColor(stat));
+			g2.fillRect(barX + 2, barY + 2, (int) ((barW - 4) * Math.min(stat / 200.0, 1.0)), barH - 4);
+			g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 16F));
+			g2.setColor(Color.BLACK);
+			g2.drawString(stat + "", barX + 4, rowY);
+		}
+		
+		// Total + species info beside the bars
+		int infoX = barX + barW + (int) (gp.tileSize * 0.4);
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 22F));
+		g2.setColor(Color.WHITE);
+		g2.drawString("Total: " + Pokemon.getBST(variant.id), infoX, statY0);
+		
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 16F));
+		int iy = statY0 + (int) (gp.tileSize * 0.9);
+		int step = (int) (gp.tileSize * 0.35);
+		g2.drawString("Weight: " + Pokemon.getWeight(variant.id) + " lbs", infoX, iy);
+		iy += step;
+		g2.drawString("Catch Rate: " + Pokemon.getCatchRate(variant.id), infoX, iy);
+		iy += step;
+		ArrayList<EggGroup> eggGroups = Pokemon.getEggGroup(variant.id);
+		String eggGroupText = eggGroups.get(0).equals(eggGroups.get(1))
+				? eggGroups.get(0).toString()
+				: eggGroups.get(0) + ", " + eggGroups.get(1);
+		g2.drawString("Egg Group(s):", infoX, iy);
+		iy += step;
+		g2.drawString(eggGroupText, infoX, iy);
+		
+		// Evolution (many evolutions get folded into a wrapped paragraph)
+		String evolve = Pokemon.getEvolveString(variant.id);
+		if (evolve == null) evolve = "Does not evolve";
+		int evoY = (int) (gp.tileSize * 10.45);
+		int evoBottom = (int) (gp.tileSize * 11.75);
+		ArrayList<String> evoLines = new ArrayList<>(Arrays.asList(evolve.split("\n")));
+		int evoLineH = gp.tileSize / 3 + 2;
+		g2.setFont(g2.getFont().deriveFont(Font.ITALIC, 18F));
+		if (evoY + (evoLines.size() - 1) * evoLineH > evoBottom) {
+			String joined = String.join("  \u2022  ", evoLines);
+			for (float size : new float[] {15F, 14F, 13F, 12F}) {
+				g2.setFont(g2.getFont().deriveFont(Font.ITALIC, size));
+				evoLines = wrapDexText(joined, innerW);
+				evoLineH = (int) (size * 1.2);
+				if (evoY + (evoLines.size() - 1) * evoLineH <= evoBottom) break;
+			}
+		}
+		g2.setColor(new Color(180, 220, 255));
+		for (String line : evoLines) {
+			g2.drawString(line, left, evoY);
+			evoY += evoLineH;
+		}
+		g2.setColor(Color.WHITE);
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20F));
+	}
+	
+	private void drawDexSummary(Player.DexVariant variant, int mode, ArrayList<Move> levelMoveList, ArrayList<String> levelLevelList, ArrayList<Item> tmList, ArrayList<Player.DexVariant> variants) {
 		if (mode == 0) return;
+		if (mode == 2 && dexMode == 0) { // browsing the list: show the Overview page
+			drawDexOverview(variant, variants);
+			return;
+		}
 		int x = gp.tileSize * 7;
 		int y = 0;
 		int width = gp.tileSize * 9;
@@ -2804,13 +3073,14 @@ public class UI extends AbstractUI {
 		// ID
 		x += gp.tileSize / 2;
 		y += gp.tileSize * 0.75;
-		g2.setColor(p.getDexNoColor());
+		g2.setColor(Pokemon.getDexNoColor(variant.id));
 		g2.setFont(g2.getFont().deriveFont(20F));
 		if (gp.keyH.shiftPressed) {
-			g2.drawString(Pokemon.getFormattedDexNo(p.getID()), x, y);
+			g2.drawString(Pokemon.getFormattedDexNo(variant.id), x, y);
 		} else {
-			g2.drawString(Pokemon.getFormattedDexNo(p.getDexNo()), x, y);
+			g2.drawString(Pokemon.getFormattedDexNo(dexBaseNo), x, y);
 		}
+		drawDexVariantChip(variants, gp.tileSize * 15 + gp.tileSize / 2);
 		
 		g2.setColor(Color.WHITE);
 		
@@ -2819,28 +3089,29 @@ public class UI extends AbstractUI {
 		y += gp.tileSize / 4;
 		int startX = x;
 		g2.setFont(g2.getFont().deriveFont(36F));
-		g2.drawString(p.name(), x, y + gp.tileSize / 2);
+		g2.drawString(Pokemon.getName(variant.id), x, y + gp.tileSize / 2);
+		if (mode == 2) drawDexSpecies(variant.id, x, y + (int) (gp.tileSize * 0.9));
 		
 		x = startX;
 		y += gp.tileSize;
 		int startY = y;
 		
 		// Sprite
-		g2.drawImage(p.getSprite(), x - 12, y, null);
+		g2.drawImage(DocUtils.getCachedSprite(variant.id, variant.shiny), x - 12, y, null);
 		x += gp.tileSize * 2;
-		g2.drawImage(p.type1.getImage2(), x - 12, y, null);
-		if (p.type2 != null) {
-			g2.drawImage(p.type2.getImage2(), x + 36, y + 36, null);
+		g2.drawImage(Pokemon.getType1(variant.id).getImage2(), x - 12, y, null);
+		if (Pokemon.getType2(variant.id) != null) {
+			g2.drawImage(Pokemon.getType2(variant.id).getImage2(), x + 36, y + 36, null);
 		}
 		
 		// Abilities
 		g2.setFont(g2.getFont().deriveFont(28F));
 		x += gp.tileSize * 3.75;
 		y -= gp.tileSize;
-		drawAbilitySection(p, mode, x, y);
+		drawAbilitySection(variant.id, mode, x, y);
 		
 		if (mode == 2) {
-			drawSpeciesInfo(p, x - gp.tileSize / 2, (int) (startY + gp.tileSize * 4.75));
+			drawSpeciesInfo(variant.id, x - gp.tileSize / 2, (int) (startY + gp.tileSize * 4.75));
 		} else {
 			return;
 		}
@@ -2865,13 +3136,13 @@ public class UI extends AbstractUI {
 			g2.fillRect(x, y, statWidth, statHeight);
 			g2.setColor(Color.WHITE);
 			g2.fillRect(x + 2, y + 2, statWidth - 4, statHeight - 4);
-			double bar = Math.min(p.getBaseStat(i) * 1.0 / 200, 1.0);
-			g2.setColor(Pokemon.getColor(p.getBaseStat(i)));
+			double bar = Math.min(Pokemon.getBaseStats(variant.id)[i] * 1.0 / 200, 1.0);
+			g2.setColor(Pokemon.getColor(Pokemon.getBaseStats(variant.id)[i]));
 			g2.fillRect(x + 2, y + 2, (int) ((statWidth - 4) * bar), statHeight - 4);
 			x += 4;
 			y += (gp.tileSize / 2) - 4;
 			g2.setColor(Color.BLACK);
-			g2.drawString(p.getBaseStat(i) + "", x, y);
+			g2.drawString(Pokemon.getBaseStats(variant.id)[i] + "", x, y);
 			
 			y = sY + gp.tileSize / 2;
 		}
@@ -2879,7 +3150,7 @@ public class UI extends AbstractUI {
 		g2.setColor(Color.WHITE);
 		x = startX;
 		y += gp.tileSize / 4;
-		String totalText = "Total: " + p.getBST();
+		String totalText = "Total: " + Pokemon.getBST(variant.id);
 		g2.drawString(totalText, getRightAlignedTextX(totalText, x + 180), y - 12);
 		
 		// Evolutions
@@ -2887,7 +3158,7 @@ public class UI extends AbstractUI {
 		y += gp.tileSize / 6;
 		g2.setFont(g2.getFont().deriveFont(Font.ITALIC, 18F));
 		g2.setColor(new Color(180, 220, 255));
-		String evolve = p.getEvolveString();
+		String evolve = Pokemon.getEvolveString(variant.id);
 		if (evolve == null) evolve = "Does not evolve";
 		String[] evolves = evolve.split("\n");
 		for (String s : evolves) {
@@ -2944,10 +3215,10 @@ public class UI extends AbstractUI {
 		
 		int moveSumX = gp.tileSize * 6;
 		int moveSumY = gp.tileSize * 2;
-		if (dexMode > 1) drawMoveSummary(moveSumX, moveSumY, p, null, null, m);
+		if (dexMode > 1) drawMoveSummary(moveSumX, moveSumY, null, null, null, m);
 	}
 	
-	private void drawAbilitySection(Pokemon p, int mode, int x, int y) {
+	private void drawAbilitySection(int id, int mode, int x, int y) {
 		String abilityLabel = "Abilities:";
 		g2.setColor(Color.WHITE);
 		g2.setFont(g2.getFont().deriveFont(28F));
@@ -2961,7 +3232,7 @@ public class UI extends AbstractUI {
 			return;
 		}
 		
-		int abilityListSize = Pokemon.getUniqueAbilityCount(p.id);
+		int abilityListSize = Pokemon.getUniqueAbilityCount(id);
 		if (abilityDexNum >= abilityListSize) abilityDexNum = abilityListSize - 1;
 		if (abilityDexNum < 0) abilityDexNum = 0;
 		
@@ -2974,8 +3245,8 @@ public class UI extends AbstractUI {
 		
 		g2.setFont(g2.getFont().deriveFont(16F));
 		for (int i = 0; i < abilityListSize; i++) {
-			int slot = Pokemon.getUniqueAbilitySlot(p.id, i);
-			Ability ab = p.getAbility(slot);
+			int slot = Pokemon.getUniqueAbilitySlot(id, i);
+			Ability ab = Pokemon.getAbility(id, slot);
 			boolean isHidden = slot == 2;
 			boolean selected = i == abilityDexNum && dexMode == 1;
 			
@@ -2997,8 +3268,8 @@ public class UI extends AbstractUI {
 		
 		int descY = listStartY + MAX_SLOTS * (buttonHeight + buttonSpacing) + gp.tileSize / 2;
 		
-		int selectedSlot = Pokemon.getUniqueAbilitySlot(p.id, abilityDexNum);
-		Ability selAbility = p.getAbility(selectedSlot);
+		int selectedSlot = Pokemon.getUniqueAbilitySlot(id, abilityDexNum);
+		Ability selAbility = Pokemon.getAbility(id, selectedSlot);
 		
 		g2.setFont(g2.getFont().deriveFont(22F));
 		g2.setColor(selectedSlot == 2 ? new Color(255, 215, 0) : Color.WHITE);
@@ -3015,18 +3286,18 @@ public class UI extends AbstractUI {
 		}
 	}
 	
-	private void drawSpeciesInfo(Pokemon p, int x, int y) {
+	private void drawSpeciesInfo(int id, int x, int y) {
 		g2.setFont(g2.getFont().deriveFont(16F));
 		g2.setColor(Color.WHITE);
 		int infoX = x - gp.tileSize * 1.7 > 0 ? (int) (x - gp.tileSize * 1.7) : x;
 
-		g2.drawString("Weight: " + p.weight + " lbs", infoX, y);
+		g2.drawString("Weight: " + Pokemon.getWeight(id) + " lbs", infoX, y);
 		y += gp.tileSize / 3;
 
-		g2.drawString("Catch Rate: " + p.catchRate, infoX, y);
+		g2.drawString("Catch Rate: " + Pokemon.getCatchRate(id), infoX, y);
 		y += gp.tileSize / 3;
 
-		ArrayList<EggGroup> eggGroups = Pokemon.getEggGroup(p.getID());
+		ArrayList<EggGroup> eggGroups = Pokemon.getEggGroup(id);
 		String eggGroupText = eggGroups.get(0).equals(eggGroups.get(1))
 				? eggGroups.get(0).toString()
 				: eggGroups.get(0) + ", " + eggGroups.get(1);

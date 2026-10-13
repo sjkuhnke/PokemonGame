@@ -73,6 +73,7 @@ public class Player extends Trainer implements Serializable {
 	public int badges;
 	public int starter;
 	public int[] pokedex;
+	public boolean[] shinyDex; // indexed by id like pokedex; true once a shiny of that species/form is registered
 	public int currentMap;
 	public boolean champion;
 	public boolean[] trainersBeat;
@@ -143,7 +144,7 @@ public class Player extends Trainer implements Serializable {
 	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 93;
+	public static final int VERSION = 94;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	public static final int BET_INC = 10;
@@ -189,6 +190,7 @@ public class Player extends Trainer implements Serializable {
 		starter = -1;
 		secondStarter = -1;
 		pokedex = new int[Pokemon.MAX_POKEMON + 1];
+		shinyDex = new boolean[Pokemon.MAX_POKEMON + 1];
 		flags = new boolean[50];
 		flag = new boolean[10][GamePanel.MAX_FLAG];
 		locations = new boolean[12]; // NMT, BVT, PG, SC, KV, PP, SRC, GT, FC, RC, IT, CC
@@ -275,7 +277,7 @@ public class Player extends Trainer implements Serializable {
 		} else {
 			index = 0;
 		}
-		if (!egg) pokedex[p.id] = 2;
+		if (!egg) registerDex(p);
 		if (ball == Item.HEAL_BALL) p.heal();
 		if (ball == Item.FRIEND_BALL) p.happiness = Math.max(200, p.happiness);
 		
@@ -607,6 +609,18 @@ public class Player extends Trainer implements Serializable {
 		for (int i = 0; i < temp.length; i++) {
 			pokedex[i] = temp[i];
 		}
+
+		boolean[] shinyTemp = shinyDex;
+		shinyDex = new boolean[Pokemon.MAX_POKEMON + 1];
+		if (shinyTemp != null) {
+			for (int i = 0; i < Math.min(shinyTemp.length, shinyDex.length); i++) {
+				shinyDex[i] = shinyTemp[i];
+			}
+		} else {
+			for (Pokemon p : getAllPokemon()) {
+				if (p != null && !(p instanceof Egg) && p.shiny) shinyDex[p.id] = true;
+			}
+		}
 	}
 
 	private void updateItems(int x, int y) {
@@ -878,6 +892,7 @@ public class Player extends Trainer implements Serializable {
 		result.setLayout(new BoxLayout(result, BoxLayout.Y_AXIS));
 		
 		int[] pokedex = this.pokedex.clone();
+		boolean[] shinyDex = this.shinyDex.clone();
 		
 		// Search bar
 		JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -917,7 +932,7 @@ public class Player extends Trainer implements Serializable {
 				member.add(new JLabel(name));
 				
 				JRadioButton[] buttons = new JRadioButton[3];
-				String[] labels = new String[] {"0", "S", "C"};
+				String[] labels = new String[] {"0", "S", "C", "Shiny"};
 				ButtonGroup buttonLayout = new ButtonGroup();
 				
 				for (int j = 0; j < 3; j++) {
@@ -934,6 +949,15 @@ public class Player extends Trainer implements Serializable {
 				}
 				
 				buttons[pokedex[i]].setSelected(true);
+				
+				JCheckBox shinyBox = new JCheckBox(labels[3]);
+				member.add(shinyBox);
+				shinyBox.setSelected(shinyDex[i]);
+				
+				final int index = i;
+				shinyBox.addActionListener(e -> {
+					shinyDex[index] = shinyBox.isSelected();
+				});
 				
 				panel.add(member);
 			}
@@ -952,6 +976,7 @@ public class Player extends Trainer implements Serializable {
 		confirmButton.addActionListener(e -> {
 			for (int i = 1; i <= Pokemon.MAX_POKEMON; i++) {
 				this.pokedex[i] = pokedex[i];
+				this.shinyDex[i] = shinyDex[i];
 			}
 			
 			SwingUtilities.getWindowAncestor(result).dispose();
@@ -1859,6 +1884,42 @@ public class Player extends Trainer implements Serializable {
 		}
 	}
 	
+	/** A registered way to view a species in the Pokedex: which id (base or alternate form) and whether it's the shiny. */
+	public static class DexVariant {
+		public final int id;
+		public final boolean shiny;
+
+		public DexVariant(int id, boolean shiny) {
+			this.id = id;
+			this.shiny = shiny;
+		}
+	}
+
+	/**
+	 * Variants of a species the player has registered, in cycle order:
+	 * Normal, Shiny, then each alternate form's Normal and Shiny. Never empty.
+	 */
+	public ArrayList<DexVariant> getDexVariants(int baseId) {
+		ArrayList<DexVariant> result = new ArrayList<>();
+		ArrayList<Integer> ids = new ArrayList<>();
+		ids.add(baseId);
+		ids.addAll(Pokemon.getFormIDs(baseId));
+		for (int id : ids) {
+			if (pokedex[id] == 2) result.add(new DexVariant(id, false));
+			if (shinyDex != null && shinyDex[id]) result.add(new DexVariant(id, true));
+		}
+		if (result.isEmpty()) result.add(new DexVariant(baseId, false));
+		return result;
+	}
+
+	/** Marks a Pokemon's species/form (and its shininess) as registered. Use this instead of writing pokedex[] directly. */
+	public void registerDex(Pokemon p) {
+		if (p == null || p instanceof Egg) return;
+		pokedex[p.id] = 2;
+		if (shinyDex == null) shinyDex = new boolean[Pokemon.MAX_POKEMON + 1];
+		if (p.shiny) shinyDex[p.id] = true;
+	}
+
 	public int getMaxDex(int dexType) {
 		switch (dexType) {
 		case 0:
@@ -2183,7 +2244,7 @@ public class Player extends Trainer implements Serializable {
 		Task text = Task.createTask(Task.EVOLUTION, oldNickname + " evolved into " + p.name() + "!", p);
 		text.types = new PType[] {p.type1, p.type2};
 		Task.insertTask(text, index++);
-		pokedex[p.id] = 2;
+		registerDex(p);
 		if (oldID == 129 && !banShedinja) {
 			Pokemon shedinja = p.clone();
 			shedinja.cloned = false;
@@ -2194,7 +2255,7 @@ public class Player extends Trainer implements Serializable {
 			for (Pokemon pok : team) {
 				if (pok != null) {
 					pok.convertToNonMeteorForm();
-					pokedex[pok.id] = 2;
+					registerDex(pok);
 				}
 			}
 		}

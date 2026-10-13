@@ -399,7 +399,7 @@ public class GamePanel extends JPanel implements Runnable {
 			
 			// Draw Items
 			for (int i = 0; i < obj[1].length; i++) {
-				if (obj[currentMap][i] != null) {
+				if (obj[currentMap][i] != null && !(obj[currentMap][i] instanceof TreasureChest)) {
 					obj[currentMap][i].draw(g2);
 				}
 			}

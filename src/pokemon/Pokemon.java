@@ -84,6 +84,7 @@ public class Pokemon implements Serializable {
 	private static Map<String, Integer> nameToID = new HashMap<>();
 	public static HashMap<Integer, Integer[]> legendaryMap = new HashMap<>();
 	public static HashMap<Integer, Integer[]> ultraParadoxMap = new HashMap<>();
+	private static HashMap<Integer, ArrayList<Integer>> altForms;
 	
 	// Database
 	private static int[] dexNos = new int[MAX_POKEMON];
@@ -760,6 +761,10 @@ public class Pokemon implements Serializable {
 	}
 	
 	public Ability getAbility(int slot) {
+		return getAbility(id, slot);
+	}
+	
+	public static Ability getAbility(int id, int slot) {
 		return abilities[id - 1][slot];
 	}
 	
@@ -1234,9 +1239,13 @@ public class Pokemon implements Serializable {
 	}
 	
 	public int getBST() {
+		return getBST(id);
+	}
+	
+	public static int getBST(int id) {
 		int BST = 0;
 		for (int i = 0; i <= 5; i++) {
-			BST += baseStats[i];
+			BST += getBaseStats(id)[i];
 		}
 		return BST;
 	}
@@ -5306,7 +5315,9 @@ public class Pokemon implements Serializable {
 				setTypes();
 				t.types = new PType[] {this.type1, this.type2};
 				setAbility();
-				if (this.playerOwned() && this.recordsStats()) this.getPlayer().pokedex[237] = 2;
+				if (this.recordsStats() && (this.playerOwned() || foe.playerOwned())) {
+					gp.player.p.registerDex(this);
+				}
 				this.swapIn(foe, false);
 			} else if (id == 237) {
 				stat(this, 0, 1, foe);
@@ -6238,7 +6249,9 @@ public class Pokemon implements Serializable {
 			setTypes();
 			t.types = new PType[] {this.type1, this.type2};
 			setAbility();
-			if (this.playerOwned() && this.recordsStats()) this.getPlayer().pokedex[291] = 2;
+			if (this.recordsStats() && (this.playerOwned() || foe.playerOwned())) {
+				gp.player.p.registerDex(this);
+			}
 			this.statStages = new int[7];
 			foe.statStages = new int[7];
 			Task.addTask(Task.TEXT, "All stat changes were eliminated!");
@@ -9184,6 +9197,10 @@ public class Pokemon implements Serializable {
 	}
 	
 	public double getWeight() {
+		return getWeight(id);
+	}
+	
+	public static double getWeight(int id) {
 		return weights[id - 1];
 	}
 	
@@ -10782,6 +10799,10 @@ public class Pokemon implements Serializable {
 
 	public Color getDexNoColor() {
 		if (this instanceof Egg) return Color.white;
+		return getDexNoColor(id);
+	}
+	
+	public static Color getDexNoColor(int id) {
 		int dexSec = getDexSection(id);
 		switch (dexSec) {
 		case 0:
@@ -10796,7 +10817,7 @@ public class Pokemon implements Serializable {
 			return Color.black;
 		}
 	}
-	
+
 	public static int getDexSection(int id) {
 		int dexNo = getDexNo(id);
 		if (dexNo >= 0) {
@@ -10810,6 +10831,31 @@ public class Pokemon implements Serializable {
 		} else {
 			return 3;
 		}
+	}
+	
+	public static ArrayList<Integer> getFormIDs(int baseId) {
+		if (altForms == null) buildAltForms();
+		ArrayList<Integer> forms = altForms.get(baseId);
+		return forms == null ? new ArrayList<>() : forms;
+	}
+	
+	private static void buildAltForms() {
+		altForms = new HashMap<>();
+		for (int id = 1; id <= MAX_POKEMON; id++) {
+			if (getDexNo(id) != 0) continue;
+			String name = getName(id);
+			int dash = name.indexOf('-');
+			if (dash <= 0) continue;
+			Integer base = getIDFromName(name.substring(0, dash));
+			if (base == null || base == id) continue;
+			altForms.computeIfAbsent(base, k -> new ArrayList<>()).add(id);
+		}
+	}
+	
+	public static String getFormLabel(int id) {
+		String name = getName(id);
+		int dash = name.indexOf('-');
+		return dash > 0 ? name.substring(dash + 1) : name;
 	}
 	
 	public int determineHappiness(Player p) {

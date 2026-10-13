@@ -771,7 +771,7 @@ public enum Move {
 			}
 			bp = user.determineBasePower(foe, this, faster, null, foe.getAbility(field), field, false);
 		}
-		if (user != null && bp > 0 && user.headbuttCrit >= 0) {
+		if (user != null && bp > 0) {
 			if (type == PType.NORMAL) {
 				if (user.getAbility(field) == Ability.GALVANIZE || user.getAbility(field) == Ability.REFRIGERATE || user.getAbility(field) == Ability.PIXILATE) bp *= 1.2;
 			}
