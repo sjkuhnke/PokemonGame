@@ -49,6 +49,7 @@ public final class SelfPlay {
 		 * One model per engine describes how the OTHER engine has learned to read it, whichever seat it sits in.
 		 */
 		public boolean persistModels = false;
+		public double[] paramsA, paramsB;
 	}
 
 	public static final class BattleResult {
@@ -133,6 +134,7 @@ public final class SelfPlay {
 		long seed;
 		BattleResult result;
 		PlayerModel on1, on2; // snapshots of the carried models taken BEFORE this battle (a replay must start from them)
+		double[] pv1, pv2;
 	}
 
 	public static SelfPlayReport run(Config cfg) {
@@ -151,10 +153,10 @@ public final class SelfPlay {
 		long start = System.nanoTime();
 
 		try {
+			if (Perf.ON) Perf.reset();
 			int battle = 0, pair = 0;
 			outer:
 			while (battle < cfg.battles) {
-				if (Perf.ON) Perf.reset();
 				Rng.setSeed(cfg.baseSeed + 1_000_003L * pair); // team generation is reproducible too
 				Trainer[] m = source.next(pair, sched);
 				int seatings = cfg.swapSeats ? 2 : 1;
@@ -168,6 +170,7 @@ public final class SelfPlay {
 					TrainerAI ai2 = swapped ? cfg.aiA : cfg.aiB;
 					int d1 = swapped ? cfg.difficultyB : cfg.difficultyA;
 					int d2 = swapped ? cfg.difficultyA : cfg.difficultyB;
+					double[] pv1 = swapped ? cfg.paramsB : cfg.paramsA, pv2 = swapped ? cfg.paramsA : cfg.paramsB;
 					long seed = cfg.baseSeed + 7919L * battle;
 
 					PlayerModel on1 = null, on2 = null; // the model stored on a seat's trainer is what ITS opponent learns about it
@@ -178,7 +181,7 @@ public final class SelfPlay {
 					PlayerModel snap1 = on1 != null && replays.size() < cfg.determinismSample ? on1.copy() : null;
 					PlayerModel snap2 = on2 != null && replays.size() < cfg.determinismSample ? on2.copy() : null;
 
-					BattleResult r = playBattle(m[0], m[1], ai1, ai2, d1, d2, seed, cfg.maxTurns, on1, on2);
+					BattleResult r = playBattle(m[0], m[1], ai1, ai2, d1, d2, seed, cfg.maxTurns, on1, on2, pv1, pv2);
 
 					if (r.error != null) {
 						rep.addCrash("battle " + battle + " (seed " + seed + "): " + describe(r.error));
@@ -191,7 +194,7 @@ public final class SelfPlay {
 					}
 					if (replays.size() < cfg.determinismSample) {
 						Replay rp = new Replay();
-						rp.x = m[0]; rp.y = m[1]; rp.ai1 = ai1; rp.ai2 = ai2; rp.d1 = d1; rp.d2 = d2; rp.seed = seed; rp.result = r; rp.on1 = snap1; rp.on2 = snap2;
+						rp.x = m[0]; rp.y = m[1]; rp.ai1 = ai1; rp.ai2 = ai2; rp.d1 = d1; rp.d2 = d2; rp.seed = seed; rp.result = r; rp.on1 = snap1; rp.on2 = snap2; rp.pv1 = pv1; rp.pv2 = pv2;
 						replays.add(rp);
 					}
 					battle++;
@@ -205,7 +208,7 @@ public final class SelfPlay {
 			for (Replay rp : replays) {
 				if (rp.result.error != null) continue;
 				BattleResult again = playBattle(rp.x, rp.y, rp.ai1, rp.ai2, rp.d1, rp.d2, rp.seed, cfg.maxTurns,
-						rp.on1 == null ? null : rp.on1.copy(), rp.on2 == null ? null : rp.on2.copy());
+						rp.on1 == null ? null : rp.on1.copy(), rp.on2 == null ? null : rp.on2.copy(), rp.pv1, rp.pv2);
 				rep.determinismChecked++;
 				if (again.error != null || again.winner != rp.result.winner || again.turns != rp.result.turns
 						|| again.checksum != rp.result.checksum) {
@@ -248,19 +251,25 @@ public final class SelfPlay {
 			int diff1, int diff2, long seed, int maxTurns) {
 		return playBattle(src1, src2, ai1, ai2, diff1, diff2, seed, maxTurns, null, null);
 	}
+	
+	public static BattleResult playBattle(Trainer src1, Trainer src2, TrainerAI ai1, TrainerAI ai2,
+			int diff1, int diff2, long seed, int maxTurns, PlayerModel on1, PlayerModel on2) {
+		return playBattle(src1, src2, ai1, ai2, diff1, diff2, seed, maxTurns, on1, on2, null, null);
+	}
 
 	/**
 	 * Phase 6: as above, with the player models to install on the two seats' trainers (what the OPPONENT of that seat has
 	 * learned about it; null = a fresh empty model). The models are mutated as the battle is played.
 	 */
 	public static BattleResult playBattle(Trainer src1, Trainer src2, TrainerAI ai1, TrainerAI ai2,
-			int diff1, int diff2, long seed, int maxTurns, PlayerModel on1, PlayerModel on2) {
+			int diff1, int diff2, long seed, int maxTurns, PlayerModel on1, PlayerModel on2, double[] pv1, double[] pv2) {
 		BattleResult r = new BattleResult();
 		final GamePanel gp = Pokemon.gp;
 		final int prevState = gp.gameState;
 		final Field prevField = Pokemon.field;
 		final boolean prevCreateTask = Pokemon.createTask;
 		long h = 1469598103934665603L;
+		final boolean tuned = pv1 != null || pv2 != null;
 
 		try {
 			SimCache.clear();
@@ -293,8 +302,10 @@ public final class SelfPlay {
 				boolean fFaster = p1.getFaster(p2, 0, 0, field) == p2;
 
 				long a = System.nanoTime();
+				if (tuned) Tunables.apply(pv1);
 				Move uMove = p1.resolveDecision(p1.bestMove2(p2, !fFaster, diff1));
 				long b = System.nanoTime();
+				if (tuned) Tunables.apply(pv2);
 				Move fMove = p2.resolveDecision(p2.bestMove2(p1, fFaster, diff2));
 				long c = System.nanoTime();
 				r.nanos1 += b - a; r.decisions1++; r.maxNanos1 = Math.max(r.maxNanos1, b - a);
@@ -389,6 +400,7 @@ public final class SelfPlay {
 					while (next.isFainted()) {
 						if (next.trainer.hasNext()) {
 							boolean userSide = !next.trainer.hasUser(p1);
+							if (tuned) Tunables.apply(next.trainer == t1 ? pv1 : pv2);
 							next = next.trainer.next(foe, userSide);
 							Task.addSwapInTask(next, false);
 							next.swapIn(foe, true);
@@ -417,6 +429,7 @@ public final class SelfPlay {
 			Pokemon.field = prevField;
 			Pokemon.createTask = prevCreateTask;
 			gp.gameState = prevState;
+			if (tuned) Tunables.apply(null);
 		}
 		return r;
 	}

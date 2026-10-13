@@ -30,13 +30,13 @@ public final class Evaluator {
 	 * real opponent leaves standing, and a real KO (material for the dead mon, but the credit resets against the replacement)
 	 * scores no better than a chip that leaves the credit in place. Eval points (same scale as matchupScore, about -90..+90).
 	 */
-	static final double ESCAPE_COST = 30;
+	static double ESCAPE_COST = 30;
 	/** A wounded bench mon is a worse answer: its edge is worsened by this many points per missing fraction of its HP. */
-	static final double HURT_ANSWER_PENALTY = 60;
+	static double HURT_ANSWER_PENALTY = 60;
 	/** A hit that would be lethal but is endured (Sturdy / Focus Sash at full HP, False Swipe) counts as at most this fraction of the target's HP in the matchup: it takes a second hit. */
-	static final double ENDURE_FRAC = 0.5;
+	static double ENDURE_FRAC = 0.5;
 	/** Fraction of a telegraphed charge that still lands: the foe can switch, Protect, or KO the charger first. Placeholder; tune in self-play. */
-	static final double CHARGE_HOLD = 0.75;
+	static double CHARGE_HOLD = 0.75;
 
 	private Evaluator() {}
 

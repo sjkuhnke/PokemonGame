@@ -58,6 +58,11 @@ public final class AIV2 implements TrainerAI {
 
 	private final boolean sackingEnabled;
 	private final boolean historyEnabled;
+	
+	/** Phase 8: diagnostics only when someone will see them. SelfPlay/Tuner suppress Print.debug, which now also skips the work. */
+	private static boolean dbg() {
+		return AI_DEBUG && !Print.isDebugSuppressed();
+	}
 
 	private AIV2(boolean sackingEnabled, boolean historyEnabled) {
 		this.sackingEnabled = sackingEnabled;
@@ -181,7 +186,7 @@ public final class AIV2 implements TrainerAI {
 		PlayerModel model = cfg.useHistoryModel && foe.trainer != null ? foe.trainer.playerModel() : null;
 		if (model != null) {
 			PlayerReader.Observation seen = PlayerReader.observe(model, self, foe);
-			if (seen != null && AI_DEBUG) {
+			if (seen != null && dbg()) {
 				Print.debug(String.format(Locale.ROOT, "[AIV2] observed the player: %s (%s) -> model %s\n", seen.cls, seen.note, model.summary()));
 			}
 		}
@@ -225,7 +230,10 @@ public final class AIV2 implements TrainerAI {
 
 		int chosen = Shaper.sample(x);
 		Action chosenAct = A.get(chosen);
-		SackAnalysis.Label label = chosenAct.kind == ActionKind.MOVE ? null : SackAnalysis.classify(root, chosenAct, P, plan.yHat, cfg, plan.sacks);
+		SackAnalysis.Label label = null;
+		if (chosenAct.kind != ActionKind.MOVE && (dbg() || (Pokemon.gp != null && Pokemon.gp.gameState == GamePanel.SIM_BATTLE_STATE))) {
+			label = SackAnalysis.classify(root, chosenAct, P, plan.yHat, cfg, plan.sacks); // re-simulates; only needed for the log / sim UI
+		}
 		logDecision(self, A, x, chosenAct, x[chosen], plan.sacks);
 		logSackChosen(self, chosenAct, x[chosen], label);
 		report(self, A, x, chosenAct, x[chosen], label);
@@ -322,7 +330,7 @@ public final class AIV2 implements TrainerAI {
 	 * numbers look like, since a dropped row's cells aren't in the post-filter plan.A/plan.M at all.
 	 */
 	private void logSack(Pokemon self, SimState root, Plan plan, AIConfig cfg) {
-		if (!AI_DEBUG || plan.sacks.isEmpty()) return;
+		if (!dbg() || plan.sacks.isEmpty()) return;
 		Pokemon[] team = root.ai.bench();
 		int activeIdx = -1;
 		for (int i = 0; i < team.length; i++) if (team[i] == root.ai.active()) activeIdx = i;
@@ -375,13 +383,13 @@ public final class AIV2 implements TrainerAI {
 
 	/** The chosen row when it is labeled a sack: the same text the sim UI gets, plus the row's sampling probability. Debug only. */
 	private void logSackChosen(Pokemon self, Action chosenAct, double chosenProb, SackAnalysis.Label label) {
-		if (!AI_DEBUG || label == null || !label.sack) return;
+		if (!dbg() || label == null || !label.sack) return;
 		Print.debug(String.format(Locale.ROOT, "[AIV2] SACK CHOSEN (%s, %.1f%%): %s", chosenAct.label(), chosenProb * 100, reason(self, chosenAct, chosenProb, label)));
 	}
 
 	/** One line per action and its sampling probability, plus the pick. Guarded by AI_DEBUG so the string building is skipped entirely when off. */
 	private void logDecision(Pokemon self, List<Action> A, double[] x, Action chosenAct, double chosenProb, Set<Integer> sacks) {
-		if (!AI_DEBUG) return;
+		if (!dbg()) return;
 		StringBuilder sb = new StringBuilder();
 		sb.append("[AIV2] ").append(self).append(" (turn ").append(Pokemon.field.turns).append(")\n");
 		Integer[] order = new Integer[A.size()];
@@ -397,12 +405,12 @@ public final class AIV2 implements TrainerAI {
 	/** Full A x P payoff matrix. Verbose - off unless AI_DEBUG_MATRIX is also set. */
 	/** Phase 6: situation, trust and per-class history / equilibrium / prediction. Silent without a model or with no history yet. */
 	private void logRead(Pokemon self, Plan plan) {
-		if (!AI_DEBUG || plan.read == null) return;
+		if (!dbg() || plan.read == null) return;
 		Print.debug(String.format(Locale.ROOT, "[AIV2] %s: %s\n", self, PlayerReader.describe(plan.read, plan.eq.y, plan.yHat, plan.alphaEff)));
 	}
 
 	private void logMatrix(Pokemon self, Plan plan) {
-		if (!AI_DEBUG || !AI_DEBUG_MATRIX) return;
+		if (!dbg() || !AI_DEBUG_MATRIX) return;
 		List<Action> A = plan.A, P = plan.P;
 		double[][] M = plan.M;
 		StringBuilder sb = new StringBuilder();
@@ -436,7 +444,7 @@ public final class AIV2 implements TrainerAI {
 	 * START is the real state before the turn, since every other line is a projection AFTER it.
 	 */
 	private void logBranchDetail(Pokemon self, SimState root, List<Action> A, List<Action> P, AIConfig cfg, double[] y, MonWeights w) {
-		if (!AI_DEBUG || !AI_DEBUG_BRANCHES || P.isEmpty()) return;
+		if (!dbg() || !AI_DEBUG_BRANCHES || P.isEmpty()) return;
 		int col = 0;
 		if (y != null) for (int j = 1; j < P.size() && j < y.length; j++) if (y[j] > y[col]) col = j;
 		List<Integer> cols = new ArrayList<>();
@@ -496,7 +504,7 @@ public final class AIV2 implements TrainerAI {
 
 	/** Breaks eval() down into its terms at the (unmodified) root state, so a suspiciously large/uniform matrix can be traced to a specific term instead of guessed at. */
 	private void logEvalBreakdown(Pokemon self, SimState root, AIConfig cfg, MonWeights weights) {
-		if (!AI_DEBUG) return;
+		if (!dbg()) return;
 		double mat = Evaluator.material(root.ai, weights.ai) - Evaluator.material(root.player, weights.player);
 		double matchup = Evaluator.matchupTerm(root, weights);
 		double matchupLive = Evaluator.activeMatchup(root);

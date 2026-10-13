@@ -362,7 +362,29 @@ public class PlayerCharacter extends Entity {
 		if (keyH.calcPressed) {
 			keyH.calcPressed = false;
 			//Item.useCalc(p.getCurrent(), null, null, true);
-			Phase8Tests.timing(20);
+			Tuner.Settings s = new Tuner.Settings();
+			s.chunk = 50;
+			s.minBattles = 200;
+			s.maxBattles = 1500;
+			s.z = 2.8;                 // stricter, to offset many tests and repeated looks
+			s.futilityAfter = 600;
+			s.futilityUpper = 0.55;
+			s.passes = 2;
+			s.maxSeconds = 8 * 3600;
+			s.only = null;
+			double[] v = Tuner.run(s);
+			if (!Arrays.equals(v, Tunables.defaults())) {
+				SelfPlay.Config c = new SelfPlay.Config();
+				c.battles = 2000;
+				c.baseSeed = 313131L;                       // not the tuner's seed
+				c.teams = SelfPlay.randomCompetitive(6);
+				c.determinismSample = 0;
+				c.paramsA = v;                           // the tuned vector (this is what v is for)
+				c.paramsB = null;                        // defaults
+				SelfPlay.run(c);                         // read engine A's score and CI
+				c.teams = SelfPlay.storyTrainers();
+				SelfPlay.run(c);
+			}
 		}
 		
 		checkHotkeys();

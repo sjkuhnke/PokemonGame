@@ -106,7 +106,7 @@ public enum Ability {
 	PYROMANCER("Inflicts the foe with a burn when this Pokemon hits with a FIRE move.", 1),
 	RADIANT("Lowers foe's Accuracy when this Pokemon hits with a LIGHT move.", 1),
 	RAIN_DISH("The Pokemon regains 1/8 max HP in RAIN.", 1),
-	RATTLED("Getting hit by DARK, GHOST, or BUG moves boost its Speed stat.", 1),
+	RATTLED("Getting hit by DARK, GHOST or BUG moves or when effected by switch-in stat-lowering Abilities, its Speed stat is boosted.", 1),
 	RECKLESS("Powers up moves that have recoil damage by 1.3x.", 1),
 	REFORGE("Restores 1/16 HP at the end of each turn.", 1),
 	REGENERATOR("Restores 1/3 max HP when withdrawn from battle.", 1),

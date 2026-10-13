@@ -8499,6 +8499,10 @@ public class Pokemon implements Serializable {
 				stat(foe, 4, 1, this);
 				foe.consumeItem(this);
 			}
+			if (foe.getAbility(field) == Ability.RATTLED) {
+				Task.addAbilityTask(foe);
+				stat(foe, 4, 1, this);
+			}
 		} else if (this.getAbility(field) == Ability.TERRIFY) {
 			Task.addAbilityTask(this);
 			if (foe.getAbility(field) == Ability.INNER_FOCUS || foe.getAbility(field) == Ability.SCRAPPY || foe.getAbility(field) == Ability.UNWAVERING) {
@@ -8512,6 +8516,10 @@ public class Pokemon implements Serializable {
 				stat(foe, 4, 1, this);
 				foe.consumeItem(this);
 			}
+			if (foe.getAbility(field) == Ability.RATTLED) {
+				Task.addAbilityTask(foe);
+				stat(foe, 4, 1, this);
+			}
 		} else if (this.getAbility(field) == Ability.THREATENING) {
 			Task.addAbilityTask(this);
 			if (foe.getAbility(field) == Ability.INNER_FOCUS || foe.getAbility(field) == Ability.SCRAPPY || foe.getAbility(field) == Ability.UNWAVERING) {
@@ -8524,6 +8532,10 @@ public class Pokemon implements Serializable {
 				Task.addTask(Task.TEXT, foe.nickname + " used its " + foe.item.toString() + " to boost its Speed!");
 				stat(foe, 4, 1, this);
 				foe.consumeItem(this);
+			}
+			if (foe.getAbility(field) == Ability.RATTLED) {
+				Task.addAbilityTask(foe);
+				stat(foe, 4, 1, this);
 			}
 		} else if (this.getAbility(field) == Ability.SMOKE_SESSION) {
 			Task.addAbilityTask(this);
@@ -8583,7 +8595,7 @@ public class Pokemon implements Serializable {
 			}
 		} else if (this.getAbility(field) == Ability.ANTICIPATION && !this.illusion) {
 			this.checkAnticipation(foe, field);
-		} else if (this.getAbility(field) == Ability.TRACE) {
+		} else if (this.getAbility(field) == Ability.TRACE && foe.getAbility(field) != Ability.TRACE) {
 			if (this.getItem(field) != Item.ABILITY_SHIELD) {
 				Task.addAbilityTask(this);
 				this.onAbilityChanged(field, foe);

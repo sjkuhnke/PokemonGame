@@ -25,7 +25,7 @@ import util.Print;
  */
 public final class ReplacementChooser {
 	/** Points of matchupScore one unit of (weight * hpFrac) is worth when ranking replacements. Tuned in Phase 8. */
-	public static final double FUTURE_W = 8.0;
+	public static double FUTURE_W = 8.0;
 
 	private ReplacementChooser() {}
 

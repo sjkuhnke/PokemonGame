@@ -130,9 +130,9 @@ Teddinaut @ Choice Specs/Choice Scarf
 Timid Nature
 Ability: Adaptability
 - Genesis Supernova
-- Tri-Attack/Hyper Beam
+- Hyper Voice/Hyper Beam
 - Trick
-- Focus Blast/Dazzling Gleam
+- Focus Blast/Spotlight Ray
 
 Teddinaut @ Coba Berry/Charti Berry/Focus Sash
 Timid Nature
@@ -140,7 +140,7 @@ Ability: Levitate
 - Desolate Void/Star Storm/Galaxy Blast
 - Abduct
 - Radio Burst/Memento/Thunder Wave
-- Knock Off/Encore/Tri-Attack
+- Knock Off/Encore/Hyper Voice
 
 Teddinaut @ Power Herb/Blunder Policy
 Timid Nature
@@ -148,7 +148,7 @@ Ability: Scrappy
 - Hyper Beam
 - Star Storm
 - Blizzard/Hydro Pump
-- Calm Mind/Charge Beam
+- Calm Mind/Focus Blast
 
 Milimace @ Focus Sash
 Impish Nature
@@ -224,7 +224,7 @@ Ability: Chlorophyll
 
 Serpenge @ Leftovers
 Bold/Calm Nature
-Ability: Competitive
+Ability: Berserk
 - Giga Drain
 - Spiky Shield/Stealth Rock
 - Draco Meteor/Dragon Pulse
@@ -244,7 +244,7 @@ Ability: Corrosion
 - Sludge Bomb
 - Leaf Storm/Energy Ball/Giga Drain
 - Earth Power
-- Shadow Ball/Dazzling Gleam
+- Shadow Ball/Photon Geyser
 
 Roserade @ Choice Specs
 Timid Nature
@@ -472,7 +472,7 @@ Ability: Unerodible
 
 Sedisoftra @ Leftovers
 Careful Nature
-Ability: Solid Rock
+Ability: Sand Stream
 - Stealth Rock/Bulk Up
 - Rollout/Stone Edge
 - Earthquake
@@ -656,7 +656,7 @@ Ability: Refrigerate
 
 Topazatops @ Choice Band
 Adamant Nature
-Ability: Rock Head
+Ability: Fortify
 - Head Smash
 - Close Combat
 - Mach Punch
@@ -664,7 +664,7 @@ Ability: Rock Head
 
 Topazatops @ Lum Berry/White Herb
 Impish/Adamant Nature
-Ability: Rock Head
+Ability: Fortify
 - Head Smash
 - Swords Dance/No Retreat
 - Close Combat
@@ -672,7 +672,7 @@ Ability: Rock Head
 
 Topazatops @ Leftovers
 Impish/Careful Nature
-Ability: Rock Head
+Ability: Fortify
 - Head Smash
 - Iron Defense
 - Stealth Rock/Spiky Shield
@@ -681,17 +681,17 @@ Ability: Rock Head
 Topazatops @ Leftovers
 Careful Nature
 Ability: Sand Force
-- Stealth Rock/Thunder Wave/Toxic
+- Stealth Rock/Thunder Wave
 - Sandstorm/Spiky Shield
 - Circle Throw
 - Ice Spinner/Rock Tomb
 
 Topazatops @ Rocky Helmet
 Impish Nature
-Ability: Rough Skin
+Ability: Bulletproof
 - Rest
 - Stone Edge/Sky Uppercut
-- Stealth Rock/Toxic
+- Stealth Rock/Thunder Wave
 - Spiky Shield
 
 Walrein @ Leftovers
@@ -784,7 +784,7 @@ Ability: Magic Bounce
 
 Hatterene @ Leftovers
 Bold Nature
-Ability: Unwavering
+Ability: Mystic Rift
 - Magic Reflect
 - Nuzzle/Mystical Fire
 - Calm Mind
@@ -808,7 +808,7 @@ Ability: Sleight Of Hand
 
 Lutrineer @ Choice Specs
 Modest Nature
-Ability: Swift Swim
+Ability: Anticipation
 - Water Spout
 - Hydro Vortex
 - Freeze-Dry
@@ -816,7 +816,7 @@ Ability: Swift Swim
 
 Lutrineer @ Damp Rock
 Bold/Calm Nature
-Ability: Hydration
+Ability: Drizzle
 - Scald
 - Rain Dance
 - Rest

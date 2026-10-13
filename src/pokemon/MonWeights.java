@@ -24,19 +24,19 @@ public final class MonWeights {
 	private static final double BASE_W = 1.0;
 	private static final double MIN_W = 0.25, MAX_W = 3.0;
 	/** Phase 5: scale of the only-answer bonus (edge units are about [-1, +1]; threat is about 1..2). Tuned in Phase 8. */
-	static final double UNIQUE_W = 0.75;
+	static double UNIQUE_W = 0.75;
 	/** Phase 5: how far ahead of the runner-up a mon's edge must be to count as the only answer. Tuned in Phase 8. */
-	static final double GAP = 0.3;
+	static double GAP = 0.3;
 	/** Phase 5: cap on the summed utility terms, so utility nudges but never outweighs answering threats. */
-	static final double UTILITY_MAX = 0.6;
+	static double UTILITY_MAX = 0.6;
 	/**
 	 * Normalization sharpness: w ~ exp(NORM_K * z), z = (raw - mean) / max(sd, NORM_SD_FLOOR). 0.5 turns a raw spread of one
 	 * standard deviation into about a 1.65x weight ratio; a lone standout on a six-mon team lands near 2.5x the average.
 	 * Untuned placeholder; Phase 8.
 	 */
-	static final double NORM_K = 0.5;
+	static double NORM_K = 0.5;
 	/** Raw units are comparable across teams (contribution/unique/utility are absolute), so a near-uniform team must not have tiny noise stretched to full scale: sd is floored here. */
-	static final double NORM_SD_FLOOR = 1.0;
+	static double NORM_SD_FLOOR = 1.0;
 
 	public final double[] ai;
 	public final double[] player;

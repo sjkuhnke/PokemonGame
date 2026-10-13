@@ -15,6 +15,11 @@ package pokemon;
  */
 public class AIConfig {
 	public int branchBudget = 4;
+	
+	static double D_ALPHA = 0.7, D_TEMP_EXPLOIT = 6.0, D_SACK_RATIO = 0.8, D_SACK_MIN_GAIN = 10, D_MIN_PROB = 0.02, D_LEAD_TEMPERATURE = 10.0;
+	
+	   static double D_W_MATCHUP = 1, D_W_HAZARD = 1, D_W_STATUS = 1, D_W_FIELD = 1, D_W_TEMPO = 1, D_W_PENDING = 1;
+	   public EvalWeights style = new EvalWeights(1.0, D_W_MATCHUP, D_W_HAZARD, D_W_STATUS, D_W_FIELD, D_W_TEMPO, D_W_PENDING);
 
 	/**
 	 * Phase 6 (§7.11): use the player model (what this player tends to do) to blend an exploit into the equilibrium.
@@ -26,22 +31,22 @@ public class AIConfig {
 	 * fully confident; with little data it is pulled toward 1 ({@link PlayerModel#alphaEff}). So 0.7 means at most 30% of
 	 * the mix chases the read - the main "how hard does the AI punish habits" knob. Placeholder; Phase 8.
 	 */
-	public double alpha = 0.7;
+	public double alpha = D_ALPHA;
 	/** Phase 6: sharpness of the exploit softmax over the rows' payoff against y_hat (payoffs scaled by their range, so unit-free). Placeholder; Phase 8. */
-	public double temperatureExploit = 6.0;
+	public double temperatureExploit = D_TEMP_EXPLOIT;
 
 	/** NORMAL=false (pivot moves and Perish-in-1 still allowed); HARD/EXTREME=true. */
 	public boolean allowVoluntarySwitch = true;
 	/** NORMAL dead turn: force a swap instead of letting the matrix decide. Default false per §7.13.1. */
 	public boolean deadTurnForcesSwitch = false;
 	/** A sack candidate must be worth < sackRatio * value(active), §7.14. */
-	public double sackRatio = 0.8;
+	public double sackRatio = D_SACK_RATIO;
 	/**
 	 * Phase 5 (§7.14.2 SACK_MIN_GAIN): a sack row (a switch / pivot-switch to a sack-only candidate) must beat the best
 	 * plain Stay row by at least this many eval points, averaged over the threat columns, or it is dropped before solving.
 	 * eval is roughly HP points (100 ~ one healthy mon). Placeholder; tuned via self-play in Phase 8.
 	 */
-	public double sackMinGain = 10;
+	public double sackMinGain = D_SACK_MIN_GAIN;
 	/**
 	 * Phase 5: false removes the AI's own sack candidates (and so the guard/classification). Exists only so self-play can
 	 * compare sacking on/off; every difficulty leaves it true.
@@ -50,10 +55,9 @@ public class AIConfig {
 	public int maxPlayerSwitchCols = 4;
 	public int maxAISwitchRows = 5;
 	/** shape() cutoff: entries below this are zeroed and the rest renormalized. */
-	public double minProb = 0.02;
+	public double minProb = D_MIN_PROB;
 	/** shape() mistake rate; 0 this phase (difficulty-tuned mistakes are a Phase 6+ knob). */
 	public double epsilon = 0.0;
-	public EvalWeights style = EvalWeights.BALANCED;
 	/** Tier 2 (full move() sim) always on this phase; Tier 0/1 fast paths are Phase 8. */
 	public boolean useFullSim = true;
 	/** Phase 7 (§7.15, §8.1): EXTREME only. The AI picks its own lead from the player's team before turn 1. */
@@ -61,7 +65,7 @@ public class AIConfig {
 	/** Phase 7: how many top rows / columns of the static lead matrix get a one-turn game value. Placeholder; Phase 8. */
 	public int leadRefineKAi = 2;
 	public int leadRefineKPlayer = 2;
-	public double leadTemperature = 10.0;
+	public double leadTemperature = D_LEAD_TEMPERATURE;
 
 	public static AIConfig normal() {
 		AIConfig c = new AIConfig();

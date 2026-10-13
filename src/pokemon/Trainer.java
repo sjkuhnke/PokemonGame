@@ -690,6 +690,8 @@ public class Trainer implements Serializable {
 			if (touch) {
 				Pokemon c = this.team[i].clone();
 				c.vStatuses = DeepClonable.deepCloneList(this.team[i].vStatuses);
+				c.removeStatus(Status.SWAP); // Phase 8: a decision already made this turn must not leak into the snapshot
+				c.removeStatus(Status.TEMP_SWITCHING);
 				c.cloned = true;
 				c.trainer = shell;
 				newTeam[i] = c;
@@ -712,6 +714,8 @@ public class Trainer implements Serializable {
 		if (p == null || p.trainer == this) return;
 		Pokemon c = p.clone();
 		c.vStatuses = DeepClonable.deepCloneList(p.vStatuses);
+		c.removeStatus(Status.SWAP); // Phase 8: a decision already made this turn must not leak into the snapshot
+		c.removeStatus(Status.TEMP_SWITCHING);
 		c.cloned = true;
 		c.trainer = this;
 		team[i] = c;
