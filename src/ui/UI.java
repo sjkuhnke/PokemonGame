@@ -10,7 +10,10 @@ import java.awt.FontMetrics;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.LinearGradientPaint;
 import java.awt.RenderingHints;
+import java.awt.geom.Point2D;
+import java.awt.MultipleGradientPaint;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -611,93 +614,7 @@ public class UI extends AbstractUI {
 			drawEvoInfoParty();
 			break;
 		case Task.ODDS:
-			boolean print = false;
-			if (currentTask.counter > 0) {
-				currentTask.counter -= 10;
-				showMessage(Item.breakString(currentTask.message, MAX_TEXTBOX));
-			} else {
-				ArrayList<Pokemon> t1Team = new ArrayList<>();
-				ArrayList<Item> t1Items = new ArrayList<>();
-				ArrayList<Pokemon> t2Team = new ArrayList<>();
-				ArrayList<Item> t2Items = new ArrayList<>();
-				
-				int teamSize = 3;
-				
-				for (int i = 0; i < teamSize; i++) {
-					Pokemon p = Pokemon.generateCompetitivePokemon(t1Team);
-					p.setSprites();
-					t1Team.add(p);
-					t1Items.add(p.item);
-				}
-				for (int i = 0; i < teamSize; i++) {
-					Pokemon p = Pokemon.generateCompetitivePokemon(t2Team);
-					p.setSprites();
-					t2Team.add(p);
-					t2Items.add(p.item);
-				}
-				
-				Trainer ut = new Trainer("Trainer A", t1Team.toArray(new Pokemon[1]), t1Items.toArray(new Item[1]), 0, 1);
-				Trainer ft = new Trainer("Trainer B", t2Team.toArray(new Pokemon[1]), t2Items.toArray(new Item[1]), 0, 2);
-				
-				int[] odds = Pokemon.simulateBattle(ut, ft);
-				int[] adjustedOdds = adjustSimulatedOdds(odds);
-				//tasks.clear();
-				
-				if (print) {
-					System.out.println("Average Crits: " + String.format("%.1f", Pokemon.field.crits * 1.0 / 10));
-					System.out.println("Average Misses: " + String.format("%.1f", Pokemon.field.misses * 1.0 / 10));
-					System.out.println("Average Super Effective Hits: " + String.format("%.1f", Pokemon.field.superEffective * 1.0 / 10));
-					System.out.println("Average Switches: " + String.format("%.1f", Pokemon.field.switches * 1.0 / 10));
-					System.out.println("Average Knockouts: " + String.format("%.1f", Pokemon.field.knockouts * 1.0 / 10));
-					System.out.println("Average Turns: " + String.format("%.1f", Pokemon.field.turns * 1.0 / 10));
-					
-					System.out.println("Trainer A games won: " + odds[0]);
-					System.out.println("Trainer B games won: " + odds[1]);
-				}
-				
-				ArrayList<Pair<Double, String>> parlay = new ArrayList<>(Arrays.asList(
-					new Pair<>(Pokemon.field.crits * 1.0 / 10, "crits"),
-					new Pair<>(Pokemon.field.misses * 1.0 / 10, "misses"),
-					new Pair<>(Pokemon.field.superEffective * 1.0 / 10, "super effective hits"),
-					new Pair<>(Pokemon.field.switches * 1.0 / 10, "switches"),
-					new Pair<>(Pokemon.field.knockouts * 1.0 / 10, "knockouts"),
-					new Pair<>(Pokemon.field.turns * 1.0 / 10, "total turns")
-				));
-				
-				System.out.println("------------------");
-				
-				for (Pair<Double, String> p : parlay) {
-					double avg = p.getFirst();
-					double randomizedLine = randomizeParlayLine(avg, p.getSecond());
-					p.setFirst(randomizedLine);
-					if (print) System.out.println(String.format("%s line: %.1f (was %.1f)", 
-							   p.getSecond(), randomizedLine, avg));
-				}
-				gauntlet = currentTask.wipe;
-				gp.simBattleUI.gauntlet = currentTask.wipe;
-				
-				int winStreak = gp.player.p.winStreak;
-				gp.player.p.winStreak = 0;
-				gp.player.p.addBetCurrency(gauntlet, -Player.BET_INC);
-				gp.saveGame(gp.player.p, true);
-				gp.player.p.winStreak = winStreak;
-				gp.player.p.addBetCurrency(gauntlet, Player.BET_INC);
-				
-				parlays = new int[MAX_PARLAYS];
-				sheetFilled = false;
-				gp.simBattleUI.parlaySheet = parlay;
-				
-				Task t = Task.addTask(Task.BET_BATTLE, "");
-				t.p = ut.getCurrent();
-				t.foe = ft.getCurrent();
-				t.trainers = new Trainer[] {ut, ft};
-				t.start = adjustedOdds[0];
-				t.finish = adjustedOdds[1];
-				
-				gp.simBattleUI.weather = null;
-				gp.simBattleUI.terrain = null;
-				currentTask = null;
-			}
+			drawOddsTask();
 			break;
 		case Task.BET_BATTLE:
 			showMessage = false;
@@ -852,6 +769,214 @@ public class UI extends AbstractUI {
 		if (currentTask.counter <= 0) {
 			currentTask = null;
 		}
+	}
+	
+	private enum OddsPhase { INTRO, LOADING_SETS, SIMULATING, FAILED }
+	private OddsPhase oddsPhase = OddsPhase.INTRO;
+	private int oddsFrames;
+	private Pokemon.OddsRun oddsRun;
+	private Trainer oddsA, oddsB;
+	private String oddsError;
+	private long oddsStartMs;
+
+	private void drawOddsTask() {
+		switch (oddsPhase) {
+		case INTRO: // lets the "Calculating odds..." message actually get drawn before any heavy work starts
+			showMessage(Item.breakString(currentTask.message, MAX_TEXTBOX));
+			if (++oddsFrames >= 20) {
+				oddsFrames = 0;
+				oddsStartMs = System.currentTimeMillis();
+				oddsPhase = OddsPhase.LOADING_SETS;
+			}
+			break;
+		case LOADING_SETS:
+			drawOddsProgress("Loading Pokemon sets", 0, elapsedText());
+			if (!Pokemon.sets.isEmpty()) {
+				startOddsRun();
+			} else if (System.currentTimeMillis() - oddsStartMs > 20000) {
+				failOdds("The Pokemon sets did not load.");
+			}
+			break;
+		case SIMULATING:
+			stepOdds();
+			break;
+		case FAILED:
+			drawOddsError();
+			break;
+		}
+	}
+
+	private void startOddsRun() {
+		try {
+			ArrayList<Pokemon> t1Team = new ArrayList<>();
+			ArrayList<Item> t1Items = new ArrayList<>();
+			ArrayList<Pokemon> t2Team = new ArrayList<>();
+			ArrayList<Item> t2Items = new ArrayList<>();
+			int teamSize = 3;
+			for (int i = 0; i < teamSize; i++) {
+				Pokemon p = Pokemon.generateCompetitivePokemon(t1Team);
+				p.setSprites();
+				t1Team.add(p);
+				t1Items.add(p.item);
+			}
+			for (int i = 0; i < teamSize; i++) {
+				Pokemon p = Pokemon.generateCompetitivePokemon(t2Team);
+				p.setSprites();
+				t2Team.add(p);
+				t2Items.add(p.item);
+			}
+			oddsA = new Trainer("Trainer A", t1Team.toArray(new Pokemon[1]), t1Items.toArray(new Item[1]), 0, 1);
+			oddsB = new Trainer("Trainer B", t2Team.toArray(new Pokemon[1]), t2Items.toArray(new Item[1]), 0, 2);
+			oddsRun = new Pokemon.OddsRun(oddsA, oddsB);
+			oddsPhase = OddsPhase.SIMULATING;
+		} catch (Throwable t) {
+			failOdds(t);
+		}
+	}
+
+	private void stepOdds() {
+		long t0 = System.nanoTime();
+		try {
+			do {
+				oddsRun.step();
+			} while (!oddsRun.isDone() && System.nanoTime() - t0 < 8_000_000L);
+		} catch (Throwable t) {
+			failOdds(t);
+			return;
+		}
+		long ms = (System.nanoTime() - t0) / 1_000_000L;
+		if (ms > 1000) System.err.println("[odds] slow step: " + ms + " ms (battle " + oddsRun.battle() + ", turn " + oddsRun.turn() + ")");
+
+		if (oddsRun.isDone()) {
+			finishOdds();
+			return;
+		}
+		drawOddsProgress("Calculating odds", oddsRun.fraction(),
+				"Battle " + oddsRun.battle() + " of " + Pokemon.OddsRun.BATTLES + "  -  turn " + oddsRun.turn() + "  -  " + elapsedText());
+	}
+
+	private String elapsedText() {
+		return ((System.currentTimeMillis() - oddsStartMs) / 1000) + "s";
+	}
+
+	private void failOdds(Throwable t) {
+		t.printStackTrace();
+		String msg = t.getMessage();
+		failOdds(t.getClass().getSimpleName() + (msg != null ? ": " + msg : ""));
+	}
+
+	private void failOdds(String message) {
+		SimContext.resetForFrame(); // never leave a half-open sim scope behind (it silently disables every Task)
+		oddsError = message;
+		oddsPhase = OddsPhase.FAILED;
+	}
+
+	private void resetOdds() {
+		oddsPhase = OddsPhase.INTRO;
+		oddsFrames = 0;
+		oddsRun = null;
+		oddsA = null;
+		oddsB = null;
+		oddsError = null;
+	}
+
+	private void drawOddsError() {
+		int w = gp.tileSize * 11, h = gp.tileSize * 4;
+		int x = (gp.screenWidth - w) / 2, y = (gp.screenHeight - h) / 2;
+		drawPanelWithBorder(x, y, w, h, 235, Color.RED);
+		g2.setFont(gp.marumonica.deriveFont(Font.BOLD, 32F));
+		g2.setColor(Color.RED);
+		g2.drawString("Couldn't calculate the odds", x + gp.tileSize / 2, y + gp.tileSize);
+		g2.setFont(gp.marumonica.deriveFont(20F));
+		g2.setColor(Color.WHITE);
+		int ty = y + (int) (gp.tileSize * 1.7);
+		for (String line : Item.breakString(oddsError, 60).split("\n")) {
+			g2.drawString(line, x + gp.tileSize / 2, ty);
+			ty += 26;
+		}
+		drawToolTips("Retry", null, "Cancel", null);
+
+		if (gp.keyH.wPressed) {
+			gp.keyH.wPressed = false;
+			oddsRun = null;
+			oddsError = null;
+			oddsStartMs = System.currentTimeMillis();
+			oddsPhase = OddsPhase.LOADING_SETS;
+		}
+		if (gp.keyH.sPressed) {
+			gp.keyH.sPressed = false;
+			resetOdds();
+			currentTask = null; // nothing was charged yet, so backing out is free
+		}
+	}
+
+	private void drawOddsProgress(String title, double fraction, String detail) {
+		int w = gp.tileSize * 9, h = gp.tileSize * 3;
+		int x = (gp.screenWidth - w) / 2, y = (gp.screenHeight - h) / 2;
+		drawPanelWithBorder(x, y, w, h, 230, Color.WHITE);
+
+		String dots = ".".repeat((int) (System.currentTimeMillis() / 400 % 4)); // animated so it's obvious the game is alive
+		g2.setFont(gp.marumonica.deriveFont(Font.BOLD, 32F));
+		g2.setColor(Color.WHITE);
+		g2.drawString(title + dots, x + gp.tileSize / 2, y + gp.tileSize);
+
+		int bx = x + gp.tileSize / 2, by = y + (int) (gp.tileSize * 1.4), bw = w - gp.tileSize, bh = gp.tileSize / 2;
+		g2.setColor(Color.DARK_GRAY);
+		g2.fillRect(bx, by, bw, bh);
+		g2.setColor(new Color(80, 200, 120));
+		g2.fillRect(bx, by, (int) (bw * Math.max(0, Math.min(1, fraction))), bh);
+		g2.setColor(Color.WHITE);
+		g2.drawRect(bx, by, bw, bh);
+
+		if (detail != null) {
+			g2.setFont(gp.marumonica.deriveFont(20F));
+			g2.drawString(detail, bx, by + bh + 28);
+		}
+	}
+
+	private void finishOdds() {
+		int[] odds = oddsRun.result();
+		Trainer ut = oddsA, ft = oddsB;
+		int[] adjustedOdds = adjustSimulatedOdds(odds);
+		double n = Pokemon.OddsRun.BATTLES;
+
+		ArrayList<Pair<Double, String>> parlay = new ArrayList<>(Arrays.asList(
+			new Pair<>(Pokemon.field.crits / n, "crits"),
+			new Pair<>(Pokemon.field.misses / n, "misses"),
+			new Pair<>(Pokemon.field.superEffective / n, "super effective hits"),
+			new Pair<>(Pokemon.field.switches / n, "switches"),
+			new Pair<>(Pokemon.field.knockouts / n, "knockouts"),
+			new Pair<>(Pokemon.field.turns / n, "total turns")
+		));
+		for (Pair<Double, String> p : parlay) {
+			p.setFirst(randomizeParlayLine(p.getFirst(), p.getSecond()));
+		}
+
+		gauntlet = currentTask.wipe;
+		gp.simBattleUI.gauntlet = currentTask.wipe;
+
+		int winStreak = gp.player.p.winStreak;
+		gp.player.p.winStreak = 0;
+		gp.player.p.addBetCurrency(gauntlet, -Player.BET_INC);
+		gp.saveGame(gp.player.p, true);
+		gp.player.p.winStreak = winStreak;
+		gp.player.p.addBetCurrency(gauntlet, Player.BET_INC);
+
+		parlays = new int[MAX_PARLAYS];
+		sheetFilled = false;
+		gp.simBattleUI.parlaySheet = parlay;
+
+		Task t = Task.addTask(Task.BET_BATTLE, "");
+		t.p = ut.getCurrent();
+		t.foe = ft.getCurrent();
+		t.trainers = new Trainer[] {ut, ft};
+		t.start = adjustedOdds[0];
+		t.finish = adjustedOdds[1];
+
+		gp.simBattleUI.weather = null;
+		gp.simBattleUI.terrain = null;
+		resetOdds();
+		currentTask = null;
 	}
 
 	private void drawBetBattle() {
@@ -2792,47 +2917,62 @@ public class UI extends AbstractUI {
 		
 		drawSubWindow(infoX, infoY, infoWidth, infoHeight, 255);
 		
-		int infoTextX = infoX + gp.tileSize / 2;
-		int infoTextY = infoY + gp.tileSize;
-		g2.setFont(g2.getFont().deriveFont(32F));
 		int[] amounts = gp.player.p.getDexAmounts(dex);
 		int caughtAmt = amounts[1];
 		int seenAmt = amounts[0] + caughtAmt;
+		Pair<Integer, Boolean> shinyInfo = gp.player.p.getShinyAmount();
+		int shinyAmt = shinyInfo.getFirst();
+		boolean shinyComplete = shinyInfo.getSecond();
+		boolean hasSort = dexSort != DexSort.DEX_NUMBER;
+		boolean bottomRow = shinyAmt > 0 || hasSort; // third row only exists when there's something to put in it
+
+		// Caught / Seen (the card keeps its original two-row look until shinies or a sort show up)
+		int infoTextX = infoX + gp.tileSize / 2;
+		int caughtY = infoY + (int) (gp.tileSize * (bottomRow ? 0.85 : 1.0));
+		int seenY = infoY + (int) (gp.tileSize * (bottomRow ? 1.5 : 2.0));
+		g2.setFont(g2.getFont().deriveFont(bottomRow ? 28F : 32F));
 		String caughtString = "Caught: " + caughtAmt;
 		String seenString = "Seen: " + seenAmt;
 		if (caughtAmt >= dex.length) {
-			g2.setPaint(new GradientPaint(infoTextX, infoTextY, new Color(255, 215, 0), infoTextX + gp.tileSize, infoTextY - gp.tileSize, new Color(245, 225, 210)));
+			g2.setPaint(new GradientPaint(infoTextX, caughtY, new Color(255, 215, 0), infoTextX + gp.tileSize, caughtY - gp.tileSize, new Color(245, 225, 210)));
 		}
-		g2.drawString(caughtString, infoTextX, infoTextY);
-		
+		g2.drawString(caughtString, infoTextX, caughtY);
+
 		g2.setColor(Color.WHITE);
-		infoTextY += gp.tileSize;
 		if (seenAmt >= dex.length) {
-			g2.setPaint(new GradientPaint(infoTextX, infoTextY, new Color(192, 192, 192), infoTextX + gp.tileSize, infoTextY - gp.tileSize, new Color(245, 225, 210)));
+			g2.setPaint(new GradientPaint(infoTextX, seenY, new Color(192, 192, 192), infoTextX + gp.tileSize, seenY - gp.tileSize, new Color(245, 225, 210)));
 		}
-		g2.drawString(seenString, infoTextX, infoTextY);
-		
-		infoTextX += gp.tileSize * 3.2;
-		infoTextY -= gp.tileSize / 2;
-		g2.setFont(g2.getFont().deriveFont(40F));
+		g2.drawString(seenString, infoTextX, seenY);
+
+		// Stars: gold for dex progress, plus a hidden iridescent one for a complete shiny dex
 		int starWidth = (gp.tileSize * 2 / 3) - 4;
+		int starsX = infoX + (int) (gp.tileSize * 3.7) - (shinyComplete ? starWidth : 0);
+		int starY = infoY + (int) (gp.tileSize * (bottomRow ? 1.4 : 1.5));
+		g2.setFont(g2.getFont().deriveFont(40F));
 		for (int i = 0; i < starAmt; i++) {
 			// Create a GradientPaint for each star individually
-			int starX = infoTextX + (i * starWidth);
+			int starX = starsX + (i * starWidth);
 			GradientPaint starPaint = new GradientPaint(
-				starX + 6, infoTextY - 6, new Color(255, 215, 0), // Start point and color
-				starX + starWidth - 10, infoTextY - starWidth + 10, new Color(245, 225, 210) // End point and color
+				starX + 6, starY - 6, new Color(255, 215, 0), // Start point and color
+				starX + starWidth - 10, starY - starWidth + 10, new Color(245, 225, 210) // End point and color
 					);
 			g2.setPaint(starPaint);
-			g2.drawString('\u2605' + "", starX, infoTextY);
+			g2.drawString('\u2605' + "", starX, starY);
 		}
-		
-		if (dexSort != DexSort.DEX_NUMBER) {
-			g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 16F));
-			g2.setColor(new Color(200, 200, 200));
-			String sortText = "Sorted: " + dexSort.shortLabel;
-			g2.drawString(sortText, getRightAlignedTextX(sortText, width - gp.tileSize / 2), infoY + (int) (gp.tileSize * 2.2));
-			g2.setColor(Color.WHITE);
+		if (shinyComplete) drawDexShinyStar(starsX + starAmt * starWidth, starY, starWidth);
+		g2.setColor(Color.WHITE);
+
+		// Bottom row: shiny count (only once a shiny is registered) on the left, current sort on the right
+		if (bottomRow) {
+			int rowY = infoY + (int) (gp.tileSize * 2.07);
+			if (shinyAmt > 0) drawDexShinyChip(infoTextX, rowY, shinyAmt, shinyComplete);
+			if (hasSort) {
+				g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 16F));
+				g2.setColor(new Color(200, 200, 200));
+				String sortText = "Sorted: " + dexSort.shortLabel;
+				g2.drawString(sortText, getRightAlignedTextX(sortText, width - gp.tileSize / 2), rowY);
+				g2.setColor(Color.WHITE);
+			}
 		}
 		
 		if (gp.keyH.shiftPressed && dexMode == 0 && !menuOpen) {
@@ -2844,13 +2984,13 @@ public class UI extends AbstractUI {
 		String wText = null;
 		switch (dexMode) {
 		case 0:
-			wText = "Details";break;
+			wText = mode == 2 ? "Details" : null;break;
 		case 1:
 			wText = "Level Moves";break;
 		case 2:
 			wText = "TM Moves";break;
 		}
-		drawToolTips(wText, "Prev", "Back", "Next", variants != null && variants.size() > 1 ? "Form/Shiny" : null);
+		drawToolTips(wText, "Prev", "Back", "Next", variants != null && variants.size() > 1 ? "Form" : null);
 		
 		if (dexSortMenu) drawDexSortOptions(baseID);
 	}
@@ -2860,6 +3000,7 @@ public class UI extends AbstractUI {
 		DEX_NUMBER("Sort (Dex #)", "Dex #", 0),
 		ALPHABETICAL("Sort (A-Z)", "A-Z", 1),
 		REVERSE_ALPHABETICAL("Sort (Z-A)", "Z-A", 1),
+		ID("Sort (ID)", "ID", 1),
 		TYPE("Sort (Type)", "Type", 1),
 		TOTAL("Sort (Total Stats)", "Total", 2),
 		HP("Sort (HP)", "HP", 2),
@@ -2886,6 +3027,8 @@ public class UI extends AbstractUI {
 				return Comparator.comparing((Pokemon p) -> Pokemon.getName(p.id), String.CASE_INSENSITIVE_ORDER);
 			case REVERSE_ALPHABETICAL:
 				return Comparator.comparing((Pokemon p) -> Pokemon.getName(p.id), String.CASE_INSENSITIVE_ORDER).reversed();
+			case ID:
+				return Comparator.comparingInt((Pokemon p) -> p.id);
 			case TYPE:
 				return Comparator.comparing((Pokemon p) -> Pokemon.getType1(p.id).toString(), String.CASE_INSENSITIVE_ORDER)
 						.thenComparing((Pokemon p) -> Pokemon.getType2(p.id) == null ? "" : Pokemon.getType2(p.id).toString(), String.CASE_INSENSITIVE_ORDER);
@@ -2985,6 +3128,64 @@ public class UI extends AbstractUI {
 		}
 	}
 	
+	private static final Color SHINY_CYAN = new Color(120, 235, 255);
+	private static final Color SHINY_PINK = new Color(255, 160, 230);
+	
+	/** Four-pointed sparkle centered on (cx, cy) with the given radius, filled with the current paint. */
+	private void fillDexSparkle(int cx, int cy, double r) {
+		double in = r * 0.22;
+		int[] xs = {cx, (int) (cx + in), (int) (cx + r), (int) (cx + in), cx, (int) (cx - in), (int) (cx - r), (int) (cx - in)};
+		int[] ys = {(int) (cy - r), (int) (cy - in), cy, (int) (cy + in), (int) (cy + r), (int) (cy + in), cy, (int) (cy - in)};
+		g2.fillPolygon(xs, ys, 8);
+	}
+	
+	/** The hidden 6th star (complete shiny dex): iridescent instead of gold, with a soft glow and a twinkle. */
+	private void drawDexShinyStar(int x, int baseline, int pitch) {
+		double pulse = 0.5 + 0.5 * Math.sin(System.currentTimeMillis() / 350.0);
+		g2.setFont(g2.getFont().deriveFont(40F));
+		g2.setColor(new Color(130, 230, 255, (int) (45 + 55 * pulse)));
+		for (int dx = -1; dx <= 1; dx++) {
+			for (int dy = -1; dy <= 1; dy++) {
+				if (dx != 0 || dy != 0) g2.drawString('\u2605' + "", x + dx * 2, baseline + dy * 2);
+			}
+		}
+		double phase = (System.currentTimeMillis() % 2400) / 2400.0; // slow shimmer sweeping across the star
+		float sx = (float) (phase * 40 - 10);
+		g2.setPaint(new LinearGradientPaint(
+				new Point2D.Float(x + sx, baseline + 4), new Point2D.Float(x + sx + 26, baseline - 30),
+				new float[] {0f, 0.5f, 1f}, new Color[] {SHINY_CYAN, new Color(190, 170, 255), SHINY_PINK},
+				MultipleGradientPaint.CycleMethod.REFLECT));
+		g2.drawString('\u2605' + "", x, baseline);
+		g2.setColor(new Color(255, 255, 255, (int) (110 + 140 * pulse)));
+		fillDexSparkle(x + pitch - 4, baseline - pitch + 8, 3 + 4 * pulse);
+	}
+	
+	/** "Shiny: N" pill with a sparkle icon. Icy blue normally, iridescent once every shiny is registered. */
+	private void drawDexShinyChip(int x, int baseline, int amount, boolean complete) {
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20F));
+		FontMetrics fm = g2.getFontMetrics();
+		String text = "Shiny: " + amount;
+		int h = (int) (gp.tileSize * 0.52);
+		int icon = h / 2 - 3;
+		int textX = x + 12 + icon * 2 + 6;
+		int w = textX - x + fm.stringWidth(text) + 12;
+		int y = baseline - h + (h - fm.getAscent()) / 2 + 2;
+		
+		g2.setColor(new Color(14, 48, 66));
+		g2.fillRoundRect(x, y, w, h, h, h);
+		g2.setStroke(new BasicStroke(2));
+		g2.setPaint(complete ? new GradientPaint(x, y, SHINY_CYAN, x + w, y + h, SHINY_PINK) : new GradientPaint(x, y, new Color(120, 220, 255, 210), x + w, y, new Color(120, 220, 255, 210)));
+		g2.drawRoundRect(x, y, w, h, h, h);
+		
+		g2.setPaint(new GradientPaint(x, y, Color.WHITE, x + icon * 2, y + h, SHINY_CYAN));
+		fillDexSparkle(x + 12 + icon, y + h / 2, icon);
+		
+		if (complete) g2.setPaint(new GradientPaint(textX, baseline - 14, SHINY_CYAN, textX + fm.stringWidth(text), baseline, SHINY_PINK));
+		else g2.setColor(new Color(170, 235, 255));
+		g2.drawString(text, textX, baseline);
+		g2.setColor(Color.WHITE);
+	}
+	
 	/** Thin scrollbar on the right edge of the dex list. total = number of reachable entries. */
 	private void drawDexScrollbar(int total) {
 		if (total <= 1) return;
@@ -3002,14 +3203,8 @@ public class UI extends AbstractUI {
 		g2.setColor(Color.WHITE);
 	}
 	
-	/** TODO: species category for this Pokemon, e.g. "Mouse Pokemon" for Pikachu. Return "" until wired in. */
-	private String getDexSpecies(int id) {
-		return "Pokemon";
-	}
-	
 	private void drawDexSpecies(int id, int x, int y) {
-		String species = getDexSpecies(id);
-		if (species == null || species.isEmpty()) return;
+		String species = "The " + Pokemon.getCategory(id) + " Pokemon";
 		g2.setFont(g2.getFont().deriveFont(Font.ITALIC, 18F));
 		g2.setColor(new Color(180, 180, 180));
 		g2.drawString(species, x, y);
@@ -6598,7 +6793,6 @@ public class UI extends AbstractUI {
 			if (gp.keyH.wPressed) {
 				if (gp.player.p.winStreak >= current.getSecond()) {
 					gp.setTaskState();
-					setNicknaming(true);
 					gp.player.p.catchPokemon(p);
 					
 					checkTasks = true;
@@ -7555,7 +7749,7 @@ public class UI extends AbstractUI {
 			
 			y += gp.tileSize * 0.75;
 			g2.setFont(g2.getFont().deriveFont(20F));
-			label = "The Pokemon Pokemon";
+			label = "The " + Pokemon.getCategory(p.id) + " Pokemon";
 			g2.drawString(label, getCenterAlignedTextX(label, startX + width / 2), y);
 			
 			y += gp.tileSize / 2;

@@ -600,12 +600,13 @@ public class BattleUI extends AbstractUI {
 		
 		if (tasks.isEmpty() && currentTask == null) {
 			subState = IDLE_STATE;
-			
-			// start figuring out best move
-			if (foe.trainerOwned() && foeMoveFuture == null) {
-				boolean fasterGuess = user.getFaster(foe, 0, 0, field) == foe;
-				foeMoveFuture = aiExecutor.submit(() -> foe.bestMove2(user, fasterGuess, difficulty));
-			}
+			startFoePrecompute();
+		}
+	}
+
+	protected void startFoePrecompute() {
+		if (foe.trainerOwned() && foeMoveFuture == null) {
+			foeMoveFuture = aiExecutor.submit(() -> foe.bestMove2(user, difficulty));
 		}
 	}
 

@@ -119,6 +119,11 @@ public class SimBattleUI extends BattleUI {
 	}
 	
 	@Override
+	protected void startFoePrecompute() {
+		// turn() decides both sides itself
+	}
+	
+	@Override
 	protected void drawAbility() {
 		super.drawAbility();
 	}
@@ -130,56 +135,7 @@ public class SimBattleUI extends BattleUI {
 		if (currentTask != null) {
 			switch (currentTask.type) {
 			case Task.PAYOUT:
-				currentDialogue = currentTask.message;
-				switch (currentTask.start) { // 1 = win, 0 = lose, -1 = draw
-				case -1:
-					if (battleBet > 0) {
-						betPayout = 0;
-						battleBet--;
-						gp.player.p.addBetCurrency(gauntlet, 1);
-					} else {
-						cooldownCounter++;
-						if (cooldownCounter >= 125) {
-							cooldownCounter = 0;
-							currentTask = null;
-						}
-					}
-					break;
-				case 0:
-					if (battleBet > 0 || gp.player.p.winStreak > 0) {
-						betPayout = 0;
-						battleBet = battleBet > 0 ? battleBet - 1 : 0;
-						gp.player.p.winStreak = gp.player.p.winStreak > 0 ? gp.player.p.winStreak - 1 : 0;
-					} else {
-						cooldownCounter++;
-						if (cooldownCounter >= 125) {
-							cooldownCounter = 0;
-							currentTask = null;
-						}
-					}
-					break;
-				case 1:
-					if (betPayout > 0) {
-						betPayout--;
-						if (battleBet > 0) {
-							battleBet--;
-						}
-						gp.player.p.addBetCurrency(gauntlet, 1);
-						if (!awarded) {
-							gp.player.p.gamesWon++;
-							gp.player.p.winStreak++;
-							awarded = true;
-						}
-					} else {
-						cooldownCounter++;
-						if (cooldownCounter >= 125) {
-							cooldownCounter = 0;
-							currentTask = null;
-							awarded = false;
-						}
-					}
-					break;
-				}
+				drawBetPayout();
 				break;
 			case Task.PARLAY:
 				dialogueState = DIALOGUE_FREE_STATE;
@@ -273,44 +229,54 @@ public class SimBattleUI extends BattleUI {
 			}
 		} else if (!payParlay) {
 			if (parlayPayout == -1) {
-				double[] expectedValues = {
-					parlaySheet.get(0).getFirst(),
-					parlaySheet.get(1).getFirst(),
-					parlaySheet.get(2).getFirst(),
-					parlaySheet.get(3).getFirst(),
-					parlaySheet.get(4).getFirst(),
-					parlaySheet.get(5).getFirst()
-				};
+				double[] expectedValues = new double[MAX_PARLAYS];
+				for (int i = 0; i < MAX_PARLAYS; i++) expectedValues[i] = parlaySheet.get(i).getFirst();
 				parlayPayout = SimBattleUI.calculateParlayPayout(parlays, expectedValues, Pokemon.field.getStats(), parlayBet, -1);
+				int activeBets = 0;
+				for (int b : parlays) if (b != 0) activeBets++;
+				parlayStake = parlayBet * activeBets;
+				if (activeBets == 0) { // nothing was bet, so there's nothing to pay out or wait for
+					finishParlay();
+					return;
+				}
 			}
-			
+			boolean skip = gp.keyH.wPressed;
+			if (skip) {
+				gp.keyH.wPressed = false;
+				commandNum = parlayPayout;
+			}
 			if (commandNum < parlayPayout) {
-				commandNum++;
+				commandNum = Math.min(parlayPayout, commandNum + Math.max(1, parlayPayout / 30));
 			} else {
 				cooldownCounter++;
-				if (cooldownCounter >= 120) {
+				if (skip || cooldownCounter >= 60) {
 					cooldownCounter = 0;
-					parlayPayout = -1;
 					payParlay = true;
 				}
 			}
+			drawToolTips("Skip", null, null, null);
 		} else {
-			if (commandNum > 0) {
-				commandNum--;
-				gp.player.p.addBetCurrency(gauntlet, 1);
-			} else {
-				cooldownCounter++;
-				if (cooldownCounter >= 120) {
-					commandNum = 0;
-					cooldownCounter = 0;
-					currentParlay = -1;
-					parlayPayout = -1;
-					parlayDone = true;
-					payParlay = false;
-					currentTask = null;
-				}
+			if (!payoutRunning) {
+				int gross = parlayPayout;
+				String label = gross >= parlayStake ? "PARLAY WIN!" : gross > 0 ? "PARTIAL PAYOUT" : "PARLAY LOST";
+				startPayoutAnimation(gross > 0 ? gross : -parlayStake, label, "Net " + signed(gross - parlayStake), gauntlet);
+				payoutRunning = true;
 			}
+			boolean done = tickPayout();
+			commandNum = payoutAmount > 0 ? payoutAmount - displayedPayout : 0; // the sheet's "Payout:" counts down as the wallet fills
+			if (done) finishParlay();
 		}
+	}
+	
+	private void finishParlay() {
+		commandNum = 0;
+		cooldownCounter = 0;
+		currentParlay = -1;
+		parlayPayout = -1;
+		parlayDone = true;
+		payParlay = false;
+		payoutRunning = false;
+		currentTask = null;
 	}
 
 	@Override
@@ -801,14 +767,13 @@ public class SimBattleUI extends BattleUI {
 	public void turn() {
 		Pokemon p1 = user;
 		Pokemon p2 = foe;
-		boolean fFaster = p1.getFaster(p2, 0, 0, field) == p2;
 		
 		p1Moves = null;
 		p2Moves = null;
 		p1Switch = null;
 		p2Switch = null;
-		Move uMove = p1.resolveDecision(p1.bestMove2(p2, !fFaster, Player.HARD));
-		Move fMove = p2.resolveDecision(p2.bestMove2(p1, fFaster, Player.HARD));
+		Move uMove = p1.resolveDecision(p1.bestMove2(p2, Player.HARD));
+		Move fMove = p2.resolveDecision(p2.bestMove2(p1, Player.HARD));
 		
 		int uP, fP;
 		uP = uMove == null ? 0 : uMove.getPriority(p1);
@@ -1015,6 +980,61 @@ public class SimBattleUI extends BattleUI {
 		}
 
 		return (int) Math.ceil(payout); // Round up to the nearest whole coin
+	}
+	
+	private static final int PAYOUT_HOLD_FRAMES = 120;
+	private boolean payoutRunning;
+	private int parlayStake;
+
+	private static String signed(int n) { return (n >= 0 ? "+" : "") + n; }
+
+	/** One frame of the shared animation: pays the wallet in step with the counter, handles skip. True when it's time to move on. */
+	private boolean tickPayout() {
+		int delta = updatePayoutAnimation();
+		if (payoutAmount > 0) gp.player.p.addBetCurrency(gauntlet, delta);
+
+		boolean pressed = gp.keyH.wPressed;
+		if (pressed) gp.keyH.wPressed = false;
+		boolean finish = false;
+		if (pressed) {
+			if (!payoutComplete) {
+				int rest = skipPayoutAnimation();
+				if (payoutAmount > 0) gp.player.p.addBetCurrency(gauntlet, rest);
+			} else {
+				finish = true; // second press: don't wait out the hold timer
+			}
+		}
+		drawPayoutPanel();
+		drawToolTips(payoutComplete ? "Continue" : "Skip", null, null, null);
+		return finish || (payoutComplete && payoutCounter > PAYOUT_HOLD_FRAMES);
+	}
+
+	private void drawBetPayout() {
+		currentDialogue = currentTask.message;
+		int mode = currentTask.start; // 1 = win, 0 = lose, -1 = draw
+		if (!payoutRunning) {
+			int stake = battleBet;
+			int gross = mode == 1 ? currentTask.counter : mode == -1 ? stake : 0; // what goes back into the wallet
+			String label = mode == 1 ? "YOU WIN!" : mode == -1 ? "DRAW" : "YOU LOSE";
+			String sub = mode == -1 ? "Bet returned" : "Net " + signed(gross - stake);
+			startPayoutAnimation(gross > 0 ? gross : -stake, label, sub, gauntlet);
+			if (mode == 1) {
+				gp.player.p.gamesWon++;
+				gp.player.p.winStreak++;
+			} else if (mode == 0) {
+				gp.player.p.winStreak = 0;
+			}
+			battleBet = 0;
+			betPayout = 0;
+			payoutRunning = true;
+			return;
+		}
+		boolean done = tickPayout();
+		betPayout = mode == 1 ? Math.max(0, payoutAmount - displayedPayout) : 0; // sidebar counts down as the wallet fills
+		if (done) {
+			payoutRunning = false;
+			currentTask = null;
+		}
 	}
 
 }

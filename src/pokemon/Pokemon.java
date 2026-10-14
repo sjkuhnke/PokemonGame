@@ -62,6 +62,7 @@ import ui.CustomProgressBarUI;
 import util.DeepClonable;
 import util.JGradientButton;
 import util.Pair;
+import util.Print;
 import util.Rng;
 
 public class Pokemon implements Serializable {
@@ -97,6 +98,7 @@ public class Pokemon implements Serializable {
 	private static int[] catch_rates = new int[MAX_POKEMON];
 	private static Node[][] movebanks = new Node[MAX_POKEMON][101];
 	private static String[] entries = new String[MAX_POKEMON];
+	private static String[] categories = new String[MAX_POKEMON];
 	private static boolean[][] tms = new boolean[MAX_POKEMON][107];
 	private static EggGroup[][] egg_groups = new EggGroup[MAX_POKEMON][2];
 	private static int[][] sprite_center = new int[MAX_POKEMON][2];
@@ -477,8 +479,8 @@ public class Pokemon implements Serializable {
 	 * Entry point for Trainer AI decisions. Dispatches to the TrainerAI installed on this
 	 * Pokemon's trainer (Trainer.ai), or TrainerAI.Config.defaultAI (AIV2) if none.
 	 */
-	public MoveDecision bestMove2(Pokemon foe, boolean first, int difficulty) {
-		return TrainerAI.forPokemon(this).decide(this, foe, first, difficulty);
+	public MoveDecision bestMove2(Pokemon foe, int difficulty) {
+		return TrainerAI.forPokemon(this).decide(this, foe, difficulty);
 	}
 	
 	public boolean isUsefulPivot(Pokemon foe, Ability foeAbility, Move m) {
@@ -750,6 +752,10 @@ public class Pokemon implements Serializable {
 	
 	public static String getDexEntry(int id) {
 		return entries[id - 1];
+	}
+	
+	public static String getCategory(int id) {
+		return categories[id - 1];
 	}
 	
 	public void setAbility(int slot) {
@@ -10253,6 +10259,7 @@ public class Pokemon implements Serializable {
 				catch_rates[i] = Integer.parseInt(tokens[9].trim());
 				egg_groups[i][0] = EggGroup.valueOf(tokens[10].trim());
 				egg_groups[i][1] = EggGroup.valueOf(tokens[11].trim());
+				categories[i] = tokens[12].trim();
 			}
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
@@ -10919,149 +10926,190 @@ public class Pokemon implements Serializable {
 	}
 	
 	public static int[] simulateBattle(Trainer trainer1, Trainer trainer2) {
-		int[] result = new int[2];
-		field = new Field();
-		for (int i = 0; i < 10; i++) {
-			Trainer t1 = trainer1.clone();
-			Trainer t2 = trainer2.clone();
-			field.clear(t1, t2);
-			
-			while (!t1.wiped() && !t2.wiped()) {
-				Pokemon p1 = t1.getCurrent();
-				Pokemon p2 = t2.getCurrent();
-				boolean fFaster = p1.getFaster(p2, 0, 0, field) == p2;
-				
-				Move uMove = p1.resolveDecision(p1.bestMove2(p2, !fFaster, Player.HARD));
-				Move fMove = p2.resolveDecision(p2.bestMove2(p1, fFaster, Player.HARD));
-				
-				int uP, fP;
-				uP = uMove == null ? 0 : uMove.getPriority(p1);
-				fP = fMove == null ? 0 : fMove.getPriority(p2);
-				
-				if (uMove != null && fMove != null && !p1.hasStatus(Status.SWAP)
-						&& !p2.hasStatus(Status.SWAP)) {
-					uP = p1.checkQuickClaw(uP);
-					fP = p2.checkQuickClaw(fP);
-				}
-				if (uMove != null) uP = p1.checkCustap(uP, p2);
-				if (fMove != null) fP = p2.checkCustap(fP, p1);
-				
-				Pokemon faster;
-				Pokemon slower;
-				
-				if (uMove == null || fMove == null) {
-					faster = uMove == null ? p1 : p2;
+		OddsRun run = new OddsRun(trainer1, trainer2);
+		while (!run.isDone()) run.step();
+		return run.result();
+	}
+	
+	private static void simulateTurn(Trainer t1, Trainer t2) {
+		Pokemon p1 = t1.getCurrent();
+		Pokemon p2 = t2.getCurrent();
+		
+		Move uMove = p1.resolveDecision(p1.bestMove2(p2, Player.HARD));
+		Move fMove = p2.resolveDecision(p2.bestMove2(p1, Player.HARD));
+		
+		int uP, fP;
+		uP = uMove == null ? 0 : uMove.getPriority(p1);
+		fP = fMove == null ? 0 : fMove.getPriority(p2);
+		
+		if (uMove != null && fMove != null && !p1.hasStatus(Status.SWAP)
+				&& !p2.hasStatus(Status.SWAP)) {
+			uP = p1.checkQuickClaw(uP);
+			fP = p2.checkQuickClaw(fP);
+		}
+		if (uMove != null) uP = p1.checkCustap(uP, p2);
+		if (fMove != null) fP = p2.checkCustap(fP, p1);
+		
+		Pokemon faster;
+		Pokemon slower;
+		
+		if (uMove == null || fMove == null) {
+			faster = uMove == null ? p1 : p2;
+		} else {
+			faster = p1.getFaster(p2, uP, fP, field);
+		}
+		
+		slower = faster == p1 ? p2 : p1;
+		
+		Move fastMove = faster == p1 ? uMove : fMove;
+		Move slowMove = faster == p1 ? fMove : uMove;
+		
+		boolean fastCanMove = true;
+		boolean slowCanMove = true;
+		
+		int fasterSwitchSlot = faster.hasStatus(Status.SWAP) ? faster.getStatusNum(Status.SWAP) : BattleUI.FREE_SWITCH;
+		int slowerSwitchSlot = slower.hasStatus(Status.SWAP) ? slower.getStatusNum(Status.SWAP) : BattleUI.FREE_SWITCH;
+		
+		if (fasterSwitchSlot > 0) {
+			faster = faster.trainer.swapOut2(slower, fasterSwitchSlot, false, false);
+			fastMove = null;
+			fastCanMove = false;
+		}
+		
+		if (slowerSwitchSlot > 0) {
+			slower = slower.trainer.swapOut2(faster, slowerSwitchSlot, false, false);
+			slowMove = null;
+			slowCanMove = false;
+		}
+		
+		if (slowMove != null && fastMove == Move.SUCKER_PUNCH && slowMove.cat == 2) fastMove = Move.FAILED_SUCKER;
+		
+		if (fastCanMove) {
+			faster.moveInit(slower, fastMove, true);
+			faster = faster.trainer.getCurrent();
+			slower = slower.trainer.getCurrent();
+		}
+		
+		// Check for swap
+		if (faster.trainer.hasValidMembers(slower) && fastCanMove && !slower.trainer.wiped() && faster.hasStatus(Status.SWITCHING)) {
+			faster = faster.trainer.swapOut2(slower, fasterSwitchSlot, faster.lastMoveUsed == Move.BATON_PASS, false);
+		}
+		// Check for swap
+		if (slower.trainer.hasValidMembers(faster) && !faster.trainer.wiped() && slower.hasStatus(Status.SWITCHING)) {
+			slower = slower.trainer.swapOut2(faster, BattleUI.FREE_SWITCH, false, false);
+			slowCanMove = false;
+		}
+		
+		if (slowCanMove) {
+			slower.moveInit(faster, slowMove, false);
+			faster = faster.trainer.getCurrent();
+			slower = slower.trainer.getCurrent();
+		}
+		
+		// Check for swap
+		if (slower.trainer.hasValidMembers(faster) && slowCanMove && !faster.trainer.wiped() && slower.hasStatus(Status.SWITCHING)) {
+			slower = slower.trainer.swapOut2(faster, BattleUI.FREE_SWITCH, slower.lastMoveUsed == Move.BATON_PASS, false);
+		}
+		// Check for swap
+ 		if (faster.trainer.hasValidMembers(slower) && !slower.trainer.wiped() && faster.hasStatus(Status.SWITCHING)) {
+ 			faster = faster.trainer.swapOut2(slower, BattleUI.FREE_SWITCH, false, false);
+ 		}
+		
+		if (fastMove != null || slowMove != null) {
+			if (!faster.trainer.wiped() && !slower.trainer.wiped()) faster.endOfTurn(slower);
+			if (!faster.trainer.wiped() && !slower.trainer.wiped()) slower.endOfTurn(faster);
+			if (!faster.trainer.wiped() && !slower.trainer.wiped()) field.endOfTurn(faster, slower);
+		}
+		
+		for (int j = 0; j < 2; j++) {
+			Pokemon p;
+			if (j == 0) {
+				p = faster;
+			} else {
+				p = slower;
+			}
+			Pokemon foe = p == faster ? slower : faster;
+			Pokemon next = p.trainer.getCurrent();
+			while (next.isFainted()) {
+				if (next.trainer.hasNext()) {
+					boolean userSide = !next.trainer.hasUser(p1);
+					next = next.trainer.next(foe, userSide);
+					Task.addSwapInTask(next, false);
+					next.swapIn(foe, true);
 				} else {
-					faster = p1.getFaster(p2, uP, fP, field);
+					break;
 				}
-				
-				slower = faster == p1 ? p2 : p1;
-				
-				Move fastMove = faster == p1 ? uMove : fMove;
-				Move slowMove = faster == p1 ? fMove : uMove;
-				
-				boolean fastCanMove = true;
-				boolean slowCanMove = true;
-				
-				int fasterSwitchSlot = faster.hasStatus(Status.SWAP) ? faster.getStatusNum(Status.SWAP) : BattleUI.FREE_SWITCH;
-				int slowerSwitchSlot = slower.hasStatus(Status.SWAP) ? slower.getStatusNum(Status.SWAP) : BattleUI.FREE_SWITCH;
-				
-				if (fasterSwitchSlot > 0) {
-					faster = faster.trainer.swapOut2(slower, fasterSwitchSlot, false, false);
-					fastMove = null;
-					fastCanMove = false;
-				}
-				
-				if (slowerSwitchSlot > 0) {
-					slower = slower.trainer.swapOut2(faster, slowerSwitchSlot, false, false);
-					slowMove = null;
-					slowCanMove = false;
-				}
-				
-				if (slowMove != null && fastMove == Move.SUCKER_PUNCH && slowMove.cat == 2) fastMove = Move.FAILED_SUCKER;
-				
-				if (fastCanMove) {
-					faster.moveInit(slower, fastMove, true);
-					faster = faster.trainer.getCurrent();
-					slower = slower.trainer.getCurrent();
-				}
-				
-				// Check for swap
-				if (faster.trainer.hasValidMembers(slower) && fastCanMove && !slower.trainer.wiped() && faster.hasStatus(Status.SWITCHING)) {
-					faster = faster.trainer.swapOut2(slower, fasterSwitchSlot, faster.lastMoveUsed == Move.BATON_PASS, false);
-				}
-				// Check for swap
-				if (slower.trainer.hasValidMembers(faster) && !faster.trainer.wiped() && slower.hasStatus(Status.SWITCHING)) {
-					slower = slower.trainer.swapOut2(faster, BattleUI.FREE_SWITCH, false, false);
-					slowCanMove = false;
-				}
-				
-				if (slowCanMove) {
-					slower.moveInit(faster, slowMove, false);
-					faster = faster.trainer.getCurrent();
-					slower = slower.trainer.getCurrent();
-				}
-				
-				// Check for swap
-				if (slower.trainer.hasValidMembers(faster) && slowCanMove && !faster.trainer.wiped() && slower.hasStatus(Status.SWITCHING)) {
-					slower = slower.trainer.swapOut2(faster, BattleUI.FREE_SWITCH, slower.lastMoveUsed == Move.BATON_PASS, false);
-				}
-				// Check for swap
-		 		if (faster.trainer.hasValidMembers(slower) && !slower.trainer.wiped() && faster.hasStatus(Status.SWITCHING)) {
-		 			faster = faster.trainer.swapOut2(slower, BattleUI.FREE_SWITCH, false, false);
-		 		}
-				
-				if (fastMove != null || slowMove != null) {
-					if (!faster.trainer.wiped() && !slower.trainer.wiped()) faster.endOfTurn(slower);
-					if (!faster.trainer.wiped() && !slower.trainer.wiped()) slower.endOfTurn(faster);
-					if (!faster.trainer.wiped() && !slower.trainer.wiped()) field.endOfTurn(faster, slower);
-				}
-				
-				for (int j = 0; j < 2; j++) {
-					Pokemon p;
-					if (j == 0) {
-						p = faster;
-					} else {
-						p = slower;
-					}
-					Pokemon foe = p == faster ? slower : faster;
-					Pokemon next = p.trainer.getCurrent();
-					while (next.isFainted()) {
-						if (next.trainer.hasNext()) {
-							boolean userSide = !next.trainer.hasUser(p1);
-							next = next.trainer.next(foe, userSide);
-							Task.addSwapInTask(next, false);
-							next.swapIn(foe, true);
-						} else {
-							break;
-						}
-					}
-				}
-				
-				for (Task t : gp.ui.tasks) {
-					System.out.println(t.message);
-				}
-				System.out.println("--------------------");
-				gp.ui.tasks.clear();
-			}
-			
-			if (t1.wiped() && !t2.wiped()) {
-				result[1]++;
-				System.out.println(t2.name + " defeated " + t1.name + "!");
-				System.out.println("========================================");
-			}
-			if (!t1.wiped() && t2.wiped()) {
-				result[0]++;
-				System.out.println(t1.name + " defeated " + t2.name + "!");
-				System.out.println("========================================");
-			}
-			if (t1.wiped() && t2.wiped()) {
-				System.out.println("Both " + t1.name + " and " + t2.name + " fainted!");
-				System.out.println("========================================");
 			}
 		}
 		
-		return result;
+		for (Task t : gp.ui.tasks) {
+			Print.debug(t.message + "\n");
+		}
+		Print.debug("--------------------\n");
+		gp.ui.tasks.clear();
+	}
+	
+	/** A resumable version of simulateBattle: call step() repeatedly and read the progress getters in between. */
+	public static final class OddsRun {
+		public static final int BATTLES = 10;
+		private static final int MAX_TURNS = 400; // a battle that never ends is scored as a draw instead of hanging forever
+
+		private final Trainer a, b;
+		private final int[] result = new int[2];
+		private Trainer t1, t2;
+		private int battles, turn;
+		private boolean done;
+
+		public OddsRun(Trainer a, Trainer b) {
+			this.a = a;
+			this.b = b;
+			field = new Field();
+		}
+
+		public void step() {
+			if (done) return;
+			if (t1 == null) {
+				t1 = a.clone();
+				t2 = b.clone();
+				field.clear(t1, t2);
+				turn = 0;
+			}
+			boolean stalled = false;
+			if (!t1.wiped() && !t2.wiped()) {
+				if (turn >= MAX_TURNS) {
+					stalled = true;
+				} else {
+					simulateTurn(t1, t2);
+					turn++;
+				}
+			}
+			if (stalled || t1.wiped() || t2.wiped()) finishBattle(stalled);
+		}
+
+		private void finishBattle(boolean stalled) {
+			if (stalled) {
+				Print.debug("Battle " + (battles + 1) + " hit the " + MAX_TURNS + "-turn cap; scored as a draw.\n");
+			} else if (t1.wiped() && !t2.wiped()) {
+				result[1]++;
+				Print.debug(t2.name + " defeated " + t1.name + "!\n");
+			} else if (!t1.wiped() && t2.wiped()) {
+				result[0]++;
+				Print.debug(t1.name + " defeated " + t2.name + "!\n");
+			} else {
+				Print.debug("Both " + t1.name + " and " + t2.name + " fainted!\n");
+			}
+			Print.debug("========================================\n");
+			battles++;
+			t1 = null;
+			t2 = null;
+			done = battles >= BATTLES;
+		}
+
+		public boolean isDone() { return done; }
+		public int[] result() { return result; }
+		public int battle() { return Math.min(BATTLES, battles + 1); }  // 1-based, the one in progress
+		public int turn() { return turn; }
+		public double fraction() { return Math.min(1.0, (battles + Math.min(0.9, turn / 40.0)) / BATTLES); }
 	}
 	
 	public ArrayList<FieldEffect> getFieldEffects() {
@@ -11177,7 +11225,7 @@ public class Pokemon implements Serializable {
 		do {
 			id = random.nextInt(MAX_POKEMON) + 1;
 			id = getBabyStage(id);
-		} while (getCatchRate(id) <= 5 || getEggGroup(id).contains(EggGroup.UNDISCOVERED));
+		} while (getCatchRate(id) <= 5 || getEggGroup(id).contains(EggGroup.UNDISCOVERED) || isUltraBeast(id));
 		
 		return id;
 	}

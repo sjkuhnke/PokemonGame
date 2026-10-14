@@ -7,19 +7,18 @@ Remove the "first dialogue" thing from script npcs and make if the name is null 
 used to then not reveal the npc's name until they introduce themselves
 
 UPDATE LIST
-Make player walk into the E4 after saying yes to guard
-Make AI know what stat stage changes, screens, status conditions do and whether or not they're useful
-Natures and PP ups for all trainers (only 8th gym+ split left)
-Make the AI not click stat stage boost moves when they have a Choice item
 Make a skip button in the payout screen for battle betting
+Update the "Calculating odds..." screen to show the progress of the odds being calculated
+Add black background or a default tile to each map background
+Evolving a Pokemon sometimes ends the task state early, maybe goBackInBag() is being called?
+Add Klara and Fred's house to Sicab City
 
 Quality of Life
 Add exp trainer in Schrice City
 Make NPCs tell about old features being updated (deletable HMs, updated moves, etc)
 
 Implementation/Bug Fixes
-Finish TMs (legendaries only)
-Encounters on R43 E over vine cross should be same as R43 W
+Finish TMs (Solaroxyous only)
 Swap in text say "forced out"/"forced in" on random switch ins (Whirlwind etc)
 Life Orb + Assault Vest behind optional trainer(s) in 5th gym split
 
@@ -29,7 +28,6 @@ Ideas
 Make Bipedice Ice/Ground (not Ground/Ice) and redo moveset
 Kissyfishy making out as a Ying-Yang thing
 Add Heart Swap
-Give Ingrain its own status effect and make it grounded as well
 Give infestation to some struggling ghost types
 
 (Not sure about these)
@@ -37,25 +35,10 @@ Make Poison not resist Bug
 Make Magic weak to Dark
 Make Rock not resist Poison
 
-New Story
-Add Klara and Fred's house to Sicab City
-
-Make map05 (lava lake) to the left 3-4 tiles
-
 CRUISE
-Infinite loop when 2 mons have empathic link and one boosts, test with Mt St Joseph TN fight
-
-Make Aromatherapy have AI
-Make hazards not be clickable if the foe only has 1 mon left
-Change switch in AI to be able to work with disruptive mons (Comp Busheep)
-Make leech seed not clickable if the opponent is a grass type/discourage it
-Make hazard/boosting moves encouraged if the opponent does less than a % to you
-Make trapping moves insentivized if opponent does less than a % to you
-
 Make Ryder 1 disappear after beating second gym
 Make Ryder 3 disappear after beating Icy Serpant
 Add Endure move tutor somewhere (everyone can learn it)
-Fix "Add" button in the calc to properly set the nature
 
 Thief magic move
 Exposing move that works like octolock

@@ -1816,12 +1816,13 @@ public class Player extends Trainer implements Serializable {
 	
 	public Pair<Integer, Boolean> getShinyAmount() {
 		int result = 0;
+		for (int i = 1; i < shinyDex.length; i++) {
+			if (shinyDex[i]) result++;
+		}
 		boolean allShiny = true;
-		for (int i = 0; i < this.shinyDex.length; i++) {
-			if (this.shinyDex[i]) {
-				result++;
-			} else {
-				allShiny = false;
+		for (int d = 0; d < 4 && allShiny; d++) {
+			for (Pokemon p : getDexType(d)) {
+				if (!shinyDex[p.id]) { allShiny = false; break; }
 			}
 		}
 		return new Pair<>(result, allShiny);
@@ -1925,10 +1926,10 @@ public class Player extends Trainer implements Serializable {
 		return result;
 	}
 
-	/** Marks a Pokemon's species/form (and its shininess) as registered. Use this instead of writing pokedex[] directly. */
+	/** Marks a Pokemon's species/form (and its shininess) as registered. */
 	public void registerDex(Pokemon p, boolean registered) {
 		if (p == null || p instanceof Egg) return;
-		pokedex[p.id] = registered && pokedex[p.id] < 2 ? 2 : 1;
+		pokedex[p.id] = registered ? 2 : Math.max(pokedex[p.id], 1);
 		if (shinyDex == null) shinyDex = new boolean[Pokemon.MAX_POKEMON + 1];
 		if (p.shiny) shinyDex[p.id] = true;
 	}

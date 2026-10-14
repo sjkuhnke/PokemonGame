@@ -30,7 +30,7 @@ public final class ScriptedAI implements TrainerAI {
 	}
 
 	@Override
-	public MoveDecision decide(Pokemon self, Pokemon foe, boolean first, int difficulty) {
+	public MoveDecision decide(Pokemon self, Pokemon foe, int difficulty) {
 		ArrayList<Move> valid = self.getValidMoveset();
 		if (valid.isEmpty()) return new MoveDecision(Move.STRUGGLE);
 

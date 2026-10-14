@@ -50,7 +50,7 @@ public final class AIV2 implements TrainerAI {
 	public static final AIV2 NO_HISTORY = new AIV2(true, false);
 
 	/** One line per action + its sampling probability, and the chosen action. */
-	public static boolean AI_DEBUG = true;
+	public static boolean AI_DEBUG = false;
 	/** Full A x P payoff matrix. Verbose - leave off unless you're chasing a specific decision. */
 	public static boolean AI_DEBUG_MATRIX = true;
 	/** Per-action resulting branch state (HP/status/stages/fainted) vs one fixed player action. See logBranchDetail. */
@@ -58,6 +58,8 @@ public final class AIV2 implements TrainerAI {
 
 	private final boolean sackingEnabled;
 	private final boolean historyEnabled;
+	
+	private static final Object AI_LOCK = new Object();
 	
 	/** Phase 8: diagnostics only when someone will see them. SelfPlay/Tuner suppress Print.debug, which now also skips the work. */
 	private static boolean dbg() {
@@ -176,69 +178,71 @@ public final class AIV2 implements TrainerAI {
 	}
 
 	@Override
-	public MoveDecision decide(Pokemon self, Pokemon foe, boolean first, int difficulty) {
-		AIConfig cfg = AIConfig.forDifficulty(difficulty);
-		cfg.enableSacking = sackingEnabled;
-		cfg.useHistoryModel = historyEnabled;
+	public MoveDecision decide(Pokemon self, Pokemon foe, int difficulty) {
+		synchronized (AI_LOCK) {
+			AIConfig cfg = AIConfig.forDifficulty(difficulty);
+			cfg.enableSacking = sackingEnabled;
+			cfg.useHistoryModel = historyEnabled;
 
-		// Phase 6: learn what the player did last turn BEFORE anything below can return, so a forced-action turn does
-		// not leave a gap. The model belongs to the player's trainer (saved with Player); null without a trainer.
-		PlayerModel model = cfg.useHistoryModel && foe.trainer != null ? foe.trainer.playerModel() : null;
-		if (model != null) {
-			PlayerReader.Observation seen = PlayerReader.observe(model, self, foe);
-			if (seen != null && dbg()) {
-				Print.debug(String.format(Locale.ROOT, "[AIV2] observed the player: %s (%s) -> model %s\n", seen.cls, seen.note, model.summary()));
+			// Phase 6: learn what the player did last turn BEFORE anything below can return, so a forced-action turn does
+			// not leave a gap. The model belongs to the player's trainer (saved with Player); null without a trainer.
+			PlayerModel model = cfg.useHistoryModel && foe.trainer != null ? foe.trainer.playerModel() : null;
+			if (model != null) {
+				PlayerReader.Observation seen = PlayerReader.observe(model, self, foe);
+				if (seen != null && dbg()) {
+					Print.debug(String.format(Locale.ROOT, "[AIV2] observed the player: %s (%s) -> model %s\n", seen.cls, seen.note, model.summary()));
+				}
 			}
-		}
 
-		// ---- §7.13 forced pre-checks (kept from existing code) ----
-		if (self.script && Pokemon.field.turns == 0) {
-			if (Pokemon.gp.currentMap == 160) return new MoveDecision(self.getStatusMove());
-			return new MoveDecision(self.moveset[0].move);
-		}
-
-		ArrayList<Move> validMoves = self.getValidMoveset();
-		boolean canSwitch = self.trainer.canSwitch(foe);
-		if (validMoves.isEmpty()) {
-			// Struggle-only: swaps at every difficulty if possible (T29). Target comes from the
-			// matrix restricted to SWITCH rows (sack candidates included); if trapped, Struggle.
-			if (canSwitch) {
-				int slot = pickStruggleSwitch(self, foe, cfg);
-				return new MoveDecision(Move.GROWL, Status.SWAP, slot + 1);
+			// ---- §7.13 forced pre-checks (kept from existing code) ----
+			if (self.script && Pokemon.field.turns == 0) {
+				if (Pokemon.gp.currentMap == 160) return new MoveDecision(self.getStatusMove());
+				return new MoveDecision(self.moveset[0].move);
 			}
-			return new MoveDecision(Move.STRUGGLE);
+
+			ArrayList<Move> validMoves = self.getValidMoveset();
+			boolean canSwitch = self.trainer.canSwitch(foe);
+			if (validMoves.isEmpty()) {
+				// Struggle-only: swaps at every difficulty if possible (T29). Target comes from the
+				// matrix restricted to SWITCH rows (sack candidates included); if trapped, Struggle.
+				if (canSwitch) {
+					int slot = pickStruggleSwitch(self, foe, cfg);
+					return new MoveDecision(Move.GROWL, Status.SWAP, slot + 1);
+				}
+				return new MoveDecision(Move.STRUGGLE);
+			}
+			// Status.RECHARGE/CHARGING/SEMI_INV/LOCKED/ENCORED mid-sequence: getValidMoveset() is
+			// already expected to have narrowed validMoves down to the forced move (existing
+			// behavior, untouched this phase) - the matrix still lets SWITCH compete when legal,
+			// since genAIActions/switchRowsAllowed don't special-case those statuses.
+
+			// ---- §5 decide() pipeline ----
+			SimState root = SimState.snapshot(self, foe);
+			Plan plan = plan(root, cfg, model);
+			if (plan == null) return new MoveDecision(Move.STRUGGLE); // defensive; validMoves was non-empty above
+			if (model != null && plan.read != null) PlayerReader.begin(model, self, foe, plan.read);
+			List<Action> A = plan.A;
+			List<Action> P = plan.P;
+			double[] x = plan.x;
+
+			logMatrix(self, plan);
+			logEvalBreakdown(self, root, cfg, plan.weights);
+			logRead(self, plan);
+			logBranchDetail(self, root, A, P, cfg, plan.yHat, plan.weights);
+			logSack(self, root, plan, cfg);
+
+			int chosen = Shaper.sample(x);
+			Action chosenAct = A.get(chosen);
+			SackAnalysis.Label label = null;
+			if (chosenAct.kind != ActionKind.MOVE && (dbg() || (Pokemon.gp != null && Pokemon.gp.gameState == GamePanel.SIM_BATTLE_STATE))) {
+				label = SackAnalysis.classify(root, chosenAct, P, plan.yHat, cfg, plan.sacks); // re-simulates; only needed for the log / sim UI
+			}
+			logDecision(self, A, x, chosenAct, x[chosen], plan.sacks);
+			logSackChosen(self, chosenAct, x[chosen], label);
+			report(self, A, x, chosenAct, x[chosen], label);
+
+			return toMoveDecision(chosenAct);
 		}
-		// Status.RECHARGE/CHARGING/SEMI_INV/LOCKED/ENCORED mid-sequence: getValidMoveset() is
-		// already expected to have narrowed validMoves down to the forced move (existing
-		// behavior, untouched this phase) - the matrix still lets SWITCH compete when legal,
-		// since genAIActions/switchRowsAllowed don't special-case those statuses.
-
-		// ---- §5 decide() pipeline ----
-		SimState root = SimState.snapshot(self, foe);
-		Plan plan = plan(root, cfg, model);
-		if (plan == null) return new MoveDecision(Move.STRUGGLE); // defensive; validMoves was non-empty above
-		if (model != null && plan.read != null) PlayerReader.begin(model, self, foe, plan.read);
-		List<Action> A = plan.A;
-		List<Action> P = plan.P;
-		double[] x = plan.x;
-
-		logMatrix(self, plan);
-		logEvalBreakdown(self, root, cfg, plan.weights);
-		logRead(self, plan);
-		logBranchDetail(self, root, A, P, cfg, plan.yHat, plan.weights);
-		logSack(self, root, plan, cfg);
-
-		int chosen = Shaper.sample(x);
-		Action chosenAct = A.get(chosen);
-		SackAnalysis.Label label = null;
-		if (chosenAct.kind != ActionKind.MOVE && (dbg() || (Pokemon.gp != null && Pokemon.gp.gameState == GamePanel.SIM_BATTLE_STATE))) {
-			label = SackAnalysis.classify(root, chosenAct, P, plan.yHat, cfg, plan.sacks); // re-simulates; only needed for the log / sim UI
-		}
-		logDecision(self, A, x, chosenAct, x[chosen], plan.sacks);
-		logSackChosen(self, chosenAct, x[chosen], label);
-		report(self, A, x, chosenAct, x[chosen], label);
-
-		return toMoveDecision(chosenAct);
 	}
 
 	/** Action -> MoveDecision, converting the 0-based Action.slot into MoveDecision's 1-based/negative switch encoding (same conventions as Pokemon.resolveDecision). */
@@ -296,7 +300,7 @@ public final class AIV2 implements TrainerAI {
 
 		if (chosenAct.kind == ActionKind.SWITCH || chosenAct.kind == ActionKind.MOVE_THEN_SWITCH) {
 			String rsn = reason(self, chosenAct, chosenProb, label);
-			Pair<Pokemon, String> p = new Pair<>(self, rsn);
+			Pair<Pokemon, String> p = new Pair<>(self, Item.breakString(rsn, 63));
 			if (slotOne) ui.p1Switch = p; else ui.p2Switch = p;
 		}
 		if (chosenAct.kind == ActionKind.MOVE || chosenAct.kind == ActionKind.MOVE_THEN_SWITCH) {

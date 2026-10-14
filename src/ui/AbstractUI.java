@@ -3569,4 +3569,141 @@ public abstract class AbstractUI {
 		if (w0 <= 0 || h0 <= 0) return 0;
 		return (int) (w0 * (h / (double) h0));
 	}
+	
+	// ===== Shared payout animation (BlackjackUI, SimBattleUI) =====
+	private final ArrayList<PayoutParticle> payoutParticles = new ArrayList<>();
+	protected int payoutAmount;        // > 0 pays out, < 0 is a loss shown for information only, 0 = push
+	protected int displayedPayout;
+	protected int payoutCounter;
+	protected boolean payoutComplete;
+	private String payoutLabel = "";
+	private String payoutSubtext;
+	private boolean payoutGauntlet;
+
+	protected void startPayoutAnimation(int amount, String label, String subtext, boolean gauntlet) {
+		payoutAmount = amount;
+		displayedPayout = 0;
+		payoutCounter = 0;
+		payoutComplete = false;
+		payoutParticles.clear();
+		payoutLabel = label;
+		payoutSubtext = subtext;
+		payoutGauntlet = gauntlet;
+	}
+
+	/** Advances one frame. Returns how much displayedPayout changed (signed) so the caller can pay the wallet in step. */
+	protected int updatePayoutAnimation() {
+		payoutCounter++;
+		int before = displayedPayout;
+		if (!payoutComplete) {
+			if (payoutAmount != 0) {
+				int step = Math.max(1, Math.abs(payoutAmount) / 30); // always about half a second, however big the payout
+				displayedPayout += payoutAmount > 0 ? step : -step;
+				if (payoutAmount > 0 ? displayedPayout >= payoutAmount : displayedPayout <= payoutAmount) {
+					displayedPayout = payoutAmount;
+					payoutComplete = true;
+				}
+				if (payoutCounter % 3 == 0 && payoutAmount > 0) spawnPayoutParticles();
+				if (payoutCounter % 2 == 0) gp.playSFX(Sound.S_MENU_1);
+			} else {
+				payoutComplete = true;
+			}
+		}
+		for (int i = payoutParticles.size() - 1; i >= 0; i--) {
+			PayoutParticle p = payoutParticles.get(i);
+			p.update();
+			if (p.isDead()) payoutParticles.remove(i);
+		}
+		return displayedPayout - before;
+	}
+
+	/** Jumps straight to the final amount. Returns how much was skipped (signed), for the caller to pay out. */
+	protected int skipPayoutAnimation() {
+		int before = displayedPayout;
+		displayedPayout = payoutAmount;
+		payoutComplete = true;
+		return displayedPayout - before;
+	}
+
+	private void spawnPayoutParticles() {
+		java.util.concurrent.ThreadLocalRandom rand = java.util.concurrent.ThreadLocalRandom.current();
+		int centerX = gp.screenWidth / 2;
+		int centerY = gp.screenHeight / 2 - gp.tileSize * 2;
+		for (int i = 0; i < 3; i++) {
+			float angle = rand.nextFloat() * (float) (Math.PI * 2);
+			float speed = 2 + rand.nextFloat() * 3;
+			payoutParticles.add(new PayoutParticle(centerX, centerY, angle, speed));
+		}
+	}
+
+	protected void drawPayoutPanel() {
+		int panelWidth = gp.tileSize * 6;
+		int panelHeight = gp.tileSize * 4 + (payoutSubtext != null ? (int) (gp.tileSize * 0.75) : 0);
+		int panelX = (gp.screenWidth - panelWidth) / 2;
+		int panelY = (gp.screenHeight - panelHeight) / 2;
+
+		Color panelColor = payoutAmount > 0 ? Color.GREEN : payoutAmount < 0 ? Color.RED : Color.BLUE;
+		drawPanelWithBorder(panelX, panelY, panelWidth, panelHeight, 230, panelColor);
+
+		float scale = 1.0f + (float) (Math.sin(payoutCounter * 0.15) * 0.1); // pulse
+		g2.setFont(gp.marumonica.deriveFont(Font.BOLD, 40F * scale));
+		int labelX = getCenterAlignedTextX(payoutLabel, gp.screenWidth / 2);
+		int labelY = panelY + gp.tileSize;
+		Color labelColor = payoutAmount > 0 ? Color.YELLOW : payoutAmount < 0 ? Color.ORANGE : Color.WHITE;
+		drawOutlinedText(payoutLabel, labelX, labelY, labelColor, Color.BLACK);
+
+		g2.setFont(gp.marumonica.deriveFont(Font.BOLD, 60F));
+		String amountText = displayedPayout > 0 ? "+" + displayedPayout : String.valueOf(displayedPayout);
+		int amountX = getCenterAlignedTextX(amountText, gp.screenWidth / 2);
+		int amountY = panelY + (int) (gp.tileSize * 2.5);
+		Color amountColor = displayedPayout > 0 ? new Color(0, 255, 0) : displayedPayout < 0 ? new Color(255, 50, 50) : Color.WHITE;
+		drawOutlinedText(amountText, amountX, amountY, amountColor, Color.BLACK);
+
+		g2.setFont(gp.marumonica.deriveFont(Font.BOLD, 24F));
+		String currLabel = getBetCurrencyName(payoutGauntlet).toUpperCase();
+		int currY = amountY + gp.tileSize;
+		drawOutlinedText(currLabel, getCenterAlignedTextX(currLabel, gp.screenWidth / 2), currY, Color.LIGHT_GRAY, Color.BLACK);
+
+		if (payoutSubtext != null) {
+			g2.setFont(gp.marumonica.deriveFont(20F));
+			drawOutlinedText(payoutSubtext, getCenterAlignedTextX(payoutSubtext, gp.screenWidth / 2),
+					currY + (int) (gp.tileSize * 0.7), Color.WHITE, Color.BLACK);
+		}
+
+		for (PayoutParticle particle : payoutParticles) particle.draw(g2);
+	}
+
+	private final class PayoutParticle {
+		float x, y, vx, vy;
+		int life = 90;
+		Color color;
+		int size;
+
+		PayoutParticle(int startX, int startY, float angle, float speed) {
+			x = startX;
+			y = startY;
+			vx = (float) (Math.cos(angle) * speed);
+			vy = (float) (Math.sin(angle) * speed);
+			java.util.concurrent.ThreadLocalRandom rand = java.util.concurrent.ThreadLocalRandom.current();
+			switch (rand.nextInt(3)) {
+			case 0:  color = payoutGauntlet ? new Color(209, 19, 203) : new Color(255, 215, 0); break;
+			case 1:  color = payoutGauntlet ? new Color(63, 26, 173) : new Color(255, 255, 0); break;
+			default: color = payoutGauntlet ? new Color(99, 23, 191) : new Color(255, 200, 50);
+			}
+			size = 8 + rand.nextInt(8);
+		}
+
+		void update() { x += vx; y += vy; vy += 0.3f; life--; }
+		boolean isDead() { return life <= 0; }
+
+		void draw(Graphics2D g2) {
+			float alpha = Math.min(1.0f, life / 30.0f);
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+			g2.setColor(color);
+			g2.fillOval((int) x - size / 2, (int) y - size / 2, size, size);
+			g2.setColor(new Color(255, 255, 255, (int) (200 * alpha)));
+			g2.fillOval((int) x - size / 4, (int) y - size / 2, size / 3, size / 3);
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+		}
+	}
 }

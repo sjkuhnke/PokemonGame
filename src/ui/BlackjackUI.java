@@ -61,14 +61,6 @@ public class BlackjackUI extends AbstractUI {
 	private String messageText;
 	private int messageTimer;
 	
-	// Payout animation
-	private ArrayList<PayoutParticle> payoutParticles;
-	private int payoutAmount;
-	private int displayedPayout;
-	private int payoutCounter;
-	private String payoutText;
-	private boolean payoutComplete;
-	
 	// Stats display
 	private int statsScrollOffset;
 	private static final int STATS_LINE_HEIGHT = 24;
@@ -94,7 +86,6 @@ public class BlackjackUI extends AbstractUI {
 		
 		playerHands = new ArrayList<>();
 		dealerHand = new Hand();
-		payoutParticles = new ArrayList<>();
 		
 		gameState = STATE_BETTING;
 		menuNum = 0;
@@ -665,12 +656,7 @@ public class BlackjackUI extends AbstractUI {
 	}
 	
 	private void startPayout(int amount, String label) {
-		payoutAmount = amount;
-		displayedPayout = 0;
-		payoutCounter = 0;
-		payoutComplete = false;
-		payoutParticles.clear();
-		payoutText = label;
+		startPayoutAnimation(amount, label, null, gauntlet);
 		gameState = STATE_PAYOUT;
 		
 		// Play appropriate sound
@@ -682,65 +668,17 @@ public class BlackjackUI extends AbstractUI {
 	}
 	
 	private void updatePayout() {
-		payoutCounter++;
-		
-		// Increment displayed payout gradually
-		if (!payoutComplete) {
-			if (payoutAmount != 0) {
-				int increment = Math.max(1, Math.abs(payoutAmount) / 30);
-				if (payoutAmount > 0) {
-					displayedPayout += increment;
-					if (displayedPayout >= payoutAmount) {
-						displayedPayout = payoutAmount;
-						payoutComplete = true;
-					}
-				} else {
-					displayedPayout -= increment;
-					if (displayedPayout <= payoutAmount) {
-						displayedPayout = payoutAmount;
-						payoutComplete = true;
-					}
-				}
-				
-				// Spawn particles
-				if (payoutCounter % 3 == 0 && payoutAmount > 0) {
-					spawnPayoutParticles();
-				}
-				
-				// Play tick sound
-				if (payoutCounter % 2 == 0) {
-					gp.playSFX(Sound.S_MENU_1);
-				}
-			} else {
-				payoutComplete = true;
-			}
+		updatePayoutAnimation();
+		if (!payoutComplete && gp.keyH.wPressed) { // free bonus: Blackjack gets the skip too
+			gp.keyH.wPressed = false;
+			skipPayoutAnimation();
 		}
-		
-		// Update particles
-		for (int i = payoutParticles.size() - 1; i >= 0; i--) {
-			PayoutParticle particle = payoutParticles.get(i);
-			particle.update();
-			if (particle.isDead()) {
-				payoutParticles.remove(i);
-			}
-		}
-		
-		// Move to game over after animation
-		if (payoutComplete && payoutCounter > 120) {
-			endGame();
-		}
+		if (payoutComplete && payoutCounter > 120) endGame();
 	}
 	
-	private void spawnPayoutParticles() {
-		Random rand = new Random();
-		int centerX = gp.screenWidth / 2;
-		int centerY = gp.screenHeight / 2 - gp.tileSize * 2;
-		
-		for (int i = 0; i < 3; i++) {
-			float angle = rand.nextFloat() * (float)(Math.PI * 2);
-			float speed = 2 + rand.nextFloat() * 3;
-			payoutParticles.add(new PayoutParticle(centerX, centerY, angle, speed));
-		}
+	private void drawPayoutAnimation() {
+		if (messageTimer > 0) return;
+		drawPayoutPanel();
 	}
 	
 	private void updateGameOver() {
@@ -1435,63 +1373,6 @@ public class BlackjackUI extends AbstractUI {
 		}
 	}
 	
-	private void drawPayoutAnimation() {
-		if (messageTimer > 0) {
-			return;
-		}
-		
-		// Draw payout panel
-		int panelWidth = gp.tileSize * 6;
-		int panelHeight = gp.tileSize * 4;
-		int panelX = (gp.screenWidth - panelWidth) / 2;
-		int panelY = (gp.screenHeight - panelHeight) / 2;
-		
-		Color panelColor = payoutAmount > 0 ? Color.GREEN : payoutAmount < 0 ? Color.RED : Color.BLUE;
-		drawPanelWithBorder(panelX, panelY, panelWidth, panelHeight, 230, panelColor);
-		
-		// Draw message label
-		g2.setFont(gp.marumonica.deriveFont(Font.BOLD, 40F));
-		int labelX = getCenterAlignedTextX(payoutText, gp.screenWidth / 2);
-		int labelY = panelY + gp.tileSize;
-		
-		// Pulse effect on label
-		float scale = 1.0f + (float)(Math.sin(payoutCounter * 0.15) * 0.1);
-		g2.setFont(gp.marumonica.deriveFont(Font.BOLD, 40F * scale));
-		labelX = getCenterAlignedTextX(payoutText, gp.screenWidth / 2);
-		
-		Color labelColor = payoutAmount > 0 ? Color.YELLOW : payoutAmount < 0 ? Color.ORANGE : Color.WHITE;
-		drawOutlinedText(payoutText, labelX, labelY, labelColor, Color.BLACK);
-		
-		// Draw payout amount with counting animation
-		g2.setFont(gp.marumonica.deriveFont(Font.BOLD, 60F));
-		String payoutText;
-		if (displayedPayout > 0) {
-			payoutText = "+" + displayedPayout;
-		} else if (displayedPayout < 0) {
-			payoutText = String.valueOf(displayedPayout);
-		} else {
-			payoutText = "0";
-		}
-		
-		int payoutX = getCenterAlignedTextX(payoutText, gp.screenWidth / 2);
-		int payoutY = panelY + (int)(gp.tileSize * 2.5);
-		
-		Color amountColor = displayedPayout > 0 ? new Color(0, 255, 0) : displayedPayout < 0 ? new Color(255, 50, 50) : Color.WHITE;
-		drawOutlinedText(payoutText, payoutX, payoutY, amountColor, Color.BLACK);
-		
-		// Draw currency label
-		g2.setFont(gp.marumonica.deriveFont(Font.BOLD, 24F));
-		String currLabel = currency.toUpperCase();
-		int currX = getCenterAlignedTextX(currLabel, gp.screenWidth / 2);
-		int currY = payoutY + gp.tileSize;
-		drawOutlinedText(currLabel, currX, currY, Color.LIGHT_GRAY, Color.BLACK);
-		
-		// Draw particles
-		for (PayoutParticle particle : payoutParticles) {
-			particle.draw(g2);
-		}
-	}
-	
 	private void drawGameOverUI() {
 		int panelWidth = gp.tileSize * 6;
 		int panelHeight = gp.tileSize * 3;
@@ -1646,65 +1527,6 @@ public class BlackjackUI extends AbstractUI {
 		} else {
 			gp.setTaskState();
 			Task.addTask(Task.TEXT, "Come play again soon, okay?");
-		}
-	}
-	
-	// Inner classes
-	private class PayoutParticle {
-		float x, y;
-		float vx, vy;
-		int life;
-		Color color;
-		int size;
-		
-		public PayoutParticle(int startX, int startY, float angle, float speed) {
-			this.x = startX;
-			this.y = startY;
-			this.vx = (float)(Math.cos(angle) * speed);
-			this.vy = (float)(Math.sin(angle) * speed);
-			this.life = 90;
-			
-			Random rand = new Random();
-			// Gold/yellow colors for coins
-			int colorChoice = rand.nextInt(3);
-			switch(colorChoice) {
-			case 0:
-			color = gauntlet ? new Color(209, 19, 203) : new Color(255, 215, 0); // Gold
-			break;
-			case 1:
-			color = gauntlet ? new Color(63, 26, 173) : new Color(255, 255, 0); // Yellow
-			break;
-			default:
-			color = gauntlet ? new Color(99, 23, 191) : new Color(255, 200, 50); // Orange-gold
-			}
-			
-			this.size = 8 + rand.nextInt(8);
-		}
-		
-		public void update() {
-			x += vx;
-			y += vy;
-			vy += 0.3f; // Gravity
-			life--;
-		}
-		
-		public boolean isDead() {
-			return life <= 0;
-		}
-		
-		public void draw(Graphics2D g2) {
-			float alpha = Math.min(1.0f, life / 30.0f);
-			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
-			
-			// Draw coin-like circle
-			g2.setColor(color);
-			g2.fillOval((int)x - size/2, (int)y - size/2, size, size);
-			
-			// Draw shine/highlight
-			g2.setColor(new Color(255, 255, 255, (int)(200 * alpha)));
-			g2.fillOval((int)x - size/4, (int)y - size/2, size/3, size/3);
-			
-			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
 		}
 	}
 	

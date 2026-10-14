@@ -299,14 +299,13 @@ public final class SelfPlay {
 
 				Pokemon p1 = t1.getCurrent();
 				Pokemon p2 = t2.getCurrent();
-				boolean fFaster = p1.getFaster(p2, 0, 0, field) == p2;
 
 				long a = System.nanoTime();
 				if (tuned) Tunables.apply(pv1);
-				Move uMove = p1.resolveDecision(p1.bestMove2(p2, !fFaster, diff1));
+				Move uMove = p1.resolveDecision(p1.bestMove2(p2, diff1));
 				long b = System.nanoTime();
 				if (tuned) Tunables.apply(pv2);
-				Move fMove = p2.resolveDecision(p2.bestMove2(p1, fFaster, diff2));
+				Move fMove = p2.resolveDecision(p2.bestMove2(p1, diff2));
 				long c = System.nanoTime();
 				r.nanos1 += b - a; r.decisions1++; r.maxNanos1 = Math.max(r.maxNanos1, b - a);
 				r.nanos2 += c - b; r.decisions2++; r.maxNanos2 = Math.max(r.maxNanos2, c - b);

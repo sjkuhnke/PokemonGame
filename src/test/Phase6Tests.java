@@ -346,10 +346,10 @@ public final class Phase6Tests {
 
 		PlayerModel model = d.pl.playerModel();
 		Rng.setSeed(5);
-		d.a.bestMove2(d.f, true, Player.HARD);
+		d.a.bestMove2(d.f, Player.HARD);
 		for (int i = 0; i < pt[0].moveset.length; i++) if (pt[0].moveset[i] != null && pt[0].moveset[i].move == Move.PROTECT) pt[0].moveset[i].currentPP--;
 		Rng.setSeed(6);
-		d.a.bestMove2(d.f, true, Player.HARD);
+		d.a.bestMove2(d.f, Player.HARD);
 		check("clicking Protect is recorded as STAY_PROTECT: " + model.summary(), model.summary().contains("STAY_PROTECT=100%"));
 
 		// the history makes the AI expect Protect: its predicted mass on the Protect column rises
@@ -370,7 +370,7 @@ public final class Phase6Tests {
 		Phase4Tests.Duel e = build(aiTeam(), ept);
 		PlayerModel em = e.pl.playerModel();
 		Rng.setSeed(20 + s);
-		e.a.bestMove2(e.f, true, Player.HARD);
+		e.a.bestMove2(e.f, Player.HARD);
 		Pokemon target = ept[s], lead = ept[0];
 		e.pl.setCurrent(target);
 		if (reorder) {
@@ -378,7 +378,7 @@ public final class Phase6Tests {
 			ept[s] = lead;
 		}
 		Rng.setSeed(30 + s);
-		e.a.bestMove2(target, true, Player.HARD);
+		e.a.bestMove2(target, Player.HARD);
 		return em.summary();
 	}
 
@@ -424,26 +424,26 @@ public final class Phase6Tests {
 		check("found a best-band move slot and an outside-band move slot", bestIdx >= 0 && otherIdx >= 0);
 
 		Rng.setSeed(11);
-		d.a.bestMove2(d.f, true, Player.HARD); // begins observing: remembers the situation
+		d.a.bestMove2(d.f, Player.HARD); // begins observing: remembers the situation
 		check("nothing observed yet", model.total() == 0);
 
 		Rng.setSeed(11);
-		d.a.bestMove2(d.f, true, Player.HARD); // same turn again, nothing changed: a second decision, not an action
+		d.a.bestMove2(d.f, Player.HARD); // same turn again, nothing changed: a second decision, not an action
 		check("a repeated decision in the same turn records nothing", model.total() == 0);
 
 		pt[0].moveset[bestIdx].currentPP--; // the player used the matrix-best move
 		Rng.setSeed(12);
-		d.a.bestMove2(d.f, true, Player.HARD);
+		d.a.bestMove2(d.f, Player.HARD);
 		check("staying in with the best move is recorded: " + model.summary(), model.summary().contains("STAY_BEST=100%"));
 
 		pt[0].moveset[otherIdx].currentPP--; // then the other move
 		Rng.setSeed(13);
-		d.a.bestMove2(d.f, true, Player.HARD);
+		d.a.bestMove2(d.f, Player.HARD);
 		check("the other move is recorded as STAY_OTHER: " + model.summary(), !model.summary().contains("STAY_OTHER=0%"));
 
 		double before = model.total();
 		Rng.setSeed(14);
-		d.a.bestMove2(d.f, true, Player.HARD); // nothing changed
+		d.a.bestMove2(d.f, Player.HARD); // nothing changed
 		close("no PP spent, same mon: nothing observable", model.total(), before, 1e-9);
 
 		// switching: both bench mons have a column, and the best band always holds at least one of them

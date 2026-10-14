@@ -1,7 +1,7 @@
 package pokemon;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Phase 8 (§7.9 "caches", §10): content-keyed memo tables for the two hottest pure computations.
@@ -14,7 +14,7 @@ import java.util.List;
  * The keys are 64-bit hashes of every input those computations read (audited against computeDamage / getSpeed / getValidMoveset).
  * Because a missed input would be a SILENT wrong answer, {@link #VERIFY} recomputes on every hit and counts mismatches; run
  * Phase8Tests with it on after any change to damage code. Cached values are immutable (a double, or a DamageRange).
- * Game thread only. Bounded: a table is cleared when it reaches MAX_ENTRIES.
+ * Bounded: a table is cleared when it reaches MAX_ENTRIES.
  */
 public final class SimCache {
 	private SimCache() {}
@@ -24,8 +24,8 @@ public final class SimCache {
 	public static long verifyChecked, verifyMismatches;
 
 	private static final int MAX_ENTRIES = 1 << 15;
-	private static final HashMap<Long, Double> EDGE = new HashMap<>();
-	private static final HashMap<Long, DamageRange> RANGE = new HashMap<>();
+	private static final ConcurrentHashMap<Long, Double> EDGE = new ConcurrentHashMap<>();
+	private static final ConcurrentHashMap<Long, DamageRange> RANGE = new ConcurrentHashMap<>();
 	/** Stands in for "bestRange returned null" (identity compare; DamageRange.unusable() makes a new object each call). */
 	private static final DamageRange NULL_MARK = DamageRange.unusable();
 

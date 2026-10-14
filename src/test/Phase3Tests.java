@@ -87,11 +87,11 @@ public final class Phase3Tests {
 	static void t4_determinism() {
 		AITestHarness.Scenario s1 = AITestHarness.basic1v1();
 		Rng.setSeed(12345L);
-		Move d1 = s1.ai.bestMove2(s1.foe, true, Player.HARD).move;
+		Move d1 = s1.ai.bestMove2(s1.foe, Player.HARD).move;
 
 		AITestHarness.Scenario s2 = AITestHarness.basic1v1(); // same trainers, freshly reset
 		Rng.setSeed(12345L);
-		Move d2 = s2.ai.bestMove2(s2.foe, true, Player.HARD).move;
+		Move d2 = s2.ai.bestMove2(s2.foe, Player.HARD).move;
 
 		assertTrue("same seed -> same chosen move (" + d1 + " vs " + d2 + ")", d1 == d2);
 	}
@@ -137,7 +137,7 @@ public final class Phase3Tests {
 		int plain = 0, n = 50;
 		Rng.randomize();
 		for (int i = 0; i < n; i++) {
-			Move chosen = s.ai.bestMove2(s.foe, true, Player.HARD).move;
+			Move chosen = s.ai.bestMove2(s.foe, Player.HARD).move;
 			System.out.println(chosen);
 			if (!chosen.hasPriority(s.ai)) plain++; // taggedMoveA = the non-priority lethal move
 		}
@@ -154,7 +154,7 @@ public final class Phase3Tests {
 			Rng.randomize();
 			for (int i = 0; i < n; i++) {
 				AITestHarness.Scenario s = AITestHarness.perishCountNWithHealthyBench(1);
-				MoveDecision d = s.ai.bestMove2(s.foe, true, diff);
+				MoveDecision d = s.ai.bestMove2(s.foe, diff);
 				if (AITestHarness.isSwitchOrPivot(d)) switches++;
 			}
 			assertTrue("perishCount==1 switches dominate at difficulty " + diff, switches > n * 0.9);
@@ -170,7 +170,7 @@ public final class Phase3Tests {
 		Rng.randomize();
 		for (int i = 0; i < n; i++) {
 			AITestHarness.Scenario s = AITestHarness.allMovesImmuneVsActive();
-			MoveDecision d = s.ai.bestMove2(s.foe, true, Player.HARD);
+			MoveDecision d = s.ai.bestMove2(s.foe, Player.HARD);
 			if (AITestHarness.isSwitchOrPivot(d)) switches++;
 		}
 		assertTrue("HARD: switching dominates when nothing lands", switches > n * 0.7);
@@ -185,7 +185,7 @@ public final class Phase3Tests {
 		Rng.randomize();
 		for (int i = 0; i < n; i++) {
 			AITestHarness.Scenario s = AITestHarness.basic1v1NotDeadTurn();
-			MoveDecision d = s.ai.bestMove2(s.foe, true, Player.NORMAL);
+			MoveDecision d = s.ai.bestMove2(s.foe, Player.NORMAL);
 			if (AITestHarness.isPlainSwitch(d)) plainSwitches++;
 		}
 		assertTrue("NORMAL never picks a plain SWITCH row outside perishCount==1/dead-turn", plainSwitches == 0);
@@ -193,7 +193,7 @@ public final class Phase3Tests {
 		boolean hardSwitchedSometimes = false;
 		for (int i = 0; i < 50 && !hardSwitchedSometimes; i++) {
 			AITestHarness.Scenario s = AITestHarness.favorableSwitchScenario();
-			MoveDecision d = s.ai.bestMove2(s.foe, true, Player.HARD);
+			MoveDecision d = s.ai.bestMove2(s.foe, Player.HARD);
 			if (AITestHarness.isPlainSwitch(d)) hardSwitchedSometimes = true;
 		}
 		assertTrue("HARD selects switches when the matrix favors them", hardSwitchedSometimes);
@@ -205,11 +205,11 @@ public final class Phase3Tests {
 
 	static void t17_perishExceptionInNormal() {
 		AITestHarness.Scenario perish1 = AITestHarness.perishCountNWithHealthyBench(1);
-		MoveDecision d1 = perish1.ai.bestMove2(perish1.foe, true, Player.NORMAL);
+		MoveDecision d1 = perish1.ai.bestMove2(perish1.foe, Player.NORMAL);
 		assertTrue("perishCount==1: NORMAL switches", AITestHarness.isSwitchOrPivot(d1));
 
 		AITestHarness.Scenario perish2 = AITestHarness.perishCountNWithHealthyBench(2);
-		MoveDecision d2 = perish2.ai.bestMove2(perish2.foe, true, Player.NORMAL);
+		MoveDecision d2 = perish2.ai.bestMove2(perish2.foe, Player.NORMAL);
 		assertTrue("perishCount==2: NORMAL does not force-switch", !AITestHarness.isPlainSwitch(d2));
 	}
 
@@ -238,12 +238,12 @@ public final class Phase3Tests {
 	static void t29_struggleOnlySwap() {
 		for (int diff : new int[] { Player.NORMAL, Player.HARD }) {
 			AITestHarness.Scenario s = AITestHarness.struggleOnlyWithHealthyBench();
-			MoveDecision d = s.ai.bestMove2(s.foe, true, diff);
+			MoveDecision d = s.ai.bestMove2(s.foe, diff);
 			assertTrue("Struggle-only + canSwitch: swaps at difficulty " + diff, AITestHarness.isPlainSwitch(d));
 			assertTrue("no Struggle row exists", d.move != Move.STRUGGLE);
 		}
 		AITestHarness.Scenario trapped = AITestHarness.struggleOnlyTrapped();
-		MoveDecision dt = trapped.ai.bestMove2(trapped.foe, true, Player.HARD);
+		MoveDecision dt = trapped.ai.bestMove2(trapped.foe, Player.HARD);
 		assertTrue("trapped: Struggle", dt.move == Move.STRUGGLE);
 	}
 
@@ -253,7 +253,7 @@ public final class Phase3Tests {
 
 	static void t30_normalKeepsFighting() {
 		AITestHarness.Scenario s = AITestHarness.threatenedButHasWorkingMove();
-		MoveDecision d = s.ai.bestMove2(s.foe, true, Player.NORMAL);
+		MoveDecision d = s.ai.bestMove2(s.foe, Player.NORMAL);
 		assertTrue("NORMAL stays and fights (no SWITCH rows) with a working move", !AITestHarness.isPlainSwitch(d));
 	}
 

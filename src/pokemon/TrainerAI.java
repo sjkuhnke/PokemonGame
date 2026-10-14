@@ -12,7 +12,7 @@ public interface TrainerAI {
 	 *
 	 * @param difficulty Player.NORMAL / Player.HARD / Player.EXTREME
 	 */
-	MoveDecision decide(Pokemon self, Pokemon foe, boolean first, int difficulty);
+	MoveDecision decide(Pokemon self, Pokemon foe, int difficulty);
 
 	String getName();
 

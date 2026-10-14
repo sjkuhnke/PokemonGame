@@ -1286,6 +1286,7 @@ public class PlayerCharacter extends Entity {
 			ui.showMessage(message);
 		} else if (code.equals("nei")) {
 			Arrays.fill(p.pokedex, 2);
+			Arrays.fill(p.shinyDex, true);
 			p.invalidateNuzlocke("Used " + code);
 		} else if (code.equals("GENN")) {
 			Pokemon po = Item.displayGenerator(null);
