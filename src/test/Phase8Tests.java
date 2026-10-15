@@ -3,10 +3,13 @@ package test;
 import java.util.Arrays;
 import java.util.List;
 
+import pokemon.AIV2;
 import pokemon.Field;
 import pokemon.MonWeights;
 import pokemon.Moveslot;
 import pokemon.Perf;
+import pokemon.Player;
+import pokemon.PlayerModel;
 import pokemon.Pokemon;
 import pokemon.SelfPlay;
 import pokemon.SimCache;
@@ -138,6 +141,39 @@ public final class Phase8Tests {
 			System.out.println(Perf.report());
 		} finally {
 			Perf.ON = false;
+		}
+	}
+	
+	public static void switchRates(int battles, boolean persistModels) {
+		boolean prevSup = util.Print.isDebugSuppressed();
+		boolean wasSeeded = util.Rng.isSeeded();
+		long prevSeed = util.Rng.getSeed();
+		util.Print.setDebugSuppressed(true);
+		try {
+			SelfPlay.TeamSource teams = SelfPlay.randomCompetitive(6);
+			PlayerModel aboutHard = new PlayerModel(), aboutNormal = new PlayerModel();
+			double score = 0; int n = 0, hardSwaps = 0, normalSwaps = 0, hardPivots = 0, normalPivots = 0;
+			for (int pair = 0; n < battles; pair++) {
+				util.Rng.setSeed(4242L + 1_000_003L * pair);
+				Trainer[] m = teams.next(pair, new java.util.Random(4242L + pair));
+				for (int seat = 0; seat < 2; seat++) {
+					boolean hardFirst = seat == 0;
+					int d1 = hardFirst ? Player.HARD : Player.NORMAL, d2 = hardFirst ? Player.NORMAL : Player.HARD;
+					PlayerModel on1 = persistModels ? (hardFirst ? aboutHard : aboutNormal) : null;
+					PlayerModel on2 = persistModels ? (hardFirst ? aboutNormal : aboutHard) : null;
+					SelfPlay.BattleResult r = SelfPlay.playBattle(m[0], m[1], AIV2.INSTANCE, AIV2.INSTANCE, d1, d2, 9000L + 7919L * n, 300, on1, on2);
+					if (r.error != null) continue;
+					n++;
+					score += r.winner < 0 ? 0.5 : ((r.winner == 0) == hardFirst ? 1 : 0);
+					hardSwaps += hardFirst ? r.swaps1 : r.swaps2;     normalSwaps += hardFirst ? r.swaps2 : r.swaps1;
+					hardPivots += hardFirst ? r.pivots1 : r.pivots2;  normalPivots += hardFirst ? r.pivots2 : r.pivots1;
+				}
+			}
+			System.out.printf("HARD score %.1f%% over %d | per battle: HARD swaps %.2f pivots %.2f, NORMAL swaps %.2f pivots %.2f (persistModels=%b)%n",
+					100 * score / n, n, hardSwaps / (double) n, hardPivots / (double) n, normalSwaps / (double) n, normalPivots / (double) n, persistModels);
+		} finally {
+			util.Print.setDebugSuppressed(prevSup);
+			if (wasSeeded) util.Rng.setSeed(prevSeed); else util.Rng.randomize();
 		}
 	}
 }

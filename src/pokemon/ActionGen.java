@@ -125,7 +125,7 @@ public final class ActionGen {
 
 	/** Mirrors the pre-overhaul skip rule (legacy AI removed in Phase 4): don't count clicking a status move as a real action for an unlocked Choice holder. */
 	private static boolean choiceLockSkip(Pokemon self, Move m, Pokemon foe, Ability foeAbility, Field field) {
-		return m.cat == 2 && self.item != null && self.getItem(field).isChoiceItem()
+		return m.cat == 2 && self.getItem(field) != null && self.getItem(field).isChoiceItem()
 				&& !m.isMagicBounceEffected(self, foe, foeAbility, m.accuracy);
 	}
 

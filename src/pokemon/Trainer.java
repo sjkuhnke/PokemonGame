@@ -208,7 +208,7 @@ public class Trainer implements Serializable {
 
 		Integer forced = SimContext.active() ? SimContext.consumeForcedSwitch() : null;
 		int index;
-		if (forced != null) {
+		if (forced != null && forced >= 0 && forced < team.length && team[forced] != null && !team[forced].isFainted() && team[forced] != current) {
 			index = forced;
 		} else {
 			Random rand = Rng.asRandom();

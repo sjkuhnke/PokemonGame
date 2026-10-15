@@ -429,6 +429,7 @@ public class BattleSimulator {
 			if (forcedSwitchTarget != null) SimContext.forceNextSwitch(forcedSwitchTarget);
 			if (forcedMetronome != null) SimContext.forceNextMetronome(forcedMetronome);
 			attacker.moveInit(defender, act.move, first);
+			SimContext.consumeForcedSwitch();
 			SimContext.forceNextMetronome(null); // never leak a forced Metronome into a later cell
 		}
 

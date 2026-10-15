@@ -57,7 +57,7 @@ public class SimBattleUI extends BattleUI {
 	public void draw(Graphics2D g2) {
 		super.draw(g2);
 		
-		if (subState != INFO_STATE && !showFoeSummary && !showParlays) {
+		if (subState != INFO_STATE && !showFoeSummary && !showParlays && (currentTask == null || currentTask.type != Task.PAYOUT)) {
 			if (currentAbility == null && (currentTask == null || currentTask.type != Task.PARLAY)) {
 				drawAutoplayWindow();
 			}
@@ -213,14 +213,14 @@ public class SimBattleUI extends BattleUI {
 						awarded = true;
 					}
 				}
-				if (cooldownCounter >= 30) {
+				if (cooldownCounter >= 15) {
 					cooldownCounter = 0;
 					parlayDone = true;
 					awarded = false;
 				}
 			} else {
 				cooldownCounter++;
-				if (cooldownCounter >= 60) {
+				if (cooldownCounter >= 30) {
 					cooldownCounter = 0;
 					parlayDone = false;
 					awarded = false;
@@ -819,7 +819,7 @@ public class SimBattleUI extends BattleUI {
 			slowCanMove = false;
 		}
 		
-		if (slowMove != null && fastMove == Move.SUCKER_PUNCH && slowMove.cat == 2) fastMove = Move.FAILED_SUCKER;
+		if (fastMove == Move.SUCKER_PUNCH && (slowMove == null || slowMove.cat == 2)) fastMove = Move.FAILED_SUCKER;
 		
 		if (fastCanMove) {
 			faster.moveInit(slower, fastMove, true);
@@ -836,6 +836,9 @@ public class SimBattleUI extends BattleUI {
 			slower = slower.trainer.swapOut2(faster, FREE_SWITCH, false, slower.trainer.hasUser(user));
 			slowCanMove = false;
 		}
+		
+		// fast can switch out so the fastMove check needs to be here
+		if (slowMove == Move.SUCKER_PUNCH && (fastMove == null || fastMove.cat == 2)) slowMove = Move.FAILED_SUCKER;
 		
 		if (slowCanMove) {
 			slower.moveInit(faster, slowMove, false);
@@ -1004,7 +1007,7 @@ public class SimBattleUI extends BattleUI {
 				finish = true; // second press: don't wait out the hold timer
 			}
 		}
-		drawPayoutPanel();
+		drawPayoutPanel(gp.tileSize * 5, gp.tileSize * 2);
 		drawToolTips(payoutComplete ? "Continue" : "Skip", null, null, null);
 		return finish || (payoutComplete && payoutCounter > PAYOUT_HOLD_FRAMES);
 	}

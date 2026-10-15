@@ -3636,11 +3636,9 @@ public abstract class AbstractUI {
 		}
 	}
 
-	protected void drawPayoutPanel() {
+	protected void drawPayoutPanel(int panelX, int panelY) {
 		int panelWidth = gp.tileSize * 6;
 		int panelHeight = gp.tileSize * 4 + (payoutSubtext != null ? (int) (gp.tileSize * 0.75) : 0);
-		int panelX = (gp.screenWidth - panelWidth) / 2;
-		int panelY = (gp.screenHeight - panelHeight) / 2;
 
 		Color panelColor = payoutAmount > 0 ? Color.GREEN : payoutAmount < 0 ? Color.RED : Color.BLUE;
 		drawPanelWithBorder(panelX, panelY, panelWidth, panelHeight, 230, panelColor);

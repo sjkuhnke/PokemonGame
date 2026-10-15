@@ -678,7 +678,7 @@ public class BlackjackUI extends AbstractUI {
 	
 	private void drawPayoutAnimation() {
 		if (messageTimer > 0) return;
-		drawPayoutPanel();
+		drawPayoutPanel(gp.tileSize * 5, gp.tileSize * 4);
 	}
 	
 	private void updateGameOver() {

@@ -752,7 +752,7 @@ public class UI extends AbstractUI {
 	}
 	
 	public boolean messageSkippable() {
-		return !(currentTask != null && currentTask.type == Task.SPACE);
+		return !(currentTask != null && (currentTask.type == Task.SPACE || currentTask.type == Task.ODDS));
 	}
 
 	private void drawParticles() {

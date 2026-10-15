@@ -60,6 +60,7 @@ public final class SelfPlay {
 		public int decisions1, decisions2;
 		public long checksum;
 		public Throwable error;
+		public int swaps1, swaps2, pivots1, pivots2;
 	}
 
 	// ------------------------------------------------------------------ team sources
@@ -307,6 +308,8 @@ public final class SelfPlay {
 				if (tuned) Tunables.apply(pv2);
 				Move fMove = p2.resolveDecision(p2.bestMove2(p1, diff2));
 				long c = System.nanoTime();
+				if (p1.hasStatus(Status.SWAP)) r.swaps1++; else if (p1.hasStatus(Status.TEMP_SWITCHING)) r.pivots1++;
+				if (p2.hasStatus(Status.SWAP)) r.swaps2++; else if (p2.hasStatus(Status.TEMP_SWITCHING)) r.pivots2++;
 				r.nanos1 += b - a; r.decisions1++; r.maxNanos1 = Math.max(r.maxNanos1, b - a);
 				r.nanos2 += c - b; r.decisions2++; r.maxNanos2 = Math.max(r.maxNanos2, c - b);
 
