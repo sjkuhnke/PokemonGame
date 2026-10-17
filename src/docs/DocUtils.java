@@ -30,8 +30,8 @@ import pokemon.Pokemon;
 
 public class DocUtils {
 	
-	private static BufferedImage[] sprites = new BufferedImage[Pokemon.MAX_POKEMON];
-	private static BufferedImage[] shinySprites = new BufferedImage[Pokemon.MAX_POKEMON];
+	private static BufferedImage[] sprites = new BufferedImage[Pokemon.MAX_POKEMON + 1]; // 0 is egg
+	private static BufferedImage[] shinySprites = new BufferedImage[Pokemon.MAX_POKEMON + 1];
 	
 	public static CellStyle makeStyle(Workbook wb, boolean bold, boolean italic, int fontSize, short color) {
 		XSSFFont font = makeFont(wb, bold, italic, fontSize, color);
@@ -69,10 +69,10 @@ public class DocUtils {
 	public static BufferedImage getCachedSprite(int id, boolean shiny) {
 		BufferedImage[] sprite = shiny ? shinySprites : sprites;
 		String folder = shiny ? "/shiny/" : "/sprites/";
-		if (sprite[id - 1] == null) {
-			sprite[id - 1] = Pokemon.getSprite(folder, id);
+		if (sprite[id] == null) {
+			sprite[id] = Pokemon.getSprite(folder, id);
 		}
-		return sprite[id - 1];
+		return sprite[id];
 	}
 	
 	public static byte[] imageToBytes(BufferedImage image, String formatName) throws IOException {

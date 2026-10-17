@@ -3516,7 +3516,7 @@ public abstract class AbstractUI {
 			g2.fillRect(0, 0, W, H);
 		}
 		
-		drawToolTips(null, null, "Cancel", null);
+		drawToolTips(null, null, currentTask.wipe ? null : "Cancel", null);
 	}
 
 	private void drawEvoGlow(int cx, int cy, double intensity) {

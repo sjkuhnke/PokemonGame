@@ -1,14 +1,11 @@
 TODO
 
 Polishing stuff
-Make whirlpool spin (jk fuck that)
 Make wild pokemon sometimes hold items (for balancing, can't covet bc it'll clear)
 Remove the "first dialogue" thing from script npcs and make if the name is null then it'll put "???" as their name. this can be
 used to then not reveal the npc's name until they introduce themselves
 
 UPDATE LIST
-Make a skip button in the payout screen for battle betting
-Update the "Calculating odds..." screen to show the progress of the odds being calculated
 Add black background or a default tile to each map background
 Evolving a Pokemon sometimes ends the task state early, maybe goBackInBag() is being called?
 Add Klara and Fred's house to Sicab City

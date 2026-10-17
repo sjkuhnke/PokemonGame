@@ -2782,7 +2782,7 @@ public class UI extends AbstractUI {
 			}
 		}
 		
-		drawDexScrollbar(maxShow + 1);
+		drawScrollbar(gp.tileSize * 7 - gp.tileSize * 2 / 5, (int) (gp.tileSize * 1.6), (int) (gp.tileSize * 7.6), 11, maxShow + 1, dexNum[dexType]);
 		
 		int baseID = view[dexNum[dexType]].id;
 		int mode = gp.player.p.pokedex[baseID];
@@ -3186,17 +3186,13 @@ public class UI extends AbstractUI {
 		g2.setColor(Color.WHITE);
 	}
 	
-	/** Thin scrollbar on the right edge of the dex list. total = number of reachable entries. */
-	private void drawDexScrollbar(int total) {
+	private void drawScrollbar(int trackX, int trackY, int trackH, int visible, int total, int index) {
 		if (total <= 1) return;
-		int trackX = gp.tileSize * 7 - gp.tileSize * 2 / 5;
-		int trackY = (int) (gp.tileSize * 1.6);
-		int trackH = (int) (gp.tileSize * 7.6);
 		int trackW = 6;
 		g2.setColor(new Color(255, 255, 255, 50));
 		g2.fillRoundRect(trackX, trackY, trackW, trackH, 6, 6);
-		int thumbH = Math.max((int) (gp.tileSize * 0.6), (int) (trackH * Math.min(1.0, 11.0 / total)));
-		double pos = dexNum[dexType] / (double) (total - 1);
+		int thumbH = Math.max((int) (gp.tileSize * 0.6), (int) (trackH * Math.min(1.0, visible / (double) total)));
+		double pos = index / (double) (total - 1);
 		int thumbY = trackY + (int) ((trackH - thumbH) * Math.max(0.0, Math.min(1.0, pos)));
 		g2.setColor(new Color(255, 255, 255, 190));
 		g2.fillRoundRect(trackX, thumbY, trackW, thumbH, 6, 6);
@@ -3621,7 +3617,7 @@ public class UI extends AbstractUI {
 			int y2 = headTextY - gp.tileSize / 2;
 			int width2 = gp.tileSize / 2;
 			int height2 = gp.tileSize / 2;
-			g2.fillPolygon(new int[] {x2, (x2 + width2), (x2 + width2 / 2)}, new int[] {y2 + height2, y2 + height2, y2}, 3);
+			g2.fillPolygon(new int[] {x2, (x2 + width2), (x2 + width2 / 2)}, new int[] {y2 + height2, y2 + height2, y2}, 3);			
 			x2 = headWidth + headX - gp.tileSize / 2 - gp.tileSize / 3;
 			g2.fillPolygon(new int[] {x2, (x2 + width2), (x2 + width2 / 2)}, new int[] {y2 + height2, y2 + height2, y2}, 3);
 		}
@@ -5146,6 +5142,7 @@ public class UI extends AbstractUI {
 			int height2 = gp.tileSize / 2;
 			g2.fillPolygon(new int[] {x2, (x2 + width2), (x2 + width2 / 2)}, new int[] {y2, y2, y2 + height2}, 3);
 		}
+		drawScrollbar((int) (gp.tileSize * 14.5) - 3, (int) (gp.tileSize * 3.65), (int) (gp.tileSize * 7.2), 9, currentItems.size(), bagNum[currentPocket - 1]);
 		// Up Arrow
 		if (bagNum[currentPocket - 1] != 0 && bagState != 2) {
 			int x2 = gp.tileSize * 5 + width;

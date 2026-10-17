@@ -367,7 +367,7 @@ public class Pokemon implements Serializable {
 	
 	public static BufferedImage getSprite(String folder, int id) {
 		BufferedImage image = null;
-				String imageName = id + "";
+				String imageName = id == 0 ? "egg" : id + "";
 		while (imageName.length() < 3) imageName = "0" + imageName;
 		
 		try {

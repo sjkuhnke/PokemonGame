@@ -6323,6 +6323,7 @@ public class AssetSetter {
 	private void SetupWhirlpool(int mapNum, int x, int y, int map) {
 		if (mapNum != map) return;
 		Whirlpool middle = new Whirlpool(gp, x, y);
+		middle.setupImages("/interactive/whirlpool0");
 		
 		gp.iTile[mapNum][iIndex] = middle;
 		iIndex++;
@@ -6340,10 +6341,10 @@ public class AssetSetter {
 			Whirlpool current;
 			if (i % 2 == 0) {
 				current = new Whirlpool_Side(gp, offsetX, offsetY);
-				current.down1 = current.setup("/interactive/whirlpool" + (i + 1));
+				current.setupImages("/interactive/whirlpool" + (i + 1));
 			} else {
 				current = new Whirlpool_Corner(gp, offsetX, offsetY);
-				current.down1 = current.setup("/interactive/whirlpool" + (i + 1));
+				current.setupImages("/interactive/whirlpool" + (i + 1));
 			}
 			
 			gp.iTile[mapNum][iIndex] = current;

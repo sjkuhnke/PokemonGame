@@ -566,8 +566,8 @@ public class EventHandler {
 			if (hit(100,50,62)) teleport(90, 52, 18,true);
 			
 			// Electric Tunnel -3 -> Shadow Path
-			if (hit(98,53,63)) teleport(105, 29, 8,true);
-			if (hit(105,29,7)) teleport(98, 53, 62,true);
+			if (hit(98,53,63)) teleport(105, 29, 8,false);
+			if (hit(105,29,7)) teleport(98, 53, 62,false);
 			
 			// Shadow Path -> TN Base
 			if (hit(105,45,91)) teleport(104, 47, 43,false);

@@ -1612,7 +1612,7 @@ public class TitleScreen extends AbstractUI {
 		for (int i = 0; i < 6; i++) {
 			Pokemon p = previewPlayer.team[i];
 			if (p != null) {
-				Image sprite = p.isFainted() && !(p instanceof Egg) ? p.getFaintedSprite() : DocUtils.getCachedSprite(p.id, p.shiny);
+				Image sprite = p.isFainted() && !(p instanceof Egg) ? p.getFaintedSprite() : DocUtils.getCachedSprite(p instanceof Egg ? 0 : p.id, p.shiny);
 				if (sprite != null) {
 					int spriteX = contentX + (i % 3) * (width / 3);
 					int spriteY = contentY + (i / 3) * iconSize;
