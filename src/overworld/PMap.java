@@ -1043,11 +1043,11 @@ public class PMap extends JPanel {
 				PlayerCharacter.currentMapName = "Route 37";
 				return 34;
 			}
-			if (x <= 47) {
+			if (x <= 45) {
 				PlayerCharacter.currentMapName = "Rawwar City";
 				return 35;
 			}
-			if (x > 47) {
+			if (x > 45) {
 				PlayerCharacter.currentMapName = "Route 38";
 				return 36;
 			}

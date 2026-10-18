@@ -88,6 +88,7 @@ public final class Tunables {
 			l.add(new Param(AIConfig.class, "D_W_FIELD", 0.2, 3.0, true));
 			l.add(new Param(AIConfig.class, "D_W_TEMPO", 0.2, 3.0, true));
 			l.add(new Param(AIConfig.class, "D_W_PENDING", 0.2, 3.0, true));
+			l.add(new Param(AIConfig.class, "D_SWITCH_TAX", 0, 40, false));
 		} catch (ReflectiveOperationException e) {
 			throw new IllegalStateException("Tunables: " + e, e);
 		}

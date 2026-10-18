@@ -16,10 +16,10 @@ package pokemon;
 public class AIConfig {
 	public int branchBudget = 4;
 	
-	static double D_ALPHA = 0.7, D_TEMP_EXPLOIT = 6.0, D_SACK_RATIO = 0.8, D_SACK_MIN_GAIN = 10, D_MIN_PROB = 0.02, D_LEAD_TEMPERATURE = 10.0;
+	static double D_ALPHA = 0.7, D_TEMP_EXPLOIT = 6.0, D_SACK_RATIO = 0.8, D_SACK_MIN_GAIN = 10, D_MIN_PROB = 0.02, D_LEAD_TEMPERATURE = 10.0, D_SWITCH_TAX = 0;
 	
-	   static double D_W_MATCHUP = 1, D_W_HAZARD = 1, D_W_STATUS = 1, D_W_FIELD = 1, D_W_TEMPO = 1, D_W_PENDING = 1;
-	   public EvalWeights style = new EvalWeights(1.0, D_W_MATCHUP, D_W_HAZARD, D_W_STATUS, D_W_FIELD, D_W_TEMPO, D_W_PENDING);
+	static double D_W_MATCHUP = 1, D_W_HAZARD = 1, D_W_STATUS = 1, D_W_FIELD = 1, D_W_TEMPO = 1, D_W_PENDING = 1;
+	public EvalWeights style = new EvalWeights(1.0, D_W_MATCHUP, D_W_HAZARD, D_W_STATUS, D_W_FIELD, D_W_TEMPO, D_W_PENDING);
 
 	/**
 	 * Phase 6 (§7.11): use the player model (what this player tends to do) to blend an exploit into the equilibrium.
@@ -66,6 +66,7 @@ public class AIConfig {
 	public int leadRefineKAi = 2;
 	public int leadRefineKPlayer = 2;
 	public double leadTemperature = D_LEAD_TEMPERATURE;
+	public double switchTax = D_SWITCH_TAX;
 
 	public static AIConfig normal() {
 		AIConfig c = new AIConfig();
@@ -95,6 +96,7 @@ public class AIConfig {
 		c.epsilon = 0;
 		c.style = style;
 		c.useFullSim = useFullSim;
+		c.switchTax = switchTax;
 		return c;
 	}
 

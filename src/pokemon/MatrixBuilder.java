@@ -22,6 +22,7 @@ public final class MatrixBuilder {
 				List<Branch> branches = BattleSimulator.simulateTurn(root, a, p, cfg);
 				double v = 0;
 				for (Branch br : branches) v += br.prob * Evaluator.eval(br.state, cfg.style, weights);
+				if (a.kind == ActionKind.SWITCH) v -= cfg.switchTax;
 				M[i][j] = v;
 				Perf.stop(Perf.CELL, t0);
 			}

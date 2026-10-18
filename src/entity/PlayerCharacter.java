@@ -361,7 +361,24 @@ public class PlayerCharacter extends Entity {
 		}
 		if (keyH.calcPressed) {
 			keyH.calcPressed = false;
-			Item.useCalc(p.getCurrent(), null, null, true);
+			//Item.useCalc(p.getCurrent(), null, null, true);
+			double[] v = Tunables.defaults();
+			int idx = -1;
+			for (int i = 0; i < Tunables.all().size(); i++) if (Tunables.all().get(i).name.equals("AIConfig.D_SWITCH_TAX")) idx = i;
+			for (double tax : new double[] { 0, 5, 10, 20 }) {
+				v[idx] = tax;
+				SelfPlay.Config c = new SelfPlay.Config();
+				c.battles = 1000;
+				c.baseSeed = 555L;
+				c.teams = SelfPlay.randomCompetitive(6);
+				c.determinismSample = 0;
+				c.difficultyA = Player.HARD;
+				c.difficultyB = Player.NORMAL;
+				c.paramsA = v.clone();      // engine A gets the tax; engine B (NORMAL) gets the defaults
+				c.paramsB = null;
+				System.out.println("=== switch tax " + tax + " ===");
+				SelfPlay.run(c);
+			}
 		}
 		
 		checkHotkeys();
