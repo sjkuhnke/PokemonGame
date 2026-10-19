@@ -2266,6 +2266,7 @@ public class AssetSetter {
 		gp.npc[mapNum][index] = NPCSetup(PROFESSOR, "Dad", 31, 36, "", mapNum); // Professor Dad
 		gp.npc[mapNum][index] = NPCSetup(SCIENTIST_UP, "Scientist", 31, 45, "Heh, you're definitely excited to head out there, but your Dad wanted to see you off before you start your adventure.");
 		gp.npc[mapNum][index++] = null; // arthra
+		gp.npc[mapNum][index] = NPCSetup(NPC_PC, 25, 34, "", "", -1);
 		
 		mapNum = 53;
 		index = 0;

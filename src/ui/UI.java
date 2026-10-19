@@ -6295,8 +6295,8 @@ public class UI extends AbstractUI {
 				currentTask = null;
 			} else {				
 				gp.currentMap = gp.eHandler.tempMap;
-				gp.player.worldX = gp.tileSize * gp.eHandler.tempCol;
-				gp.player.worldY = gp.tileSize * gp.eHandler.tempRow;
+				gp.player.worldX = (int) (gp.tileSize * gp.eHandler.tempCol);
+				gp.player.worldY = (int) (gp.tileSize * gp.eHandler.tempRow);
 				gp.player.worldY -= gp.tileSize / 4;
 				gp.eHandler.previousEventX = gp.player.worldX;
 				gp.eHandler.previousEventY = gp.player.worldY;

@@ -1415,6 +1415,9 @@ public class PMap extends JPanel {
 		case 232:
 			PlayerCharacter.currentMapName = "Research Post C";
 			return 20;
+		case 233:
+			PlayerCharacter.currentMapName = "New Minnow Town";
+			return 0;
 		}
 		
 		return -1;

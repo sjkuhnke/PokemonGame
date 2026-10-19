@@ -699,7 +699,8 @@ public class Trainer implements Serializable {
 				newTeam[i] = this.team[i];
 			}
 		}
-		shell.setCurrent(activeIdx >= 0 ? newTeam[activeIdx] : null);
+		if (activeIdx < 0) throw new IllegalStateException("simShell: current " + current + " is not in team " + Arrays.toString(team));
+		shell.setCurrent(newTeam[activeIdx]);
 		return shell;
 	}
 

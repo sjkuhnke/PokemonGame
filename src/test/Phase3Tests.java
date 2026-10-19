@@ -637,4 +637,16 @@ public final class Phase3Tests {
 			return isPlainSwitch(d) || isPivot(d);
 		}
 	}
+	
+	public static void t8Dump() {
+		Phase3Tests.AITestHarness.Scenario s = Phase3Tests.AITestHarness.twoLethalMovesDifferentPriorityAiFaster();
+		AIV2.Plan p = AIV2.plan(SimState.snapshot(s.ai, s.foe), AIConfig.hard(), null);
+		System.out.println("AI " + s.ai + " vs " + s.foe + ", foe moves " + s.foe.getValidMoveset());
+		for (int i = 0; i < p.A.size(); i++) {
+			StringBuilder sb = new StringBuilder(String.format("%-22s x=%.2f  ", p.A.get(i).label(), p.x[i]));
+			for (int j = 0; j < p.P.size(); j++) sb.append(String.format("%8.1f", p.M[i][j]));
+			System.out.println(sb);
+		}
+		for (int j = 0; j < p.P.size(); j++) System.out.println("  col " + j + ": " + p.P.get(j).label());
+	}
 }

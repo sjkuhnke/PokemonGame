@@ -6,10 +6,8 @@ Remove the "first dialogue" thing from script npcs and make if the name is null 
 used to then not reveal the npc's name until they introduce themselves
 
 UPDATE LIST
-Add black background or a default tile to each map background
 Evolving a Pokemon sometimes ends the task state early, maybe goBackInBag() is being called?
 Add Klara and Fred's house to Sicab City
-Optimize calc and updateMoves() calls
 Figure out why Matrix switches in Battle Betting don't always line up with who actually comes in
 Make sure Battle Betting plays on hard OR extreme, doesn't use player's difficulty
 

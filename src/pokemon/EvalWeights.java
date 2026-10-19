@@ -1,5 +1,7 @@
 package pokemon;
 
+import java.util.Objects;
+
 /**
  * §7.8 / §6 AIConfig.style. Weights for the terms of {@link Evaluator#eval}. Placeholder
  * values this phase (§12 Phase 3: "eval with placeholder weights"); tuned via self-play in
@@ -26,4 +28,14 @@ public final class EvalWeights {
 	}
 
 	public static final EvalWeights BALANCED = new EvalWeights(1.0, 1.0, 1.0, 1.0, 1.0, 1.0);
+	
+	@Override public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof EvalWeights)) return false;
+		EvalWeights e = (EvalWeights) o;
+		return Double.compare(wMaterial, e.wMaterial) == 0 && Double.compare(wMatchup, e.wMatchup) == 0 && Double.compare(wHazard, e.wHazard) == 0
+				&& Double.compare(wStatus, e.wStatus) == 0 && Double.compare(wField, e.wField) == 0 && Double.compare(wTempo, e.wTempo) == 0
+				&& Double.compare(wPending, e.wPending) == 0;
+	}
+	@Override public int hashCode() { return Objects.hash(wMaterial, wMatchup, wHazard, wStatus, wField, wTempo, wPending); }
 }

@@ -92,6 +92,7 @@ public final class SelfPlay {
 		for (Trainer t : Trainer.trainers) {
 			if (t == null || t.team == null || t.team.length == 0 || t.current == null) continue;
 			if (t.current.script) continue; // scripted encounters behave differently (forced hits/misses)
+			if (t.team.length > 6) continue;
 			pool.add(t);
 		}
 		return pool;
@@ -369,7 +370,7 @@ public final class SelfPlay {
 				}
 
 				if (faster.trainer.hasValidMembers(slower) && fastCanMove && !slower.trainer.wiped() && faster.hasStatus(Status.SWITCHING)) {
-					faster = faster.trainer.swapOut2(slower, fasterSwitchSlot, faster.lastMoveUsed == Move.BATON_PASS, false);
+					faster = faster.trainer.swapOut2(slower, faster.getStatusNum(Status.SWITCHING), faster.lastMoveUsed == Move.BATON_PASS, false);
 				}
 				if (slower.trainer.hasValidMembers(faster) && !faster.trainer.wiped() && slower.hasStatus(Status.SWITCHING)) {
 					slower = slower.trainer.swapOut2(faster, BattleUI.FREE_SWITCH, false, false);

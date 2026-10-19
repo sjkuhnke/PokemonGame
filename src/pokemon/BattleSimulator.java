@@ -436,7 +436,10 @@ public class BattleSimulator {
 		if (attacker.hasStatus(Status.SWITCHING) && !attacker.isFainted()) {
 			int target = attacker.getStatusNum(Status.SWITCHING);
 			attacker.removeStatus(Status.SWITCHING);
-			if (target > 0) performSwitch(moverSide, target - 1, defender);
+			if (target > 0) {
+				int slot = (mover == Side.AI && !first) ? ReplacementChooser.pickSlot(moverSide.shell, defender, br.state.field) : target - 1;
+				if (slot >= 0) performSwitch(moverSide, slot, defender);
+			}
 		}
 
 		if (defender.hasStatus(Status.SWITCHING) && !defender.isFainted()) {

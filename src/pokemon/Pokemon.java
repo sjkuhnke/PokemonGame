@@ -5701,6 +5701,10 @@ public class Pokemon implements Serializable {
 	 * @throws IllegalArgumentException if amt is 0 (invalid stat change)
 	 */
 	public void stat(Pokemon p, int i, int amt, Pokemon foe) throws IllegalArgumentException {
+		stat(p, i, amt, foe, false);
+	}
+	
+	public void stat(Pokemon p, int i, int amt, Pokemon foe, boolean bounced) throws IllegalArgumentException {
 		if (amt == 0) throw new IllegalArgumentException("Stat change amount cannot be 0");
 		if (p.isFainted()) return;
 		int a = amt;
@@ -5759,9 +5763,9 @@ public class Pokemon implements Serializable {
 		} else {
 			Task.addStatTask(p.nickname + "'s " + type + amount + "!", p, a);
 		}
-		if (foe != null && foe.getAbility(field) == Ability.EMPATHIC_LINK && a > 0) {
+		if (foe != null && !bounced && foe.getAbility(field) == Ability.EMPATHIC_LINK && a > 0) {
 			Task.addAbilityTask(foe);
-			foe.stat(foe, foe.getHighestAttackingStat(), a, this);
+			foe.stat(foe, foe.getHighestAttackingStat(), a, this, true);
 		}
 		p.statStages[i] += a;
 		p.statStages[i] = p.statStages[i] < -6 ? -6 : p.statStages[i];

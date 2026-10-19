@@ -16,7 +16,8 @@ public class EventHandler {
 	public int previousEventX, previousEventY;
 	public boolean canTouchEvent = true;
 	
-	public int tempMap, tempCol, tempRow;
+	public int tempMap;
+	public double tempCol, tempRow;
 	public boolean tempCooldown;
 	public int tempDirection = -1;
 	
@@ -322,6 +323,10 @@ public class EventHandler {
 			
 			if (hit(0,84,54)) teleport(54, 31, 45,false);
 			if (hit(54,31,46)) teleport(0, 84, 55,false);
+			
+			// Starting Lab
+			if (hit(52,36,34)) teleport(233, 53, 49,false,Task.LEFT);
+			if (hit(233,54,49)) teleport(52, 35, 34.5,false,Task.LEFT);
 			
 			// Bananaville Town Houses
 			if (hit(0,27,44)) teleport(55, 31, 45,false);
@@ -1241,11 +1246,11 @@ public class EventHandler {
 	    return hit;
 	}
 	
-	public void teleport(int map, int col, int row, boolean cooldown) {
+	public void teleport(int map, double col, double row, boolean cooldown) {
 		teleport(map,col,row,cooldown,-1);
 	}
 	
-	public void teleport(int map, int col, int row, boolean cooldown, int direction) {
+	public void teleport(int map, double col, double row, boolean cooldown, int direction) {
 		gp.gameState = GamePanel.TRANSITION_STATE;
 		tempMap = map;
 		tempCol = col;

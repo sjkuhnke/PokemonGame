@@ -169,7 +169,7 @@ public class Player extends Trainer implements Serializable {
 	public static Pokemon[] pokedex4 = new Pokemon[Pokemon.POKEDEX_2_SIZE]; // regional
 	
 	public static int[][] spawn = new int[][] { // map, x, y
-		new int[] {52, 31, 41},
+		new int[] {233, 48, 50},
 		new int[] {160, 41, 15},
 	}; 
 	

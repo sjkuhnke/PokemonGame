@@ -15,6 +15,7 @@ import pokemon.SelfPlay;
 import pokemon.SimCache;
 import pokemon.SimState;
 import pokemon.Trainer;
+import pokemon.Tunables;
 
 /**
  * Phase 8 tests (performance half). In-game, game thread, Trainer.trainers populated, like Phase 5-7.
@@ -174,6 +175,77 @@ public final class Phase8Tests {
 		} finally {
 			util.Print.setDebugSuppressed(prevSup);
 			if (wasSeeded) util.Rng.setSeed(prevSeed); else util.Rng.randomize();
+		}
+	}
+	
+	public static void taxMechanism(int battles, double... taxes) {
+		int idx = -1;
+		for (int i = 0; i < Tunables.all().size(); i++) if (Tunables.all().get(i).name.equals("AIConfig.D_SWITCH_TAX")) idx = i;
+		if (idx < 0) throw new IllegalStateException("D_SWITCH_TAX is not registered in Tunables");
+		boolean prevSup = util.Print.isDebugSuppressed();
+		boolean wasSeeded = util.Rng.isSeeded();
+		long prevSeed = util.Rng.getSeed();
+		util.Print.setDebugSuppressed(true);
+		try {
+			for (double tax : taxes) {
+				double[] taxed = Tunables.defaults();
+				taxed[idx] = tax;
+				SelfPlay.TeamSource teams = SelfPlay.randomCompetitive(6);
+				double score = 0;
+				int n = 0, swT = 0, swU = 0, pvT = 0, pvU = 0, turns = 0;
+				for (int pair = 0; n < battles; pair++) {
+					util.Rng.setSeed(6161L + 1_000_003L * pair);
+					Trainer[] m = teams.next(pair, new java.util.Random(6161L + pair));
+					for (int seat = 0; seat < 2; seat++) {
+						boolean taxedFirst = seat == 0;
+						SelfPlay.BattleResult r = SelfPlay.playBattle(m[0], m[1], AIV2.INSTANCE, AIV2.INSTANCE, Player.HARD, Player.HARD,
+								12000L + 7919L * n, 300, null, null, taxedFirst ? taxed : null, taxedFirst ? null : taxed);
+						if (r.error != null) continue;
+						n++;
+						turns += r.turns;
+						score += r.winner < 0 ? 0.5 : ((r.winner == 0) == taxedFirst ? 1 : 0);
+						swT += taxedFirst ? r.swaps1 : r.swaps2;
+						swU += taxedFirst ? r.swaps2 : r.swaps1;
+						pvT += taxedFirst ? r.pivots1 : r.pivots2;
+						pvU += taxedFirst ? r.pivots2 : r.pivots1;
+					}
+				}
+				System.out.printf("tax %.0f vs 0: score %.1f%% over %d | per battle: taxed swaps %.2f pivots %.2f | untaxed swaps %.2f pivots %.2f | turns %.1f%n",
+						tax, 100 * score / n, n, swT / (double) n, pvT / (double) n, swU / (double) n, pvU / (double) n, turns / (double) n);
+			}
+		} finally {
+			util.Print.setDebugSuppressed(prevSup);
+			if (wasSeeded) util.Rng.setSeed(prevSeed); else util.Rng.randomize();
+		}
+	}
+	
+	public static double[] withTax(double tax) {
+		double[] v = Tunables.defaults();
+		for (int i = 0; i < Tunables.all().size(); i++) {
+			if (Tunables.all().get(i).name.equals("AIConfig.D_SWITCH_TAX")) v[i] = tax;
+		}
+		return v;
+	}
+	
+	public static void replayStory(long baseSeed, int battleIndex, double[] paramsA, double[] paramsB, int difficulty) {
+		boolean prevSup = util.Print.isDebugSuppressed();
+		util.Print.setDebugSuppressed(true);
+		try {
+			SelfPlay.TeamSource src = SelfPlay.storyTrainers();
+			java.util.Random sched = new java.util.Random(baseSeed);
+			int pair = battleIndex / 2;
+			boolean swapped = battleIndex % 2 == 1;
+			Trainer[] m = null;
+			for (int p = 0; p <= pair; p++) { util.Rng.setSeed(baseSeed + 1_000_003L * p); m = src.next(p, sched); }
+			long seed = baseSeed + 7919L * battleIndex;
+			SelfPlay.BattleResult r = SelfPlay.playBattle(m[0], m[1], AIV2.INSTANCE, AIV2.INSTANCE, difficulty, difficulty, seed, 300, null, null,
+					swapped ? paramsB : paramsA, swapped ? paramsA : paramsB);
+			if (r.error == null) { System.out.println("not reproduced (winner " + r.winner + ", turns " + r.turns + ")"); return; }
+			StackTraceElement[] st = r.error.getStackTrace();
+			System.out.println("REPRODUCED: " + r.error + " (" + st.length + " frames, turn " + r.turns + ")");
+			for (int i = 0; i < Math.min(30, st.length); i++) System.out.println("    at " + st[i]);
+		} finally {
+			util.Print.setDebugSuppressed(prevSup);
 		}
 	}
 }

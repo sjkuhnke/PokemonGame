@@ -362,23 +362,19 @@ public class PlayerCharacter extends Entity {
 		if (keyH.calcPressed) {
 			keyH.calcPressed = false;
 			//Item.useCalc(p.getCurrent(), null, null, true);
-			double[] v = Tunables.defaults();
-			int idx = -1;
-			for (int i = 0; i < Tunables.all().size(); i++) if (Tunables.all().get(i).name.equals("AIConfig.D_SWITCH_TAX")) idx = i;
-			for (double tax : new double[] { 0, 5, 10, 20 }) {
-				v[idx] = tax;
-				SelfPlay.Config c = new SelfPlay.Config();
-				c.battles = 1000;
-				c.baseSeed = 555L;
-				c.teams = SelfPlay.randomCompetitive(6);
-				c.determinismSample = 0;
-				c.difficultyA = Player.HARD;
-				c.difficultyB = Player.NORMAL;
-				c.paramsA = v.clone();      // engine A gets the tax; engine B (NORMAL) gets the defaults
-				c.paramsB = null;
-				System.out.println("=== switch tax " + tax + " ===");
-				SelfPlay.run(c);
-			}
+			Phase3Tests.runAll();
+			Phase8Tests.taxMechanism(400, 0, 25);
+			SelfPlay.Config c = new SelfPlay.Config();
+			c.battles = 2000;
+			c.baseSeed = 9292L;                       // fresh seed, not used before
+			c.teams = SelfPlay.storyTrainers();
+			c.determinismSample = 0;
+			c.difficultyA = Player.HARD;
+			c.difficultyB = Player.HARD;
+			c.paramsA = Phase8Tests.withTax(25);     // taxed
+			c.paramsB = Phase8Tests.withTax(0);      // untaxed
+			System.out.println("=== story trainers: HARD tax " + 25 + " vs HARD tax 0 ===");
+			SelfPlay.run(c);		
 		}
 		
 		checkHotkeys();
@@ -553,6 +549,11 @@ public class PlayerCharacter extends Entity {
 	}
 
 	private void interactPC(NPC_PC target) {
+		if (p.getOrderedTeam().isEmpty()) {
+			gp.ui.showMessage("Test");
+			return;
+		}
+		
 		if (!target.isGauntlet()) {
 			target.direction = "up";
 		}

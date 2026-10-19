@@ -48,6 +48,8 @@ public class TileManager {
 	public static final int TOP_RIGHT_CORNER = 20;
 	public static final int BOTTOM_LEFT_BIG_CORNER = 21;
 	public static final int BOTTOM_RIGHT_BIG_CORNER = 22;
+	public static final int TOP_FOURTH_LEFT_HALF = 23;
+	public static final int BOTTOM_FOURTH_LEFT_HALF = 24;
 	
 	public TileManager(GamePanel gp) {
 		this.gp = gp;
@@ -292,10 +294,11 @@ public class TileManager {
 		loadMap("/maps/lab05.txt", 230, false);
 		loadMap("/maps/lab05.txt", 231, false);
 		loadMap("/maps/lab06.txt", 232, false);
+		loadMap("/maps/lab02.txt", 233, true);
 	}
 	
 	private void setupCollisionRectangles() {
-		collisionRectangles = new Rectangle[23];
+		collisionRectangles = new Rectangle[25];
 		collisionRectangles[FULL] = new Rectangle(0, 0, gp.tileSize, gp.tileSize); // full tile
 		collisionRectangles[TOP_HALF] = new Rectangle(0, 0, gp.tileSize, gp.tileSize / 2); // top half
 		collisionRectangles[BOTTOM_HALF] = new Rectangle(0, gp.tileSize / 2, gp.tileSize, gp.tileSize / 2); // bottom half
@@ -319,6 +322,8 @@ public class TileManager {
 		collisionRectangles[TOP_RIGHT_CORNER] = new Rectangle(gp.tileSize / 2, 0, gp.tileSize / 2, gp.tileSize / 2); // bottom right corner
 		collisionRectangles[BOTTOM_LEFT_BIG_CORNER] = new Rectangle(0, gp.tileSize / 4, gp.tileSize * 3 / 4, gp.tileSize * 3 / 4); // left fourth
 		collisionRectangles[BOTTOM_RIGHT_BIG_CORNER] = new Rectangle(gp.tileSize / 4, gp.tileSize / 4, gp.tileSize * 3 / 4, gp.tileSize * 3 / 4); // right fourth
+		collisionRectangles[TOP_FOURTH_LEFT_HALF] = new Rectangle(0, 0, gp.tileSize / 2, gp.tileSize / 4); // top fourth left half
+		collisionRectangles[BOTTOM_FOURTH_LEFT_HALF] = new Rectangle(0, gp.tileSize * 3 / 4, gp.tileSize / 2, gp.tileSize / 4); // bottom fourth left half
 	}
 
 	public void getTileImage() {
@@ -933,7 +938,7 @@ public class TileManager {
 		setup(620, true);
 		setup(621, false);
 		setup(622, true);
-		setup(623, true);
+		setup(623, true, BOTTOM_THREE_FOURTHS, OVER);
 		setup(624, true);
 		setup(625, false, OVER);
 		setup(626, false, OVER);
@@ -1759,39 +1764,79 @@ public class TileManager {
 		setup(1464, true, BOTTOM_HALF, FULL, new Tile(), true);
 		setup(1465, false, FULL, FULL, new Tile(), true);
 		setup(1466, true, BOTTOM_HALF, FULL, new Tile(), true);
-//		setup(1467, false);
-//		setup(1468, false);
-//		setup(1469, false);
-//		setup(1470, false);
-//		setup(1471, false);
-//		setup(1472, false);
-//		setup(1473, false);
-//		setup(1474, false);
-//		setup(1475, false);
-//		setup(1476, false);
-//		setup(1477, false);
-//		setup(1478, false);
-//		setup(1479, false);
-//		setup(1480, false);
-//		setup(1481, false);
-//		setup(1482, false);
-//		setup(1483, false);
-//		setup(1484, false);
-//		setup(1485, false);
-//		setup(1486, false);
-//		setup(1487, false);
-//		setup(1488, false);
-//		setup(1489, false);
-//		setup(1490, false);
-//		setup(1491, false);
-//		setup(1492, false);
-//		setup(1493, false);
-//		setup(1494, false);
-//		setup(1495, false);
-//		setup(1496, false);
-//		setup(1497, false);
-//		setup(1498, false);
-//		setup(1499, false);
+		setup(1467, true);
+		setup(1468, true);
+		setup(1469, true);
+		setup(1470, true);
+		setup(1471, true);
+		setup(1472, true);
+		setup(1473, true);
+		setup(1474, true);
+		setup(1475, true);
+		setup(1476, true);
+		setup(1477, true);
+		setup(1478, true);
+		setup(1479, true);
+		setup(1480, true);
+		setup(1481, true, TOP_FOURTH);
+		setup(1482, true, TOP_FOURTH);
+		setup(1483, true, TOP_FOURTH);
+		setup(1484, true, TOP_FOURTH);
+		setup(1485, true, TOP_FOURTH);
+		setup(1486, true, TOP_FOURTH);
+		setup(1487, true, TOP_FOURTH_LEFT_HALF);
+		setup(1488, true, BOTTOM_FOURTH);
+		setup(1489, true, RIGHT_FOURTH);
+		setup(1490, false);
+		setup(1491, false);
+		setup(1492, false);
+		setup(1493, false);
+		setup(1494, false);
+		setup(1495, false);
+		setup(1496, false);
+		setup(1497, true, TOP_HALF);
+		setup(1498, true, TOP_HALF);
+		setup(1499, false);
+		setup(1500, false);
+		setup(1501, false);
+		setup(1502, false);
+		setup(1503, false);
+		setup(1504, false, OVER);
+		setup(1505, false, OVER);
+		setup(1506, false);
+		setup(1507, false);
+		setup(1508, false);
+		setup(1509, false);
+		setup(1510, false);
+		setup(1511, false);
+		setup(1512, true);
+		setup(1513, true, LEFT_TWO_THIRDS);
+		setup(1514, true);
+		setup(1515, true, LEFT_TWO_THIRDS);
+		setup(1516, true, BOTTOM_THREE_FOURTHS);
+		setup(1517, true);
+		setup(1518, false);
+//		setup(1519, false);
+//		setup(1520, false);
+//		setup(1521, false);
+//		setup(1522, false);
+//		setup(1523, false);
+//		setup(1524, false);
+//		setup(1525, false);
+//		setup(1526, false);
+//		setup(1527, false);
+//		setup(1528, false);
+//		setup(1529, false);
+//		setup(1530, false);
+//		setup(1531, false);
+//		setup(1532, false);
+//		setup(1533, false);
+//		setup(1534, false);
+//		setup(1535, false);
+//		setup(1536, false);
+//		setup(1537, false);
+//		setup(1538, false);
+//		setup(1539, false);
 		
 		setupCliff(37, 2, new Tile());
 		setupCliff(38, 2, new Tile());
@@ -1959,32 +2004,38 @@ public class TileManager {
 	}
 	
 	public void draw(Graphics2D g2, boolean drawAbove) {
-		int worldCol = 0;
-		int worldRow = 0;
+		final int ts = gp.tileSize;
+		final int[][] map = mapTileNum[gp.currentMap];
+		final int voidTile = map[0][0];
 		
-		while(worldCol < gp.maxWorldCol && worldRow < gp.maxWorldRow) {
-			
-			int tileNum = mapTileNum[gp.currentMap][worldCol][worldRow];
-			
-			int worldX = worldCol * gp.tileSize;
-			int worldY = worldRow * gp.tileSize;
-			int screenX = worldX - gp.player.worldX + gp.player.screenX + gp.offsetX;
-			int screenY = worldY - gp.player.worldY + gp.player.screenY + gp.offsetY;
-			
-			if (worldX + gp.tileSize + gp.offsetX > gp.player.worldX - gp.player.screenX &&
-				worldX - gp.tileSize + gp.offsetX < gp.player.worldX + gp.player.screenX &&
-				worldY + gp.tileSize + gp.offsetY > gp.player.worldY - gp.player.screenY &&
-				worldY - gp.tileSize + gp.offsetY < gp.player.worldY + gp.player.screenY) {
+		int camX = gp.player.worldX - gp.player.screenX - gp.offsetX;
+		int camY = gp.player.worldY - gp.player.screenY - gp.offsetY;
+		
+		int firstCol = Math.floorDiv(camX, ts);
+		int lastCol  = Math.floorDiv(camX + gp.screenWidth - 1, ts);
+		int firstRow = Math.floorDiv(camY, ts);
+		int lastRow  = Math.floorDiv(camY + gp.screenHeight - 1, ts);
+		
+		for (int worldRow = firstRow; worldRow <= lastRow; worldRow++) {
+			for (int worldCol = firstCol; worldCol <= lastCol; worldCol++) {
 				
-				if (tile[tileNum].mask == null || !tile[tileNum].drawAbove) {
-					if (tile[tileNum].drawAbove == drawAbove) {
-						g2.drawImage(tile[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+				boolean inMap = worldCol >= 0 && worldCol < gp.maxWorldCol
+						&& worldRow >= 0 && worldRow < gp.maxWorldRow;
+				int tileNum = inMap ? map[worldCol][worldRow] : voidTile;
+				Tile t = tile[tileNum];
+				
+				int screenX = worldCol * ts - gp.player.worldX + gp.player.screenX + gp.offsetX;
+				int screenY = worldRow * ts - gp.player.worldY + gp.player.screenY + gp.offsetY;
+				
+				if (t.mask == null || !t.drawAbove) {
+					if (t.drawAbove == drawAbove) {
+						g2.drawImage(t.image, screenX, screenY, ts, ts, null);
 					}
 				} else {
-					for (int y = 0; y < tile[tileNum].image.getHeight(); y++) {
-						for (int x = 0; x < tile[tileNum].image.getWidth(); x++) {
-							int maskPixel = tile[tileNum].mask.getRGB(x, y);
-							int imagePixel = tile[tileNum].image.getRGB(x, y);
+					for (int y = 0; y < t.image.getHeight(); y++) {
+						for (int x = 0; x < t.image.getWidth(); x++) {
+							int maskPixel = t.mask.getRGB(x, y);
+							int imagePixel = t.image.getRGB(x, y);
 							
 							if (drawAbove && maskPixel == Color.white.getRGB()) {
 								g2.setColor(new Color(imagePixel));
@@ -1996,13 +2047,6 @@ public class TileManager {
 						}
 					}
 				}
-			}
-			
-			worldCol++;
-			
-			if (worldCol == gp.maxWorldCol) {
-				worldCol = 0;
-				worldRow++;
 			}
 		}
 	}
