@@ -2861,7 +2861,7 @@ public class Script {
 		
 		scriptMap.put(196.0, (npc) -> { // faith dragon in 6A
 			if (!p.flag[7][13]) {
-				p.flag[7][13] = true;
+				p.flag[7][25] = true; // so merlin can be placed correctly
 				Task.addTask(Task.TEXT, "The ancient being is in a deep slumber... its body radiates a warm, sacred aura.");
 				Task.addTask(Task.SLEEP, "", 30);
 				Task.addTask(Task.TURN, player, "", Task.DOWN);
@@ -2884,6 +2884,9 @@ public class Script {
 				Task.addTask(Task.TURN, player, "", Task.UP);
 				Task.addTask(Task.SLEEP, "", 15);
 				Task.addTask(Task.DIALOGUE, gp.npc[196][1], "By the sacred breath... awaken, Relopamil. The world needs you once more.");
+				Task t = Task.addTask(Task.FLAG, ""); // add awake flag like this so the above update call doesn't awake him early
+				t.start = 7;
+				t.finish = 13;
 				Task.addTask(Task.SLEEP, "", 15);
 				Task.addTask(Task.FLASH_IN, "");
 				Task.addTask(Task.FLASH_OUT, "");
@@ -2902,7 +2905,7 @@ public class Script {
 				Task.addTask(Task.SLEEP, "", 5);
 		        Task.addTask(Task.DIALOGUE, gp.npc[196][1], "Here, quick! Take this - it's a Temple Ball. Forged long ago by the founders of the old faith.");
 		        Task.addTask(Task.DIALOGUE, gp.npc[196][1], "It will ensure Relopamil joins you, without resistance!");
-		        Task t = Task.addTask(Task.ITEM, "");
+		        t = Task.addTask(Task.ITEM, "");
 		        t.item = Item.TEMPLE_BALL;
 		        Task.addTask(Task.SLEEP, "", 15);
 		        Task.addTask(Task.TURN, player, "", Task.UP);
@@ -3081,7 +3084,7 @@ public class Script {
 		
 		scriptMap.put(202.0, (npc) -> { // logic dragon in -5A
 			if (!p.flag[7][13]) {
-				p.flag[7][13] = true;
+				p.flag[7][25] = true; // so merlin can be placed correctly
 				Task.addTask(Task.TEXT, "The ancient being lies dormant... its mind is unreachable, like a locked door behind glass.");
 				Task.addTask(Task.SLEEP, "", 30);
 				Task.addTask(Task.TURN, player, "", Task.DOWN);
@@ -3104,6 +3107,9 @@ public class Script {
 				Task.addTask(Task.TURN, player, "", Task.UP);
 				Task.addTask(Task.SLEEP, "", 15);
 				Task.addTask(Task.DIALOGUE, gp.npc[202][1], "Code of the First Mind... awaken now. Logic eternal, emerge.");
+				Task t = Task.addTask(Task.FLAG, ""); // add awake flag like this so the above update call doesn't awake him early
+				t.start = 7;
+				t.finish = 13;
 				Task.addTask(Task.SLEEP, "", 15);
 				Task.addTask(Task.FLASH_IN, "");
 				Task.addTask(Task.FLASH_OUT, "");
@@ -3122,7 +3128,7 @@ public class Script {
 				Task.addTask(Task.SLEEP, "", 5);
 		        Task.addTask(Task.DIALOGUE, gp.npc[202][1], "Here, quick! Take this - it's a Temple Ball. Forged long ago by the founders of the First Light.");
 		        Task.addTask(Task.DIALOGUE, gp.npc[202][1], "It will ensure Relomidel joins you, without resistance!");
-		        Task t = Task.addTask(Task.ITEM, "");
+		        t = Task.addTask(Task.ITEM, "");
 		        t.item = Item.TEMPLE_BALL;
 		        Task.addTask(Task.SLEEP, "", 15);
 		        Task.addTask(Task.TURN, player, "", Task.UP);

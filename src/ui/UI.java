@@ -2065,7 +2065,12 @@ public class UI extends AbstractUI {
 				case 1: // regional trade confirm
 					Task.addTask(Task.TEXT, "You traded for " + currentTask.p.name() + "!");
 					gp.player.p.team[partyNum] = currentTask.p;
-					gp.player.p.pokedex[currentTask.p.id] = 2;
+					if (gp.player.p.pokedex[currentTask.p.id] < 2) {
+						Task.addTask(Task.POKEDEX, "", currentTask.p);
+					}
+					t = Task.addTask(Task.NICKNAME, "Would you like to nickname " + currentTask.p.name() + "?", currentTask.p);
+					t.wipe = true;
+					gp.player.p.registerDex(currentTask.p, true);
 					currentTask.p.trainer = gp.player.p;
 					currentTask.p.metAt = "???";
 					currentTask = null;

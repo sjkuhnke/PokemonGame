@@ -210,7 +210,7 @@ public final class Phase8Tests {
 						pvU += taxedFirst ? r.pivots2 : r.pivots1;
 					}
 				}
-				System.out.printf("tax %.0f vs 0: score %.1f%% over %d | per battle: taxed swaps %.2f pivots %.2f | untaxed swaps %.2f pivots %.2f | turns %.1f%n",
+				System.out.printf("tax %.0f vs 25: score %.1f%% over %d | per battle: taxed swaps %.2f pivots %.2f | untaxed swaps %.2f pivots %.2f | turns %.1f%n",
 						tax, 100 * score / n, n, swT / (double) n, pvT / (double) n, swU / (double) n, pvU / (double) n, turns / (double) n);
 			}
 		} finally {

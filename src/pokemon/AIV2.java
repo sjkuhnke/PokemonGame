@@ -159,21 +159,39 @@ public final class AIV2 implements TrainerAI {
 				}
 			}
 		}
-
-		Solver.Result eq = Solver.solveZeroSum(M);
-
-		// §7.11 predict() + finalStrategy(). read() is computed whenever there is a model (decide() needs its situation to
-		// start observing even while w is still 0); the blend only changes anything once the model has data.
-		PlayerReader.Read read = model != null && cfg.useHistoryModel ? PlayerReader.read(model, root, P, M, eq.x) : null;
-		double[] yHat = eq.y;
-		double[] xRaw = eq.x;
+		
+		boolean[] drop = dominatedRows(M);
+		int n = 0;
+		for (boolean d : drop) if (!d) n++;
+		int[] keep = new int[n];
+		double[][] Mr = new double[n][];
+		for (int i = 0, r = 0; i < M.length; i++) {
+			if (drop[i]) continue;
+			keep[r] = i;
+			Mr[r++] = M[i];
+		}
+		
+		Solver.Result eqR = Solver.solveZeroSum(Mr);
+		double[] xr = eqR.x.clone();
+		equalizeDuplicates(Mr, xr, new boolean[n]);
+		
+		PlayerReader.Read read = model != null && cfg.useHistoryModel ? PlayerReader.read(model, root, P, Mr, xr) : null;
+		double[] yHat = eqR.y;
+		double[] xRaw = xr;
 		double alphaEff = 1.0;
 		if (read != null && read.w > 0) {
-			yHat = PlayerModel.predict(eq.y, read.classes, read.hist, read.w);
+			yHat = PlayerModel.predict(eqR.y, read.classes, read.hist, read.w);
 			alphaEff = PlayerModel.alphaEff(cfg.alpha, read.w);
-			xRaw = PlayerModel.finalStrategy(M, eq.x, yHat, alphaEff, cfg.temperatureExploit);
+			xRaw = PlayerModel.finalStrategy(Mr, xr, yHat, alphaEff, cfg.temperatureExploit);
 		}
-		double[] x = Shaper.shape(xRaw, cfg);
+		double[] xs = Shaper.shape(xRaw, cfg);
+		
+		double[] x = new double[A.size()], xeq = new double[A.size()];
+		for (int r = 0; r < n; r++) {
+			x[keep[r]] = xs[r];
+			xeq[keep[r]] = xr[r];
+		}
+		Solver.Result eq = new Solver.Result(xeq, eqR.y);
 		return new Plan(A, P, M, weights, sackOnly, sacks, guard, eq, x, yHat, read, alphaEff);
 	}
 
@@ -536,6 +554,44 @@ public final class AIV2 implements TrainerAI {
 		double tempo = Evaluator.tempo(s);
 		return String.format(Locale.ROOT, "eval=%.1f  [material=%.1f matchup=%.1f (live %.1f) hazard=%.1f status=%.1f field=%.1f tempo=%.1f]",
 				total, mat, matchup, matchupLive, hazard, status, field, tempo);
+	}
+	
+	/** Rows weakly dominated by another row (>= everywhere, strictly > somewhere). Exact duplicates are NEVER dropped. */
+	public static boolean[] dominatedRows(double[][] M) {
+		final double eps = 1e-9;
+		int n = M.length;
+		boolean[] drop = new boolean[n];
+		for (int i = 0; i < n; i++) {
+			for (int k = 0; k < n; k++) {
+				if (k == i) continue;
+				boolean ge = true, gt = false;
+				for (int j = 0; j < M[i].length && ge; j++) {
+					if (M[k][j] < M[i][j] - eps) ge = false;
+					else if (M[k][j] > M[i][j] + eps) gt = true;
+				}
+				if (ge && gt) { drop[i] = true; break; }
+			}
+		}
+		return drop;
+	}
+
+	/** Spread each group of identical kept rows' total mass evenly, so move-list order cannot matter. */
+	static void equalizeDuplicates(double[][] M, double[] x, boolean[] drop) {
+		final double eps = 1e-9;
+		for (int i = 0; i < M.length; i++) {
+			if (drop[i]) continue;
+			java.util.List<Integer> group = new java.util.ArrayList<>();
+			for (int k = i; k < M.length; k++) {
+				if (drop[k]) continue;
+				boolean same = true;
+				for (int j = 0; j < M[i].length && same; j++) same = Math.abs(M[k][j] - M[i][j]) <= eps;
+				if (same) group.add(k);
+			}
+			if (group.size() < 2 || group.get(0) != i) continue; // handle each group once, from its first member
+			double total = 0;
+			for (int k : group) total += x[k];
+			for (int k : group) x[k] = total / group.size();
+		}
 	}
 
 	private static String fmtW(double[] w) {

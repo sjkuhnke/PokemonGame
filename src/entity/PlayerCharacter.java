@@ -361,20 +361,7 @@ public class PlayerCharacter extends Entity {
 		}
 		if (keyH.calcPressed) {
 			keyH.calcPressed = false;
-			//Item.useCalc(p.getCurrent(), null, null, true);
-			Phase3Tests.runAll();
-			Phase8Tests.taxMechanism(400, 0, 25);
-			SelfPlay.Config c = new SelfPlay.Config();
-			c.battles = 2000;
-			c.baseSeed = 9292L;                       // fresh seed, not used before
-			c.teams = SelfPlay.storyTrainers();
-			c.determinismSample = 0;
-			c.difficultyA = Player.HARD;
-			c.difficultyB = Player.HARD;
-			c.paramsA = Phase8Tests.withTax(25);     // taxed
-			c.paramsB = Phase8Tests.withTax(0);      // untaxed
-			System.out.println("=== story trainers: HARD tax " + 25 + " vs HARD tax 0 ===");
-			SelfPlay.run(c);		
+			Item.useCalc(p.getCurrent(), null, null, true);
 		}
 		
 		checkHotkeys();
@@ -1209,7 +1196,7 @@ public class PlayerCharacter extends Entity {
 	}
 	
 	public void runCode(String code, UI ui) {
-		if (code.equals("RAR3")) {
+		if (code.equals("RAR4")) {
 			p.bag.add(Item.RARE_CANDY_BOX);
 			p.invalidateNuzlocke("Used " + code);
 		} else if (code.equals("M1X3R")) {

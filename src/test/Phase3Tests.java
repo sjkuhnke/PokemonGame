@@ -41,6 +41,7 @@ public final class Phase3Tests {
 		run("T29", Phase3Tests::t29_struggleOnlySwap);
 		run("T30", Phase3Tests::t30_normalKeepsFighting);
 		run("T31", Phase3Tests::t31_choiceLockIntoStatus);
+		run("T32", Phase3Tests::t32_lastDitchPriority);
 	}
 
 	private static void run(String label, Runnable test) {
@@ -138,7 +139,6 @@ public final class Phase3Tests {
 		Rng.randomize();
 		for (int i = 0; i < n; i++) {
 			Move chosen = s.ai.bestMove2(s.foe, Player.HARD).move;
-			System.out.println(chosen);
 			if (!chosen.hasPriority(s.ai)) plain++; // taggedMoveA = the non-priority lethal move
 		}
 		assertTrue("non-priority move dominates when priority is redundant (already faster)", plain > n * 0.9);
@@ -622,6 +622,32 @@ public final class Phase3Tests {
 			throw new IllegalStateException("no mon with both a priority and a non-priority lethal move vs a "
 					+ "1 HP slower foe found in the pool (T8) - tell me the mon/moves you want used and I'll target it directly");
 		}
+		
+		/** taggedMoveA = the priority move (non-lethal), taggedMoveB = a stronger non-priority move. */
+		static Scenario slowerKilledWithPriorityOption() {
+			for (Trainer at : pool()) for (Pokemon aiMon : at.team) {
+				if (aiMon == null) continue;
+				for (Trainer ft : pool()) {
+					if (ft == at) continue;
+					for (Pokemon foeMon : ft.team) {
+						if (foeMon == null) continue;
+						if (foeMon.id == 38 || foeMon.id == 141) continue;
+						reset(at); reset(ft);
+						if (aiMon.getFaster(foeMon, 0, 0, Pokemon.field) == aiMon) continue;   // foe outspeeds the AI
+						if (bestKoProb(foeMon, aiMon) < 0.9) continue;                         // and kills it
+						Move prio = null;
+						try (SimContext.Scope sc = SimContext.enter(SimPolicy.DEFAULT)) {
+							for (Move m : aiMon.getValidMoveset()) {
+								DamageRange r = aiMon.calcRange(foeMon, m, true, Pokemon.field);
+								if (r.usable && !r.immune && r.dealsDamage() && m.getPriority(aiMon, Pokemon.field) > 0 && r.koProb(foeMon.currentHP) < 0.5) prio = m;
+							}
+						}
+						if (prio != null) { Scenario s = finish(at, aiMon, ft, foeMon); s.taggedMoveA = prio; return s; }
+					}
+				}
+			}
+			throw new IllegalStateException("no slower-and-killed position with a non-lethal priority move in the pool");
+		}
 
 		// ---- decision-shape helpers ----
 
@@ -648,5 +674,32 @@ public final class Phase3Tests {
 			System.out.println(sb);
 		}
 		for (int j = 0; j < p.P.size(); j++) System.out.println("  col " + j + ": " + p.P.get(j).label());
+	}
+
+	static void t32_lastDitchPriority() {
+		AITestHarness.Scenario s = AITestHarness.slowerKilledWithPriorityOption();
+		for (Pokemon m : s.ai.trainer.team) {               // no bench: the only decision is which move to click
+			if (m != null && m != s.ai) { m.fainted = true; m.currentHP = 0; }
+		}
+		int prio = 0, n = 200;
+		Rng.randomize();
+		for (int i = 0; i < n; i++) if (s.ai.bestMove2(s.foe, Player.HARD).move == s.taggedMoveA) prio++;
+		double share = prio / (double) n;
+		System.out.println("last-ditch priority share: " + share);
+		assertTrue("last-ditch priority is the clear favorite when the only alternative is a weaker move (" + share + ")", share > 0.6);
+	}
+	
+	public static void t32Dump() {
+		AITestHarness.Scenario s = AITestHarness.slowerKilledWithPriorityOption();
+		AIV2.Plan p = AIV2.plan(SimState.snapshot(s.ai, s.foe), AIConfig.hard(), null);
+		boolean[] dom = AIV2.dominatedRows(p.M);          // package-private: put this in package pokemon, or make it public
+		System.out.println("AI " + s.ai + " (hp " + s.ai.currentHP + "/" + s.ai.getStat(0) + ") vs " + s.foe + " (hp " + s.foe.currentHP + "/" + s.foe.getStat(0)
+				+ "), tagged priority move " + s.taggedMoveA + ", foe moves " + s.foe.getValidMoveset());
+		for (int i = 0; i < p.A.size(); i++) {
+			StringBuilder sb = new StringBuilder(String.format("%-22s x=%.2f %s ", p.A.get(i).label(), p.x[i], dom[i] ? "[dominated]" : "           "));
+			for (int j = 0; j < p.P.size(); j++) sb.append(String.format("%8.1f", p.M[i][j]));
+			System.out.println(sb);
+		}
+		for (int j = 0; j < p.P.size(); j++) System.out.println("  col " + j + ": " + p.P.get(j).label() + "  y=" + String.format("%.2f", p.eq.y[j]));
 	}
 }

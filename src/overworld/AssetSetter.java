@@ -2998,7 +2998,7 @@ public class AssetSetter {
 		
 		mapNum = 196;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(FAITH_DRAGON, "Relopamil", 50, 47, "", mapNum, -1, "", 405);
+		gp.npc[mapNum][index++] = null; // faith dragon
 		gp.npc[mapNum][index] = NPCSetup(MERLIN, "Merlin", 50, 99, "", 196.2);
 		gp.npc[mapNum][index] = NPCSetup(DRAGOWRATH, "Dragowrath", 50, 1, "", 196.1, -1, "", 406);
 		gp.npc[mapNum][index++] = ITileSetup(48, 47, TORCH, mapNum, mapNum);
@@ -3075,7 +3075,7 @@ public class AssetSetter {
 		
 		mapNum = 202;
 		index = 0;
-		gp.npc[mapNum][index] = NPCSetup(LOGIC_DRAGON, "Relomidel", 50, 47, "", mapNum, -1, "", 404);
+		gp.npc[mapNum][index++] = null; // logic dragon
 		gp.npc[mapNum][index] = NPCSetup(MERLIN, "Merlin", 50, 99, "", 202.2);
 		gp.npc[mapNum][index] = NPCSetup(DRAGOWRATH, "Dragowrath", 50, 1, "", 202.1, -1, "", 406);
 		gp.npc[mapNum][index++] = ITileSetup(48, 47, TORCH, mapNum, mapNum);
@@ -4997,7 +4997,7 @@ public class AssetSetter {
 			gp.npc[197][1] = null;
 		}
 		
-		if (flag[7][13]) {
+		if (flag[7][25]) {
 			gp.npc[191][9] = null;
 			gp.npc[197][4] = null;
 			if (gp.npc[196][1] != null) {
@@ -5011,27 +5011,17 @@ public class AssetSetter {
 		}
 		
 		if (flag[7][15]) {
-			gp.npc[191][0] = null;
-			gp.npc[196][0] = null;
 			if (gp.npc[196][2] != null) gp.npc[196][2].worldY = gp.tileSize * 35;
-			for (int i = 2; i <= 7; i++) gp.npc[191][i] = null;
-			for (int i = 0; i <= 5; i++) gp.npc[192][i] = null;
-			for (int i = 0; i <= 9; i++) gp.npc[193][i] = null;
-			for (int i = 11; i <= 13; i++) gp.npc[193][i] = null;
-			for (int i = 0; i <= 12; i++) gp.npc[194][i] = null;
-			for (int i = 0; i <= 4; i++) gp.npc[195][i] = null;
+			gp.npc[196][0] = null;
+		} else {
+			if (gp.npc[196][0] == null) gp.npc[196][0] = NPCSetup(FAITH_DRAGON, "Relopamil", 50, 47, "", 196, -1, "", 405);
 		}
 		
 		if (flag[7][14]) {
-			gp.npc[197][0] = null;
-			gp.npc[202][0] = null;
 			if (gp.npc[202][2] != null) gp.npc[202][2].worldY = gp.tileSize * 35;
-			for (int i = 5; i <= 13; i++) gp.npc[197][i] = null;
-			for (int i = 1; i <= 4; i++) gp.npc[198][i] = null;
-			for (int i = 0; i <= 12; i++) gp.npc[199][i] = null;
-			for (int i = 2; i <= 6; i++) gp.npc[200][i] = null;
-			for (int i = 0; i <= 9; i++) gp.npc[201][i] = null;
-			gp.npc[201][11] = null;
+			gp.npc[202][0] = null;
+		} else {
+			if (gp.npc[202][0] == null) gp.npc[202][0] = NPCSetup(LOGIC_DRAGON, "Relomidel", 50, 47, "", 202, -1, "", 404);
 		}
 		
 		if (flag[7][16]) {
@@ -5039,6 +5029,27 @@ public class AssetSetter {
 			gp.npc[196][2] = null;
 			gp.npc[202][1] = null;
 			gp.npc[202][2] = null;
+			
+			// under [7][16] to ensure that the player actually caught the legendary before clearing everything
+			if (flag[7][15]) {
+				gp.npc[191][0] = null;
+				for (int i = 2; i <= 7; i++) gp.npc[191][i] = null;
+				for (int i = 0; i <= 5; i++) gp.npc[192][i] = null;
+				for (int i = 0; i <= 9; i++) gp.npc[193][i] = null;
+				for (int i = 11; i <= 13; i++) gp.npc[193][i] = null;
+				for (int i = 0; i <= 12; i++) gp.npc[194][i] = null;
+				for (int i = 0; i <= 4; i++) gp.npc[195][i] = null;
+			}
+			
+			if (flag[7][14]) {
+				gp.npc[197][0] = null;
+				for (int i = 5; i <= 13; i++) gp.npc[197][i] = null;
+				for (int i = 1; i <= 4; i++) gp.npc[198][i] = null;
+				for (int i = 0; i <= 12; i++) gp.npc[199][i] = null;
+				for (int i = 2; i <= 6; i++) gp.npc[200][i] = null;
+				for (int i = 0; i <= 9; i++) gp.npc[201][i] = null;
+				gp.npc[201][11] = null;
+			}
 		}
 		
 		if (flag[7][16] && !flag[7][18]) {

@@ -610,7 +610,7 @@
         "delay": 0,
         "duration": 250,
         "properties": {
-          "sprite": "topbite",
+          "sprite": "bottombite",
           "startX": 0,
           "startY": -0.4,
           "endX": 0,
@@ -625,7 +625,7 @@
         "delay": 0,
         "duration": 250,
         "properties": {
-          "sprite": "bottombite",
+          "sprite": "topbite",
           "startX": 0,
           "startY": 0.4,
           "endX": 0,
