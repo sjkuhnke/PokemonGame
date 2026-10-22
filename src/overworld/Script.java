@@ -4369,8 +4369,6 @@ public class Script {
 						Task.addTask(Task.DIALOGUE, npc, "Your convenience items will NOT function inside.");
 						Task.addTask(Task.DIALOGUE, npc, "Your Healing Pack, Pocket PC, everything are all disabled.");
 					}
-					Task.addTask(Task.DIALOGUE, npc, "If you're not stocked up on healing items, now's your last chance.");
-					Task.addTask(Task.DIALOGUE, npc, "Potions, elixirs, revives, whatever you think you need - bring more.");
 					Task.addTask(Task.DIALOGUE, npc, "Once I step aside... the climb ends, and the real battle begins.");
 					
 					gp.ui.commandNum = 1;

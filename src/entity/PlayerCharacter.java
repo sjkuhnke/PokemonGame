@@ -190,54 +190,7 @@ public class PlayerCharacter extends Entity {
 				p.steps++;
 			}
 			
-			if (p.surf) {
-				double surfXD =  worldX / (1.0 * gp.tileSize);
-				double surfYD =  worldY / (1.0 * gp.tileSize);
-				int surfX = (int) Math.round(surfXD);
-				int surfY = (int) Math.round(surfYD);
-				switch(direction) {
-				case "up":
-					surfY = (int) Math.ceil(surfYD);
-					break;
-				case "down":
-					break;
-				case "left":
-					break;
-				case "right":
-					break;
-				}
-				if (!gp.tileM.getWaterTiles().contains(gp.tileM.mapTileNum[gp.currentMap][surfX][surfY])) {
-					p.surf = false;
-					for (Integer i : gp.tileM.getWaterTiles()) {
-						gp.tileM.tile[i].collision = true;
-					}
-					snapToTile();
-				}
-			}
-			if (p.lavasurf) {
-				double surfXD =  worldX / (1.0 * gp.tileSize);
-				double surfYD =  worldY / (1.0 * gp.tileSize);
-				int surfX = (int) Math.round(surfXD);
-				int surfY = (int) Math.round(surfYD);
-				switch(direction) {
-				case "up":
-					surfY = (int) Math.ceil(surfYD);
-					break;
-				case "down":
-					break;
-				case "left":
-					break;
-				case "right":
-					break;
-				}
-				if (!gp.tileM.getLavaTiles().contains(gp.tileM.mapTileNum[gp.currentMap][surfX][surfY])) {
-					p.lavasurf = false;
-					for (Integer i : gp.tileM.getLavaTiles()) {
-						gp.tileM.tile[i].collision = true;
-					}
-					snapToTile();
-				}
-			}
+			checkDismount();
 			
 			if (gp.ticks % 4 == 0 && (inTallGrass || p.surf || p.lavasurf) && !p.repel && cooldown > 2) {
 				Random r = new Random();
@@ -433,7 +386,36 @@ public class PlayerCharacter extends Entity {
 			}
 		}
 	}
-
+	
+	private void checkDismount() {
+		if (p.surf && !overlapsTiles(gp.tileM.getWaterTiles())) endSurf(true);
+		if (p.lavasurf && !overlapsTiles(gp.tileM.getLavaTiles())) endSurf(false);
+	}
+	
+	private void endSurf(boolean isSurf) {
+		if (isSurf) p.surf = false; else p.lavasurf = false;
+		for (Integer i : isSurf ? gp.tileM.getWaterTiles() : gp.tileM.getLavaTiles()) {
+			gp.tileM.tile[i].collision = true;
+		}
+		snapToTile();
+	}
+	
+	// true if any tile touched by the solid area is in the given list
+	private boolean overlapsTiles(List<Integer> tiles) {
+		int ts = gp.tileSize;
+		int left   = Math.max(0, (worldX + solidAreaDefaultX) / ts);
+		int right  = Math.min(gp.maxWorldCol - 1, (worldX + solidAreaDefaultX + solidArea.width - 1) / ts);
+		int top    = Math.max(0, (worldY + solidAreaDefaultY) / ts);
+		int bottom = Math.min(gp.maxWorldRow - 1, (worldY + solidAreaDefaultY + solidArea.height - 1) / ts);
+		int[][] map = gp.tileM.mapTileNum[gp.currentMap];
+		for (int col = left; col <= right; col++) {
+			for (int row = top; row <= bottom; row++) {
+				if (tiles.contains(map[col][row])) return true;
+			}
+		}
+		return false;
+	}
+	
 	public void resetSpriteNum() {
 		spriteCounter = 8;
 		spriteNum = 1;
@@ -1179,7 +1161,7 @@ public class PlayerCharacter extends Entity {
 		}
 		if (p.badges >= 3) {
 			items.add(Item.FULL_HEAL);
-			if (p.buyableRevives) items.add(Item.REVIVE);
+			if (!p.nuzlocke || p.buyableRevives) items.add(Item.REVIVE);
 		}
 		if (p.badges >= 4) {
 			items.addAll(Arrays.asList(Item.ULTRA_BALL, Item.HYPER_POTION));
@@ -1189,7 +1171,7 @@ public class PlayerCharacter extends Entity {
 		}
 		if (p.badges >= 8) {
 			items.add(Item.FULL_RESTORE);
-			if (p.buyableRevives) items.add(Item.MAX_REVIVE);
+			if (!p.nuzlocke || p.buyableRevives) items.add(Item.MAX_REVIVE);
 		}
 
 		return items.toArray(new Item[0]);

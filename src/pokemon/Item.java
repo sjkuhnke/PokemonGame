@@ -1588,6 +1588,7 @@ public enum Item {
 		try {
 			for (int i = 0; i < 6; i++) {
 				statLabels[i].setText(current.getStat(i) + "");
+				if (i != 0) stages[i].setSelectedIndex(current.statStages[i - 1] + 6);
 
 				if (i == 0 && currentHP != null) {
 					currentHP.setText(current.currentHP + "");

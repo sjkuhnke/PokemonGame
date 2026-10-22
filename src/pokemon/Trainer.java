@@ -575,7 +575,6 @@ public class Trainer implements Serializable {
 			}
 		}
 		this.setCurrent(this.team[0]);
-		
 	}
 
 	public boolean hasPokemonID(int id) {

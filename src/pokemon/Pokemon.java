@@ -1482,81 +1482,81 @@ public class Pokemon implements Serializable {
 					this.status = Status.HEALTHY;
 				}
 			}
-			
-			if (this.hasStatus(Status.CONFUSED)) {
-				if (this.confusionCounter == 0) {
-					this.removeStatus(Status.CONFUSED);
-					Task.addTask(Task.TEXT, this.nickname + " snapped out of confusion!");
-				} else {
-					Task.addTask(Task.TEXT, this.nickname + " is confused!");
-					if (Rng.next() < 1.0/3.0) {
-						// user hits themselves
-						attackStat = this.getStat(1);
-						defenseStat = this.getStat(2);
-						attackStat *= this.asModifier(0) * this.getBoosterMod(0);
-						defenseStat *= this.asModifier(1) * this.getBoosterMod(1);
-						damage = calc(attackStat, defenseStat, 40, this.level);
-						this.damage(damage, foe, Move.STRUGGLE, this.nickname + " hit itself in confusion!", -1, false, this);
-						if (this.currentHP <= 0) {
-							this.faint(true, foe);
+			if (consumePP) { // for sleep talk
+				if (this.hasStatus(Status.CONFUSED)) {
+					if (this.confusionCounter == 0) {
+						this.removeStatus(Status.CONFUSED);
+						Task.addTask(Task.TEXT, this.nickname + " snapped out of confusion!");
+					} else {
+						Task.addTask(Task.TEXT, this.nickname + " is confused!");
+						if (Rng.next() < 1.0/3.0) {
+							// user hits themselves
+							attackStat = this.getStat(1);
+							defenseStat = this.getStat(2);
+							attackStat *= this.asModifier(0) * this.getBoosterMod(0);
+							defenseStat *= this.asModifier(1) * this.getBoosterMod(1);
+							damage = calc(attackStat, defenseStat, 40, this.level);
+							this.damage(damage, foe, Move.STRUGGLE, this.nickname + " hit itself in confusion!", -1, false, this);
+							if (this.currentHP <= 0) {
+								this.faint(true, foe);
+							}
+							confusionCounter--;
+							endMove();
+							this.outCount = 0;
+							this.removeStatus(Status.CHARGING);
+							this.removeStatus(Status.SEMI_INV);
+							this.lastMoveUsed = prevMove;
+							this.rollCount = 1;
+							this.metronome = 0;
+							this.moveMultiplier = 1;
+							this.impressive = false;
+							success = false;
+							return;
+						} else {
+							confusionCounter--;
 						}
-						confusionCounter--;
-						endMove();
+					}
+				}
+				if (this.status == Status.PARALYZED && Rng.next() < 0.25) {
+					Task t = Task.addTask(Task.TEXT, this.nickname + " is paralyzed! It can't move!", this);
+					t.wipe = true;
+					this.moveMultiplier = 1;
+					this.impressive = false;
+					this.outCount = 0;
+					this.removeStatus(Status.CHARGING);
+					this.removeStatus(Status.SEMI_INV);
+					this.lastMoveUsed = prevMove;
+					this.rollCount = 1;
+					this.metronome = 0;
+					success = false;
+					return;
+				}
+				if (this.hasStatus(Status.FLINCHED) && this.ability != Ability.INNER_FOCUS) {
+					if (this.getItem(field) == Item.MENTAL_HERB) {
+						Task.addTask(Task.TEXT, this.nickname + " didn't flinch due to its Mental Herb!");
+						this.removeStatus(Status.FLINCHED);
+						this.consumeItem(foe);
+					} else {
+						Task t = Task.addTask(Task.TEXT, this.nickname + " flinched!", this);
+						t.wipe = true;
+						this.removeStatus(Status.FLINCHED);
+						this.moveMultiplier = 1;
+						this.impressive = false;
 						this.outCount = 0;
 						this.removeStatus(Status.CHARGING);
 						this.removeStatus(Status.SEMI_INV);
 						this.lastMoveUsed = prevMove;
 						this.rollCount = 1;
-						this.metronome = 0;
-						this.moveMultiplier = 1;
-						this.impressive = false;
+						this.metronome = -1;
 						success = false;
 						return;
-					} else {
-						confusionCounter--;
 					}
 				}
-			}
-			if (this.status == Status.PARALYZED && Rng.next() < 0.25) {
-				Task t = Task.addTask(Task.TEXT, this.nickname + " is paralyzed! It can't move!", this);
-				t.wipe = true;
-				this.moveMultiplier = 1;
-				this.impressive = false;
-				this.outCount = 0;
-				this.removeStatus(Status.CHARGING);
-				this.removeStatus(Status.SEMI_INV);
-				this.lastMoveUsed = prevMove;
-				this.rollCount = 1;
-				this.metronome = 0;
-				success = false;
-				return;
 			}
 		}
 		
 		if (this.status != Status.TOXIC) toxic = 0;
 		if (foe.status != Status.TOXIC) foe.toxic = 0;
-		
-		if (this.hasStatus(Status.FLINCHED) && this.ability != Ability.INNER_FOCUS) {
-			if (this.getItem(field) == Item.MENTAL_HERB) {
-				Task.addTask(Task.TEXT, this.nickname + " didn't flinch due to its Mental Herb!");
-				this.removeStatus(Status.FLINCHED);
-				this.consumeItem(foe);
-			} else {
-				Task t = Task.addTask(Task.TEXT, this.nickname + " flinched!", this);
-				t.wipe = true;
-				this.removeStatus(Status.FLINCHED);
-				this.moveMultiplier = 1;
-				this.impressive = false;
-				this.outCount = 0;
-				this.removeStatus(Status.CHARGING);
-				this.removeStatus(Status.SEMI_INV);
-				this.lastMoveUsed = prevMove;
-				this.rollCount = 1;
-				this.metronome = -1;
-				success = false;
-				return;
-			}
-		}
 		
 		// choice lock - AFTER full para/flinch/self hit confusion/asleep checks
 		if (consumePP && this.choiceMove == null && this.item != null && this.item.isChoiceItem()) {

@@ -914,7 +914,7 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 
 	public Pokemon encounterPokemon(String area, char type, boolean banShedinja) {
-		if (currentMap == 149 || currentMap == 209) return null;
+		if (currentMap == 149 || currentMap == 209 || currentMap == 211) return null;
 	    ArrayList<Encounter> encounters = Encounter.getEncounters(area, type, banShedinja);
 
 	    // Calculate the total encounter chance for the route

@@ -1980,6 +1980,7 @@ public class BattleUI extends AbstractUI {
 			}
 		}
 		if (user.getPlayer().wiped()) {
+			foeMoveFuture = null;
 			wipe();
 		}
 	}

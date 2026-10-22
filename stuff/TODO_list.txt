@@ -4,6 +4,8 @@ Polishing stuff
 Make wild pokemon sometimes hold items (for balancing, can't covet bc it'll clear)
 Remove the "first dialogue" thing from script npcs and make if the name is null then it'll put "???" as their name. this can be
 used to then not reveal the npc's name until they introduce themselves
+Make each trainer have individual money prizes instead of just all $100
+Make Pokemon have real xp yields/curves
 
 UPDATE LIST
 NATURES and PP UPS FOR GYM 8+ SPLIT TRAINERS
@@ -13,12 +15,18 @@ Figure out why Matrix switches in Battle Betting don't always line up with who a
 Make sure Battle Betting plays on hard OR extreme, doesn't use player's difficulty
 Add some more battle betting sets and redo old ones
 
+Trainer AI Changes
+Yawn doesn't have AI
+Future Sight doesn't have AI
+Replacement Chooser's free switch is inconsistent based on matchup - the AI swaps out of their free switch often
+
 Quality of Life
 Add exp trainer in Schrice City
 Make NPCs tell about old features being updated (deletable HMs, updated moves, etc)
 Revamp settings to have multiple categories
 Add toggle speedup
 Add customizable speedup FPS
+Add more boxes once you have at least one Pokemon in each box or something
 
 Implementation/Bug Fixes
 Finish TMs (Solaroxyous only)
