@@ -5,6 +5,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+
+import ai.AIConfig;
+import ai.AIV2;
+import ai.LeadSelection;
+import ai.PlayerModel;
+import ai.ReplacementChooser;
+import ai.SimContext;
+import ai.TrainerAI;
+
 import java.util.Random;
 
 import overworld.GamePanel;
@@ -38,7 +47,7 @@ public class Trainer implements Serializable {
 	 * sim). {@code Player} overrides {@link #playerModel()} with a saved one. Package-private so SelfPlay can carry one
 	 * across battles; not serialized.
 	 */
-	transient PlayerModel sessionModel;
+	public transient PlayerModel sessionModel;
 	/** Phase 7 (§7.15): 1-based team slot this trainer must lead with; 0 = none. Default 0 so an old save deserializes to "none". Nothing sets it yet. */
 	public int fixedLead;
 	
@@ -709,7 +718,7 @@ public class Trainer implements Serializable {
 	 * {@code trainer} pointing at the source shell); swapping such a mon in would mutate the shared object (hazard damage,
 	 * Intimidate, ...) and read the wrong shell's hazards. Call before any swap that can bring team[i] in. Idempotent.
 	 */
-	void ownSlot(int i) {
+	public void ownSlot(int i) {
 		Pokemon p = team[i];
 		if (p == null || p.trainer == this) return;
 		Pokemon c = p.clone();

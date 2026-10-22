@@ -3,19 +3,19 @@ package test;
 import java.util.Arrays;
 import java.util.List;
 
-import pokemon.AIV2;
+import ai.AIV2;
+import ai.MonWeights;
+import ai.PlayerModel;
+import ai.SelfPlay;
+import ai.SimCache;
+import ai.SimState;
+import ai.Tunables;
 import pokemon.Field;
-import pokemon.MonWeights;
 import pokemon.Moveslot;
-import pokemon.Perf;
 import pokemon.Player;
-import pokemon.PlayerModel;
 import pokemon.Pokemon;
-import pokemon.SelfPlay;
-import pokemon.SimCache;
-import pokemon.SimState;
 import pokemon.Trainer;
-import pokemon.Tunables;
+import util.Perf;
 
 /**
  * Phase 8 tests (performance half). In-game, game thread, Trainer.trainers populated, like Phase 5-7.

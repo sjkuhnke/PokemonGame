@@ -34,6 +34,8 @@ import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 import javax.swing.SwingUtilities;
 
+import ai.SimCache;
+import ai.SimContext;
 import docs.DocUtils;
 import entity.*;
 import object.*;
@@ -48,6 +50,7 @@ import pokemon.Nursery.EggGroup;
 import puzzle.Puzzle;
 import util.Pair;
 import util.Print;
+import util.Task;
 import util.ToolTip;
 
 public class UI extends AbstractUI {

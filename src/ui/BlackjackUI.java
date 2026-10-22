@@ -15,8 +15,8 @@ import javax.imageio.ImageIO;
 
 import overworld.*;
 import pokemon.Player;
-import pokemon.Task;
 import puzzle.Puzzle;
+import util.Task;
 import util.ToolTip;
 
 public class BlackjackUI extends AbstractUI {

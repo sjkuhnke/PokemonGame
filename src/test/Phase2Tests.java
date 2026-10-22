@@ -3,6 +3,12 @@ package test;
 import java.util.ArrayList;
 import java.util.List;
 
+import ai.AIConfig;
+import ai.Action;
+import ai.BattleSimulator;
+import ai.Branch;
+import ai.SideState;
+import ai.SimState;
 import pokemon.Field;
 import pokemon.*;
 import util.Print;

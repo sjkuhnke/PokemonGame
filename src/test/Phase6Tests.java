@@ -10,9 +10,21 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import ai.AIConfig;
+import ai.AIV2;
+import ai.Action;
+import ai.ActionKind;
+import ai.PlayerModel;
+import ai.PlayerReader;
+import ai.ScriptedAI;
+import ai.SelfPlay;
+import ai.SelfPlayReport;
+import ai.SimState;
+import ai.Solver;
+import ai.TrainerAI;
+import ai.PlayerModel.ActionClass;
 import pokemon.Field;
 import pokemon.*;
-import pokemon.PlayerModel.ActionClass;
 import util.Print;
 import util.Rng;
 

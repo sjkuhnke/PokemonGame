@@ -15,6 +15,7 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import ai.SimContext;
 import pokemon.Field.Effect;
 import util.JGradientButton;
 import util.Pair;

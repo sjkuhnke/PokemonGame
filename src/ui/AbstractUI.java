@@ -29,6 +29,7 @@ import overworld.Sound;
 import pokemon.*;
 import pokemon.Nursery.EggGroup;
 import util.Pair;
+import util.Task;
 import util.ToolTip;
 
 public abstract class AbstractUI {

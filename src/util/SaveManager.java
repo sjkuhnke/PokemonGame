@@ -59,8 +59,8 @@ public class SaveManager {
 	public static Player loadPlayer(String fileName) {
 		File file = new File(SAVE_DIR + File.separator + fileName);
 		if (!file.exists()) return null;
-
-		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+		
+		try (ObjectInputStream ois = new RemapStream(new FileInputStream(file))) {
 			return (Player) ois.readObject();
 		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
@@ -72,17 +72,17 @@ public class SaveManager {
 		File folder = new File(SAVE_DIR);
 		File[] files = folder.listFiles((dir, name) -> name.endsWith(".dat"));
 		if (files == null) return new ArrayList<>();
-
+		
 		ArrayList<String> names = new ArrayList<>();
 		for (File f : files) {
 			names.add(f.getName());
 		}
-
+		
 		names.sort((f1, f2) -> Long.compare(
 			new File(SAVE_DIR, f2).lastModified(),
 			new File(SAVE_DIR, f1).lastModified()
 		));
-
+		
 		return names;
 	}
 
@@ -197,5 +197,25 @@ public class SaveManager {
 		}
 		
 		return logsPath;
+	}
+	
+	/**
+	 * Reads saves written before the Trainer AI moved from package pokemon to package ai: the player model's old class names
+	 * are mapped to the new ones. Fields are matched by name, so an existing model loads intact.
+	 */
+	private static final class RemapStream extends ObjectInputStream {
+		RemapStream(InputStream in) throws IOException {
+			super(in);
+		}
+		
+		@Override
+		protected ObjectStreamClass readClassDescriptor() throws IOException, ClassNotFoundException {
+			ObjectStreamClass d = super.readClassDescriptor();
+			String n = d.getName();
+			if (n.equals("pokemon.PlayerModel") || n.startsWith("pokemon.PlayerModel$")) {
+				return ObjectStreamClass.lookup(Class.forName("ai." + n.substring("pokemon.".length())));
+			}
+			return d;
+		}
 	}
 }

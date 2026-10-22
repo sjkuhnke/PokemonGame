@@ -8,8 +8,8 @@ import java.util.Random;
 import overworld.GamePanel;
 import pokemon.Item;
 import pokemon.Player;
-import pokemon.Task;
 import util.Pair;
+import util.Task;
 
 public class NPC_Mine extends Entity {
 	

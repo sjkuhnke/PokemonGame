@@ -20,6 +20,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import ai.MoveDecision;
 import animation.AnimationFrame;
 import animation.AnimationFrame.Target;
 import animation.BattleAnimation;
@@ -34,6 +35,7 @@ import pokemon.Bag.Entry;
 import pokemon.Field.Effect;
 import pokemon.Field.FieldEffect;
 import util.Print;
+import util.Task;
 import util.ToolTip;
 
 public class BattleUI extends AbstractUI {

@@ -18,6 +18,7 @@ import javax.imageio.ImageIO;
 import overworld.GamePanel;
 import pokemon.*;
 import tile.Tile;
+import util.Task;
 
 public class Entity {
 	

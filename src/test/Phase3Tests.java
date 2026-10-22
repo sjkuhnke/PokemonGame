@@ -2,7 +2,19 @@ package test;
 
 import java.util.List;
 
-import pokemon.Move;
+import ai.AIConfig;
+import ai.AIV2;
+import ai.Action;
+import ai.ActionGen;
+import ai.ActionKind;
+import ai.MatrixBuilder;
+import ai.MonWeights;
+import ai.MoveDecision;
+import ai.SelfPlay;
+import ai.SimContext;
+import ai.SimPolicy;
+import ai.SimState;
+import ai.Solver;
 import pokemon.*;
 import util.Rng;
 

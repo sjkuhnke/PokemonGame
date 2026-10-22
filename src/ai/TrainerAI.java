@@ -1,0 +1,33 @@
+package ai;
+
+import pokemon.Pokemon;
+
+/**
+ * A Trainer AI engine. Lets the legacy AI and the overhauled AI run side by side
+ * (self-play, A/B flags). Pokemon.bestMove2 dispatches here.
+ */
+public interface TrainerAI {
+
+	/**
+	 * Decide this Pokemon's action for the turn. Must keep the slot-encoding conventions of
+	 * Pokemon.MoveDecision (see spec section 2) and must not change any real battle state.
+	 *
+	 * @param difficulty Player.NORMAL / Player.HARD / Player.EXTREME
+	 */
+	MoveDecision decide(Pokemon self, Pokemon foe, int difficulty);
+
+	String getName();
+
+	/** Engine used by a Pokemon: its trainer's own {@code ai}, else the global default. */
+	static TrainerAI forPokemon(Pokemon p) {
+		if (p.trainer != null && p.trainer.ai != null) return p.trainer.ai;
+		return Config.defaultAI;
+	}
+
+	/** Global default engine. (The legacy engine was removed in Phase 4.) */
+	final class Config {
+		public static volatile TrainerAI defaultAI = AIV2.INSTANCE;
+
+		private Config() {}
+	}
+}

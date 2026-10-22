@@ -5,11 +5,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+import ai.SimContext;
+import ai.SimPolicy;
 import overworld.GamePanel;
-import pokemon.Field;
 import pokemon.*;
 import util.Print;
 import util.Rng;
+import util.Task;
 
 /**
  * Phase 1 tests: T1 (calcRange parity), simulation determinism / isolation, and the calc primitives.

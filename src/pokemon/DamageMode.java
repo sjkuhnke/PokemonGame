@@ -14,26 +14,34 @@ package pokemon;
  * <li>{@code checkAcc}: roll accuracy (legacy mode 0 only).</li>
  * </ul>
  */
-final class DamageMode {
+public final class DamageMode {
 	static final int NOT_LEGACY = Integer.MIN_VALUE;
 
-	static final int CRIT_LEGACY = 0, CRIT_NEVER = 1, CRIT_FORCE = 2;
-	static final int CHROMO_RANDOM = 0, CHROMO_NO = 1, CHROMO_YES = 2;
+	static final int CRIT_LEGACY = 0;
+
+	public static final int CRIT_NEVER = 1;
+
+	static final int CRIT_FORCE = 2;
+	static final int CHROMO_RANDOM = 0;
+
+	public static final int CHROMO_NO = 1;
+
+	static final int CHROMO_YES = 2;
 
 	/** The old int mode, or NOT_LEGACY. When set, {@code calc(..., legacyMode)} is used so the RNG stream is consumed exactly as before. */
 	final int legacyMode;
 	/** The old {@code crit} argument (only read by the legacy estimate rule). */
 	final boolean legacyCrit;
-	final boolean checkAcc;
+	public final boolean checkAcc;
 	/** Real-engine rules. */
-	final boolean engine;
+	public final boolean engine;
 	/** Apply one-shot defensive effects the engine consumes elsewhere (Anticipation, resist berries). Legacy estimates and simulations want them. */
-	final boolean predictOneShots;
+	public final boolean predictOneShots;
 	/** Multiply bp by the number of hits (legacy engine approximation). calcRange handles hits separately. */
-	final boolean hitsInBp;
+	public final boolean hitsInBp;
 	/** Cap damage at the target's current HP and apply Sturdy / Focus Sash / False Swipe (legacy engine). calcRange reports these separately. */
-	final boolean capAtHp;
-	final RollMode rollMode;
+	public final boolean capAtHp;
+	public final RollMode rollMode;
 	/** Exact roll multiplier when NOT legacy. */
 	final double roll;
 	final int crit;
@@ -55,7 +63,7 @@ final class DamageMode {
 	}
 
 	/** Maps the old calcWithTypes arguments. Mode 0 = engine rules; any other value = estimate rules. */
-	static DamageMode legacy(int mode, boolean crit, boolean checkAcc) {
+	public static DamageMode legacy(int mode, boolean crit, boolean checkAcc) {
 		boolean engine = mode == 0;
 		RollMode rm = mode == -1 ? RollMode.MIN : mode == 1 ? RollMode.MAX : RollMode.RANDOM;
 		return new DamageMode(mode, crit, engine && checkAcc, engine, !engine, engine, engine, rm, Double.NaN, CRIT_LEGACY,
@@ -63,21 +71,21 @@ final class DamageMode {
 	}
 
 	/** Deterministic engine rules at an exact roll: what calcRange iterates. Never draws from any random stream. */
-	static DamageMode det(double roll, int crit, int chromo) {
+	public static DamageMode det(double roll, int crit, int chromo) {
 		return new DamageMode(NOT_LEGACY, false, false, true, true, false, false, RollMode.AVG, roll, crit, chromo);
 	}
 
-	boolean isLegacy() {
+	public boolean isLegacy() {
 		return legacyMode != NOT_LEGACY;
 	}
 
 	/** True only for the legacy engine mode, the one that samples. */
-	boolean random() {
+	public boolean random() {
 		return legacyMode == 0;
 	}
 
 	/** The mode used for the self-hit branch of Magic Reflect / Possessed (the old code passed checkAcc = true there). */
-	DamageMode forReflect() {
+	public DamageMode forReflect() {
 		boolean acc = checkAcc || random();
 		return new DamageMode(legacyMode, legacyCrit, acc, engine, predictOneShots, hitsInBp, capAtHp, rollMode, roll, crit, chromo);
 	}

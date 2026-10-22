@@ -62,16 +62,16 @@ public final class DamageRange {
 
 	private static final double[] NONE = new double[0];
 
-	static DamageRange unusable() {
+	public static DamageRange unusable() {
 		return new DamageRange(false, false, false, 0, 0, 0, 0, 0, 0, NONE, NONE, new double[] { 1.0 }, 0, false, false);
 	}
 
-	static DamageRange immune() {
+	public static DamageRange immune() {
 		return new DamageRange(true, true, false, 0, 0, 0, 0, 0, 0, NONE, NONE, new double[] { 1.0 }, 0, false, false);
 	}
 
 	/** Usable, deals no direct damage (status moves, Counter family). Accuracy still matters for status moves. */
-	static DamageRange noDamage(double accuracy) {
+	public static DamageRange noDamage(double accuracy) {
 		return new DamageRange(true, false, false, 0, 0, 0, 0, accuracy, 1, NONE, NONE, new double[] { 0.0, 1.0 }, 0, false, false);
 	}
 
@@ -80,7 +80,7 @@ public final class DamageRange {
 	 * @param probs    matching probabilities (must sum to about 1)
 	 * @param hitProb  hitProb[n] = P(n hits)
 	 */
-	static DamageRange of(double[] outcomes, double[] probs, double min, double avg, double max, double critProb, double accuracy,
+	public static DamageRange of(double[] outcomes, double[] probs, double min, double avg, double max, double critProb, double accuracy,
 			double[] hitProb, int foeMaxHp, boolean endureAtFull, boolean neverKills, boolean reflected) {
 		Integer[] order = new Integer[outcomes.length];
 		for (int i = 0; i < order.length; i++) order[i] = i;

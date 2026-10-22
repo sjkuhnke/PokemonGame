@@ -42,6 +42,8 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import ai.PlayerModel;
+import ai.SimContext;
 import entity.Entity;
 import entity.NPC_Prize_Shop;
 import entity.PlayerCharacter;

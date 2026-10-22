@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import overworld.*;
 import pokemon.*;
+import util.Task;
 
 public class PuzzleManager {
 	public Puzzle[] faithPuzzles;

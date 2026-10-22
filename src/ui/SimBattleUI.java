@@ -11,6 +11,7 @@ import pokemon.*;
 import puzzle.Puzzle;
 import util.Pair;
 import util.Print;
+import util.Task;
 import util.ToolTip;
 
 public class SimBattleUI extends BattleUI {

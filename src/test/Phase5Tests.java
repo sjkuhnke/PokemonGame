@@ -7,6 +7,24 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import ai.AIConfig;
+import ai.AIV2;
+import ai.Action;
+import ai.ActionGen;
+import ai.ActionKind;
+import ai.BattleSimulator;
+import ai.Branch;
+import ai.MatrixBuilder;
+import ai.MonWeights;
+import ai.ReplacementChooser;
+import ai.SackAnalysis;
+import ai.SelfPlay;
+import ai.SelfPlayReport;
+import ai.SideState;
+import ai.SimContext;
+import ai.SimPolicy;
+import ai.SimState;
+import ai.SwitchInScorer;
 import pokemon.Field.Effect;
 import pokemon.*;
 

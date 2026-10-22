@@ -3,6 +3,20 @@ package test;
 import java.util.List;
 import java.util.function.ToDoubleFunction;
 
+import ai.AIConfig;
+import ai.Action;
+import ai.ActionGen;
+import ai.ActionKind;
+import ai.BattleSimulator;
+import ai.Branch;
+import ai.Evaluator;
+import ai.MatrixBuilder;
+import ai.MonWeights;
+import ai.SecondaryKinds;
+import ai.SimContext;
+import ai.SimPolicy;
+import ai.SimState;
+import ai.Solver;
 import pokemon.*;
 import pokemon.Field.Effect;
 

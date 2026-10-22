@@ -10,6 +10,7 @@ import docs.GiftEncounter;
 import entity.*;
 import pokemon.*;
 import puzzle.Puzzle;
+import util.Task;
 
 public class Script {
 	

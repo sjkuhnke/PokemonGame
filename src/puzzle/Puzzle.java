@@ -9,7 +9,7 @@ import java.util.Random;
 import entity.PlayerCharacter;
 import overworld.GamePanel;
 import overworld.PMap;
-import pokemon.Task;
+import util.Task;
 
 public abstract class Puzzle {
 	protected int floor;

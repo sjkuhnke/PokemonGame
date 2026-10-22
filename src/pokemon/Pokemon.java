@@ -46,6 +46,10 @@ import javax.swing.SwingUtilities;
 
 import org.json.JSONObject;
 
+import ai.MoveDecision;
+import ai.SimContext;
+import ai.SwitchInScorer;
+import ai.TrainerAI;
 import docs.DocUtils;
 
 import org.json.JSONArray;
@@ -62,8 +66,10 @@ import ui.CustomProgressBarUI;
 import util.DeepClonable;
 import util.JGradientButton;
 import util.Pair;
+import util.Perf;
 import util.Print;
 import util.Rng;
+import util.Task;
 
 public class Pokemon implements Serializable {
 	/**
@@ -1298,7 +1304,7 @@ public class Pokemon implements Serializable {
 		PROTECT
 	}
 	
-	enum AnimPhase {
+	public enum AnimPhase {
 		CHARGING,
 		ATTACKING,
 		NORMAL,
