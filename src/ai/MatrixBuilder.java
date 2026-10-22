@@ -6,13 +6,18 @@ import pokemon.*;
 import util.Perf;
 
 /**
- * §7.9. Every cell runs full {@link BattleSimulator#simulateTurn} and is scored with {@link Evaluator#eval}.
- * Post-eval adjustments to a cell (switch tax, last-ditch priority bonus) live in {@link CellAdjustments}, so this
- * method stays the plain "simulate, evaluate, store" loop.
+ * Builds the payoff matrix of one decision: rows are the AI's actions, columns the player's, and each cell is the expected
+ * evaluation of the position after both sides act, from the AI's point of view.
+ * <p>
+ * Every cell runs the full {@link BattleSimulator#simulateTurn} (the real move code, in a simulation scope), averages
+ * {@link Evaluator#eval} over the resulting branches by probability, then applies the small adjustments in
+ * {@link CellAdjustments} (switch tax, last-ditch priority bonus). Keeping the adjustments out of the loop leaves
+ * {@code buildMatrix} as the plain "simulate, evaluate, store" pass.
  */
 public final class MatrixBuilder {
 	private MatrixBuilder() {}
 
+	/** Payoff matrix {@code M[i][j]} for AI action {@code A[i]} against player action {@code P[j]}. */
 	public static double[][] buildMatrix(SimState root, List<Action> A, List<Action> P, AIConfig cfg, MonWeights weights) {
 		double[][] M = new double[A.size()][P.size()];
 		CellAdjustments adjust = new CellAdjustments(root, P, cfg);
@@ -39,7 +44,7 @@ public final class MatrixBuilder {
 		private final List<Action> P;
 		private final AIConfig cfg;
 		private final Pokemon aiMon, plMon;
-		/** Flat cost of a plain switch, waived while the foe threatens a KO on the AI's active. */
+		/** Whether plain switches pay {@link AIConfig#switchTax}: false while the foe threatens a KO on the AI's active. */
 		private final boolean taxSwitches;
 		/** Per player column: P(it kills the AI's active before the AI's normal-priority move lands); 0 = no last-ditch situation. */
 		private final double[] ditchP;
@@ -54,17 +59,19 @@ public final class MatrixBuilder {
 			this.ditchP = lastDitchColumns();
 		}
 
+		/** The cell's score {@code v} for AI action {@code a} against player column {@code j}, after both adjustments. */
 		double apply(double v, Action a, int j) {
 			v -= switchTax(a);
 			v += lastDitchBonus(a, j);
 			return v;
 		}
 
+		/** The flat cost of a plain switch. Pivot moves and sack rows' moves are not charged; only {@code SWITCH} rows. */
 		private double switchTax(Action a) {
 			return a.kind == ActionKind.SWITCH && taxSwitches ? cfg.switchTax : 0;
 		}
 
-		/** Columns where the player has a fast kill: an attack with a likely KO that outspeeds the AI's active. */
+		/** Columns where the player has a fast kill: an attack with a likely KO (at least 0.5) that outspeeds the AI's active. */
 		private double[] lastDitchColumns() {
 			double[] d = new double[P.size()];
 			if (cfg.lastDitchBonus == 0) return d;
@@ -74,7 +81,7 @@ public final class MatrixBuilder {
 				double ko = SackAnalysis.koChance(plMon, aiMon, p.move, root.field);
 				if (ko < 0.5) continue;
 				int pPrio = p.move.getPriority(plMon, root.field);
-				if (plMon.getFaster(aiMon, pPrio, 0, root.field) != plMon) continue; // the AI already outspeeds it
+				if (plMon.getFaster(aiMon, pPrio, 0, root.field) != plMon) continue; // the AI moves first anyway: nothing to be "last ditch" about
 				d[j] = ko;
 			}
 			return d;
@@ -82,8 +89,9 @@ public final class MatrixBuilder {
 
 		/**
 		 * Extra credit for a non-lethal priority move that really acts first in a column where the player has a fast
-		 * kill: it gets its hit in before the AI's active goes down. A lethal priority move is already priced by the sim.
-		 * Scales with the fraction of the foe's HP removed, so it stays a nudge inside the mixed strategy, never a forced pick.
+		 * kill: it gets its hit in before the AI's active goes down. A lethal priority move is already priced by the
+		 * simulation, so it gets nothing here. Scales with the fraction of the foe's HP removed, so it stays a nudge
+		 * inside the mixed strategy, never a forced pick.
 		 */
 		private double lastDitchBonus(Action a, int j) {
 			if (ditchP[j] <= 0 || a.kind != ActionKind.MOVE || a.move == null) return 0;

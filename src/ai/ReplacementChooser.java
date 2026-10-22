@@ -9,11 +9,9 @@ import util.Perf;
 import util.Print;
 
 /**
- * Phase 5 (§7.14.3): the ONE non-recursive forced-replacement chooser. {@code Trainer.getNext2} (the real battle, every
- * difficulty, both seats in self-play) and {@code BattleSimulator.resolveReplacementsForSide} / the Eject-style switch
- * (the matrix) both call {@link #pickSlot}, so the replacement the AI plans for after a sack is the replacement the real
- * game brings out (T22). It replaces {@code BattleSimulator.cheapReplacementSlot} (a type-chart proxy) and the
- * {@code Integer.MIN_VALUE} best-score loop that used to live in {@code getNext2}.
+ * The ONE non-recursive forced-replacement chooser. {@code Trainer.getNext2} (the real battle, every difficulty, both
+ * seats in self-play) and {@code BattleSimulator.resolveReplacementsForSide} / the Eject-style switch (the matrix) both
+ * call {@link #pickSlot}, so the replacement the AI plans for after a sack is the replacement the real game brings out.
  * <p>
  * score(r) = {@link SwitchInScorer#scoreOn} (matchup after entry: hazards and entry abilities applied, against the foe's
  * POST-turn active) minus {@link #FUTURE_W} * weight(r) * hpFrac(r). The second term is r's future value
@@ -21,14 +19,13 @@ import util.Print;
  * the less valuable one comes in and the more valuable one is kept for later. A candidate that faints on entry scores
  * {@link SwitchInScorer#ENTRY_FAINT_SCORE} (finite, no sentinel semantics).
  * <p>
- * {@code MonWeights.forSide} is recomputed on every call, uncached (Phase 4 note: no caching this phase - correctness
- * first, tune in Phase 8). A per-decision cache was tried and dropped: its key did not (and, short of hashing the two
- * sides' full hazard/screen lists and every bench mon's status, cannot cheaply) capture everything {@code forSide}'s
- * utility term reads, so a stale hit was a live risk - not worth it for a call this infrequent (once per faint / free
- * switch). Game thread only, like the rest of the battle code.
+ * {@code MonWeights.forSide} is recomputed on every call, uncached. A per-decision cache was tried and dropped: its key
+ * did not (and, short of hashing the two sides' full hazard/screen lists and every bench mon's status, cannot cheaply)
+ * capture everything {@code forSide}'s utility term reads, so a stale hit was a live risk, and the call is infrequent
+ * (once per faint or free switch). Game thread only, like the rest of the battle code.
  */
 public final class ReplacementChooser {
-	/** Points of matchupScore one unit of (weight * hpFrac) is worth when ranking replacements. Tuned in Phase 8. */
+	/** Points of matchupScore one unit of (weight * hpFrac) is worth when ranking replacements. Registered in {@link Tunables}; self-play found it flat. */
 	public static double FUTURE_W = 8.0;
 
 	private ReplacementChooser() {}
@@ -64,6 +61,7 @@ public final class ReplacementChooser {
 		return best;
 	}
 
+	/** The combined score of one candidate (entry quality minus future value), with the weights already computed. */
 	static double score(Trainer side, int idx, Pokemon foe, Field field, double[] w) {
 		Pokemon p = side.team[idx];
 		double hpFrac = p.currentHP * 1.0 / p.getStat(0);
@@ -82,8 +80,8 @@ public final class ReplacementChooser {
 	 * {@link SwitchInScorer} pins it for entry scoring: MonWeights.forSide's damage/type calls go through ordinary
 	 * Pokemon methods that read the static field, not only the explicit parameter, so a caller deep inside
 	 * {@link BattleSimulator#simulateTurn} (where the static field can have drifted from this specific branch's field
-	 * by the time replacements are resolved) needs it pinned explicitly - a direct call from outside the simulator
-	 * happens to work without this only because nothing else has touched the static field yet.
+	 * by the time replacements are resolved) needs it pinned explicitly. A direct call from outside the simulator works
+	 * without this only because nothing else has touched the static field yet.
 	 */
 	private static double[] futureWeights(Trainer side, Pokemon foe, Field field) {
 		Trainer foeTrainer = foe.trainer;

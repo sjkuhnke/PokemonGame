@@ -9,26 +9,26 @@ import java.util.Set;
 import pokemon.*;
 
 /**
- * Phase 5 (§7.14.2 min-gain guard, §7.14.4 classification). A sack is a switch (or pivot-switch) into a low-value bench
- * mon to spare the current active - whether or not that mon survives the incoming hit. Surviving, chipping the threat,
- * or using a support move on the way out is still a valid reason to send it in; nothing here requires it to faint. This
- * class only (1) finds the player's threat columns, (2) drops sack-only rows that do not clearly beat staying in, and
- * (3) labels the chosen row afterwards for reporting. It never adds a rule that picks a sack.
+ * The sack logic around the payoff matrix. A sack is a switch (or pivot-switch) into a low-value bench mon to spare the
+ * current active, whether or not that mon survives the incoming hit. Surviving, chipping the threat, or using a support
+ * move on the way out is still a valid reason to send it in; nothing here requires it to faint. This class only
+ * (1) finds the player's threat columns, (2) drops sack rows that do not clearly beat staying in (the min-gain guard and
+ * the same-mon-return rule), and (3) labels the chosen row afterwards for reporting. It never adds a rule that picks a
+ * sack: the solver does.
  * <p>
  * "Sack-only row" (the guard's scope) means a row whose target is a sack candidate that is NOT also one of the top-N
  * answers ({@link ActionGen.BenchPlan#sackOnly}). A row into a mon that is a real answer is never touched by the guard;
- * it exists to stop a throwaway from picking up mixed probability for nothing.
+ * the guard exists to stop a throwaway from picking up mixed probability for nothing.
  * <p>
  * The {@link Label} produced afterwards is broader than the guard's scope: it labels ANY switch into ANY sack candidate
  * ({@link ActionGen.BenchPlan#sacks}, sack-only or not) as a sack for reporting, regardless of whether the target ends
- * up fainting. {@link Label#pTargetFaints} stays purely informational - it decides only whether a replacement plan is
+ * up fainting. {@link Label#pTargetFaints} stays purely informational: it decides only whether a replacement plan is
  * worth printing (a target that usually survives has no "free replacement" to plan for), never whether the label fires.
  */
 public final class SackAnalysis {
-	/** A player move is a "threat" when accuracy * P(KO) against the AI's active is at least this (§7.14.2 "about 0.3"). */
+	/** A player move is a "threat" when accuracy * P(KO) against the AI's active is at least this. */
 	public static final double THREAT_KO = 0.3;
-	/** P(target faints) at or above this is worth reporting a replacement plan for (§7.14.4). Informational only - it
-	 * no longer decides {@link Label#sack}, which now follows purely from what kind of row was chosen. */
+	/** P(target faints) at or above this is worth reporting a replacement plan for. Informational only: it does not decide {@link Label#sack}, which follows purely from what kind of row was chosen. */
 	public static final double SACK_LABEL_P = 0.5;
 
 	private SackAnalysis() {}
@@ -72,19 +72,20 @@ public final class SackAnalysis {
 		return (a.kind == ActionKind.SWITCH || a.kind == ActionKind.MOVE_THEN_SWITCH) && sackOnly.contains(a.slot);
 	}
 
+	/** The result of a sack filter: the surviving rows and matrix, what was dropped and why, and the figures the decision was made from (for the debug log). */
 	public static final class Filtered {
 		public final List<Action> A;
 		public final double[][] M;
 		public final List<Action> dropped;
 		/** Per ORIGINAL row: mean gain over Stay in the threat columns for sack rows, NaN for every other row. */
 		public final double[] gain;
-		/** Rows and payoffs BEFORE filtering (§7.14.4 diagnostics: a dropped row's own cells aren't in A/M above, since
-		 * those are already filtered). originalA.indexOf(droppedAction) finds a dropped row's index into originalM. */
+		/** Rows and payoffs BEFORE filtering (a dropped row's own cells aren't in A/M above, since those are already
+		 * filtered). originalA.indexOf(droppedAction) finds a dropped row's index into originalM. */
 		public final List<Action> originalA;
 		public final double[][] originalM;
 		/** Per player column: the best payoff among plain Stay (MOVE) rows, same figure "gain" was computed against. */
 		public final double[] stay;
-		/** Per player column: whether it was a threat column (§7.14.2, KO chance >= THREAT_KO) - context for "gain",
+		/** Per player column: whether it was a threat column (KO chance >= THREAT_KO). Context for "gain",
 		 * which averages over threat columns when any exist, or over all columns otherwise. */
 		public final boolean[] threat;
 		/** Why a row was dropped, when the reason is more specific than the min-gain guard (e.g. the same-mon-return rule). */
@@ -104,10 +105,12 @@ public final class SackAnalysis {
 	}
 
 	/**
-	 * Pure. Stay[j] = best payoff in column j among the plain MOVE rows. A sack row is kept only if the player has at
-	 * least one threat column AND its mean (row - Stay) over the threat columns is >= minGain. With no threat there is
-	 * nothing to sack against, so every sack row goes (T20). Non-sack rows are never dropped; if there is no plain MOVE
-	 * row to compare with, or filtering would empty the set, everything is kept.
+	 * Pure. Stay[j] = best payoff in column j among the plain MOVE rows. A sack row's gain is its mean (row - Stay) over
+	 * the threat columns, or over every column when no player move threatens a KO this turn; it is kept only if that gain
+	 * is at least {@code minGain}. (With no threat there is no acute crisis to weigh a sack against, so the guard judges it
+	 * against the overall matchup instead of vetoing it outright: a good sack of a low-value mon in a clearly bad long-run
+	 * matchup can survive, a bad one still goes.) Non-sack rows are never dropped; if there is no plain MOVE row to
+	 * compare with, or filtering would empty the set, everything is kept.
 	 */
 	public static Filtered applyMinGain(List<Action> A, double[][] M, boolean[] threat, Set<Integer> sackOnly, double minGain) {
 		int nRows = A.size();
@@ -141,14 +144,7 @@ public final class SackAnalysis {
 				for (int j = 0; j < nCols; j++) if (threat[j]) sum += M[i][j] - stay[j];
 				g = sum / nThreat;
 			} else {
-				// No player move threatens an outright KO this turn - the guard's safety check (§7.14.2's "don't
-				// throw a mon away for nothing") has no acute crisis to weigh against, so it judges the sack
-				// against the OVERALL matchup instead of reflexively vetoing it: the mean gain over every player
-				// column, not just threat ones. A genuinely bad sack still gets dropped here (its mean gain stays
-				// below minGain); a genuinely good one - a low-value mon in a clearly bad long-run matchup - can
-				// now survive without needing an imminent one-hit-KO to justify it. Previously this branch was a
-				// hard -Infinity (always drop), which was closer to a blanket ban on sacking outside OHKO
-				// emergencies than the safety check the spec describes - see PHASE5_CHANGES.md.
+				// No threat column: judge against the overall matchup (mean gain over every column).
 				double sum = 0;
 				for (int j = 0; j < nCols; j++) sum += M[i][j] - stay[j];
 				g = nCols > 0 ? sum / nCols : Double.NEGATIVE_INFINITY;
@@ -168,7 +164,7 @@ public final class SackAnalysis {
 		return new Filtered(A2, M2, dropped, gain, A, M, stay, threat);
 	}
 
-	// ---- same-mon-return rule (Phase 5 follow-up) ----
+	// ---- same-mon-return rule ----
 
 	/**
 	 * A sack is only worth a mon if the free switch-in does something. A sack whose target faints and whose replacement is the
@@ -179,7 +175,7 @@ public final class SackAnalysis {
 	 * boosts), or</li>
 	 * <li>the sack was spared a real KO (some player move threatens one this turn) AND that threat does not come back: after the
 	 * turn the foe in play no longer threatens the returned mon (it fainted, was replaced, ...). If the same foe still threatens
-	 * the same mon, the KO is merely postponed one turn at the price of a mon (a sack loop: Gulpin and Rockmite in the logs).</li>
+	 * the same mon, the KO is merely postponed one turn at the price of a mon (a sack loop).</li>
 	 * </ul>
 	 * Without a KO threat this turn the second condition cannot rescue the row (there was nothing to be spared).
 	 * <p>
@@ -307,7 +303,7 @@ public final class SackAnalysis {
 		return v;
 	}
 
-	// ---- diagnostics (§7.14.4): per-column detail for a DROPPED sack-only row ----
+	// ---- diagnostics: per-column detail for a dropped sack row ----
 
 	/** One player column's outcome for a specific AI row, from re-simulating it (not read off the matrix, which only
 	 * holds the already-weighted eval score). */
@@ -320,8 +316,8 @@ public final class SackAnalysis {
 
 	/**
 	 * Per player column, what actually happens if {@code row} (a SWITCH or MOVE_THEN_SWITCH) is played against that
-	 * column: does the target faint, and if not, how much HP does it keep. One simulateTurn per column - meant for a
-	 * handful of DROPPED rows in a debug log, not the hot path. Rows that don't switch don't have a "target", so this
+	 * column: does the target faint, and if not, how much HP does it keep. One simulateTurn per column, so it is meant for a
+	 * handful of dropped rows in a debug log, not the hot path. Rows that don't switch don't have a "target", so this
 	 * is only meaningful for SWITCH/MOVE_THEN_SWITCH.
 	 */
 	public static ColumnOutcome[] columnOutcomes(SimState root, Action row, List<Action> P, AIConfig cfg) {
@@ -347,28 +343,29 @@ public final class SackAnalysis {
 		return out;
 	}
 
-	// ---- classification (§7.14.4) ----
+	// ---- classification ----
 
+	/** How a chosen switch row is reported: whether it is a sack, how likely its target is to faint, and the likely replacement. */
 	public static final class Label {
-		/** True when the chosen row switches (or pivot-switches) into ANY sack candidate - independent of whether the
+		/** True when the chosen row switches (or pivot-switches) into ANY sack candidate, independent of whether the
 		 * target ends up fainting. Set directly from the row and the candidate set the caller supplies; classify()
 		 * does not re-derive candidacy from simulated outcomes. */
 		public boolean sack;
 		/** P(the switched-in target is fainted at the end of the turn) over the predicted player distribution.
-		 * Informational only (see class doc) - does not gate {@link #sack}. */
+		 * Informational only (see class doc): it does not gate {@link #sack}. */
 		public double pTargetFaints;
 		/** Team index of the most likely replacement in the branches where the target fainted. -1 when the target
-		 * doesn't tend to faint (pTargetFaints below SACK_LABEL_P) - there's no meaningful "free replacement" to
+		 * doesn't tend to faint (pTargetFaints below SACK_LABEL_P): there's no meaningful "free replacement" to
 		 * report in that case, so callers should omit the replacement-plan line rather than print "unknown". */
 		public int replacementSlot = -1;
 	}
 
 	/**
 	 * Labels {@code chosen} a sack purely from whether it's a switch/pivot-switch into {@code sackCandidates} (ANY sack
-	 * candidate, not just sack-ONLY rows - a candidate that's also a top-N answer still counts as a sack when chosen).
+	 * candidate, not just sack-ONLY rows: a candidate that's also a top-N answer still counts as a sack when chosen).
 	 * Then, ONLY to decide whether a replacement plan is worth reporting, re-simulates the row against every column
-	 * with weight in y (the predicted player distribution; the raw equilibrium y until Phase 6's model) to see how
-	 * often the target actually faints. One simulateTurn per column, only for the chosen row, so this stays cheap.
+	 * with weight in y (the predicted player distribution) to see how often the target actually faints. One simulateTurn
+	 * per column, only for the chosen row, so this stays cheap.
 	 */
 	public static Label classify(SimState root, Action chosen, List<Action> P, double[] y, AIConfig cfg, Set<Integer> sackCandidates) {
 		Label L = new Label();

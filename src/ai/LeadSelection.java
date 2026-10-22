@@ -10,19 +10,19 @@ import util.Perf;
 import util.Print;
 
 /**
- * Phase 7 (§7.15): EXTREME lead selection. A one-shot simultaneous game: rows are the AI's selectable mons, columns are the
- * player's selectable mons ({@link Trainer#isSelectableLead}, the same predicate the preview UI's select handler uses).
+ * EXTREME lead selection. A one-shot simultaneous game: rows are the AI's selectable mons, columns are the player's
+ * selectable mons ({@link Trainer#isSelectableLead}, the same predicate the preview UI's select handler uses).
  * <p>
  * Pipeline ({@link #plan}), pure and Rng-free (the only draw is {@link #choose}'s final sample):
  * <ol>
  * <li>{@link #startState}: the REAL current HP / status of both teams on a clean field with no hazards.</li>
- * <li>{@link MonWeights#compute} on that start state (§7.14.1; also breaks ties through the material term).</li>
+ * <li>{@link MonWeights#compute} on that start state (also breaks ties through the material term).</li>
  * <li>Static pass: for every pair, {@link BattleSimulator#simulateEntry} (both leads swapIn, speed order, NO end of turn,
  * exactly like the real battle start) then {@code Evaluator.eval}.</li>
  * <li>Refinement: the top K_ai rows x top K_player columns of the static equilibrium are replaced by the game value of a
  * lite one-turn matrix built from that entry state (captures "my lead gets countered, so I pivot", Fake Out, Sash, hazards).
  * Unrefined cells are shifted by the mean (refined - static) gap so the two scales agree.</li>
- * <li>Solve the zero-sum lead matrix, shape, sample.</li>
+ * <li>Solve the zero-sum lead matrix, soften it ({@link #softLeads}), shape, sample.</li>
  * </ol>
  * The player's lead CHOICE is never an input: only the player's team. Game thread only.
  */
@@ -41,7 +41,7 @@ public final class LeadSelection {
 		/** Raw equilibrium row / column strategies of L, and the shaped sampling distribution over the rows. */
 		public final double[] xRaw, y, x;
 		public final MonWeights weights;
-		/** Total, and its two big parts: the static entry pass (36 sims at 6v6) and the one-turn refinement. */
+		/** Total, and its two big parts: the static entry pass (one simulation per pair, 36 at 6v6) and the one-turn refinement. */
 		public final long millis, staticMs, refineMs;
 
 		Plan(List<Integer> aiSlots, List<Integer> playerSlots, double[][] staticL, double[][] L, boolean[][] refined, double shift,
@@ -62,7 +62,7 @@ public final class LeadSelection {
 		}
 	}
 
-	/** Team indices of the mons {@link Trainer#isSelectableLead} accepts, ascending. */
+	/** Team indices of the alive, non-null mons of a trainer, ascending. */
 	public static List<Integer> selectable(Trainer t) {
 		List<Integer> out = new ArrayList<>();
 		for (int i = 0; i < t.team.length; i++) if (t.team[i] != null && !t.team[i].isFainted()) out.add(i);
@@ -169,13 +169,13 @@ public final class LeadSelection {
 		return ai.team[p.aiSlots.get(k)];
 	}
 
-	/** Pure. Sampling distribution for a lead matrix (solve, soften, shape). Exposed so T24/T33 can test the math on hand-built matrices. */
+	/** Pure. Sampling distribution for a lead matrix (solve, soften, shape). Exposed so the math can be tested on hand-built matrices. */
 	public static double[] solveLeads(double[][] L, AIConfig cfg) {
 		return softLeads(L, Solver.solveZeroSum(L).y, cfg);
 	}
 
 	/**
-	 * Phase 7 fix: a logit response to the equilibrium column strategy instead of sampling the raw equilibrium row.
+	 * A logit response to the equilibrium column strategy instead of sampling the raw equilibrium row.
 	 * u_i = sum_j L[i][j] * y[j] (each row's payoff against the player's equilibrium leads);
 	 * x_i ~ exp(leadTemperature * (u_i - max u) / (max L - min L)); then {@link Shaper#shape} (minProb cut, epsilon).
 	 * <p>
@@ -184,7 +184,7 @@ public final class LeadSelection {
 	 * The logit keeps the ordering (a strictly dominant lead still gets ~99%) but lets near-ties share the mass in proportion
 	 * to how much they give up, scaled by the matrix range so it is unit-free. Cost: for rows that are all best replies to y
 	 * (a mixed equilibrium) the equilibrium weights become equal; each is equally good against y, so only an off-equilibrium
-	 * player could tell. Trade-off documented in PHASE7_CHANGES.md (D8).
+	 * player could tell.
 	 */
 	public static double[] softLeads(double[][] L, double[] y, AIConfig cfg) {
 		int n = L.length;
@@ -227,7 +227,7 @@ public final class LeadSelection {
 		return (lower + upper) / 2;
 	}
 
-	/** T25 helper: eval(entry with swapIn effects) - eval(the same pair with no entry effects applied). 0 for a lead with nothing that triggers. */
+	/** Test helper: eval(entry with swapIn effects) - eval(the same pair with no entry effects applied). 0 for a lead with nothing that triggers. */
 	public static double entryDelta(SimState start, int aiSlot, int playerSlot, AIConfig cfg, MonWeights w) {
 		SimState with = BattleSimulator.simulateEntry(start, aiSlot, playerSlot, true);
 		SimState without = BattleSimulator.simulateEntry(start, aiSlot, playerSlot, false);

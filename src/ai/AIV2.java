@@ -16,56 +16,56 @@ import util.Pair;
 import util.Print;
 
 /**
- * §5/§12 Phase 3. The overhauled engine, active behind {@link TrainerAI.Config#defaultAI} (or a
- * per-trainer {@code Trainer.ai}) for NORMAL and HARD. EXTREME gets HARD's in-battle behavior
- * this phase; lead selection (§7.15) is Phase 7, so EXTREME's {@code decide()} runs identically
- * to HARD's until then.
+ * The Trainer AI engine, used by every trainer unless {@code Trainer.ai} says otherwise ({@link TrainerAI.Config#defaultAI}).
+ * One engine runs at every difficulty; {@link AIConfig#forDifficulty} is the only place difficulty is decided.
  * <p>
- * This phase's simplifications relative to the full spec (each is a deliberately deferred later
- * phase, not an oversight - see PHASE3_CHANGES.md):
- * <ul>
- * <li>(Was: {@code predict()}/{@code finalStrategy()} un-implemented. Both landed in Phase 6, see below.)</li>
- * <li>Tier 0/1 pruning and switch-in caching are Phase 8. (The {@code chooseReplacement} unification of §7.14.3 landed
- * in Phase 5: {@link ReplacementChooser}, shared with the real battle.)</li>
- * </ul>
+ * It is hard because it plays a mixed strategy against what the player is likely to do, not because it cheats: it never
+ * reads the player's chosen action, only their sets (which are open) and their past habits.
  * <p>
- * Phase 5 (sacking, §7.14): {@link #plan} runs the whole matrix pipeline including the SACK_MIN_GAIN guard, and
- * {@link #decide} labels a chosen switch row as a sack (P(target faints) >= 0.5) with a replacement plan.
+ * <b>One decision</b> ({@link #plan}, then {@link #decide} samples from it):
+ * <ol>
+ * <li>{@link MonWeights} values every mon on both teams.</li>
+ * <li>{@link ActionGen} lists the AI's actions (moves, switches, pivot-switches, sacks) and the player's.</li>
+ * <li>{@link MatrixBuilder} simulates every pair of actions and scores the resulting positions.</li>
+ * <li>{@link SackAnalysis} drops sack rows that do not clearly beat staying in.</li>
+ * <li>Rows that another row beats in every column are removed ({@link #dominatedRows}), and the {@link Solver} finds the
+ * equilibrium of what is left.</li>
+ * <li>With a {@link PlayerModel} that has seen the player, the AI predicts the player's mix from their habits and blends
+ * an exploit into the equilibrium ({@code x = alphaEff * x_eq + (1 - alphaEff) * x_exploit}).</li>
+ * <li>{@link Shaper} cuts negligible probabilities, and {@link Shaper#sample} picks the action.</li>
+ * </ol>
+ * With an empty model, no model, or {@code useHistoryModel == false}, the result is exactly the equilibrium. The model
+ * lives on the player ({@code Trainer.playerModel()}, saved with {@code Player}) and is read and updated only in
+ * {@link #decide}; {@link #plan} is pure given the model's counts.
  * <p>
- * Phase 6 (§7.11, player model): {@link #plan(SimState, AIConfig, PlayerModel)} solves the equilibrium as before, then
- * predicts the player's mix from their observed habits ({@link PlayerModel#predict}, {@code y_hat}) and blends
- * {@code x = alphaEff * x_eq + (1 - alphaEff) * x_exploit} ({@link PlayerModel#finalStrategy}). The model lives on the
- * player ({@code Trainer.playerModel()}, saved with {@code Player}) and is read/updated only in {@link #decide}; with an
- * empty model, or the two-argument {@code plan}, the result is exactly the Phase 5 equilibrium. The sack label and the
- * branch log now use {@code y_hat}. Every difficulty uses the model identically (it only gets more to work with as the
- * run goes on); {@link AIConfig#forDifficulty} is the one place difficulty is decided.
+ * Forced situations are handled in {@link #decide} before the matrix: the scripted opening of a scripted encounter, and
+ * Struggle-only turns (swap if possible, else Struggle).
  * <p>
- * Debug output: set {@link #AI_DEBUG} for a one-line-per-action probability dump (via {@link
- * Print#debug}, same channel as everything else, so {@code SelfPlay}'s existing {@code
- * Print.setDebugSuppressed} silences it automatically outside {@code cfg.aiTrace}). Set {@link
- * #AI_DEBUG_MATRIX} too for the full payoff matrix - verbose, off by default even when {@link
- * #AI_DEBUG} is on.
+ * <b>Debug output:</b> set {@link #AI_DEBUG} for a probability dump per decision (via {@link Print#debug}, so
+ * {@code SelfPlay}'s {@code Print.setDebugSuppressed} silences it and also skips the work). With it on,
+ * {@link #AI_DEBUG_MATRIX} adds the payoff matrix and {@link #AI_DEBUG_BRANCHES} adds per-branch detail.
  */
 public final class AIV2 implements TrainerAI {
 	public static final AIV2 INSTANCE = new AIV2(true, true);
-	/** Phase 5 self-play baseline: identical to INSTANCE but the AI never generates sack candidates (cfg.enableSacking=false). */
+	/** Self-play baseline: identical to INSTANCE but the AI never generates sack candidates ({@code cfg.enableSacking = false}). */
 	public static final AIV2 NO_SACK = new AIV2(false, true);
-	/** Phase 6 self-play baseline: identical to INSTANCE but pure equilibrium, no player model (cfg.useHistoryModel=false). */
+	/** Self-play baseline: identical to INSTANCE but pure equilibrium, no player model ({@code cfg.useHistoryModel = false}). */
 	public static final AIV2 NO_HISTORY = new AIV2(true, false);
 
-	/** One line per action + its sampling probability, and the chosen action. */
+	/** Master switch: one line per action with its sampling probability, and the chosen action. */
 	public static boolean AI_DEBUG = false;
-	/** Full A x P payoff matrix. Verbose - leave off unless you're chasing a specific decision. */
+	/** Full payoff matrix. Verbose; only printed while {@link #AI_DEBUG} is on. */
 	public static boolean AI_DEBUG_MATRIX = true;
-	/** Per-action resulting branch state (HP/status/stages/fainted) vs one fixed player action. See logBranchDetail. */
+	/** Resulting branch states (HP, status, stages, fainted) per action against one fixed player action. Only printed while {@link #AI_DEBUG} is on. See {@link #logBranchDetail}. */
 	public static boolean AI_DEBUG_BRANCHES = true;
 
 	private final boolean sackingEnabled;
 	private final boolean historyEnabled;
-	
+
+	/** Decisions are serialized: the AI reads and writes shared static state (the tunable constants, the caches). */
 	private static final Object AI_LOCK = new Object();
-	
-	/** Phase 8: diagnostics only when someone will see them. SelfPlay/Tuner suppress Print.debug, which now also skips the work. */
+
+	/** Diagnostics run only when someone will see them; they re-simulate, so they are skipped entirely when output is suppressed. */
 	private static boolean dbg() {
 		return AI_DEBUG && !Print.isDebugSuppressed();
 	}
@@ -83,25 +83,29 @@ public final class AIV2 implements TrainerAI {
 		return n + ")";
 	}
 
-	/** Everything decide() computes before sampling; package-private so tests run the exact production pipeline. */
+	/** Everything {@link #decide} computes before sampling, public so tests run the exact production pipeline. */
 	public static final class Plan {
+		/** The AI's rows and the player's columns. {@code A} is already filtered by the sack guard; {@code M[i][j]} is the payoff of {@code A[i]} against {@code P[j]}. */
 		public final List<Action> A, P;
 		public final double[][] M;
 		public final MonWeights weights;
 		/** Sack-only slots (sack candidates that are not also answers); empty when the AI cannot switch or sacking is off. */
 		public final Set<Integer> sackOnly;
-		/** ALL sack candidates (§7.14.2's ActionGen.BenchPlan.sacks), including ones that are ALSO top-N answers. This
-		 * is what decides the [Sack: ...] label (chosen row switches into ANY sack candidate) - sackOnly above is
-		 * narrower (only what the min-gain guard actually judges) and stays separate for that reporting. */
+		/** ALL sack candidates (see {@code ActionGen.BenchPlan.sacks}), including ones that are also top-N answers. This
+		 * decides the sack label (the chosen row switches into ANY sack candidate); {@link #sackOnly} is narrower (only
+		 * what the min-gain guard judges) and stays separate for reporting. */
 		public final Set<Integer> sacks;
-		/** Min-gain guard result, null when there were no sack-only rows to judge. A/M above are already filtered. */
+		/** Sack guard result (min-gain and same-mon-return rules), null when there were no sack rows to judge. A/M above are already filtered. */
 		public final Filtered guard;
+		/** The equilibrium: {@code eq.x} is full length (zeros on dominated rows), {@code eq.y} has one entry per player column. */
 		public final Result eq;
+		/** The strategy to sample from: the equilibrium after the player-model blend and shaping. Full length, zeros on dominated rows. */
 		public final double[] x;
-		/** Phase 6: the predicted player mix (eq.y itself when there is no model or no history), and the reading it came from (null without a model). */
+		/** The predicted player mix ({@code eq.y} itself when there is no model or no history yet). */
 		public final double[] yHat;
+		/** The player model's reading of this situation, null without a model. */
 		public final Read read;
-		/** Phase 6: weight of the equilibrium in the blend (1.0 = pure equilibrium). */
+		/** Weight of the equilibrium in the blend (1.0 = pure equilibrium). */
 		public final double alphaEff;
 
 		Plan(List<Action> A, List<Action> P, double[][] M, MonWeights weights, Set<Integer> sackOnly, Set<Integer> sacks,
@@ -121,15 +125,15 @@ public final class AIV2 implements TrainerAI {
 		}
 	}
 
-	/** Phase 3-5 pipeline with no player model: x is the equilibrium, y_hat is eq.y. Kept so earlier tests and self-play baselines are untouched. */
+	/** {@link #plan(SimState, AIConfig, PlayerModel)} with no player model: {@code x} is the shaped equilibrium and {@code yHat} is {@code eq.y}. */
 	public static Plan plan(SimState root, AIConfig cfg) {
 		return plan(root, cfg, null);
 	}
 
 	/**
-	 * Rows, columns, payoff matrix, SACK_MIN_GAIN guard, equilibrium, player prediction and shaped strategy for one
-	 * decision. No RNG is drawn and {@code model} is not modified (pure given the model's counts). Null if there are no
-	 * rows. A null {@code model}, {@code cfg.useHistoryModel == false} or an empty model gives the plain equilibrium.
+	 * Rows, columns, payoff matrix, sack guard, equilibrium, player prediction and shaped strategy for one decision.
+	 * No RNG is drawn and {@code model} is not modified (pure given the model's counts). Null if the AI has no rows.
+	 * A null {@code model}, {@code cfg.useHistoryModel == false} or an empty model gives the plain equilibrium.
 	 */
 	public static Plan plan(SimState root, AIConfig cfg, PlayerModel model) {
 		MonWeights weights = MonWeights.compute(root);
@@ -140,6 +144,7 @@ public final class AIV2 implements TrainerAI {
 
 		double[][] M = MatrixBuilder.buildMatrix(root, A, P, cfg, weights);
 
+		// Sack guard: a sack row only survives if it clearly beats staying in.
 		Set<Integer> sackOnly = Collections.emptySet();
 		Set<Integer> sacks = Collections.emptySet();
 		SackAnalysis.Filtered guard = null;
@@ -163,7 +168,9 @@ public final class AIV2 implements TrainerAI {
 				}
 			}
 		}
-		
+
+		// Solve on the reduced game: rows another row beats everywhere are removed, so they can never pick up probability
+		// from the solver's averaging noise or be tie-broken into by the blend. keep[r] maps a reduced row to its full index.
 		boolean[] drop = dominatedRows(M);
 		int n = 0;
 		for (boolean d : drop) if (!d) n++;
@@ -174,11 +181,13 @@ public final class AIV2 implements TrainerAI {
 			keep[r] = i;
 			Mr[r++] = M[i];
 		}
-		
+
 		Solver.Result eqR = Solver.solveZeroSum(Mr);
 		double[] xr = eqR.x.clone();
-		equalizeDuplicates(Mr, xr, new boolean[n]);
-		
+		equalizeDuplicates(Mr, xr, new boolean[n]); // identical rows share their mass evenly, so move order cannot matter
+
+		// Player model: read() is computed whenever there is a model (decide() needs its situation to start observing even
+		// while w is still 0); the blend only changes anything once the model has data.
 		PlayerReader.Read read = model != null && cfg.useHistoryModel ? PlayerReader.read(model, root, P, Mr, xr) : null;
 		double[] yHat = eqR.y;
 		double[] xRaw = xr;
@@ -189,7 +198,8 @@ public final class AIV2 implements TrainerAI {
 			xRaw = PlayerModel.finalStrategy(Mr, xr, yHat, alphaEff, cfg.temperatureExploit);
 		}
 		double[] xs = Shaper.shape(xRaw, cfg);
-		
+
+		// Expand back to full length (zeros on dropped rows) so A, M and x stay aligned.
 		double[] x = new double[A.size()], xeq = new double[A.size()];
 		for (int r = 0; r < n; r++) {
 			x[keep[r]] = xs[r];
@@ -206,8 +216,8 @@ public final class AIV2 implements TrainerAI {
 			cfg.enableSacking = sackingEnabled;
 			cfg.useHistoryModel = historyEnabled;
 
-			// Phase 6: learn what the player did last turn BEFORE anything below can return, so a forced-action turn does
-			// not leave a gap. The model belongs to the player's trainer (saved with Player); null without a trainer.
+			// Learn what the player did last turn BEFORE anything below can return, so a forced-action turn does not
+			// leave a gap. The model belongs to the player's trainer (saved with Player); null without a trainer.
 			PlayerModel model = cfg.useHistoryModel && foe.trainer != null ? foe.trainer.playerModel() : null;
 			if (model != null) {
 				PlayerReader.Observation seen = PlayerReader.observe(model, self, foe);
@@ -216,8 +226,8 @@ public final class AIV2 implements TrainerAI {
 				}
 			}
 
-			// ---- §7.13 forced pre-checks (kept from existing code) ----
-			if (self.script && Pokemon.field.turns == 0) {
+			// ---- forced situations, decided without the matrix ----
+			if (self.script && Pokemon.field.turns == 0) { // scripted encounter: fixed opening move
 				if (Pokemon.gp.currentMap == 160) return new MoveDecision(self.getStatusMove());
 				return new MoveDecision(self.moveset[0].move);
 			}
@@ -225,20 +235,18 @@ public final class AIV2 implements TrainerAI {
 			ArrayList<Move> validMoves = self.getValidMoveset();
 			boolean canSwitch = self.trainer.canSwitch(foe);
 			if (validMoves.isEmpty()) {
-				// Struggle-only: swaps at every difficulty if possible (T29). Target comes from the
-				// matrix restricted to SWITCH rows (sack candidates included); if trapped, Struggle.
+				// Struggle-only: swaps at every difficulty if possible. The target comes from the matrix restricted to
+				// switch rows (sack candidates included); if trapped, Struggle.
 				if (canSwitch) {
 					int slot = pickStruggleSwitch(self, foe, cfg);
 					return new MoveDecision(Move.GROWL, Status.SWAP, slot + 1);
 				}
 				return new MoveDecision(Move.STRUGGLE);
 			}
-			// Status.RECHARGE/CHARGING/SEMI_INV/LOCKED/ENCORED mid-sequence: getValidMoveset() is
-			// already expected to have narrowed validMoves down to the forced move (existing
-			// behavior, untouched this phase) - the matrix still lets SWITCH compete when legal,
-			// since genAIActions/switchRowsAllowed don't special-case those statuses.
+			// Mid-sequence statuses (recharge, charging, semi-invulnerable, locked, encored): getValidMoveset() has already
+			// narrowed validMoves to the forced move. The matrix still lets switching compete when it is legal.
 
-			// ---- §5 decide() pipeline ----
+			// ---- the matrix decision ----
 			SimState root = SimState.snapshot(self, foe);
 			Plan plan = plan(root, cfg, model);
 			if (plan == null) return new MoveDecision(Move.STRUGGLE); // defensive; validMoves was non-empty above
@@ -257,7 +265,7 @@ public final class AIV2 implements TrainerAI {
 			Action chosenAct = A.get(chosen);
 			SackAnalysis.Label label = null;
 			if (chosenAct.kind != ActionKind.MOVE && (dbg() || (Pokemon.gp != null && Pokemon.gp.gameState == GamePanel.SIM_BATTLE_STATE))) {
-				label = SackAnalysis.classify(root, chosenAct, P, plan.yHat, cfg, plan.sacks); // re-simulates; only needed for the log / sim UI
+				label = SackAnalysis.classify(root, chosenAct, P, plan.yHat, cfg, plan.sacks); // re-simulates; only needed for the log and the sim UI
 			}
 			logDecision(self, A, x, chosenAct, x[chosen], plan.sacks);
 			logSackChosen(self, chosenAct, x[chosen], label);
@@ -281,7 +289,7 @@ public final class AIV2 implements TrainerAI {
 		}
 	}
 
-	/** Struggle-only forced swap: pick the best SWITCH-only cell by the matrix, restricted to candidateBench. */
+	/** Struggle-only forced swap: the best switch row by the matrix, restricted to {@code candidateBench}. Returns a 0-based team slot. */
 	private int pickStruggleSwitch(Pokemon self, Pokemon foe, AIConfig cfg) {
 		SimState root = SimState.snapshot(self, foe);
 		MonWeights weights = MonWeights.compute(root);
@@ -308,9 +316,9 @@ public final class AIV2 implements TrainerAI {
 	}
 
 	/**
-	 * §7.12 reporting: derives simBattleUI.p1Moves/p2Moves (moves only, renormalized) and
-	 * p1Switch/p2Switch reasons from x, mirroring the pre-overhaul "fill p1 slot if empty,
-	 * else p2" pattern so the existing sim-UI probability displays keep working unmodified.
+	 * Fills the sim-battle UI's probability displays: {@code simBattleUI.p1Moves/p2Moves} (moves only, renormalized) and
+	 * {@code p1Switch/p2Switch} reasons from {@code x}. The first AI to report in a turn takes slot one, the second slot two.
+	 * Only active in a simulated (betting) battle.
 	 */
 	private void report(Pokemon self, List<Action> A, double[] x, Action chosenAct, double chosenProb, SackAnalysis.Label label) {
 		if (Pokemon.gp == null || Pokemon.gp.gameState != GamePanel.SIM_BATTLE_STATE) return;
@@ -332,11 +340,11 @@ public final class AIV2 implements TrainerAI {
 		}
 	}
 
-	/** §7.14.4 UI/debug reason: the sack line when the chosen switch is labeled a sack, else the plain matrix line. */
+	/** UI/debug reason for a switch: the sack line when the chosen switch is labeled a sack, else the plain matrix line. */
 	static String reason(Pokemon self, Action chosenAct, double chosenProb, SackAnalysis.Label label) {
 		Pokemon target = self.trainer.team[chosenAct.slot];
 		if (label != null && label.sack) {
-			// Replacement plan is only meaningful when the target actually tends to faint (SackAnalysis.SACK_LABEL_P);
+			// A replacement plan is only meaningful when the target actually tends to faint (SackAnalysis.SACK_LABEL_P);
 			// otherwise there is no "free replacement" to plan for, so the segment is left out rather than shown as "?".
 			String replSegment = label.replacementSlot >= 0
 					? String.format(Locale.ROOT, " | replacement plan: %s", self.trainer.team[label.replacementSlot])
@@ -347,13 +355,11 @@ public final class AIV2 implements TrainerAI {
 		return String.format(Locale.ROOT, "[Matrix: switch to %s %.0f%%]\n", target, chosenProb * 100);
 	}
 
-	/** §7.14.4 debug: sack-only candidates with weighted values, and each judged row's payoff gap vs Stay (mean over threat columns). Off unless AI_DEBUG. */
 	/**
-	 * Phase 5 (§7.14.4) sack-candidate summary, plus a per-column breakdown for each row the min-gain guard actually
-	 * dropped: the matrix payoff and the best Stay payoff it was compared against (same figures "gain" is built from),
-	 * and - re-simulated, not read off the matrix, since the matrix only holds the final weighted eval score - whether
-	 * the target faints in that column and, when it survives, how much HP it keeps. This is what a dropped row's own
-	 * numbers look like, since a dropped row's cells aren't in the post-filter plan.A/plan.M at all.
+	 * Sack-candidate summary, plus a per-column breakdown for each row the sack guard actually dropped: the matrix payoff
+	 * and the best Stay payoff it was compared against (the figures "gain" is built from) and, re-simulated since the
+	 * matrix only holds the weighted eval score, whether the target faints in that column and how much HP it keeps if
+	 * not. A dropped row's cells are not in the post-filter {@code plan.A/plan.M}, so this is where its numbers show.
 	 */
 	private void logSack(Pokemon self, SimState root, Plan plan, AIConfig cfg) {
 		if (!dbg() || plan.sacks.isEmpty()) return;
@@ -413,7 +419,7 @@ public final class AIV2 implements TrainerAI {
 		Print.debug(String.format(Locale.ROOT, "[AIV2] SACK CHOSEN (%s, %.1f%%): %s", chosenAct.label(), chosenProb * 100, reason(self, chosenAct, chosenProb, label)));
 	}
 
-	/** One line per action and its sampling probability, plus the pick. Guarded by AI_DEBUG so the string building is skipped entirely when off. */
+	/** One line per action and its sampling probability, plus the pick. Debug only. */
 	private void logDecision(Pokemon self, List<Action> A, double[] x, Action chosenAct, double chosenProb, Set<Integer> sacks) {
 		if (!dbg()) return;
 		StringBuilder sb = new StringBuilder();
@@ -428,13 +434,13 @@ public final class AIV2 implements TrainerAI {
 		Print.debug(sb.toString());
 	}
 
-	/** Full A x P payoff matrix. Verbose - off unless AI_DEBUG_MATRIX is also set. */
-	/** Phase 6: situation, trust and per-class history / equilibrium / prediction. Silent without a model or with no history yet. */
+	/** The player model's reading: situation, trust, and per-class history / equilibrium / prediction. Silent without a model. */
 	private void logRead(Pokemon self, Plan plan) {
 		if (!dbg() || plan.read == null) return;
 		Print.debug(String.format(Locale.ROOT, "[AIV2] %s: %s\n", self, PlayerReader.describe(plan.read, plan.eq.y, plan.yHat, plan.alphaEff)));
 	}
 
+	/** Full A x P payoff matrix. Verbose; only printed while {@link #AI_DEBUG_MATRIX} is on. */
 	private void logMatrix(Pokemon self, Plan plan) {
 		if (!dbg() || !AI_DEBUG_MATRIX) return;
 		List<Action> A = plan.A, P = plan.P;
@@ -449,9 +455,9 @@ public final class AIV2 implements TrainerAI {
 			for (int j = 0; j < P.size(); j++) sb.append(String.format(Locale.ROOT, "%12.1f", M[i][j]));
 			sb.append('\n');
 		}
-		// Rows the min-gain guard removed before solving: shown with their ORIGINAL payoffs so they are not silently absent.
+		// Rows the sack guard removed before solving: shown with their ORIGINAL payoffs so they are not silently absent.
 		if (plan.guard != null && !plan.guard.dropped.isEmpty()) {
-			sb.append("  -- dropped by min-gain guard (not in the solve or in the probabilities below) --\n");
+			sb.append("  -- dropped by the sack guard (not in the solve or in the probabilities below) --\n");
 			for (Action a : plan.guard.dropped) {
 				int r = plan.guard.originalA.indexOf(a);
 				if (r < 0) continue;
@@ -464,7 +470,7 @@ public final class AIV2 implements TrainerAI {
 	}
 
 	/**
-	 * Diagnostic (AI_DEBUG_BRANCHES): for every AI action, the resulting branch(es) against player columns that explain the decision:
+	 * Diagnostic ({@link #AI_DEBUG_BRANCHES}): for every AI action, the resulting branch(es) against player columns that explain the decision:
 	 * the column the equilibrium expects most, plus (when different) the highest-expected column in which some AI row takes the foe
 	 * active's life, so a KO line can be compared with a chip line term by term. Each branch carries its eval() split into terms;
 	 * START is the real state before the turn, since every other line is a projection AFTER it.
@@ -528,7 +534,7 @@ public final class AIV2 implements TrainerAI {
 		return -1;
 	}
 
-	/** Breaks eval() down into its terms at the (unmodified) root state, so a suspiciously large/uniform matrix can be traced to a specific term instead of guessed at. */
+	/** Breaks eval() down into its terms at the (unmodified) root state, so a suspiciously large or uniform matrix can be traced to a specific term. */
 	private void logEvalBreakdown(Pokemon self, SimState root, AIConfig cfg, MonWeights weights) {
 		if (!dbg()) return;
 		double mat = Evaluator.material(root.ai, weights.ai) - Evaluator.material(root.player, weights.player);
@@ -559,8 +565,13 @@ public final class AIV2 implements TrainerAI {
 		return String.format(Locale.ROOT, "eval=%.1f  [material=%.1f matchup=%.1f (live %.1f) hazard=%.1f status=%.1f field=%.1f tempo=%.1f]",
 				total, mat, matchup, matchupLive, hazard, status, field, tempo);
 	}
-	
-	/** Rows weakly dominated by another row (>= everywhere, strictly > somewhere). Exact duplicates are NEVER dropped. */
+
+	/**
+	 * Rows weakly dominated by another row (at least as good in every column, strictly better in some). Removing them
+	 * does not change the game's value, and keeps a row that is never better from picking up probability by chance.
+	 * Exact duplicates are NEVER dropped (neither dominates the other): they are all kept and share their mass evenly, see
+	 * {@link #equalizeDuplicates}.
+	 */
 	public static boolean[] dominatedRows(double[][] M) {
 		final double eps = 1e-9;
 		int n = M.length;
@@ -579,7 +590,7 @@ public final class AIV2 implements TrainerAI {
 		return drop;
 	}
 
-	/** Spread each group of identical kept rows' total mass evenly, so move-list order cannot matter. */
+	/** Spreads each group of identical kept rows' total mass evenly, so the order of the move list cannot matter. */
 	static void equalizeDuplicates(double[][] M, double[] x, boolean[] drop) {
 		final double eps = 1e-9;
 		for (int i = 0; i < M.length; i++) {

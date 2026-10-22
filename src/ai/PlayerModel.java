@@ -7,17 +7,18 @@ import java.util.Arrays;
 import java.util.Locale;
 
 /**
- * Phase 6 (§7.11). What the Trainer AI has learned about HOW a player plays: not which moves they own (the AI always
- * sees the full sets, like the player sees the AI's), but their habits - when the simulation says switching is their
- * best reply, do they switch or stay in; do they pick the move/switch-in the simulation likes best or something else.
- * The AI uses it to hedge less or more against switching than the plain equilibrium says, so trainers get harder the
- * more of the player's run they have seen. "Best" is always the AI's own payoff matrix against its equilibrium mix
- * (see {@link PlayerReader}), never a type-chart proxy.
+ * What the Trainer AI has learned about HOW a player plays: not which moves they own (the AI always sees the full sets,
+ * like the player sees the AI's), but their habits. When the simulation says switching is their best reply, do they
+ * switch or stay in? Do they pick the move or switch-in the simulation likes best, or something else? The AI uses it to
+ * hedge less or more against switching than the plain equilibrium says, so trainers get harder the more of the player's
+ * run they have seen. "Best" is always the AI's own payoff matrix against its equilibrium mix (see {@link PlayerReader}),
+ * never a type-chart proxy.
  * <p>
  * <b>Storage.</b> A fixed table of {@code (48 fine + 4 coarse + 1 global) situation slots x 5 action classes} floats
- * (about 1.2 KB serialized), kept on {@code Player} and saved with it. It cannot grow: every observation decays the
+ * (about 1 KB serialized), kept on {@code Player.habits} and saved with it. It cannot grow: every observation decays the
  * slots it touches by {@link #DECAY}, so a slot holds at most {@code 1 / (1 - DECAY)} observations' worth and old
- * habits fade if the player changes style.
+ * habits fade if the player changes style. Saves written before the AI moved to package {@code ai} are mapped to this
+ * class on load by {@code SaveManager}.
  * <p>
  * <b>Confidence.</b> The estimate for a situation is shrunk toward its coarse bucket, which is shrunk toward the global
  * habit ({@link #estimate}); {@link #blendWeight} turns the effective sample size into how much the AI trusts it. An
@@ -55,22 +56,22 @@ public final class PlayerModel implements Serializable {
 
 	public static final int CLASSES = ActionClass.values().length;
 	/**
-	 * 2 (AI threatens the player's active) x 2 (the simulation says switching is the player's better reply) x 3 (player
-	 * active's HP band) x 2 (AI outspeeds) x 2 (the player has a Protect-family move available, so a Protect habit is
-	 * measured per turn it COULD protect and not diluted by mons without one).
+	 * Number of fine situation buckets: 2 (AI threatens the player's active) x 2 (the simulation says switching is the
+	 * player's better reply) x 3 (player active's HP band) x 2 (AI outspeeds) x 2 (the player has a Protect-family move
+	 * available, so a Protect habit is measured per turn it COULD protect and not diluted by mons without one).
 	 */
 	public static final int FINE = 48;
-	/** The (threatened, switchBetter) pair: fine / 12. */
+	/** Number of coarse buckets: the (threatened, switchBetter) pair, i.e. {@code fine / 12}. */
 	public static final int COARSE = 4;
 	static final int COARSE_BASE = FINE;
 	static final int GLOBAL = FINE + COARSE;
 	static final int SLOTS = GLOBAL + 1;
 
-	/** §7.11's K: observations at which the AI trusts the history as much as the equilibrium. Placeholder, Phase 8. */
+	/** Observations at which the AI trusts the history as much as the equilibrium. Not in {@code Tunables}: mirror self-play has no habits to learn, so it cannot measure it. */
 	public static final double K_BLEND = 6.0;
-	/** Pseudo-observations a bucket borrows from its parent (fine from coarse, coarse from global). Placeholder, Phase 8. */
+	/** Pseudo-observations a bucket borrows from its parent (fine from coarse, coarse from global). */
 	public static final double K_PARENT = 4.0;
-	/** Per-observation forgetting of the slots an observation touches. 0.97 caps a slot at about 33 observations. Placeholder, Phase 8. */
+	/** Per-observation forgetting of the slots an observation touches. 0.97 caps a slot at about 33 observations. */
 	public static final double DECAY = 0.97;
 
 	private float[] counts = new float[SLOTS * CLASSES];
@@ -97,6 +98,7 @@ public final class PlayerModel implements Serializable {
 
 	// ---- situation index ----
 
+	/** Index of the fine bucket for a situation; {@code hpBand} is 0, 1 or 2. */
 	public static int fineIndex(boolean threatened, boolean switchBetter, int hpBand, boolean aiFaster, boolean protectAvailable) {
 		if (hpBand < 0 || hpBand > 2) throw new IllegalArgumentException("hpBand " + hpBand);
 		return ((((threatened ? 1 : 0) * 2 + (switchBetter ? 1 : 0)) * 3 + hpBand) * 2 + (aiFaster ? 1 : 0)) * 2 + (protectAvailable ? 1 : 0);
@@ -131,6 +133,7 @@ public final class PlayerModel implements Serializable {
 
 	// ---- estimate ----
 
+	/** A smoothed habit estimate for one situation and how much data stands behind it. */
 	public static final class Estimate {
 		/** Smoothed distribution over {@link ActionClass}, sums to 1. Uniform when there is no data at all. */
 		public final double[] dist;
@@ -183,13 +186,13 @@ public final class PlayerModel implements Serializable {
 		return eff <= 0 ? 0 : eff / (eff + K_BLEND);
 	}
 
-	/** §7.11's alpha, shrunk toward 1 (pure equilibrium) when the model is unsure: {@code 1 - (1 - alpha) * w}. */
+	/** The equilibrium weight {@code alpha}, shrunk toward 1 (pure equilibrium) when the model is unsure: {@code 1 - (1 - alpha) * w}. */
 	public static double alphaEff(double alpha, double w) {
 		double a = Math.max(0, Math.min(1, alpha));
 		return 1.0 - (1.0 - a) * Math.max(0, Math.min(1, w));
 	}
 
-	// ---- prediction (§7.11 predict) ----
+	// ---- prediction ----
 
 	/** Total equilibrium mass per action class over the columns. */
 	public static double[] classMass(double[] y, ActionClass[] cls) {
@@ -199,10 +202,11 @@ public final class PlayerModel implements Serializable {
 	}
 
 	/**
-	 * y_hat: the class mix {@code w * history + (1 - w) * equilibrium}, spread back over the columns of each class in
-	 * proportion to the equilibrium within the class (uniformly when the equilibrium gives that class no mass, so a habit
-	 * the equilibrium never plays can still be predicted). Classes with no column in this matrix are dropped and the
-	 * history renormalized over the rest. {@code w == 0}, or no usable history, returns {@code y} unchanged.
+	 * The predicted player mix y_hat: the class mix {@code w * history + (1 - w) * equilibrium}, spread back over the
+	 * columns of each class in proportion to the equilibrium within the class (uniformly when the equilibrium gives that
+	 * class no mass, so a habit the equilibrium never plays can still be predicted). Classes with no column in this matrix
+	 * are dropped and the history renormalized over the rest. {@code w == 0}, or no usable history, returns {@code y}
+	 * unchanged.
 	 */
 	public static double[] predict(double[] y, ActionClass[] cls, double[] hist, double w) {
 		double[] out = y.clone();
@@ -241,7 +245,7 @@ public final class PlayerModel implements Serializable {
 		return out;
 	}
 
-	// ---- final strategy (§7.11 finalStrategy) ----
+	// ---- final strategy ----
 
 	/**
 	 * {@code alphaEff * x_eq + (1 - alphaEff) * x_exploit}, where x_exploit is a softmax over the rows' payoff against
@@ -277,6 +281,7 @@ public final class PlayerModel implements Serializable {
 
 	// ---- utilities ----
 
+	/** An independent copy of the counts (the per-battle bookkeeping is not copied). */
 	public PlayerModel copy() {
 		PlayerModel c = new PlayerModel();
 		System.arraycopy(counts, 0, c.counts, 0, counts.length);

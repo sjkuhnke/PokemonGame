@@ -314,7 +314,15 @@ public class PlayerCharacter extends Entity {
 		}
 		if (keyH.calcPressed) {
 			keyH.calcPressed = false;
-			Item.useCalc(p.getCurrent(), null, null, true);
+			//Item.useCalc(p.getCurrent(), null, null, true);
+			Phase0Tests.runAll();
+			Phase1Tests.runAll();
+			Phase3Tests.runAll();
+			Phase4Tests.runAll();
+			Phase5Tests.runAll();
+			Phase6Tests.runAll();
+			Phase7Tests.runAll();
+			Phase8Tests.runAll();
 		}
 		
 		checkHotkeys();

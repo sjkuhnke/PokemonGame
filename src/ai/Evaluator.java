@@ -5,20 +5,21 @@ import pokemon.Field.Effect;
 import util.Perf;
 
 /**
- * §7.8. Turns a {@link SimState} into a signed "roughly HP-points" value from the AI's
- * perspective (100 ~ one full healthy mon). Called once per branch inside
- * {@link MatrixBuilder#buildMatrix} and again, restricted to the AI's own moves, inside
- * {@link ActionGen#deadTurn}.
+ * Turns a {@link SimState} into a signed "roughly HP-points" value from the AI's perspective (100 is about one full
+ * healthy mon). Called once per branch inside {@link MatrixBuilder#buildMatrix} and, restricted to the AI's own moves,
+ * inside {@link ActionGen#deadTurn}.
  * <p>
- * Known v1 simplifications, flagged per §0 rather than hidden (see PHASE3_CHANGES.md):
+ * The value is a weighted sum of terms, each weighted by {@link EvalWeights}: material (HP and alive mons, priced by
+ * {@link MonWeights}), the active matchup (escape-capped, see {@link #matchupTerm}), hazards, bench status, field effects
+ * (weather, screens), tempo, forced turns, charging attacks and pending recovery/restrictions.
+ * <p>
+ * Deliberate simplifications:
  * <ul>
- * <li>{@code hazardPain} scales {@code calcHazardTeamValue} (which values one layer) by
- * {@link #hazardLayerScale} (Phase 4: Spikes 1 : 1.33 : 2, Toxic Spikes 1 : 1.67).</li>
- * <li>{@code benchStatusValue} uses flat per-status points instead of reusing
- * {@code scoreInflictedStatus} (which needs a specific incoming-move context that doesn't
- * generalize to "any bench mon vs an unknown future opponent"). Natural Cure is handled (Phase 4).</li>
- * <li>{@code tempo}/{@code forcedTurnPenalty} use flat constants rather than move-specific
- * recharge/lock durations.</li>
+ * <li>{@code hazardPain} scales {@code calcHazardTeamValue} (which values one layer) by {@link #hazardLayerScale}
+ * (Spikes 1 : 1.33 : 2, Toxic Spikes 1 : 1.67).</li>
+ * <li>{@code benchStatusValue} uses flat per-status points instead of a move-specific score, since "any bench mon against
+ * an unknown future opponent" has no incoming move to score against. Natural Cure mons are skipped.</li>
+ * <li>{@code tempo} and {@code forcedTurnPenalty} use flat constants rather than move-specific recharge/lock durations.</li>
  * </ul>
  */
 public final class Evaluator {
@@ -37,11 +38,12 @@ public final class Evaluator {
 	static double HURT_ANSWER_PENALTY = 60;
 	/** A hit that would be lethal but is endured (Sturdy / Focus Sash at full HP, False Swipe) counts as at most this fraction of the target's HP in the matchup: it takes a second hit. */
 	static double ENDURE_FRAC = 0.5;
-	/** Fraction of a telegraphed charge that still lands: the foe can switch, Protect, or KO the charger first. Placeholder; tune in self-play. */
+	/** Fraction of a telegraphed charge that still lands: the foe can switch, Protect, or KO the charger first. */
 	static double CHARGE_HOLD = 0.75;
 
 	private Evaluator() {}
 
+	/** Eval with explicit mon weights and no escape cap (the matchup term is the live matchup). Used where no {@link MonWeights} context exists, e.g. lead selection. */
 	public static double eval(SimState s, EvalWeights style, double[] aiWeights, double[] playerWeights) {
 		return evalCore(s, style, aiWeights, playerWeights, null);
 	}
@@ -72,7 +74,7 @@ public final class Evaluator {
 		return v;
 	}
 
-	/** material(side) = Sum over alive mons: 100 * hpFrac * monWeight, plus ALIVE_BONUS * aliveCount (§7.8). */
+	/** material(side) = sum over alive mons of 100 * hpFrac * monWeight, plus {@link #ALIVE_BONUS} per alive mon. */
 	public static double material(SideState side, double[] weights) {
 		Pokemon[] team = side.bench();
 		double total = 0;
@@ -89,9 +91,9 @@ public final class Evaluator {
 	}
 
 	/**
-	 * bestRange(ai->player) and bestRange(player->ai), fed as expected-damage fractions into
-	 * the existing matchupScore formula (unchanged constants) - matches §7.8's "myR.frac,
-	 * foeR.frac" naming: expectedCapped/hp, not just the max roll.
+	 * The live active-vs-active matchup (current HP, stages, status): each side's best move as an expected-damage fraction
+	 * of the foe's current HP (expected damage capped at the HP, not just the max roll), fed into the mon's
+	 * {@code matchupScore} formula together with who is faster.
 	 */
 	public static double activeMatchup(SimState s) {
 		Pokemon aiMon = s.ai.active(), plMon = s.player.active();
@@ -133,13 +135,13 @@ public final class Evaluator {
 		if (best == Double.POSITIVE_INFINITY) return live; // the foe has nothing to escape to
 		return Math.min(live, best + ESCAPE_COST);
 	}
-	
-	/** Attacker's best valid move against defender, ranked by expected-capped damage. Null if nothing lands. Cached (Phase 8). */
+
+	/** Attacker's best valid move against defender, ranked by expected-capped damage. Null if nothing lands. Cached by {@link SimCache}. */
 	static DamageRange bestRange(Pokemon attacker, Pokemon defender, Field field) {
 		return SimCache.bestRange(attacker, defender, field);
 	}
-	
-	/** The uncached computation (SimCache and MonWeights.duel call this). */
+
+	/** The uncached computation ({@link SimCache} and {@code MonWeights.duel} call this). */
 	static DamageRange bestRangeRaw(Pokemon attacker, Pokemon defender, Field field) {
 		DamageRange best = null;
 		double bestScore = -1;
@@ -154,7 +156,7 @@ public final class Evaluator {
 		}
 		return best;
 	}
-	
+
 	static double fracOf(DamageRange r, double hp) {
 		if (r == null || hp <= 0) return 0;
 		double f = Math.min(1.0, r.expectedCapped(hp) / hp);
@@ -164,7 +166,7 @@ public final class Evaluator {
 		return f;
 	}
 
-	/** hazardPain(side) = Sum over active hazard effects on side's own field: calcHazardTeamValue, scaled by layers (v1, see class doc). */
+	/** hazardPain(side) = sum over active hazard effects on the side's own field of calcHazardTeamValue, scaled by layers. */
 	public static double hazardPain(SideState side, Field field) {
 		Pokemon anchor = side.active();
 		if (anchor == null) return 0;
@@ -178,7 +180,7 @@ public final class Evaluator {
 	}
 
 	/**
-	 * Phase 4: calcHazardTeamValue values ONE layer. Spikes deal 1/8, 1/6, 1/4 of max HP for 1, 2, 3 layers (relative
+	 * calcHazardTeamValue values ONE layer. Spikes deal 1/8, 1/6, 1/4 of max HP for 1, 2, 3 layers (relative
 	 * 1 : 1.33 : 2); Toxic Spikes poison at 1 layer and badly poison at 2 (relative 1 : 1.67, matching statusPenalty's
 	 * 15 : 25). Everything else is single-layer.
 	 */
@@ -189,23 +191,20 @@ public final class Evaluator {
 		return 1.0;
 	}
 
-	/** benchStatusValue = Sum over alive BENCH mons (active handled via activeMatchup): status penalty * hpFrac. */
+	/** benchStatusValue = sum over alive BENCH mons (the active is covered by the matchup) of status penalty * hpFrac. */
 	public static double benchStatusValue(SideState side, Field field) {
 		Pokemon active = side.active();
 		double total = 0;
 		for (Pokemon p : side.bench()) {
 			if (p == null || p.isFainted() || p == active) continue;
-			if (p.getAbility(field) == Ability.NATURAL_CURE) continue; // cured on switch-in (§9 Aromatherapy/Heal Bell row; Phase 3 deferral)
+			if (p.getAbility(field) == Ability.NATURAL_CURE) continue; // cured on switch-in, so the status costs nothing
 			double hpFrac = p.currentHP * 1.0 / p.getStat(0);
 			total += statusPenalty(p.status) * hpFrac;
 		}
 		return total;
 	}
 
-	/**
-	 * Flat per-status points (v1; see class doc for why this doesn't reuse scoreInflictedStatus).
-	 * Natural Cure is handled by the caller (benchStatusValue skips those mons).
-	 */
+	/** Flat per-status points (see the class doc for why this is not move-specific). Natural Cure is handled by the caller. */
 	private static double statusPenalty(Status status) {
 		if (status == null || status == Status.HEALTHY) return 0;
 		switch (status) {
@@ -219,7 +218,7 @@ public final class Evaluator {
 		}
 	}
 
-	/** fieldValue(s) = net weather value (AI perspective, already nets both sides) + AI screens - player screens. */
+	/** fieldValue(s) = net weather value (AI perspective, already nets both sides) + AI screens - player screens, each weighted by how long it lasts. */
 	public static double fieldValue(SimState s) {
 		Pokemon aiAnchor = s.ai.active(), plAnchor = s.player.active();
 		if (aiAnchor == null || plAnchor == null) return 0;
@@ -238,7 +237,7 @@ public final class Evaluator {
 		return v;
 	}
 
-	/** Phase 4 (§9 "duration-weighted"): a field effect with 1 turn left is worth a quarter of one with 4+. turns <= 0 = indefinite. */
+	/** Duration weighting: a field effect with 1 turn left is worth a quarter of one with 4 or more. turns &lt;= 0 means indefinite. */
 	public static double durationFactor(int turnsLeft) {
 		if (turnsLeft <= 0) return 1.0;
 		return Math.min(1.0, turnsLeft / 4.0);
@@ -272,7 +271,7 @@ public final class Evaluator {
 		return p.hasStatus(Status.RECHARGE) || p.hasStatus(Status.CHARGING) || p.hasStatus(Status.LOCKED);
 	}
 
-	// ---- Phase 4 terms (§9): pending recovery effects and action-set restriction ----
+	// ---- pending recovery effects and action-set restriction ----
 
 	/** Cap so a restriction never outweighs losing a mon; it only breaks ties between otherwise similar rows. */
 	private static final double RESTRICTION_MAX = 12;
@@ -281,7 +280,7 @@ public final class Evaluator {
 	 * pendingValue = (AI side's pending recovery - player side's) - (AI's restriction cost - player's).
 	 * Healing Wish / Lunar Dance: the best bench beneficiary's missing HP (plus its status for Lunar Dance and Healing
 	 * Wish alike, since both cure it). Wish: the heal the active mon will get, capped at its missing HP.
-	 * A Healing Wish sacrifice is a MOVE row that KOs the user; this term is what pays for it (§9).
+	 * A Healing Wish sacrifice is a MOVE row that KOs the user; this term is what pays for it.
 	 */
 	public static double pendingValue(SimState s, double[] aiWeights, double[] playerWeights) {
 		double v = pendingRecovery(s.ai, aiWeights, s.field) - pendingRecovery(s.player, playerWeights, s.field);
@@ -290,6 +289,7 @@ public final class Evaluator {
 		return v;
 	}
 
+	/** The value of recovery already set up on a side: Healing Wish / Lunar Dance for the best bench beneficiary, Wish for the active mon. */
 	public static double pendingRecovery(SideState side, double[] weights, Field field) {
 		double total = 0;
 		Pokemon[] team = side.bench();
@@ -318,8 +318,8 @@ public final class Evaluator {
 
 	/**
 	 * Cost of an active mon's move restrictions: RESTRICTION_MAX * (fraction of its moves it can no longer use), only
-	 * while a Taunt / Disable / Encore / Torment is actually on it. Choice-item locks are excluded on purpose: Phase 3's
-	 * choice-lock handling already prices those, and counting them here would double-charge.
+	 * while a Taunt / Disable / Encore / Torment is actually on it. Choice-item locks are excluded on purpose: the
+	 * choice-lock handling in {@link ActionGen#deadTurn} already prices those, and counting them here would double-charge.
 	 */
 	public static double restrictionCost(SideState side, Field field) {
 		Pokemon a = side.active();
@@ -334,7 +334,7 @@ public final class Evaluator {
 		if (valid == 0) return RESTRICTION_MAX; // Struggle-only
 		return RESTRICTION_MAX * (1.0 - valid * 1.0 / total);
 	}
-	
+
 	/** Value of the attack a charging mon releases next turn, in the same units as material. */
 	private static double chargeCredit(SideState atkSide, SideState defSide, Field f, double[] defW) {
 	    Pokemon atk = atkSide.active(), def = defSide.active();

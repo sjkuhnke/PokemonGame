@@ -4,38 +4,39 @@ import pokemon.*;
 import util.Perf;
 
 /**
- * §7.14.1. HP-independent, per-team-slot value weights, computed once per decision from the
- * root snapshot and never recomputed inside matrix cells. Indexed by team-array slot (not by
- * Pokemon reference), since forked/cloned SimStates give bench mons new object identities but
- * keep slot indices stable.
+ * HP-independent, per-team-slot value weights, computed once per decision from the root snapshot and never recomputed
+ * inside matrix cells. Indexed by team-array slot (not by Pokemon reference), since forked/cloned SimStates give bench
+ * mons new object identities but keep slot indices stable.
  * <p>
  * raw[m] = BASE_W + contribution[m] + UNIQUE_W * unique[m] + utility[m], normalized to mean 1.0 over the side's alive
  * mons and clamped to [MIN_W, MAX_W].
  * <ul>
  * <li>{@code contribution}: how much of the opposing team a mon handles, weighted by how dangerous each foe is.</li>
- * <li>{@code unique} (Phase 5): the only good answer to a dangerous foe (best edge, above 0, and more than {@link #GAP}
+ * <li>{@code unique}: the only good answer to a dangerous foe (best edge, above 0, and more than {@link #GAP}
  * clear of the runner-up). Pure math in {@link #uniqueBonuses}.</li>
- * <li>{@code utility} (Phase 5): small capped terms for what a mon does beyond trading hits (hazards, screens, cleric,
+ * <li>{@code utility}: small capped terms for what a mon does beyond trading hits (hazards, screens, cleric,
  * Healing Wish, speed control), see {@link #utility}.</li>
  * </ul>
  * There is deliberately NO ace multiplier: a mon is valuable because the evaluation says it answers threats or does a
  * job the team needs, not because it was labeled an ace. The same weights price sacks (who is worth keeping), the
  * material term in eval, and the future-value term of {@link ReplacementChooser}.
+ * <p>
+ * The per-pair "edge" values come from full-HP duels and are cached by content ({@link SimCache}), so a whole battle
+ * reuses them. The constants below are registered in {@link Tunables}; self-play found the engine insensitive to them.
  */
 public final class MonWeights {
 	private static final double BASE_T = 1.0;
 	private static final double BASE_W = 1.0;
 	private static final double MIN_W = 0.25, MAX_W = 3.0;
-	/** Phase 5: scale of the only-answer bonus (edge units are about [-1, +1]; threat is about 1..2). Tuned in Phase 8. */
+	/** Scale of the only-answer bonus (edge units are about [-1, +1]; threat is about 1..2). */
 	static double UNIQUE_W = 0.75;
-	/** Phase 5: how far ahead of the runner-up a mon's edge must be to count as the only answer. Tuned in Phase 8. */
+	/** How far ahead of the runner-up a mon's edge must be to count as the only answer. */
 	static double GAP = 0.3;
-	/** Phase 5: cap on the summed utility terms, so utility nudges but never outweighs answering threats. */
+	/** Cap on the summed utility terms, so utility nudges but never outweighs answering threats. */
 	static double UTILITY_MAX = 0.6;
 	/**
 	 * Normalization sharpness: w ~ exp(NORM_K * z), z = (raw - mean) / max(sd, NORM_SD_FLOOR). 0.5 turns a raw spread of one
 	 * standard deviation into about a 1.65x weight ratio; a lone standout on a six-mon team lands near 2.5x the average.
-	 * Untuned placeholder; Phase 8.
 	 */
 	static double NORM_K = 0.5;
 	/** Raw units are comparable across teams (contribution/unique/utility are absolute), so a near-uniform team must not have tiny noise stretched to full scale: sd is floored here. */
@@ -52,6 +53,7 @@ public final class MonWeights {
 		this.edge = edge;
 	}
 
+	/** Both sides' weights (and the AI-perspective edge table) for the position {@code root}. */
 	public static MonWeights compute(SimState root) {
 		long t0 = Perf.start();
 		double[][][] edgeOut = new double[1][][];
@@ -77,10 +79,11 @@ public final class MonWeights {
 		for (int i = 0; i < n; i++) myAlive[i] = myTeam[i] != null && !myTeam[i].isFainted();
 		for (int j = 0; j < m; j++) theirAlive[j] = theirTeam[j] != null && !theirTeam[j].isFainted();
 
+		// Edge table: one cached full-HP duel per pair. A computed duel also fills the mirror entry for the other side's table.
 		double[][] edge = new double[n][m];
 		long fKey = SimCache.fieldKey(field);
 		long[] myKey = new long[n], theirKey = new long[m];
-		Pokemon[] myBase = new Pokemon[n], theirBase = new Pokemon[m]; // baselines are built lazily, once per mon (was once per PAIR)
+		Pokemon[] myBase = new Pokemon[n], theirBase = new Pokemon[m]; // baselines are built lazily, once per mon
 		for (int i = 0; i < n; i++) if (myAlive[i]) myKey[i] = SimCache.monKey(myTeam[i], false);
 		for (int j = 0; j < m; j++) if (theirAlive[j]) theirKey[j] = SimCache.monKey(theirTeam[j], false);
 		for (int i = 0; i < n; i++) {
@@ -99,12 +102,12 @@ public final class MonWeights {
 				if (theirBase[j] == null) theirBase[j] = baseline(theirTeam[j]);
 				double[] d = duel(myBase[i], theirBase[j], field);
 				SimCache.edgePut(k, d[0]);
-				SimCache.edgePut(SimCache.edgeKey(theirKey[j], myKey[i], fKey), d[1]); // the other side's table needs the mirror entry
+				SimCache.edgePut(SimCache.edgeKey(theirKey[j], myKey[i], fKey), d[1]);
 				if (cached != null) SimCache.verifyEdge(cached, d[0]);
 				edge[i][j] = d[0];
 			}
 		}
-		
+
 		if (edgeOut != null) edgeOut[0] = edge;
 
 		double[] threat = new double[m];
@@ -239,8 +242,7 @@ public final class MonWeights {
 
 	/**
 	 * Both directions of one full-HP duel from ONE pair of best-range computations: {edge(m vs q), edge(q vs m)}, each as
-	 * matchupScore / 90. (The old baseEdge ran the same two bestRange calls once per side, plus two fullClones each time.)
-	 * getFaster runs inside the scope so a speed tie is the deterministic id tiebreak, never a real Rng draw.
+	 * matchupScore / 90. getFaster runs inside the scope so a speed tie is the deterministic id tiebreak, never a real Rng draw.
 	 */
 	private static double[] duel(Pokemon mBase, Pokemon qBase, Field field) {
 		DamageRange mine, theirs;
@@ -259,10 +261,8 @@ public final class MonWeights {
 	}
 
 	/**
-	 * Full HP, no status, no stat stages, current item/ability (§7.14.1's "1v1 matchup at full
-	 * HP ... no stages, no status"). Uses fullClone() (Phase 0/2 precedent) then resets the
-	 * volatile bits. Confirmed: the engine's default/healthy state is {@code Status.HEALTHY},
-	 * not {@code null}.
+	 * A copy of the mon at full HP, no status and no stat stages, keeping its current item and ability: the "1v1 matchup
+	 * at full HP" the edge table is defined on. The engine's healthy state is {@code Status.HEALTHY}, not {@code null}.
 	 */
 	private static Pokemon baseline(Pokemon p) {
 		Pokemon c = p.fullClone();
@@ -275,13 +275,13 @@ public final class MonWeights {
 	/**
 	 * z-score + exponential, then rescale to mean 1.0 over the alive mons, then clamp to [MIN_W, MAX_W].
 	 * <ul>
-	 * <li>Sign-safe: raw can be negative on a struggling team (BASE_W + contributions that go below 0). Ratio-to-mean broke
-	 * there (mean &lt;= 0 gave a flat 1.0 or inverted order); z-scores do not care about sign.</li>
-	 * <li>Scale-safe: the previous offset-from-mean (1 + raw - mean) put raw-unit differences straight into a [0.25, 3.0]
-	 * window, so any raw spread over about 0.75 pinned nearly every mon to a clamp (four at 0.25 and one at 3.0 in real
-	 * logs), erasing the differences between the weaker mons and with them the price of a sack.</li>
+	 * <li>Sign-safe: raw can be negative on a struggling team (BASE_W + contributions that go below 0). A ratio to the
+	 * mean breaks there (mean &lt;= 0 gives a flat 1.0 or an inverted order); z-scores do not care about sign.</li>
+	 * <li>Scale-safe: an offset from the mean would put raw-unit differences straight into a [0.25, 3.0] window, so any
+	 * raw spread over about 0.75 pinned nearly every mon to a clamp, erasing the differences between the weaker mons
+	 * and with them the price of a sack.</li>
 	 * <li>Monotone in raw, so ordering is preserved and the Defog/utility bonuses still lift a mon.</li>
-	 * <li>Averages exactly 1.0 before the clamp (T26). With NORM_K = 0.5 the clamp is rarely reached.</li>
+	 * <li>Averages exactly 1.0 before the clamp. With NORM_K = 0.5 the clamp is rarely reached.</li>
 	 * <li>One alive mon: weight 1.0. Fainted mons: 0.</li>
 	 * </ul>
 	 */

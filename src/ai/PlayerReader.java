@@ -11,9 +11,9 @@ import ai.PlayerModel.ActionClass;
 import pokemon.*;
 
 /**
- * Phase 6 (§7.11). The engine half of the player model: turns a decision's state and payoff matrix into a situation
- * bucket and an action class per player column ({@link #read}), remembers what it saw ({@link #begin}), and next turn
- * works out what the player actually did from the state alone ({@link #observe}). Needs no hook in the battle UI or in
+ * The engine half of the player model: turns a decision's state and payoff matrix into a situation bucket and an action
+ * class per player column ({@link #read}), remembers what it saw ({@link #begin}), and next turn works out what the
+ * player actually did from the state alone ({@link #observe}). Needs no hook in the battle UI or in
  * {@code Player.recordTurn} (that one feeds the battle-log upload): the AI diffs the player's active mon and its PP
  * between two of its own decisions.
  * <p>
@@ -35,7 +35,7 @@ public final class PlayerReader {
 
 	/** Switching counts as the better reply when the best switch beats the best stay by more than this fraction of the matrix's payoff range. */
 	static final double SWITCH_MARGIN = 0.05;
-	/** Columns within this many eval points (~HP points; 100 ~ one healthy mon) of the lowest AI payoff all count as "best". Placeholder; Phase 8. */
+	/** Columns within this many eval points (about HP points; 100 is one healthy mon) of the lowest AI payoff all count as "best". Not in {@code Tunables}: it needs a player with habits to measure. */
 	public static final double BEST_TOL = 5.0;
 
 	/** One decision's reading of the player: situation, class of every column, history for that situation and how much to trust it. */
@@ -95,7 +95,7 @@ public final class PlayerReader {
 	/**
 	 * Pure. Reads the player's situation from {@code root} and the matrix, and classifies every column of {@code P}.
 	 *
-	 * @param M   the decision's payoff matrix (rows = AI actions as left after the sack guard, columns = {@code P})
+	 * @param M   the decision's payoff matrix (rows = AI actions as left after the sack guard and dominance reduction, columns = {@code P})
 	 * @param xEq the equilibrium mix over M's rows
 	 */
 	public static Read read(PlayerModel model, SimState root, List<Action> P, double[][] M, double[] xEq) {

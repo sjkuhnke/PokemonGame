@@ -8,19 +8,30 @@ import java.util.Set;
 import pokemon.*;
 
 /**
- * §7.4 genAIActions/genPlayerActions (Phase 4: + §9 usefulRows filter), §7.13.1 switchRowsAllowed/deadTurn, §7.14.2
- * candidateBench/sackCandidates. Phase 5: {@link #benchPlan} keeps the answers/sacks split (the min-gain guard needs to
- * know which rows are sack-only), sack candidates honor {@code cfg.enableSacking}, and the player's sack column is only
- * kept while the AI actually threatens the player's active.
+ * Generates the two action lists a decision's payoff matrix is built from: the AI's rows ({@link #genAIActions}) and the
+ * player's columns ({@link #genPlayerActions}).
+ * <p>
+ * <b>Moves.</b> Rows that provably do nothing this turn are dropped first ({@link #usefulRows}), so they neither cost
+ * matrix cells nor split probability mass.
+ * <p>
+ * <b>Switches.</b> The AI's switch rows come from {@link #benchPlan}: the top few type-matchup "answers" plus the
+ * "sack" candidates (low-value mons worth throwing in front of a hit, never pruned). Whether the AI may switch
+ * voluntarily at all depends on difficulty ({@link #switchRowsAllowed}; NORMAL only on a {@link #deadTurn}, a Perish
+ * count of 1, or Struggle-only). {@code benchPlan} keeps the answers/sacks split because the sack guard needs to know
+ * which rows are sack-only. Sack candidates honor {@code cfg.enableSacking}.
+ * <p>
+ * <b>Player columns.</b> The player gets their moves, a few switch targets, and pivot moves paired with those targets.
+ * Their sack column is only included while the AI actually threatens their active ({@link #playerSwitchColumns}).
  */
 public final class ActionGen {
-	/** deadTurn's "did anything change" threshold (§7.13.1). */
+	/** {@link #deadTurn}'s "did anything change" threshold, in eval points. */
 	private static final double DEAD_EPS = 1.0;
 
 	private ActionGen() {}
 
-	// ---- §7.4 ----
+	// ---- action lists ----
 
+	/** The AI's rows: useful moves, pivot moves paired with each switch target, and (when allowed) plain switches. */
 	public static List<Action> genAIActions(SimState root, AIConfig cfg, MonWeights weights) {
 		List<Action> A = new ArrayList<>();
 		Pokemon self = root.ai.active();
@@ -32,10 +43,10 @@ public final class ActionGen {
 		Ability foeAbility = canSwitch ? foe.getAbility(root.field) : null;
 
 		for (Move m : validMoves) {
-			// A pivot move whose switch-in is already covered by explicit MOVE_THEN_SWITCH rows
-			// below is NOT also added plain: a plain pivot's post-move replacement is the forced-replacement
-			// chooser (ReplacementChooser, Phase 5: the same function the real battle uses), not a switch
-			// the AI planned in the matrix - so the explicit rows are the only way the AI picks the target.
+			// A pivot move whose switch-in is already covered by explicit MOVE_THEN_SWITCH rows below is NOT also added
+			// plain: a plain pivot's post-move replacement is picked by ReplacementChooser (the same function the real
+			// battle uses), not by a switch the AI planned in the matrix, so the explicit rows are the only way the AI
+			// chooses the target.
 			boolean pivotCoveredBySwitchRows = canSwitch && !switchTargets.isEmpty()
 					&& m.isPivotMove() && self.isUsefulPivot(foe, foeAbility, m);
 			if (!pivotCoveredBySwitchRows) A.add(new Action(m));
@@ -53,12 +64,12 @@ public final class ActionGen {
 		return A;
 	}
 
-	/** considerPlayerSwitches is true at every difficulty per §7.4; infoMode FULL only this phase (REVEALED_ONLY is Phase 6). */
+	/** The player's columns, with weights computed here. The player's switches are considered at every difficulty. */
 	public static List<Action> genPlayerActions(SimState root, AIConfig cfg) {
 		return genPlayerActions(root, cfg, MonWeights.compute(root));
 	}
 
-	/** Phase 5: takes the decision's weights so the player sack column does not recompute them. */
+	/** The player's columns, given the decision's weights (so the player's sack column does not recompute them). */
 	public static List<Action> genPlayerActions(SimState root, AIConfig cfg, MonWeights weights) {
 		List<Action> P = new ArrayList<>();
 		Pokemon player = root.player.active();
@@ -79,14 +90,14 @@ public final class ActionGen {
 		return P;
 	}
 
-	// ---- §9 row filter (Phase 4) ----
+	// ---- row filter ----
 
 	/**
-	 * Drops rows that provably do nothing this turn, so they neither cost matrix cells nor split probability mass:
-	 * Fake Out / First Impression / Dream Eater and friends when {@code calcRange} says unusable (damaging moves only:
-	 * for those {@code usable=false} always means "cannot be used now"), Sleep Talk / Snore while awake, and hazard moves
-	 * that {@code isHazardUseful} rejects. Never returns an empty list: if everything would be dropped the unfiltered
-	 * list is returned (the sim then plays it out as a failed move).
+	 * Drops rows that provably do nothing this turn: Fake Out / First Impression / Dream Eater and friends when
+	 * {@code calcRange} says unusable (damaging moves only: for those {@code usable=false} always means "cannot be used
+	 * now"), Sleep Talk / Snore while awake, and hazard moves that {@code isHazardUseful} rejects. Never returns an empty
+	 * list: if everything would be dropped the unfiltered list is returned (the simulation then plays it out as a failed
+	 * move).
 	 */
 	public static List<Move> usefulRows(Pokemon self, Pokemon foe, Field field, List<Move> valid) {
 		List<Move> out = new ArrayList<>(valid.size());
@@ -101,8 +112,12 @@ public final class ActionGen {
 		return out.isEmpty() ? valid : out;
 	}
 
-	// ---- §7.13.1 ----
+	// ---- voluntary switching (the NORMAL gate) ----
 
+	/**
+	 * Whether the AI's plain switch rows are in the matrix this turn. HARD and EXTREME always allow them. NORMAL allows them
+	 * only when its Perish count is 1, it has only Struggle, or the turn is dead ({@link #deadTurn}).
+	 */
 	public static boolean switchRowsAllowed(SimState root, AIConfig cfg, MonWeights weights) {
 		if (cfg.allowVoluntarySwitch) return true; // HARD / EXTREME
 		Pokemon self = root.ai.active();
@@ -111,7 +126,11 @@ public final class ActionGen {
 		return deadTurn(root, cfg);
 	}
 
-	/** Deliberately checks only the active foe (no back-check) - preserves the existing hasRealAction contract. */
+	/**
+	 * A dead turn: none of the AI's moves improves the position against the active foe (each move is simulated against a
+	 * passing foe and compared with the AI passing). Deliberately checks only the active foe, with no look at a foe that
+	 * might switch in.
+	 */
 	public static boolean deadTurn(SimState root, AIConfig cfg) {
 		double baseline = evalAfter(root, Action.PASS, Action.PASS, cfg);
 		Pokemon self = root.ai.active();
@@ -125,7 +144,7 @@ public final class ActionGen {
 		return true;
 	}
 
-	/** Mirrors the pre-overhaul skip rule (legacy AI removed in Phase 4): don't count clicking a status move as a real action for an unlocked Choice holder. */
+	/** Clicking a status move does not count as a real action for a Choice holder that is not locked yet (it would lock it into the status move). */
 	private static boolean choiceLockSkip(Pokemon self, Move m, Pokemon foe, Ability foeAbility, Field field) {
 		return m.cat == 2 && self.getItem(field) != null && self.getItem(field).isChoiceItem()
 				&& !m.isMagicBounceEffected(self, foe, foeAbility, m.accuracy);
@@ -138,9 +157,9 @@ public final class ActionGen {
 		return v;
 	}
 
-	// ---- §7.14.2 ----
+	// ---- the AI's bench: answers and sacks ----
 
-	/** candidateBench split: the capped top-N "answers", and the never-pruned sack candidates. */
+	/** The AI's switch targets, split into the capped top-N "answers" and the never-pruned sack candidates. */
 	public static final class BenchPlan {
 		final List<Integer> answers;
 		public final List<Integer> sacks;
@@ -150,14 +169,14 @@ public final class ActionGen {
 			this.sacks = sacks;
 		}
 
-		/** answers first, then sacks not already in answers. */
+		/** Answers first, then sacks not already in answers. */
 		List<Integer> all() {
 			Set<Integer> u = new LinkedHashSet<>(answers);
 			u.addAll(sacks);
 			return new ArrayList<>(u);
 		}
 
-		/** Sack candidates that are NOT also answers: the only rows the min-gain guard may drop. */
+		/** Sack candidates that are NOT also answers: the only rows the sack guard may drop. */
 		public Set<Integer> sackOnly() {
 			Set<Integer> s = new LinkedHashSet<>(sacks);
 			s.removeAll(answers);
@@ -166,8 +185,8 @@ public final class ActionGen {
 	}
 
 	/**
-	 * valueOf(m) = weight * hpFrac (§7.14.1). Candidates: alive bench mons worth strictly less than
-	 * sackRatio * value(active), lowest two. Empty when {@code cfg.enableSacking} is false or the active is worth nothing.
+	 * Sack candidates: alive bench mons whose {@link #valueOf value} is strictly less than {@code sackRatio * value(active)},
+	 * lowest two. Empty when {@code cfg.enableSacking} is false or the active is worth nothing.
 	 */
 	public static List<Integer> sackCandidates(SimState root, AIConfig cfg, MonWeights weights) {
 		if (!cfg.enableSacking) return new ArrayList<>();
@@ -186,6 +205,10 @@ public final class ActionGen {
 		return c.size() > 2 ? new ArrayList<>(c.subList(0, 2)) : c;
 	}
 
+	/**
+	 * The AI's switch targets: the best {@code maxAISwitchRows - 2} alive bench mons by type matchup against the foe's
+	 * active (a mon resistant or immune to the foe's types ranks high, so it is naturally included), plus the sack candidates.
+	 */
 	public static BenchPlan benchPlan(SimState root, AIConfig cfg, MonWeights weights) {
 		Pokemon[] team = root.ai.bench();
 		Pokemon foeActive = root.player.active();
@@ -198,8 +221,6 @@ public final class ActionGen {
 		int n = Math.max(0, cfg.maxAISwitchRows - 2);
 		alive.sort((i, j) -> Double.compare(cheapMatchup(team[j], foeActive, root.field), cheapMatchup(team[i], foeActive, root.field)));
 
-		// any bench mon resistant/immune to the foe's likely move types is already ranked highly by
-		// cheapMatchup and so is naturally included by the topN cut (§7.14.2's third clause).
 		List<Integer> answers = new ArrayList<>();
 		for (int idx : alive) {
 			if (answers.size() >= n) break;
@@ -208,15 +229,15 @@ public final class ActionGen {
 		return new BenchPlan(answers, sackCandidates(root, cfg, weights)); // sacks are never pruned
 	}
 
-	/** answers ∪ sack candidates (§7.14.2). */
+	/** Answers plus sack candidates. */
 	static List<Integer> candidateBench(SimState root, AIConfig cfg, MonWeights weights) {
 		return benchPlan(root, cfg, weights).all();
 	}
 
 	/**
-	 * Keeps the player's top matchup-answers, plus (Phase 5, §7.14.2) their lowest-weighted-value bench mon as a sack
-	 * column when the AI threatens the player's active and that mon is worth less than sackRatio * value(active): a human
-	 * sacks too, and predicting it lets the AI punish it. No threat, no sack column.
+	 * Keeps the player's top matchup answers, plus their lowest-weighted-value bench mon as a sack column when the AI
+	 * threatens the player's active and that mon is worth less than {@code sackRatio * value(active)}: a human sacks too,
+	 * and predicting it lets the AI punish it. No threat, no sack column.
 	 */
 	private static List<Integer> playerSwitchColumns(SimState root, AIConfig cfg, MonWeights weights) {
 		Pokemon[] team = root.player.bench();
@@ -270,7 +291,7 @@ public final class ActionGen {
 		return result;
 	}
 
-	/** weight * hpFrac (§7.14.1); 0 for a missing slot. */
+	/** A mon's worth to its team right now: {@code weight * hpFrac} (the weight is HP-independent, so this tracks HP). 0 for a missing slot. */
 	public static double valueOf(double[] w, Pokemon[] team, int i) {
 		if (i < 0) return 0;
 		Pokemon p = team[i];
@@ -279,7 +300,7 @@ public final class ActionGen {
 		return weight * hpFrac;
 	}
 
-	/** Cheap type-matchup proxy for ranking candidate switch-ins (not evaluateSwitchInScore - that's the recursive path §7.14.3 retires). */
+	/** Cheap type-matchup proxy for ranking candidate switch-ins. It only decides which bench mons get a row; the matrix prices the switch itself. */
 	private static double cheapMatchup(Pokemon mine, Pokemon foe, Field field) {
 		if (mine == null || foe == null) return Double.NEGATIVE_INFINITY;
 		double eff = 1.0 - Trainer.getEffective(mine, foe, foe.type1, null, false);
