@@ -214,6 +214,9 @@ Iglite -> Sember
 Blaxer -> Kaboon
 Pyrator -> Detonape
 Magmaclang -> Apierition
+Tiowoo -> Vulcite
+Magwoo -> Basault
+Lafloo -> Pompein
 Shookwat ->
 Wattwo ->
 Megawatt -> Mechamo

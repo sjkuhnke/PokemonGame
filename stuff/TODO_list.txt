@@ -11,7 +11,6 @@ UPDATE LIST
 NATURES and PP UPS FOR GYM 8+ SPLIT TRAINERS
 Add Klara and Fred's house to Sicab City
 Figure out why Matrix switches in Battle Betting don't always line up with who actually comes in
-Make sure Battle Betting plays on hard OR extreme, doesn't use player's difficulty
 Add some more battle betting sets and redo old ones
 
 Trainer AI Changes

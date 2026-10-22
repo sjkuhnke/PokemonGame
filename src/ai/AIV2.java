@@ -53,7 +53,7 @@ public final class AIV2 implements TrainerAI {
 	public static final AIV2 NO_HISTORY = new AIV2(true, false);
 
 	/** Master switch: one line per action with its sampling probability, and the chosen action. */
-	public static boolean AI_DEBUG = false;
+	public static boolean AI_DEBUG = true;
 	/** Full payoff matrix. Verbose; only printed while {@link #AI_DEBUG} is on. */
 	public static boolean AI_DEBUG_MATRIX = true;
 	/** Resulting branch states (HP, status, stages, fainted) per action against one fixed player action. Only printed while {@link #AI_DEBUG} is on. See {@link #logBranchDetail}. */

@@ -146,7 +146,7 @@ public class Player extends Trainer implements Serializable {
 	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 95;
+	public static final int VERSION = 96;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	public static final int BET_INC = 10;

@@ -11654,6 +11654,7 @@ public class Pokemon implements Serializable {
 		json.put("fainted", fainted);
 		
 		// misc
+		json.put("exp", exp);
 		json.put("happiness", happiness);
 		json.put("metAt", metAt);
 		
