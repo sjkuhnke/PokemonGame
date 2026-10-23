@@ -41,7 +41,7 @@ import entity.*;
 import object.*;
 import overworld.Fog;
 import overworld.GamePanel;
-import overworld.Main;
+import overworld.PokemonXhenos;
 import overworld.PMap;
 import overworld.Sound;
 import pokemon.*;
@@ -2793,12 +2793,15 @@ public class UI extends AbstractUI {
 		drawScrollbar(gp.tileSize * 7 - gp.tileSize * 2 / 5, (int) (gp.tileSize * 1.6), (int) (gp.tileSize * 7.6), 11, maxShow + 1, dexNum[dexType]);
 		
 		int baseID = view[dexNum[dexType]].id;
-		int mode = gp.player.p.pokedex[baseID];
+		int baseMode = gp.player.p.pokedex[baseID];
 		dexBaseID = baseID;
 		dexBaseNo = view[dexNum[dexType]].getDexNo();
-		ArrayList<Player.DexVariant> variants = mode == 2 ? gp.player.p.getDexVariants(baseID) : null;
+		// Seen entries can toggle variants too (the shiny dex registers on sight)
+		ArrayList<Player.DexVariant> variants = baseMode >= 1 ? gp.player.p.getDexVariants(baseID) : null;
 		dexVariant = variants == null ? 0 : Math.max(0, Math.min(dexVariant, variants.size() - 1));
 		Player.DexVariant variant = variants == null ? new Player.DexVariant(baseID, false) : variants.get(dexVariant);
+		// What may be shown depends on the selected variant's own status: a caught species can have a form that's only been seen
+		int mode = variants == null ? baseMode : Math.max(1, gp.player.p.pokedex[variant.id]);
 		ArrayList<Move> levelMoveList = new ArrayList<>();
 		ArrayList<String> levelLevelList = new ArrayList<>();
 		ArrayList<Item> tmList = new ArrayList<>();
@@ -2915,6 +2918,7 @@ public class UI extends AbstractUI {
 				abilityDexNum = 0;
 				levelDexNum = 0;
 				tmDexNum = 0;
+				if (gp.player.p.pokedex[variants.get(dexVariant).id] != 2) dexMode = 0; // seen-only: no details pages
 			}
 		}
 		
@@ -3208,7 +3212,7 @@ public class UI extends AbstractUI {
 	}
 	
 	private void drawDexSpecies(int id, int x, int y) {
-		String species = "The " + Pokemon.getCategory(id) + " Pokemon";
+		String species = getDexSpeciesText(id);
 		g2.setFont(g2.getFont().deriveFont(Font.ITALIC, 18F));
 		g2.setColor(new Color(180, 180, 180));
 		g2.drawString(species, x, y);
@@ -3409,7 +3413,7 @@ public class UI extends AbstractUI {
 		g2.setColor(Pokemon.getDexNoColor(variant.id));
 		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 20F));
 		g2.drawString(Pokemon.getFormattedDexNo(gp.keyH.shiftPressed ? variant.id : dexBaseNo), left, (int) (gp.tileSize * 0.75));
-		if (caught) drawDexVariantChip(variants, dexRight());
+		drawDexVariantChip(variants, dexRight());
 		
 		g2.setColor(Color.WHITE);
 		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 36F));
@@ -5897,7 +5901,7 @@ public class UI extends AbstractUI {
 				gp.titleScreen.newGameMenuNum = TitleScreen.NG_SAVE_NAME;
 				gp.titleScreen.docOptions = new boolean[8];
 				gp.player = new PlayerCharacter(gp);
-				Main.window.setTitle(Main.gameTitle);
+				PokemonXhenos.window.setTitle(PokemonXhenos.gameTitle);
 				gp.setGameState(GamePanel.TITLE_STATE);
 				menuNum = 0;
 				subState = 0;
@@ -6336,7 +6340,7 @@ public class UI extends AbstractUI {
 		
 		String currentMap = PlayerCharacter.currentMapName;
 		PMap.getLoc(newMap, (int) Math.round(gp.player.worldX * 1.0 / 48), (int) Math.round(gp.player.worldY * 1.0 / 48));
-		Main.window.setTitle(Main.gameTitle + " - " + PlayerCharacter.currentMapName);
+		PokemonXhenos.window.setTitle(PokemonXhenos.gameTitle + " - " + PlayerCharacter.currentMapName);
 		if (!currentMap.equals(PlayerCharacter.currentMapName)) {
 			showAreaName();
 			gp.player.p.checkSummon(gp, newMap);

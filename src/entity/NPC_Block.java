@@ -1,7 +1,6 @@
 package entity;
 
 import overworld.GamePanel;
-import pokemon.*;
 import util.Task;
 
 public class NPC_Block extends Entity {

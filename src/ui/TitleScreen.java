@@ -33,7 +33,7 @@ import javax.imageio.ImageIO;
 import docs.DocUtils;
 import entity.PlayerCharacter;
 import overworld.GamePanel;
-import overworld.Main;
+import overworld.PokemonXhenos;
 import overworld.PMap;
 import overworld.Sound;
 import pokemon.BattleRecord;
@@ -312,7 +312,7 @@ public class TitleScreen extends AbstractUI {
 			if (saveFiles.isEmpty()) {
 				showMessage("No save files found!");
 			} else {
-				Main.loadGame(saveFiles.get(selectedSaveIndex), "Finn");
+				PokemonXhenos.loadGame(saveFiles.get(selectedSaveIndex), "Finn");
 			}
 			break;
 		case MAIN_NEW_GAME:
@@ -1068,7 +1068,7 @@ public class TitleScreen extends AbstractUI {
 		fileName = getUniqueSaveFileName(fileName);
 		fileName += ".dat";
 		
-		Main.loadGame(fileName, playerName.trim());
+		PokemonXhenos.loadGame(fileName, playerName.trim());
 	}
 
 	private String sanitizeFileName(String name) {

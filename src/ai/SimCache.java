@@ -7,7 +7,7 @@ import pokemon.*;
 import util.Perf;
 
 /**
- * Phase 8 (§7.9 "caches", §10): content-keyed memo tables for the two hottest pure computations.
+ * Content-keyed memo tables for the two hottest pure computations.
  * <ul>
  * <li><b>Edge cache</b>: {@code MonWeights}' full-HP 1v1 edge for an ordered pair of mons. Key = {@link #monKey}(base) of both,
  * plus the field. HP, status and stages are NOT in the key (the baseline resets them), so one entry serves a whole battle.</li>
@@ -16,8 +16,9 @@ import util.Perf;
  * </ul>
  * The keys are 64-bit hashes of every input those computations read (audited against computeDamage / getSpeed / getValidMoveset).
  * Because a missed input would be a SILENT wrong answer, {@link #VERIFY} recomputes on every hit and counts mismatches; run
- * Phase8Tests with it on after any change to damage code. Cached values are immutable (a double, or a DamageRange).
- * Bounded: a table is cleared when it reaches MAX_ENTRIES.
+ * the Phase8Tests cache checks with it on after any change to damage code. Cached values are immutable (a double, or a
+ * DamageRange). Values never depend on a tunable parameter, so switching a {@link Tunables} vector needs no clear. Each table
+ * is bounded: it is cleared when it reaches MAX_ENTRIES. Self-play clears both at the start of every battle.
  */
 public final class SimCache {
 	private SimCache() {}
@@ -32,6 +33,7 @@ public final class SimCache {
 	/** Stands in for "bestRange returned null" (identity compare; DamageRange.unusable() makes a new object each call). */
 	private static final DamageRange NULL_MARK = DamageRange.unusable();
 
+	/** Empties both tables. Call where a battle starts. */
 	public static void clear() {
 		EDGE.clear();
 		RANGE.clear();

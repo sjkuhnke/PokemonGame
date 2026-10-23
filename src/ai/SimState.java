@@ -5,7 +5,10 @@ import java.util.Set;
 
 import pokemon.*;
 
-/** §6/§7.2. A start-of-turn (or start-of-next-turn) battle state, safe to mutate. */
+/**
+ * A start-of-turn (or start-of-next-turn) battle state that is safe to mutate: a cloned {@link Field} and a
+ * {@link SideState} for each side. The simulator ({@link BattleSimulator}) works only on these, never on the real battle.
+ */
 public class SimState {
 	public Field field;
 	public SideState ai;
@@ -20,9 +23,10 @@ public class SimState {
 	}
 
 	/**
-	 * One clone pass per decision (§7.2). self/foe must be the REAL, currently-active
-	 * Pokemon. Leaves every real object (teams, field, trainer.current) untouched — see
-	 * Phase2Tests.fingerprintReal / T3.
+	 * One clone pass per decision. {@code self} and {@code foe} must be the REAL, currently active Pokemon. Leaves every
+	 * real object (teams, field, trainer.current) untouched, which the invariance tests check by fingerprinting the real
+	 * state before and after a decision. Statuses that record an already-made decision this turn (SWAP, TEMP_SWITCHING)
+	 * are stripped from the clones, so the AI never sees the foe's chosen action.
 	 */
 	public static SimState snapshot(Pokemon self, Pokemon foe) {
 		Field fieldClone = Pokemon.field.clone();
@@ -32,11 +36,10 @@ public class SimState {
 	}
 
 	/**
-	 * Per-cell copy-on-write fork (§7.2). touchedAiSlots/touchedPlayerSlots are 0-based
-	 * team indices that this cell's action(s) name explicitly (e.g. a SWITCH target); the
-	 * active slot on each side is always included even if not listed. field is always
-	 * cloned (cheap; many moves/abilities mutate it). Untouched bench slots keep the SAME
-	 * Pokemon reference as `this` and must not be mutated by the caller.
+	 * Per-cell copy-on-write fork. {@code touchedAiSlots} / {@code touchedPlayerSlots} are 0-based team indices that this
+	 * cell's action(s) name explicitly (e.g. a SWITCH target); the active slot on each side is always included even if not
+	 * listed. The field is always cloned (cheap; many moves and abilities mutate it). Untouched bench slots keep the SAME
+	 * Pokemon reference as {@code this} and must not be mutated by the caller.
 	 */
 	public SimState fork(Set<Integer> touchedAiSlots, Set<Integer> touchedPlayerSlots) {
 		Field fieldClone = this.field.clone();
@@ -51,10 +54,10 @@ public class SimState {
 	}
 
 	/**
-	 * Cheap, deterministic hash over everything that matters for "is this state
-	 * meaningfully different" (mergeSimilar) and for T3 invariance checks when pointed at
-	 * real, non-shell state. Order-independent per side would be nicer, but team[] order
-	 * is stable within one battle, so a straight fold is fine.
+	 * Cheap, deterministic hash over everything that matters for "is this state meaningfully different": field, then each
+	 * side's active slot, field effects and every mon's HP, status, stages and Perish count. Used by the invariance tests
+	 * to prove a decision left real state untouched (it can be pointed at real, non-shell state). Team order is stable
+	 * within one battle, so a straight fold is fine.
 	 */
 	public long fingerprint() {
 		long h = 1125899906842597L; // arbitrary odd seed

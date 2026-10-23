@@ -16,7 +16,6 @@ import overworld.*;
 import util.*;
 import pokemon.*;
 import puzzle.Puzzle;
-import test.*;
 import ui.UI;
 
 public class PlayerCharacter extends Entity {
@@ -215,7 +214,7 @@ public class PlayerCharacter extends Entity {
 			String currentMap = currentMapName;
 			PMap.getLoc(gp.currentMap, (int) Math.round(worldX * 1.0 / gp.tileSize), (int) Math.round(worldY * 1.0 / gp.tileSize));
 			if (!currentMap.equals(currentMapName)) gp.ui.showAreaName();
-			Main.window.setTitle(Main.gameTitle + " - " + currentMapName);
+			PokemonXhenos.window.setTitle(PokemonXhenos.gameTitle + " - " + currentMapName);
 		} else {
 			resetSpriteNum();
 		}
@@ -314,15 +313,7 @@ public class PlayerCharacter extends Entity {
 		}
 		if (keyH.calcPressed) {
 			keyH.calcPressed = false;
-			//Item.useCalc(p.getCurrent(), null, null, true);
-			Phase0Tests.runAll();
-			Phase1Tests.runAll();
-			Phase3Tests.runAll();
-			Phase4Tests.runAll();
-			Phase5Tests.runAll();
-			Phase6Tests.runAll();
-			Phase7Tests.runAll();
-			Phase8Tests.runAll();
+			Item.useCalc(p.getCurrent(), null, null, true);
 		}
 		
 		checkHotkeys();

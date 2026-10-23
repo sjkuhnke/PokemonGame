@@ -4509,7 +4509,7 @@ public class Script {
 				Task.addTask(Task.DIALOGUE, npc, "No, you absolute dolt. Sure, my grandpa talked a big game about spellbooks and wands and what not, but the real magic is inside us all along.");
 				Task.addTask(Task.DIALOGUE, npc, "Like a well-worn suit of armor, we did not falter to the dangers of the world, but kept others safe from harm.");
 				Task.addTask(Task.DIALOGUE, npc, "And like the sharpest sword, we... well mostly me, will cut through anything that stands in my way...");
-				Task.addTask(Task.DIALOGUE, npc, "And now " + herLegend + " stands by my side, ready to continue the fight once more.");
+				if (!p.flag[8][9]) Task.addTask(Task.DIALOGUE, npc, "And now " + herLegend + " stands by my side, ready to continue the fight once more.");
 				Task.addTask(Task.SLEEP, "", 30);
 				Task.addTask(Task.DIALOGUE, npc, "So ready yourself, <@>... and test your mettle against Arthra, last of the Elite Four, blade of " + herAdjective + "!");
 				Task.addTask(Task.BATTLE, "", 538);

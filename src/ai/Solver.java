@@ -3,18 +3,17 @@ package ai;
 import java.util.Arrays;
 
 /**
- * §7.10. Regret matching for a zero-sum bimatrix game (player's payoff = -AI's payoff). No LP
- * dependency, cheap enough for matrices bounded at ~12x9 (§10 size budget). The smooth/"human"
- * quantal-response variant (temperature-weighted softmax instead of positive-part
- * normalization) is part of §7.11's player-model exploitation, which Phase 3 doesn't wire up
- * yet (predict() just returns the raw equilibrium y this phase) - so only the plain variant is
- * implemented here.
+ * Regret matching for a zero-sum matrix game (the player's payoff is the negative of the AI's). No LP dependency, and
+ * cheap enough for matrices of about 12 x 9. The result is the AVERAGE strategy over the iterations, which converges to an
+ * equilibrium but is only approximate: it can leave small probabilities on rows that are never better (see
+ * {@code AIV2.dominatedRows}), and {@code LeadSelection.gameValue} brackets the value instead of trusting it.
  */
 public final class Solver {
 	private static final int DEFAULT_ITERS = 500;
 
 	private Solver() {}
 
+	/** Row strategy {@code x} (the AI) and column strategy {@code y} (the player); each sums to 1. */
 	public static final class Result {
 		public final double[] x;
 		public final double[] y;
@@ -25,10 +24,12 @@ public final class Solver {
 		}
 	}
 
+	/** Solves with the default 500 iterations. */
 	public static Result solveZeroSum(double[][] M) {
 		return solveZeroSum(M, DEFAULT_ITERS);
 	}
 
+	/** {@code M[i][j]} is the AI's payoff for row i against column j. An empty matrix returns empty strategies. */
 	public static Result solveZeroSum(double[][] M, int iters) {
 		int n = M.length;
 		int m = n == 0 ? 0 : M[0].length;
@@ -71,6 +72,7 @@ public final class Solver {
 		return new Result(x, y);
 	}
 
+	/** Regret-matching strategy: the positive part of the regrets, normalized (uniform when none is positive). */
 	private static double[] positivePartNormalized(double[] R) {
 		int n = R.length;
 		double[] out = new double[n];

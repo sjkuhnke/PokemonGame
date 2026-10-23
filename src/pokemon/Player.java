@@ -1921,7 +1921,7 @@ public class Player extends Trainer implements Serializable {
 		ids.add(baseId);
 		ids.addAll(Pokemon.getFormIDs(baseId));
 		for (int id : ids) {
-			if (pokedex[id] == 2) result.add(new DexVariant(id, false));
+			if (pokedex[id] >= 1) result.add(new DexVariant(id, false));
 			if (shinyDex != null && shinyDex[id]) result.add(new DexVariant(id, true));
 		}
 		if (result.isEmpty()) result.add(new DexVariant(baseId, false));

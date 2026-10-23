@@ -1497,5 +1497,76 @@ Made running out of PP also remove your disabled status so you can be disabled o
 Added the toxic counter to the info screen in battles
 Fixed talking to Water/Lava with the HM move taught but not enough badges immediately closing the text box
 Fixed being able to move the cursor through the Pokemon's moves when a message is up in the Pokemon summary screen
-New sprite for Durfish-S and Dompster-S!
+New sprites for Durfish-S and Dompster-S!
 Fixed Neutralizing Gas not disabling Natural Cure and Regenerator
+Gave Metapod Tackle at lv 1 and Bug Bite at lv 18
+Added Student Hugh to Route 27 to showcase 3 Pokemon the player wouldn't see otherwise: Metapod, Gulpin, Gurdurr
+Made Zurrclu/Zurroaratr compatible with TM37 Rock Tomb (oops)
+Changed Light of Ruin to deal 1/2 recoil instead of 1/3 to match vanilla behavior
+New sprites for Posho, Shomp, and Poshorump!
+Changed screenshot key to F2 and added [Enter] as an unbindable key that exits text boxes (good for people that rebind their arrow keys, making them unable to arrow key out of the text box normally before this change)
+Tweaked Fluffy's description to make it more accurate to the in-game behavior
+Added sprites for Lilyray, Daray, and Spinaquata!
+Did some bug fixes to Terraforge to get it to work properly for when the terrain ends or is cleared
+Removed the 30% chance to flinch the foe for Summit Strike and buffed its accuracy to 100 (two effects doesn't work in the engine with secondary effect changes like Sparkly Terrain)
+Added a fix for Max Elixir being used even if the PP is already full on a Pokemon
+Made Red Card work for multi-hit moves removing the Pokemon on the first hit
+Made Berserk and Slipstream both work mid-turn on multi-hit moves (allowing Berserk to proc multiple times potentially and Slipstream potentially exiting on the first hit and ending the move early)
+Made King's Rock have the 10% chance on each hit of a multi-hit move
+Fixed Neutralizing Gas to wear off if the ability is nullified
+Fixed Leppa Berry
+Changed Nincada's encounter chance 11% -> 7%, and added 4% chance for Cluuz-S in Route 42
+Changed Snom's encounter chance 11% -> 6% and added a 5% chance for Busheep in Peaceful Park
+Gave Milimace Dragon Tail at lv 45 and moved Fell Stinger to lv 48
+Made Mortal Spin, Rapid Spin and Tornado Spin's clearing hazards, spun and leech seeded effects their primary effect (can't be blocked by Covert Cloak etc) but their other effects (Speed boost, Poison, Speed and Accuracy boosts, respectively) secondary effects that can be nullified
+Fixed the crit chance being addative for multi-hit moves with a boosted crit chance (Flash Darts, Scope Lens, Super Luck)
+Fixed Encore/Disable not properly wearing off if that move runs out of PP
+Added Heal Bell and gave to Leavanny at lv 1, Gardevoir at lv 1, Clefable at lv 1, Minishoo at lv 39, Glittleshoo at lv 25 and moved Tailwind to lv 15 and Trick to lv 10 to make room
+Changed Vandalize's move text to say that the user stole the target's ability
+Gave Leavanny Night Slash at lv 1
+Gave Arbok Switcheroo at lv 1
+ADDED CUSTOM NATURES AND PP UPS FOR ALL TRAINERS IN THE GAME!
+Fixed a bug where Shedinja and hatched eggs would have the cloned flag (therefore not allowing them to get xp)
+Made Close Combat a punching move since Headlong Rush is
+Changed Black Belt Antonio's Conkeldurr's Drain Punch to Close Combat
+Fixed Star Shop UI being able to close the menu instead of the dialogue box if there is one
+Redid drawing engine to work on Macs
+Buffed Anticipation by making it proc when a new opponent switches in too
+Buffed Rest by making it work when asleep (called by Sleep Talk) instead of failing
+Made Rest still work if your side is affected by Safeguard
+Fixed Battle Betting turn counter being updated properly
+Gave Magikarp Aqua Jet at lv 35 and Gyarados Aqua Jet at lv 62
+Gave Magikarp-E Dragon Ascent at lv 51 and Aqua Jet at lv 55, gave Gyarados-E Aqua Jet at lv 65, Bolt Strike at lv 70, Wave Crash at lv 75, and Dragon Ascent at lv 80
+Made both Gyarados and Gyarados-E compatible with TM78 Swords Dance
+Changed a bunch of trainers to have these new move changes
+Gave Twigzap line a signature ability Smoke Session which lowers evasion by 1 on switch-in and every time a Pokemon makes contact with them
+Gave Thunderzap Zap Cannon at lv 70
+Changed Athlete Melvyn and Ace Trainer Tara's Thunderzaps to have Smoke Session and gave them a better move each
+Fixed Future Sight and Wish correctly calculating how much damage/healing
+Made checking for an evolution a bit more efficient by only checking Pokemon that can evolve
+Made the slower Pokemon not be able to have their switch in effects upon starting a battle if they were forced out by the faster Pokemon on turn 0 (eject pack)
+Gave Cervora Ice Beam at lv 58
+Gave Ninjask Sticky Web at lv 55
+Made Psycorboratr compatible with TM27 Drain Punch
+Added an NPC in Mt. St. Joseph 2A that warns the player of the slow fall pit for Earth Power TM (quad battle)
+Made Fatal Bind not announce that the target will perish in 3 turns if the perish counter is already applied (text is wrong, it doesn't reset the counter)
+Added an empty code block for metronome's status effect since it becomes another move earlier in the code
+Fixed a bug with cloned fields and Trace applying the traced ability field effect (like Drought setting sun) on the actual battle field
+Added the count of the items given to the trainer documentation
+Added an NPC that lets the player set their friendship value costing 1 Euphorian Gem (in the range [0, current + 100])
+Fixed multiple switches happening at the end of a turn (due to a chain of Eject Packs or something)
+Gave Rockmite/Stellarock Stealth Rock at lv 36 and moved Rock Slide to lv 33
+Gave Stellarock Aurora Glow at lv 70 (in place of where Stealth Rock was) and swapped Shooting Stars and Cosmic Power
+Gave Dompster-S Switcheroo at lv 1
+Removed Aurora Glow from Swalot-X and moved Star Storm lv 53 -> 52 to compensate (needed a nerf badly)
+Added Bulletproof and gave it to Ceramber/Topazatops, and made Bulletproof block all "projectile" moves which is a combo of ball/bomb and pulse moves
+Changed the current "Contrary" effect (was inverts stats on the whole field) to its vanilla effect (inverts stats on the user)
+Gave Rhypolar Contrary as its hidden ability
+Gave Inkay/Malamar Brainwash as their only regular ability with the old Contrary effect (inverts stats on the whole field)
+Made Flameruff/Barkflare compatible with TM14 Taunt
+New sprites for Ali and Batorali!
+Changed buy prices of PP Up/PP Max $2500 -> $2000 and $5000 -> $4000, respectively
+Made Magic Tomb not make contact (not sure why it ever did)
+Added the Healing, Crushing and Projectile categories to the move summary
+Made the Ingrain status condition ground the user to match vanilla behavior
+Gave Hoghoncho Heavy Slam at lv 78

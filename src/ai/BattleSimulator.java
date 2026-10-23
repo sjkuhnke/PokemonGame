@@ -10,25 +10,43 @@ import pokemon.*;
 import util.Perf;
 
 /**
- * §7.5-7.7. Turn simulation on top of SimState. Phase 4 adds: secondary-effect branching for status/flinch
- * (§7.5, {@link SecondaryKinds}), a Metronome expected-value fan-out (§9), and copy-on-write ownership of any bench
- * mon a switch brings in ({@link Trainer#ownSlot}), which fixes a Phase 2 aliasing bug (see PHASE4_CHANGES.md).
+ * Turn simulation on top of {@link SimState}: plays one turn of "AI action vs player action" with the real
+ * {@code move()} / {@code swapIn()} / {@code endOfTurn()} code inside a {@link SimContext} scope (no tasks, no
+ * recorders, policy-driven rolls), and returns the possible outcomes as weighted {@link Branch}es.
+ * <p>
+ * A turn runs in four steps: pre-move switches (speed-ordered), the moves (priority then speed), end of turn, and
+ * forced replacements for fainted actives. Randomness is turned into a small number of branches:
+ * <ul>
+ * <li><b>Accuracy and KO</b> are split when their probability is meaningfully between 0 and 1 (5%-95%); otherwise the
+ * likely outcome is played. A KO split plays the lethal roll against the survivable one.</li>
+ * <li><b>Secondary effects</b> that cause a status or a flinch ({@link SecondaryKinds}) are split when their chance is in
+ * [10%, 90%]; other secondaries use the majority outcome (they proc at 50% or more).</li>
+ * <li><b>Forced random switches</b> (Whirlwind, Roar, Dragon Tail, Circle Throw, Red Card) fan out into one branch per
+ * possible switch-in, since the real code picks the target inside {@code move()}.</li>
+ * <li><b>Metronome</b> is averaged over a small fixed sample of moves, the same sample in every cell so rows stay comparable.</li>
+ * </ul>
+ * The branch count is capped at {@link AIConfig#branchBudget}: the least likely branches are merged into one.
+ * <p>
+ * Copy-on-write rule: a bench mon that a switch (or a random-target move) can bring in is cloned first
+ * ({@link Trainer#ownSlot}), so a mon object is never mutated while shared with another branch, cell or the root.
  */
 public class BattleSimulator {
 
 	private static final double ACC_LOW = 0.05, ACC_HIGH = 0.95;
-	/** §7.5 Phase 4: split a status/flinch secondary only when its chance is in [0.1, 0.9]; outside that MAJORITY is close enough. */
+	/** Split a status/flinch secondary only when its chance is in [0.1, 0.9]; outside that the majority outcome is close enough. */
 	private static final double SEC_LOW = 0.10, SEC_HIGH = 0.90;
-	/** §9 Metronome: number of evenly spaced moves from Move.getAllMoves() a Metronome cell is averaged over. */
+	/** Metronome: number of evenly spaced moves from Move.getAllMoves() a Metronome cell is averaged over. */
 	private static final int METRONOME_SAMPLES = 4;
 	private static List<Move> metronomeSample;
-	/** Status moves (no damage) whose own effect is an unconditional random switch of the
-	 *  DEFENDER's side, resolved in statusEffect(): Pokemon.java ~7281. */
+	/** Status moves (no damage) whose own effect is an unconditional random switch of the DEFENDER's side (resolved in the move's status effect). */
 	private static final Set<Move> STATUS_RANDOM_SWITCH_MOVES = new HashSet<>(Arrays.asList(Move.WHIRLWIND, Move.ROAR));
-	/** Damaging moves whose secondary effect (Pokemon.java ~5182, via secondaryEffect()) is a
-	 *  random switch of the DEFENDER's side after a successful hit. */
+	/** Damaging moves whose secondary effect is a random switch of the DEFENDER's side after a successful hit. */
 	private static final Set<Move> DAMAGE_RANDOM_SWITCH_MOVES = new HashSet<>(Arrays.asList(Move.DRAGON_TAIL, Move.CIRCLE_THROW));
 
+	/**
+	 * Plays one turn from {@code root} (which is not modified) and returns the weighted outcomes, probabilities summing to 1.
+	 * At most {@code cfg.branchBudget} branches are returned.
+	 */
 	public static List<Branch> simulateTurn(SimState root, Action aAct, Action pAct, AIConfig cfg) {
 		Field prevField = Pokemon.field;
 		long t0 = Perf.start();
@@ -57,13 +75,13 @@ public class BattleSimulator {
 			Pokemon.field = prevField;
 		}
 	}
-	
+
 	/**
-	 * Phase 7 (§7.15): the start-of-turn-1 state for one lead pair. Forks {@code start}, makes the two slots current and
-	 * mirrors BattleUI.setStartingTasks: Neutralizing Gas first, then swapIn faster-first with hazards=true on a field with
-	 * none. NO end of turn: the real battle runs none before turn 1 either, so the first endOfTurn happens inside the
-	 * lead refinement's own simulateTurn. {@code applyEntryEffects=false} returns the same pair with nothing applied
-	 * (the baseline T25 compares against). Does not touch {@code start}.
+	 * The start-of-turn-1 state for one lead pair (EXTREME lead selection). Forks {@code start}, makes the two slots
+	 * current and mirrors the real battle start: Neutralizing Gas first, then swapIn faster-first with hazards on a field
+	 * with none. NO end of turn: the real battle runs none before turn 1 either, so the first end of turn happens inside the
+	 * lead refinement's own {@link #simulateTurn}. {@code applyEntryEffects == false} returns the same pair with nothing
+	 * applied (the baseline the entry-effect test compares against). Does not touch {@code start}.
 	 */
 	public static SimState simulateEntry(SimState start, int aiSlot, int playerSlot, boolean applyEntryEffects) {
 		Field prevField = Pokemon.field;
@@ -83,7 +101,7 @@ public class BattleSimulator {
 			Pokemon slower = faster == pl ? ai : pl;
 			faster.swapIn(slower, true, s.field);
 			slower.swapIn(faster, true, s.field);
-			// Eject Pack-style entry switches are not simulated (flagged, PHASE7_CHANGES.md D5).
+			// Entry switches (Eject Pack and the like) are not simulated: the request is dropped.
 			if (ai.hasStatus(Status.SWITCHING)) ai.removeStatus(Status.SWITCHING);
 			if (pl.hasStatus(Status.SWITCHING)) pl.removeStatus(Status.SWITCHING);
 			return s;
@@ -130,7 +148,7 @@ public class BattleSimulator {
 	}
 
 	private static void performSwitch(SideState side, int slot0Based, Pokemon foe) {
-		side.shell.ownSlot(slot0Based); // Phase 4: never switch in a Pokemon object shared with another branch/cell/root
+		side.shell.ownSlot(slot0Based); // never switch in a Pokemon object shared with another branch, cell or the root
 		side.shell.swapOut2(foe, slot0Based + 1, false, false);
 	}
 
@@ -197,11 +215,12 @@ public class BattleSimulator {
 	}
 
 	/**
-	 * §7.5: branch on accuracy (hit/miss) and, for damaging moves, KO-roll. Covers three shapes:
-	 * unusable/immune (nothing happens); usable-no-damage, e.g. Whirlwind/Roar (branch on
-	 * accuracy only); damaging (branch on accuracy and KO). Every resulting branch is tagged
-	 * likelyHit so runMoveAndFollowUps knows whether Red Card / the random-switch moves are even
-	 * in play, and carries the SimPolicy that reproduces its outcome when moveInit actually runs.
+	 * Branches on accuracy (hit/miss) and, for damaging moves, the KO roll. Covers three shapes: unusable or immune
+	 * (nothing happens); usable with no damage, e.g. Whirlwind/Roar (branch on accuracy only); damaging (branch on
+	 * accuracy and KO). The first branch of every split reuses {@code br} itself (its state is not touched until the move
+	 * runs), which halves the number of forks. Every resulting branch is tagged {@code likelyHit}, so
+	 * {@link #runMoveAndFollowUps} knows whether Red Card / the random-switch moves are even in play, and carries the
+	 * {@link SimPolicy} that reproduces its outcome when the move actually runs.
 	 */
 	private static List<Branch> expandDamageBranches(Branch br, Side mover, Move move, boolean first) {
 		SideState moverSide = mover == Side.AI ? br.state.ai : br.state.player;
@@ -284,10 +303,11 @@ public class BattleSimulator {
 	}
 
 	/**
-	 * §7.5 Phase 4: splits each connecting branch of a damaging move into "secondary procs" / "secondary doesn't",
-	 * weighted by the effective chance, when the effect is a status or flinch ({@link SecondaryKinds}) and the chance is
-	 * in [SEC_LOW, SEC_HIGH]. Not split: KO branches (the target is gone, so the effect is moot), a target that is
-	 * KO'd with near certainty anyway, reflected damage, flinch when the mover goes second, and status moves.
+	 * Splits each connecting branch of a damaging move into "secondary procs" / "secondary doesn't", weighted by the
+	 * effective chance, when the effect is a status or flinch ({@link SecondaryKinds}) and the chance is in
+	 * [SEC_LOW, SEC_HIGH]. Not split: KO branches (the target is gone, so the effect is moot), a target that is KO'd with
+	 * near certainty anyway, reflected damage, flinch when the mover goes second, and status moves. The "no proc" branch
+	 * reuses its parent.
 	 */
 	private static List<Branch> splitSecondary(List<Branch> in, Pokemon attacker, Pokemon defender, Move move, boolean first,
 			Field field, double ko, DamageRange range) {
@@ -315,6 +335,7 @@ public class BattleSimulator {
 		return out;
 	}
 
+	/** A new branch with probability {@code prob} on a full fork of this branch's state. */
 	private static Branch rebranch(Branch br, double prob) {
 		Branch b = new Branch(prob, br.state.fork());
 		return b;
@@ -326,16 +347,13 @@ public class BattleSimulator {
 	}
 
 	/**
-	 * §7.7: random-target forced switches. Both the status-move family (Whirlwind/Roar) and the
-	 * damaging-move family (Dragon Tail/Circle Throw) swap the DEFENDER's side; Red Card swaps
-	 * the ATTACKER's side (foe.getItem==RED_CARD, checked per Pokemon.java's hit loop — no
-	 * isFainted() guard there, so it fans out on the KO branch too, matching the real code).
-	 * All three call Trainer.swapRandom synchronously inside move()/its effect methods, so
-	 * fan-out has to happen before moveInit, one full run per candidate.
-	 *
-	 * Known simplification: Red Card eligibility here omits the `!sheer` guard (Sheer Force
-	 * happening to suppress Red Card alongside secondary effects on the same hit) — see
-	 * PHASE2_CHANGES.md.
+	 * Random-target forced switches. Both the status-move family (Whirlwind/Roar) and the damaging-move family (Dragon
+	 * Tail/Circle Throw) swap the DEFENDER's side; Red Card swaps the ATTACKER's side (it triggers on any hit, including
+	 * the KO branch, matching the real code). All three call {@code Trainer.swapRandom} synchronously inside the move, so
+	 * the fan-out has to happen before the move runs, one full run per candidate.
+	 * <p>
+	 * Known simplification: Red Card eligibility here omits the Sheer Force guard (Sheer Force suppressing Red Card
+	 * alongside secondary effects on the same hit).
 	 */
 	private static List<Branch> runMoveAndFollowUps(Branch br, Side mover, Action act, boolean first) {
 		enterField(br.state);
@@ -360,7 +378,7 @@ public class BattleSimulator {
 		return runOneMoveInit(br, mover, act, first, null);
 	}
 
-	/** §9: a Metronome cell is the average over a small fixed sample of moves (same sample every cell, so rows stay comparable). */
+	/** A Metronome cell is the average over a small fixed sample of moves (the same sample every cell, so rows stay comparable). */
 	private static List<Branch> fanOutMetronome(Branch br, Side mover, Action act, boolean first) {
 		List<Move> sample = metronomeSample();
 		List<Branch> out = new ArrayList<>();
@@ -409,6 +427,11 @@ public class BattleSimulator {
 		return runOneMoveInit(br, mover, act, first, forcedSwitchTarget, null);
 	}
 
+	/**
+	 * Runs the real {@code moveInit} on the branch's state under its policy, then resolves a pivot's planned switch and a
+	 * forced switch of the defender. {@code forcedSwitchTarget} / {@code forcedMetronome} pre-select the random outcome for
+	 * one fan-out branch; both are cleared afterwards so they can never leak into a later cell.
+	 */
 	private static List<Branch> runOneMoveInit(Branch br, Side mover, Action act, boolean first, Integer forcedSwitchTarget,
 			Move forcedMetronome) {
 		enterField(br.state);
@@ -417,7 +440,7 @@ public class BattleSimulator {
 		Pokemon attacker = moverSide.active();
 		Pokemon defender = otherSide.active();
 
-		// Phase 4 copy-on-write: whichever bench mons a random-target switch / Red Card can bring in must be this shell's own.
+		// Copy-on-write: whichever bench mons a random-target switch / Red Card can bring in must be this shell's own.
 		if (STATUS_RANDOM_SWITCH_MOVES.contains(act.move) || DAMAGE_RANDOM_SWITCH_MOVES.contains(act.move)) ownAllBench(otherSide.shell);
 		if (defender.getItem(Pokemon.field) == Item.RED_CARD) ownAllBench(moverSide.shell);
 		// Team-wide moves mutate every member (Heal Bell / Aromatherapy cure the whole bench).
@@ -432,7 +455,7 @@ public class BattleSimulator {
 			if (forcedSwitchTarget != null) SimContext.forceNextSwitch(forcedSwitchTarget);
 			if (forcedMetronome != null) SimContext.forceNextMetronome(forcedMetronome);
 			attacker.moveInit(defender, act.move, first);
-			SimContext.consumeForcedSwitch();
+			SimContext.consumeForcedSwitch(); // a forced pick the move never consumed (miss, no Red Card trigger) must not leak into a later swap
 			SimContext.forceNextMetronome(null); // never leak a forced Metronome into a later cell
 		}
 
@@ -440,6 +463,8 @@ public class BattleSimulator {
 			int target = attacker.getStatusNum(Status.SWITCHING);
 			attacker.removeStatus(Status.SWITCHING);
 			if (target > 0) {
+				// Mirrors the real battle: when the AI pivots second, the replacement is chosen for the new board (the planned
+				// slot is ignored); when it pivots first, the planned slot is used.
 				int slot = (mover == Side.AI && !first) ? ReplacementChooser.pickSlot(moverSide.shell, defender, br.state.field) : target - 1;
 				if (slot >= 0) performSwitch(moverSide, slot, defender);
 			}
@@ -447,7 +472,7 @@ public class BattleSimulator {
 
 		if (defender.hasStatus(Status.SWITCHING) && !defender.isFainted()) {
 			defender.removeStatus(Status.SWITCHING);
-			int slot = ReplacementChooser.pickSlot(otherSide.shell, attacker, br.state.field); // Phase 5: same chooser as the real battle
+			int slot = ReplacementChooser.pickSlot(otherSide.shell, attacker, br.state.field); // same chooser as the real battle
 			if (slot >= 0) performSwitch(otherSide, slot, attacker);
 		}
 
@@ -496,7 +521,7 @@ public class BattleSimulator {
 		resolveReplacementsForSide(s.player, s.ai.active(), s.field);
 	}
 
-	/** Phase 5 (§7.14.3): the forced replacement is {@link ReplacementChooser#pickSlot}, the SAME function Trainer.getNext2 uses in the real battle (T22). */
+	/** The forced replacement is {@link ReplacementChooser#pickSlot}, the SAME function {@code Trainer.getNext2} uses in the real battle. */
 	private static void resolveReplacementsForSide(SideState side, Pokemon foe, Field field) {
 		if (!side.active().isFainted()) return;
 		if (!side.shell.hasValidMembers(foe)) return;
@@ -506,6 +531,7 @@ public class BattleSimulator {
 
 	// ---- Merge ----
 
+	/** Caps the branch list at {@code budget}: the most likely branches are kept and all the rest are folded into one (the last kept branch carries their combined probability). */
 	private static List<Branch> mergeSimilar(List<Branch> branches, int budget) {
 		if (branches.size() <= budget) return branches;
 		branches.sort((a, b) -> Double.compare(b.prob, a.prob));

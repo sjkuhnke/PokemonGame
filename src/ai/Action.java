@@ -3,23 +3,22 @@ package ai;
 import pokemon.Move;
 
 /**
- * §6. One action: a plain move, a plain switch, or a pivot move followed by a switch.
- * Immutable. slot is always a 0-based team index (not the game's 1-based/negative
- * MoveDecision encoding - that conversion happens where an Action is turned into a
- * MoveDecision, in AIV2.toMoveDecision).
- *
- * Phase 3 addition: PASS, a kind=MOVE action with a null move. This already "does nothing"
- * under BattleSimulator's existing logic (aMove ends up null -> aCanAct=false -> no switch, no
- * move touched), so no BattleSimulator/ActionKind change was needed to support it. Used only
- * internally by ActionGen.deadTurn's what-if probes ("AI: PASS, player: PASS" / "AI: MOVE m,
- * player: PASS", §7.13.1) - never added to a real genAIActions/genPlayerActions row set.
+ * One action of one side: a plain move, a plain switch, or a pivot move followed by a switch. These are the rows (AI)
+ * and columns (player) of the payoff matrix. Immutable.
+ * <p>
+ * {@code slot} is always a 0-based team index, not the game's 1-based/negative {@code MoveDecision} encoding; that
+ * conversion happens where an Action becomes a MoveDecision ({@code AIV2.toMoveDecision}).
+ * <p>
+ * {@link #PASS} is a MOVE action with a null move. The simulator treats it as "this side does nothing", so it is the
+ * probe {@code ActionGen.deadTurn} uses ("AI passes, player passes" against "AI moves, player passes"). It is never part
+ * of a real row or column set.
  */
 public class Action {
 	public final ActionKind kind;
 	public final Move move;	// MOVE, MOVE_THEN_SWITCH
 	public final int slot;		// SWITCH, MOVE_THEN_SWITCH; -1 otherwise
 
-	/** Phase 3: "nothing happens but end-of-turn effects" probe action - see class doc. */
+	/** "Nothing happens but end-of-turn effects": a MOVE with no move. See the class doc. */
 	public static final Action PASS = new Action((Move) null);
 
 	public Action(Move move) {
@@ -40,6 +39,7 @@ public class Action {
 		this.slot = slot;
 	}
 
+	/** Short text for logs and the debug matrix, e.g. "Flamethrower", "Switch->2", "U-turn->Switch->1". */
 	public String label() {
 		switch (kind) {
 			case MOVE: return move == null ? "Pass" : move.toString();

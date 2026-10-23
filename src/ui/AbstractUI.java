@@ -9,9 +9,11 @@ import java.awt.FontMetrics;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RadialGradientPaint;
 import java.awt.RenderingHints;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Path2D;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -20,6 +22,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 
@@ -116,6 +119,63 @@ public abstract class AbstractUI {
 	// IMAGE CACHES
 	public static BufferedImage[] silhouettes;
 	public static Image[] faintedSprites;
+	
+	// POKEDEX REGISTRATION STATE
+	private Task dexRegTask;
+	private Pokemon dexRegDisplay;
+	private BufferedImage dexRegSilhouette;
+	private int dexRegFrame; // frames since the screen began opening
+	private int dexRegCloseFrame = -1; // -1 = not closing
+
+	private static final int DEX_REG_OPEN_FRAMES = 24;
+	private static final int DEX_REG_CLOSE_FRAMES = 14;
+	private static final int DEX_REG_REVEAL_DELAY = 30; // frames the silhouette is held after opening
+	private static final int DEX_REG_REVEAL_FRAMES = 30; // frames to fade silhouette -> sprite
+	
+	// EVOLUTION ANIMATION STATE
+	private Task evoTask; // task the cached data below belongs to
+	private Image evoOldSprite;
+	private Image evoNewSprite;
+	private BufferedImage evoOldWhite; // white silhouettes used for the morph
+	private BufferedImage evoNewWhite;
+	private String evoOldName = "";
+	private String evoNewName = "";
+	private PType evoNewType1;
+	private PType evoNewType2;
+	private int evoPhase;
+	private int evoFrame; // frames spent in the current phase
+	private boolean evoCancelled;
+	private boolean evoShowNew;  // which silhouette the morph flicker is showing
+	private int evoToggleTimer;
+	private final ArrayList<EvoParticle> evoParticles = new ArrayList<>();
+	private final Random evoRandom = new Random();
+
+	private static final int EVO_PHASE_FADE_IN = 0; // screen fades to black (no cancel yet)
+	private static final int EVO_PHASE_INTRO = 1; // "What? X is evolving!" (S cancels)
+	private static final int EVO_PHASE_MORPH = 2; // glow + silhouette flicker (S cancels)
+	private static final int EVO_PHASE_FLASH = 3; // point of no return, screen whites out
+	private static final int EVO_PHASE_REVEAL = 4; // new form, sparkles, name + types
+	private static final int EVO_PHASE_FADE_OUT = 5; // back to the game
+	private static final int EVO_PHASE_CANCEL = 6; // cancelled: hold on the old form + message at full opacity
+
+	// Timings in frames
+	private static final int EVO_FADE_IN_FRAMES = 30;
+	private static final int EVO_INTRO_FRAMES = 90;
+	private static final int EVO_MORPH_FRAMES = 210;
+	private static final int EVO_FLASH_FRAMES = 20;
+	private static final int EVO_REVEAL_FRAMES = 130;
+	private static final int EVO_FADE_OUT_FRAMES = 30;
+	private static final int EVO_CANCEL_FRAMES = 90; // how long the cancel message is held (W/S skips after 30)
+	
+	// PAYOUT ANIMATION
+	private final ArrayList<PayoutParticle> payoutParticles = new ArrayList<>();
+	protected int payoutAmount; // > 0 pays out, < 0 is a loss shown for information only, 0 = push
+	protected int displayedPayout;
+	protected int payoutCounter;
+	protected boolean payoutComplete;
+	private String payoutLabel = "";
+	private String payoutSubtext;
+	private boolean payoutGauntlet;
 
 	public abstract void showMessage(String message);
 
@@ -2722,28 +2782,6 @@ public abstract class AbstractUI {
 		
 		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
 	}
-	
-	
-	// =====================================================================
-	// Paste into AbstractUI.java (inside the class body)
-	//
-	// Extra imports needed in AbstractUI.java:
-	//   import java.awt.Composite;
-	//   import java.awt.event.KeyEvent;
-	//   import pokemon.Nursery.EggGroup;
-	// =====================================================================
-
-	// POKEDEX REGISTRATION STATE
-	private Task dexRegTask;                 // task the cached data below belongs to
-	private Pokemon dexRegDisplay;           // lv 5 copy used for base stats / abilities (same setup as the Pokedex screen)
-	private BufferedImage dexRegSilhouette;
-	private int dexRegFrame;                 // frames since the screen began opening
-	private int dexRegCloseFrame = -1;       // -1 = not closing
-
-	private static final int DEX_REG_OPEN_FRAMES = 24;
-	private static final int DEX_REG_CLOSE_FRAMES = 14;
-	private static final int DEX_REG_REVEAL_DELAY = 30;   // frames the silhouette is held after opening
-	private static final int DEX_REG_REVEAL_FRAMES = 30;  // frames to fade silhouette -> sprite
 
 	/**
 	 * Draws the "new Pokedex entry" card for currentTask.p.
@@ -2930,10 +2968,14 @@ public abstract class AbstractUI {
 		}
 		g2.setColor(Color.WHITE);
 		g2.drawString(name, rx, heroTop + (int) (gp.tileSize * 1.25));
+		
+		g2.setFont(g2.getFont().deriveFont(Font.ITALIC, 18F));
+		g2.setColor(new Color(180, 180, 180));
+		g2.drawString(getDexSpeciesText(caught.id), rx, heroTop + (int) (gp.tileSize * 1.65));
 
 		// Types
-		int typeH = (int) (gp.tileSize * 0.75);
-		int typeY = heroTop + (int) (gp.tileSize * 1.5);
+		int typeH = (int) (gp.tileSize * 0.65);
+		int typeY = heroTop + (int) (gp.tileSize * 1.8);
 		int typeX = rx;
 		typeX += drawDexRegTypeIcon(d.type1.getImage2(), typeX, typeY, typeH) + 12;
 		if (d.type2 != null) drawDexRegTypeIcon(d.type2.getImage2(), typeX, typeY, typeH);
@@ -2941,14 +2983,14 @@ public abstract class AbstractUI {
 		// Ability chips (names only, hidden ability in gold)
 		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 18F));
 		g2.setColor(new Color(200, 200, 200));
-		g2.drawString("Abilities", rx, heroTop + (int) (gp.tileSize * 2.75));
+		g2.drawString("Abilities", rx, heroTop + (int) (gp.tileSize * 2.85));
 
 		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 15F));
 		FontMetrics fm = g2.getFontMetrics();
 		int chipH = (int) (gp.tileSize * 0.5);
 		int chipGap = 8;
 		int chipX = rx;
-		int chipY = heroTop + (int) (gp.tileSize * 2.9);
+		int chipY = heroTop + (int) (gp.tileSize * 3.0);
 		int abilityCount = Pokemon.getUniqueAbilityCount(d.id);
 		for (int i = 0; i < abilityCount; i++) {
 			int slot = Pokemon.getUniqueAbilitySlot(d.id, i);
@@ -2967,8 +3009,8 @@ public abstract class AbstractUI {
 		}
 
 		// ---- Description band ----
-		int descY = (int) (gp.tileSize * 5.7);
-		int descH = (int) (gp.tileSize * 1.35);
+		int descY = (int) (gp.tileSize * 5.85);
+		int descH = (int) (gp.tileSize * 1.3);
 		g2.setColor(new Color(0, 0, 0, 120));
 		g2.fillRoundRect(ix, descY, iw, descH, 16, 16);
 		String entry = Pokemon.getDexEntry(caught.id);
@@ -3072,6 +3114,11 @@ public abstract class AbstractUI {
 			ey += evoLineH;
 		}
 	}
+	
+	/** Species line shown under a Pokemon's name, e.g. "The Mouse Pokemon". Same wording as the Pokedex screen. */
+	protected String getDexSpeciesText(int id) {
+		return "The " + Pokemon.getCategory(id) + " Pokemon";
+	}
 
 	/** Draws a type icon scaled to the given height; returns the drawn width. */
 	private int drawDexRegTypeIcon(Image img, int x, int y, int h) {
@@ -3102,50 +3149,6 @@ public abstract class AbstractUI {
 		}
 		return lines;
 	}
-	
-	// =====================================================================
-	// REPLACES the old AbstractUI.drawEvolution(Task t) (the Yes/No prompt).
-	// Paste this block into AbstractUI.java and delete the old method.
-	//
-	// Needs the same extra imports as the Pokedex screen:
-	//   import java.awt.Composite;
-	//   import java.awt.event.KeyEvent;
-	// =====================================================================
-
-	// EVOLUTION CUTSCENE STATE
-	private Task evoTask;                       // task the cached data below belongs to
-	private Image evoOldSprite;
-	private Image evoNewSprite;
-	private BufferedImage evoOldWhite;          // white silhouettes used for the morph
-	private BufferedImage evoNewWhite;
-	private String evoOldName = "";
-	private String evoNewName = "";
-	private PType evoNewType1;
-	private PType evoNewType2;
-	private int evoPhase;
-	private int evoFrame;                       // frames spent in the current phase
-	private boolean evoCancelled;
-	private boolean evoShowNew;                 // which silhouette the morph flicker is showing
-	private int evoToggleTimer;
-	private final ArrayList<EvoParticle> evoParticles = new ArrayList<>();
-	private final java.util.Random evoRandom = new java.util.Random();
-
-	private static final int EVO_PHASE_FADE_IN = 0;   // screen fades to black (no cancel yet)
-	private static final int EVO_PHASE_INTRO = 1;     // "What? X is evolving!" (S cancels)
-	private static final int EVO_PHASE_MORPH = 2;     // glow + silhouette flicker (S cancels)
-	private static final int EVO_PHASE_FLASH = 3;     // point of no return, screen whites out
-	private static final int EVO_PHASE_REVEAL = 4;    // new form, sparkles, name + types
-	private static final int EVO_PHASE_FADE_OUT = 5;  // back to the game
-	private static final int EVO_PHASE_CANCEL = 6;    // cancelled: hold on the old form + message at full opacity
-
-	// Timings in frames (assumes ~60 fps)
-	private static final int EVO_FADE_IN_FRAMES = 30;
-	private static final int EVO_INTRO_FRAMES = 90;
-	private static final int EVO_MORPH_FRAMES = 210;
-	private static final int EVO_FLASH_FRAMES = 20;
-	private static final int EVO_REVEAL_FRAMES = 130;
-	private static final int EVO_FADE_OUT_FRAMES = 30;
-	private static final int EVO_CANCEL_FRAMES = 90;   // how long the cancel message is held (W/S skips after 30)
 
 	private static class EvoParticle {
 		float x, y, vx, vy, size;
@@ -3524,8 +3527,8 @@ public abstract class AbstractUI {
 		if (intensity <= 0) return;
 		float r = (float) (gp.tileSize * (2.5 + 3.5 * Math.min(1.0, intensity)));
 		int a = (int) (Math.min(1.0, intensity) * 190);
-		java.awt.RadialGradientPaint paint = new java.awt.RadialGradientPaint(
-				new java.awt.geom.Point2D.Float(cx, cy), r, new float[] {0f, 1f},
+		RadialGradientPaint paint = new RadialGradientPaint(
+				new Point2D.Float(cx, cy), r, new float[] {0f, 1f},
 				new Color[] {new Color(220, 235, 255, a), new Color(220, 235, 255, 0)});
 		g2.setPaint(paint);
 		g2.fillOval(cx - (int) r, cy - (int) r, (int) r * 2, (int) r * 2);
@@ -3570,16 +3573,6 @@ public abstract class AbstractUI {
 		if (w0 <= 0 || h0 <= 0) return 0;
 		return (int) (w0 * (h / (double) h0));
 	}
-	
-	// ===== Shared payout animation (BlackjackUI, SimBattleUI) =====
-	private final ArrayList<PayoutParticle> payoutParticles = new ArrayList<>();
-	protected int payoutAmount;        // > 0 pays out, < 0 is a loss shown for information only, 0 = push
-	protected int displayedPayout;
-	protected int payoutCounter;
-	protected boolean payoutComplete;
-	private String payoutLabel = "";
-	private String payoutSubtext;
-	private boolean payoutGauntlet;
 
 	protected void startPayoutAnimation(int amount, String label, String subtext, boolean gauntlet) {
 		payoutAmount = amount;

@@ -7,15 +7,15 @@ import pokemon.Field.Effect;
 import pokemon.*;
 
 /**
- * §7.5 / §9 (Phase 4): which secondary effects are worth BRANCHING on (status or flinch), and the effective
- * proc chance the simulator should branch with. Everything else with a secondary effect keeps SimPolicy's
- * MAJORITY behavior (procs at >= 50%), which is the "expected value" stand-in the spec allows for stat drops and
- * the like: those move {@code matchupScore} by a stage or two, not a status/turn.
+ * Which secondary effects are worth BRANCHING on (status or flinch), and the effective proc chance the simulator should
+ * branch with. Everything else with a secondary effect keeps {@code SimPolicy}'s MAJORITY behavior (procs at 50% or more),
+ * which is the "expected value" stand-in for stat drops and the like: those move {@code matchupScore} by a stage or two,
+ * not a status or a turn.
  * <p>
  * The two sets below are GENERATED from {@code Pokemon.secondaryEffect}: a case group goes in STATUS if its body
  * calls {@code foe.paralyze/burn/freeze/poison/toxic/sleep/confuse}, and in FLINCH_ONLY if the only such call is
  * {@code foe.flinch()}. If you add a move with a status/flinch secondary, add it here, or re-run
- * tools/gen_secondary_kinds.py (see PHASE4_CHANGES.md), which regenerates both sets from Pokemon.java.
+ * {@code tools/gen_secondary_kinds.py}, which regenerates both sets from Pokemon.java.
  */
 public final class SecondaryKinds {
 	private SecondaryKinds() {}
@@ -42,10 +42,12 @@ public final class SecondaryKinds {
 			Move.STOMP, Move.TWISTER, Move.UNSEEN_STRANGLE, Move.WATERFALL, Move.WATER_SMACK, Move.ZEN_HEADBUTT,
 			Move.ZING_ZAP);
 
+	/** True if the move's secondary effect is a status or a flinch (the kinds the simulator splits on). */
 	public static boolean isStatusOrFlinch(Move m) {
 		return STATUS.contains(m) || FLINCH_ONLY.contains(m);
 	}
 
+	/** True if the only such effect is a flinch (which only matters when the mover acts first). */
 	static boolean isFlinchOnly(Move m) {
 		return FLINCH_ONLY.contains(m);
 	}

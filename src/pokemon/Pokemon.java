@@ -10712,8 +10712,8 @@ public class Pokemon implements Serializable {
 			boolean arthra = false;
 			int starterIndex = t.getName().contains("Scott") ? ((gp.player.p.starter - 1) + 3) % 3 : t.getName().contains("Fred") ? (gp.player.p.starter + 1) % 3 : -1;
 			if (starterIndex == -1) { // arthra
-				// if already done arthra scene (only after beating champion), she uses bronzong, if not she uses opposite dragon as player
-				starterIndex = gp.player.p.flag[8][9] && gp.player.p.flag[8][10] ? 2 : gp.player.p.flag[7][9] ? 0 : gp.player.p.flag[7][10] ? 1 : -1;
+				// if already done arthra scene, she uses bronzong, if not she uses opposite dragon as player
+				starterIndex = gp.player.p.flag[8][9] ? 2 : gp.player.p.flag[7][9] ? 0 : gp.player.p.flag[7][10] ? 1 : -1;
 				arthra = true;
 			}
 			if (starterIndex == -1) continue; // if the player hasn't done anything to determine arthra's team yet

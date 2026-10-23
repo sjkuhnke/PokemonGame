@@ -28,7 +28,7 @@ import util.Print;
 import util.SaveManager;
 import ui.LoadingScreen;
 
-public class Main {
+public class PokemonXhenos {
 	public static JFrame window;
 	public static GamePanel gp;
 	public static final String gameTitle = "Pokemon Xhenos";
@@ -101,7 +101,7 @@ public class Main {
 	        if (icons[image - 1] != null) {
 	            icon = icons[image - 1];
 	        } else {
-	            URL iconURL = Main.class.getResource("/gen/icon" + image + ".png");
+	            URL iconURL = PokemonXhenos.class.getResource("/gen/icon" + image + ".png");
 
 	            if (iconURL != null) {
 	                icon = ImageIO.read(iconURL);
@@ -174,7 +174,7 @@ public class Main {
 				
 				loader.setProgress(7, "Loading map data...");
 				PMap.getLoc(gp.currentMap, (int) Math.round(gp.player.worldX * 1.0 / gp.tileSize), (int) Math.round(gp.player.worldY * 1.0 / gp.tileSize));
-				window.setTitle(Main.gameTitle + " - " + PlayerCharacter.currentMapName);
+				window.setTitle(PokemonXhenos.gameTitle + " - " + PlayerCharacter.currentMapName);
 				
 				loader.setProgress(8, "Updating player version...");
 				if (gp.player.p.version != Player.VERSION) {

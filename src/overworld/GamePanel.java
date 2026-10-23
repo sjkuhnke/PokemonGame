@@ -527,9 +527,6 @@ public class GamePanel extends JPanel implements Runnable {
 				foe.trainer.reset();
 			}
 		}
-		if (foe.trainer != null && foe.trainer.eliteFour) {
-			challengeE4Trainers();
-		}
 		setTaskState();
 		Task t = Task.addTask(Task.TELEPORT, "");
 		int spawnIndex = inSpace() ? 1 : 0; // in space or not
@@ -747,30 +744,30 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	public void addPanel(JPanel panel) {
 		// Add the Battle
-	    Main.window.getContentPane().add(panel);
+	    PokemonXhenos.window.getContentPane().add(panel);
 
 	    // Set focus on the Battle
 	    panel.requestFocusInWindow();
 
 	    // Repaint the JFrame to reflect the changes
-	    Main.window.revalidate();
-	    Main.window.repaint();
+	    PokemonXhenos.window.revalidate();
+	    PokemonXhenos.window.repaint();
 	}
 	
 	public void removePanel() {
 		// Remove all existing components from the JFrame
-	    Main.window.getContentPane().removeAll();
+	    PokemonXhenos.window.getContentPane().removeAll();
 	}
 	
 	public void addGamePanel() {
 		keyH.resetKeys();
-		Main.window.add(this);
+		PokemonXhenos.window.add(this);
 		
 		this.requestFocusInWindow();
 
 	    // Repaint the JFrame to reflect the changes
-	    Main.window.revalidate();
-	    Main.window.repaint();
+	    PokemonXhenos.window.revalidate();
+	    PokemonXhenos.window.repaint();
 		
 	}
 
@@ -1136,6 +1133,21 @@ public class GamePanel extends JPanel implements Runnable {
 		for (int i = 535; i < 540; i++) {
 			player.p.trainersBeat[i] = false;
 		}
+		player.p.flag[8][5] = false;
+		player.p.flag[8][6] = false;
+		player.p.flag[8][7] = false;
+		player.p.flag[8][8] = false;
+		player.p.flag[8][10] = false;
+		// sensei
+		npc[222][0].worldX = 50 * tileSize;
+		npc[222][0].worldY = 49 * tileSize;
+		npc[222][0].direction = "down";
+		// whiskeroar
+		npc[222][1].worldX = 50 * tileSize;
+		npc[222][1].worldY = 1 * tileSize;
+		npc[222][1].direction = "down";
+		// chlorie
+		npc[223][0].direction = "up";
 	}
 	
 	public boolean inE4() {
