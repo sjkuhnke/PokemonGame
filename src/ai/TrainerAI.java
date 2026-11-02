@@ -3,19 +3,22 @@ package ai;
 import pokemon.Pokemon;
 
 /**
- * A Trainer AI engine. Lets the legacy AI and the overhauled AI run side by side
- * (self-play, A/B flags). Pokemon.bestMove2 dispatches here.
+ * A Trainer AI engine: given the two active Pokemon, picks this Pokemon's action for the turn. {@code Pokemon.bestMove2}
+ * dispatches here, so engines can run side by side (self-play A/B comparisons, scripted opponents, per-trainer overrides).
+ * The shipped engine is {@link AIV2}.
  */
 public interface TrainerAI {
 
 	/**
-	 * Decide this Pokemon's action for the turn. Must keep the slot-encoding conventions of
-	 * Pokemon.MoveDecision (see spec section 2) and must not change any real battle state.
+	 * Decide this Pokemon's action for the turn. Must follow the slot-encoding conventions of {@link MoveDecision} (a plain
+	 * switch is a SWAP status with a 1-based slot, a pivot a TEMP_SWITCHING status with a negative one) and must not change
+	 * any real battle state.
 	 *
 	 * @param difficulty Player.NORMAL / Player.HARD / Player.EXTREME
 	 */
 	MoveDecision decide(Pokemon self, Pokemon foe, int difficulty);
 
+	/** A short name for reports and logs. Two engines that compare against each other should return different names. */
 	String getName();
 
 	/** Engine used by a Pokemon: its trainer's own {@code ai}, else the global default. */
@@ -24,7 +27,7 @@ public interface TrainerAI {
 		return Config.defaultAI;
 	}
 
-	/** Global default engine. (The legacy engine was removed in Phase 4.) */
+	/** Holder of the global default engine. */
 	final class Config {
 		public static volatile TrainerAI defaultAI = AIV2.INSTANCE;
 

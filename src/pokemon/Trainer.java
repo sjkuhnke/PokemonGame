@@ -43,12 +43,12 @@ public class Trainer implements Serializable {
 	public transient TrainerAI ai;
 	
 	/**
-	 * Phase 6 (§7.11): session-only habit model for a non-Player trainer that an AI is fighting (self-play, the betting
-	 * sim). {@code Player} overrides {@link #playerModel()} with a saved one. Package-private so SelfPlay can carry one
-	 * across battles; not serialized.
+	 * Session-only habit model for a non-Player trainer that an AI is fighting (self-play, the betting sim).
+	 * {@code Player} overrides {@link #playerModel()} with a saved one. Public so {@code SelfPlay} can carry one across
+	 * battles; not serialized.
 	 */
 	public transient PlayerModel sessionModel;
-	/** Phase 7 (§7.15): 1-based team slot this trainer must lead with; 0 = none. Default 0 so an old save deserializes to "none". Nothing sets it yet. */
+	/** 1-based team slot this trainer must lead with, overriding EXTREME lead selection; 0 = none. Defaults to 0 so an old save deserializes to "none". Nothing sets it yet. */
 	public int fixedLead;
 	
 	transient ArrayList<FieldEffect> effects;
@@ -163,7 +163,7 @@ public class Trainer implements Serializable {
 	}
 	
 	/**
-	 * Phase 5 (§7.14.3): the forced replacement after a faint / free switch, at every difficulty. One non-recursive chooser
+	 * The forced replacement after a faint or free switch, at every difficulty. One non-recursive chooser
 	 * ({@link ReplacementChooser}) shared with the simulator, so the replacement the AI plans for (a sack's free
 	 * replacement, a "lose the matchup, then bring the answer" line) is the one that actually comes out. Null if no alive
 	 * teammate remains.
@@ -205,12 +205,11 @@ public class Trainer implements Serializable {
 	}
 	
 	/**
-	 * B10 fixed (§7.2): trainer shells give simulated callers their own team[]/current to
-	 * mutate, so the old "don't really swap, just repoint current" shortcut for cloned
-	 * Pokemon is gone. Phase 2 (§7.7): under a SimContext scope, SimContext.forceNextSwitch
-	 * can steer the pick instead of drawing — this is how the simulator explores every
-	 * candidate of a Whirlwind/Roar/Dragon Tail/Circle Throw/Red Card instead of getting
-	 * one arbitrary outcome from the isolated stream.
+	 * A random forced switch (Whirlwind, Roar, Dragon Tail, Circle Throw, Red Card). Trainer shells give simulated callers
+	 * their own team[] and current to mutate, so a simulated swap really swaps. Under a {@code SimContext} scope,
+	 * {@code SimContext.forceNextSwitch} can steer the pick instead of drawing, which is how the simulator explores every
+	 * candidate of those moves instead of getting one arbitrary outcome. A forced index is honored only if it names an alive
+	 * teammate other than the current one; otherwise the pick is random as usual.
 	 */
 	public boolean swapRandom(Pokemon foe) {
 		if (!hasValidMembers(foe)) return false;
@@ -641,7 +640,11 @@ public class Trainer implements Serializable {
 		return toString();
 	}
 
-	/** Existing call site stays unchanged. foe is used ONLY to reach foe.trainer and its difficulty, never as "the player's lead". */
+	/**
+	 * The lead this trainer opens with against {@code foe}. {@code foe} is used ONLY to reach its trainer and that trainer's
+	 * difficulty, never as "the player's lead". Only a player opponent on EXTREME triggers lead selection; every other case
+	 * keeps the current (team-order) lead, and so does a valid {@link #fixedLead}.
+	 */
 	public Pokemon pickLead(Pokemon foe) {
 		if (!foe.playerOwned()) return current; // AI-vs-AI sim battles keep their fixed leads
 		AIConfig cfg = AIConfig.forDifficulty(((Player) foe.trainer).difficulty);
@@ -653,7 +656,7 @@ public class Trainer implements Serializable {
 		return chooseLead(foe.trainer, cfg);
 	}
 
-	/** §7.15: takes the player's TEAM only. Sets {@code current} to the chosen mon (the existing behavior) and returns it. */
+	/** EXTREME lead selection: takes the player's TEAM only, never their lead choice. Sets {@code current} to the chosen mon and returns it. */
 	public Pokemon chooseLead(Trainer playerTrainer, AIConfig cfg) {
 		Pokemon chosen = LeadSelection.choose(this, playerTrainer, cfg);
 		if (chosen != null) current = chosen;
@@ -662,9 +665,8 @@ public class Trainer implements Serializable {
 	}
 	
 	/**
-	 * Full trainer shell for SimState.snapshot (§7.2): every team slot gets an
-	 * independent Pokemon clone re-pointed at a fresh shell Trainer. Real team[],
-	 * current, and effects are never touched.
+	 * Full trainer shell for {@code SimState.snapshot}: every team slot gets an independent Pokemon clone re-pointed at a
+	 * fresh shell Trainer. Real team[], current, and effects are never touched.
 	 */
 	public Trainer simShell() {
 		Set<Integer> all = new HashSet<>();
@@ -673,14 +675,14 @@ public class Trainer implements Serializable {
 	}
 
 	/**
-	 * Copy-on-write trainer shell for SimState.fork (§7.2). Slots in touchedSlots,
-	 * plus the currently active slot (always), get an independent Pokemon clone
-	 * re-pointed at a NEW shell Trainer. Every other slot keeps the SAME Pokemon
-	 * reference as this trainer's team — shared and read-only for the caller's cell
-	 * (enforced only by convention/T3, not by the type system).
-	 *
-	 * this.team, this.current, and this.effects are never mutated by this call, on
-	 * either this trainer or the shell it was itself built from.
+	 * Copy-on-write trainer shell for {@code SimState.fork}. Slots in {@code touchedSlots}, plus the currently active slot
+	 * (always), get an independent Pokemon clone re-pointed at a NEW shell Trainer. Every other slot keeps the SAME Pokemon
+	 * reference as this trainer's team: shared and read-only for the caller's cell (enforced by convention and by the
+	 * invariance tests, not by the type system; see {@link #ownSlot}).
+	 * <p>
+	 * Cloned mons have {@code SWAP} and {@code TEMP_SWITCHING} stripped: they record a decision already made this turn, and a
+	 * snapshot must never carry the opponent's chosen action. this.team, this.current, and this.effects are never mutated by
+	 * this call. Throws if {@code current} is not in {@code team}.
 	 */
 	public Trainer simShell(Set<Integer> touchedSlots) {
 		Pokemon[] newTeam = new Pokemon[this.team.length];
@@ -698,7 +700,7 @@ public class Trainer implements Serializable {
 			if (touch) {
 				Pokemon c = this.team[i].clone();
 				c.vStatuses = DeepClonable.deepCloneList(this.team[i].vStatuses);
-				c.removeStatus(Status.SWAP); // Phase 8: a decision already made this turn must not leak into the snapshot
+				c.removeStatus(Status.SWAP); // a decision already made this turn must not leak into the snapshot
 				c.removeStatus(Status.TEMP_SWITCHING);
 				c.cloned = true;
 				c.trainer = shell;
@@ -713,17 +715,17 @@ public class Trainer implements Serializable {
 	}
 
 	/**
-	 * Phase 4 (sim shells only, spec 7.2 copy-on-write): makes team[i] this shell's OWN clone if it is still the object
-	 * shared with the shell this one was forked from. simShell(touched) shares every untouched bench slot (and leaves its
-	 * {@code trainer} pointing at the source shell); swapping such a mon in would mutate the shared object (hazard damage,
-	 * Intimidate, ...) and read the wrong shell's hazards. Call before any swap that can bring team[i] in. Idempotent.
+	 * Sim shells only (copy-on-write): makes team[i] this shell's OWN clone if it is still the object shared with the shell
+	 * this one was forked from. {@code simShell(touched)} shares every untouched bench slot (and leaves its {@code trainer}
+	 * pointing at the source shell); swapping such a mon in would mutate the shared object (hazard damage, Intimidate, ...)
+	 * and read the wrong shell's hazards. Call before any swap that can bring team[i] in. Idempotent.
 	 */
 	public void ownSlot(int i) {
 		Pokemon p = team[i];
 		if (p == null || p.trainer == this) return;
 		Pokemon c = p.clone();
 		c.vStatuses = DeepClonable.deepCloneList(p.vStatuses);
-		c.removeStatus(Status.SWAP); // Phase 8: a decision already made this turn must not leak into the snapshot
+		c.removeStatus(Status.SWAP); // a decision already made this turn must not leak into the snapshot
 		c.removeStatus(Status.TEMP_SWITCHING);
 		c.cloned = true;
 		c.trainer = this;

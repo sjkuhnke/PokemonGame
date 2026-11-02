@@ -5099,11 +5099,13 @@ public class AssetSetter {
 			gp.npc[160][4] = null;
 		}
 		
-		if (flag[7][24] && !flag[8][1]) {
+		if (flag[7][24]) {
 			gp.npc[159][16] = null;
-			if (gp.npc[160][5] == null) gp.npc[160][5] = NPCSetup(NOVA_UP, "Nova", 41, 14, "", 160.3);
-			if (gp.npc[160][6] == null) gp.npc[160][6] = NPCSetup(RYDER_RIGHT, "Ryder", 40, 13, "...");
-			if (gp.npc[160][7] == null) gp.npc[160][7] = NPCSetup(ALAKAZAM_RIGHT, "Alakazam", 39, 13, "Vxxxvhh...");
+			if (!flag[8][1]) { // clear nova as she goes back to her house
+				if (gp.npc[160][5] == null) gp.npc[160][5] = NPCSetup(NOVA_UP, "Nova", 41, 14, "", 160.3);
+				if (gp.npc[160][6] == null) gp.npc[160][6] = NPCSetup(RYDER_RIGHT, "Ryder", 40, 13, "...");
+				if (gp.npc[160][7] == null) gp.npc[160][7] = NPCSetup(ALAKAZAM_RIGHT, "Alakazam", 39, 13, "Vxxxvhh...");
+			}
 		}
 		
 		/**

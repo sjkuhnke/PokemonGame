@@ -3244,13 +3244,13 @@ public class UI extends AbstractUI {
 		g2.setColor(Color.WHITE);
 	}
 	
-	/** Draws an image scaled to fit ~85% of a square box, centered on (cx, cy). */
-	private void drawDexSprite(Image img, int cx, int cy, int box) {
+	/** Draws a pixel-art sprite using integer scaling, centered in its box. */
+	private void drawDexSprite(Image img, int cx, int cy) {
 		if (img == null) return;
 		int sw = img.getWidth(null);
 		int sh = img.getHeight(null);
 		if (sw <= 0 || sh <= 0) return;
-		double scale = Math.min((box * 0.85) / sw, (box * 0.85) / sh);
+		int scale = 2;
 		int dw = (int) (sw * scale);
 		int dh = (int) (sh * scale);
 		Object oldHint = g2.getRenderingHint(RenderingHints.KEY_INTERPOLATION);
@@ -3304,8 +3304,8 @@ public class UI extends AbstractUI {
 		drawDexHero(variant, true, -1);
 		
 		// Description
-		int descY = (int) (gp.tileSize * 5.5);
-		int descH = (int) (gp.tileSize * 1.3);
+		int descY = (int) (gp.tileSize * 6.2);
+		int descH = (int) (gp.tileSize * 1.35);
 		g2.setColor(new Color(255, 255, 255, 30));
 		g2.fillRoundRect(left, descY, innerW, descH, 16, 16);
 		String entry = Pokemon.getDexEntry(variant.id);
@@ -3327,7 +3327,7 @@ public class UI extends AbstractUI {
 		}
 		
 		// Stat bars
-		int statY0 = (int) (gp.tileSize * 7.5);
+		int statY0 = (int) (gp.tileSize * 8.0);
 		int barX = left + (int) (gp.tileSize * 0.75);
 		int barW = 3 * gp.tileSize;
 		int barH = gp.tileSize / 2;
@@ -3374,8 +3374,8 @@ public class UI extends AbstractUI {
 		// Evolution (many evolutions get folded into a wrapped paragraph)
 		String evolve = Pokemon.getEvolveString(variant.id);
 		if (evolve == null) evolve = "Does not evolve";
-		int evoY = (int) (gp.tileSize * 10.75);
-		int evoBottom = (int) (gp.tileSize * 12);
+		int evoY = (int) (gp.tileSize * 11.0);
+		int evoBottom = (int) (gp.tileSize * 11.9);
 		ArrayList<String> evoLines = new ArrayList<>(Arrays.asList(evolve.split("\n")));
 		int evoLineH = gp.tileSize / 3 + 2;
 		g2.setFont(g2.getFont().deriveFont(Font.ITALIC, 18F));
@@ -3428,8 +3428,8 @@ public class UI extends AbstractUI {
 	private void drawDexHero(Player.DexVariant variant, boolean caught, int selectedAbility) {
 		int left = dexLeft();
 		int right = dexRight();
-		int boxSize = (int) (gp.tileSize * 3.0);
-		int boxY = (int) (gp.tileSize * 2.15);
+		int boxSize = (int) (gp.tileSize * 4.0);
+		int boxY = (int) (gp.tileSize * 2.1);
 		
 		// Sprite box tinted by the first type
 		Color tc = Pokemon.getType1(variant.id).getColor();
@@ -3438,7 +3438,7 @@ public class UI extends AbstractUI {
 		g2.setColor(new Color(255, 255, 255, 160));
 		g2.setStroke(new BasicStroke(3));
 		g2.drawRoundRect(left, boxY, boxSize, boxSize, 30, 30);
-		drawDexSprite(DocUtils.getCachedSprite(variant.id, variant.shiny), left + boxSize / 2, boxY + boxSize / 2, boxSize);
+		drawDexSprite(DocUtils.getCachedSprite(variant.id, variant.shiny), left + boxSize / 2, boxY + boxSize / 2);
 		
 		// Types
 		int rx = left + boxSize + (int) (gp.tileSize * 0.4);
@@ -3508,8 +3508,8 @@ public class UI extends AbstractUI {
 		drawDexHero(variant, true, dexMode == 1 ? abilityDexNum : -1);
 		
 		// Selected ability: name + description
-		int descY = (int) (gp.tileSize * 5.45);
-		int descH = (int) (gp.tileSize * 1.75);
+		int descY = (int) (gp.tileSize * 6.2);
+		int descH = (int) (gp.tileSize * 1.6);
 		g2.setColor(new Color(255, 255, 255, 30));
 		g2.fillRoundRect(left, descY, innerW, descH, 16, 16);
 		int selectedSlot = Pokemon.getUniqueAbilitySlot(variant.id, abilityDexNum);
@@ -3536,7 +3536,7 @@ public class UI extends AbstractUI {
 		// Compact stat strip
 		int[] stats = Pokemon.getBaseStats(variant.id);
 		int colW = innerW / 7;
-		int stripY = (int) (gp.tileSize * 7.9);
+		int stripY = (int) (gp.tileSize * 8.5);
 		for (int i = 0; i < 7; i++) {
 			int colX = left + colW * i + colW / 2;
 			String label = i < 6 ? Pokemon.getStatType(i, false) : "Total";
@@ -3550,7 +3550,8 @@ public class UI extends AbstractUI {
 		}
 		
 		// Move lists (5 rows each; the summary window covers everything above y = 8 tiles)
-		int moveStartY = (int) (gp.tileSize * 8.5);
+		int moveStartY = (int) (gp.tileSize * 9.0);
+		int moveRowH = (int) (gp.tileSize * 0.55);
 		int moveWidth = gp.tileSize * 4;
 		int moveHeight = gp.tileSize / 2;
 		int x = left;
@@ -3571,7 +3572,7 @@ public class UI extends AbstractUI {
 			g2.fillRoundRect(x, y, moveWidth, moveHeight, 8, 8);
 			g2.setColor(Color.BLACK);
 			g2.drawString(levelLevelList.get(i) + " " + levelMoveList.get(i).toString(), x + 8, y + 19);
-			y += gp.tileSize * 0.6;
+			y += moveRowH;
 		}
 		
 		x += gp.tileSize * 4.25;
@@ -3592,7 +3593,7 @@ public class UI extends AbstractUI {
 				g2.setColor(Color.BLACK);
 				g2.drawString(tmList.get(i).toString(), x + 8, y + 19);
 			}
-			y += gp.tileSize * 0.6;
+			y += moveRowH;
 		}
 		
 		int moveSumX = gp.tileSize * 6;

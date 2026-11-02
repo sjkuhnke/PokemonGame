@@ -1,11 +1,6 @@
 ================================================================================
 Sprites (Prefered Order, can always be changed up) (* = has sketch from RAMM)
 ================================================================================
-150 Kissyfishy
-218 Consodust*
-219 Cosmocrash*
-195 Rockmite*
-196 Stellarock*
 190 Blobmo*
 191 Nebulimb*
 192 Galactasolder*

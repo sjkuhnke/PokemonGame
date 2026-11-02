@@ -11,7 +11,8 @@ import util.Perf;
  * <p>
  * The value is a weighted sum of terms, each weighted by {@link EvalWeights}: material (HP and alive mons, priced by
  * {@link MonWeights}), the active matchup (escape-capped, see {@link #matchupTerm}), hazards, bench status, field effects
- * (weather, screens), tempo, forced turns, charging attacks and pending recovery/restrictions.
+ * (weather, screens), tempo, forced turns, charging attacks, pending recovery/restrictions/Future Sight damage, and sleep
+ * (asleep or drowsy active mon, see {@link #sleepCost}).
  * <p>
  * Deliberate simplifications:
  * <ul>
@@ -40,6 +41,23 @@ public final class Evaluator {
 	static double ENDURE_FRAC = 0.5;
 	/** Fraction of a telegraphed charge that still lands: the foe can switch, Protect, or KO the charger first. */
 	static double CHARGE_HOLD = 0.75;
+
+	// ---- delayed effects (Yawn, sleep, Future Sight): see sleepCost and pendingDelayedDamage ----
+
+	/** Master switch for the sleep term (0 disables it, for A/B self-play). Not a style weight: EvalWeights has no field for it. */
+	static double W_SLEEP = 1.0;
+	/** Eval points for one turn the active mon loses to sleep (a free hit for the other side is worth about a quarter of a mon). */
+	static double SLEEP_TURN_VALUE = 25;
+	/** Expected turns lost to a sleep (the engine rolls 1-3). Used instead of the real counter: the counter is hidden information, and the simulator only draws one sample of it. */
+	static double SLEEP_MEAN_TURNS = 2.0;
+	/** Fraction of a sleep's value that is kept: the sleeper can switch out (the bench mon stays asleep, but the hit is dodged). */
+	static double SLEEP_HOLD = 0.7;
+	/** A DROWSY mon falls asleep at the end of its NEXT turn, after it has acted once and had a chance to switch: this fraction of a full sleep is credited. */
+	static double DROWSY_LAND = 0.8;
+	/** Sleep Talk keeps a sleeping mon acting about half the time. */
+	static double SLEEP_TALK_FACTOR = 0.5;
+	/** Fraction of a pending Future Sight hit that is booked: the target can switch to a resistor or an immune mon before it lands. */
+	static double FUTURE_SIGHT_HOLD = 0.75;
 
 	private Evaluator() {}
 
@@ -71,6 +89,7 @@ public final class Evaluator {
 		v += forcedTurnPenalty(s);
 		v += chargeCredit(s.ai, s.player, s.field, playerWeights) - chargeCredit(s.player, s.ai, s.field, aiWeights);
 		v += style.wPending * pendingValue(s, aiWeights, playerWeights);
+		if (W_SLEEP != 0) v += W_SLEEP * (sleepCost(s.player, s.field) - sleepCost(s.ai, s.field));
 		return v;
 	}
 
@@ -286,6 +305,8 @@ public final class Evaluator {
 		double v = pendingRecovery(s.ai, aiWeights, s.field) - pendingRecovery(s.player, playerWeights, s.field);
 		v -= restrictionCost(s.ai, s.field);
 		v += restrictionCost(s.player, s.field);
+		// Future Sight is queued on the TARGET's side: a hit pending on the player's side is value for the AI.
+		v += pendingDelayedDamage(s.player, s.ai, playerWeights, s.field) - pendingDelayedDamage(s.ai, s.player, aiWeights, s.field);
 		return v;
 	}
 
@@ -314,6 +335,99 @@ public final class Evaluator {
 			}
 		}
 		return total;
+	}
+
+	/**
+	 * Value of the Future Sight hits already queued against {@code defSide}, in the same units as material: the expected
+	 * damage on the mon that is out now (average of the min and max roll through {@code takeFutureSight}'s deterministic
+	 * modes, capped at its HP), as a percentage of its max HP times its weight, times {@link #FUTURE_SIGHT_HOLD}. Immune
+	 * targets (Dark types and so on) contribute 0 on their own, because the same damage code decides. Positive = damage
+	 * coming at {@code defSide}. {@code takeFutureSight} reads the static {@code Pokemon.field} and draws from no stream in
+	 * modes 1 and -1, so the field is installed for the call and a scope guards the one possible draw (Focus Band).
+	 */
+	public static double pendingDelayedDamage(SideState defSide, SideState atkSide, double[] defWeights, Field field) {
+		Pokemon target = defSide.active(), user = atkSide.active();
+		if (target == null || target.isFainted() || user == null) return 0;
+		double total = 0;
+		for (Field.FieldEffect fe : defSide.shell.getFieldEffectList()) {
+			if (fe.effect != Effect.FUTURE_SIGHT) continue;
+			int hi, lo;
+			Field prev = Pokemon.field;
+			Pokemon.field = field;
+			try (SimContext.Scope sc = SimContext.enter(SimPolicy.DEFAULT)) {
+				hi = target.takeFutureSight(fe.bp, fe.stat, fe.mod, fe.level, fe.crit, fe.ability, 1, user);
+				lo = target.takeFutureSight(fe.bp, fe.stat, fe.mod, fe.level, fe.crit, fe.ability, -1, user);
+			} finally {
+				Pokemon.field = prev;
+			}
+			double dmg = Math.min(target.currentHP, (hi + lo) / 2.0);
+			int idx = defSide.shell.indexOf(target);
+			double w = (defWeights != null && idx >= 0 && idx < defWeights.length) ? defWeights[idx] : 1.0;
+			total += 100.0 * dmg / target.getStat(0) * w * FUTURE_SIGHT_HOLD;
+		}
+		return total;
+	}
+
+	/**
+	 * What sleep costs the side's ACTIVE mon, in eval points (positive = bad for that side). {@code calcRange} ignores a
+	 * sleeping attacker and {@link #benchStatusValue} only prices the bench, so without this term a mon that is asleep, or
+	 * about to be, is scored as a full threat. Two cases:
+	 * <ul>
+	 * <li>{@code ASLEEP} (with turns left): {@link #SLEEP_MEAN_TURNS} lost turns.</li>
+	 * <li>{@code YAWNING} / {@code DROWSY} and the mon could actually fall asleep ({@link #canFallAsleep}):
+	 * the same, times {@link #DROWSY_LAND}. This is what makes Yawn visible to a one-turn simulation.</li>
+	 * </ul>
+	 * Each lost turn is worth {@link #SLEEP_TURN_VALUE}, times {@link #SLEEP_HOLD} (the sleeper can switch), times the mon's
+	 * HP fraction (a nearly dead mon loses little), halved for a Sleep Talk user. A side's own Rest pays this too, which is
+	 * the honest price of Rest.
+	 */
+	public static double sleepCost(SideState side, Field field) {
+		Pokemon a = side.active();
+		if (a == null || a.isFainted()) return 0;
+		double turns;
+		if (a.status == Status.ASLEEP) {
+			if (a.sleepCounter <= 0) return 0; // wakes the next time it tries to move
+			turns = SLEEP_MEAN_TURNS;
+		} else if (a.hasStatus(Status.DROWSY) || a.hasStatus(Status.YAWNING)) {
+			if (!canFallAsleep(a, field)) return 0;
+			turns = SLEEP_MEAN_TURNS * DROWSY_LAND;
+		} else {
+			return 0;
+		}
+		if (a.moveset != null) {
+			for (Moveslot ms : a.moveset) {
+				if (ms != null && ms.move == Move.SLEEP_TALK) {
+					turns *= SLEEP_TALK_FACTOR;
+					break;
+				}
+			}
+		}
+		double hpFrac = a.currentHP * 1.0 / a.getStat(0);
+		return SLEEP_TURN_VALUE * turns * SLEEP_HOLD * hpFrac;
+	}
+
+	/**
+	 * Whether a plain sleep would stick on {@code p} right now, decided by running the real {@code sleep()} on a clone, so
+	 * there is no second copy of its gates to keep in step. Three details matter:
+	 * <ul>
+	 * <li>{@code sleep()} reads the static {@code Pokemon.field} (Safeguard, terrain, {@code isGrounded()}), so the sim's field is
+	 * installed for the call.</li>
+	 * <li>It runs in a {@link SimContext} scope: {@code setSleepCounter} draws from {@code Rng}, and the scope keeps that off the
+	 * real stream and makes the Task calls inert.</li>
+	 * <li>The clone is passed as its own {@code foe}: a null foe skips the Lum / Chesto Berry cure, and the real foe would be
+	 * mutated by Synchronize. {@code clone()} keeps the trainer, so Safeguard on the side's list is seen.</li>
+	 * </ul>
+	 */
+	static boolean canFallAsleep(Pokemon p, Field field) {
+		Pokemon c = p.clone();
+		Field prev = Pokemon.field;
+		Pokemon.field = field;
+		try (SimContext.Scope sc = SimContext.enter(SimPolicy.DEFAULT)) {
+			c.sleep(false, c);
+		} finally {
+			Pokemon.field = prev;
+		}
+		return c.status == Status.ASLEEP;
 	}
 
 	/**

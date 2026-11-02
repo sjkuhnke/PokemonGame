@@ -74,7 +74,7 @@ Decisions kept: no wall-clock budget for lead refinement (it would make leads ma
 | `StackOverflowError`, story trainers | `stat()` and Empathic Link looped | Loop guard in `stat()` |
 | `ArrayIndexOutOfBounds` in `swapRandom` | A forced switch index left over from a move that never consumed it | Clear the forced switch after `moveInit`; `swapRandom` validates it |
 | NPE in `ActionGen.choiceLockSkip` | `item != null` but `getItem(field)` is null under Magic Room | Check `getItem(field)` |
-| "current is not in team" in `simShell` | Slot index 9 became `swapOut2` argument 10 == `NORMAL_SWITCH`, so the chooser ran instead of the planned slot | `performSwitch` passes a negative slot; clear error on mismatch |
+| "current is not in team" in `simShell` | Slot index 9 became `swapOut2` argument 10 == `NORMAL_SWITCH`, so the chooser ran instead of the planned slot | Not reachable in a real battle (teams have at most 6 mons, so slot arguments stay below 10), so `performSwitch` is unchanged. Self-play avoids it by skipping teams longer than 6 (next row) |
 | 18-mon teams in self-play | `SelfPlay.buildPool()` used raw multi-badge trainer lists | Skip teams longer than 6 |
 | T27 failure | `EvalWeights` had no value equality | Added `equals` / `hashCode` |
 | `Perf` reported one pair | `Perf.reset()` inside the pair loop | Moved above the loop |
@@ -90,3 +90,46 @@ All pass: Phase 3 (T4-T32), Phase 5, Phase 6, Phase 8, invariance (10,000 trials
 - Optional: model the free-switch override in the simulator (the matrix prices a planned pivot slot even when the AI moves second).
 - Not done, no measured need: `SwitchInScorer` / `shallowClone` cost, Tier 1 fast cells.
 - The HARD vs NORMAL criterion is only weakly demonstrated in self-play (about 51-53% with the tax). Scripted-opponent exploitation is flat at the ceilings tried; mirror-team scripted runs would be a cleaner test.
+- Yawn / Future Sight / active-mon sleep: see section 11.
+
+
+Status: written, **not yet compiled or run**. Fill in the results lines below after `Phase8DelayedEffectTests.diagnose()` and `runAll()`.
+ 
+### Problem
+The trainer never clicked Yawn or Future Sight. Both rows scored the same as doing nothing, so `AIV2.dominatedRows` removed them every time. Reading the code, the cause is not only the one-turn horizon:
+ 
+| Gap | Where | Effect |
+|---|---|---|
+| Yawn leaves only `DROWSY` after the turn (`YAWNING` becomes `DROWSY` inside the same `endOfTurn`; the sleep lands at the end of the NEXT turn) | `Pokemon.endOfTurn` | No eval term reads `DROWSY` / `YAWNING`. |
+| A sleeping ACTIVE mon is not valued at all | `calcRange` has no check for the attacker's own sleep; `Evaluator.statusPenalty` is applied to bench mons only | Even two turns later, a landed sleep scores 0. This also hurts any sleep move (Spore, Hypnosis). |
+| Future Sight is a `FUTURE_SIGHT` field effect on the target's side, carrying bp / stat / mod / level / crit / ability | `Pokemon.move` | `pendingValue` only read `HEALING_WISH` / `LUNAR_DANCE` / `WISH`. |
+| `YAWN` in `statusEffect` checks only `YAWNING` / `DROWSY` / `ASLEEP` | `Pokemon.statusEffect` | A sleep-immune target (Psychic, Insomnia, Safeguard, Electric Terrain, a Lum/Chesto holder) "becomes drowsy" and then nothing happens. The simulator copies that, so the eval has to apply the same gates. |
+ 
+### Fix (evaluator only, no change to move code)
+- `Evaluator.canFallAsleep(p, field)`: runs the real `sleep()` on `p.clone()` and checks `status == ASLEEP`, so there is no second copy of the sleep gates to keep in step (no change to `Pokemon.java`). It installs `Pokemon.field` for the call (`sleep()` reads the static for Safeguard, terrain and `isGrounded()`), runs inside a `SimContext` scope (`setSleepCounter` draws from `Rng`; the scope keeps that off the real stream and makes the Task calls inert), and passes the clone as its own `foe` (a null foe skips the Lum / Chesto cure, and the real foe would be hit by Synchronize).
+- `Evaluator.sleepCost(side, field)`, added to `evalCore` as `W_SLEEP * (sleepCost(player) - sleepCost(ai))`:
+  - `ASLEEP` with turns left: `SLEEP_TURN_VALUE (25) * SLEEP_MEAN_TURNS (2.0) * SLEEP_HOLD (0.7) * hpFrac`, halved for a Sleep Talk user (`SLEEP_TALK_FACTOR`).
+  - `DROWSY` / `YAWNING` and `canFallAsleep`: the same times `DROWSY_LAND (0.8)`. Full-HP value is 28 points.
+  - The mean (2 turns) is used instead of the real `sleepCounter`: the counter is hidden information (no-peek, spec section 1), and the simulator only draws one sample of it.
+- `Evaluator.pendingDelayedDamage(defSide, atkSide, defWeights, field)`, added to `pendingValue` as `+pending(player side) - pending(ai side)`: each queued `FUTURE_SIGHT` effect is run through `takeFutureSight` in its deterministic modes (1 and -1, no tasks, no RNG), averaged, capped at the target's HP, times 100 / maxHP * mon weight * `FUTURE_SIGHT_HOLD (0.75)`. Immune targets come out 0 from the same damage code. `Pokemon.field` is installed for the call because `takeFutureSight` reads the static.
+- All constants are non-final statics in `Evaluator`, like the other placeholders. `W_SLEEP = 0` and `FUTURE_SIGHT_HOLD = 0` give the old behavior (this is what `diagnose()` uses).
+- Because the matrix includes the player's switch columns, the escape is priced by the solver: a foe that switches out clears `DROWSY`, and a Yawn used into a switch hits the switch-in (pre-move switches run first).
+### Side effects to watch
+- **Rest** now pays the sleep cost for the AI's own mon (about 35 points, 17 with Sleep Talk). Rest is still chosen when the heal is worth more; if a Rest-related test flips, lower `W_SLEEP` rather than special-casing Rest.
+- **`deadTurn`** (NORMAL) evaluates with the same `evalCore`, so Yawn, Future Sight and sleep moves now count as "doing something" and can keep a NORMAL trainer from switching on a turn that used to be dead.
+- **Unchanged and out of scope:** the evaluator still cannot see a plan across turns (Yawn then Protect, stalling out a Future Sight). It prices the state after one turn, with the delayed effect booked at a discount.
+### Tests (`Phase8DelayedEffectTests`)
+`diagnose()` prints the Yawn and Future Sight rows against a do-nothing row with both terms off (expect differences near 0). `runAll()`: Yawn becomes `DROWSY` after turn 1 and `ASLEEP` after turn 2 in the simulator; `canFallAsleep` gives the right answer for seven gates (healthy, burned, Insomnia, Psychic, Safeguard, Electric Terrain, Lum Berry) and leaves the real mon, its item and `Pokemon.field` untouched; eval prices `DROWSY`, `YAWNING`, `ASLEEP`, Sleep Talk, Insomnia and wounded mons; Future Sight is queued, priced, and 0 into a Dark target; the Yawn and Future Sight rows beat a pass row in every foe-move column; Yawn into an Insomnia foe is not rewarded; `DROWSY` does not follow a mon through a switch. `dump()` prints three full mixed strategies.
+ 
+Results (fill in): diagnose = ___ ; runAll = ___ ; Phase 3 to 8 suites re-run = ___ ; self-play A/B with `W_SLEEP` 0 vs 1 = ___.
+ 
+### Assumptions to confirm
+1. `Field.FieldEffect` has `bp`, `stat`, `mod`, `level`, `crit` and `ability` with types matching `takeFutureSight`'s parameters (they are assigned in `move()`, so they exist).
+2. Future Sight lands on whoever is out when it resolves; the code values it on the mon that is out now.
+3. The switch-out reset that removes `YAWNING` / `DROWSY` (the block around `Pokemon.java:8064`) runs for a sim switch (`swapOut2`).
+4. `Phase4Tests.mk` / `duel` / `Duel` stay package-private statics.
+6. `Pokemon.clone()` keeps `trainer` (confirmed in the code), so Safeguard on the side's field-effect list is visible to the clone.
+5. `Pokemon.type1` / `type2` and `ability` are assignable from the test.
+### Found while reading (not changed)
+- `takeFutureSight`: `ICY_SCALES || MULTISCALE && foe.currentHP == foe.getStat(0)` tests the ATTACKER's HP (`foe`), not the target's, and Icy Scales halves unconditionally. Looks unintended.
+- `Evaluator.eval` runs after `simulateTurn` has restored `Pokemon.field` to the real battle's field. Terms that call methods reading the static (`isGrounded`, `takeFutureSight`) must install `s.field` first, as the new code does.

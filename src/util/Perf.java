@@ -3,17 +3,19 @@ package util;
 import java.util.Locale;
 
 /**
- * Phase 8 (§10): zero-dependency decision profiler. Off by default ({@code Perf.ON = false}); when off every hook is one
- * boolean test. Sections are INCLUSIVE and nest (simulateTurn contains calcRange, pickSlot contains monWeights.forSide, ...),
- * so do not add the rows up. Game thread only.
- *
- * Usage: Perf.reset(); Perf.ON = true; ...play...; System.out.println(Perf.report()); Perf.ON = false;
+ * Zero-dependency profiler for the AI's decision path. Off by default ({@code Perf.ON = false}); when off every hook is one
+ * boolean test. Sections are INCLUSIVE and nest (simulateTurn contains calcRange, pickSlot contains MonWeights.forSide, ...),
+ * so do not add the rows up. Counters (clone, cache hits and misses) have no time. Game thread only.
+ * <p>
+ * Usage: {@code Perf.reset(); Perf.ON = true; ...play...; System.out.println(Perf.report()); Perf.ON = false;}.
+ * {@code SelfPlay.run} resets before and prints after a run when {@code ON} is set.
  */
 public final class Perf {
 	private Perf() {}
 
 	public static boolean ON = false;
 
+	/** Section and counter ids. */
 	public static final int CLONE = 0, CALC_RANGE = 1, SIM_TURN = 2, CELL = 3, W_COMPUTE = 4, W_FORSIDE = 5, PICK = 6, EVAL = 7,
 			ENTRY = 8, EDGE_HIT = 9, EDGE_MISS = 10, RANGE_HIT = 11, RANGE_MISS = 12;
 
@@ -29,12 +31,14 @@ public final class Perf {
 		return ON ? System.nanoTime() : 0L;
 	}
 
+	/** Ends a section started with {@link #start}. */
 	public static void stop(int id, long t0) {
 		if (!ON || t0 == 0L) return;
 		calls[id]++;
 		nanos[id] += System.nanoTime() - t0;
 	}
 
+	/** Counts an event that has no duration. */
 	public static void count(int id) {
 		if (ON) calls[id]++;
 	}
@@ -44,6 +48,7 @@ public final class Perf {
 		java.util.Arrays.fill(nanos, 0);
 	}
 
+	/** A table of calls, total and average time per section, plus the two cache hit rates. */
 	public static String report() {
 		StringBuilder sb = new StringBuilder("\n===== Perf (inclusive; sections nest) =====\n");
 		for (int i = 0; i < NAMES.length; i++) {

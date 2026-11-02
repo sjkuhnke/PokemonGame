@@ -481,10 +481,7 @@ public class Pokemon implements Serializable {
 	    return decision.move;
 	}
 	
-	/**
-	 * Entry point for Trainer AI decisions. Dispatches to the TrainerAI installed on this
-	 * Pokemon's trainer (Trainer.ai), or TrainerAI.Config.defaultAI (AIV2) if none.
-	 */
+	/** Entry point for Trainer AI decisions: dispatches to the engine installed on this Pokemon's trainer ({@code Trainer.ai}), else {@code TrainerAI.Config.defaultAI} ({@link ai.AIV2}). */
 	public MoveDecision bestMove2(Pokemon foe, int difficulty) {
 		return TrainerAI.forPokemon(this).decide(this, foe, difficulty);
 	}
@@ -570,10 +567,10 @@ public class Pokemon implements Serializable {
 	private static final double TEMPO_WEIGHT = 10;   // pure "who acts first" value when nothing dies
 
 	/**
-	 * Continuous expected-value score for a 1v1 matchup exchange.
-	 * @param myMaxDamagePercent  my best move's max-roll damage % against foe
-	 * @param foeMaxDamagePercent foe's best move's max-roll damage % against me
-	 * @param iAmFaster		   whether I act first this turn
+	 * Continuous expected-value score for a 1v1 matchup exchange, roughly -90 to +90 (positive = good for me).
+	 * @param myMaxMoveScore      my best move's damage against the foe, as a percent of the foe's current HP (callers pass the expected damage, capped at the HP)
+	 * @param foeMaxDamagePercent the foe's best move's damage against me, as a percent of my current HP
+	 * @param iAmFaster           whether I act first this turn
 	 */
 	public double matchupScore(int myMaxMoveScore, double foeMaxDamagePercent, boolean iAmFaster) {
 		double atkFrac = Math.min(myMaxMoveScore, 100.0) / 100.0;
@@ -581,13 +578,13 @@ public class Pokemon implements Serializable {
 		
 		double value;
 		if (iAmFaster) {
-			// With prob kappa, foe never gets to act at all.
+			// atkFrac is the chance I knock the foe out before it acts at all.
 			double ifSurvivedFoeTurn = atkFrac * CHIP_WEIGHT
 					- defFrac * Math.abs(DEATH_VALUE)
 					- (1 - defFrac) * defFrac * THREAT_WEIGHT;
 			value = atkFrac * KILL_VALUE + (1 - atkFrac) * ifSurvivedFoeTurn;
 		} else {
-			// With prob phi, I never get to act at all.
+			// defFrac is the chance the foe knocks me out before I act at all.
 			double ifSurvivedToAct = atkFrac * (KILL_VALUE - defFrac * DELAY_WEIGHT)
 					+ (1 - atkFrac) * (atkFrac * CHIP_WEIGHT - defFrac * THREAT_WEIGHT);
 			value = defFrac * DEATH_VALUE + (1 - defFrac) * ifSurvivedToAct;
@@ -601,10 +598,10 @@ public class Pokemon implements Serializable {
 		return value;
 	}
 	/**
-	 * Scores this Pokemon as a switch-in against {@code foe}: one non-recursive post-switch-in matchup
-	 * (hazards and entry abilities applied in a sim shell), used by {@code Trainer.getNext2},
-	 * {@code pickLead} and {@code predictPlayerLeads}. Higher is better; {@code Integer.MIN_VALUE + 1}
-	 * means it faints on entry. See {@link SwitchInScorer}.
+	 * Scores this Pokemon as a switch-in against {@code foe}: one non-recursive post-switch-in matchup (hazards and entry
+	 * abilities applied in a sim shell). Higher is better; {@link ai.SwitchInScorer#ENTRY_FAINT_SCORE} means it faints on
+	 * entry. No production code calls this any more (replacements go through {@link ai.ReplacementChooser}); only tests do.
+	 * Delete it together with those test uses.
 	 */
 	public int evaluateSwitchInScore(Pokemon foe, Field field) {
 		return SwitchInScorer.score(this, foe, field);
@@ -11344,7 +11341,7 @@ public class Pokemon implements Serializable {
 			}
 		}
 		
-		if (this.getAbility(field) == Ability.ICY_SCALES || this.getAbility(field) == Ability.MULTISCALE && foe.currentHP == foe.getStat(0)) damage /= 2;
+		if (this.getAbility(field) == Ability.ICY_SCALES || (this.getAbility(field) == Ability.MULTISCALE && this.currentHP == this.getStat(0))) damage /= 2;
 		
 		if (multiplier == 0) immune = true;
 		

@@ -111,15 +111,17 @@ public final class Phase4Tests {
 
 	// ------------------------------------------------------------------ scenario building
 
-	static final class Duel {
-		Trainer ai, pl;
-		Pokemon a, f;
-		Field field;
+	public static final class Duel {
+		Trainer ai;
+		public Trainer pl;
+		Pokemon a;
+		public Pokemon f;
+		public Field field;
 
-		SimState root() { return SimState.snapshot(a, f); }
+		public SimState root() { return SimState.snapshot(a, f); }
 	}
 
-	static Pokemon mk(int id, Move... moves) {
+	public static Pokemon mk(int id, Move... moves) {
 		return mk(id, 50, moves);
 	}
 
@@ -135,7 +137,7 @@ public final class Phase4Tests {
 	}
 
 	/** AI: a + two bench mons. Player: f + two bench mons. Fresh Field installed as Pokemon.field. */
-	static Duel duel(Pokemon a, Pokemon f) {
+	public static Duel duel(Pokemon a, Pokemon f) {
 		Pokemon[] at = { a, mk(2, Move.FLAMETHROWER), mk(3, Move.FLAMETHROWER) };
 		Pokemon[] pt = { f, mk(5, Move.FLAMETHROWER), mk(6, Move.FLAMETHROWER) };
 		Trainer ta = new Trainer("P4-ai", at, 0);

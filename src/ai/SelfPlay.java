@@ -13,62 +13,82 @@ import util.Rng;
 import util.Task;
 
 /**
- * Phase 0 self-play runner: plays K headless Trainer-vs-Trainer battles between two TrainerAI engines
- * and reports win rate, turns, think time, crashes and (optionally) seed reproducibility.
+ * Self-play runner: plays K headless Trainer-vs-Trainer battles between two {@link TrainerAI} engines and reports win
+ * rate, turns, think time, crashes and (optionally) seed reproducibility. It is how the AI is measured and tuned
+ * ({@link Tuner}), and how regressions are caught.
  * <p>
- * The turn loop deliberately mirrors {@code Pokemon.simulateBattle} (the betting sim), which resolves
- * turns in TASK_STATE with tasks going to {@code gp.ui.tasks}. Run it on the game thread with no battle
- * on screen, e.g. from a debug key. It blocks until finished (or {@code maxSeconds}), so expect the game
- * to freeze while it runs. Start with a small battle count and watch the reported think time per decision.
+ * Each matchup is played twice with the engines swapping seats, so team strength cancels out. Everything is seeded: a
+ * battle is reproducible from {@code baseSeed + 7919 * battleIndex}, and the first few battles are replayed and compared
+ * to prove it. Per-seat parameter vectors ({@link Tunables}) let two engines with different constants play each other in
+ * one process.
+ * <p>
+ * The turn loop deliberately mirrors {@code Pokemon.simulateBattle} (the betting sim), which resolves turns in TASK_STATE
+ * with tasks going to {@code gp.ui.tasks}. Run it on the game thread with no battle on screen, e.g. from a debug key. It
+ * blocks until finished (or {@code maxSeconds}), so expect the game to freeze while it runs. Start with a small battle
+ * count and watch the reported think time per decision. On a laptop, keep it from sleeping: a suspended machine lands in
+ * the timings.
  */
 public final class SelfPlay {
 	private SelfPlay() {}
 
 	// ------------------------------------------------------------------ config
 
+	/** Supplies the two teams of each matchup. */
 	public interface TeamSource {
 		/** One matchup: [0] plays seat 1, [1] plays seat 2. Called with Rng already seeded for this pair. */
 		Trainer[] next(int pairIndex, Random sched);
 		String describe();
 	}
 
+	/** What to run. The defaults play 200 seat-swapped battles of AIV2 against itself at HARD on the story trainers. */
 	public static final class Config {
 		public int battles = 200;
 		public long baseSeed = 20260921L;
 		public int maxTurns = 300;
-		public double maxSeconds = 0;          // 0 = no limit
+		/** Wall-clock limit in seconds, 0 = none. */
+		public double maxSeconds = 0;
+		/** The two engines and the difficulty each plays at. */
 		public TrainerAI aiA = AIV2.INSTANCE;
 		public TrainerAI aiB = AIV2.INSTANCE;
 		public int difficultyA = Player.HARD;
 		public int difficultyB = Player.HARD;
-		public TeamSource teams;               // null = storyTrainers()
-		public boolean swapSeats = true;       // each matchup is played twice, engines swapped, to cancel team strength
-		public int determinismSample = 3;      // replay this many of the first battles and compare; 0 = off
+		/** Where teams come from; null = {@link #storyTrainers()}. */
+		public TeamSource teams;
+		/** Play each matchup twice with the engines swapped, to cancel team strength. */
+		public boolean swapSeats = true;
+		/** Replay this many of the first battles and compare the results; 0 = off. */
+		public int determinismSample = 3;
 		public int progressEvery = 10;
-		public boolean aiTrace = false;        // true = keep Print.debug output (slow, huge log)
+		/** true = keep Print.debug output (slow, huge log). */
+		public boolean aiTrace = false;
 		/**
-		 * Phase 6: carry each engine's player model across battles, the way a real player's habits persist across a run.
+		 * Carry each engine's player model across battles, the way a real player's habits persist across a run.
 		 * Off = every battle starts with an empty model (the models then never get past a single battle's worth of data).
 		 * One model per engine describes how the OTHER engine has learned to read it, whichever seat it sits in.
 		 */
 		public boolean persistModels = false;
+		/** Parameter vectors ({@link Tunables} order) installed for engine A / engine B while it decides; null = the defaults. */
 		public double[] paramsA, paramsB;
 	}
 
+	/** The outcome of one battle. Seats are numbered by position: 1 is the first trainer passed in. */
 	public static final class BattleResult {
-		public int winner = -1;                // 0 = seat 1, 1 = seat 2, -1 = draw / timeout
+		/** 0 = seat 1, 1 = seat 2, -1 = draw / timeout. */
+		public int winner = -1;
 		public boolean timedOut;
 		public int turns;
 		public long nanos1, nanos2, maxNanos1, maxNanos2;
 		public int decisions1, decisions2;
+		/** Hash of every chosen move and HP: equal checksums mean the replay played out identically. */
 		public long checksum;
 		public Throwable error;
+		/** How many turns each seat chose a plain switch (swaps) or a pivot move with a planned switch (pivots). */
 		public int swaps1, swaps2, pivots1, pivots2;
 	}
 
 	// ------------------------------------------------------------------ team sources
 
-	/** Real trainers from Trainer.trainers (skips script/scripted-encounter trainers). */
+	/** Real trainers from Trainer.trainers (see {@link #buildPool}). */
 	public static TeamSource storyTrainers() {
 		return new TeamSource() {
 			private List<Trainer> pool;
@@ -90,12 +110,13 @@ public final class SelfPlay {
 		};
 	}
 
+	/** The trainers self-play and the scenario tests draw from: real, battle-ready trainers, without scripted encounters or oversized teams. */
 	public static List<Trainer> buildPool() {
 		List<Trainer> pool = new ArrayList<>();
 		for (Trainer t : Trainer.trainers) {
 			if (t == null || t.team == null || t.team.length == 0 || t.current == null) continue;
 			if (t.current.script) continue; // scripted encounters behave differently (forced hits/misses)
-			if (t.team.length > 6) continue;
+			if (t.team.length > 6) continue; // longer lists are stored multi-badge variants, not teams that are ever battled
 			pool.add(t);
 		}
 		return pool;
@@ -132,6 +153,7 @@ public final class SelfPlay {
 
 	// ------------------------------------------------------------------ tournament
 
+	/** Everything needed to play one battle again for the determinism check. */
 	private static final class Replay {
 		Trainer x, y;
 		TrainerAI ai1, ai2;
@@ -142,6 +164,7 @@ public final class SelfPlay {
 		double[] pv1, pv2;
 	}
 
+	/** Plays the whole tournament described by {@code cfg}, prints the report and returns it. Restores Rng and debug-output state afterwards. */
 	public static SelfPlayReport run(Config cfg) {
 		if (Pokemon.gp == null) throw new IllegalStateException("Pokemon.gp is null: run inside the game (game thread), not standalone");
 
@@ -249,22 +272,26 @@ public final class SelfPlay {
 	}
 
 	/**
-	 * Plays one battle to the end. Mirrors Pokemon.simulateBattle's turn loop. Seats: 1 = src1, 2 = src2.
-	 * Restores gameState, Pokemon.field and Pokemon.createTask afterwards. Never throws: errors go in the result.
+	 * Plays one battle to the end with fresh player models and the default parameters. Mirrors Pokemon.simulateBattle's turn
+	 * loop. Seats: 1 = src1, 2 = src2. Restores gameState, Pokemon.field and Pokemon.createTask afterwards. Never throws:
+	 * errors go in the result.
 	 */
 	public static BattleResult playBattle(Trainer src1, Trainer src2, TrainerAI ai1, TrainerAI ai2,
 			int diff1, int diff2, long seed, int maxTurns) {
 		return playBattle(src1, src2, ai1, ai2, diff1, diff2, seed, maxTurns, null, null);
 	}
-	
+
+	/** As above, with the player models to install on the two seats' trainers (see the full overload) and the default parameters. */
 	public static BattleResult playBattle(Trainer src1, Trainer src2, TrainerAI ai1, TrainerAI ai2,
 			int diff1, int diff2, long seed, int maxTurns, PlayerModel on1, PlayerModel on2) {
 		return playBattle(src1, src2, ai1, ai2, diff1, diff2, seed, maxTurns, on1, on2, null, null);
 	}
 
 	/**
-	 * Phase 6: as above, with the player models to install on the two seats' trainers (what the OPPONENT of that seat has
-	 * learned about it; null = a fresh empty model). The models are mutated as the battle is played.
+	 * The full form. {@code on1} / {@code on2} are the player models to install on the two seats' trainers (what the
+	 * OPPONENT of that seat has learned about it; null = a fresh empty model); they are mutated as the battle is played.
+	 * {@code pv1} / {@code pv2} are {@link Tunables} vectors installed right before that seat decides (and before its forced
+	 * replacement); null = the defaults.
 	 */
 	public static BattleResult playBattle(Trainer src1, Trainer src2, TrainerAI ai1, TrainerAI ai2,
 			int diff1, int diff2, long seed, int maxTurns, PlayerModel on1, PlayerModel on2, double[] pv1, double[] pv2) {
@@ -372,6 +399,8 @@ public final class SelfPlay {
 					slower = slower.trainer.getCurrent();
 				}
 
+				// Pivot switches, as in BattleUI: a side that pivots FIRST uses the slot it planned; a side that pivots
+				// second gets a free switch (the replacement is chosen for the new board).
 				if (faster.trainer.hasValidMembers(slower) && fastCanMove && !slower.trainer.wiped() && faster.hasStatus(Status.SWITCHING)) {
 					faster = faster.trainer.swapOut2(slower, faster.getStatusNum(Status.SWITCHING), faster.lastMoveUsed == Move.BATON_PASS, false);
 				}

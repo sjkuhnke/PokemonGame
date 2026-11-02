@@ -9,17 +9,22 @@ public final class SelfPlayReport {
 	public final String nameA;
 	public final String nameB;
 
-	public int battles;          // battles that finished without an exception
+	/** Battles that finished without an exception. */
+	public int battles;
 	public int winsA, winsB;
-	public int draws;            // both wiped, or timed out
-	public int timeouts;         // subset of draws
+	/** Both wiped, or timed out. */
+	public int draws;
+	/** The part of {@link #draws} that hit the turn limit. */
+	public int timeouts;
 	public int crashes;
 	public long turns;
 	public long decisionsA, decisionsB;
 	public long nanosA, nanosB, maxNanosA, maxNanosB;
 	public int determinismChecked, determinismMismatches;
+	/** True if the wall-clock limit ended the run before all battles were played. */
 	public boolean stoppedEarly;
 	public long wallNanos;
+	/** The first few crash descriptions (with the failing seed). */
 	public final List<String> errors = new ArrayList<>();
 
 	public SelfPlayReport(String nameA, String nameB) {
@@ -27,7 +32,7 @@ public final class SelfPlayReport {
 		this.nameB = nameB;
 	}
 
-	/** @param winner 0 = A won, 1 = B won, -1 = draw/timeout */
+	/** Records one finished battle. {@code winner}: 0 = A won, 1 = B won, -1 = draw/timeout. The rest are A's and B's total think time, decision count and slowest decision. */
 	public void addBattle(int winner, boolean timedOut, int battleTurns,
 			long nA, int dA, long maxA, long nB, int dB, long maxB) {
 		battles++;
@@ -60,10 +65,12 @@ public final class SelfPlayReport {
 		return new double[] { Math.max(0, centre - half), Math.min(1, centre + half) };
 	}
 
+	/** Average milliseconds per decision. */
 	public static double avgMs(long nanos, long decisions) {
 		return decisions == 0 ? 0 : nanos / 1e6 / decisions;
 	}
 
+	/** One line of running totals, printed every few battles. */
 	public String progressLine(int done, int total) {
 		return String.format(Locale.ROOT, "[self-play] %d/%d  %s %d - %d %s  draws %d  crashes %d",
 				done, total, nameA, winsA, winsB, nameB, draws, crashes);

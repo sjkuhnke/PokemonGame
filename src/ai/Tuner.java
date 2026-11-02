@@ -8,21 +8,26 @@ import util.Print;
 import util.Rng;
 
 /**
- * Phase 8 (tuning half): coordinate ascent over {@link Tunables} using seat-swapped self-play.
+ * Coordinate ascent over {@link Tunables} using seat-swapped self-play.
  * <p>
  * For each parameter, a candidate vector (the incumbent with that one value stepped up, then down) plays the incumbent in
  * chunks of battles. Both engines are {@code AIV2.INSTANCE}; the only difference is the parameter vector installed before each
- * seat decides ({@code SelfPlay.playBattle}'s pv1/pv2). After each chunk a Wilson interval on the candidate's score decides:
- * lower bound above 0.5 = accept (and try the same direction again, up to 3 times); upper bound below 0.5 = reject; neither
- * by maxBattles = reject (inconclusive keeps the incumbent). Pairs of teams are seeded, so every test is reproducible.
+ * seat decides ({@code SelfPlay.playBattle}'s pv1/pv2). After each chunk, once at least {@code minBattles} have been played,
+ * a Wilson interval on the candidate's score decides: lower bound above 0.5 = accept (and try the same direction again, up
+ * to 3 times); upper bound below 0.5 = reject; a candidate whose optimistic bound is still below {@code futilityUpper} after
+ * {@code futilityAfter} battles is stopped early; anything undecided at {@code maxBattles} is rejected (inconclusive keeps
+ * the incumbent). Pairs of teams are seeded, so every test is reproducible. The incumbent is printed whenever it changes.
  * <p>
- * Statistics are the limit, not speed: a 5-point edge needs well over a thousand battles to show. Treat a short run as a
- * screen for large effects and a long overnight run (maxBattles in the thousands) as the real tuning. Self-play measures
- * strength against this same engine, not against a human; keep the player-facing probability dumps as the sanity check.
+ * Statistics are the limit, not speed: a 5-point edge needs well over a thousand battles to show, and checking the interval
+ * after every chunk makes false accepts likely, so use a high {@code z} (2.8 or more), a large {@code minBattles}, and confirm
+ * every accept with a fresh-seed run against the defaults before adopting it. Treat a short run as a screen for large effects.
+ * Self-play measures strength against this same engine, not against a human; keep the player-facing probability dumps as the
+ * sanity check. A tuned vector equal to {@link Tunables#defaults()} means nothing was found, which is a valid result.
  */
 public final class Tuner {
 	private Tuner() {}
 
+	/** What to tune and how much evidence to demand. */
 	public static final class Settings {
 		/** Battles played between interval checks; rounded up to a whole matchup (two seatings). */
 		public int chunk = 30;
@@ -43,11 +48,11 @@ public final class Tuner {
 		public double stepFrac = 0.25;
 		/** Names from Tunables.all() to tune, null = all. */
 		public List<String> only;
-		// no accept/reject before this many battles
+		/** No accept/reject verdict before this many battles. */
 		public int minBattles = 200;
-		// after this many battles...
+		/** After this many battles... */
 		public int futilityAfter = 600;
-		// ...stop if even the optimistic bound is below this
+		/** ...stop the candidate if even its optimistic bound is below this score. */
 		public double futilityUpper = 0.55;
 	}
 
@@ -107,7 +112,7 @@ public final class Tuner {
 		return best;
 	}
 
-	/** +1 accept, -1 reject, 0 inconclusive (treated as reject by the caller). */
+	/** Plays chunks until a verdict: +1 accept, -1 reject, 0 inconclusive or futile (treated as reject by the caller). */
 	private static int test(Settings s, double[] cand, double[] inc, int[] cursor, Tally t, long deadline) {
 		while (t.n < s.maxBattles) {
 			play(s, cand, inc, s.chunk, cursor, t, deadline);
@@ -122,6 +127,7 @@ public final class Tuner {
 		return 0;
 	}
 
+	/** Plays about {@code battles} battles (whole matchups, both seatings) of candidate vs incumbent and adds them to {@code t}. Crashed battles are printed with a stack trace and skipped. */
 	private static void play(Settings s, double[] cand, double[] inc, int battles, int[] cursor, Tally t, long deadline) {
 		int done = 0;
 		while (done < battles && System.nanoTime() <= deadline) {

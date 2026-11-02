@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import pokemon.*;
 
 /**
- * Phase 6 test support (lives with SelfPlay, not in the shipped decision path): fixed-habit opponents for measuring
- * whether the AI's player model actually exploits a habit. Seated as the "player" against {@link AIV2} in self-play.
+ * Fixed-habit opponents for measuring whether the AI's player model actually exploits a habit. Test support that lives
+ * with {@link SelfPlay}, not part of the shipped decision path. Seated as the "player" against {@link AIV2} in self-play.
  * <ul>
  * <li>{@link Style#SAFE_SWITCHER}: whenever the foe's active threatens a KO on it, switches to the replacement
  * {@link ReplacementChooser} likes best; otherwise clicks its best attack. The "always plays safe" player.</li>
@@ -38,7 +38,7 @@ public final class ScriptedAI implements TrainerAI {
 
 		if (style == Style.SAFE_SWITCHER && self.trainer.canSwitch(foe) && SackAnalysis.threatens(foe, self, Pokemon.field)) {
 			int slot = ReplacementChooser.pickSlot(self.trainer, foe, Pokemon.field);
-			if (slot >= 0) return new MoveDecision(Move.GROWL, Status.SWAP, slot + 1); // MoveDecision slot encoding is 1-based (spec §2)
+			if (slot >= 0) return new MoveDecision(Move.GROWL, Status.SWAP, slot + 1); // MoveDecision's switch slot is 1-based
 		}
 		Move best = bestAttack(self, foe, Pokemon.field);
 		return new MoveDecision(best != null ? best : valid.get(0));

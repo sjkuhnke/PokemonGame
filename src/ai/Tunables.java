@@ -7,20 +7,27 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Phase 8 (tuning half): registry of the placeholder constants the earlier phases left for self-play tuning, and a way to
- * install a whole parameter vector at once. The constants are plain non-final statics in their own classes (drop the
- * {@code final}; see PHASE8_CHANGES_PART2.md); this class finds them by reflection, so no call site changes.
+ * Registry of the numeric constants the AI's behavior depends on (evaluator, weights, replacement, difficulty-independent
+ * config defaults, the switch tax and the last-ditch bonus), and a way to install a whole parameter vector at once so
+ * self-play can pit two settings against each other. The constants are plain non-final statics in their own classes; this
+ * class finds them by reflection, so no call site changes. To register a new constant: make it a non-final static and add a
+ * line to the list below with its search range.
  * <p>
  * A vector is a {@code double[]} in {@link #all()} order. {@link #apply(double[])} writes it into the statics; null means the
- * defaults captured when this class first loaded (so load it before anything has mutated them). SelfPlay applies a seat's
- * vector right before that seat decides, which is how two engines with different constants play each other in one process.
- * The SimCache tables hold no tunable-dependent values (edges and damage ranges only), so switching vectors never needs a clear.
- * Game thread only.
+ * defaults captured when this class first loaded (so load it before anything has mutated them). {@link SelfPlay} applies a
+ * seat's vector right before that seat decides, which is how two engines with different constants play each other in one
+ * process. The {@link SimCache} tables hold no tunable-dependent values (edges and damage ranges only), so switching vectors
+ * never needs a clear. Game thread only.
+ * <p>
+ * The {@code AIConfig.D_*} entries are the defaults a new {@link AIConfig} is built from, so a vector affects configs created
+ * after it is applied.
  */
 public final class Tunables {
 	private Tunables() {}
 
+	/** One registered constant: its field, search range and default. */
 	public static final class Param {
+		/** {@code Class.FIELD}, e.g. {@code Evaluator.ESCAPE_COST}. */
 		public final String name;
 		public final double lo, hi, def;
 		/** Multiplicative steps (positive scale-free weights) vs additive steps (fractions). */
@@ -96,6 +103,7 @@ public final class Tunables {
 		ALL = Collections.unmodifiableList(l);
 	}
 
+	/** The registered parameters, in vector order. */
 	public static List<Param> all() {
 		return ALL;
 	}

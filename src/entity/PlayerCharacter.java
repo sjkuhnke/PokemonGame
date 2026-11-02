@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import ai.Phase8DelayedEffectTests;
 import object.*;
 import overworld.*;
 import util.*;
@@ -313,7 +314,8 @@ public class PlayerCharacter extends Entity {
 		}
 		if (keyH.calcPressed) {
 			keyH.calcPressed = false;
-			Item.useCalc(p.getCurrent(), null, null, true);
+			//Item.useCalc(p.getCurrent(), null, null, true);
+			Phase8DelayedEffectTests.runAll();
 		}
 		
 		checkHotkeys();

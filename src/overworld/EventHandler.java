@@ -1000,7 +1000,11 @@ public class EventHandler {
 			if (hit(195,36,50)) teleport(194, 36, 50,true);
 			
 			// AT 6A -> 1A
-			if (p.flag[7][15] && hit(196,50,51)) teleport(191, 50, 73, false);
+			if (p.flag[7][15] && hit(196,50,51)) {
+				teleport(191, 50, 73, false);
+				// reset here because if you fail the other dragon it'll softlock when re-entering gauntlet
+				gp.puzzleM.setup(true, false); // reset puzzles without setting them up
+			}
 			
 			// Route 44 -> Deep Chasm Ladder
 			if (hit(144,79,79)) teleport(197, 83, 83,true);
@@ -1013,8 +1017,12 @@ public class EventHandler {
 			if (hit(200,48,53)) toggleSpikes(200);
 			if (hit(200,60,16)) toggleSpikes(200);
 			
-			// AT -5A -> -0A
-			if (p.flag[7][14] && hit(202,50,51)) teleport(197, 50, 75, false);
+			// Chasm -5A -> -0A
+			if (p.flag[7][14] && hit(202,50,51)) {
+				teleport(197, 50, 75, false);
+				// reset here because if you fail the other dragon it'll softlock when re-entering gauntlet
+				gp.puzzleM.setup(false, false); // reset puzzles without setting them up
+			}
 			
 			// Cutscene with Arthra after catching a legendary
 			if (!gp.player.p.flag[7][17] && hit(186,33,42)) gp.player.interactNPC(gp.npc[186][0], false);

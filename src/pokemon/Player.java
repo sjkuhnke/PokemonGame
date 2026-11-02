@@ -64,8 +64,9 @@ public class Player extends Trainer implements Serializable {
 	public String[] boxLabels;
 	public Pokemon[] tempTeam;
 	/**
-	 * Phase 6 (§7.11): what the Trainer AI has learned about how this player plays - a fixed ~0.6 KB table, saved with
-	 * the player so trainers get harder over the run. null in saves from before Phase 6 (created on first use).
+	 * What the Trainer AI has learned about how this player plays: a fixed table of about 1 KB, saved with the player so
+	 * trainers get harder over the run. null in saves from before the model existed (created on first use).
+	 * See {@link ai.PlayerModel}.
 	 */
 	public PlayerModel habits;
 	private int numBattled;
