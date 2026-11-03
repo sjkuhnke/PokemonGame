@@ -1,7 +1,9 @@
 package ai;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -151,21 +153,20 @@ public final class AIV2 implements TrainerAI {
 		if (cfg.enableSacking && root.ai.active().trainer.canSwitch(root.player.active())) {
 			ActionGen.BenchPlan bp = ActionGen.benchPlan(root, cfg, weights);
 			sackOnly = bp.sackOnly();
-			sacks = new java.util.LinkedHashSet<>(bp.sacks);
+			sacks = new LinkedHashSet<>(bp.sacks);
+			boolean[] threat = SackAnalysis.threatColumns(root, P);
 			if (!sacks.isEmpty()) {
-				boolean[] threat = SackAnalysis.threatColumns(root, P);
 				if (!sackOnly.isEmpty()) {
 					guard = SackAnalysis.applyMinGain(A, M, threat, sackOnly, cfg.sackMinGain);
 					A = guard.A;
 					M = guard.M;
 				}
-				// Second layer: no sack that only returns the same mon to the same position (see SackAnalysis.dropSameMonReturns).
-				SackAnalysis.Filtered sm = SackAnalysis.dropSameMonReturns(root, A, M, P, threat, sacks, cfg, guard);
-				if (sm != null) {
-					guard = sm;
-					A = sm.A;
-					M = sm.M;
-				}
+			}
+			SackAnalysis.Filtered sm = SackAnalysis.dropSameMonReturns(root, A, M, P, threat, sacks, cfg, guard);
+			if (sm != null) {
+				guard = sm;
+				A = sm.A;
+				M = sm.M;
 			}
 		}
 
@@ -426,7 +427,7 @@ public final class AIV2 implements TrainerAI {
 		sb.append("[AIV2] ").append(self).append(" (turn ").append(Pokemon.field.turns).append(")\n");
 		Integer[] order = new Integer[A.size()];
 		for (int i = 0; i < order.length; i++) order[i] = i;
-		java.util.Arrays.sort(order, (i, j) -> Double.compare(x[j], x[i])); // highest probability first
+		Arrays.sort(order, (i, j) -> Double.compare(x[j], x[i])); // highest probability first
 		for (int idx : order) {
 			sb.append(String.format(Locale.ROOT, "    %-34s %5.1f%%\n", rowLabel(A.get(idx), sacks), x[idx] * 100));
 		}
@@ -487,8 +488,8 @@ public final class AIV2 implements TrainerAI {
 		Pokemon a0 = root.ai.active(), f0 = root.player.active();
 		StringBuilder sb = new StringBuilder("[AIV2] branch detail for ").append(self).append(":\n");
 		sb.append(String.format(Locale.ROOT, "  START  self hp=%d/%d status=%s stages=%s magicReflect=%b  |  foe hp=%d/%d status=%s stages=%s magicReflect=%b\n",
-				a0.currentHP, a0.getStat(0), a0.status, java.util.Arrays.toString(a0.statStages), a0.hasStatus(Status.MAGIC_REFLECT),
-				f0.currentHP, f0.getStat(0), f0.status, java.util.Arrays.toString(f0.statStages), f0.hasStatus(Status.MAGIC_REFLECT)));
+				a0.currentHP, a0.getStat(0), a0.status, Arrays.toString(a0.statStages), a0.hasStatus(Status.MAGIC_REFLECT),
+				f0.currentHP, f0.getStat(0), f0.status, Arrays.toString(f0.statStages), f0.hasStatus(Status.MAGIC_REFLECT)));
 		for (int c : cols) {
 			Action p0 = P.get(c);
 			double yc = (y != null && c < y.length) ? y[c] : Double.NaN;
@@ -504,7 +505,7 @@ public final class AIV2 implements TrainerAI {
 							"      p=%.2f  self hp=%d/%d status=%s stages=%s fainted=%b  |  foe hp=%d/%d status=%s fainted=%b\n",
 							br.prob,
 							aiMon == null ? -1 : aiMon.currentHP, aiMon == null ? -1 : aiMon.getStat(0),
-							aiMon == null ? "?" : aiMon.status, aiMon == null ? "?" : java.util.Arrays.toString(aiMon.statStages),
+							aiMon == null ? "?" : aiMon.status, aiMon == null ? "?" : Arrays.toString(aiMon.statStages),
 							aiMon != null && aiMon.fainted,
 							foeMon == null ? -1 : foeMon.currentHP, foeMon == null ? -1 : foeMon.getStat(0),
 							foeMon == null ? "?" : foeMon.status, foeMon != null && foeMon.fainted));
@@ -522,7 +523,7 @@ public final class AIV2 implements TrainerAI {
 		Integer[] order = new Integer[P.size()];
 		for (int j = 0; j < order.length; j++) order[j] = j;
 		final double[] yy = y;
-		java.util.Arrays.sort(order, (p, q) -> Double.compare(yy != null && q < yy.length ? yy[q] : 0, yy != null && p < yy.length ? yy[p] : 0));
+		Arrays.sort(order, (p, q) -> Double.compare(yy != null && q < yy.length ? yy[q] : 0, yy != null && p < yy.length ? yy[p] : 0));
 		for (int j : order) {
 			for (Action a : A) {
 				for (Branch br : BattleSimulator.simulateTurn(root, a, P.get(j), cfg)) {
@@ -595,7 +596,7 @@ public final class AIV2 implements TrainerAI {
 		final double eps = 1e-9;
 		for (int i = 0; i < M.length; i++) {
 			if (drop[i]) continue;
-			java.util.List<Integer> group = new java.util.ArrayList<>();
+			List<Integer> group = new ArrayList<>();
 			for (int k = i; k < M.length; k++) {
 				if (drop[k]) continue;
 				boolean same = true;

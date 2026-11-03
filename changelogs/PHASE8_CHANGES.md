@@ -90,9 +90,9 @@ All pass: Phase 3 (T4-T32), Phase 5, Phase 6, Phase 8, invariance (10,000 trials
 - Optional: model the free-switch override in the simulator (the matrix prices a planned pivot slot even when the AI moves second).
 - Not done, no measured need: `SwitchInScorer` / `shallowClone` cost, Tier 1 fast cells.
 - The HARD vs NORMAL criterion is only weakly demonstrated in self-play (about 51-53% with the tax). Scripted-opponent exploitation is flat at the ceilings tried; mirror-team scripted runs would be a cleaner test.
-- Yawn / Future Sight / active-mon sleep: see section 11.
 
-
+## 11. Delayed effects: Yawn, sleep and Future Sight
+ 
 Status: written, **not yet compiled or run**. Fill in the results lines below after `Phase8DelayedEffectTests.diagnose()` and `runAll()`.
  
 ### Problem
@@ -121,8 +121,12 @@ The trainer never clicked Yawn or Future Sight. Both rows scored the same as doi
 ### Tests (`Phase8DelayedEffectTests`)
 `diagnose()` prints the Yawn and Future Sight rows against a do-nothing row with both terms off (expect differences near 0). `runAll()`: Yawn becomes `DROWSY` after turn 1 and `ASLEEP` after turn 2 in the simulator; `canFallAsleep` gives the right answer for seven gates (healthy, burned, Insomnia, Psychic, Safeguard, Electric Terrain, Lum Berry) and leaves the real mon, its item and `Pokemon.field` untouched; eval prices `DROWSY`, `YAWNING`, `ASLEEP`, Sleep Talk, Insomnia and wounded mons; Future Sight is queued, priced, and 0 into a Dark target; the Yawn and Future Sight rows beat a pass row in every foe-move column; Yawn into an Insomnia foe is not rewarded; `DROWSY` does not follow a mon through a switch. `dump()` prints three full mixed strategies.
  
-Results (fill in): diagnose = ___ ; runAll = ___ ; Phase 3 to 8 suites re-run = ___ ; self-play A/B with `W_SLEEP` 0 vs 1 = ___.
- 
+Results:
+- `diagnose()` (terms off): Yawn and Future Sight tie with a pass row in every column (diff 0.00; one Future Sight switch column -1.77). Confirms the diagnosis.
+- `runAll()`: 10/10 pass (after fixing two test-setup bugs: terrain is set with `Field.setTerrain`, not `setEffect`, and inside a `SimContext` scope because it announces itself through `Task.addTask`).
+- `dump()` (terms on), Yawn + Tackle vs Tackle: Yawn row +28.0 over the terms-off value (exactly the `DROWSY` value), Future Sight +10.5; both now dominate Tackle in every column. The mixed strategy was 100% `SWITCH slot 2` because that bench mon beats every move in every column in the test fixture, so `dump()` now also prints AI-move-rows-only and strong-attack (Earthquake) scenarios.
+- Self-play, sleep + Future Sight terms ON vs OFF, 400 battles on matchups containing Yawn / Future Sight / Rest: 53.1% (95% CI 48.2 to 58.0%), no significant difference.
+- `Tuner` on `SLEEP_TURN_VALUE`, `SLEEP_HOLD`, `DROWSY_LAND`, `FUTURE_SIGHT_HOLD` (one step up and down each, 520 to 920 battles per step): every step inconclusive, defaults kept. The engine is insensitive to these constants, as in Phase 8; the shipped defaults stand.
 ### Assumptions to confirm
 1. `Field.FieldEffect` has `bp`, `stat`, `mod`, `level`, `crit` and `ability` with types matching `takeFutureSight`'s parameters (they are assigned in `move()`, so they exist).
 2. Future Sight lands on whoever is out when it resolves; the code values it on the mon that is out now.
@@ -130,6 +134,33 @@ Results (fill in): diagnose = ___ ; runAll = ___ ; Phase 3 to 8 suites re-run = 
 4. `Phase4Tests.mk` / `duel` / `Duel` stay package-private statics.
 6. `Pokemon.clone()` keeps `trainer` (confirmed in the code), so Safeguard on the side's field-effect list is visible to the clone.
 5. `Pokemon.type1` / `type2` and `ability` are assignable from the test.
-### Found while reading (not changed)
-- `takeFutureSight`: `ICY_SCALES || MULTISCALE && foe.currentHP == foe.getStat(0)` tests the ATTACKER's HP (`foe`), not the target's, and Icy Scales halves unconditionally. Looks unintended.
-- `Evaluator.eval` runs after `simulateTurn` has restored `Pokemon.field` to the real battle's field. Terms that call methods reading the static (`isGrounded`, `takeFutureSight`) must install `s.field` first, as the new code does.
+ 
+Status: written and measured. `W_BUFFER = 0` is the shipped default, so none of the buffer code is active.
+ 
+### Problem
+Healing moves (Recover and similar) were picked almost every time the mon was hurt, especially when slower, even against foes that hit weakly.
+ 
+### Diagnosis (`Evaluator.breakdown` + `Phase8HealingDiagnosis`)
+`breakdown` splits an eval into its weighted terms (`TERMS`: material, matchup, hazard, status, field, tempo, forced, charge, pending, sleep, buffer; `runAll` checks the terms sum to `eval`). `Phase8HealingDiagnosis.diagnose()` gives the AI Recover + Earthquake against a Tackle or Flamethrower foe, faster and slower, at 100/70/50/30% HP, in three setups (real weights with full benches, all mon weights forced to 1.0, 1v1 with every bench mon fainted). Findings:
+- A heal at full HP is never rewarded (no phantom value).
+- With full benches the matchup term is pinned at -60 in every weak-foe cell: the foe's best bench answer has edge about -1, and `-90 + ESCAPE_COST (30) = -60`. The cap's escape table is built from full-HP duels, so it cannot see the AI's current HP. That leaves linear `material`, where a heal is worth `heal% * weight` and an attack `damage% * foe weight`, whether or not the foe threatens anything.
+- Mon weights decide it when the AI is faster (real weights: AI active 0.95, foe active 0.44; Recover 100% at 50% HP; with both forced to 1.0 Earthquake wins about 82%).
+- When slower, Recover is the steady row against the foe's switch columns (Earthquake can hit a resistant switch-in), so minimax prefers it even at equal weights.
+- In 1v1 (no cap) the evaluator behaves well: Earthquake wins at every HP, and a slower mon at 30% HP correctly heals (matchup +76). So the matchup term already prices danger and progress; it goes blind only when the foe has a bench.
+- Not fixed by anything here: slower vs a strong foe at 100% HP still stalls (Recover -128 vs Earthquake -147 in a two-row matrix), and the solver's preference for rows that do not depend on the foe's choice.
+### Buffer v1 (removed)
+`W_BUFFER`: discount the part of each active mon's HP the foe cannot take before the duel is decided (needed HP sized from hits-to-win and speed), applied to both sides. It fixed the target rows but taxed progress: damaging the foe shortened the race, lowered the AI's needed HP and discounted the AI's HP, and discounting the foe's HP cancelled the credit for removing it (Earthquake vs a switch-in fell from +49.9 to -14.5; a correct faster / Flamethrower / 30% HP row flipped to Recover). Self-play, 400 battles on heal-move teams: 38.5% (CI 33.9 to 43.4%), significantly worse.
+ 
+### Buffer v2 (kept, off)
+One-sided (AI's own active mon only) and independent of the foe's HP and speed: `needed = BUFFER_FLOOR (0.10) + BUFFER_TURNS (1.5) * foeHit * BUFFER_SAFETY (1.25)`, HP above it discounted by `BUFFER_DISCOUNT (0.75)`. `runAll()` asserts the target rows (no heal when unthreatened), the row v1 broke, and that damaging the foe is worth exactly the same with the buffer on or off. `diagnoseBuffer()` matches the predictions (switch columns back to baseline, Earthquake wins every faster Tackle row, Flamethrower rows unchanged, the slower stall unchanged).
+ 
+Self-play, `confirmBuffer(2000)`, buffer ON vs OFF:
+| Teams | Score | 95% CI | |
+|---|---|---|---|
+| Matchups containing Recover / Rest / Wish (1000 found, 0 fell through) | 50.6% | 48.5 to 52.8% | no significant difference |
+| Plain random competitive teams | 47.0% | 44.8 to 49.2% | significantly worse |
+ 
+Not adopted. Reading: the buffer is neutral where it is supposed to act and costs about 3 points elsewhere, so the loss comes from non-heal decisions. Suspected cause: the need is sized from the foe's ACTIVE mon only, so a fresh mon in front of a weak hitter is docked up to about 40 to 47 points while the same mon in front of a strong hitter is not, which biases switching, sacking and replacement, and treats HP as spare when the foe's bench will threaten it later. The target effect and the harm scale together (the target rows only flip at about 0.5 weight or more), so lowering `W_BUFFER` / `BUFFER_DISCOUNT` does not separate them. `tuneBuffer` was not run for that reason.
+ 
+### Next, if the feel problem is worth more work
+Scope the adjustment to heal rows only (a `MatrixBuilder` cell adjustment, so it cannot touch other decisions) and size the threat from the foe's whole team, not its active mon. The tools for it are in place: `W_BUFFER`, `BUFFER_*` and `BUFFER_TURNS` are registered in `Tunables`; `DelayedEffectTuning` (`confirmBuffer`, `tuneBuffer`, `FilteredTeams`) runs the A/B and the tuner.

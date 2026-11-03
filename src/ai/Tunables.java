@@ -97,6 +97,19 @@ public final class Tunables {
 			l.add(new Param(AIConfig.class, "D_W_PENDING", 0.2, 3.0, true));
 			l.add(new Param(AIConfig.class, "D_SWITCH_TAX", 0, 40, false));
 			l.add(new Param(AIConfig.class, "D_LAST_DITCH_BONUS", 0, 50, false));
+			// Phase 8 addendum: delayed effects (Yawn / sleep / Future Sight) and the HP buffer. W_SLEEP and W_BUFFER are on/off
+			// switches for A/B runs (SLEEP_MEAN_TURNS and SLEEP_TALK_FACTOR are left out: the first is redundant with
+			// SLEEP_TURN_VALUE, the second rarely matters). The BUFFER_* values only do anything while W_BUFFER > 0.
+			l.add(new Param(Evaluator.class, "W_SLEEP", 0.0, 2.0, false));
+			l.add(new Param(Evaluator.class, "SLEEP_TURN_VALUE", 5, 60, true));
+			l.add(new Param(Evaluator.class, "SLEEP_HOLD", 0.2, 1.0, false));
+			l.add(new Param(Evaluator.class, "DROWSY_LAND", 0.2, 1.0, false));
+			l.add(new Param(Evaluator.class, "FUTURE_SIGHT_HOLD", 0.2, 1.2, false));
+			l.add(new Param(Evaluator.class, "W_BUFFER", 0.0, 1.5, false));
+			l.add(new Param(Evaluator.class, "BUFFER_DISCOUNT", 0.2, 1.0, false));
+			l.add(new Param(Evaluator.class, "BUFFER_TURNS", 0.5, 4.0, true));
+			l.add(new Param(Evaluator.class, "BUFFER_SAFETY", 0.8, 2.5, true));
+			l.add(new Param(Evaluator.class, "BUFFER_FLOOR", 0.0, 0.4, false));
 		} catch (ReflectiveOperationException e) {
 			throw new IllegalStateException("Tunables: " + e, e);
 		}

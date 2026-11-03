@@ -260,6 +260,7 @@ Drillatron ->
 Wormite ->
 Wormbot ->
 Wormatron ->
+Dragowrath -> Anubisyan/Obsydious
 
 Reddit posts:
 Shookwat line

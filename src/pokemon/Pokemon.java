@@ -25,6 +25,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Queue;
@@ -33,15 +34,19 @@ import java.util.Scanner;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.GrayFilter;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 
 import org.json.JSONObject;
@@ -107,6 +112,8 @@ public class Pokemon implements Serializable {
 	private static String[] categories = new String[MAX_POKEMON];
 	private static boolean[][] tms = new boolean[MAX_POKEMON][107];
 	private static EggGroup[][] egg_groups = new EggGroup[MAX_POKEMON][2];
+	private static int[] exp_groups = new int[MAX_POKEMON];
+	private static int[] exp_yields = new int[MAX_POKEMON];
 	private static int[][] sprite_center = new int[MAX_POKEMON][2];
 	
 	public static ArrayList<Integer> rivalIndices = new ArrayList<>();
@@ -246,7 +253,7 @@ public class Pokemon implements Serializable {
 		}
 		this.weight = getWeight();
 		
-		expMax = setExpMax();
+		setExpMax();
 		exp = 0;
 		
 		currentHP = this.getStat(0);
@@ -305,7 +312,7 @@ public class Pokemon implements Serializable {
 		setAbility(abilitySlot);
 		this.weight = getWeight();
 		
-		expMax = setExpMax();
+		setExpMax();
 		
 		catchRate = getCatchRate();
 		
@@ -805,6 +812,22 @@ public class Pokemon implements Serializable {
 		return new ArrayList<>(Arrays.asList(egg_groups[id - 1]));
 	}
 	
+	public int getExpGroup() {
+		return getExpGroup(id);
+	}
+	
+	public static int getExpGroup(int id) {
+		return exp_groups[id - 1];
+	}
+	
+	public int getExpYield() {
+		return getExpYield(id);
+	}
+	
+	public static int getExpYield(int id) {
+		return exp_yields[id - 1];
+	}
+	
 	public int getLevel() {
 		return level;
 	}
@@ -818,7 +841,7 @@ public class Pokemon implements Serializable {
 		++level;
 		awardHappiness(5, false);
 		
-		expMax = setExpMax();
+		setExpMax();
 		setStats();
 		int nHP = this.getStat(0);
 		int amt = nHP - oHP;
@@ -834,27 +857,8 @@ public class Pokemon implements Serializable {
 		this.checkEvo(player, check.size());
 	}
 	
-	public int setExpMax() {
-		if (level >= 1 && level < 20) {
-			return level * 2;
-		} else if (level >= 20 && level < 30) {
-			return (int) (level * 2.5);
-		} else if (level >= 30 && level < 40) {
-			return level * 3;
-		} else if (level >= 40 && level < 50) {
-			return (int) (level * 3.5);
-		} else if (level >= 50 && level < 60) {
-			return level * 4;
-		} else if (level >= 60 && level < 70) {
-			return (int) (level * 4.5);
-		} else if (level >= 70 && level < 80) {
-			return level * 5;
-		} else if (level >= 80 && level < 90) {
-			return (int) (level * 5.5);
-		} else if (level >= 90) {
-			return level * 6;
-		}
-		return 0;
+	public void setExpMax() {
+		expMax = ExpGroup.toNext(getExpGroup(), level);
 	}
 	
 	public int checkMove(int index, int level) {
@@ -3122,11 +3126,6 @@ public class Pokemon implements Serializable {
 	private double getHPAmount(double fraction) {
 		return Math.max(this.getStat(0) * fraction, 1);
 	}
-
-	private int getxpReward() {
-		int result = (int) Math.ceil(this.level * (trainerOwned() ? 1.5 : 1.0));
-		return result;
-	}
 	
 	private String announceMove(Move move, Pokemon foe, MoveContext ctx) {
 		if (move == Move.FAILED_SUCKER) move = Move.SUCKER_PUNCH;
@@ -3406,7 +3405,11 @@ public class Pokemon implements Serializable {
 		return !this.cloned && !SimContext.active();
 	}
 	
-	public void awardExp(int amt) {
+	public int calcExpGain(Pokemon recipient, int participants) {
+		return ExpGroup.gain(this.getExpYield(), this.level, recipient.level, participants, this.trainerOwned(), recipient.item == Item.LUCKY_EGG);
+	}
+	
+	public void awardExp(Pokemon foe) {
 		if (!this.playerOwned()) return;
 		if (this.cloned) return;
 		Player player = this.getPlayer();
@@ -3414,24 +3417,16 @@ public class Pokemon implements Serializable {
 		player.handleExpShare();
 		int numBattled = player.getBattled();
 		if (numBattled == 0) return;
-		int expPerPokemon = amt / numBattled;
-		int remainingExp = amt % numBattled;
-
+		
 		// Award experience points to each battled Pokemon
 		for (Pokemon p : player.getTeam()) {
 			if (p != null && p.battled) {
-				int expAwarded = expPerPokemon;
-				if (remainingExp > 0) {
-					expAwarded++;
-					remainingExp--;
-				}
+				int expAwarded = foe.calcExpGain(p, numBattled);
 				if (p.level < 100 && !p.isFainted() && !((p.id == 233 || p.id == 234) && !player.flag[7][21])) {
-					if (p.item == Item.LUCKY_EGG) expAwarded = (int) Math.ceil(expAwarded * 1.5);
-					
 					int totalExp = p.exp + expAwarded;
 					String flavor = p.item == Item.LUCKY_EGG ? "a boosted " : p.item == Item.EXP_SHARE && !p.visible ? "a shared " : "";
 					Task t = Task.addTask(Task.EXP, p.nickname + " gained " + flavor + expAwarded + " experience points!", p);
-					t.setFinish(Math.min(totalExp, expMax));
+					t.setFinish(Math.min(totalExp, p.expMax));
 					
 					while (totalExp >= p.expMax && p.level < 100) {
 						totalExp -= p.expMax;
@@ -6286,7 +6281,7 @@ public class Pokemon implements Serializable {
 		
 		if (this.playerOwned() && this.recordsStats() && this.getPlayer().nuzlocke) gp.saveScum(this.toString() + " died to " + foe.toString() + (foe.trainerOwned() ? " (" + foe.trainer.getName() + ")": "" + " (Save Scum)"));
 		
-		foe.awardExp(getxpReward());
+		foe.awardExp(this);
 		if (this.recordsStats()) field.knockouts++;
 		if (this.recordsStats() && foe != null && foe.playerOwned()) {
 			foe.getPlayer().recordKill(foe, this);
@@ -8105,8 +8100,12 @@ public class Pokemon implements Serializable {
 	public String getNature() {
 		return this instanceof Egg ? "??" : nat.toString();
 	}
+	
+	public JPanel showSummary(Field field) {
+		return showSummary(field, null, null, null);
+	}
 
-	public JPanel showSummary(Field field, JPanel panel) {
+	public JPanel showSummary(Field field, List<Pokemon> recipients, Pokemon selected, Player player) {
 		JPanel teamMemberPanel = new JPanel();
 		teamMemberPanel.setLayout(new BoxLayout(teamMemberPanel, BoxLayout.Y_AXIS));
 		
@@ -8256,29 +8255,12 @@ public class Pokemon implements Serializable {
 		
 		teamMemberPanel.add(movesPanel);
 		
-		JButton takeButton = new JButton("N/A");
 		JPanel itemPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel itemDescPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel itemLabel = new JLabel("N/A");
 		JLabel itemDesc = new JLabel("N/A");
 		if (this.item != null) {
-			takeButton.setText("Take " + item.toString());
 			itemLabel.setText(item.toString());
-			takeButton.addActionListener(e -> {
-				int option = JOptionPane.showOptionDialog(null,
-						"Would you like to take " + this.nickname + "'s " + this.item + "?",
-						"Take " + this.item + "?",
-						JOptionPane.YES_NO_OPTION,
-						JOptionPane.QUESTION_MESSAGE,
-						null, null, null);
-				if (option == JOptionPane.YES_OPTION) {
-					//Item old = this.item;
-					//player.bag.add(old);
-					this.item = null;
-					SwingUtilities.getWindowAncestor(teamMemberPanel).dispose();
-					if (panel != null) SwingUtilities.getWindowAncestor(panel).dispose();
-				}
-			});
 			itemPanel.add(new JLabel(new ImageIcon(this.item.getImage())));
 			itemPanel.add(itemLabel);
 			itemDesc.setText("<html>" + Item.breakString(this.item.getDesc(), Math.max(this.ability.desc.length() - 4, 50)).replace("\n", "<br>") + "</html>");
@@ -8300,11 +8282,64 @@ public class Pokemon implements Serializable {
 			}
 		});
 		
+		if (recipients != null && !recipients.isEmpty()) {
+			teamMemberPanel.add(buildExpYieldPanel(recipients, selected, player));
+		}
+		
 		teamMemberPanel.add(bottomPanel);
 		
 		teamMemberPanel.add(Box.createHorizontalGlue());
 
 		return teamMemberPanel;
+	}
+	
+	private JPanel buildExpYieldPanel(List<Pokemon> recipients, Pokemon selected, Player player) {
+		JPanel box = new JPanel();
+		box.setLayout(new BoxLayout(box, BoxLayout.Y_AXIS));
+		box.setBorder(BorderFactory.createTitledBorder("Experience if KO'd (" + (this.trainerOwned() ? "trainer" : "wild") + ")"));
+		
+		JComboBox<Pokemon> who = new JComboBox<>(recipients.toArray(new Pokemon[0]));
+		if (selected != null) who.setSelectedItem(selected);
+		JSpinner sharing = new JSpinner(new SpinnerNumberModel(1, 1, 6, 1));
+		JLabel gainLabel = new JLabel(" ");
+		gainLabel.setFont(new Font(gainLabel.getFont().getName(), Font.BOLD, 14));
+		JLabel detailLabel = new JLabel(" ");
+		JLabel hint = new JLabel(player == null ? " " : "(" + player.countParticipants() + " currently battled/holding Exp. Share)");
+		
+		Runnable refresh = () -> {
+			Pokemon r = (Pokemon) who.getSelectedItem();
+			if (r == null) return;
+			if (r.isFainted()) { gainLabel.setText(r.nickname + " is fainted: no exp"); detailLabel.setText(" "); return; }
+			if (r.level >= 100) { gainLabel.setText(r.nickname + " is Lv. 100: no exp"); detailLabel.setText(" "); return; }
+			int s = (Integer) sharing.getValue();
+			int gain = calcExpGain(r, s);
+			gainLabel.setText(r.nickname + " gains " + gain + " exp");
+			
+			ArrayList<String> mods = new ArrayList<>();
+			if (this.trainerOwned()) mods.add("trainer x1.5");
+			if (r.item == Item.LUCKY_EGG) mods.add("Lucky Egg x1.5");
+			String pct = r.expMax > 0 ? String.format(" (%.0f%% of a level)", gain * 100.0 / r.expMax) : "";
+			detailLabel.setText("<html>Solo yield: " + calcExpGain(r, 1) + pct + (mods.isEmpty() ? "" : "<br>Bonuses: " + String.join(", ", mods)) + "</html>");
+		};
+		
+		who.addActionListener(e -> {
+			Pokemon r = (Pokemon) who.getSelectedItem();
+			sharing.setValue(Math.min(6, player == null ? 1 : player.defaultParticipants(r)));
+			refresh.run();
+		});
+		sharing.addChangeListener(e -> refresh.run());
+		
+		JPanel whoRow = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		whoRow.add(new JLabel("Gaining:")); whoRow.add(who);
+		JPanel shareRow = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		shareRow.add(new JLabel("Sharing exp:")); shareRow.add(sharing); shareRow.add(hint);
+		box.add(whoRow); box.add(shareRow);
+		JPanel g = new JPanel(new FlowLayout(FlowLayout.LEFT)); g.add(gainLabel); box.add(g);
+		JPanel d = new JPanel(new FlowLayout(FlowLayout.LEFT)); d.add(detailLabel); box.add(d);
+		
+		sharing.setValue(Math.min(6, player == null || selected == null ? 1 : player.defaultParticipants(selected)));
+		refresh.run();
+		return box;
 	}
 	
 	public String getHappinessDesc() {
@@ -10267,6 +10302,8 @@ public class Pokemon implements Serializable {
 				egg_groups[i][0] = EggGroup.valueOf(tokens[10].trim());
 				egg_groups[i][1] = EggGroup.valueOf(tokens[11].trim());
 				categories[i] = tokens[12].trim();
+				exp_groups[i] = Integer.parseInt(tokens[13].trim());
+				exp_yields[i] = Integer.parseInt(tokens[14].trim());
 			}
 		} catch (NumberFormatException e) {
 			e.printStackTrace();

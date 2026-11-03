@@ -1053,13 +1053,16 @@ public enum Item {
 			}
 			
 			infoButton.addActionListener(e -> {
-				JOptionPane.showMessageDialog(calc, ((Pokemon) userMons.getSelectedItem()).showSummary(field, null), "Pokemon details", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(calc, ((Pokemon) userMons.getSelectedItem()).showSummary(field), "Pokemon details", JOptionPane.PLAIN_MESSAGE);
 			});
 			
 			fInfoButton.addActionListener(e -> {
 				Pokemon foe = (Pokemon) foeMons.getSelectedItem();
 				if (foe.getSprite() == null) foe.setSprites();
-				JOptionPane.showMessageDialog(calc, ((Pokemon) foeMons.getSelectedItem()).showSummary(field, null), "Pokemon details", JOptionPane.PLAIN_MESSAGE);
+				ArrayList<Pokemon> recipients = new ArrayList<>();
+				for (int i = 0; i < userMons.getItemCount(); i++) recipients.add((Pokemon) userMons.getItemAt(i));
+				Player live = Pokemon.gp != null ? Pokemon.gp.player.p : null;
+				JOptionPane.showMessageDialog(calc, ((Pokemon) foeMons.getSelectedItem()).showSummary(field, recipients, (Pokemon) userMons.getSelectedItem(), live), "Pokemon details", JOptionPane.PLAIN_MESSAGE);
 			});
 			
 			JComboBox<Item> userItem = new JComboBox<>((Item[]) items.toArray(new Item[1]));
@@ -2253,7 +2256,7 @@ public enum Item {
 					moveInputs[j].setSelectedItem(m1);
 				}
 			}
-			test.expMax = test.setExpMax();
+			test.setExpMax();
 			expInput.setText(test.expMax + "");
 		});
 		

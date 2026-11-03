@@ -59,6 +59,19 @@ public final class Evaluator {
 	/** Fraction of a pending Future Sight hit that is booked: the target can switch to a resistor or an immune mon before it lands. */
 	static double FUTURE_SIGHT_HOLD = 0.75;
 
+	// ---- HP buffer: the AI's own HP beyond what the foe can take from it in the next few turns is worth less (see hpBufferDiscount) ----
+
+	/** Weight of the HP-buffer term. 0 = off (the default), 1 = on. Not a style weight, so self-play can A/B it. */
+	static double W_BUFFER = 0.0;
+	/** Fraction of an excess HP point's material value that is removed (not 1.0: the HP still matters for later matchups). */
+	static double BUFFER_DISCOUNT = 0.75;
+	/** How many foe attacks' worth of damage the active mon is assumed to need to absorb. */
+	static double BUFFER_TURNS = 1.5;
+	/** Margin on the foe's expected damage when sizing the HP the active mon needs. */
+	static double BUFFER_SAFETY = 1.25;
+	/** Fraction of max HP that is always counted as needed (crits, rolls, secondary effects, a foe that switches to something stronger). */
+	static double BUFFER_FLOOR = 0.10;
+
 	private Evaluator() {}
 
 	/** Eval with explicit mon weights and no escape cap (the matchup term is the live matchup). Used where no {@link MonWeights} context exists, e.g. lead selection. */
@@ -90,7 +103,65 @@ public final class Evaluator {
 		v += chargeCredit(s.ai, s.player, s.field, playerWeights) - chargeCredit(s.player, s.ai, s.field, aiWeights);
 		v += style.wPending * pendingValue(s, aiWeights, playerWeights);
 		if (W_SLEEP != 0) v += W_SLEEP * (sleepCost(s.player, s.field) - sleepCost(s.ai, s.field));
+		if (W_BUFFER != 0) v -= W_BUFFER * hpBufferDiscount(s.ai, s.player, s.field, aiWeights);
 		return v;
+	}
+
+	/**
+	 * Material the side's ACTIVE mon loses to {@link #W_BUFFER}'s idea that HP is only worth what it buys against the foe's
+	 * damage. {@code material} counts every HP point at full price, so a heal at 50% HP is worth +50 whether or not the foe can
+	 * hurt the mon, and the escape-capped matchup term (built on full-HP duels) cannot say otherwise. The HP the mon needs is
+	 * {@code BUFFER_FLOOR + BUFFER_TURNS * foeHit * BUFFER_SAFETY} (fraction of max HP, capped at 1), where foeHit is the foe's best
+	 * expected hit; HP above that is excess and is discounted by {@link #BUFFER_DISCOUNT}.
+	 * <p>
+	 * Deliberately independent of the foe's HP and of who is faster, and applied to the AI's own mon only: an earlier version sized
+	 * the need from how fast the AI wins the duel and discounted both sides, which taxed progress (damaging the foe shortened the
+	 * race, lowered the need, and discounted the AI's HP; discounting the foe's HP cancelled the credit for removing it). The
+	 * foe's HP is the work the AI has left, not a buffer. Limitation: the foe's side gets no such discount, so a foe's pointless
+	 * heal is still priced at full material. Returns eval points (positive = value taken off the AI).
+	 */
+	public static double hpBufferDiscount(SideState mine, SideState theirs, Field field, double[] myWeights) {
+		Pokemon a = mine.active(), f = theirs.active();
+		if (a == null || f == null || a.isFainted() || f.isFainted()) return 0;
+		int aMax = a.getStat(0);
+		double hpFrac = a.currentHP * 1.0 / aMax;
+		double takenFrac;
+		try (SimContext.Scope sc = SimContext.enter(SimPolicy.DEFAULT)) {
+			DamageRange taken = bestRange(f, a, field);
+			takenFrac = taken == null ? 0 : taken.expectedCapped(aMax) * 1.0 / aMax;
+		}
+		double needed = Math.min(1.0, BUFFER_FLOOR + BUFFER_TURNS * takenFrac * BUFFER_SAFETY);
+		double excess = Math.max(0, hpFrac - needed);
+		int idx = mine.shell.indexOf(a);
+		double w = (myWeights != null && idx >= 0 && idx < myWeights.length) ? myWeights[idx] : 1.0;
+		return 100.0 * w * excess * BUFFER_DISCOUNT;
+	}
+
+	/** Names of the {@link #breakdown} terms, in order. */
+	static final String[] TERMS = { "material", "matchup", "hazard", "status", "field", "tempo", "forced", "charge", "pending", "sleep", "buffer" };
+
+	/**
+	 * {@link #eval(SimState, EvalWeights, MonWeights)} split into its weighted terms (same order as {@link #TERMS}); the
+	 * entries sum to the eval. For diagnosis only: a terminal state puts +-{@link #WIN} in slot 0. A test compares the sum
+	 * with eval, so a term added to evalCore and forgotten here is caught.
+	 */
+	static double[] breakdown(SimState s, EvalWeights style, MonWeights w) {
+		double[] t = new double[TERMS.length];
+		if (s.player.shell.wiped()) { t[0] = WIN; return t; }
+		if (s.ai.shell.wiped()) { t[0] = -WIN; return t; }
+		double[] aw = w.ai, pw = w.player;
+		t[0] = style.wMaterial * (material(s.ai, aw) - material(s.player, pw));
+		t[1] = style.wMatchup * matchupTerm(s, w);
+		t[2] = style.wHazard * (hazardPain(s.player, s.field) - hazardPain(s.ai, s.field));
+		t[3] = style.wStatus * (benchStatusValue(s.player, s.field) - benchStatusValue(s.ai, s.field));
+		t[4] = style.wField * fieldValue(s);
+		t[5] = style.wTempo * tempo(s);
+		t[6] = forcedTurnPenalty(s);
+		t[7] = chargeCredit(s.ai, s.player, s.field, pw) - chargeCredit(s.player, s.ai, s.field, aw);
+		t[8] = style.wPending * pendingValue(s, aw, pw);
+		t[9] = W_SLEEP != 0 ? W_SLEEP * (sleepCost(s.player, s.field) - sleepCost(s.ai, s.field)) : 0;
+		t[10] = W_BUFFER != 0 ? -W_BUFFER * hpBufferDiscount(s.ai, s.player, s.field, aw) : 0;
+		return t;
 	}
 
 	/** material(side) = sum over alive mons of 100 * hpFrac * monWeight, plus {@link #ALIVE_BONUS} per alive mon. */

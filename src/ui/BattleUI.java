@@ -802,7 +802,8 @@ public class BattleUI extends AbstractUI {
 			currentDialogue = currentTask.message;
 			if (currentTask.p.isVisible()) {
 				if (userExp < currentTask.finish) {
-					userExp++;
+					int step = Math.max(1, userExpMax / 90);
+					userExp = Math.min(currentTask.finish, userExp + step);
 				} else {
 					endTask();
 				}

@@ -147,7 +147,7 @@ public class Player extends Trainer implements Serializable {
 	
 	public static final int MAX_BOXES = 12;
 	public static final int GAUNTLET_BOX_SIZE = 4;
-	public static final int VERSION = 96;
+	public static final int VERSION = 97;
 	
 	public static final int MAX_POKEDEX_PAGES = 4;
 	public static final int BET_INC = 10;
@@ -196,6 +196,8 @@ public class Player extends Trainer implements Serializable {
 		shinyDex = new boolean[Pokemon.MAX_POKEMON + 1];
 		flags = new boolean[50];
 		flag = new boolean[10][GamePanel.MAX_FLAG];
+		// set old flags
+		flag[0][24] = true;
 		locations = new boolean[12]; // NMT, BVT, PG, SC, KV, PP, SRC, GT, FC, RC, IT, CC
 		itemsCollected = new boolean[gp.obj.length][gp.obj[1].length];
 		trainersBeat = new boolean[MAX_TRAINERS];
@@ -702,7 +704,7 @@ public class Player extends Trainer implements Serializable {
 		result.add(bagButton);
 		
 		String[][] flagDesc = {
-			{"Dad First", "Starter", "Pokedex 1", "Grandma", "Avery", "Scott 1", "Second Starter", "Talk to Robin", "Letter A", "Letter B", "Letter C", "Tell Robin 1", "WH Grunt", "WH Unlock", "Rick 1", "Letter D", "Tell Robin 2", "Crook", "Lucky Egg"},
+			{"Dad First", "Starter", "Pokedex 1", "Grandma", "Avery", "Scott 1", "Second Starter", "Talk to Robin", "Letter A", "Letter B", "Letter C", "Tell Robin 1", "WH Grunt", "WH Unlock", "Rick 1", "Letter D", "Tell Robin 2", "Crook", "Lucky Egg", "Guy Eddie", "1+ S Forms", "All S Forms", "Shell Bell", "Set Difficutly", "Update Exp"},
 			{"Fred 1", "Researcher", "Teleport", "Ryder 1", "Fuse 1", "Rocky-E", "PP 1", "Poof-E", "PP 2", "Stanford", "TN Office", "Flamehox-E", "Office 2", "Scott", "Gyarados-E", "Fuse 2", "Stanford", "Fishing Rod", "Gym 2", "Photon Gift", "Res A Gift", "3+ E Forms", "All E Forms", "Endure", "Deletor"},
 			{"Scott 2", "Ryder 2", "Gift Magic", "Regional", "Millie 1", "Millie 2", "Fred 2", "Chained Xurkitree", "Millie 3", "TN Splinkty", "Millie 4", "Free Xurkitree", "UP Xurkitree", "Millie 5", "Gift Fossil", "All V Forms", "Lauryn 1", "Shae 1", "Lauryn 2", "Did UP Test", "Caught UP"},
 			{"Ryder 3", "Ice Master", "Ground Master", "I Unlock", "G Unlock", "I Clear", "G Clear", "Principal", "UP Cairnasaur", "Gift \"Starter\"", "Petticoat", "Valiant", "Gym 4"},
@@ -1699,6 +1701,7 @@ public class Player extends Trainer implements Serializable {
 
 	public void update(GamePanel gp) {
 		if (this.trainersBeat.length != MAX_TRAINERS) updateTrainers();
+		flag[0][24] = false;
 		updateItems(gp.obj.length, gp.obj[1].length);
 		updateFlags();
 		updatePokedex();
@@ -1706,8 +1709,14 @@ public class Player extends Trainer implements Serializable {
 		for (Pokemon p : getAllPokemon()) {
 			if (p != null) {
 				p.update();
+				// convert from old exp system
+				if (!flag[0][24]) {
+					p.exp = ExpGroup.convertExp(p.exp, p.expMax, p.getExpGroup(), p.level);
+					p.setExpMax();
+				}
 			}
 		}
+		flag[0][24] = true;
 		while (starter >= 3) starter--;
 		updateBoxes();
 		updateBerries();
@@ -2604,10 +2613,24 @@ public class Player extends Trainer implements Serializable {
 	}
 	
 	public static String formatPlayTime(long nanos) {
-	    long totalSeconds = nanos / 1_000_000_000L;
-	    long hours = totalSeconds / 3600;
-	    long minutes = (totalSeconds / 60) % 60;
-	    long seconds = totalSeconds % 60;
-	    return String.format("%d:%02d:%02d", hours, minutes, seconds);
+		long totalSeconds = nanos / 1_000_000_000L;
+		long hours = totalSeconds / 3600;
+		long minutes = (totalSeconds / 60) % 60;
+		long seconds = totalSeconds % 60;
+		return String.format("%d:%02d:%02d", hours, minutes, seconds);
+	}
+	
+	public int countParticipants() {
+		int n = 0;
+		for (Pokemon p : team) if (isParticipant(p)) n++;
+		return n;
+	}
+	
+	public int defaultParticipants(Pokemon r) {
+		return Math.max(1, countParticipants() + (isParticipant(r) ? 0 : 1));
+	}
+	
+	private static boolean isParticipant(Pokemon p) {
+		return p != null && !p.isFainted() && (p.battled || p.item == Item.EXP_SHARE);
 	}
 }

@@ -149,7 +149,9 @@ public final class Phase8DelayedEffectTests {
 			case 3: foe.type1 = PType.PSYCHIC; foe.type2 = null; break;
 			case 4: d.pl.getFieldEffectList().add(effect(Effect.SAFEGUARD)); break;
 			case 5:
-				d.field.setTerrain(d.field.new FieldEffect(Effect.ELECTRIC));
+				// setTerrain announces itself through Task.addTask, which throws outside a battle state unless a sim scope is open.
+				final Field tf = d.field;
+				SimContext.run(SimPolicy.DEFAULT, () -> tf.setTerrain(tf.new FieldEffect(Effect.ELECTRIC)));
 				check("setup: Electric Terrain is the field's terrain", d.field.equals(d.field.terrain, Effect.ELECTRIC));
 				break;
 			case 6: foe.item = Item.LUM_BERRY; break;
@@ -335,23 +337,39 @@ public final class Phase8DelayedEffectTests {
 		}
 	}
 
-	/** Full production-shaped decision (rows from ActionGen, solve, shape) for three scenarios; read the click rate by eye. */
+	/**
+	 * Full decision (rows from ActionGen, solve, shape) for several scenarios; read the click rate by eye. Each scenario is
+	 * printed twice: with all rows, and with only the AI's MOVE rows. The second answers "among its moves, does it click
+	 * Yawn / Future Sight": a bench mon that is simply a better answer takes 100% of the first and says nothing about that.
+	 * The Earthquake scenarios are the sanity check that the new values are not too generous: a strong attack should win.
+	 */
 	public static void dump() {
 		Field prev = Pokemon.field;
 		try {
-			dumpDecision("Yawn + Tackle vs Tackle", duel(new Move[] { Move.YAWN, Move.TACKLE }, Move.TACKLE));
-			dumpDecision("Future Sight + Tackle vs Tackle", duel(new Move[] { Move.FUTURE_SIGHT, Move.TACKLE }, Move.TACKLE));
-			dumpDecision("Yawn + Future Sight + Tackle vs Tackle", duel(new Move[] { Move.YAWN, Move.FUTURE_SIGHT, Move.TACKLE }, Move.TACKLE));
+			Object[][] scenarios = {
+				{ "Yawn + Tackle vs Tackle", new Move[] { Move.YAWN, Move.TACKLE } },
+				{ "Future Sight + Tackle vs Tackle", new Move[] { Move.FUTURE_SIGHT, Move.TACKLE } },
+				{ "Yawn + Future Sight + Tackle vs Tackle", new Move[] { Move.YAWN, Move.FUTURE_SIGHT, Move.TACKLE } },
+				{ "Yawn + Earthquake vs Tackle (strong attack should win)", new Move[] { Move.YAWN, Move.EARTHQUAKE } },
+				{ "Future Sight + Earthquake vs Tackle (strong attack should win)", new Move[] { Move.FUTURE_SIGHT, Move.EARTHQUAKE } },
+			};
+			for (Object[] sc : scenarios) {
+				for (boolean movesOnly : new boolean[] { false, true }) {
+					dumpDecision((String) sc[0] + (movesOnly ? "  [AI move rows only]" : "  [all rows]"),
+							duel((Move[]) sc[1], Move.TACKLE), movesOnly);
+				}
+			}
 		} finally {
 			Pokemon.field = prev;
 		}
 	}
 
-	private static void dumpDecision(String title, Phase4Tests.Duel d) {
+	private static void dumpDecision(String title, Phase4Tests.Duel d, boolean movesOnly) {
 		AIConfig cfg = AIConfig.hard();
 		SimState root = d.root();
 		MonWeights w = MonWeights.compute(root);
 		List<Action> A = ActionGen.genAIActions(root, cfg, w);
+		if (movesOnly) A.removeIf(a -> a.kind != ActionKind.MOVE);
 		List<Action> P = ActionGen.genPlayerActions(root, cfg, w);
 		double[][] M = MatrixBuilder.buildMatrix(root, A, P, cfg, w);
 		Solver.Result r = Solver.solveZeroSum(M);

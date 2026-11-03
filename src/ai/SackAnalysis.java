@@ -1,8 +1,10 @@
 package ai;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -116,10 +118,10 @@ public final class SackAnalysis {
 		int nRows = A.size();
 		int nCols = threat.length;
 		double[] gain = new double[nRows];
-		java.util.Arrays.fill(gain, Double.NaN);
+		Arrays.fill(gain, Double.NaN);
 
 		double[] stay = new double[nCols];
-		java.util.Arrays.fill(stay, Double.NEGATIVE_INFINITY);
+		Arrays.fill(stay, Double.NEGATIVE_INFINITY);
 		boolean anyStay = false;
 		for (int i = 0; i < nRows; i++) {
 			Action a = A.get(i);
@@ -196,19 +198,19 @@ public final class SackAnalysis {
 		Map<Action, String> reasons = new HashMap<>();
 		for (int i = 0; i < A.size(); i++) {
 			Action a = A.get(i);
-			boolean sackRow = (a.kind == ActionKind.SWITCH || a.kind == ActionKind.MOVE_THEN_SWITCH) && sackCandidates.contains(a.slot);
+			boolean sackRow = (a.kind == ActionKind.SWITCH || a.kind == ActionKind.MOVE_THEN_SWITCH);
 			double[] st = sackRow ? sameMonStats(root, a, P, cfg, activeIdx) : null; // {share returning the same mon, share of those where it is threatened again}; null/-1 = n/a
 			boolean drop = false;
 			String why = null;
 			if (st != null && st[0] >= 0.5) {
 				if (!anyThreat) {
 					drop = true;
-					why = String.format(java.util.Locale.ROOT,
+					why = String.format(Locale.ROOT,
 							"same-mon return: the target faints and the replacement is %s in %.0f%% of those branches; no KO threat this turn to be spared; resetting %s gains nothing (reset value %.1f)",
 							active, st[0] * 100, active, reset);
 				} else if (st[1] >= 0.5) {
 					drop = true;
-					why = String.format(java.util.Locale.ROOT,
+					why = String.format(Locale.ROOT,
 							"same-mon return: the target faints and the replacement is %s in %.0f%% of those branches; the KO it is spared this turn comes back (%s is threatened again in %.0f%% of them); resetting gains nothing (reset value %.1f)",
 							active, st[0] * 100, active, st[1] * 100, reset);
 				}
@@ -244,9 +246,9 @@ public final class SackAnalysis {
 			origA = A;
 			origM = M;
 			gain = new double[A.size()];
-			java.util.Arrays.fill(gain, Double.NaN);
+			Arrays.fill(gain, Double.NaN);
 			stay = new double[threat.length];
-			java.util.Arrays.fill(stay, Double.NEGATIVE_INFINITY);
+			Arrays.fill(stay, Double.NEGATIVE_INFINITY);
 			for (int i = 0; i < A.size(); i++) {
 				if (A.get(i).kind != ActionKind.MOVE || A.get(i).move == null) continue;
 				for (int j = 0; j < threat.length; j++) stay[j] = Math.max(stay[j], M[i][j]);

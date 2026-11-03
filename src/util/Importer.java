@@ -90,6 +90,7 @@ public class Importer {
             }
         }
         int level = 100;
+        int exp = 0;
         Item ball = Item.POKEBALL;
         boolean shiny = false;
 
@@ -133,6 +134,16 @@ public class Importer {
                 if (level < 1 || level > 100) {
                     throw new IllegalArgumentException(
                         "Level must be between 1 and 100 for " + pokemonName
+                    );
+                }
+            } else if (line.startsWith("EXP:")) {
+                try {
+                    exp = Integer.parseInt(
+                        line.substring("EXP:".length()).trim()
+                    );
+                } catch (NumberFormatException e) {
+                    throw new IllegalArgumentException(
+                        "Invalid exp for " + pokemonName
                     );
                 }
             } else if (line.startsWith("Ball:")) {
@@ -205,6 +216,7 @@ public class Importer {
         }
         
         Pokemon p = set.makePokemon(level);
+        p.exp = exp;
         
         p.shiny = shiny;
         p.ball = ball;
