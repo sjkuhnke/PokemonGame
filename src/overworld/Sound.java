@@ -86,8 +86,8 @@ public class Sound {
 		infos.removeIf(mi -> mi.getName().startsWith("Port"));
 		infos.sort(Comparator.comparingInt(Sound::mixerRank));
 
-		System.out.println("Available mixers:");
-		for (Mixer.Info mi : infos) System.out.println("  " + mi.getName());
+		//System.out.println("Available mixers:");
+		//for (Mixer.Info mi : infos) System.out.println("  " + mi.getName());
 
 		for (Mixer.Info mi : infos) {
 			try {
@@ -98,7 +98,7 @@ public class Sound {
 				l.start();
 				line = l;
 				running = true;
-				System.out.println("Audio mixer in use: " + mi.getName());
+				//System.out.println("Audio mixer in use: " + mi.getName());
 				Thread t = new Thread(Sound::mixLoop, "audio-mixer");
 				t.setDaemon(true);
 				t.start();

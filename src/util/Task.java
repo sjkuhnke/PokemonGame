@@ -95,6 +95,7 @@ public class Task {
 	public static final int MINE = 73;
 	public static final int MINING_CHANCES = 74;
 	public static final int POKEDEX = 75;
+	public static final int REPLACE_SHINY = 76; // nuzlocke shiny clause prompt: p = the caught shiny, start = index of the candidate shown
 	
 	public static GamePanel gp;
 	
@@ -251,6 +252,11 @@ public class Task {
 		case USE_MOVE: return "USE_MOVE";
 		case SAVE: return "SAVE";
 		case LOAD: return "LOAD";
+		case HAPPINESS: return "HAPPINESS";
+		case MINE: return "MINE";
+		case MINING_CHANCES: return "MINING_CHANCES";
+		case POKEDEX: return "POKEDEX";
+		case REPLACE_SHINY: return "REPLACE_SHINY";
 		default:
 			return "getTypeString() doesn't have a case for this type";
 		}

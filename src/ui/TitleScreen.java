@@ -63,13 +63,15 @@ public class TitleScreen extends AbstractUI {
 	private String playerName = "";
 	public int newGameMenuNum;
 	public boolean nuzlockeMode;
-	public int difficultyLevel;
+	public int difficultyLevel = 1;
 	public boolean banShedinja;
 	public boolean banBatonPass;
-	public boolean allowDryPass;
-	public boolean allowRevives;
+	public boolean allowDryPass = true;
+	public boolean allowRevives = true;
 	public boolean buyableRevives;
 	public int levelCapBonus;
+	public int shinyClause = 2;
+	private static final String[] SHINY_CLAUSE_LABELS = {"Off", "Extra Catch", "Replacement"};
 	
 	// SAVE FILE DATA
 	private ArrayList<String> saveFiles;
@@ -116,8 +118,9 @@ public class TitleScreen extends AbstractUI {
 	public static final int NG_DRY_PASS = 6;
 	public static final int NG_ALLOW_REVIVES = 7;
 	public static final int NG_BUYABLE_REVIVES = 8;
-	public static final int NG_LEVEL_CAP = 9;
-	public static final int NG_START = 10;
+	public static final int NG_SHINY_CLAUSE = 9;
+	public static final int NG_LEVEL_CAP = 10;
+	public static final int NG_START = 11;
 	
 	// NEW GAME SCROLL
 	private int newGameMenuScroll = 0;
@@ -342,15 +345,7 @@ public class TitleScreen extends AbstractUI {
 	private void handleNewGame() {
 		menuState = NEW_GAME_MENU;
 		newGameMenuNum = 0;
-		playerName = "";
-		nuzlockeMode = false;
-		difficultyLevel = 1;
-		banShedinja = false;
-		banBatonPass = false;
-		allowDryPass = true;
-		allowRevives = true;
-		buyableRevives = false;
-		levelCapBonus = 0;
+		// rule settings (nuzlocke, difficulty, bans, shiny clause) are remembered from the last run via Config
 		newGameMenuScroll = 0;
 	}
 	
@@ -825,7 +820,7 @@ public class TitleScreen extends AbstractUI {
 					}
 					// skip buyable revives if allow revives is off
 					if (newGameMenuNum == NG_BUYABLE_REVIVES && !allowRevives) {
-						newGameMenuNum = NG_LEVEL_CAP;
+						newGameMenuNum = NG_SHINY_CLAUSE;
 					}
 					// update scroll position
 					int maxVisibleOptions = getMaxVisibleOptions();
@@ -979,6 +974,21 @@ public class TitleScreen extends AbstractUI {
 						gp.playSFX(Sound.S_MENU_CON);
 					}
 					buyableRevives = !buyableRevives;
+				}
+				break;
+				
+			case NG_SHINY_CLAUSE:
+				if (gp.keyH.leftPressed) {
+					gp.keyH.leftPressed = false;
+					gp.playSFX(Sound.S_MENU_1);
+					shinyClause--;
+					if (shinyClause < 0) shinyClause = 2;
+				}
+				if (gp.keyH.rightPressed) {
+					gp.keyH.rightPressed = false;
+					gp.playSFX(Sound.S_MENU_1);
+					shinyClause++;
+					if (shinyClause > 2) shinyClause = 0;
 				}
 				break;
 				
@@ -1153,7 +1163,6 @@ public class TitleScreen extends AbstractUI {
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 24F));
 		selected = newGameMenuNum == NG_PLAYER_NAME;
 		drawOutlinedText("Player Name:", contentX, contentY, selected ? textColor : new Color(200, 200, 200), Color.BLACK);
-		
 		
 		contentY += gp.tileSize / 3;
 		
@@ -1344,6 +1353,36 @@ public class TitleScreen extends AbstractUI {
 			}
 			
 			g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));
+			selected = newGameMenuNum == NG_SHINY_CLAUSE;
+			drawOutlinedText("Shiny Clause:", contentX + gp.tileSize / 4, contentY, selected ? textColor : new Color(200, 200, 200), Color.BLACK);
+			
+			drawSelector(contentX + gp.tileSize * 4, contentY, SHINY_CLAUSE_LABELS[shinyClause], selected);
+			
+			if (selected) {
+				tipX += gp.tileSize;
+				int tipY = contentY - gp.tileSize / 8;
+				g2.setFont(g2.getFont().deriveFont(Font.ITALIC, 14F));
+				Color tipColor = new Color(180, 180, 180);
+				switch (shinyClause) {
+				case 0:
+					drawOutlinedText("Shinies follow normal Nuzlocke rules.", tipX, tipY + gp.tileSize / 8, tipColor, Color.BLACK);
+					break;
+				case 1:
+					drawOutlinedText("A shiny can always be caught and", tipX, tipY, tipColor, Color.BLACK);
+					tipY += gp.tileSize / 4;
+					drawOutlinedText("doesn't use up the area's encounter.", tipX, tipY, tipColor, Color.BLACK);
+					break;
+				case 2:
+					drawOutlinedText("A shiny you couldn't catch can only", tipX, tipY, tipColor, Color.BLACK);
+					tipY += gp.tileSize / 4;
+					drawOutlinedText("replace a Pokemon from its evo line.", tipX, tipY, tipColor, Color.BLACK);
+					break;
+				}
+			}
+			
+			contentY += (int)(gp.tileSize * 0.75);
+			
+			g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));
 			selected = newGameMenuNum == NG_LEVEL_CAP;
 			drawOutlinedText("Level Cap Bonus:", contentX + gp.tileSize / 4, contentY,selected ? textColor : new Color(200, 200, 200), Color.BLACK);
 			
@@ -1351,8 +1390,8 @@ public class TitleScreen extends AbstractUI {
 			drawSelector(contentX + gp.tileSize * 4, contentY, levelCapText, selected);
 			
 			if (selected) {
-				int tipY = contentY;
 				tipX += gp.tileSize;
+				int tipY = contentY;
 				tipY -= gp.tileSize / 8;
 				g2.setFont(g2.getFont().deriveFont(Font.ITALIC, 14F));
 				drawOutlinedText("A set number to increase", tipX, tipY, new Color(180, 180, 180), Color.BLACK);
@@ -1410,7 +1449,7 @@ public class TitleScreen extends AbstractUI {
 			toolTips.add(new ToolTip(gp, "Edit", "", true, gp.config.wKey));
 		} else if (newGameMenuNum == NG_START) {
 			toolTips.add(new ToolTip(gp, "Start", "", true, gp.config.wKey));
-		} else if (newGameMenuNum == NG_DIFFICULTY || newGameMenuNum == NG_LEVEL_CAP) {
+		} else if (newGameMenuNum == NG_DIFFICULTY || newGameMenuNum == NG_SHINY_CLAUSE || newGameMenuNum == NG_LEVEL_CAP) {
 			toolTips.add(new ToolTip(gp, "Adjust", "/", true, gp.config.leftKey, gp.config.rightKey));
 		} else {
 			toolTips.add(new ToolTip(gp, "Toggle", "", true, gp.config.wKey));

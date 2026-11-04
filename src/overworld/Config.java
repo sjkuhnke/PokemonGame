@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Arrays;
 
+import ui.TitleScreen;
+
 public class Config {
 	GamePanel gp;
 	
@@ -114,6 +116,29 @@ public class Config {
 			bw.write("togglerun=" + (toggleRun ? 1 : 0));
 			bw.newLine();
 			
+			// New game rules (remembered for the next new game)
+			if (gp.titleScreen != null) {
+				TitleScreen ts = gp.titleScreen;
+				bw.write("nuzlocke=" + (ts.nuzlockeMode ? 1 : 0));
+				bw.newLine();
+				bw.write("difficulty=" + ts.difficultyLevel);
+				bw.newLine();
+				bw.write("banShedinja=" + (ts.banShedinja ? 1 : 0));
+				bw.newLine();
+				bw.write("banBatonPass=" + (ts.banBatonPass ? 1 : 0));
+				bw.newLine();
+				bw.write("allowDryPass=" + (ts.allowDryPass ? 1 : 0));
+				bw.newLine();
+				bw.write("allowRevives=" + (ts.allowRevives ? 1 : 0));
+				bw.newLine();
+				bw.write("buyableRevives=" + (ts.buyableRevives ? 1 : 0));
+				bw.newLine();
+				bw.write("levelCapBonus=" + ts.levelCapBonus);
+				bw.newLine();
+				bw.write("shinyClause=" + ts.shinyClause);
+				bw.newLine();
+			}
+			
 			// Screen settings
 			bw.write("screenWidth=" + gp.lastWindowWidth);
 			bw.newLine();
@@ -175,6 +200,33 @@ public class Config {
 						break;
 					case "togglerun":
 						toggleRun = intValue == 1;
+						break;
+					case "nuzlocke":
+						gp.titleScreen.nuzlockeMode = intValue == 1;
+						break;
+					case "difficulty":
+						gp.titleScreen.difficultyLevel = Math.max(0, Math.min(2, intValue));
+						break;
+					case "banShedinja":
+						gp.titleScreen.banShedinja = intValue == 1;
+						break;
+					case "banBatonPass":
+						gp.titleScreen.banBatonPass = intValue == 1;
+						break;
+					case "allowDryPass":
+						gp.titleScreen.allowDryPass = intValue == 1;
+						break;
+					case "allowRevives":
+						gp.titleScreen.allowRevives = intValue == 1;
+						break;
+					case "buyableRevives":
+						gp.titleScreen.buyableRevives = intValue == 1;
+						break;
+					case "levelCapBonus":
+						gp.titleScreen.levelCapBonus = Math.max(0, Math.min(5, intValue));
+						break;
+					case "shinyClause":
+						gp.titleScreen.shinyClause = Math.max(0, Math.min(2, intValue));
 						break;
 					case "screenWidth":
 						loadedWidth = intValue;

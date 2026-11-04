@@ -1019,7 +1019,7 @@ public enum Item {
 			}
 			for (int i = 0; i < Trainer.trainers.length; i++) {
 				Trainer tr = Trainer.trainers[i];
-				if (tr != null && !Pokemon.gp.player.p.trainersBeat[i]) {
+				if (tr != null && (tr.isE4() || !Pokemon.gp.player.p.trainersBeat[i])) {
 					Pokemon[] newTeam = new Pokemon[tr.getTeam().length];
 					for (int j = 0; j < tr.getTeam().length; j++) {
 						Pokemon po = tr.getTeam()[j];

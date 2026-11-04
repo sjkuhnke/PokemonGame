@@ -648,6 +648,13 @@ public abstract class AbstractUI {
 			drawShinyIcon(starX, y - 7, 9);
 		}
 		
+		// Retired: replaced by a shiny under the nuzlocke Replacement clause
+		if (p.retired && !egg) {
+			int labelX = x + g2.getFontMetrics().stringWidth(p.getFormattedDexNo()) + (p.shiny ? 40 : 16);
+			g2.setColor(new Color(170, 170, 170));
+			g2.drawString("[Replaced by a shiny]", labelX, y);
+		}
+		
 		g2.setColor(Color.WHITE);
 		
 		// Ball

@@ -2796,11 +2796,9 @@ public class UI extends AbstractUI {
 		int baseMode = gp.player.p.pokedex[baseID];
 		dexBaseID = baseID;
 		dexBaseNo = view[dexNum[dexType]].getDexNo();
-		// Seen entries can toggle variants too (the shiny dex registers on sight)
 		ArrayList<Player.DexVariant> variants = baseMode >= 1 ? gp.player.p.getDexVariants(baseID) : null;
 		dexVariant = variants == null ? 0 : Math.max(0, Math.min(dexVariant, variants.size() - 1));
 		Player.DexVariant variant = variants == null ? new Player.DexVariant(baseID, false) : variants.get(dexVariant);
-		// What may be shown depends on the selected variant's own status: a caught species can have a form that's only been seen
 		int mode = variants == null ? baseMode : Math.max(1, gp.player.p.pokedex[variant.id]);
 		ArrayList<Move> levelMoveList = new ArrayList<>();
 		ArrayList<String> levelLevelList = new ArrayList<>();
@@ -3370,6 +3368,10 @@ public class UI extends AbstractUI {
 		g2.drawString("Egg Group(s):", infoX, iy);
 		iy += step;
 		g2.drawString(eggGroupText, infoX, iy);
+		iy += step;
+		g2.drawString("Exp Group: " + ExpGroup.getExpGroupName(Pokemon.getExpGroup(variant.id)), infoX, iy);
+		iy += step;
+		g2.drawString("Exp Yield: " + Pokemon.getExpYield(variant.id), infoX, iy);
 		
 		// Evolution (many evolutions get folded into a wrapped paragraph)
 		String evolve = Pokemon.getEvolveString(variant.id);
@@ -3491,7 +3493,7 @@ public class UI extends AbstractUI {
 		
 		// Seen but not caught: same header + hero, abilities unknown
 		if (mode != 2) {
-			drawDexHeader(variant, variants, (int) (gp.tileSize * 5.6), false);
+			drawDexHeader(variant, variants, (int) (gp.tileSize * 6.6), false);
 			drawDexHero(variant, false, -1);
 			return;
 		}
@@ -3666,6 +3668,15 @@ public class UI extends AbstractUI {
 			if (i < cBox.length && cBox[i] != null) {
 				boolean egg = cBox[i] instanceof Egg;
 				g2.drawImage(cBox[i].isFainted() && !egg ? cBox[i].getFaintedSprite() : cBox[i].getSprite(), cX, cY, null);
+				if (cBox[i].retired) {
+					// small badge marking a Pokemon that was replaced by a shiny
+					g2.setFont(g2.getFont().deriveFont(Font.BOLD, 14F));
+					g2.setColor(new Color(90, 90, 90, 220));
+					g2.fillRoundRect(cX, cY, 18, 18, 6, 6);
+					g2.setColor(Color.WHITE);
+					g2.drawString("R", cX + 4, cY + 14);
+					g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 14F));
+				}
 				int itemX = cX + 4;
 				int itemY = cY + 56;
 				if (!showBoxParty && (cBox[i] == itemSwapP || (itemSwapP != null && i == boxNum))) {
@@ -5674,7 +5685,12 @@ public class UI extends AbstractUI {
 
 		Color validColor = p.isValidNuzlocke ? new Color(100, 255, 100) : new Color(255, 100, 100);
 		drawOutlinedText("Valid: " + (p.isValidNuzlocke ? "Yes" : "No"), labelX, contentY, validColor, Color.BLACK);
-		contentY += gp.tileSize;
+		contentY += (int)(gp.tileSize * 0.6);
+		
+		String[] shinyLabels = {"Off", "Extra Catch", "Replacement"};
+		int shinyMode = Math.max(0, Math.min(p.shinyClause, shinyLabels.length - 1));
+		drawOutlinedText("Shiny: " + shinyLabels[shinyMode], labelX, contentY, new Color(200, 200, 200), Color.BLACK);
+		contentY += (int)(gp.tileSize * 0.4);
 
 		// settings
 		int settingsX = contentX + gp.tileSize * 3;

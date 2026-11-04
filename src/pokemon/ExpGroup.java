@@ -50,4 +50,16 @@ public final class ExpGroup {
         if (luckyEgg) exp *= 1.5;
         return Math.max(1, (int) exp);
     }
+    
+    public static String getExpGroupName(int group) {
+    	switch (group) {
+    	case 0: return "Medium Fast";
+    	case 1: return "Erratic";
+    	case 2: return "Fluctuating";
+    	case 3: return "Medium Slow";
+    	case 4: return "Fast";
+    	case 5: return "Slow";
+    	default: return "?";
+    	}
+    }
 }

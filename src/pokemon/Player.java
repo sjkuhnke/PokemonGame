@@ -140,6 +140,7 @@ public class Player extends Trainer implements Serializable {
 	public boolean allowRevives;
 	public boolean buyableRevives;
 	public int levelCapBonus;
+	public int shinyClause; // 0 = shiny clause off, 1 = regular shiny clause, 2 = replace a pokemon only
 	
 	public HashMap<String, BattleRecord> trainersDatabase;
 	private transient BattleRecord currentBattle;
@@ -225,8 +226,9 @@ public class Player extends Trainer implements Serializable {
 		return this.id;
 	}
 	
-	public void setupNuzlocke(boolean banShedinja, boolean banBatonPass, boolean allowDryPass, boolean allowRevives, boolean buyableRevives, int levelCapBonus) {
+	public void setupNuzlocke(boolean banShedinja, boolean banBatonPass, boolean allowDryPass, boolean allowRevives, boolean buyableRevives, int levelCapBonus, int shinyClause) {
 		this.nuzlocke = true;
+		this.shinyClause = shinyClause;
 		this.nuzlockeStarted = false;
 		this.isValidNuzlocke = true;
 		this.trackBattleLogs = true;
@@ -256,6 +258,8 @@ public class Player extends Trainer implements Serializable {
 		int index = 0;
 		Task t = null;
 		String metAt = PlayerCharacter.getMetAt();
+		// a shiny the normal rules wouldn't let us keep, caught under the Extra Catch clause: doesn't use up the area's encounter
+		boolean extraShiny = nuzlocke && !egg && !canCatchPokemonHere(metAt, p) && allowsExtraShinyCatch(p);
 		p.reset();
 		p.ball = ball;
 		if (p.trainer != null && p.trainer.staticEnc) {
@@ -269,7 +273,7 @@ public class Player extends Trainer implements Serializable {
 				t = Task.createTask(Task.POKEDEX, "", p);
 				Task.insertTask(t, index++);
 			}
-			if (nuzlocke && !canCatchPokemonHere(metAt, p)) {
+			if (nuzlocke && !extraShiny && !canCatchPokemonHere(metAt, p)) {
 				String s = egg ? "receive " : "catch ";
 				String reason = isDupes(p) ? p.name() + " is a dupe!" : "you've already gotten an encounter at " + metAt + "!";
 				t = Task.createTask(Task.END, Item.breakString("Cannot " + s + p.name() + ", " + reason , UI.MAX_TEXTBOX));
@@ -306,10 +310,94 @@ public class Player extends Trainer implements Serializable {
 			}
 		}
 		
-		if (nuzlocke && !egg) {
+		if (nuzlocke && !egg && !extraShiny) {
 			removeEncounterArea(metAt, null);
 		}
 		return true;
+	}
+	
+	public boolean canCatchShiny(Pokemon p) {
+		if (!nuzlocke || p == null || !p.shiny || p instanceof Egg) return false;
+		if (shinyClause == 1) return true;
+		return shinyClause == 2 && !getShinyReplacementCandidates(p).isEmpty() && findEmptyBoxSlot() != null;
+	}
+	
+	public boolean isShinyReplacement(Pokemon p) {
+		return nuzlocke && shinyClause == 2 && p != null && p.shiny && !(p instanceof Egg) && !canCatchPokemonHere(PlayerCharacter.getMetAt(), p) && !getShinyReplacementCandidates(p).isEmpty();
+	}
+	
+	public boolean allowsExtraShinyCatch(Pokemon p) {
+		return nuzlocke && shinyClause == 1 && p != null && p.shiny && !(p instanceof Egg);
+	}
+	
+	public ArrayList<Pokemon> getShinyReplacementCandidates(Pokemon shiny) {
+		ArrayList<Pokemon> result = new ArrayList<>();
+		if (shiny == null || !shiny.shiny) return result;
+		for (Pokemon p : team) addIfReplaceable(result, shiny, p);
+		for (Pokemon[] box : boxes) {
+			for (Pokemon p : box) addIfReplaceable(result, shiny, p);
+		}
+		return result;
+	}
+	
+	private void addIfReplaceable(ArrayList<Pokemon> result, Pokemon shiny, Pokemon candidate) {
+		if (candidate == null || candidate instanceof Egg || candidate.isFainted() || candidate.retired || candidate.shiny) return;
+		if (Pokemon.isLinearEvolutionOf(shiny.id, candidate.id)) result.add(candidate);
+	}
+	
+	public boolean replaceWithShiny(Pokemon shiny, Pokemon target, Item ball) {
+		int[] free = findEmptyBoxSlot();
+		if (free == null) return false;
+		
+		shiny.reset();
+		shiny.ball = ball;
+		shiny.trainer = this;
+		shiny.metAt = PlayerCharacter.getMetAt();
+		registerDex(shiny, true);
+		if (target.item != null && shiny.item == null) {
+			shiny.item = target.item;
+			target.item = null;
+		}
+		
+		// the shiny takes the target's slot, so find where the target lives before moving it
+		int teamIndex = -1;
+		for (int i = 0; i < team.length; i++) {
+			if (team[i] == target) teamIndex = i;
+		}
+		int[] boxPos = null;
+		for (int b = 0; b < boxes.length && teamIndex < 0 && boxPos == null; b++) {
+			for (int s = 0; s < boxes[b].length; s++) {
+				if (boxes[b][s] == target) {
+					boxPos = new int[] {b, s};
+					break;
+				}
+			}
+		}
+		
+		boxes[free[0]][free[1]] = target;
+		target.fainted = true;
+		target.retired = true;
+		target.currentHP = 0;
+		target.status = Status.HEALTHY;
+		target.slot = -1;
+		
+		if (teamIndex >= 0) {
+			team[teamIndex] = shiny;
+			shiny.slot = teamIndex;
+			if (current == target) current = shiny;
+		} else if (boxPos != null) {
+			boxes[boxPos[0]][boxPos[1]] = shiny;
+		}
+		return true;
+	}
+	
+	private int[] findEmptyBoxSlot() {
+		for (int b = 0; b < boxes.length; b++) {
+			for (int s = 0; s < boxes[b].length; s++) {
+				if (boxes[b][s] == null) return new int[] {b, s};
+			}
+		}
+		return null;
 	}
 	
 	public int addPokemon(Pokemon p) {
@@ -1296,6 +1384,9 @@ public class Player extends Trainer implements Serializable {
 			case MAX_REVIVE:
 				if (!p.isFainted()) {
 					gp.ui.showMessage(p.nickname + " isn't fainted!");
+					return;
+				} else if (p.retired) {
+					gp.ui.showMessage(p.nickname + " was replaced by a shiny and can't be revived.");
 					return;
 				} else {
 					if (nuzlocke && !allowRevives) {

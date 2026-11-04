@@ -100,6 +100,12 @@ public final class DamageRange {
 	public boolean dealsDamage() {
 		return usable && !immune && !reflected && vals.length > 0 && vals[vals.length - 1] > 0;
 	}
+	
+	/** Fewest hits a use can land (>= 1). A Sash / Sturdy only stops a single-hit use: hit 2 finishes a mon left at 1 HP. */
+	private int minHits() {
+	    for (int n = 1; n < hitProb.length; n++) if (hitProb[n] > 0) return n;
+	    return 1;
+	}
 
 	/**
 	 * True when a lethal hit on a target with {@code hp} HP would leave it standing at 1 HP: a never-kills move (False Swipe),
@@ -107,7 +113,7 @@ public final class DamageRange {
 	 * the evaluator uses it to stop crediting such a hit as a KO.
 	 */
 	public boolean endures(double hp) {
-		return neverKills || (endureAtFull && hp >= foeMaxHp);
+		return neverKills || (endureAtFull && hp >= foeMaxHp && minHits() <= 1);
 	}
 
 	/** Mean damage of one hit over the crit / bonus mixture (before accuracy and hit count). */
@@ -128,10 +134,11 @@ public final class DamageRange {
 	 */
 	public double expectedCapped(double hp) {
 		if (!usable || immune || reflected || vals.length == 0 || hp <= 0) return 0;
-		double limit = (neverKills || (endureAtFull && hp >= foeMaxHp)) ? hp - 1 : hp;
+		boolean sash = endureAtFull && hp >= foeMaxHp;
 		double total = 0;
 		for (int n = 1; n < hitProb.length; n++) {
 			if (hitProb[n] <= 0) continue;
+			double limit = (neverKills || (sash && n == 1)) ? hp - 1 : hp;
 			double e = 0;
 			for (int i = 0; i < vals.length; i++) e += Math.min(n * vals[i], limit) * weights[i];
 			total += hitProb[n] * e;
@@ -147,10 +154,11 @@ public final class DamageRange {
 	public double koProb(double hp) {
 		if (!usable || immune || reflected || neverKills || vals.length == 0) return 0;
 		if (hp <= 0) return 1;
-		if (endureAtFull && hp >= foeMaxHp) return 0;
+		boolean sash = endureAtFull && hp >= foeMaxHp;
 		double p = 0;
 		for (int n = 1; n < hitProb.length; n++) {
 			if (hitProb[n] <= 0) continue;
+			if (sash && n == 1) continue;
 			double need = hp / n;
 			double q = 0;
 			for (int i = vals.length - 1; i >= 0 && vals[i] >= need; i--) q += weights[i];

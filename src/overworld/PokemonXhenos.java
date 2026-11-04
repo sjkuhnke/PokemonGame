@@ -136,6 +136,7 @@ public class PokemonXhenos {
 	    boolean allowRevives = gp.titleScreen.allowRevives;
 	    boolean buyableRevives = gp.titleScreen.buyableRevives;
 	    int levelCapBonus = gp.titleScreen.levelCapBonus;
+	    int shinyClause = gp.titleScreen.shinyClause;
 		
 		new Thread(() -> {
 			try {
@@ -164,7 +165,7 @@ public class PokemonXhenos {
 				} else {
 					loader.setProgress(5, "Creating new player...");
 					gp.player.p = new Player(gp, playerName);
-					if (nuzlocke) gp.player.p.setupNuzlocke(banShedinja, banBatonPass, allowDryPass, allowRevives, buyableRevives, levelCapBonus);
+					if (nuzlocke) gp.player.p.setupNuzlocke(banShedinja, banBatonPass, allowDryPass, allowRevives, buyableRevives, levelCapBonus, shinyClause);
 					gp.player.p.difficulty = difficulty;
 					gp.player.p.flag[0][23] = true;
 				}

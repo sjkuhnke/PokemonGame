@@ -47,7 +47,6 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.SwingUtilities;
 
 import org.json.JSONObject;
 
@@ -208,6 +207,7 @@ public class Pokemon implements Serializable {
 	public boolean script;
 	public boolean abilityFlag;
 	public boolean cloned;
+	public boolean retired;
 	
 	// battle fields
 	public Move lastMoveUsed;
@@ -353,7 +353,7 @@ public class Pokemon implements Serializable {
 	
 	private boolean determineShiny() {
 		Random random = Rng.asRandom();
-		return random.nextInt() % 512 == 0;
+		return random.nextInt() % 4 == 0;
 	}
 	
 	private UUID setUUID() {
@@ -6972,7 +6972,7 @@ public class Pokemon implements Serializable {
 		
 		boolean fullHP = foe.currentHP == foe.getStat(0);
 		boolean sturdy = false;
-		if (damage >= foe.currentHP && (move == Move.FALSE_SWIPE ||
+		if (damage >= foe.currentHP && (move == Move.FALSE_SWIPE || foe.hasStatus(Status.ENDURE) ||
 				(fullHP && (foeAbility == Ability.STURDY || foe.getItem(field) == Item.FOCUS_SASH)))) {
 			sturdy = true;
 		}
@@ -6998,7 +6998,7 @@ public class Pokemon implements Serializable {
 			}
 		}
 		return DamageResult.dealt(damage, damagePercent, isCrit, critChance, critBlocked,
-				foeAbility == Ability.STURDY || foe.getItem(field) == Item.FOCUS_SASH, move == Move.FALSE_SWIPE);
+				foeAbility == Ability.STURDY || foe.getItem(field) == Item.FOCUS_SASH, move == Move.FALSE_SWIPE || foe.hasStatus(Status.ENDURE));
 	}
 
 	/** Crit stage after status, Super Luck, Scope Lens and Merciless. Shared by move() and computeDamage so the two cannot drift (T1). */
@@ -9336,6 +9336,19 @@ public class Pokemon implements Serializable {
 	public boolean hasBoosts(int[] stages) {
 		for (int i = 0; i < stages.length; i++) {
 			if (stages[i] > 0) return true;
+		}
+		return false;
+	}
+	
+	public static boolean isLinearEvolutionOf(int shinyId, int targetId) {
+		String target = getName(targetId);
+		String current = getName(shinyId);
+		HashSet<String> seen = new HashSet<>();
+		while (current != null && seen.add(current)) {
+			if (current.equals(target)) return true;
+			HashSet<String> children = forwardEvoMap.getOrDefault(current, new HashSet<String>());
+			if (children.size() != 1) return false;
+			current = children.iterator().next();
 		}
 		return false;
 	}

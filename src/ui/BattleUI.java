@@ -573,6 +573,83 @@ public class BattleUI extends AbstractUI {
 		}
 	}
 
+	// ---- Nuzlocke Replacement shiny clause prompt ----
+	private ArrayList<Pokemon> shinyCandidates = new ArrayList<>();
+	private Item shinyBall;
+	private int shinyChoice;
+	
+	private void startShinyReplacePrompt(Pokemon shiny, Item ball) {
+		shinyCandidates = gp.player.p.getShinyReplacementCandidates(shiny);
+		shinyBall = ball;
+		shinyChoice = 0;
+		Task t = Task.createTask(Task.REPLACE_SHINY, "", shiny);
+		t.start = 0;
+		Task.insertTask(t, 0);
+	}
+	
+	private void drawReplaceShinyWindow() {
+		Pokemon shiny = currentTask.p;
+		int idx = Math.max(0, Math.min(currentTask.start, shinyCandidates.size() - 1));
+		if (shinyCandidates.isEmpty()) {
+			currentTask = null;
+			return;
+		}
+		Pokemon target = shinyCandidates.get(idx);
+		boolean multiple = shinyCandidates.size() > 1;
+		currentDialogue = Item.breakString("Your Shiny Clause lets " + shiny.name() + " replace " + target.nickname + " (Lv. " + target.level
+				+ ", met at " + target.metAt + (multiple ? ") [" + (idx + 1) + "/" + shinyCandidates.size() + "]" : ")") + ". "
+				+ target.nickname + " will be kept in the boxes as fainted and can't be revived.", 63);
+		
+		String[] options = multiple ? new String[] {"Replace", "Next", "Let go"} : new String[] {"Replace", "Let go"};
+		int x = gp.tileSize * 11;
+		int height = (int) (gp.tileSize * (1.0 + options.length * 0.9));
+		int y = gp.tileSize * 4 - (height - (int) (gp.tileSize * 2.5));
+		drawSubWindow(x, y, gp.tileSize * 3, height);
+		
+		if (gp.keyH.upPressed) {
+			gp.keyH.upPressed = false;
+			if (shinyChoice > 0) shinyChoice--;
+		}
+		if (gp.keyH.downPressed) {
+			gp.keyH.downPressed = false;
+			if (shinyChoice < options.length - 1) shinyChoice++;
+		}
+		int ty = y + gp.tileSize;
+		for (int i = 0; i < options.length; i++) {
+			g2.drawString(options[i], x + gp.tileSize, ty);
+			if (shinyChoice == i) g2.drawString(">", x + gp.tileSize - 24, ty);
+			ty += (int) (gp.tileSize * 0.9);
+		}
+		
+		if (gp.keyH.wPressed) {
+			gp.keyH.wPressed = false;
+			String choice = options[shinyChoice];
+			if (choice.equals("Next")) {
+				currentTask.start = (idx + 1) % shinyCandidates.size();
+				return;
+			}
+			if (choice.equals("Replace")) {
+				String oldName = target.nickname;
+				if (gp.player.p.replaceWithShiny(shiny, target, shinyBall)) {
+					Task end = Task.createTask(Task.END, Item.breakString("Replaced " + oldName + " with " + shiny.name() + "!", 63));
+					Task.insertTask(end, 0);
+					Task nick = Task.createTask(Task.NICKNAME, "Would you like to nickname " + shiny.name() + "?", shiny);
+					nick.wipe = true;
+					Task.insertTask(nick, 0);
+				} else {
+					Task end = Task.createTask(Task.END, Item.breakString("There's no room in your boxes to keep " + oldName + ", so " + shiny.name() + " got away.", 63));
+					Task.insertTask(end, 0);
+				}
+			} else {
+				Task end = Task.createTask(Task.END, "You let " + shiny.name() + " go.");
+				Task.insertTask(end, 0);
+			}
+			shinyCandidates = new ArrayList<>();
+			shinyChoice = 0;
+			currentTask = null;
+		}
+	}
+	
 	protected void endTask() {
 		subState = COOLDOWN_STATE;
 		userX = (int) userOriginalPos.getX();
@@ -768,9 +845,14 @@ public class BattleUI extends AbstractUI {
 			if (counter >= 75) {
 				counter = 0;
 				if (currentTask.wipe) {
-					boolean caughtBefore = gp.player.p.pokedex[foe.id] == 2;
-					boolean caught = user.getPlayer().catchPokemon(foe, true, currentTask.item);
-					if (caught && caughtBefore) setNicknaming(true);
+					if (gp.player.p.isShinyReplacement(foe)) {
+						// Replacement shiny clause: don't hand the shiny to catchPokemon (it would reject it as a dupe), ask which Pokemon it replaces
+						startShinyReplacePrompt(foe, currentTask.item);
+					} else {
+						boolean caughtBefore = gp.player.p.pokedex[foe.id] == 2;
+						boolean caught = user.getPlayer().catchPokemon(foe, true, currentTask.item);
+						if (caught && caughtBefore) setNicknaming(true);
+					}
 				} else {
 					currentTask.p.setVisible(true);
 					Task.addTask(Task.TEXT, "Oh no, " + foe.name() + " broke free!");
@@ -779,6 +861,10 @@ public class BattleUI extends AbstractUI {
 				}
 				currentTask = null;
 			}
+			break;
+		case Task.REPLACE_SHINY:
+			currentDialogue = currentTask.message;
+			drawReplaceShinyWindow();
 			break;
 		case Task.NICKNAME:
 			currentDialogue = currentTask.message;
@@ -1135,7 +1221,7 @@ public class BattleUI extends AbstractUI {
 		userHP = user.currentHP;
 		maxUserHP = user.getStat(0);
 		invalidEncounter = false;
-		if (gp.player.p.nuzlocke && !gp.player.p.canCatchPokemonHere(PlayerCharacter.getMetAt(), foe) && !gp.player.p.bag.contains(Item.TEMPLE_BALL)) {
+		if (gp.player.p.nuzlocke && !gp.player.p.canCatchPokemonHere(PlayerCharacter.getMetAt(), foe) && !gp.player.p.bag.contains(Item.TEMPLE_BALL) && !gp.player.p.canCatchShiny(foe)) {
 			invalidEncounter = true;
 		}
 		
