@@ -35,7 +35,7 @@ public final class ExpGroup {
     }
 
     /**
-     * @param baseYield   species base exp yield b (see getBaseExpYield)
+     * @param baseYield   species base exp yield b
      * @param foeLevel    L
      * @param winnerLevel Lp
      * @param participants s (Pokemon that fought + Exp Share holders)

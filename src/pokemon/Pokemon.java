@@ -353,7 +353,7 @@ public class Pokemon implements Serializable {
 	
 	private boolean determineShiny() {
 		Random random = Rng.asRandom();
-		return random.nextInt() % 4 == 0;
+		return random.nextInt() % 512 == 0;
 	}
 	
 	private UUID setUUID() {
