@@ -17,6 +17,7 @@ import javax.swing.SwingUtilities;
 import docs.AbilitiesDoc;
 import docs.EncounterDoc;
 import docs.ItemsDoc;
+import docs.MasterDoc;
 import docs.MovesDoc;
 import docs.PokemonDoc;
 import docs.TrainerDoc;
@@ -127,7 +128,7 @@ public class PokemonXhenos {
 		
 		// SETTINGS
 		boolean[] selectedOptions = gp.titleScreen.docOptions;
-		boolean excel = gp.titleScreen.generateExcel;
+		boolean masterExcel = gp.titleScreen.masterExcel;
 		boolean nuzlocke = gp.titleScreen.nuzlockeMode;
 		int difficulty = gp.titleScreen.difficultyLevel;
 		boolean banShedinja = gp.titleScreen.banShedinja;
@@ -170,7 +171,6 @@ public class PokemonXhenos {
 					gp.player.p.flag[0][23] = true;
 				}
 				loader.setProgress(6, "Saving Config...");
-				gp.config.excel = excel;
 				gp.config.saveConfig();
 				
 				loader.setProgress(7, "Loading map data...");
@@ -200,72 +200,40 @@ public class PokemonXhenos {
 					}
 				}
 				
-				if (hasAnyChecked(selectedOptions)) {
+				if (hasAnyChecked(selectedOptions) || masterExcel) {
 					Path docsDirectory = SaveManager.getDocsDirectory();
 					
-					if (selectedOptions[0]) {
-						loader.setProgress(65, "Generating trainer docs...\n(Be patient... this may take a few minutes!)");
-						if (excel) {
-							TrainerDoc.writeTrainersToExcel(gp, docsDirectory);
-						} else {
-							TrainerDoc.writeTrainersToTxt(gp, docsDirectory);
-						}		    			
-					}
-					if (selectedOptions[1]) {
-						loader.setProgress(85, "Generating Pokemon docs...");
-						if (excel) {
-							PokemonDoc.writePokemonToExcel(docsDirectory);
-						} else {
-							PokemonDoc.writePokemonToTxt(docsDirectory);
+					// Doc generation owns 65%-98% of the bar. If both the master
+					// workbook and TXT docs are requested, TXT takes the first slice.
+					final int DOCS_START = 65;
+					final int DOCS_END = 98;
+					int txtEnd = masterExcel ? 80 : DOCS_END;
+					
+					String[] docLabels = {"trainer", "Pokemon", "encounter", "move", "ability", "item", "defensive type", "offensive type"};
+					int totalTxt = 0;
+					for (boolean b : selectedOptions) if (b) totalTxt++;
+					int doneTxt = 0;
+					
+					for (int d = 0; d < selectedOptions.length; d++) {
+						if (!selectedOptions[d]) continue;
+						int pct = DOCS_START + (txtEnd - DOCS_START) * doneTxt / Math.max(1, totalTxt);
+						loader.setProgress(pct, "Generating " + docLabels[d] + " docs...\n(" + (doneTxt + 1) + " of " + totalTxt + ")");
+						switch (d) {
+						case 0: TrainerDoc.writeTrainersToTxt(gp, docsDirectory); break;
+						case 1: PokemonDoc.writePokemonToTxt(docsDirectory); break;
+						case 2: EncounterDoc.writeEncountersToTxt(gp, docsDirectory); break;
+						case 3: MovesDoc.writeMovesToTxt(docsDirectory); break;
+						case 4: AbilitiesDoc.writeAbilitiesToTxt(docsDirectory); break;
+						case 5: ItemsDoc.writeItemsToTxt(gp, docsDirectory); break;
+						case 6: TypingsDoc.writeDefensiveTypingsToTxt(docsDirectory); break;
+						case 7: TypingsDoc.writeOffensiveTypingsToTxt(docsDirectory); break;
 						}
+						doneTxt++;
 					}
-					if (selectedOptions[2]) {
-						loader.setProgress(88, "Generating encounter docs...");
-						if (excel) {
-							EncounterDoc.writeEncountersToExcel(gp, docsDirectory);
-						} else {
-							EncounterDoc.writeEncountersToTxt(gp, docsDirectory);
-						}
-					}
-					if (selectedOptions[3]) {
-						loader.setProgress(91, "Generating move docs...");
-						if (excel) {
-							MovesDoc.writeMovesToExcel(docsDirectory);
-						} else {
-							MovesDoc.writeMovesToTxt(docsDirectory);
-						}
-					}
-					if (selectedOptions[4]) {
-						loader.setProgress(92, "Generating ability docs...");
-						if (excel) {
-							AbilitiesDoc.writeAbilitiesToExcel(docsDirectory);
-						} else {
-							AbilitiesDoc.writeAbilitiesToTxt(docsDirectory);
-						}
-					}
-					if (selectedOptions[5]) {
-						loader.setProgress(94, "Generating item docs...");
-						if (excel) {
-							ItemsDoc.writeItemsToExcel(gp, docsDirectory);
-						} else {
-							ItemsDoc.writeItemsToTxt(gp, docsDirectory);
-						}
-					}
-					if (selectedOptions[6]) {
-						loader.setProgress(96, "Generating defensive type docs...");
-						if (excel) {
-							TypingsDoc.writeDefensiveTypingsToExcel(docsDirectory);
-						} else {
-							TypingsDoc.writeDefensiveTypingsToTxt(docsDirectory);
-						}
-					}
-					if (selectedOptions[7]) {
-						loader.setProgress(98, "Generating offensive type docs...");
-						if (excel) {
-							TypingsDoc.writeOffensiveTypingsToExcel(docsDirectory);
-						} else {
-							TypingsDoc.writeOffensiveTypingsToTxt(docsDirectory);
-						}
+					
+					if (masterExcel) {
+						loader.setProgress(txtEnd, "Generating master Excel doc...");
+						MasterDoc.generate(gp, docsDirectory, loader::setProgress, txtEnd, DOCS_END);
 					}
 
 					loader.setProgress(99, "Opening docs folder...");

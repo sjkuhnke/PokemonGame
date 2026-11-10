@@ -75,7 +75,7 @@ public class TypeChart {
 		sheet.createFreezePane(1, 1);
 	}
 
-	private static PType[] getUsableTypes() {
+	static PType[] getUsableTypes() {
 		PType[] types = PType.values();
 		ArrayList<PType> list = new ArrayList<>(Arrays.asList(types));
 		list.remove(PType.UNKNOWN);
@@ -86,7 +86,7 @@ public class TypeChart {
 	// docs: `test` throws the attack, `foe`'s typing is set to the
 	// defending type for this cell, and getImmune/getResistances/
 	// getWeaknesses do the actual lookup against the game's type data.
-	private static double computeMultiplier(Pokemon test, Pokemon foe, PType atkType, PType defType) {
+	static double computeMultiplier(Pokemon test, Pokemon foe, PType atkType, PType defType) {
 		foe.type1 = defType;
 		foe.type2 = null;
 

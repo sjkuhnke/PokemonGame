@@ -13,8 +13,9 @@ import overworld.GamePanel;
 
 public class LoadingScreen {
 	private GamePanel gp;
-	private int progress; // 0-100
-	private String currentTask;
+	// written by the loading thread, read by the render thread
+	private volatile int progress; // 0-100
+	private volatile String currentTask;
 	private Image backgroundImage;
 	
 	public LoadingScreen(GamePanel gp) {
@@ -42,6 +43,8 @@ public class LoadingScreen {
 	}
 	
 	public void draw(Graphics2D g2) {
+		final int progress = this.progress;
+		final String currentTask = this.currentTask == null ? "" : this.currentTask;
 		g2.setColor(Color.BLACK);
 		g2.setFont(gp.marumonica);
 		if (backgroundImage != null) {

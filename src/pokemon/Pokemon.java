@@ -93,8 +93,6 @@ public class Pokemon implements Serializable {
 	private static Map<String, HashSet<String>> forwardEvoMap;
 	private static Map<String, HashSet<String>> reverseEvoMap;
 	private static Map<String, Integer> nameToID = new HashMap<>();
-	public static HashMap<Integer, Integer[]> legendaryMap = new HashMap<>();
-	public static HashMap<Integer, Integer[]> ultraParadoxMap = new HashMap<>();
 	private static HashMap<Integer, ArrayList<Integer>> altForms;
 	
 	// Database
@@ -1955,10 +1953,8 @@ public class Pokemon implements Serializable {
 			return; // Check for immunity
 		}
 		double effectiveAccuracy = getEffectiveAccuracy(move, foe, field, foeAbility, first);
-		
-		if (move == Move.POP_POP) effectiveAccuracy = 1.1;
 
-		if (effectiveAccuracy <= 1.0 && (!hit(effectiveAccuracy * 100) || foe.hasStatus(Status.SEMI_INV))) {
+		if (effectiveAccuracy <= 1.0 && move != Move.POP_POP && (!hit(effectiveAccuracy * 100) || foe.hasStatus(Status.SEMI_INV))) {
 			ctx.moveType = MoveType.MISS;
 			ctx.shouldAnimate = false;
 			announceMove(move, foe, ctx);
@@ -2013,6 +2009,8 @@ public class Pokemon implements Serializable {
 			
 			if (move == Move.POP_POP) {
 				if (effectiveAccuracy <= 1.0 && (!hit(effectiveAccuracy * 100) || foe.hasStatus(Status.SEMI_INV))) {
+					ctx.moveType = MoveType.MISS;
+					ctx.shouldAnimate = false;
 					Task.addTask(Task.TEXT, move.getMissString(this, foe));
 					if (recordsStats()) field.misses++;
 					if (this.getItem(field) == Item.BLUNDER_POLICY) {

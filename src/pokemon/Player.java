@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -48,6 +47,7 @@ import entity.Entity;
 import entity.NPC_Prize_Shop;
 import entity.PlayerCharacter;
 import overworld.GamePanel;
+import overworld.SummonSite;
 import pokemon.Bag.Entry;
 import ui.AbstractUI;
 import ui.UI;
@@ -2481,7 +2481,8 @@ public class Player extends Trainer implements Serializable {
 			summonedLegendaries = new HashMap<>();
 		}
 		
-		if (!Pokemon.legendaryMap.containsKey(map)) return;
+		SummonSite site = SummonSite.SITES.get(map);
+		if (site == null || !site.isFableSite()) return;
 		if (summonedLegendaries.containsKey(map)) return;
 		
 		gp.setTaskState();
@@ -2502,44 +2503,13 @@ public class Player extends Trainer implements Serializable {
 	}
 	
 	public void summonLegendary(GamePanel gp, int map, PType[] types) {
-		int legendaryID = -1;
-		if (map == 232) { // summoning UP Paradox mon
-			Random random = new Random(gp.aSetter.generateSeed(getID(), 50, 50, map)); // should always return the same seed for the same save file
-			List<Integer> allUP = Pokemon.ultraParadoxMap.values().stream().map(arr -> arr[0]).collect(Collectors.toList());
-			Map<Integer, Integer> weights = new HashMap<>();
-			int totalWeight = 0;
-			for (Integer pokemonID: allUP) {
-				int weight = 1;
-				for (PType sacrificeType : types) {
-					if (sacrificeType == Pokemon.getType1(pokemonID) || sacrificeType == Pokemon.getType2(pokemonID)) {
-						weight += 3;
-					}
-				}
-				weights.put(pokemonID, weight);
-				totalWeight += weight;
-			}
-			int roll = random.nextInt(totalWeight);
-			for (Integer pokemonID : allUP) {
-				roll -= weights.get(pokemonID);
-				if (roll < 0) {
-					legendaryID = pokemonID;
-					break;
-				}
-			}
-		} else {
-			bag.remove(Item.FABLE_CHARGE, 5);
-			if (nuzlocke) { // generate a random legendary
-				Random random = new Random(gp.aSetter.generateSeed(getID(), 50, 50, map)); // should always return the same seed for the same save file
-				List<Integer> allLegends = Pokemon.legendaryMap.values().stream().map(arr -> arr[0]).collect(Collectors.toList());
-				legendaryID = allLegends.get(random.nextInt(allLegends.size()));
-			} else {
-				legendaryID = Pokemon.legendaryMap.get(map)[0];
-			}
-		}
-		if (summonedLegendaries == null) {
-			summonedLegendaries = new HashMap<>();
-		}
-		summonedLegendaries.put(map, legendaryID);
+		SummonSite site = SummonSite.SITES.get(map);
+		if (site == null) return;
+		if (site.isFableSite()) bag.remove(Item.FABLE_CHARGE, site.fableCost);
+		Random random = new Random(gp.aSetter.generateSeed(getID(), 50, 50, map));
+		int id = site.pick(random, nuzlocke, types);
+		if (summonedLegendaries == null) summonedLegendaries = new HashMap<>();
+		summonedLegendaries.put(map, id);
 		gp.aSetter.updateNPC(map);
 	}
 	

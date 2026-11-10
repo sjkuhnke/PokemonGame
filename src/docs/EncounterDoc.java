@@ -1,6 +1,5 @@
 package docs;
 
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -10,18 +9,6 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.VerticalAlignment;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
-import org.apache.poi.xssf.usermodel.XSSFFont;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
 import entity.PlayerCharacter;
 import overworld.GamePanel;
 import overworld.PMap;
@@ -30,8 +17,6 @@ import pokemon.Encounter;
 import pokemon.Pokemon;
 
 public class EncounterDoc {
-
-	private static final int WILD_LAST_COL = 8; // matches TrainerDoc's 9-wide location banner
 
 	// ----------------------------------------------------------------------
 	// Moved/renamed from writeEncounters -> writeEncountersToTxt, to match
@@ -58,14 +43,7 @@ public class EncounterDoc {
 				String area = parts[0];
 				String type = parts[1];
 
-				String typeName;
-				switch (type) {
-					case "G": typeName = "Standard"; break;
-					case "F": typeName = "Fish";	 break;
-					case "S": typeName = "Surf";	 break;
-					case "L": typeName = "Lava";	 break;
-					default:  typeName = "Unknown";  break;
-				}
+				String typeName = encounterTypeName(type);
 
 				writer.write(area + " (" + typeName + ")\n");
 				writer.write(writeEncounter(e.getValue()));
@@ -162,7 +140,7 @@ public class EncounterDoc {
 		return result;
 	}
 	
-	private static Map<String, ArrayList<GiftEncounter>> buildGiftLocationMap(GamePanel gp) {
+	static Map<String, ArrayList<GiftEncounter>> buildGiftLocationMap(GamePanel gp) {
 		Map<String, ArrayList<GiftEncounter>> giftMap = new LinkedHashMap<>();
 		for (GiftEncounter g : Script.giftEncounters) {
 			int mapNum = g.coordinates[0];
@@ -175,43 +153,7 @@ public class EncounterDoc {
 		return giftMap;
 	}
 
-	// ========================================================================
-	// Excel version
-	// ========================================================================
-	public static void writeEncountersToExcel(GamePanel gp, Path dir) {
-		Workbook wb = new XSSFWorkbook();
-		Sheet sheet = wb.createSheet("Wild Encounters");
-		sheet.setColumnWidth(0, 1400); // sprite col
-		for (int c = 1; c <= WILD_LAST_COL; c++) {
-			sheet.setColumnWidth(c, 2400);
-		}
-
-		int rowIndex = 0;
-		for (Map.Entry<String, ArrayList<Encounter>> e : Encounter.encounters.entrySet()) {
-			String[] parts = e.getKey().split("\\|");
-			String area = parts[0];
-			String type = parts[1];
-			String typeName = encounterTypeName(type);
-
-			rowIndex = DocUtils.writeLocationHeader(sheet, rowIndex, area + " (" + typeName + ")", WILD_LAST_COL);
-			rowIndex = writeEncounterRows(wb, sheet, e.getValue(), rowIndex);
-			rowIndex++; // blank spacer row between locations
-		}
-
-		// Gift encounters get their own tab rather than being interleaved,
-		// since they don't carry the same sprite-table shape as wild encounters.
-		writeGiftEncounterSheet(wb, gp);
-
-		Path outPath = dir.resolve("WildPokemon.xlsx");
-		try (FileOutputStream fileOut = new FileOutputStream(outPath.toFile())) {
-			wb.write(fileOut);
-			wb.close();
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
-	}
-
-	private static String encounterTypeName(String type) {
+	static String encounterTypeName(String type) {
 		switch (type) {
 			case "G": return "Standard";
 			case "F": return "Fish";
@@ -221,121 +163,4 @@ public class EncounterDoc {
 		}
 	}
 
-	private static int writeEncounterRows(Workbook wb, Sheet sheet, ArrayList<Encounter> encounters, int rowIndex) {
-		for (Encounter enc : encounters) {
-			Row row = sheet.createRow(rowIndex++);
-			row.setHeightInPoints(20);
-
-			try {
-				byte[] spriteBytes = DocUtils.imageToBytes(DocUtils.getCachedSprite(enc.getId(), false), "png");
-				if (spriteBytes != null) {
-					DocUtils.insertImage(sheet, spriteBytes, 0, row.getRowNum(), 1, 1, 0.6, 0.6);
-				}
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
-
-			Cell nameCell = row.createCell(1);
-			nameCell.setCellValue(Pokemon.getName(enc.getId()));
-			nameCell.setCellStyle(plainStyle(wb, true, HorizontalAlignment.LEFT));
-			sheet.addMergedRegion(new CellRangeAddress(row.getRowNum(), row.getRowNum(), 1, 3));
-
-			boolean sameLv = enc.getMinLevel() == enc.getMaxLevel();
-			String levelStr = sameLv ? "Lv. " + enc.getMinLevel() : "Lv. " + enc.getMinLevel() + " - " + enc.getMaxLevel();
-			Cell levelCell = row.createCell(4);
-			levelCell.setCellValue(levelStr);
-			levelCell.setCellStyle(plainStyle(wb, false, HorizontalAlignment.LEFT));
-			sheet.addMergedRegion(new CellRangeAddress(row.getRowNum(), row.getRowNum(), 4, 5));
-
-			Cell chanceCell = row.createCell(6);
-			chanceCell.setCellValue(enc.getEncounterChance());
-			chanceCell.setCellStyle(percentStyle(wb));
-			sheet.addMergedRegion(new CellRangeAddress(row.getRowNum(), row.getRowNum(), 6, WILD_LAST_COL));
-		}
-		return rowIndex;
-	}
-
-	// ----------------------------------------------------------------------
-	// Gift encounters tab
-	// ----------------------------------------------------------------------
-	private static void writeGiftEncounterSheet(Workbook wb, GamePanel gp) {
-		Sheet sheet = wb.createSheet("Gift Encounters");
-		sheet.setColumnWidth(0, 1400);
-		for (int c = 1; c <= WILD_LAST_COL; c++) {
-			sheet.setColumnWidth(c, 2400);
-		}
-
-		Map<String, ArrayList<GiftEncounter>> giftMap = buildGiftLocationMap(gp);
-
-		int rowIndex = 0;
-		for (Map.Entry<String, ArrayList<GiftEncounter>> e : giftMap.entrySet()) {
-			rowIndex = DocUtils.writeLocationHeader(sheet, rowIndex, e.getKey(), WILD_LAST_COL);
-
-			for (GiftEncounter g : e.getValue()) {
-				rowIndex = writeGiftRows(wb, sheet, g, rowIndex);
-			}
-			rowIndex++; // blank spacer row
-		}
-	}
-
-	private static int writeGiftRows(Workbook wb, Sheet sheet, GiftEncounter g, int rowIndex) {
-		for (int id : g.possibleIds) {
-			Row row = sheet.createRow(rowIndex++);
-			row.setHeightInPoints(20);
-
-			try {
-				byte[] spriteBytes = DocUtils.imageToBytes(DocUtils.getCachedSprite(id, false), "png");
-				if (spriteBytes != null) {
-					DocUtils.insertImage(sheet, spriteBytes, 0, row.getRowNum(), 1, 1, 0.6, 0.6);
-				}
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
-
-			Cell nameCell = row.createCell(1);
-			nameCell.setCellValue(Pokemon.getName(id));
-			nameCell.setCellStyle(plainStyle(wb, true, HorizontalAlignment.LEFT));
-			sheet.addMergedRegion(new CellRangeAddress(row.getRowNum(), row.getRowNum(), 1, 3));
-
-			String detail = "";
-			if (g.level > 0) detail += "Lv. " + g.level;
-			if (g.notes != null && !g.notes.isEmpty()) detail += (detail.isEmpty() ? "" : "  |  ") + g.notes;
-
-			Cell detailCell = row.createCell(4);
-			detailCell.setCellValue(detail);
-			detailCell.setCellStyle(plainStyle(wb, false, HorizontalAlignment.LEFT));
-			sheet.addMergedRegion(new CellRangeAddress(row.getRowNum(), row.getRowNum(), 4, WILD_LAST_COL));
-		}
-
-		return rowIndex;
-	}
-
-	// ----------------------------------------------------------------------
-	// Styles
-	// ----------------------------------------------------------------------
-	private static CellStyle plainStyle(Workbook wb, boolean bold, HorizontalAlignment align) {
-		XSSFCellStyle style = (XSSFCellStyle) wb.createCellStyle();
-		style.setAlignment(align);
-		style.setVerticalAlignment(VerticalAlignment.CENTER);
-
-		XSSFFont font = (XSSFFont) wb.createFont();
-		font.setBold(bold);
-		font.setFontHeightInPoints((short) 11);
-		style.setFont(font);
-
-		return style;
-	}
-
-	private static CellStyle percentStyle(Workbook wb) {
-		XSSFCellStyle style = (XSSFCellStyle) wb.createCellStyle();
-		style.setAlignment(HorizontalAlignment.LEFT);
-		style.setVerticalAlignment(VerticalAlignment.CENTER);
-		style.setDataFormat(wb.createDataFormat().getFormat("0%"));
-
-		XSSFFont font = (XSSFFont) wb.createFont();
-		font.setFontHeightInPoints((short) 11);
-		style.setFont(font);
-
-		return style;
-	}
 }

@@ -13,12 +13,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.stream.Collectors;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -591,10 +589,9 @@ public class GamePanel extends JPanel implements Runnable {
 				}
 				
 				if (trainer > -1 && player.p.summonedLegendaries != null && t.staticEnc) {
-					List<Integer> allLegends = Pokemon.legendaryMap.values().stream().map(arr -> arr[0]).collect(Collectors.toList());
-					List<Integer> allUP = Pokemon.ultraParadoxMap.values().stream().map(arr -> arr[0]).collect(Collectors.toList());
-					allLegends.addAll(allUP);
-					if (allLegends.contains(id) && player.p.summonedLegendaries.containsKey(currentMap)) {
+					SummonSite site = SummonSite.SITES.get(currentMap);
+					Integer summoned = player.p.summonedLegendaries.get(currentMap);
+					if (site != null && summoned != null && summoned.intValue() == id) {
 						player.p.summonedLegendaries.remove(currentMap);
 						if (currentMap == 232 && t.getCurrent().isFainted()) { // player killed ultra paradox test
 							player.p.flag[2][20] = false;
@@ -780,8 +777,7 @@ public class GamePanel extends JPanel implements Runnable {
 		loadingScreen.setProgress(10, "Loading tiles and maps...");
 		tileM = new TileManager(this);
 		loadingScreen.setProgress(19, "Setting up static legendaries...");
-		aSetter.setLegendarySkeletons();
-		aSetter.setUltraParadoxSkeletons();
+		SummonSite.registerAll();
 		loadingScreen.setProgress(20, "Setting NPCs...");
 		aSetter.setNPC();
 		loadingScreen.setProgress(32, "Setting up item objects...");
@@ -938,7 +934,7 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	private void drawOverworldToolTips(Graphics2D g2) {
 		if (!keyH.shiftPressed || gameState != PLAY_STATE) return;
-		
+		System.out.println(npc[232][0]);
 		int x = 0;
 		int y = (int) (tileSize * 7.5);
 		ArrayList<ToolTip> hotkeyTips = new ArrayList<>();
@@ -1071,12 +1067,9 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 	
 	public void saveScum(String reason) {
-		Player temp = SaveManager.loadPlayer(player.currentSave);
-		if (temp != null) {
-			temp.invalidateNuzlocke(reason);
-			temp.playTimeNanos = player.p.playTimeNanos;
-			saveGame(temp, false);
-		}
+		config.saveConfig();
+		Print.flush();
+		SaveManager.invalidateNuzlockeAsync(player.currentSave, reason, player.p.playTimeNanos);
 	}
 	
 	public ArrayList<Task> getTasks() {

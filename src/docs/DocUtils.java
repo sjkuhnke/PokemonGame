@@ -14,17 +14,12 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.ClientAnchor;
 import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Drawing;
-import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Picture;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
-import org.apache.poi.xssf.usermodel.XSSFColor;
-import org.apache.poi.xssf.usermodel.XSSFFont;
 
 import pokemon.Pokemon;
 
@@ -32,29 +27,11 @@ public class DocUtils {
 	
 	private static BufferedImage[] sprites = new BufferedImage[Pokemon.MAX_POKEMON + 1]; // 0 is egg
 	private static BufferedImage[] shinySprites = new BufferedImage[Pokemon.MAX_POKEMON + 1];
-	
-	public static CellStyle makeStyle(Workbook wb, boolean bold, boolean italic, int fontSize, short color) {
-		XSSFFont font = makeFont(wb, bold, italic, fontSize, color);
 
-		CellStyle style = wb.createCellStyle();
-		style.setFont(font);
-		return style;
-	}
-	
-	public static XSSFFont makeFont(Workbook wb, boolean bold, boolean italic, int fontSize, short color) {
-		XSSFFont font = (XSSFFont) wb.createFont();
-		font.setFontHeightInPoints((short) fontSize);
-		font.setBold(bold);
-		font.setItalic(italic);
-		font.setColor(color);
-		
-		return font;
-	}
-	
-	public static void insertImage(Sheet sheet, byte[] imageBytes, int col, int row, int colSpan, int rowSpan, double scaleX, double scaleY) {
-		Workbook wb = sheet.getWorkbook();
-		int pictureIdx = wb.addPicture(imageBytes, Workbook.PICTURE_TYPE_PNG);
-		CreationHelper helper = wb.getCreationHelper();
+	// Places an already-embedded picture (index from wb.addPicture or ImageCache).
+	// Use this with ImageCache so each distinct image is stored in the file once.
+	public static void insertPicture(Sheet sheet, int pictureIdx, int col, int row, int colSpan, int rowSpan, double scaleX, double scaleY) {
+		CreationHelper helper = sheet.getWorkbook().getCreationHelper();
 		Drawing<?> drawing = sheet.createDrawingPatriarch();
 		ClientAnchor anchor = helper.createClientAnchor();
 		anchor.setCol1(col);
@@ -64,6 +41,14 @@ public class DocUtils {
 		
 		Picture pict = drawing.createPicture(anchor, pictureIdx);
 		pict.resize(scaleX, scaleY); // Scales it relative to the anchor box size
+	}
+	
+	// Picks black or white text based on background luminance so labels stay
+	// readable. Shared replacement for the copies in PokemonDoc, MovesDoc,
+	// TypeChart, and TypingsDoc.
+	public static Color textColorFor(Color bg) {
+		double luminance = (0.299 * bg.getRed() + 0.587 * bg.getGreen() + 0.114 * bg.getBlue());
+		return luminance > 150 ? new Color(20, 20, 20) : Color.WHITE;
 	}
 	
 	public static BufferedImage getCachedSprite(int id, boolean shiny) {
@@ -132,48 +117,23 @@ public class DocUtils {
 		}
 	}
 
-	public static CellStyle wrapStyle(Workbook wb, int fontSize, HorizontalAlignment align) {
-		XSSFCellStyle style = (XSSFCellStyle) wb.createCellStyle();
-		style.setWrapText(true);
-		style.setAlignment(align);
-		style.setVerticalAlignment(VerticalAlignment.TOP);
-
-		XSSFFont font = (XSSFFont) wb.createFont();
-		font.setFontHeightInPoints((short) fontSize);
-		style.setFont(font);
-
-		return style;
-	}
-
-	// ------------------------------------------------------------------
-	// Shared "location header" banner - the same three-row outline/label
-	// pattern TrainerDoc uses (an outline row, a merged colored label row,
-	// another outline row), generalized to any column span so ItemsDoc and
-	// EncounterDoc's Excel sheets can look consistent with TrainerInfo.xlsx.
+	// Three-row location banner (outline row, merged colored label row, outline
+	// row) spanning columns 0..lastCol, used by the Trainer/Encounter/Items sheets.
+	// Styles come from ctx.styles so repeated banners don't create new CellStyles.
 	// Returns the next free row index after the banner.
-	// ------------------------------------------------------------------
-	public static int writeLocationHeader(Sheet sheet, int rowIndex, String location, int lastCol) {
-		Workbook wb = sheet.getWorkbook();
-
-		XSSFCellStyle headerStyle = (XSSFCellStyle) makeStyle(wb, true, false, 16, org.apache.poi.ss.usermodel.IndexedColors.WHITE.getIndex());
-		headerStyle.setAlignment(HorizontalAlignment.CENTER);
-		headerStyle.setVerticalAlignment(VerticalAlignment.CENTER);
-		headerStyle.setFillForegroundColor(new XSSFColor(new Color(80, 80, 80), null));
-		headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-
-		CellStyle outline = wb.createCellStyle();
-		((XSSFCellStyle) outline).setFillForegroundColor(new XSSFColor(new Color(80, 80, 80), null));
-		outline.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+	public static int writeLocationHeader(DocContext ctx, Sheet sheet, int rowIndex, String location, int lastCol) {
+		Color banner = new Color(80, 80, 80);
+		CellStyle headerStyle = ctx.style(StyleSpec.plain().bold().size(16).textColor(Color.WHITE).fill(banner)
+				.align(HorizontalAlignment.CENTER).valign(VerticalAlignment.CENTER));
+		CellStyle outline = ctx.style(StyleSpec.plain().fill(banner));
 
 		Row outlineTop = sheet.createRow(rowIndex++);
 		Row headerRow = sheet.createRow(rowIndex++);
 		Row outlineBottom = sheet.createRow(rowIndex++);
 
 		for (int c = 0; c <= lastCol; c++) {
-			Cell top = outlineTop.createCell(c);
-			top.setCellStyle(outline);
-			Cell bottom = outlineBottom.createCell(c);
-			bottom.setCellStyle(outline);
+			outlineTop.createCell(c).setCellStyle(outline);
+			outlineBottom.createCell(c).setCellStyle(outline);
 		}
 		sheet.addMergedRegion(new CellRangeAddress(outlineTop.getRowNum(), outlineTop.getRowNum(), 0, lastCol));
 		sheet.addMergedRegion(new CellRangeAddress(outlineBottom.getRowNum(), outlineBottom.getRowNum(), 0, lastCol));
@@ -181,10 +141,8 @@ public class DocUtils {
 		Cell headerCell = headerRow.createCell(1);
 		headerCell.setCellValue(location);
 		headerCell.setCellStyle(headerStyle);
-		Cell edge1 = headerRow.createCell(0);
-		edge1.setCellStyle(outline);
-		Cell edge2 = headerRow.createCell(lastCol);
-		edge2.setCellStyle(outline);
+		headerRow.createCell(0).setCellStyle(outline);
+		headerRow.createCell(lastCol).setCellStyle(outline);
 		sheet.addMergedRegion(new CellRangeAddress(headerRow.getRowNum(), headerRow.getRowNum(), 1, lastCol - 1));
 
 		return rowIndex;

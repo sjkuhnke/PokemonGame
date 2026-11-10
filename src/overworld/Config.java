@@ -41,9 +41,6 @@ public class Config {
 	public int escKey = 19;
 	public int fullKey = 20;
 	
-	// Doc settings
-	public boolean excel = false;
-	
 	// Other settings
 	public boolean fullscreen = false;
 	public boolean toggleRun = false;
@@ -104,10 +101,6 @@ public class Config {
 			bw.write("music=" + gp.music.volumeScale);
 			bw.newLine();
 			bw.write("sfx=" + gp.sfx.volumeScale);
-			bw.newLine();
-			
-			// Doc settings
-			bw.write("excel=" + (excel ? 1 : 0));
 			bw.newLine();
 			
 			// Misc settings
@@ -191,9 +184,6 @@ public class Config {
 						break;
 					case "sfx":
 						gp.sfx.volumeScale = intValue;
-						break;
-					case "excel":
-						gp.titleScreen.generateExcel = intValue == 1;
 						break;
 					case "fullscreen":
 						fullscreen = intValue == 1;

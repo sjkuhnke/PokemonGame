@@ -7,6 +7,8 @@ import java.nio.file.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.concurrent.*;
+import java.nio.file.StandardCopyOption;
 
 import javax.imageio.ImageIO;
 
@@ -48,12 +50,53 @@ public class SaveManager {
 		}
 		return path.toString();
 	}
+	
+	private static final Object SAVE_LOCK = new Object();
+	private static final ExecutorService scumExec = Executors.newSingleThreadExecutor(r -> new Thread(r, "scum-save"));
 
 	public static void savePlayer(Player p, String fileName) throws IOException {
-		File file = new File(SAVE_DIR + File.separator + fileName);
-		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
-		oos.writeObject(p);
-		oos.close();
+		synchronized (SAVE_LOCK) {
+			writeAtomically(p, fileName);
+		}
+	}
+
+	// write to a temp file, then swap it in, so a crash mid-write can't leave a half-written save
+	private static void writeAtomically(Player p, String fileName) throws IOException {
+		Path target = getSavePath(fileName);
+		Path tmp = target.resolveSibling(fileName + ".tmp"); // doesn't end in .dat, so getSaveFiles ignores it
+		try (ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(Files.newOutputStream(tmp)))) {
+			oos.writeObject(p);
+		}
+		try {
+			Files.move(tmp, target, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);
+		} catch (AtomicMoveNotSupportedException e) {
+			Files.move(tmp, target, StandardCopyOption.REPLACE_EXISTING);
+		}
+	}
+
+	public static void invalidateNuzlockeAsync(String fileName, String reason, long playTimeNanos) {
+		scumExec.execute(() -> {
+			synchronized (SAVE_LOCK) {
+				try {
+					Player temp = loadPlayer(fileName);
+					if (temp == null) return;
+					temp.invalidateNuzlocke(reason);
+					temp.playTimeNanos = playTimeNanos;
+					writeAtomically(temp, fileName);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	public static void awaitPendingSaves() { // call on exit
+		scumExec.shutdown();
+		try {
+			scumExec.awaitTermination(3, TimeUnit.SECONDS);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
 	}
 
 	public static Player loadPlayer(String fileName) {

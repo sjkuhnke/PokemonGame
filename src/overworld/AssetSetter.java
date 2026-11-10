@@ -2,9 +2,8 @@ package overworld;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Map;
 import java.util.Random;
-import java.util.Set;
 
 import entity.*;
 import object.*;
@@ -275,36 +274,6 @@ public class AssetSetter {
 		index = 0;
 		objIndex = 0;
 		iIndex = 0;
-	}
-	
-	public void setLegendarySkeletons() {
-		//                             blohadel perilyte faulette sasquotta hueduu
-		int[] validMaps = new int[] {    210,     150,     127,      209,    148 };
-		int[] legendaryIDs = new int[] { 228,     229,     230,      231,    232 };
-		int[] trainerIDs = new int[] {   509,     325,     511,      512,    326 };
-		
-		for (int i = 0; i < validMaps.length; i++) {
-			Pokemon.legendaryMap.put(validMaps[i], new Integer[] { legendaryIDs[i], trainerIDs[i] });
-		}
-		
-		legendarySkeletons.put(228, new StaticSkeleton(228, 54, 62, 510, "Glublublerbe... bubblava!")); // blohadel
-		legendarySkeletons.put(229, new StaticSkeleton(229, 46, 66, 325, "Vrrrrlyigtt!")); // perilyte
-		legendarySkeletons.put(230, new StaticSkeleton(230, 31, 35, 511, "Jahahack! Jahacklehette!!")); // faulette
-		legendarySkeletons.put(231, new StaticSkeleton(231, 49, 45, 512, "Ohohquotta!")); // sasquotta
-		legendarySkeletons.put(232, new StaticSkeleton(232, 50, 68, 326, "Vouuudouhhh!!!")); // hueduu
-	}
-	
-	public void setUltraParadoxSkeletons() {
-		for (int i = 0; i < 6; i++) {
-			Pokemon.ultraParadoxMap.put(232 + i, new Integer[] { 284 + i, 550 + i });
-		}
-		
-		legendarySkeletons.put(284, new StaticSkeleton(284, 31, 42, 550, "Zuzuzuurrkiii!")); // cage critter
-		legendarySkeletons.put(285, new StaticSkeleton(285, 31, 42, 551, "Gzssisssss!")); // icy serpent
-		legendarySkeletons.put(286, new StaticSkeleton(286, 31, 42, 552, "Bloooghawooooooooarooo!")); // shocky spire
-		legendarySkeletons.put(287, new StaticSkeleton(287, 31, 42, 553, "Cvvshugizgi!")); // dust sorcerer
-		legendarySkeletons.put(288, new StaticSkeleton(288, 31, 42, 554, "Azchoozlooagh!")); // fever dream
-		legendarySkeletons.put(289, new StaticSkeleton(289, 31, 42, 555, "Xvringzzi!")); // dusk skater
 	}
 	
 	public void setObject() {
@@ -5111,19 +5080,17 @@ public class AssetSetter {
 		/**
 		 * Summonable Legendaries
 		 */
-		Set<Integer> legendMaps = new HashSet<>(Pokemon.legendaryMap.keySet());
-		legendMaps.addAll(Pokemon.ultraParadoxMap.keySet());
-		for (Integer legendMap : legendMaps) {
-			if (gp.player.p.summonedLegendaries != null) {
-				if (gp.player.p.summonedLegendaries.containsKey(legendMap)) {
-					if (gp.npc[legendMap][0] == null) {
-						StaticSkeleton sk = legendarySkeletons.get(gp.player.p.summonedLegendaries.get(legendMap));
-						sk.nuzlocke = gp.player.p.nuzlocke;
-						gp.npc[legendMap][0] = SetupStaticEncounter(sk.id(), sk.x(), sk.y(), sk.t(), sk.d());
-					}
-				} else {
-					gp.npc[legendMap][0] = null;
-				}
+		Map<Integer, Integer> summoned = gp.player.p.summonedLegendaries;
+		if (summoned != null) {
+			for (SummonSite site : SummonSite.SITES.values()) {
+				Integer id = summoned.get(site.map);
+				if (id == null) { gp.npc[site.map][site.npcSlot] = null; continue; }
+				if (gp.npc[site.map][site.npcSlot] != null) continue;
+				SummonSite.Entry e = site.entry(id);
+				int[] spot = site.spawnFor(gp.aSetter.generateSeed(gp.player.p.getID(), 51, 51, site.map));
+				StaticSkeleton sk = new StaticSkeleton(e.pokemonId(), spot[0], spot[1], e.trainerId(), e.cry());
+				sk.nuzlocke = gp.player.p.nuzlocke;
+				gp.npc[site.map][site.npcSlot] = SetupStaticEncounter(sk.id(), sk.x(), sk.y(), sk.t(), sk.d());
 			}
 		}
 		

@@ -9,6 +9,7 @@ Make Pokemon have real xp yields/curves
 
 UPDATE LIST
 NATURES and PP UPS FOR GYM 8+ SPLIT TRAINERS
+Make Pokedex task not show up if you didn't actually recieve the Pokemon
 Add Klara and Fred's house to Sicab City
 Figure out why Matrix switches in Battle Betting don't always line up with who actually comes in
 Add some more battle betting sets and redo old ones

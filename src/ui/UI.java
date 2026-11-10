@@ -657,6 +657,7 @@ public class UI extends AbstractUI {
 			break;
 		case Task.SUMMON:
 			gp.player.p.summonLegendary(gp, gp.currentMap, currentTask.types);
+			System.out.println(gp.npc[232][0]);
 			currentTask = null;
 			break;
 		case Task.DELETE_MOVE:

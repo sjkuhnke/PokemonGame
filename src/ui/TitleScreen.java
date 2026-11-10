@@ -91,7 +91,7 @@ public class TitleScreen extends AbstractUI {
 	
 	// DOC CHECKBOXES
 	public boolean[] docOptions = new boolean[8];
-	public boolean generateExcel = false;
+	public boolean masterExcel = false; // one workbook with every doc as a tab; not remembered between launches
 	
 	// DELETE CONFIRM FIELDS
 	private boolean showDeleteConfirm;
@@ -104,9 +104,9 @@ public class TitleScreen extends AbstractUI {
 	public static final int MAIN_MANAGE = 2;
 	public static final int MAIN_SETTINGS = 3;
 	public static final int MAIN_SAVE_SELECT = 4;
-	public static final int MAIN_DOC_START = 5;
-	public static final int MAIN_DOC_END = 12;
-	public static final int MAIN_EXCEL_TOGGLE = 13;
+	public static final int MAIN_EXCEL_MASTER = 5;
+	public static final int MAIN_DOC_START = 6;
+	public static final int MAIN_DOC_END = 13;
 	
 	// NEW GAME MENU OPTIONS
 	public static final int NG_SAVE_NAME = 0;
@@ -240,14 +240,13 @@ public class TitleScreen extends AbstractUI {
 	}
 
 	private void updateMainMenu() {
-		int maxOption = MAIN_EXCEL_TOGGLE;
+		int maxOption = MAIN_DOC_END;
+		int bottomLeftDoc = ((MAIN_DOC_END - MAIN_DOC_START) / 2) + MAIN_DOC_START;
 		if (gp.keyH.upPressed) {
 			gp.keyH.upPressed = false;
 			gp.playSFX(Sound.S_MENU_1);
-			if (menuNum == MAIN_EXCEL_TOGGLE) { // for toggle going to left column
-				menuNum = ((MAIN_DOC_END - MAIN_DOC_START) / 2) + MAIN_DOC_START;
-			} else if (menuNum == ((MAIN_DOC_END - MAIN_DOC_START) / 2) + MAIN_DOC_START + 1) { // for top checkbox on the right column
-				menuNum = MAIN_SAVE_SELECT;
+			if (menuNum == bottomLeftDoc + 1) { // top checkbox of the right column -> master checkbox above it
+				menuNum = MAIN_EXCEL_MASTER;
 			} else {
 				menuNum = getNextValidOption(menuNum, maxOption, true);
 			}
@@ -255,8 +254,8 @@ public class TitleScreen extends AbstractUI {
 		if (gp.keyH.downPressed) {
 			gp.keyH.downPressed = false;
 			gp.playSFX(Sound.S_MENU_1);
-			if (menuNum == ((MAIN_DOC_END - MAIN_DOC_START) / 2) + MAIN_DOC_START) { // for bottom left column checkbox to the toggle
-				menuNum = MAIN_EXCEL_TOGGLE;
+			if (menuNum == bottomLeftDoc) { // bottom of the left column: nothing below, wrap like the right column does
+				menuNum = getNextValidOption(MAIN_DOC_END, maxOption, false);
 			} else {
 				menuNum = getNextValidOption(menuNum, maxOption, false);
 			}
@@ -285,17 +284,15 @@ public class TitleScreen extends AbstractUI {
 			}
 		}
 		
-		if (menuNum == MAIN_EXCEL_TOGGLE) {
-			if (gp.keyH.wPressed || gp.keyH.leftPressed || gp.keyH.rightPressed) {
+		if (menuNum == MAIN_EXCEL_MASTER) {
+			if (gp.keyH.wPressed) {
 				gp.keyH.wPressed = false;
-				gp.keyH.leftPressed = false;
-				gp.keyH.rightPressed = false;
-				if (generateExcel) {
+				if (masterExcel) {
 					gp.playSFX(Sound.S_MENU_CAN);
 				} else {
 					gp.playSFX(Sound.S_MENU_CON);
 				}
-				generateExcel = !generateExcel;
+				masterExcel = !masterExcel;
 			}
 		}
 		
@@ -1954,80 +1951,64 @@ public class TitleScreen extends AbstractUI {
 	
 	private void drawDocumentationSection(Graphics2D g2, int x, int y) {
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));
-		boolean inDocumentation = menuNum >= MAIN_DOC_START && menuNum <= MAIN_EXCEL_TOGGLE;
+		boolean inDocumentation = menuNum >= MAIN_EXCEL_MASTER && menuNum <= MAIN_DOC_END;
 		drawOutlinedText("Generate Documentation:", x, y, inDocumentation ? textColor : new Color(200, 200, 200), Color.BLACK);
 		
 		y += gp.tileSize / 2;
 		g2.setFont(g2.getFont().deriveFont(18F));
 		
+		int rowHeight = gp.tileSize * 2 / 3;
+		
+		// Master Excel doc: one workbook with every document as a tab (sits above the TXT checkboxes)
+		drawDocCheckbox("Master Excel Doc (all docs, one file)", x, y, menuNum == MAIN_EXCEL_MASTER,
+				masterExcel, new Color(0, 200, 100));
+		y += rowHeight + gp.tileSize / 6; // small gap between the master checkbox and the TXT list
+		
 		String[] docNames = {
 			"Trainers", "Pokemon", "Encounters", "Moves",
 			"Abilities", "Items", "Defensive Types", "Offensive Types"
 		};
-		boolean[] docCanBeExcel = {
-			true, true, true, true,
-			true, true, true, true
-		};
 		
 		int col1X = x;
 		int col2X = gp.tileSize * 4;
-		int rowHeight = gp.tileSize * 2 / 3;
 		
 		for (int i = 0; i < docNames.length; i++) {
 			int docX = (i < 4) ? col1X : col2X;
 			int docY = y + ((i % 4) * rowHeight);
-			int docCommandNum = MAIN_DOC_START + i;
-			
-			boolean isSelected = menuNum == docCommandNum;
-			boolean isExcel = generateExcel && docCanBeExcel[i];
-			Color checkedColor = isExcel ? new Color(0, 200, 100) : new Color(200, 200, 200);
-			
-			int checkboxSize = gp.tileSize / 4;
-			int checkboxX = docX;
-			int checkboxY = docY - checkboxSize;
-			
-			if (isSelected) {
-				g2.setStroke(new BasicStroke(2));
-				g2.setColor(Color.YELLOW);
-				g2.drawRect(checkboxX - 2, checkboxY - 2, checkboxSize + 4, checkboxSize + 4);
-			}
-			
-			g2.setStroke(new BasicStroke(2));
-			g2.setColor(Color.WHITE);
-			g2.drawRect(checkboxX, checkboxY, checkboxSize, checkboxSize);
-			
-			if (docOptions[i]) {
-				g2.setColor(checkedColor.darker());
-				g2.fillRect(checkboxX + 2, checkboxY + 2, checkboxSize - 4, checkboxSize - 4);
-				
-				g2.setColor(Color.WHITE);
-				g2.setStroke(new BasicStroke(2));
-				int checkX = checkboxX + checkboxSize / 4;
-				int checkY = checkboxY + checkboxSize / 2;
-				g2.drawLine(checkX, checkY, checkX + checkboxSize / 4, checkY + checkboxSize / 4);
-				g2.drawLine(checkX + checkboxSize / 4, checkY + checkboxSize / 4, checkX + checkboxSize / 2, checkY - checkboxSize / 4);
-			}
-			
-			Color labelColor = isSelected ? textColor : checkedColor;
-			drawOutlinedText(docNames[i], docX + checkboxSize + 8, docY, labelColor, Color.BLACK);
+			drawDocCheckbox(docNames[i], docX, docY, menuNum == MAIN_DOC_START + i,
+					docOptions[i], new Color(200, 200, 200));
 		}
-		
-		int toggleX = (int) (gp.tileSize * 2.5);
-		int toggleY = (int) (y + gp.tileSize * 2.5);
-		drawExcelToggle(toggleX, toggleY);
 	}
 	
-	private void drawExcelToggle(int x, int y) {
-		boolean selected = menuNum == MAIN_EXCEL_TOGGLE;
-		int toggleX = x;
-		int toggleY = y - gp.tileSize / 6;
+	private void drawDocCheckbox(String label, int x, int y, boolean isSelected, boolean isChecked, Color checkedColor) {
+		int checkboxSize = gp.tileSize / 4;
+		int checkboxX = x;
+		int checkboxY = y - checkboxSize;
 		
-		g2.setFont(g2.getFont().deriveFont(16F));
-		String label = "Excel:";
-		drawOutlinedText(label, toggleX - gp.tileSize, toggleY + gp.tileSize / 6 + 5,
-			selected ? textColor : new Color(200, 200, 200), Color.BLACK);
+		if (isSelected) {
+			g2.setStroke(new BasicStroke(2));
+			g2.setColor(Color.YELLOW);
+			g2.drawRect(checkboxX - 2, checkboxY - 2, checkboxSize + 4, checkboxSize + 4);
+		}
 		
-		drawToggleSwitch(toggleX, toggleY, generateExcel, selected);
+		g2.setStroke(new BasicStroke(2));
+		g2.setColor(Color.WHITE);
+		g2.drawRect(checkboxX, checkboxY, checkboxSize, checkboxSize);
+		
+		if (isChecked) {
+			g2.setColor(checkedColor.darker());
+			g2.fillRect(checkboxX + 2, checkboxY + 2, checkboxSize - 4, checkboxSize - 4);
+			
+			g2.setColor(Color.WHITE);
+			g2.setStroke(new BasicStroke(2));
+			int checkX = checkboxX + checkboxSize / 4;
+			int checkY = checkboxY + checkboxSize / 2;
+			g2.drawLine(checkX, checkY, checkX + checkboxSize / 4, checkY + checkboxSize / 4);
+			g2.drawLine(checkX + checkboxSize / 4, checkY + checkboxSize / 4, checkX + checkboxSize / 2, checkY - checkboxSize / 4);
+		}
+		
+		Color labelColor = isSelected ? textColor : checkedColor;
+		drawOutlinedText(label, x + checkboxSize + 8, y, labelColor, Color.BLACK);
 	}
 
 	private void drawSettingsMenu() {

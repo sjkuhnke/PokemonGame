@@ -16,7 +16,6 @@ import overworld.*;
 import util.*;
 import pokemon.*;
 import puzzle.Puzzle;
-import test.SashMultiHitTests;
 import ui.UI;
 
 public class PlayerCharacter extends Entity {
@@ -314,10 +313,7 @@ public class PlayerCharacter extends Entity {
 		}
 		if (keyH.calcPressed) {
 			keyH.calcPressed = false;
-			//Item.useCalc(p.getCurrent(), null, null, true);
-			Pokemon plMon = p.team[0].fullClone();   // your Shooting Stars user
-			Pokemon aiMon = Trainer.trainers[535].team[0].fullClone(); // Soldrota-E
-			SashMultiHitTests.debugPlan(Trainer.trainers[535], p);
+			Item.useCalc(p.getCurrent(), null, null, true);
 		}
 		
 		checkHotkeys();

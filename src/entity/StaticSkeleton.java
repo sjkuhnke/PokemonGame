@@ -22,11 +22,11 @@ public class StaticSkeleton {
 	}
 	
 	public int x() {
-		return nuzlocke ? 49 : x;
+		return x;
 	}
 	
 	public int y() {
-		return nuzlocke ? 45 : y;
+		return y;
 	}
 	
 	public int t() {
