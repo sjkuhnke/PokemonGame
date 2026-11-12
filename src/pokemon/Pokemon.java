@@ -10936,31 +10936,6 @@ public class Pokemon implements Serializable {
 		return Math.min(this.happiness + (25 * p.badges), 255);
 	}
 	
-	public static Pokemon generateCompetitivePokemon() {
-		Random rand = Rng.asRandom();
-		int id;
-		boolean sprite = false;
-		do {
-			id = rand.nextInt(MAX_POKEMON) + 1;
-			try {
-				ImageIO.read(Pokemon.class.getResourceAsStream("/sprites/" + String.format("%03d", id) + ".png"));
-				sprite = true;
-			} catch (Exception e) {
-				sprite = false;
-			}
-		} while (getEvolveString(id) != null || !sprite);
-		
-		Item item;
-		do {
-			Item[] values = Item.values();
-			item = values[rand.nextInt(values.length)];
-		} while (item.getPocket() != Item.HELD_ITEM && item.getPocket() != Item.BERRY);
-		
-		Pokemon result = new Pokemon(id, 100, false, true);
-		result.item = item;
-		return result;
-	}
-
 	public static Pokemon generateCompetitivePokemon(ArrayList<Pokemon> team) {
 		Random rand = Rng.asRandom();
 		int id = 0;

@@ -1,3 +1,11 @@
+Tortugis @ Eject Pack/Choice Specs
+Bold/Modest Nature
+Ability: Overgrow
+- U-Turn
+- Leaf Storm
+- Giga Drain/Scorching Sands
+- Draco Meteor/Rockfall Frenzy
+
 Tortugis @ Rocky Helmet
 Bold Nature
 Ability: Rough Skin
@@ -14,21 +22,21 @@ Ability: Regenerator
 - Draco Meteor/Dark Pulse
 - Spikes/U-Turn
 
-Tortugis @ Blunder Policy/Assault Vest/Choice Band
+Tortugis @ Assault Vest/Choice Band
 Adamant Nature
 Ability: Regenerator
 - Head Smash
 - Leaf Blade/Vine Cross
-- Dragon Tail/Earthquake
-- Close Combat/Ice Spinner
+- Dragon Tail/Earthquake/U-Turn
+- Close Combat/Ice Spinner/Meteor Assault
 
 Magron @ Air Balloon
 Timid Nature
 Ability: Dry Skin
-- Stealth Rock
+- Stealth Rock/Metal Burst
 - Spikes/Will-O-Wisp
 - Molten Steelspike/Surf
-- Fire Blast/Flamethrower
+- Fire Blast/Flamethrower/Lava Surf
 
 Magron @ Choice Scarf
 Timid Nature
@@ -36,7 +44,7 @@ Ability: Drought
 - Eruption
 - Molten Steelspike
 - Weather Ball/Solar Beam
-- Earth Power/Aura Sphere
+- Earth Power/Aura Sphere/U-Turn
 
 Dragave @ Sitrus Berry
 Jolly Nature
@@ -54,7 +62,7 @@ Ability: Protean
 - Flip Turn/U-Turn
 - Summit Strike
 
-Dragave @ Big Root
+Dragave @ Big Root/Shell Bell
 Adamant/Impish/Careful/Jolly Nature
 Ability: Swift Swim
 - Wave Crash
@@ -78,6 +86,14 @@ Ability: Insect Feeder
 - Aeroblast
 - Heat Wave/Star Storm/Bug Buzz/Energy Ball
 
+Armoraven @ Cell Battery/Leftovers
+Impish Nature
+Ability: Battle Armor
+- Iron Defense
+- Body Press
+- Roost/Mirror Coat
+- Drill Peck/Ice Spinner
+
 Armoraven @ Rocky Helmet/Leftovers/Wacan Berry
 Impish Nature
 Ability: Iron Barbs
@@ -98,7 +114,7 @@ Grunswine @ Eviolite
 Impish/Careful Nature
 Ability: Mouthwater
 - Super Fang/Body Slam
-- Bulk Up
+- Bulk Up/Slack Off
 - Baton Pass/Drain Punch/Mach Punch
 - Bulldoze/Earthquake
 
@@ -123,8 +139,16 @@ Adamant Nature
 Ability: Solid Rock
 - Rock Blast
 - Spike Cannon
-- Swords Dance
+- Swords Dance/Slack Off
 - Earthquake
+
+Hoghoncho @ Sitrus Berry
+Impish Nature
+Ability: Solid Rock
+- Belly Drum
+- Body Slam
+- Earthquake/Stone Edge
+- Mach Punch
 
 Teddinaut @ Choice Specs/Choice Scarf
 Timid Nature
@@ -222,7 +246,7 @@ Ability: Chlorophyll
 - Solar Beam
 - Flamethrower
 
-Serpenge @ Leftovers
+Serpenge @ Leftovers/Sitrus Berry
 Bold/Calm Nature
 Ability: Berserk
 - Giga Drain
@@ -498,15 +522,23 @@ Prismodon @ Power Herb
 Modest Nature
 Ability: Filter
 - Meteor Beam
-- Rock Polish/Thunder Wave
+- Rock Polish/Thunder Wave/Rainbow Flash
 - Prismatic Laser
 - Earth Power/Ice Beam
+
+Prismodon @ Assault Vest
+Bold Nature
+Ability: Sand Stream
+- Diamond Storm
+- Radio Burst/Mirror Coat
+- Light Drain
+- Scorching Sands/Lava Surf
 
 Kobraturgy @ Choice Band/Choice Scarf
 Jolly Nature
 Ability: Rock Head
 - Rock Wrecker
-- Earthquake
+- Headlong Rush
 - U-Turn
 - Psychic Fangs
 
@@ -514,16 +546,16 @@ Kobraturgy @ Leftovers
 Jolly Nature
 Ability: Rock Head
 - Rock Wrecker
-- Coil/Rock Polish
+- Coil/Rock Polish/Accelerock
 - Psychic Fangs
 - Earthquake/Crunch
 
-Kobraturgy @ Rocky Helmet
+Kobraturgy @ Rocky Helmet/Luminous Moss
 Impish/Careful Nature
 Ability: Intimidate/Regenerator
 - Stealth Rock
 - U-Turn
-- Rock Wrecker
+- Mighty Cleave
 - Thunder Wave/Taunt
 
 Saberock @ Focus Sash/Red Card/Rocky Helmet
@@ -569,40 +601,56 @@ Ability: Adaptability
 Pterator @ Flame Orb
 Jolly Nature
 Ability: Guts
-- Bulk Up/U-Turn
+- Bulk Up/U-Turn/Mana Punch
 - Drain Punch/Close Combat
 - Brave Bird
-- Knock Off
+- Knock Off/Roost
 
 Nixnerva @ Light Clay/Icy Rock
 Bold Nature
 Ability: Snow Warning
 - Aurora Veil
-- Glare
-- Freezing Glare
+- Glare/Frostbind/Roost/Aurora Glow
+- Freezing Glare/Future Sight
 - Blizzard
 
 Nixnerva @ Choice Scarf
 Modest Nature
 Ability: Snow Warning
 - Trick/Volt Switch
-- Shadow Ball/Focus Blast
-- Freezing Glare
+- Shadow Ball/Focus Blast/Heat Wave
+- Freezing Glare/Psycho Boost
 - Blizzard
+
+Cervora @ Leftovers/Enigma Berry
+Bold Nature
+Ability: Everglow
+- Frostbind/Aurora Boost
+- Magic Reflect
+- Flamethrower/Ice Beam
+- Arcane Spell/Quick Spell
 
 Cervora @ Sitrus Berry
 Timid Nature
 Ability: Sparkly Surge
 - Aurora Boost
 - Freeze-Dry
-- Frostbind
-- Magic Tomb/Flamethrower
+- Powder Snow
+- Terrain Pulse/Flamethrower
+
+Cervora @ Assault Vest
+Timid Nature
+Ability: Sparkly Surge/Everglow
+- U-Turn
+- Arcane Spell
+- Snow Plume/Freeze-Dry
+- Earth Power/Galaxy Blast/Mirror Coat
 
 Frosmoth @ Heavy-Duty Boots
 Bold Nature
 Ability: Icy Scales
 - Defog/Sticky Web
-- Haze/Tailwind
+- Haze/Tailwind/Roost/Aurora Glow
 - Frostbind/Stun Spore
 - Ice Beam/Freeze-Dry
 
@@ -627,7 +675,7 @@ Adamant Nature
 Ability: Guts
 - Ice Spinner/Icicle Crash/Ice Punch
 - Close Combat/Drain Punch
-- Swords Dance/Bulk Up/U-Turn
+- Swords Dance/Bulk Up/U-Turn/Trick Tackle
 - Ice Shard/Mach Punch
 
 Thalarctic @ Assault Vest/Choice Band
@@ -658,19 +706,19 @@ Topazatops @ Choice Band
 Adamant Nature
 Ability: Fortify
 - Head Smash
-- Close Combat
+- Body Press
 - Mach Punch
-- Earthquake
+- Headlong Rush
 
 Topazatops @ Lum Berry/White Herb
 Impish/Adamant Nature
 Ability: Fortify
-- Head Smash
-- Swords Dance/No Retreat
-- Close Combat
-- Meteor Assault
+- Stone Edge
+- Iron Defense/No Retreat
+- Body Press
+- Meteor Assault/Headlong Rush
 
-Topazatops @ Leftovers
+Topazatops @ Leftovers/Enigma Berry
 Impish/Careful Nature
 Ability: Fortify
 - Head Smash
@@ -686,7 +734,7 @@ Ability: Sand Force
 - Circle Throw
 - Ice Spinner/Rock Tomb
 
-Topazatops @ Rocky Helmet
+Topazatops @ Sitrus Berry/Maranga Berry/Kee Berry
 Impish Nature
 Ability: Bulletproof
 - Rest
@@ -697,7 +745,7 @@ Ability: Bulletproof
 Walrein @ Leftovers
 Calm Nature
 Ability: Unaware
-- Flip Turn/Whirlpool
+- Flip Turn/Whirlpool/Chilly Reception
 - Frostbind/Scald
 - Slack Off
 - Ice Beam
@@ -706,8 +754,8 @@ Walrein @ Leftovers/Custap Berry
 Bold Nature
 Ability: Ice Body
 - Blizzard
-- Snowscape
-- Aurora Veil
+- Chilly Reception
+- Aurora Veil/Aurora Glow
 - Scald/Flip Turn
 
 Walrein @ Sitrus Berry
@@ -877,3 +925,131 @@ Ability: Trace
 - U-Turn/Teleport/Explosion
 - Gravity Punch
 - Gyro Ball
+
+Gardevoir @ Focus Sash
+Timid/Modest Nature
+Ability: Empathic Link
+- Glitter Dance
+- Spotlight Ray/Chromo Beam/Photon Geyser
+- Psychic/Psyshock
+- Thunderbolt/Aura Sphere/Power Gem
+
+Gardevoir @ Tanga Berry/Rindo Berry
+Timid/Bold Nature
+Ability: Empathic Link
+- Chromo Beam/Spotlight Ray
+- Future Sight/Psychic
+- Moonlight/Wish/Vacuum Wave
+- Calm Mind
+
+Gardevoir @ Focus Sash
+Timid Nature
+Ability: Trace
+- Future Sight/Psyshock/Psychic Noise
+- Mirror Coat/Destiny Bond/Healing Wish
+- Arcane Spell/Mystical Fire/Thunder Wave
+- Chromo Beam/Spotlight Ray
+
+Gardevoir @ Choice Specs/Choice Scarf
+Timid/Modest Nature
+Ability: Pixilate
+- Trick
+- Hyper Voice
+- Thunderbolt/Aura Sphere/Shadow Ball
+- Psychic/Star Storm
+
+Gardevoir @ Life Orb
+Timid Nature
+Ability: Pixilate
+- Hyper Voice
+- Future Sight/Psyshock
+- Thunderbolt/Iron Blast
+- Will-O-Wisp/Thunder Wave/Healing Wish
+
+Gallade @ Choice Scarf
+Adamant Nature
+Ability: Sharpness
+- Sacred Sword
+- Psycho Cut
+- Night Slash/Aqua Cutter/U-Turn
+- Solstice Blade/Trick Tackle
+
+Gallade @ Focus Sash/Sitrus Berry
+Impish/Adamant Nature
+Ability: Sharpness
+- Swords Dance/Counter
+- Agility/Shadow Sneak/Thunder Wave
+- Sacred Sword
+- Knock Off/X-Scissor/Psycho Cut
+
+Gallade @ Power Herb
+Jolly Nature
+Ability: Sharpness
+- Acrobatics
+- Solar Blade/Sword Of Dawn
+- Sacred Sword
+- Swords Dance/Psycho Cut
+
+Gallade @ White Herb
+Jolly Nature
+Ability: Justified
+- Close Combat
+- Acrobatics/Zen Headbutt
+- Swords Dance/Will-O-Wisp
+- Knock Off/Shadow Sneak
+
+Gallade @ Life Orb/Focus Sash
+Adamant Nature
+Ability: Inner Focus
+- Swords Dance
+- Agility/Flame Charge
+- Drain Punch/Close Combat
+- Knock Off/Stone Edge
+
+Benglow @ Focus Sash
+Modest Nature
+Ability: Simple
+- Agility/Rainbow Flash/Radio Burst
+- Prismatic Laser/Spotlight Ray
+- Tail Glow
+- Arcane Spell/Psyshock
+
+Benglow @ Focus Sash
+Adamant Nature
+Ability: Simple
+- Swords Dance
+- Extreme Speed
+- Light Speed
+- Mana Punch
+
+Benglow @ Starf Berry/Petaya Berry
+Timid Nature
+Ability: Simple
+- Endure
+- Hyper Beam/Hyper Voice
+- Minimize/Mana Punch/Glitter Dance
+- Light Drain/Chromo Beam
+
+Benglow @ Blunder Policy/Power Herb
+Timid Nature
+Ability: Simple
+- Blizzard
+- Focus Blast/Thunder
+- Hyper Beam
+- Tail Glow/Calm Mind
+
+Benglow @ Focus Sash
+Quiet Nature
+Ability: Simple
+- Trick Room
+- Prismatic Laser/Chromo Beam
+- Tail Glow
+- Arcane Spell/Focus Blast
+
+Benglow @ Choice Scarf
+Hasty/Naive Nature
+Ability: Pixilate
+- Trick Tackle
+- Hyper Voice
+- Dark Pulse/Power Gem
+- U-Turn
