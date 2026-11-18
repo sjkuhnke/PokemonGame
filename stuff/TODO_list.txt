@@ -8,6 +8,7 @@ Make each trainer have individual money prizes instead of just all $100
 Make Pokemon have real xp yields/curves
 
 UPDATE LIST
+Make calc reset your cursor to the player's dropdown on open
 NATURES and PP UPS FOR GYM 8+ SPLIT TRAINERS
 Make Pokedex task not show up if you didn't actually recieve the Pokemon
 Add Klara and Fred's house to Sicab City

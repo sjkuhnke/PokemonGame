@@ -7,7 +7,6 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.VerticalAlignment;
 
 import pokemon.PType;
 import pokemon.Pokemon;
@@ -62,7 +61,7 @@ public class TypingsSection implements DocSection {
 				String weak = TypingsDoc.joinTypes(eff, v -> v >= 2.0, type1, type2, true);
 				String resist = TypingsDoc.joinTypes(eff, v -> v < 1.0 && v != 0.0, type1, type2, true);
 
-				Cell typingCell = writeRow(ctx, sheet, rowIndex, type1, type2, immune, weak, resist);
+				writeRow(ctx, sheet, rowIndex, type1, type2, immune, weak, resist);
 				if (type1 == type2) {
 					ctx.links.register(LinkRegistry.Kind.TYPE, type1, sheet, rowIndex, 0);
 				}

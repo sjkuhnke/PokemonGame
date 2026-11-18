@@ -1315,6 +1315,10 @@ public class Player extends Trainer implements Serializable {
 	}
 
 	public void useItem(Pokemon p, Item item, GamePanel gp) {
+		if (p instanceof Egg) {
+			gp.ui.showMessage("It won't have any effect.");
+			return;
+		}
 		if (p == null) return;
 		if (item.getPocket() == Item.HELD_ITEM || item.getPocket() == Item.BERRY) {
 			if (p.item != null) {

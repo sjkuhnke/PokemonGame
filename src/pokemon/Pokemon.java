@@ -3403,8 +3403,8 @@ public class Pokemon implements Serializable {
 		return !this.cloned && !SimContext.active();
 	}
 	
-	public int calcExpGain(Pokemon recipient, int participants) {
-		return ExpGroup.gain(this.getExpYield(), this.level, recipient.level, participants, this.trainerOwned(), recipient.item == Item.LUCKY_EGG);
+	public int calcExpGain(Pokemon recipient, int participants, Player player) {
+		return ExpGroup.gain(this.getExpYield(), this.level, recipient.level, participants, this.trainerOwned(), recipient.item == Item.LUCKY_EGG, player.nuzlocke, Player.getLevelCap(player.badges, player));
 	}
 	
 	public void awardExp(Pokemon foe) {
@@ -3419,7 +3419,7 @@ public class Pokemon implements Serializable {
 		// Award experience points to each battled Pokemon
 		for (Pokemon p : player.getTeam()) {
 			if (p != null && p.battled) {
-				int expAwarded = foe.calcExpGain(p, numBattled);
+				int expAwarded = foe.calcExpGain(p, numBattled, player);
 				if (p.level < 100 && !p.isFainted() && !((p.id == 233 || p.id == 234) && !player.flag[7][21])) {
 					int totalExp = p.exp + expAwarded;
 					String flavor = p.item == Item.LUCKY_EGG ? "a boosted " : p.item == Item.EXP_SHARE && !p.visible ? "a shared " : "";
@@ -8310,14 +8310,14 @@ public class Pokemon implements Serializable {
 			if (r.isFainted()) { gainLabel.setText(r.nickname + " is fainted: no exp"); detailLabel.setText(" "); return; }
 			if (r.level >= 100) { gainLabel.setText(r.nickname + " is Lv. 100: no exp"); detailLabel.setText(" "); return; }
 			int s = (Integer) sharing.getValue();
-			int gain = calcExpGain(r, s);
+			int gain = calcExpGain(r, s, player);
 			gainLabel.setText(r.nickname + " gains " + gain + " exp");
 			
 			ArrayList<String> mods = new ArrayList<>();
 			if (this.trainerOwned()) mods.add("trainer x1.5");
 			if (r.item == Item.LUCKY_EGG) mods.add("Lucky Egg x1.5");
 			String pct = r.expMax > 0 ? String.format(" (%.0f%% of a level)", gain * 100.0 / r.expMax) : "";
-			detailLabel.setText("<html>Solo yield: " + calcExpGain(r, 1) + pct + (mods.isEmpty() ? "" : "<br>Bonuses: " + String.join(", ", mods)) + "</html>");
+			detailLabel.setText("<html>Solo yield: " + calcExpGain(r, 1, player) + pct + (mods.isEmpty() ? "" : "<br>Bonuses: " + String.join(", ", mods)) + "</html>");
 		};
 		
 		who.addActionListener(e -> {

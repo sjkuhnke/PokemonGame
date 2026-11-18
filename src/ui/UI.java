@@ -55,6 +55,8 @@ import util.ToolTip;
 
 public class UI extends AbstractUI {
 	
+	private WorldMapUI worldMap;
+	
 	// MENU STATE
 	public int menuNum = 0;
 	public int slotCol = 0;
@@ -4737,7 +4739,8 @@ public class UI extends AbstractUI {
 			showPlayer();
 			break;
 		case 6:
-			gp.openMap();
+			if (worldMap == null) worldMap = new WorldMapUI(this, gp);
+			worldMap.draw(g2);
 			break;
 		case 7:
 			drawSettings();
