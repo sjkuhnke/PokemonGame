@@ -343,6 +343,8 @@ public final class WorldMapData {
 			NODES[e[0]].neighbors[fill[e[0]]++] = e[1];
 			NODES[e[1]].neighbors[fill[e[1]]++] = e[0];
 		}
+		for (int id : new int[] {37, 38, 39, 40, 46, 48}) NODES[id].climate = MapNode.Climate.DESERT;
+		for (int id : new int[] {20, 33}) NODES[id].climate = MapNode.Climate.SNOW;
 		for (int i = 0; i < NODES.length; i++) {
 			if (NODES[i].id != i) throw new IllegalStateException("NODES must be indexed by id: " + i);
 		}

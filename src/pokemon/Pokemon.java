@@ -20,6 +20,7 @@ import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -10936,25 +10937,6 @@ public class Pokemon implements Serializable {
 		return Math.min(this.happiness + (25 * p.badges), 255);
 	}
 	
-	public static Pokemon generateCompetitivePokemon(ArrayList<Pokemon> team) {
-		Random rand = Rng.asRandom();
-		int id = 0;
-		do {
-			id = compIDs.get(rand.nextInt(compIDs.size()));
-		} while (teamContainsID(team, id));
-		
-		ArrayList<Set> setOptions = sets.get(id);
-		
-		return setOptions.get(rand.nextInt(setOptions.size())).makePokemon();
-	}
-
-	private static boolean teamContainsID(ArrayList<Pokemon> team, int id) {
-		for (Pokemon p : team) {
-			if (p.id == id) return true;
-		}
-		return false;
-	}
-	
 	public static int[] simulateBattle(Trainer trainer1, Trainer trainer2) {
 		OddsRun run = new OddsRun(trainer1, trainer2);
 		while (!run.isDone()) run.step();
@@ -11167,8 +11149,6 @@ public class Pokemon implements Serializable {
 	public static void loadCompetitiveSets() {
 		Scanner scanner = new Scanner(Pokemon.class.getResourceAsStream("/info/sets.txt"));
 		
-		boolean newID = true;
-		
 		while (scanner.hasNextLine()) {
 			String nameLine = scanner.nextLine();
 			if (nameLine.trim().isEmpty()) continue;
@@ -11226,9 +11206,7 @@ public class Pokemon implements Serializable {
 			
 			set.validate();
 			
-			if (newID) {
-				compIDs.add(id);
-			}
+			if (!compIDs.contains(id)) compIDs.add(id);
 			
 			ArrayList<Set> setOptions = sets.getOrDefault(id, new ArrayList<>());
 			setOptions.add(set);
@@ -11238,6 +11216,19 @@ public class Pokemon implements Serializable {
 		}
 		
 		scanner.close();
+	}
+	
+	public static Set pickCompetitiveSet(Collection<Integer> usedIds, Random rand) {
+		int id;
+		do { id = compIDs.get(rand.nextInt(compIDs.size())); } while (usedIds.contains(id));
+		ArrayList<Set> opts = sets.get(id);
+		return opts.get(rand.nextInt(opts.size()));
+	}
+
+	public static Pokemon generateCompetitivePokemon(ArrayList<Pokemon> team) {
+		ArrayList<Integer> used = new ArrayList<>();
+		for (Pokemon p : team) used.add(p.id);
+		return pickCompetitiveSet(used, Rng.asRandom()).makePokemon();
 	}
 
 	public ArrayList<Move> getMoves() {

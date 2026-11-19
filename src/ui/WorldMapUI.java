@@ -134,7 +134,7 @@ public class WorldMapUI {
 
 	private void tryWarp(MapNode node) {
 		if (!gp.canFly()) {
-			message = "A weird energy is rendering the teleporter obsolete here!";
+			message = "A weird energy is rendering the teleporter\nobsolete here!";
 			mode = Mode.MESSAGE;
 			return;
 		}

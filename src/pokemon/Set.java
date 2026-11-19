@@ -4,50 +4,52 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
+import util.Rng;
+
 public class Set {
 	private int id;
 	private ArrayList<Ability> abilities;
 	private ArrayList<Item> items;
 	private ArrayList<Nature> natures;
-	private int[] ivs;
+	private int level = 100;
+	private int[] baseIvs = {31,31,31,31,31,31};
 	
 	private ArrayList<Move>[] moves;
 	
-	private static final Random RANDOM = new Random();
+	private static Random rng() { return Rng.asRandom(); }
 	
 	@SuppressWarnings("unchecked")
 	public Set(int id) {
 		this.id = id;
-		this.ivs = new int[] {31, 31, 31, 31, 31, 31};
 		this.moves = new ArrayList[4];
 	}
 	
-	public Pokemon makePokemon() {
-		return makePokemon(100);
-	}
+	public int getLevel() { return level; }
+	public void setLevel(int l) { level = Math.max(1, Math.min(100, l)); }
+	public int getId() { return id; }
+	public Pokemon makePokemon() { return makePokemon(level); }
 	
 	public Pokemon makePokemon(int level) {
 		Pokemon p = new Pokemon(id, level, false, true);
 		p.item = getItem();
 		Ability ability = getAbility();
-		int abilitySlot = getAbilitySlot(p, ability);
-		p.abilitySlot = abilitySlot;
+		p.abilitySlot = getAbilitySlot(p, ability);
 		p.setAbility();
 		p.nat = getNature();
-		
+
+		int[] ivs = baseIvs.clone(); // per-Pokemon copy; HP moves may change it below
 		Moveslot[] moveslot = new Moveslot[4];
 		for (int i = 0; i < moveslot.length; i++) {
 			if (this.moves[i] == null) break;
-			moveslot[i] = new Moveslot(getMove(i));
+			moveslot[i] = new Moveslot(getMove(i, ivs));
 			moveslot[i].maxPP();
 			moveslot[i].currentPP = moveslot[i].maxPP;
 		}
 		p.moveset = moveslot;
-		p.ivs = this.ivs;
-		
+		p.ivs = ivs;
+
 		p.setStats();
 		p.verifyHP();
-		
 		return p;
 	}
 	
@@ -64,15 +66,27 @@ public class Set {
 		return 2;
 	}
 
+	/** Permanent IVs of the set (used when an Hp/Return move isn't rolled). */
+	public void setIVs(int[] ivs) {
+		if (ivs != null && ivs.length == 6) this.baseIvs = Arrays.copyOf(ivs, 6);
+	}
+
+	/** Kept for outside callers; sets the permanent IVs. Not used while rolling. */
 	public void setIVs(PType type) {
 		if (type == null) return;
-		this.ivs = Pokemon.determineOptimalIVs(type);
+		this.baseIvs = Pokemon.determineOptimalIVs(type).clone();
 	}
-	
-	public void setIVs(int[] ivs) {
-		if (ivs != null && ivs.length == 6) {
-			this.ivs = Arrays.copyOf(ivs, 6);
+
+	/** Rolls slot `index`. If it's an Hp/Return variant, writes the matching IVs into `ivs` and returns the real move. */
+	public Move getMove(int index, int[] ivs) {
+		ArrayList<Move> opts = this.moves[index];
+		Move m = opts.size() == 1 ? opts.get(0) : opts.get(rng().nextInt(opts.size()));
+		if (m.id >= Move.HP_ROCK.id && m.id <= Move.RETURN_GALACTIC.id) {
+			int[] opt = Pokemon.determineOptimalIVs(m.mtype);
+			System.arraycopy(opt, 0, ivs, 0, 6);
+			m = m.id <= Move.HP_GALACTIC.id ? Move.HIDDEN_POWER : Move.RETURN;
 		}
+		return m;
 	}
 	
 	public void setItems(Item... items) {
@@ -93,28 +107,17 @@ public class Set {
 	
 	public Item getItem() {
 		if (this.items.size() == 1) return this.items.get(0);
-		return this.items.get(RANDOM.nextInt(this.items.size()));
-	}
-	
-	public Move getMove(int index) {
-		if (this.moves[index].size() == 1) return this.moves[index].get(0);
-		Move m = this.moves[index].get(RANDOM.nextInt(this.moves[index].size()));
-		if (m.id >= Move.HP_ROCK.id && m.id <= Move.RETURN_GALACTIC.id) {
-			PType type = m.mtype;
-			setIVs(type);
-			m = m.id <= Move.HP_GALACTIC.id ? Move.HIDDEN_POWER : Move.RETURN;
-		}
-		return m;
+		return this.items.get(rng().nextInt(this.items.size()));
 	}
 	
 	public Nature getNature() {
 		if (this.natures.size() == 1) return this.natures.get(0);
-		return this.natures.get(RANDOM.nextInt(this.natures.size()));
+		return this.natures.get(rng().nextInt(this.natures.size()));
 	}
 	
 	public Ability getAbility() {
 		if (this.abilities.size() == 1) return this.abilities.get(0);
-		return this.abilities.get(RANDOM.nextInt(this.abilities.size()));
+		return this.abilities.get(rng().nextInt(this.abilities.size()));
 	}
 	
 	@Override
@@ -123,7 +126,7 @@ public class Set {
 		   ", items=" + items +
 		   ", natures=" + natures +
 		   ", abilities=" + abilities +
-		   ", ivs=" + Arrays.toString(ivs) +
+		   ", ivs=" + Arrays.toString(baseIvs) +
 		   ", moves=" + Arrays.deepToString(moves) +
 		   '}';
 	}

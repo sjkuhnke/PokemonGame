@@ -15,6 +15,9 @@ public class MapNode {
 	/** Dominant terrain (derived from the real tiles). */
 	public enum Biome { PLAINS, PATH, FOREST, MOUNTAIN, LAKE, CAVE, LAVA, TUNNEL, TOWER }
 
+	/** Regional climate the node sits in (drives the desert / snow look of the background). */
+	public enum Climate { TEMPERATE, DESERT, SNOW }
+
 	/** id used by getLoc / resolve (0..48). */
 	public final int id;
 	public final String name;
@@ -31,6 +34,7 @@ public class MapNode {
 	public final int regionMap, regionX, regionY, regionW, regionH, contentTiles;
 	/** Terrain mix as percentages, ordered like WorldMapData.TERRAIN. */
 	public final int[] terrain;
+	public Climate climate = Climate.TEMPERATE;
 	/** ids of directly connected nodes (filled in by WorldMapData). */
 	public int[] neighbors = new int[0];
 
