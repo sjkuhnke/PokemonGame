@@ -11,7 +11,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import ai.LevelBalancer;
 import object.*;
 import overworld.*;
 import util.*;
@@ -192,7 +191,7 @@ public class PlayerCharacter extends Entity {
 			
 			checkDismount();
 			
-			if (gp.ticks % 4 == 0 && (inTallGrass || p.surf || p.lavasurf) && !p.repel && cooldown > 2) {
+			if (gp.ticks % 4 == 0 && (inTallGrass || p.surf || p.lavasurf) && !p.repel && cooldown > 2 && gp.ui.tasks.isEmpty()) {
 				Random r = new Random();
 				int random = r.nextInt(p.current != null && p.current.item == Item.CLEANSE_TAG ? 300 : 150);
 				if (random < speed) {
@@ -300,8 +299,8 @@ public class PlayerCharacter extends Entity {
 					pickUpObject(objIndex);
 				}
 			}
-			trySurfing(Move.SURF, true);
-			trySurfing(Move.LAVA_SURF, false);
+			trySurfing(Item.HM04, true);
+			trySurfing(Item.HM08, false);
 			
 			// Check iTiles
 			int iTileIndex = gp.cChecker.checkEntity(this, gp.iTile);
@@ -314,8 +313,8 @@ public class PlayerCharacter extends Entity {
 		}
 		if (keyH.calcPressed) {
 			keyH.calcPressed = false;
-			//Item.useCalc(p.getCurrent(), null, null, true);
-			LevelBalancer.run(4, 5000, 6, 0.7, "set_levels.txt");
+			Item.useCalc(p.getCurrent(), null, null, true);
+			//LevelBalancer.run(4, 5000, 6, 0.7, "set_levels.txt");
 		}
 		
 		checkHotkeys();
@@ -337,9 +336,9 @@ public class PlayerCharacter extends Entity {
 		this.worldY = snapY;
 	}
 
-	private void trySurfing(Move move, boolean isSurf) {
-		if ((p.knowsMove(move) || p.ghost) && ((isSurf && !p.surf) || (!isSurf && !p.lavasurf))) {
-			int badgeReq = p.getRequiredBadges(move);
+	private void trySurfing(Item hm, boolean isSurf) {
+		if ((p.hasMove(hm) || p.ghost) && ((isSurf && !p.surf) || (!isSurf && !p.lavasurf))) {
+			int badgeReq = p.getRequiredBadges(hm.getMove());
 			int result = gp.cChecker.checkTileType(this);
 			List<Integer> tileList = isSurf ? gp.tileM.getWaterTiles() : gp.tileM.getLavaTiles();
 			if (tileList.contains(result)) {
@@ -379,7 +378,7 @@ public class PlayerCharacter extends Entity {
 				} else {
 					gp.keyH.wPressed = false;
 					String surfaceType = isSurf ? "water" : "lava";
-					String moveName = move.toString();
+					String moveName = hm.getMove().toString();
 					String badgeWord = badgeReq == 1 ? "badge" : "badges";
 					String message = String.format("This %s can be crossed!\n(You need %d %s to use %s outside of battle!)", surfaceType, badgeReq, badgeWord, moveName);
 					gp.ui.showMessage(Item.breakString(message, UI.MAX_TEXTBOX));
@@ -653,9 +652,9 @@ public class PlayerCharacter extends Entity {
 	
 	private void interactCutTree(int i, boolean override) {
 		String message = "This tree looks like it can be cut down!";
-		Move m = Move.CUT;
-		if (override || p.knowsMove(m)) {
-			int badgeReq = p.getRequiredBadges(m);
+		Item hm = Item.HM01;
+		if (override || p.hasMove(hm)) {
+			int badgeReq = p.getRequiredBadges(hm.getMove());
 			if (p.badges >= badgeReq) {
 				gp.keyH.wPressed = false;
 				Cut_Tree temp = (Cut_Tree) gp.iTile[gp.currentMap][i];
@@ -668,7 +667,7 @@ public class PlayerCharacter extends Entity {
 				String badgeWord = badgeReq == 1 ? "badge" : "badges";
 				String fullMessage = String.format(
 					"%s\n(You need %d %s to use %s outside of battle!)",
-					message, badgeReq, badgeWord, m.toString()
+					message, badgeReq, badgeWord, hm.getMove().toString()
 				);
 				gp.ui.showMessage(Item.breakString(fullMessage, UI.MAX_TEXTBOX));
 			}
@@ -679,9 +678,9 @@ public class PlayerCharacter extends Entity {
 	
 	private void interactRockSmash(int i, boolean override) {
 		String message = "This rock looks like it can be broken!";
-		Move m = Move.ROCK_SMASH;
-		if (override || p.knowsMove(m)) {
-			int badgeReq = p.getRequiredBadges(m);
+		Item hm = Item.HM02;
+		if (override || p.hasMove(hm)) {
+			int badgeReq = p.getRequiredBadges(hm.getMove());
 			if (p.badges >= badgeReq) {
 				gp.keyH.wPressed = false;
 				generateParticle(gp.iTile[gp.currentMap][i]);
@@ -690,7 +689,7 @@ public class PlayerCharacter extends Entity {
 				String badgeWord = badgeReq == 1 ? "badge" : "badges";
 				String fullMessage = String.format(
 					"%s\n(You need %d %s to use %s outside of battle!)",
-					message, badgeReq, badgeWord, m.toString()
+					message, badgeReq, badgeWord, hm.getMove().toString()
 				);
 				gp.ui.showMessage(Item.breakString(fullMessage, UI.MAX_TEXTBOX));
 			}
@@ -701,9 +700,9 @@ public class PlayerCharacter extends Entity {
 	
 	private void interactVines(int i, boolean override) {
 		String message = "This gap looks like it can be crossed!";
-		Move m = Move.VINE_CROSS;
-		if (override || p.knowsMove(m)) {
-			int badgeReq = p.getRequiredBadges(m);
+		Item hm = Item.HM03;
+		if (override || p.hasMove(hm)) {
+			int badgeReq = p.getRequiredBadges(hm.getMove());
 			if (p.badges >= badgeReq) {
 				gp.keyH.wPressed = false;
 				Vine_Crossable temp = (Vine_Crossable) gp.iTile[gp.currentMap][i];
@@ -715,7 +714,7 @@ public class PlayerCharacter extends Entity {
 				String badgeWord = badgeReq == 1 ? "badge" : "badges";
 				String fullMessage = String.format(
 					"%s\n(You need %d %s to use %s outside of battle!)",
-					message, badgeReq, badgeWord, m.toString()
+					message, badgeReq, badgeWord, hm.getMove().toString()
 				);
 				gp.ui.showMessage(Item.breakString(fullMessage, UI.MAX_TEXTBOX));
 			}
@@ -727,9 +726,9 @@ public class PlayerCharacter extends Entity {
 	private void interactPit(int i, boolean override) {
 		String message = "This pit looks deep!\nI can't even see the bottom!";
 		if (gp.currentMap >= 197 && gp.currentMap <= 202) override = true;
-		Move m = Move.SLOW_FALL;
-		if (override || p.knowsMove(m)) {
-			int badgeReq = p.getRequiredBadges(m);
+		Item hm = Item.HM05;;
+		if (override || p.hasMove(hm)) {
+			int badgeReq = p.getRequiredBadges(hm.getMove());
 			if (p.badges >= badgeReq) {
 				gp.keyH.wPressed = false;
 				Pit pit = (Pit) gp.iTile[gp.currentMap][i];
@@ -739,7 +738,7 @@ public class PlayerCharacter extends Entity {
 				String badgeWord = badgeReq == 1 ? "badge" : "badges";
 				String fullMessage = String.format(
 					"%s\n(You need %d %s to use %s outside of battle!)",
-					message, badgeReq, badgeWord, m.toString()
+					message, badgeReq, badgeWord, hm.getMove().toString()
 				);
 				gp.ui.showMessage(Item.breakString(fullMessage, UI.MAX_TEXTBOX));
 			}
@@ -750,9 +749,9 @@ public class PlayerCharacter extends Entity {
 	
 	private void interactWhirlpool(int i, boolean override) {
 		String message = "This water vortex can be crossed!";
-		Move m = Move.WHIRLPOOL;
-		if (override || p.knowsMove(m)) {
-			int badgeReq = p.getRequiredBadges(m);
+		Item hm = Item.HM06;
+		if (override || p.hasMove(hm)) {
+			int badgeReq = p.getRequiredBadges(hm.getMove());
 			if (p.badges >= badgeReq) {
 				gp.keyH.wPressed = false;
 				int offset = gp.tileSize / 2;
@@ -781,7 +780,7 @@ public class PlayerCharacter extends Entity {
 				String badgeWord = badgeReq == 1 ? "badge" : "badges";
 				String fullMessage = String.format(
 					"%s\n(You need %d %s to use %s outside of battle!)",
-					message, badgeReq, badgeWord, m.toString()
+					message, badgeReq, badgeWord, hm.getMove().toString()
 				);
 				gp.ui.showMessage(Item.breakString(fullMessage, UI.MAX_TEXTBOX));
 			}
@@ -792,10 +791,9 @@ public class PlayerCharacter extends Entity {
 	
 	private void interactRockClimb(int i, boolean override) {
 		String message = "This wall looks like it can be scaled!";
-		if (gp.inSpace()) override = true;
-		Move m = Move.ROCK_CLIMB;
-		if (override || p.knowsMove(m)) {
-			int badgeReq = p.getRequiredBadges(m);
+		Item hm = Item.HM07;
+		if (override || p.hasMove(hm)) {
+			int badgeReq = p.getRequiredBadges(hm.getMove());
 			if (p.badges >= badgeReq) {
 				gp.keyH.wPressed = false;
 				Rock_Climb rc = (Rock_Climb) gp.iTile[gp.currentMap][i];
@@ -818,7 +816,7 @@ public class PlayerCharacter extends Entity {
 				String badgeWord = badgeReq == 1 ? "badge" : "badges";
 				String fullMessage = String.format(
 					"%s\n(You need %d %s to use %s outside of battle!)",
-					message, badgeReq, badgeWord, m.toString()
+					message, badgeReq, badgeWord, hm.getMove().toString()
 				);
 				gp.ui.showMessage(Item.breakString(fullMessage, UI.MAX_TEXTBOX));
 			}

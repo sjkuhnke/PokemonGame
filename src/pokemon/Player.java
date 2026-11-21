@@ -616,11 +616,8 @@ public class Player extends Trainer implements Serializable {
 		return true;
 	}
 	
-	public boolean knowsMove(Move m) {
-		for (Pokemon p : team) {
-			if (p != null && p.knowsMove(m)) return true;
-		}
-		return false;
+	public boolean hasMove(Item hm) {
+		return bag.contains(hm);
 	}
 	
 	public int getRequiredBadges(Move m) {

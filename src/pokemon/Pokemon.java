@@ -6590,7 +6590,15 @@ public class Pokemon implements Serializable {
 		}
 		
 		if (move.basePower < 0) {
-			bp = determineBasePower(foe, move, first, null, foeAbility, field, false);
+			if (move == Move.MAGNITUDE && dm.rollMode == RollMode.MIN) {
+				move = Move.MAGNITUDE_4;
+				bp = move.basePower;
+			} else if (move == Move.MAGNITUDE && dm.rollMode == RollMode.MAX) {
+				move = Move.MAGNITUDE_10;
+				bp = move.basePower;
+			} else {
+				bp = determineBasePower(foe, move, first, null, foeAbility, field, false);
+			}
 		}
 		
 		int arcane = this.getStatusNum(Status.ARCANE_SPELL);

@@ -4,7 +4,7 @@ import java.awt.Rectangle;
 
 /**
  * One location on the world map (a town, route, or point of interest).
- * Rects and anchors are in screen space (WorldMapData.LAYOUT_W x LAYOUT_H, the size of worldmap_bg.png).
+ * Anchors (the icon centers) and rects are in screen space (WorldMapData.LAYOUT_W x LAYOUT_H, the size of worldmap_bg.png).
  *
  * GENERATED data lives in WorldMapData; edit freely afterwards.
  */
@@ -29,7 +29,7 @@ public class MapNode {
 	public final int warpFlag;
 	public final int warpMap, warpCol, warpRow;
 	/** Where the marker / player pin sits (a building for towns, a path tile for routes). */
-	public final int anchorX, anchorY;
+	public int anchorX, anchorY;
 	/** The real tile region this node was built from; regionMap is -1 for hand-painted nodes. */
 	public final int regionMap, regionX, regionY, regionW, regionH, contentTiles;
 	/** Terrain mix as percentages, ordered like WorldMapData.TERRAIN. */
@@ -84,6 +84,12 @@ public class MapNode {
 			out[i] = new Rectangle(x, y, x2 - x, y2 - y);
 		}
 		return out;
+	}
+
+	/** Moves the node's icon (used by WorldMapLayout overrides and the layout editor). */
+	public void setAnchor(int x, int y) {
+		this.anchorX = x;
+		this.anchorY = y;
 	}
 
 	/** Marker anchor in layout space. */
