@@ -33,7 +33,7 @@ import javax.imageio.ImageIO;
 import docs.DocUtils;
 import entity.PlayerCharacter;
 import overworld.GamePanel;
-import overworld.PokemonXhenos;
+import overworld.Xhenos;
 import overworld.PMap;
 import overworld.Sound;
 import pokemon.BattleRecord;
@@ -63,6 +63,7 @@ public class TitleScreen extends AbstractUI {
 	private String playerName = "";
 	public int newGameMenuNum;
 	public boolean nuzlockeMode;
+	public boolean qolItems;
 	public int difficultyLevel = 1;
 	public boolean banShedinja;
 	public boolean banBatonPass;
@@ -112,15 +113,16 @@ public class TitleScreen extends AbstractUI {
 	public static final int NG_SAVE_NAME = 0;
 	public static final int NG_PLAYER_NAME = 1;
 	public static final int NG_NUZLOCKE_TOGGLE = 2;
-	public static final int NG_DIFFICULTY = 3;
-	public static final int NG_BAN_SHEDINJA = 4;
-	public static final int NG_BAN_BATON_PASS = 5;
-	public static final int NG_DRY_PASS = 6;
-	public static final int NG_ALLOW_REVIVES = 7;
-	public static final int NG_BUYABLE_REVIVES = 8;
-	public static final int NG_SHINY_CLAUSE = 9;
-	public static final int NG_LEVEL_CAP = 10;
-	public static final int NG_START = 11;
+	public static final int NG_QOL_ITEMS = 3;
+	public static final int NG_DIFFICULTY = 4;
+	public static final int NG_BAN_SHEDINJA = 5;
+	public static final int NG_BAN_BATON_PASS = 6;
+	public static final int NG_DRY_PASS = 7;
+	public static final int NG_ALLOW_REVIVES = 8;
+	public static final int NG_BUYABLE_REVIVES = 9;
+	public static final int NG_SHINY_CLAUSE = 10;
+	public static final int NG_LEVEL_CAP = 11;
+	public static final int NG_START = 12;
 	
 	// NEW GAME SCROLL
 	private int newGameMenuScroll = 0;
@@ -312,7 +314,7 @@ public class TitleScreen extends AbstractUI {
 			if (saveFiles.isEmpty()) {
 				showMessage("No save files found!");
 			} else {
-				PokemonXhenos.loadGame(saveFiles.get(selectedSaveIndex), "Finn");
+				Xhenos.loadGame(saveFiles.get(selectedSaveIndex), "Finn");
 			}
 			break;
 		case MAIN_NEW_GAME:
@@ -338,7 +340,7 @@ public class TitleScreen extends AbstractUI {
 			break;
 		}
 	}
-
+	
 	private void handleNewGame() {
 		menuState = NEW_GAME_MENU;
 		newGameMenuNum = 0;
@@ -887,6 +889,21 @@ public class TitleScreen extends AbstractUI {
 				}
 				break;
 				
+			case NG_QOL_ITEMS:
+				if (gp.keyH.wPressed || gp.keyH.leftPressed || gp.keyH.rightPressed) {
+					gp.keyH.wPressed = false;
+					gp.keyH.leftPressed = false;
+					gp.keyH.rightPressed = false;
+					if (nuzlockeMode) {
+						// forced on in Nuzlocke mode
+						gp.playSFX(Sound.S_MENU_CAN);
+					} else {
+						gp.playSFX(qolItems ? Sound.S_MENU_CAN : Sound.S_MENU_CON);
+						qolItems = !qolItems;
+					}
+				}
+				break;
+				
 			case NG_DIFFICULTY:
 				if (gp.keyH.leftPressed) {
 					gp.keyH.leftPressed = false;
@@ -1075,7 +1092,7 @@ public class TitleScreen extends AbstractUI {
 		fileName = getUniqueSaveFileName(fileName);
 		fileName += ".dat";
 		
-		PokemonXhenos.loadGame(fileName, playerName.trim());
+		Xhenos.loadGame(fileName, playerName.trim());
 	}
 
 	private String sanitizeFileName(String name) {
@@ -1209,6 +1226,24 @@ public class TitleScreen extends AbstractUI {
 			drawOutlinedText("(1 Encounter per location w/ Dupes Clause,", tipX, tipY, new Color(180, 180, 180), Color.BLACK);
 			tipY += gp.tileSize / 4;
 			drawOutlinedText("Permadeath, Enforced Level Caps, QoL Items)", tipX, tipY, new Color(180, 180, 180), Color.BLACK);
+		}
+		
+		contentY += gp.tileSize * 3 / 4;
+		
+		// Quality of Life items (non-nuzlocke setting; always on in Nuzlocke mode)
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));
+		selected = newGameMenuNum == NG_QOL_ITEMS;
+		drawOutlinedText("Quality of Life:", contentX, contentY, selected ? textColor : new Color(200, 200, 200), Color.BLACK);
+		if (nuzlockeMode) {
+			drawLockIcon(contentX + (int)(gp.tileSize * 3.4), contentY - gp.tileSize / 2 + gp.tileSize / 8, selected);
+		}
+		drawToggleSwitch(contentX + gp.tileSize * 4, contentY - gp.tileSize / 4, nuzlockeMode || qolItems, selected);
+		if (selected) {
+			int qolTipY = contentY - gp.tileSize / 8;
+			g2.setFont(g2.getFont().deriveFont(Font.ITALIC, 14F));
+			drawOutlinedText("Start with helpful convenience items", tipX, qolTipY, new Color(180, 180, 180), Color.BLACK);
+			qolTipY += gp.tileSize / 4;
+			drawOutlinedText(nuzlockeMode ? "(Always on in Nuzlocke Mode)" : "to make your journey a bit smoother.", tipX, qolTipY, new Color(180, 180, 180), Color.BLACK);
 		}
 		
 		contentY += gp.tileSize * 3 / 4;

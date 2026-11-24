@@ -114,6 +114,8 @@ public class Config {
 				TitleScreen ts = gp.titleScreen;
 				bw.write("nuzlocke=" + (ts.nuzlockeMode ? 1 : 0));
 				bw.newLine();
+				bw.write("qolItems=" + (ts.qolItems ? 1 : 0));
+				bw.newLine();
 				bw.write("difficulty=" + ts.difficultyLevel);
 				bw.newLine();
 				bw.write("banShedinja=" + (ts.banShedinja ? 1 : 0));
@@ -193,6 +195,9 @@ public class Config {
 						break;
 					case "nuzlocke":
 						gp.titleScreen.nuzlockeMode = intValue == 1;
+						break;
+					case "qolItems":
+						gp.titleScreen.qolItems = intValue == 1;
 						break;
 					case "difficulty":
 						gp.titleScreen.difficultyLevel = Math.max(0, Math.min(2, intValue));

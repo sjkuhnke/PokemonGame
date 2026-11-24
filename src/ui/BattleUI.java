@@ -1210,6 +1210,8 @@ public class BattleUI extends AbstractUI {
 		gp.player.p.amulet = user.item == Item.AMULET_COIN;
 		user.battled = true;
 		
+		foeMoveFuture = null;
+		
 		tempUser = user.clone();
 		tempFoe = foe.clone();
 		partyNum = 0;

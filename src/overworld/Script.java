@@ -1715,7 +1715,7 @@ public class Script {
 		});
 		
 		scriptMap.put(93.0, (npc) -> { // move reminder
-			if (p.nuzlocke && !p.flag[4][7]) {
+			if ((p.nuzlocke || p.qolItems) && !p.flag[4][7]) {
 				Task.addTask(Task.TEXT, "Hello there! I'm the move reminder, I can teach any Pokemon a move they've forgotten!");
 				Task.addTask(Task.TEXT, "I know that having to come to me every time isn't always convenient, so here, I made this item for use on-the-go!");
 				Task t = Task.addTask(Task.ITEM, "");

@@ -134,6 +134,7 @@ public class Player extends Trainer implements Serializable {
 	public ArrayList<String> nuzlockeEncounters;
 	public ArrayList<String> invalidReasons;
 	// settings
+	public boolean qolItems;
 	public boolean banShedinja;
 	public boolean banBatonPass;
 	public boolean allowDryPass;
@@ -2694,5 +2695,17 @@ public class Player extends Trainer implements Serializable {
 	
 	private static boolean isParticipant(Pokemon p) {
 		return p != null && !p.isFainted() && (p.battled || p.item == Item.EXP_SHARE);
+	}
+
+	public void setQoL(boolean qol) {
+		this.qolItems = qol;
+		if (qol) {
+			this.bag.add(Item.INFINITE_REPEL);
+			this.bag.add(Item.HEALING_PACK);
+			this.bag.add(Item.POCKET_PC);
+			this.bag.add(Item.STATUS_KIT);
+			this.bag.add(Item.DAMAGE_KIT);
+		}
+		
 	}
 }

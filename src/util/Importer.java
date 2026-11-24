@@ -8,7 +8,7 @@ import java.awt.Dimension;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import overworld.PokemonXhenos;
+import overworld.Xhenos;
 import pokemon.Ability;
 import pokemon.Item;
 import pokemon.Move;
@@ -367,7 +367,7 @@ public class Importer {
             return importPokemon(textArea.getText());
 
         } catch (IllegalArgumentException e) {
-            JOptionPane.showMessageDialog(PokemonXhenos.gp, e.getMessage(), "Import Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(Xhenos.gp, e.getMessage(), "Import Error", JOptionPane.ERROR_MESSAGE);
             
             return null;
         }

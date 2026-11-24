@@ -434,7 +434,7 @@ public enum Move {
 	ROCK_BLAST(25,90,0,0,0,0,PType.ROCK,"Hits 2-5 times",false,10),
 	ROCK_CLIMB(80,100,20,0,0,0,PType.ROCK,"% chance to confuse foe",true,10),
 	ROCK_POLISH(0,1000,0,0,2,0,PType.ROCK,"Raises user's Speed by 2",false,20),
-	ROCK_SLIDE(75,90,30,0,0,0,PType.ROCK,"% of causing foe to flinch",false,10),
+	ROCK_SLIDE(75,95,30,0,0,0,PType.ROCK,"% of causing foe to flinch",false,10),
 	ROCK_SMASH(40,100,100,0,0,0,PType.FIGHTING,"% to lower foe's Defense by 1",true,30),
 	ROCK_THROW(50,90,0,0,0,0,PType.ROCK,"A normal attack",false,15),
 	ROCK_TOMB(60,95,100,0,0,0,PType.ROCK,"% to lower foe's Speed by 1",false,15),
@@ -455,7 +455,7 @@ public enum Move {
 	SCARY_FACE(0,100,0,0,2,0,PType.NORMAL,"Lowers foe's Speed by 2",false,10),
 	SCORCHING_SANDS(70,100,30,0,1,0,PType.GROUND,"% chance to burn foe",false,15),
 	SCRATCH(40,100,0,0,0,0,PType.NORMAL,"A normal attack",true,35),
-	SCREECH(0,85,0,0,2,0,PType.NORMAL,"Lowers foe's Defense by 2",false,35),
+	SCREECH(0,100,0,0,2,0,PType.NORMAL,"Lowers foe's Defense by 2",false,35),
 	SEA_DRAGON(0,1000,0,0,2,0,PType.MAGIC,"Transforms Kissyfishy into Kissyfishy-D: raised Atk, SpAtk, Acc by 1 if Kissyfishy-D",false,5),
 	SEED_BOMB(80,100,0,0,0,0,PType.GRASS,"A normal attack",false,15),
 	SEISMIC_TOSS(0,100,0,-999,0,0,PType.FIGHTING,"Damage dealt is equal to the user's level",true,20),
@@ -518,7 +518,7 @@ public enum Move {
 	STAR$STRUCK_ARROW(75,85,0,3,0,0,PType.GALACTIC,"This move always crits",false,10),
 	STEALTH_ROCK(0,1000,0,0,2,0,PType.ROCK,"Lays floating rocks on opponents side. Will damage any foe switching in (depending on their type weakness/resistance to ROCK) for a corresponding amount (1/2-1/32)",false,20),
 	STEEL_BEAM(140,95,0,0,1,0,PType.STEEL,"Deals 1/2 of user's max HP in recoil",false,5),
-	STEEL_WING(70,90,10,0,0,0,PType.STEEL,"% chance to raise user's Defense by 1",true,25),
+	STEEL_WING(70,100,10,0,0,0,PType.STEEL,"% chance to raise user's Defense by 1",true,25),
 	STICKY_WEB(0,1000,0,0,2,0,PType.BUG,"Lays webs on opponents side. This will cause a grounded foe switching in to have their Speed lowered by 1 stage",false,10),
 	STOCKPILE(0,1000,0,0,2,0,PType.NORMAL,"Raises user's Defense and Sp.Def by 1",false,20),
 	STOMP(65,100,30,0,0,0,PType.NORMAL,"% of causing foe to flinch",true,20),
@@ -1329,6 +1329,7 @@ public enum Move {
 		ArrayList<Move> result = getDraining();
 		result.add(LIFE_DEW);
 		result.add(HEALING_CIRCLE);
+		result.add(AURORA_GLOW);
 		result.add(MOONLIGHT);
 		result.add(MORNING_SUN);
 		result.add(RECOVER);

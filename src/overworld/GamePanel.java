@@ -741,30 +741,30 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	public void addPanel(JPanel panel) {
 		// Add the Battle
-	    PokemonXhenos.window.getContentPane().add(panel);
+	    Xhenos.window.getContentPane().add(panel);
 
 	    // Set focus on the Battle
 	    panel.requestFocusInWindow();
 
 	    // Repaint the JFrame to reflect the changes
-	    PokemonXhenos.window.revalidate();
-	    PokemonXhenos.window.repaint();
+	    Xhenos.window.revalidate();
+	    Xhenos.window.repaint();
 	}
 	
 	public void removePanel() {
 		// Remove all existing components from the JFrame
-	    PokemonXhenos.window.getContentPane().removeAll();
+	    Xhenos.window.getContentPane().removeAll();
 	}
 	
 	public void addGamePanel() {
 		keyH.resetKeys();
-		PokemonXhenos.window.add(this);
+		Xhenos.window.add(this);
 		
 		this.requestFocusInWindow();
 
 	    // Repaint the JFrame to reflect the changes
-	    PokemonXhenos.window.revalidate();
-	    PokemonXhenos.window.repaint();
+	    Xhenos.window.revalidate();
+	    Xhenos.window.repaint();
 		
 	}
 

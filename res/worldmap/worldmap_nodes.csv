@@ -1,9 +1,9 @@
 # id,x,y,name  (icon centers in 768x576 screen pixels; written by WorldMapEditor)
 0,399,361,New Minnow Town
 1,330,361,Route 22
-2,264,368,Bananaville Town
-3,256,320,Route 23
-4,288,280,Poppy Grove
+2,273,364,Bananaville Town
+3,269,328,Route 23
+4,269,278,Poppy Grove
 5,219,280,Route 24 pt. 1
 6,162,296,Route 24 pt. 2
 7,58,296,Gelb Forest
@@ -11,16 +11,16 @@
 9,48,160,Sicab City
 10,56,119,Route 26
 11,56,64,Mt. Splinkty
-12,113,62,Route 27
-13,166,64,Kleine Village
-14,176,128,Route 41
-15,176,168,Peaceful Park
-16,232,216,Route 36
-17,216,83,Route 28
-18,267,68,Electric Tunnel
-19,326,68,Route 29
+12,122,55,Route 27
+13,175,79,Kleine Village
+14,167,128,Route 41
+15,156,169,Peaceful Park
+16,217,214,Route 36
+17,208,79,Route 28
+18,247,79,Electric Tunnel
+19,337,66,Route 29
 20,425,69,Schrice City
-21,265,413,Route 40
+21,254,413,Route 40
 22,425,122,Route 30
 23,426,175,Mindagan Lake
 24,411,240,Route 31
@@ -33,18 +33,20 @@
 31,636,104,Route 34
 32,621,68,Glurg Town
 33,533,68,Route 35
-34,41,356,Route 37
+34,37,356,Route 37
 35,64,408,Rawwar City
 36,120,424,Route 38
 37,176,424,Mt. St. Joseph
 38,62,464,Route 39
-39,64,536,Iron Town
-40,264,464,Lava Lake
+39,62,532,Iron Town
+40,254,458,Lava Lake
 41,104,312,Route 44
 42,144,368,Deep Chasm
-43,671,127,A.T. Path
-44,696,96,Abandoned Tower
-45,464,381,Route 43
-46,679,341,Checkpoint Charlie
+43,660,134,A.T. Path
+44,699,105,Abandoned Tower
+45,456,394,Route 43
+46,663,346,Checkpoint Charlie
 47,108,105,Route 45
-48,583,364,Victory Road
+48,576,395,Victory Road
+49,112,170,Sicab River
+50,175,41,Cell Park

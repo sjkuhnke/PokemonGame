@@ -276,6 +276,16 @@ public final class WorldMapData {
 				-1, 0, 0, 0,
 				544, 408, 213, 0, 0, 92, 100, 7173,
 				new int[] {8, 0, 1, 0, 0, 0, 0, 49, 0, 20, 23}),
+		new MapNode(49, "Sicab River", MapNode.Type.POI, MapNode.Biome.LAKE,
+				new int[][] {{538, 320, 92, 100}},
+				-1, 0, 0, 0,
+				544, 408, 213, 0, 0, 92, 100, 7173,
+				new int[] {8, 0, 1, 0, 0, 0, 0, 49, 0, 20, 23}),
+		new MapNode(50, "Cell Park", MapNode.Type.POI, MapNode.Biome.PLAINS,
+				new int[][] {{156, 26, 38, 46}},
+				4, 28, 76, 52,
+				168, 48, 28, 62, 10, 38, 48, 933,
+				new int[] {60, 2, 9, 15, 0, 0, 4, 4, 2, 0, 4}),
 	};
 
 	/** Undirected connections between node ids (the trails drawn on the background). */
@@ -326,12 +336,15 @@ public final class WorldMapData {
 		{35, 36},
 		{35, 38},
 		{36, 37},
-		{37, 42},
 		{38, 39},
 		{41, 42},
 		{43, 44},
 		{45, 48},
 		{46, 48},
+		{49, 9},
+		{49, 15},
+		{37, 41},
+		{13, 50},
 	};
 
 	static {
@@ -470,7 +483,7 @@ public final class WorldMapData {
 						return new Resolved(9, name);
 					} else {
 						name = "Sicab River";
-						return new Resolved(9, name);
+						return new Resolved(49, name);
 					}
 				}
 			case 14:
@@ -533,7 +546,7 @@ public final class WorldMapData {
 				if (x > 61) {
 					if (y <= 31) {
 						name = "Cell Park";
-						return new Resolved(13, name);
+						return new Resolved(50, name);
 					} else {
 						name = "Kleine Village";
 						return new Resolved(13, name);

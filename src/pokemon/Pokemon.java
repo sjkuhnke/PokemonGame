@@ -1570,6 +1570,16 @@ public class Pokemon implements Serializable {
 			if (move == Move.FAILED_SUCKER) this.choiceMove = Move.SUCKER_PUNCH;
 		}
 		
+		if (id == 237) {
+			Move m = move;
+			move = get150Move(move);
+			if (move != m) {
+				consumeMovePP(m, foe);
+				move(foe, move, first, false);
+				return; // same logic as metronome
+			}
+		}
+		
 		if (this.hasStatus(Status.RECHARGE)) {
 			Task t = Task.addTask(Task.TEXT, this.nickname + " must recharge!", this);
 			t.wipe = true;
@@ -1642,22 +1652,12 @@ public class Pokemon implements Serializable {
 			announceMove(move, foe, ctx);
 			Move[] moves = Move.getAllMoves();
 			Random metronome = Rng.asRandom();
-			Move m = SimContext.consumeForcedMetronome(); // Phase 4: the simulator steers this to average a cell (null in real play)
+			Move m = SimContext.consumeForcedMetronome();
 			while (m == null || m == Move.METRONOME) {
 				m = moves[metronome.nextInt(moves.length)];
 			}
 			move(foe, m, first, false);
 			return; // recursively call the move method but not checking para and such so moves called can still be blocked by things like Taunt
-		}
-		
-		if (id == 237) {
-			Move m = move;
-			move = get150Move(move);
-			if (move != m) {
-				consumeMovePP(m, foe);
-				move(foe, move, first, false);
-				return; // same logic as metronome
-			}
 		}
 		
 		if (move == Move.MIRROR_MOVE || move == Move.MIMIC) {
@@ -2750,7 +2750,7 @@ public class Pokemon implements Serializable {
 				foe.abilityFlag = true;
 				foe.illusion = false;
 				Task.addAbilityTask(foe);
-				Task.addTask(Task.TEXT, "Its shroud served it as a decoy!");
+				Task.addTask(Task.TEXT, "Its shroud protected it from the attack!");
 				damage = 0;
 				foe.damage((int)foe.getHPAmount(1.0/8), this, move, "", -1);
 				Task.addTask(Task.TEXT, foe.nickname + "'s shadow veil was broken!");

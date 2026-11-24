@@ -29,7 +29,7 @@ import util.Print;
 import util.SaveManager;
 import ui.LoadingScreen;
 
-public class PokemonXhenos {
+public class Xhenos {
 	public static JFrame window;
 	public static GamePanel gp;
 	public static final String gameTitle = "Pokemon Xhenos";
@@ -102,7 +102,7 @@ public class PokemonXhenos {
 	        if (icons[image - 1] != null) {
 	            icon = icons[image - 1];
 	        } else {
-	            URL iconURL = PokemonXhenos.class.getResource("/gen/icon" + image + ".png");
+	            URL iconURL = Xhenos.class.getResource("/gen/icon" + image + ".png");
 
 	            if (iconURL != null) {
 	                icon = ImageIO.read(iconURL);
@@ -130,6 +130,7 @@ public class PokemonXhenos {
 		boolean[] selectedOptions = gp.titleScreen.docOptions;
 		boolean masterExcel = gp.titleScreen.masterExcel;
 		boolean nuzlocke = gp.titleScreen.nuzlockeMode;
+		boolean qol = gp.titleScreen.qolItems;
 		int difficulty = gp.titleScreen.difficultyLevel;
 		boolean banShedinja = gp.titleScreen.banShedinja;
 	    boolean banBatonPass = gp.titleScreen.banBatonPass;
@@ -166,7 +167,8 @@ public class PokemonXhenos {
 				} else {
 					loader.setProgress(5, "Creating new player...");
 					gp.player.p = new Player(gp, playerName);
-					if (nuzlocke) gp.player.p.setupNuzlocke(banShedinja, banBatonPass, allowDryPass, allowRevives, buyableRevives, levelCapBonus, shinyClause);
+					if (nuzlocke) { gp.player.p.setupNuzlocke(banShedinja, banBatonPass, allowDryPass, allowRevives, buyableRevives, levelCapBonus, shinyClause); }
+					else { gp.player.p.setQoL(qol); }
 					gp.player.p.difficulty = difficulty;
 					gp.player.p.flag[0][23] = true;
 				}
@@ -175,7 +177,7 @@ public class PokemonXhenos {
 				
 				loader.setProgress(7, "Loading map data...");
 				PMap.getLoc(gp.currentMap, (int) Math.round(gp.player.worldX * 1.0 / gp.tileSize), (int) Math.round(gp.player.worldY * 1.0 / gp.tileSize));
-				window.setTitle(PokemonXhenos.gameTitle + " - " + PlayerCharacter.currentMapName);
+				window.setTitle(Xhenos.gameTitle + " - " + PlayerCharacter.currentMapName);
 				
 				loader.setProgress(8, "Updating player version...");
 				if (gp.player.p.version != Player.VERSION) {

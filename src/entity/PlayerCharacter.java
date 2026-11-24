@@ -214,9 +214,14 @@ public class PlayerCharacter extends Entity {
 			String currentMap = currentMapName;
 			PMap.getLoc(gp.currentMap, (int) Math.round(worldX * 1.0 / gp.tileSize), (int) Math.round(worldY * 1.0 / gp.tileSize));
 			if (!currentMap.equals(currentMapName)) gp.ui.showAreaName();
-			PokemonXhenos.window.setTitle(PokemonXhenos.gameTitle + " - " + currentMapName);
+			Xhenos.window.setTitle(Xhenos.gameTitle + " - " + currentMapName);
 		} else {
 			resetSpriteNum();
+		}
+		
+		if (checkTrainerSpot()) {
+			resetSpriteNum();
+			return;
 		}
 		
 		gp.eHandler.checkEvent();
@@ -243,15 +248,6 @@ public class PlayerCharacter extends Entity {
 				speed = isRunning ? SPEED_2 : SPEED_1;
 			} else {
 				speed = sPressed ? SPEED_2 : SPEED_1;
-			}
-		}
-		if (!ice) {
-			for (int i = 0; i < gp.npc[1].length; i++) {
-				int trainer = gp.npc[gp.currentMap][i] == null ? 0 : gp.npc[gp.currentMap][i].trainer;
-				if (gp.ticks % 4 == 0 && gp.npc[gp.currentMap][i] != null && gp.cChecker.checkTrainer(this, gp.npc[gp.currentMap][i], trainer) && gp.npc[gp.currentMap][i].direction == "down") trainerSpot(gp.npc[gp.currentMap][i]);
-				if (gp.ticks % 4 == 1 && gp.npc[gp.currentMap][i] != null && gp.cChecker.checkTrainer(this, gp.npc[gp.currentMap][i], trainer) && gp.npc[gp.currentMap][i].direction == "up") trainerSpot(gp.npc[gp.currentMap][i]);
-				if (gp.ticks % 4 == 2 && gp.npc[gp.currentMap][i] != null && gp.cChecker.checkTrainer(this, gp.npc[gp.currentMap][i], trainer) && gp.npc[gp.currentMap][i].direction == "left") trainerSpot(gp.npc[gp.currentMap][i]);
-				if (gp.ticks % 4 == 3 && gp.npc[gp.currentMap][i] != null && gp.cChecker.checkTrainer(this, gp.npc[gp.currentMap][i], trainer) && gp.npc[gp.currentMap][i].direction == "right") trainerSpot(gp.npc[gp.currentMap][i]);
 			}
 		}
 		if (keyH.wPressed && !gp.ui.showMessage) {
@@ -335,7 +331,7 @@ public class PlayerCharacter extends Entity {
 		this.worldX = snapX;
 		this.worldY = snapY;
 	}
-
+	
 	private void trySurfing(Item hm, boolean isSurf) {
 		if ((p.hasMove(hm) || p.ghost) && ((isSurf && !p.surf) || (!isSurf && !p.lavasurf))) {
 			int badgeReq = p.getRequiredBadges(hm.getMove());
@@ -454,12 +450,29 @@ public class PlayerCharacter extends Entity {
 			interactIceChunk();
 		}
 	}
-
-	private void trainerSpot(Entity entity) {
-		int trainer = entity.trainer;
-		if (p.trainersBeat[trainer]) return;
+	
+	private boolean checkTrainerSpot() {
+		if (ice || p.wiped()) return false;
 		
-		interactTrainer(entity, -1, false);
+		Entity spotter = null;
+		int bestDist = Integer.MAX_VALUE;
+		for (Entity npc : gp.npc[gp.currentMap]) {
+			if (npc == null) continue;
+			int trainer = npc.trainer;
+			if (trainer < 0 || p.trainersBeat[trainer]) continue;
+			if (!gp.cChecker.checkTrainer(this, npc, trainer)) continue;
+			
+			// if two trainers see you at once, the closer one goes first
+			int dist = Math.abs(npc.worldX - worldX) + Math.abs(npc.worldY - worldY);
+			if (dist < bestDist) {
+				bestDist = dist;
+				spotter = npc;
+			}
+		}
+		if (spotter == null) return false;
+		
+		interactTrainer(spotter, -1, false);
+		return true;
 	}
 
 	public void interactTrainer(Entity entity, int id, boolean turn) {

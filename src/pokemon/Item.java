@@ -56,7 +56,7 @@ import javax.swing.SwingUtilities;
 
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
-import overworld.PokemonXhenos;
+import overworld.Xhenos;
 import pokemon.Field.Effect;
 import util.JGradientButton;
 import util.Pair;
@@ -1375,7 +1375,7 @@ public enum Item {
 			calcFrame.add(contentPanel);
 			calcFrame.pack();
 			installScaling(calcFrame, contentPanel);
-			PokemonXhenos.loadIcon(calcFrame, 5);
+			Xhenos.loadIcon(calcFrame, 5);
 			calcFrame.setLocationRelativeTo(Pokemon.gp); // Center on screen
 		}
 		
@@ -1487,7 +1487,7 @@ public enum Item {
 			// Make OK button the default button for Enter key
 			JRootPane rootPane = calcFrame.getRootPane();
 			rootPane.setDefaultButton(okButton);
-			PokemonXhenos.loadIcon(calcFrame, 5);
+			Xhenos.loadIcon(calcFrame, 5);
 			calcFrame.setVisible(true);
 		}
 		

@@ -41,7 +41,7 @@ import entity.*;
 import object.*;
 import overworld.Fog;
 import overworld.GamePanel;
-import overworld.PokemonXhenos;
+import overworld.Xhenos;
 import overworld.PMap;
 import overworld.Sound;
 import pokemon.*;
@@ -5533,6 +5533,13 @@ public class UI extends AbstractUI {
 		drawOutlinedText(ptLabel, leftColX, ptY, new Color(200, 200, 200), Color.BLACK);
 		drawOutlinedText(ptValue, leftColX + fm.stringWidth(ptLabel), ptY, textColor, Color.BLACK);
 		
+		// Quality of Life items setting (nuzlocke always has it on)
+		String qolLabel = "Quality of Life: ";
+		boolean qolOn = p.nuzlocke || p.qolItems;
+		int qolY = (int) (ptY + gp.tileSize * 0.6);
+		drawOutlinedText(qolLabel, leftColX, qolY, new Color(200, 200, 200), Color.BLACK);
+		drawOutlinedText(qolOn ? "On" : "Off", leftColX + fm.stringWidth(qolLabel), qolY, qolOn ? new Color(100, 255, 100) : new Color(255, 100, 100), Color.BLACK);
+		
 		// === RIGHT COLUMN ===
 		int rightColX = (int) (contentX + gp.tileSize * 3.75);
 		int rightColY = contentY + gp.tileSize;
@@ -5922,7 +5929,7 @@ public class UI extends AbstractUI {
 				gp.titleScreen.newGameMenuNum = TitleScreen.NG_SAVE_NAME;
 				gp.titleScreen.docOptions = new boolean[8];
 				gp.player = new PlayerCharacter(gp);
-				PokemonXhenos.window.setTitle(PokemonXhenos.gameTitle);
+				Xhenos.window.setTitle(Xhenos.gameTitle);
 				gp.setGameState(GamePanel.TITLE_STATE);
 				menuNum = 0;
 				subState = 0;
@@ -6361,7 +6368,7 @@ public class UI extends AbstractUI {
 		
 		String currentMap = PlayerCharacter.currentMapName;
 		PMap.getLoc(newMap, (int) Math.round(gp.player.worldX * 1.0 / 48), (int) Math.round(gp.player.worldY * 1.0 / 48));
-		PokemonXhenos.window.setTitle(PokemonXhenos.gameTitle + " - " + PlayerCharacter.currentMapName);
+		Xhenos.window.setTitle(Xhenos.gameTitle + " - " + PlayerCharacter.currentMapName);
 		if (!currentMap.equals(PlayerCharacter.currentMapName)) {
 			showAreaName();
 			gp.player.p.checkSummon(gp, newMap);

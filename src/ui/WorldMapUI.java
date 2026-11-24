@@ -99,7 +99,7 @@ public class WorldMapUI {
 	private void browse(boolean acceptInput, boolean[] locations, boolean hasTeleporter) {
 		MapNode sel = WorldMapData.get(selected);
 		boolean warpReady = sel != null && hasTeleporter && sel.isUnlocked(locations);
-		ui.drawToolTips(warpReady ? "Warp" : null, null, "Close", null);
+		ui.drawToolTips(warpReady ? "Warp" : null, null, "Close", "Close");
 		if (!acceptInput) return;
 
 		int dir = -1;
@@ -163,7 +163,7 @@ public class WorldMapUI {
 		y += gp.tileSize;
 		g2.drawString("No", x, y);
 		if (confirmIndex == 1) g2.drawString(">", x - 24, y);
-		ui.drawToolTips("OK", null, "Back", null);
+		ui.drawToolTips("OK", null, "Back", "Back");
 		if (!acceptInput) return;
 
 		if (gp.keyH.upPressed || gp.keyH.downPressed) {

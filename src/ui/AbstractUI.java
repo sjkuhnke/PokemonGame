@@ -2114,7 +2114,7 @@ public abstract class AbstractUI {
 		drawToolTips("OK", null, "Back", "Back");
 	}
 	
-	private void drawLockIcon(int x, int y, boolean highlighted) {
+	protected void drawLockIcon(int x, int y, boolean highlighted) {
 		int size = gp.tileSize / 3;
 		
 		// Lock body (rectangle)
