@@ -1118,7 +1118,7 @@ public class PlayerCharacter extends Entity {
 		int width = image.getWidth() * gp.scale;
 		int wOffset = (width - gp.tileSize) / 2;
 		int height = image.getHeight() * gp.scale;
-		int hOffset = height - gp.tileSize;
+		int hOffset = height - gp.tileSize - (p.surf || p.lavasurf ? 16 : 0);
 		int drawX = screenX - wOffset + gp.offsetX;
 		int drawY = screenY - hOffset + gp.offsetY;
 		

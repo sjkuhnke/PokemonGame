@@ -1995,7 +1995,7 @@ public class TitleScreen extends AbstractUI {
 		int rowHeight = gp.tileSize * 2 / 3;
 		
 		// Master Excel doc: one workbook with every document as a tab (sits above the TXT checkboxes)
-		drawDocCheckbox("Master Excel Doc (all docs, one file)", x, y, menuNum == MAIN_EXCEL_MASTER,
+		drawDocCheckbox("Master Excel Doc", x, y, menuNum == MAIN_EXCEL_MASTER,
 				masterExcel, new Color(0, 200, 100));
 		y += rowHeight + gp.tileSize / 6; // small gap between the master checkbox and the TXT list
 		

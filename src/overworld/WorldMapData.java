@@ -283,7 +283,7 @@ public final class WorldMapData {
 				new int[] {8, 0, 1, 0, 0, 0, 0, 49, 0, 20, 23}),
 		new MapNode(50, "Cell Park", MapNode.Type.POI, MapNode.Biome.PLAINS,
 				new int[][] {{156, 26, 38, 46}},
-				4, 28, 76, 52,
+				-1, 0, 0, 0,
 				168, 48, 28, 62, 10, 38, 48, 933,
 				new int[] {60, 2, 9, 15, 0, 0, 4, 4, 2, 0, 4}),
 	};

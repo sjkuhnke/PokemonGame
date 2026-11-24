@@ -9,15 +9,12 @@ Make Pokemon have real xp yields/curves
 
 UPDATE LIST
 Make calc reset your cursor to the player's dropdown on open
-NATURES and PP UPS FOR GYM 8+ SPLIT TRAINERS
 Make Pokedex task not show up if you didn't actually recieve the Pokemon
 Add Klara and Fred's house to Sicab City
 Figure out why Matrix switches in Battle Betting don't always line up with who actually comes in
 Add some more battle betting sets and redo old ones
 
 Trainer AI Changes
-Yawn doesn't have AI
-Future Sight doesn't have AI
 Replacement Chooser's free switch is inconsistent based on matchup - the AI swaps out of their free switch often
 
 Quality of Life
