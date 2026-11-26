@@ -235,7 +235,7 @@ public final class Evaluator {
 	static DamageRange bestRangeRaw(Pokemon attacker, Pokemon defender, Field field) {
 		DamageRange best = null;
 		double bestScore = -1;
-		for (Move m : attacker.getValidMoveset()) {
+		for (Move m : ActionGen.effectiveMoves(attacker)) {
 			DamageRange r = attacker.calcRange(defender, m, true, field);
 			if (!r.usable || r.immune) continue;
 			double score = r.expectedCapped(defender.currentHP);

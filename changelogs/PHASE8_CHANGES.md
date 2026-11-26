@@ -1,10 +1,10 @@
 # Phase 8: performance, tuning, and the bugs self-play found
-
+ 
 Status: applied and tested. Phase 3, 5, 6 and 8 suites pass, and the 10,000-trial invariance check passes (20 matchups x 500 trials, T3).
 Final defaults: `D_SWITCH_TAX = 25` (waived while the foe threatens a KO), `D_LAST_DITCH_BONUS = 20`. All other tunables are at their original values.
-
+ 
 ## 1. Performance
-
+ 
 | Item | Result |
 |---|---|
 | `Pokemon.clone()` | 0.1-0.8 us (was milliseconds: the constructor decoded a PNG and drew about 9 `Rng` numbers per clone) |
@@ -12,7 +12,7 @@ Final defaults: `D_SWITCH_TAX = 25` (waived while the foe threatens a KO), `D_LA
 | EXTREME lead selection, 6v6 | 135 ms (static pass 16 ms, refinement 86 ms); budget was 500 ms |
 | Cache hit rates | edge cache 98%, range cache 80% |
 | Cache VERIFY | 83,096 hits re-checked, 0 mismatches; cold == warm; determinism replays identical |
-
+ 
 Changes:
 - `Pokemon(boolean fieldCopyOnly)` constructor: `clone()` no longer runs `setSprites()` or draws from `Rng`.
 - `SimCache`: content-hash edge cache (no HP/status/stages in the key) and range cache (full key), both bounded at 32k entries. VERIFY mode recomputes every hit and compares. `SimCache.clear()` runs at the start of every self-play battle.
@@ -23,51 +23,44 @@ Changes:
 - `getFaster` ties inside `MonWeights` resolve with the deterministic id tiebreak in a `SimContext` scope, not a real `Rng` draw.
 - `Perf`: section timers and counters, off by default. `Perf.reset()` is called once per run, not per pair.
 - Seeded results no longer match pre-Phase-8 runs, because `clone()` stopped consuming `Rng`. Compare Phase 8 against Phase 8.
-
 Decisions kept: no wall-clock budget for lead refinement (it would make leads machine-dependent); cache keys are content hashes with VERIFY; weights stay exact and fresh per call (switching the simulator to root-snapshot weights would break T22).
-
+ 
 ## 2. Debug gating and the SWAP leak
-
+ 
 - `AIV2.dbg()` = `AI_DEBUG && !Print.isDebugSuppressed()`. All diagnostics (branch detail, sack log, matrix log, eval breakdown, sack classification) are skipped when output is suppressed. They re-simulate, so this was a real cost in self-play.
 - `Trainer.simShell` / `ownSlot` strip `Status.SWAP` and `Status.TEMP_SWITCHING` from every cloned mon. A decision already made this turn no longer leaks into the opponent's snapshot (this was a §1 peek violation, and the source of the "had swap at the end of the turn (bad)" spam).
-
 ## 3. Tuning infrastructure
-
+ 
 - `Tunables`: reflection-based registry of the placeholder constants (24 parameters: Evaluator, MonWeights, ReplacementChooser, AIConfig defaults, EvalWeights terms, switch tax, last-ditch bonus). `apply(double[])` installs a vector, `apply(null)` restores defaults, `describe` prints differences. The constants are non-final statics.
 - `Tuner`: coordinate ascent with seat-swapped self-play and Wilson intervals. Settings: `chunk`, `minBattles` (no verdict before this), `maxBattles`, `futilityAfter` / `futilityUpper` (stop hopeless candidates early), `z`, `passes`, `maxSeconds`, `only`.
 - `SelfPlay.Config.paramsA/paramsB`; `playBattle` takes per-seat vectors and applies them immediately before each seat's decision and forced replacement.
 - `Phase8Tests`: `cloneFidelity`, `cacheTransparency`, `selfPlayVerify`, `timing`, `switchRates`, `taxMechanism`, `replayStory`, `withTax`.
-
 ## 4. Tuning results
-
+ 
 - Full run: 2 passes over all parameters, `chunk 50`, `minBattles 200`, `maxBattles 1500`, `z 2.8`. Every test was inconclusive except one accept (`D_TEMP_EXPLOIT` 6 -> 7.5, 54.4% over 1050) and one reject (`D_W_TEMPO` x1.25, 43.2%).
 - Validation on fresh seeds: the `D_TEMP_EXPLOIT` accept scored 49.9% on random teams and 49.9% on story trainers (2000 battles each). It was noise. Earlier short screens produced the same kind of false accept (`FUTURE_W` 10: 61.7% over 60 battles, then 48.8% over 1000; `D_SACK_MIN_GAIN` 20). All defaults stay.
 - Reading: the engine is insensitive to every tunable at about 3-4 points of resolution. The Phase 3-7 placeholders were already on a flat optimum.
 - `D_ALPHA` and `D_TEMP_EXPLOIT` cannot show a benefit in mirror self-play, because the player model has nothing to exploit there. They only matter against opponents with habits.
 - Long runs need sleep disabled. A suspended machine put hours into single-decision timings and burned `maxSeconds`.
-
 ## 5. Switch tax (`D_SWITCH_TAX = 25`)
-
+ 
 - Observation: HARD vs NORMAL scored 48-50% over four runs without the tax, while HARD made about 4.4 plain switches per battle against NORMAL's 0.6. The extra switching was not paying.
 - A flat point cost on `SWITCH` rows (`MatrixBuilder`, now `CellAdjustments.switchTax`) gave: vs NORMAL 53.6% (tax 20) and 51.7% (tax 25); HARD vs HARD 51.6 / 51.9 / 50.7% at tax 20 / 30 / 40 (2000 battles each, none significant alone); story trainers 50.3-50.9%; scripted opponents unchanged within noise.
 - Mechanism check: taxed side swaps fall monotonically (5.3 -> 3.4 -> 2.1 per battle at tax 0 / 20 / 40) and pivots stay flat.
 - A flat tax failed T16 ("HARD selects switches when the matrix favors them"), so the tax is waived while the foe's active threatens a KO on the AI's active (`SackAnalysis.threatens`). T16 passes with the waiver.
 - Evidence is a real but small effect (about 1-2 points) that no single run proved. The pooled direction is consistent.
-
 ## 6. Last-ditch priority bonus (`D_LAST_DITCH_BONUS = 20`)
-
+ 
 - Trigger: a non-lethal priority move that really acts first, in a player column where the player has a fast likely KO (koChance >= 0.5 and outspeeds). It adds `bonus * ditchP * (fraction of foe HP removed)` to that cell, so it stays inside the mixed strategy.
 - Sweep (1000 battles each, bonus 15 to 50): 47.7, 53.5 (20), 50.8, 48.9, 48.2, 50.5, 49.4, 47.6%. No monotonic trend. Kept at 20 as a nudge for human-facing behavior, with no measured self-play effect.
 - T32 finding: the matrix already rewarded the priority move in the columns the player plays. The AI declined it because switching beat every attack in that position. The T32 scenario now removes the bench so the test is about attacks only.
-
 ## 7. Behavior changes outside tuning
-
+ 
 - `AIV2.dominatedRows` removes rows weakly dominated by another row. Exact duplicates are never dropped; `equalizeDuplicates` splits their mass evenly after solving, so move-list order cannot matter. The solve, the player-model blend and `Shaper` run on the reduced matrix, and `x` / `eq.x` are expanded back to full length with zeros so `A`, `M` and `x` stay aligned. This fixed T8 (a never-better priority move was getting about 22% from regret-matching noise).
 - `MatrixBuilder`: post-eval adjustments (switch tax, last-ditch bonus) live in a private `CellAdjustments` class. `buildMatrix` is back to the plain simulate / evaluate / store loop.
 - `SelfPlay` pivot handling matches `BattleUI`: when the AI moves first, the planned pivot slot (`getStatusNum(Status.SWITCHING)`) is used; when it moves second, the free-switch chooser picks. The free-switch override is intentional (the AI can answer a player's hard switch).
-
 ## 8. Bugs found by self-play (all fixed)
-
+ 
 | Bug | Cause | Fix |
 |---|---|---|
 | `StackOverflowError`, two Trace mons | `swapIn` traced the other mon's Trace endlessly | Skip tracing when the other mon also has Trace |
@@ -78,19 +71,18 @@ Decisions kept: no wall-clock budget for lead refinement (it would make leads ma
 | 18-mon teams in self-play | `SelfPlay.buildPool()` used raw multi-badge trainer lists | Skip teams longer than 6 |
 | T27 failure | `EvalWeights` had no value equality | Added `equals` / `hashCode` |
 | `Perf` reported one pair | `Perf.reset()` inside the pair loop | Moved above the loop |
-
+ 
 ## 9. Tests
-
+ 
 All pass: Phase 3 (T4-T32), Phase 5, Phase 6, Phase 8, invariance (10,000 trials), and a 2000-battle story-trainer batch with 0 crashes. T8 passes with duplicate-equalized dominance pruning. T16 passes with the tax waiver. T32 is the last-ditch priority test.
-
+ 
 ## 10. Open items
-
+ 
 - D2: `Perf` showed `MonWeights.compute` calls well below the decision count. Probably forced-action pre-checks; confirm with `Perf.report()` after one normal-position `bestMove2`.
 - `Pokemon.evaluateSwitchInScore` has no production caller. Delete it together with the test uses.
 - Optional: model the free-switch override in the simulator (the matrix prices a planned pivot slot even when the AI moves second).
 - Not done, no measured need: `SwitchInScorer` / `shallowClone` cost, Tier 1 fast cells.
 - The HARD vs NORMAL criterion is only weakly demonstrated in self-play (about 51-53% with the tax). Scripted-opponent exploitation is flat at the ceilings tried; mirror-team scripted runs would be a cleaner test.
-
 ## 11. Delayed effects: Yawn, sleep and Future Sight
  
 Status: written, **not yet compiled or run**. Fill in the results lines below after `Phase8DelayedEffectTests.diagnose()` and `runAll()`.
@@ -164,3 +156,35 @@ Not adopted. Reading: the buffer is neutral where it is supposed to act and cost
  
 ### Next, if the feel problem is worth more work
 Scope the adjustment to heal rows only (a `MatrixBuilder` cell adjustment, so it cannot touch other decisions) and size the threat from the foe's whole team, not its active mon. The tools for it are in place: `W_BUFFER`, `BUFFER_*` and `BUFFER_TURNS` are registered in `Tunables`; `DelayedEffectTuning` (`confirmBuffer`, `tuneBuffer`, `FilteredTeams`) runs the A/B and the tuner.
+ 
+## 12. Struggle-only turns are matrix rows
+Status: written, **not yet compiled or run** (needs the in-game tests below).
+ 
+### Problem
+When every move was unusable the AI always swapped out (`pickStruggleSwitch`, a switch-only matrix), even when staying in and Struggling was better: a mon that can still KO, or a swap that only gives the foe a free hit and the tempo. Phase 4's table above ("Sack switch, Perish at 1, dead turn, Struggle, Choice lock: unchanged") is superseded for Struggle.
+ 
+### Change
+| File | Change |
+|---|---|
+| `AIV2.decide` | The "no valid moves" branch only keeps the trapped case (`!canSwitch` -> `Move.STRUGGLE`, no matrix). A Struggle-only mon that can switch falls through to `plan`. The defensive `plan == null` comment updated |
+| `AIV2.pickStruggleSwitch` | Removed (dead). `ActionGen.candidateBench` stays |
+| `ActionGen.effectiveMoves(Pokemon)` | New: `getValidMoveset()`, or `[Move.STRUGGLE]` when empty. `getValidMoveset()` is deliberately unchanged (the real battle uses its emptiness) |
+| `ActionGen.genAIActions` / `genPlayerActions` | Rows and columns come from `effectiveMoves`, so a Struggle-only AI has a Struggle row and a Struggle-only player has a Struggle column (before, the player had no move columns at all) |
+| `Evaluator.bestRangeRaw`, `SackAnalysis.threatens` | Loop over `effectiveMoves`. Without this a Struggle-only mon had zero offense in every post-turn eval, in the weights' full-HP duels, and as a threat (it would have tilted the new matrix toward switching) |
+| `ActionGen.switchRowsAllowed` | Unchanged: Struggle-only still unlocks switch rows in NORMAL, now alongside the Struggle row instead of replacing it |
+| Spec | §1.1 case 3, §7.13 (Struggle bullet and `switchRowsAllowed` comment), the `bestMove2` and `forcedAction` rows, the difficulty table row, T29, open question 18 |
+ 
+### Behavior notes
+- `switchTax` (25) applies to the switch rows unless the foe threatens a KO on the active, so Struggling is favored when nothing threatens and the two are close, and the tax is waived when staying means dying.
+- Struggle's recoil (25% of max HP) is simulated by the existing `Pokemon` code (`move == Move.STRUGGLE` in the recoil block), so the Struggle row already pays for it.
+- The Struggle row is a MOVE row, so `SackAnalysis.applyMinGain` uses it as a "stay" baseline: a sack switch must beat Struggling by `sackMinGain`.
+- `PlayerReader` needs no change: a Struggle column classes as `STAY_OTHER`/`STAY_BEST`, and `observe` records nothing for a Struggle turn (no PP drops).
+### Tests to add / run
+- T29 rewritten (see spec). Add: Struggle-only, outspeeds and KOs -> Struggle row gets most mass; foe threatens a KO and a bench wall exists -> switches; trapped -> Struggle without building a matrix; NORMAL and HARD both include the switch rows.
+- Invariance fingerprint test around a Struggle-only decision (real state untouched).
+- One `SelfPlay` run to confirm no crashes and that the Struggle-only share of switches drops.
+### Assumptions to confirm
+1. `Move.STRUGGLE` is typeless in `computeDamage` / `calcRange` (it hits Ghosts and ignores resistances in the real game). Check with a Struggle-vs-Ghost fixture; if `calcRange` reports it immune, the row will look useless.
+2. Struggle never misses in `rangeAccuracy`.
+3. `SimCache` keys (`monKey`, `bestRange`) already distinguish a mon with 0 PP on every move from one with PP; otherwise a cached `bestRange` from before the PP ran out could be reused. This predates the change (0-PP moves were already filtered by `getValidMoveset`), but Struggle makes the stale value matter more.
+4. `SwitchInScorer` (not reviewed) does not loop over `getValidMoveset()` for a mon's offense; if it does, it should use `effectiveMoves` too.

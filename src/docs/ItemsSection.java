@@ -1,9 +1,14 @@
 package docs;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
+
+import javax.imageio.ImageIO;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
@@ -21,6 +26,7 @@ import object.TreasureChest;
 import overworld.GamePanel;
 import overworld.PMap;
 import pokemon.Item;
+import pokemon.Move;
 
 /**
  * Items, TM Locations, Overworld Items and Shops sheets.
@@ -96,6 +102,7 @@ public class ItemsSection implements DocSection {
 			ctx.text(header, c, labels[c], headerStyle);
 		}
 
+		Set<Item> tmSet = new HashSet<>(TMMoves.tmItems());
 		Item[] allItems = Item.values();
 		int rowIndex = 1;
 		for (Item i : allItems) {
@@ -104,8 +111,12 @@ public class ItemsSection implements DocSection {
 
 			icon(ctx, sheet, i, COL_ICON, rowIndex);
 
-			ctx.text(row, COL_NAME, i.toString(), plain(true, HorizontalAlignment.LEFT));
+			Cell itemNameCell = ctx.text(row, COL_NAME, i.toString(), plain(true, HorizontalAlignment.LEFT));
 			ctx.links.register(LinkRegistry.Kind.ITEM, i, sheet, rowIndex, COL_NAME);
+			if (tmSet.contains(i)) {
+				Move teaches = TMMoves.moveFor(i);
+				if (teaches != null) ctx.links.link(itemNameCell, LinkRegistry.Kind.MOVE, teaches);
+			}
 
 			ctx.text(row, COL_POCKET, Item.getPocketName(i.getPocket()), plain(false, HorizontalAlignment.LEFT));
 
@@ -156,7 +167,17 @@ public class ItemsSection implements DocSection {
 				}
 
 				Row row = sheet.createRow(rowIndex);
-				ctx.text(row, 0, tmName, plain(true, HorizontalAlignment.LEFT));
+				Cell tmCell = ctx.text(row, 0, tmName, plain(true, HorizontalAlignment.LEFT));
+				Item tmItem = TMMoves.itemForText(tmName);
+				if (tmItem != null) {
+					// the TM Compatibility headers link here
+					ctx.links.register(LinkRegistry.Kind.TM_LOCATION, tmItem, sheet, rowIndex, 0);
+				} else {
+					System.err.println("TM Locations: no TM item matched \"" + tmName + "\"");
+				}
+				Move tmMove = tmItem != null ? TMMoves.moveFor(tmItem) : null;
+				if (tmMove == null) tmMove = TMMoves.moveForText(tmName);
+				if (tmMove != null) ctx.links.link(tmCell, LinkRegistry.Kind.MOVE, tmMove);
 				ctx.text(row, 1, location, DocStyles.wrapped(10));
 				DocUtils.setWrappedRowHeight(row, location, 75, 13f);
 				rowIndex++;
@@ -190,12 +211,24 @@ public class ItemsSection implements DocSection {
 		}
 	}
 
+	private static final int OW_X_COL = 6, OW_Y_COL = 7;
+
+	private static BufferedImage loadChestImage() {
+		try (java.io.InputStream in = ItemsSection.class.getResourceAsStream("/interactive/chest.png")) {
+			return in == null ? null : ImageIO.read(in);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
 	private void writeOverworldItemsSheet(DocContext ctx) {
 		Sheet sheet = ctx.newSheet("Overworld Items");
-		sheet.setColumnWidth(0, 1200);
+		sheet.setColumnWidth(0, 1800);
 		for (int c = 1; c <= OW_LAST_COL; c++) {
 			sheet.setColumnWidth(c, 2600);
 		}
+
+		BufferedImage chestImg = loadChestImage(); // decoded once; ImageCache dedupes the picture
 
 		ItemObj[][] items = gp.obj;
 		Map<String, ArrayList<ItemObj>> itemsMap = new LinkedHashMap<>();
@@ -211,44 +244,87 @@ public class ItemsSection implements DocSection {
 		int rowIndex = 0;
 		for (Map.Entry<String, ArrayList<ItemObj>> e : itemsMap.entrySet()) {
 			rowIndex = DocUtils.writeLocationHeader(ctx, sheet, rowIndex, e.getKey(), OW_LAST_COL);
+
+			Row labels = sheet.createRow(rowIndex++);
+			labels.setHeightInPoints(16);
+			StyleSpec ls = DocStyles.columnLabel(10);
+			ctx.text(labels, 0, "", ls);
+			ctx.text(labels, 1, "Item", ls);
+			for (int c = 2; c <= 5; c++) ctx.text(labels, c, "", ls);
+			sheet.addMergedRegion(new CellRangeAddress(labels.getRowNum(), labels.getRowNum(), 1, 5));
+			ctx.text(labels, OW_X_COL, "X", ls);
+			ctx.text(labels, OW_Y_COL, "Y", ls);
+			ctx.text(labels, OW_LAST_COL, "", ls);
+
 			for (ItemObj obj : e.getValue()) {
-				rowIndex = writeOverworldItemRow(ctx, sheet, obj, rowIndex);
+				rowIndex = writeOverworldItemRow(ctx, sheet, obj, rowIndex, chestImg);
 			}
 			rowIndex++; // blank row between locations
 		}
 	}
 
-	private int writeOverworldItemRow(DocContext ctx, Sheet sheet, ItemObj obj, int rowIndex) {
+	private int writeOverworldItemRow(DocContext ctx, Sheet sheet, ItemObj obj, int rowIndex, BufferedImage chestImg) {
 		int x = obj.worldX / gp.tileSize;
 		int y = obj.worldY / gp.tileSize;
-		boolean chest = obj instanceof TreasureChest;
+
+		if (obj instanceof TreasureChest) {
+			return writeChestBlock(ctx, sheet, (TreasureChest) obj, x, y, rowIndex, chestImg);
+		}
 
 		Row row = sheet.createRow(rowIndex++);
 		row.setHeightInPoints(20);
+		Item item = obj.item;
+		if (item != null) icon(ctx, sheet, item, 0, row.getRowNum());
 
-		Item item = chest ? null : obj.item;
-		if (item != null) {
-			icon(ctx, sheet, item, 0, row.getRowNum());
-		}
-
-		Cell nameCell = ctx.text(row, 1, chest ? "Treasure Chest" : item.toString(), plain(true, HorizontalAlignment.LEFT));
+		StyleSpec left = plain(true, HorizontalAlignment.LEFT);
+		Cell nameCell = ctx.text(row, 1, item != null ? item.toString() : "?", left);
+		for (int c = 2; c <= 5; c++) ctx.text(row, c, "", left);
 		sheet.addMergedRegion(new CellRangeAddress(row.getRowNum(), row.getRowNum(), 1, 5));
 		if (item != null) ctx.links.link(nameCell, LinkRegistry.Kind.ITEM, item);
 
-		ctx.text(row, 6, String.format("(%d, %d)", x, y), plain(false, HorizontalAlignment.LEFT));
-		sheet.addMergedRegion(new CellRangeAddress(row.getRowNum(), row.getRowNum(), 6, OW_LAST_COL));
+		ctx.number(row, OW_X_COL, x, plain(false, HorizontalAlignment.CENTER));
+		ctx.number(row, OW_Y_COL, y, plain(false, HorizontalAlignment.CENTER));
+		return rowIndex;
+	}
 
-		if (chest) {
-			for (Item contained : ((TreasureChest) obj).inventory) {
-				Row chestRow = sheet.createRow(rowIndex++);
-				chestRow.setHeightInPoints(18);
+	/** Chest header row (sprite, "Treasure Chest", X, Y) + one row per contained item, fenced top and bottom. */
+	private int writeChestBlock(DocContext ctx, Sheet sheet, TreasureChest chest, int x, int y, int rowIndex,
+			BufferedImage chestImg) {
+		java.util.List<Item> inv = new ArrayList<>(chest.inventory);
+		boolean onlyRow = inv.isEmpty();
 
-				icon(ctx, sheet, contained, 1, chestRow.getRowNum());
+		Row head = sheet.createRow(rowIndex++);
+		head.setHeightInPoints(28);
+		StyleSpec left = plain(true, HorizontalAlignment.LEFT).borderTop();
+		StyleSpec center = plain(false, HorizontalAlignment.CENTER).borderTop();
+		if (onlyRow) {
+			left = left.borderBottom();
+			center = center.borderBottom();
+		}
+		ctx.text(head, 0, "", left);
+		if (chestImg != null) {
+			ctx.imageFit(sheet, "chest", () -> chestImg, 0, head.getRowNum(), 1, 1, 0.9, true);
+		}
+		ctx.text(head, 1, "Treasure Chest", left);
+		for (int c = 2; c <= 5; c++) ctx.text(head, c, "", left);
+		sheet.addMergedRegion(new CellRangeAddress(head.getRowNum(), head.getRowNum(), 1, 5));
+		ctx.number(head, OW_X_COL, x, center);
+		ctx.number(head, OW_Y_COL, y, center);
+		ctx.text(head, OW_LAST_COL, "", center);
 
-				Cell c = ctx.text(chestRow, 2, contained.toString(), plain(false, HorizontalAlignment.LEFT));
-				sheet.addMergedRegion(new CellRangeAddress(chestRow.getRowNum(), chestRow.getRowNum(), 2, OW_LAST_COL));
-				ctx.links.link(c, LinkRegistry.Kind.ITEM, contained);
-			}
+		for (int k = 0; k < inv.size(); k++) {
+			Item contained = inv.get(k);
+			Row r = sheet.createRow(rowIndex++);
+			r.setHeightInPoints(20);
+
+			StyleSpec ns = plain(false, HorizontalAlignment.LEFT);
+			if (k == inv.size() - 1) ns = ns.borderBottom();
+			ctx.text(r, 0, "", ns);
+			icon(ctx, sheet, contained, 0, r.getRowNum());
+			Cell c1 = ctx.text(r, 1, contained.toString(), ns);
+			for (int c = 2; c <= OW_LAST_COL; c++) ctx.text(r, c, "", ns);
+			sheet.addMergedRegion(new CellRangeAddress(r.getRowNum(), r.getRowNum(), 1, 5));
+			ctx.links.link(c1, LinkRegistry.Kind.ITEM, contained);
 		}
 		return rowIndex;
 	}
@@ -256,10 +332,11 @@ public class ItemsSection implements DocSection {
 	private void writeShopsSheet(DocContext ctx) {
 		Sheet sheet = ctx.newSheet("Shops");
 		sheet.setColumnWidth(0, 5000);  // Shop
-		sheet.setColumnWidth(1, 3500);  // Coordinates
-		sheet.setColumnWidth(2, 1200);  // Icon
-		sheet.setColumnWidth(3, 5000);  // Item
-		sheet.setColumnWidth(4, 4500);  // Cost
+		sheet.setColumnWidth(1, 1800);  // X
+		sheet.setColumnWidth(2, 1800);  // Y
+		sheet.setColumnWidth(3, 1200);  // Icon
+		sheet.setColumnWidth(4, 5000);  // Item
+		sheet.setColumnWidth(5, 4500);  // Cost
 
 		Map<String, ArrayList<Entity>> shopsMap = new LinkedHashMap<>();
 		for (int map = 0; map < gp.npc.length; map++) {
@@ -275,7 +352,13 @@ public class ItemsSection implements DocSection {
 
 		int rowIndex = 0;
 		for (Map.Entry<String, ArrayList<Entity>> entry : shopsMap.entrySet()) {
-			rowIndex = DocUtils.writeLocationHeader(ctx, sheet, rowIndex, entry.getKey(), 4);
+			rowIndex = DocUtils.writeLocationHeader(ctx, sheet, rowIndex, entry.getKey(), 5);
+
+			Row labels = sheet.createRow(rowIndex++);
+			labels.setHeightInPoints(16);
+			StyleSpec ls = DocStyles.columnLabel(10);
+			String[] names = {"Shop", "X", "Y", "", "Item", "Cost"};
+			for (int c = 0; c < names.length; c++) ctx.text(labels, c, names[c], ls);
 
 			for (Entity shop : entry.getValue()) {
 				int x = shop.worldX / gp.tileSize;
@@ -288,15 +371,16 @@ public class ItemsSection implements DocSection {
 					row.setHeightInPoints(20);
 
 					ctx.text(row, 0, shopName, plain(true, HorizontalAlignment.LEFT));
-					ctx.text(row, 1, String.format("(%d, %d)", x, y), plain(false, HorizontalAlignment.LEFT));
-					icon(ctx, sheet, item, 2, rowIndex);
+					ctx.number(row, 1, x, plain(false, HorizontalAlignment.CENTER));
+					ctx.number(row, 2, y, plain(false, HorizontalAlignment.CENTER));
+					icon(ctx, sheet, item, 3, rowIndex);
 
-					Cell itemCell = ctx.text(row, 3, item.toString(), plain(false, HorizontalAlignment.LEFT));
+					Cell itemCell = ctx.text(row, 4, item.toString(), plain(false, HorizontalAlignment.LEFT));
 					ctx.links.link(itemCell, LinkRegistry.Kind.ITEM, item);
 
 					int cost = item.getCost();
 					String costText = cost == 0 ? "--" : starShop ? cost + " Star Piece(s)" : "$" + cost;
-					ctx.text(row, 4, costText, plain(false, HorizontalAlignment.CENTER));
+					ctx.text(row, 5, costText, plain(false, HorizontalAlignment.CENTER));
 
 					rowIndex++;
 				}

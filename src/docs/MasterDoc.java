@@ -13,7 +13,7 @@ import entity.PlayerCharacter;
 import overworld.GamePanel;
 
 /**
- * Builds the single master workbook (XhenosDocs.xlsx) containing every
+ * Builds the single master workbook (PokemonXhenosDocs.xlsx) containing every
  * document as its own tab(s), with hyperlinks between them.
  *
  * Sheet order follows the order sections are added below. Links are resolved
@@ -24,7 +24,7 @@ import overworld.GamePanel;
  */
 public class MasterDoc {
 
-	public static final String FILE_NAME = "XhenosDocs.xlsx";
+	public static final String FILE_NAME = "PokemonXhenosDocs.xlsx";
 	public static final String LINK_REPORT_FILE = "PokemonXhenosDocs_missing_links.txt";
 
 	// the finalize steps get a little weight so the bar doesn't sit at the end
@@ -83,6 +83,8 @@ public class MasterDoc {
 			e.printStackTrace();
 		}
 
+		normalizeRowHeights(ctx.wb);
+
 		ctx.progress.begin("Saving workbook...\n(This can take a little while)", SAVE_WEIGHT);
 		Path outPath = dir.resolve(FILE_NAME);
 		try (FileOutputStream out = new FileOutputStream(outPath.toFile())) {
@@ -101,6 +103,28 @@ public class MasterDoc {
 		String done = failedSections.isEmpty() ? "Documentation complete!"
 				: "Documentation saved (" + failedSections.size() + " section(s) failed; see console)";
 		ctx.progress.finish(done);
+	}
+
+	/**
+	 * Gives every row without an explicit height one computed from its largest font.
+	 * Excel estimates the scroll position of a hyperlink jump using default heights for
+	 * rows that have no custom height, so rows with bigger fonts made it land short.
+	 */
+	private static void normalizeRowHeights(org.apache.poi.ss.usermodel.Workbook wb) {
+		for (int s = 0; s < wb.getNumberOfSheets(); s++) {
+			org.apache.poi.ss.usermodel.Sheet sheet = wb.getSheetAt(s);
+			for (org.apache.poi.ss.usermodel.Row row : sheet) {
+				if (row.getZeroHeight() || row.getHeight() != -1) continue; // already explicit
+				double maxPt = 11;
+				for (org.apache.poi.ss.usermodel.Cell cell : row) {
+					org.apache.poi.ss.usermodel.CellStyle cs = cell.getCellStyle();
+					if (cs == null) continue;
+					org.apache.poi.ss.usermodel.Font f = wb.getFontAt((short) cs.getFontIndex());
+					if (f.getFontHeightInPoints() > maxPt) maxPt = f.getFontHeightInPoints();
+				}
+				row.setHeightInPoints((float) Math.max(15.0, Math.ceil(maxPt * 1.36)));
+			}
+		}
 	}
 
 	/**

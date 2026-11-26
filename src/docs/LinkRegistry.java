@@ -37,7 +37,15 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  * Rows/cols are 0-based, matching POI.
  */
 public class LinkRegistry {
-	public enum Kind { POKEMON, MOVE, ABILITY, ITEM, TYPE }
+	public enum Kind {
+		POKEMON, MOVE, ABILITY, ITEM, TYPE,
+		/** String location name -> first wild (else gift) encounter block for that area */
+		ENCOUNTER_AREA,
+		/** String location name -> first trainer block for that area */
+		TRAINER_AREA,
+		/** pokemon.Item (a TM/HM) -> its row on the TM Locations sheet */
+		TM_LOCATION
+	}
 
 	private static final class Target {
 		final String sheet;
@@ -56,10 +64,12 @@ public class LinkRegistry {
 		final Cell cell;
 		final Kind kind;
 		final Object key;
-		Pending(Cell cell, Kind kind, Object key) {
+		final boolean optional; // optional links are silently skipped when there is no target
+		Pending(Cell cell, Kind kind, Object key, boolean optional) {
 			this.cell = cell;
 			this.kind = kind;
 			this.key = key;
+			this.optional = optional;
 		}
 	}
 
@@ -84,7 +94,16 @@ public class LinkRegistry {
 	/** Queues a link from `cell` to the entity's home entry. Resolved later. */
 	public void link(Cell cell, Kind kind, Object key) {
 		if (cell == null || key == null) return;
-		pending.add(new Pending(cell, kind, key));
+		pending.add(new Pending(cell, kind, key, false));
+	}
+
+	/**
+	 * Like link(), but a missing target is expected (e.g. a trainer location that
+	 * has no wild encounters): no link is made and nothing is reported.
+	 */
+	public void linkOptional(Cell cell, Kind kind, Object key) {
+		if (cell == null || key == null) return;
+		pending.add(new Pending(cell, kind, key, true));
 	}
 
 	/** Immediate link to a known sheet (e.g. Index sheet -> each tab). */
@@ -108,6 +127,7 @@ public class LinkRegistry {
 		for (Pending p : pending) {
 			Target t = targets.get(p.kind).get(p.key);
 			if (t == null) {
+				if (p.optional) continue;
 				unresolved.add(p.kind + ":" + p.key + " from '" + p.cell.getSheet().getSheetName() + "'!"
 						+ new CellReference(p.cell.getRowIndex(), p.cell.getColumnIndex()).formatAsString());
 				continue;

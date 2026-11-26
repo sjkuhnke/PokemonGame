@@ -2709,6 +2709,9 @@ public class Pokemon implements Serializable {
 			if (move == Move.COUNTER) {
 				if (this.damageTaken == null || !this.damageTaken.getSecond()) {
 					fail();
+					this.impressive = false;
+					this.moveMultiplier = 1;
+					this.metronome = -1;
 					return;
 				} else {
 					damage = this.damageTaken.getFirst() * 2;
@@ -2717,6 +2720,9 @@ public class Pokemon implements Serializable {
 			if (move == Move.MIRROR_COAT) {
 				if (this.damageTaken == null || this.damageTaken.getSecond()) {
 					fail();
+					this.impressive = false;
+					this.moveMultiplier = 1;
+					this.metronome = -1;
 					return;
 				} else {
 					damage = this.damageTaken.getFirst() * 2;
@@ -2725,6 +2731,9 @@ public class Pokemon implements Serializable {
 			if (move == Move.METAL_BURST) {
 				if (this.damageTaken == null) {
 					fail();
+					this.impressive = false;
+					this.moveMultiplier = 1;
+					this.metronome = -1;
 					return;
 				} else {
 					damage = (int) (this.damageTaken.getFirst() * 1.5);
@@ -2756,6 +2765,7 @@ public class Pokemon implements Serializable {
 				Task.addTask(Task.TEXT, foe.nickname + "'s shadow veil was broken!");
 			}
 			
+			int drainHeal = 0;
 			if (Move.getDraining().contains(move) && damage > 0) {
 				int healAmount = Math.min(damage, foe.currentHP);
 				if (move == Move.BLOODSHED_CLEAVE) {
@@ -2763,15 +2773,14 @@ public class Pokemon implements Serializable {
 				} else {
 					healAmount = Math.max((int) Math.ceil(healAmount / 2.0), 1);
 				}
-				
 				if (item == Item.BIG_ROOT) healAmount *= 1.3;
-				heal(healAmount, this.nickname + " sucked HP from " + foe.nickname + "!");
+				drainHeal = healAmount;
 			}
 			
-			if (!sheer && this.getItem(field) == Item.SHELL_BELL && this.currentHP < this.getStat(0) && damage > 0) {
+			int shellBellHeal = 0;
+			if (!sheer && this.getItem(field) == Item.SHELL_BELL && damage > 0) {
 				int healAmount = Math.min(damage, foe.currentHP);
-				healAmount = Math.max((int) Math.ceil(healAmount / 4.0), 1);
-				heal(healAmount, this.nickname + " recovered a little HP using its Shell Bell!");
+				shellBellHeal = Math.max((int) Math.ceil(healAmount / 4.0), 1);
 			}
 			
 			int recoil = 0;
@@ -2806,6 +2815,13 @@ public class Pokemon implements Serializable {
 				} else {
 					Task.addTask(Task.TEXT, damagePercentText);
 					foe.damage(damage, this, move, moveText, damageIndex, sturdy, this);
+				}
+			}
+			
+			if (this.currentHP > 0) {
+				if (drainHeal > 0) heal(drainHeal, this.nickname + " sucked HP from " + foe.nickname + "!");
+				if (shellBellHeal > 0 && this.currentHP < this.getStat(0)) {
+					heal(shellBellHeal, this.nickname + " recovered a little HP using its Shell Bell!");
 				}
 			}
 			

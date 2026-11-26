@@ -50,7 +50,7 @@ public final class SackAnalysis {
 	/** True if any of attacker's valid moves is a threat (>= THREAT_KO) to defender's current HP. */
 	public static boolean threatens(Pokemon attacker, Pokemon defender, Field field) {
 		if (attacker == null || defender == null || attacker.isFainted() || defender.isFainted()) return false;
-		for (Move m : attacker.getValidMoveset()) {
+		for (Move m : ActionGen.effectiveMoves(attacker)) {
 			if (koChance(attacker, defender, m, field) >= THREAT_KO) return true;
 		}
 		return false;

@@ -40,8 +40,9 @@ import util.Print;
  * lives on the player ({@code Trainer.playerModel()}, saved with {@code Player}) and is read and updated only in
  * {@link #decide}; {@link #plan} is pure given the model's counts.
  * <p>
- * Forced situations are handled in {@link #decide} before the matrix: the scripted opening of a scripted encounter, and
- * Struggle-only turns (swap if possible, else Struggle).
+ * Forced situations are handled in {@link #decide} before the matrix: the scripted opening of a scripted encounter, and a
+ * trapped Struggle-only mon (its one possible action). A Struggle-only mon that CAN switch goes through the matrix like
+ * any other: Struggle is a row ({@link ActionGen#effectiveMoves}) next to the switch rows.
  * <p>
  * <b>Debug output:</b> set {@link #AI_DEBUG} for a probability dump per decision (via {@link Print#debug}, so
  * {@code SelfPlay}'s {@code Print.setDebugSuppressed} silences it and also skips the work). With it on,
@@ -234,23 +235,19 @@ public final class AIV2 implements TrainerAI {
 			}
 
 			ArrayList<Move> validMoves = self.getValidMoveset();
-			boolean canSwitch = self.trainer.canSwitch(foe);
-			if (validMoves.isEmpty()) {
-				// Struggle-only: swaps at every difficulty if possible. The target comes from the matrix restricted to
-				// switch rows (sack candidates included); if trapped, Struggle.
-				if (canSwitch) {
-					int slot = pickStruggleSwitch(self, foe, cfg);
-					return new MoveDecision(Move.GROWL, Status.SWAP, slot + 1);
-				}
+			if (validMoves.isEmpty() && !self.trainer.canSwitch(foe)) {
+				// Struggle-only and trapped: the only action there is, so there is nothing for a matrix to decide.
 				return new MoveDecision(Move.STRUGGLE);
 			}
+			// Struggle-only but free to switch falls through to the matrix: ActionGen gives it a Struggle row and the usual
+			// switch rows, so staying in and dying can win over giving up the turn to switch (see switchTax).
 			// Mid-sequence statuses (recharge, charging, semi-invulnerable, locked, encored): getValidMoveset() has already
 			// narrowed validMoves to the forced move. The matrix still lets switching compete when it is legal.
 
 			// ---- the matrix decision ----
 			SimState root = SimState.snapshot(self, foe);
 			Plan plan = plan(root, cfg, model);
-			if (plan == null) return new MoveDecision(Move.STRUGGLE); // defensive; validMoves was non-empty above
+			if (plan == null) return new MoveDecision(Move.STRUGGLE); // defensive; ActionGen always yields at least a Struggle or move row
 			if (model != null && plan.read != null) PlayerReader.begin(model, self, foe, plan.read);
 			List<Action> A = plan.A;
 			List<Action> P = plan.P;
@@ -288,32 +285,6 @@ public final class AIV2 implements TrainerAI {
 		default:
 			throw new IllegalStateException("Unknown ActionKind: " + act.kind);
 		}
-	}
-
-	/** Struggle-only forced swap: the best switch row by the matrix, restricted to {@code candidateBench}. Returns a 0-based team slot. */
-	private int pickStruggleSwitch(Pokemon self, Pokemon foe, AIConfig cfg) {
-		SimState root = SimState.snapshot(self, foe);
-		MonWeights weights = MonWeights.compute(root);
-		List<Integer> targets = ActionGen.candidateBench(root, cfg, weights);
-
-		if (targets.isEmpty()) {
-			Pokemon[] team = self.trainer.team;
-			for (int i = 0; i < team.length; i++) {
-				if (team[i] != null && !team[i].isFainted() && team[i] != self) return i;
-			}
-			return 0;
-		}
-
-		List<Action> A = new ArrayList<>();
-		for (int slot : targets) A.add(new Action(slot));
-		List<Action> P = ActionGen.genPlayerActions(root, cfg, weights);
-		if (P.isEmpty()) P = Collections.singletonList(Action.PASS);
-
-		double[][] M = MatrixBuilder.buildMatrix(root, A, P, cfg, weights);
-		Solver.Result eq = Solver.solveZeroSum(M);
-		int best = 0;
-		for (int i = 1; i < eq.x.length; i++) if (eq.x[i] > eq.x[best]) best = i;
-		return A.get(best).slot;
 	}
 
 	/**

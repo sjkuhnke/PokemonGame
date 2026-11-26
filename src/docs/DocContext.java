@@ -58,6 +58,22 @@ public class DocContext {
 	}
 
 	/**
+	 * Inserts an image scaled to fit inside the given block of cells with its
+	 * aspect ratio preserved (never stretched). `fill` is the fraction of the
+	 * limiting dimension to use (0.9 leaves a small margin); `centerX` false
+	 * left-aligns it. Row heights and column widths of the block must already
+	 * be set, since the size is computed from them.
+	 */
+	public void imageFit(Sheet sheet, String key, Supplier<BufferedImage> source,
+			int col, int row, int colSpan, int rowSpan, double fill, boolean centerX) {
+		int idx = images.getOrAdd(key, source);
+		int[] size = images.sizeOf(key);
+		if (idx >= 0 && size != null) {
+			DocUtils.insertPictureFit(sheet, idx, size[0], size[1], col, row, colSpan, rowSpan, fill, centerX);
+		}
+	}
+
+	/**
 	 * Inserts an image using the shared cache: the picture is embedded once
 	 * per key no matter how many times it's placed. No-op if the image is null.
 	 */

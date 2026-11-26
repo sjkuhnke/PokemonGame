@@ -17,7 +17,8 @@ import pokemon.*;
  * <b>Switches.</b> The AI's switch rows come from {@link #benchPlan}: the top few type-matchup "answers" plus the
  * "sack" candidates (low-value mons worth throwing in front of a hit, never pruned). Whether the AI may switch
  * voluntarily at all depends on difficulty ({@link #switchRowsAllowed}; NORMAL only on a {@link #deadTurn}, a Perish
- * count of 1, or Struggle-only). {@code benchPlan} keeps the answers/sacks split because the sack guard needs to know
+ * count of 1, or Struggle-only). A Struggle-only mon is NOT forced out: Struggle is an ordinary MOVE row, so the matrix
+ * decides between staying in on Struggle and every switch row. {@code benchPlan} keeps the answers/sacks split because the sack guard needs to know
  * which rows are sack-only. Sack candidates honor {@code cfg.enableSacking}.
  * <p>
  * <b>Player columns.</b> The player gets their moves, a few switch targets, and pivot moves paired with those targets.
@@ -31,12 +32,15 @@ public final class ActionGen {
 
 	// ---- action lists ----
 
-	/** The AI's rows: useful moves, pivot moves paired with each switch target, and (when allowed) plain switches. */
+	/**
+	 * The AI's rows: useful moves, pivot moves paired with each switch target, and (when allowed) plain switches. A mon with
+	 * no valid move gets one Struggle row ({@link #effectiveMoves}), so "stay in and Struggle" competes with the switch rows.
+	 */
 	public static List<Action> genAIActions(SimState root, AIConfig cfg, MonWeights weights) {
 		List<Action> A = new ArrayList<>();
 		Pokemon self = root.ai.active();
 		Pokemon foe = root.player.active();
-		List<Move> validMoves = usefulRows(self, foe, root.field, self.getValidMoveset());
+		List<Move> validMoves = usefulRows(self, foe, root.field, effectiveMoves(self));
 		boolean canSwitch = self.trainer.canSwitch(foe);
 
 		List<Integer> switchTargets = canSwitch ? benchPlan(root, cfg, weights).all() : java.util.Collections.emptyList();
@@ -74,7 +78,7 @@ public final class ActionGen {
 		List<Action> P = new ArrayList<>();
 		Pokemon player = root.player.active();
 		Pokemon aiMon = root.ai.active();
-		List<Move> validMoves = usefulRows(player, aiMon, root.field, player.getValidMoveset());
+		List<Move> validMoves = usefulRows(player, aiMon, root.field, effectiveMoves(player));
 		for (Move m : validMoves) P.add(new Action(m));
 
 		if (player.trainer.canSwitch(aiMon)) {
@@ -88,6 +92,21 @@ public final class ActionGen {
 			}
 		}
 		return P;
+	}
+
+	// ---- Struggle ----
+
+	/**
+	 * The moves a mon can actually click this turn, as the planner sees them: {@code getValidMoveset()}, or just
+	 * {@link Move#STRUGGLE} when that is empty (every move out of PP, Taunted into nothing, etc.). The game forces Struggle
+	 * in that case, so it is a real option with real damage and real recoil. Anything in the AI that asks "what can this mon
+	 * hit with" (row generation, {@code Evaluator.bestRangeRaw}, {@code SackAnalysis.threatens}) must go through here, or a
+	 * Struggle-only mon looks like it has no offense at all. {@code getValidMoveset()} itself stays empty on purpose: the
+	 * real battle (move menu, {@code randomMove}, {@code movesetEmpty}) relies on that.
+	 */
+	public static List<Move> effectiveMoves(Pokemon p) {
+		List<Move> valid = p.getValidMoveset();
+		return valid.isEmpty() ? java.util.Collections.singletonList(Move.STRUGGLE) : valid;
 	}
 
 	// ---- row filter ----
@@ -122,7 +141,7 @@ public final class ActionGen {
 		if (cfg.allowVoluntarySwitch) return true; // HARD / EXTREME
 		Pokemon self = root.ai.active();
 		if (self.perishCount == 1) return true;
-		if (self.getValidMoveset().isEmpty()) return true; // Struggle-only
+		if (self.getValidMoveset().isEmpty()) return true; // Struggle-only: switch rows compete with the Struggle row
 		return deadTurn(root, cfg);
 	}
 

@@ -43,6 +43,78 @@ public class DocUtils {
 		pict.resize(scaleX, scaleY); // Scales it relative to the anchor box size
 	}
 	
+	private static final int EMU_PER_PIXEL = 9525;
+
+	private static double rowPixels(Sheet sheet, int r) {
+		Row row = sheet.getRow(r);
+		double points = row != null ? row.getHeightInPoints() : sheet.getDefaultRowHeightInPoints();
+		return points * 96.0 / 72.0;
+	}
+
+	/**
+	 * Places an embedded picture inside a block of cells, scaled to fit with its
+	 * aspect ratio preserved, using an explicit anchor computed from the real
+	 * cell sizes (instead of POI's resize(), which can come out stretched).
+	 * Row heights/column widths of the block must be set before calling.
+	 *
+	 * @param fill    fraction (0-1] of the limiting dimension to occupy
+	 * @param centerX true to center horizontally in the block, false to left-align
+	 */
+	public static void insertPictureFit(Sheet sheet, int pictureIdx, int imgW, int imgH,
+			int col, int row, int colSpan, int rowSpan, double fill, boolean centerX) {
+		double boxW = 0, boxH = 0;
+		for (int c = col; c < col + colSpan; c++) boxW += sheet.getColumnWidthInPixels(c);
+		for (int r = row; r < row + rowSpan; r++) boxH += rowPixels(sheet, r);
+
+		double scale = Math.min(boxW * fill / imgW, boxH * fill / imgH);
+		double w = imgW * scale;
+		double h = imgH * scale;
+		double x0 = centerX ? (boxW - w) / 2 : Math.min(2, (boxW - w) / 2);
+		double y0 = (boxH - h) / 2;
+
+		// walk the columns/rows to turn pixel offsets into (cell, offset-in-cell)
+		int c1 = col;
+		double rem = x0;
+		while (rem >= sheet.getColumnWidthInPixels(c1) && c1 < col + colSpan - 1) {
+			rem -= sheet.getColumnWidthInPixels(c1++);
+		}
+		int dx1 = (int) (rem * EMU_PER_PIXEL);
+
+		int c2 = c1;
+		rem += w;
+		while (rem > sheet.getColumnWidthInPixels(c2) && c2 < col + colSpan - 1) {
+			rem -= sheet.getColumnWidthInPixels(c2++);
+		}
+		int dx2 = (int) (Math.min(rem, sheet.getColumnWidthInPixels(c2)) * EMU_PER_PIXEL);
+
+		int r1 = row;
+		rem = y0;
+		while (rem >= rowPixels(sheet, r1) && r1 < row + rowSpan - 1) {
+			rem -= rowPixels(sheet, r1++);
+		}
+		int dy1 = (int) (rem * EMU_PER_PIXEL);
+
+		int r2 = r1;
+		rem += h;
+		while (rem > rowPixels(sheet, r2) && r2 < row + rowSpan - 1) {
+			rem -= rowPixels(sheet, r2++);
+		}
+		int dy2 = (int) (Math.min(rem, rowPixels(sheet, r2)) * EMU_PER_PIXEL);
+
+		CreationHelper helper = sheet.getWorkbook().getCreationHelper();
+		Drawing<?> drawing = sheet.createDrawingPatriarch();
+		ClientAnchor anchor = helper.createClientAnchor();
+		anchor.setCol1(c1);
+		anchor.setDx1(dx1);
+		anchor.setRow1(r1);
+		anchor.setDy1(dy1);
+		anchor.setCol2(c2);
+		anchor.setDx2(dx2);
+		anchor.setRow2(r2);
+		anchor.setDy2(dy2);
+		drawing.createPicture(anchor, pictureIdx); // no resize(): the anchor already has the exact size
+	}
+
 	// Picks black or white text based on background luminance so labels stay
 	// readable. Shared replacement for the copies in PokemonDoc, MovesDoc,
 	// TypeChart, and TypingsDoc.

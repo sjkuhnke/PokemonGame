@@ -1,7 +1,7 @@
 package docs;
 
+import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -48,7 +48,6 @@ public class MovesSection implements DocSection {
 		sheet.setColumnWidth(COL_ACC, 1800);
 		sheet.setColumnWidth(COL_PP, 1800);
 		sheet.setColumnWidth(COL_DESC, 20000);
-		sheet.createFreezePane(0, 1);
 
 		Map<PType, List<Move>> movesByType = MovesDoc.groupMovesByType();
 		List<PType> sortedTypes = new ArrayList<>(movesByType.keySet());
@@ -82,7 +81,7 @@ public class MovesSection implements DocSection {
 		// UNKNOWN (Struggle) has no row on the Typings sheet, so there is nothing to link to
 		if (type != PType.UNKNOWN) ctx.links.link(nameCell, LinkRegistry.Kind.TYPE, type);
 
-		ctx.image(sheet, "type:" + type.name(), type::getImage2, COL_NAME, rowIndex, 1, 1, 0.6, 0.6);
+		ctx.imageFit(sheet, "type:" + type.name(), type::getImage2, COL_NAME, rowIndex, 1, 1, 0.9, false);
 		return rowIndex + 1;
 	}
 
@@ -133,21 +132,30 @@ public class MovesSection implements DocSection {
 	}
 
 	// ----------------------------------------------------------------------
-	// IVs -> Hidden Power type
+	// IVs -> Hidden Power type. Only the parity of each IV matters, so every IV
+	// gets its own cell, shaded by even (30) / odd (31).
 	// ----------------------------------------------------------------------
+	private static final Color EVEN_IV = new Color(214, 228, 246); // washed-out blue
+	private static final Color ODD_IV = new Color(250, 226, 200);  // washed-out orange
+	private static final String[] IV_LABELS = {"HP", "Atk", "Def", "SpA", "SpD", "Spe"};
+
 	private void writeHiddenPowerSheet(DocContext ctx) {
 		Sheet sheet = ctx.newSheet("Hidden Power");
-		sheet.setColumnWidth(0, 7000);
-		sheet.setColumnWidth(1, 4000);
+		for (int c = 0; c < IV_LABELS.length; c++) sheet.setColumnWidth(c, 2000);
+		sheet.setColumnWidth(6, 4200);  // type
+		sheet.setColumnWidth(7, 1000);  // spacer
+		sheet.setColumnWidth(8, 7500);  // key
 		sheet.createFreezePane(0, 1);
 
 		Row header = sheet.createRow(0);
 		header.setHeightInPoints(18);
 		StyleSpec labelStyle = DocStyles.columnLabel(10);
-		ctx.text(header, 0, "IVs (HP/Atk/Def/SpA/SpD/Spe)", labelStyle);
-		ctx.text(header, 1, "Hidden Power Type", labelStyle);
+		for (int c = 0; c < IV_LABELS.length; c++) ctx.text(header, c, IV_LABELS[c], labelStyle);
+		ctx.text(header, 6, "Hidden Power Type", labelStyle);
+		ctx.text(header, 8, "Key", labelStyle);
 
-		StyleSpec plain = DocStyles.text(false, 10, HorizontalAlignment.LEFT, VerticalAlignment.TOP);
+		StyleSpec ivCell = StyleSpec.plain().bold().size(10).align(HorizontalAlignment.CENTER)
+				.valign(VerticalAlignment.CENTER);
 		Pokemon test = new Pokemon(1, 5, true, false);
 		for (int i = 0; i < 64; i++) {
 			int[] ivs = new int[6];
@@ -158,10 +166,19 @@ public class MovesSection implements DocSection {
 			PType hpType = test.determineHPType();
 
 			Row row = sheet.createRow(i + 1);
-			ctx.text(row, 0, Arrays.toString(ivs), plain);
-			Cell typeCell = ctx.text(row, 1, hpType.toString().toUpperCase(),
+			for (int j = 0; j < 6; j++) {
+				ctx.number(row, j, ivs[j], ivCell.fill(ivs[j] % 2 == 0 ? EVEN_IV : ODD_IV));
+			}
+			Cell typeCell = ctx.text(row, 6, hpType.toString().toUpperCase(),
 					DocStyles.badge(hpType.getColor(), 13, HorizontalAlignment.CENTER));
 			ctx.links.link(typeCell, LinkRegistry.Kind.TYPE, hpType);
 		}
+
+		// little key beside the table
+		StyleSpec keyText = StyleSpec.plain().size(10).valign(VerticalAlignment.CENTER);
+		ctx.text(sheet.getRow(1), 8, "30 = even IV", keyText.fill(EVEN_IV));
+		ctx.text(sheet.getRow(2), 8, "31 = odd IV", keyText.fill(ODD_IV));
+		ctx.text(sheet.getRow(3), 8, "Hidden Power's type is decided by", StyleSpec.plain().italic().size(9));
+		ctx.text(sheet.getRow(4), 8, "which IVs are odd, not their value.", StyleSpec.plain().italic().size(9));
 	}
 }

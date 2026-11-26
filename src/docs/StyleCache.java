@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
@@ -46,6 +47,14 @@ public class StyleCache {
 		if (spec.rotation != 0) style.setRotation(spec.rotation);
 		if (spec.format != null) {
 			style.setDataFormat(wb.createDataFormat().getFormat(spec.format));
+		}
+		if ((spec.border & 1) != 0) {
+			style.setBorderTop(BorderStyle.MEDIUM);
+			style.setTopBorderColor(new XSSFColor(new Color(60, 60, 60), null));
+		}
+		if ((spec.border & 2) != 0) {
+			style.setBorderBottom(BorderStyle.MEDIUM);
+			style.setBottomBorderColor(new XSSFColor(new Color(60, 60, 60), null));
 		}
 		if (spec.hasFill()) {
 			style.setFillForegroundColor(new XSSFColor(new Color(spec.fillRgb), null));

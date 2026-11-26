@@ -275,8 +275,7 @@ public class PokemonSection implements DocSection {
 		}
 
 		boolean[][] tms = Pokemon.getTMTable();
-		List<Item> tmItems = new ArrayList<>();
-		for (int tm = 93; tm <= 199; tm++) tmItems.add(Item.getItem(tm));
+		List<Item> tmItems = TMMoves.tmItems();
 
 		sheet.setColumnWidth(0, 3400);
 		sheet.setColumnWidth(1, 900);
@@ -294,7 +293,7 @@ public class PokemonSection implements DocSection {
 				.align(HorizontalAlignment.CENTER).valign(VerticalAlignment.BOTTOM).rotate(90);
 		for (int c = 0; c < tmItems.size(); c++) {
 			Cell h = ctx.text(headerRow, c + 2, tmItems.get(c).toString(), rotated);
-			ctx.links.link(h, LinkRegistry.Kind.ITEM, tmItems.get(c));
+			ctx.links.link(h, LinkRegistry.Kind.TM_LOCATION, tmItems.get(c)); // the Items sheet only has the icon
 		}
 
 		sheet.createFreezePane(2, 1);

@@ -55,7 +55,7 @@ There is **one AI engine**. Difficulty changes only two gates. Move evaluation, 
 **Switching that is always allowed, at every difficulty** (none of these is "leaving an unfavorable matchup"):
 1. **Pivot moves** (U-turn, Volt Switch, Flip Turn, Parting Shot, etc.).
 2. **Perish Song will faint it this turn** (`perishCount == 1`).
-3. **Only Struggle is available.** If it can switch, it swaps (existing behavior).
+3. **Only Struggle is available.** Voluntary switch rows stay in the action set, but the AI is no longer forced out: Struggle is a normal MOVE row (full recoil, full simulation) and the matrix decides between staying in and every switch row. Trapped: Struggle.
 4. **Dead turn**: nothing the mon can do matters against the active foe. Examples: Choice-locked into a move the foe is immune to (Choice Band Earthquake after the player switches in a Flying type), every move immune or blocked, only useless status moves. See §7.13.1.
 
 Implementation notes:
@@ -90,7 +90,7 @@ Implementation notes:
 
 | Existing piece | Verdict | Notes |
 |---|---|---|
-| `bestMove2` (shell, script-battle handling, `MoveDecision` output, sim-UI reporting) | **Change** | Becomes thin wrapper around `decide()`. Keep script-battle turn-1 logic and the "no valid moves → Struggle / forced swap" handling as pre-checks. |
+| `bestMove2` (shell, script-battle handling, `MoveDecision` output, sim-UI reporting) | **Change** | Becomes thin wrapper around `decide()`. Keep script-battle turn-1 logic as a pre-check, plus the trapped Struggle-only shortcut (one possible action, no matrix). A Struggle-only mon that can switch runs the matrix. |
 | NORMAL-difficulty rule branch (perish rule, `hasRealAction` swap) | **Delete** | Replaced by `switchRowsAllowed` (§7.13.1): NORMAL = the same matrix with plain SWITCH rows removed unless a pivot move, Perish-in-1, Struggle-only or a dead turn applies. `hasRealAction` becomes `deadTurn` (bug B2 disappears). Keep these cases as *regression tests*, not code paths. |
 | Non-NORMAL score-diff switch branch (`weights`, `chance = min(95,|diff|/2)`) | **Delete** | Replaced by switch rows in the matrix. |
 | `findFoeStrongestMove`, `FoeMoveResult` | **Delete** | Matrix columns replace "assume foe clicks strongest". (May be kept as a cheap heuristic for pruning only.) |
@@ -143,7 +143,7 @@ Fix the **Persistent** bugs in Phase 0/1 (they will corrupt the new system). **L
 bestMove2(foe, first, difficulty)
   └─ decide(self, foe, cfg)
        1. root = SimState.snapshot(self, foe)                # one clone pass, trainer shells
-       2. forced = forcedAction(root)                        # script turn, Struggle, recharge, locked, charging...
+       2. forced = forcedAction(root)                        # script turn, trapped Struggle-only, recharge, locked, charging...
           if forced → return it
        3. A = genAIActions(root, cfg)                        # rows: moves + pivots; plain switches gated by difficulty; sack candidates always included
           P = genPlayerActions(root, cfg)                    # columns
@@ -521,7 +521,7 @@ Reporting: derive `simBattleUI.p1Moves/p2Moves` probabilities (moves only, renor
 
 Return early, no matrix, when:
 - script battle turn 0 (`this.script`, `gp.currentMap == 160` → status move, else `moveset[0]`).
-- all moves 0 PP (Struggle only): if the AI can switch, it swaps at **every difficulty** (existing behavior). The target comes from the matrix restricted to SWITCH rows (sack candidates included). If trapped, Struggle.
+- all moves unusable (Struggle only): **trapped** → Struggle, no matrix. **Not trapped** → no pre-check; the matrix runs with a Struggle MOVE row plus the normal switch rows (sack candidates included), at **every difficulty**. Struggle is not a forced swap any more: sometimes staying in and Struggling (even to die) beats giving up the turn and the tempo, and `switchTax` (waived while the foe threatens a KO) prices that. Implementation: `ActionGen.effectiveMoves(mon)` returns `getValidMoveset()` or `[STRUGGLE]` when that is empty, and everything that asks what a mon can hit with (row generation for both sides, `Evaluator.bestRangeRaw`, `SackAnalysis.threatens`, and through `bestRangeRaw` the `MonWeights` duels) uses it. `getValidMoveset()` itself stays empty because the real battle relies on that. The Struggle row is a plain MOVE row, so it is also the "stay" baseline the sack min-gain guard compares against.
 - `Status.RECHARGE`, `CHARGING`, `SEMI_INV`, `LOCKED`, `ENCORED` mid-sequence, forced Sleep Talk, etc.: action is forced; but still let `SWITCH` compete when legal (Outrage/Encore lock the *move*, not the switch).
 - Trapped (`!canSwitch`): switch rows omitted.
 - NORMAL (`allowVoluntarySwitch = false`): plain SWITCH rows are removed **unless** `switchRowsAllowed` (§7.13.1) says otherwise. Pivot moves are always legal.
@@ -532,7 +532,7 @@ Return early, no matrix, when:
 switchRowsAllowed(root, cfg):
     if cfg.allowVoluntarySwitch:              return true     # HARD / EXTREME
     if self.perishCount == 1:                 return true     # will faint to Perish Song this turn
-    if validMoves is empty (Struggle only):   return true     # forced swap at every difficulty (see above)
+    if validMoves is empty (Struggle only):   return true     # switch rows compete with the Struggle row; the matrix decides (see above)
     if deadTurn(root):                        return true     # nothing this mon can do matters right now
     return false                                              # NORMAL and the mon can still act: stay and fight
 
@@ -833,7 +833,7 @@ Each row: existing heuristic → how the new system must handle it. A move isn't
 | Perish Song at count 1 | NORMAL rule branch: 100% swap | Switch rows always allowed at `perishCount == 1` (all difficulties); the matrix decides which |
 | Lead selection (EXTREME) | none (team order) | §7.15 lead matrix and `chooseLead` |
 | Dead turn (nothing does anything to the active foe) | NORMAL rule branch `hasRealAction`, 100% swap (with bug B2) | `deadTurn` (§7.13.1); unlocks switch rows in NORMAL; HARD/EXTREME handled by the matrix |
-| Struggle only | 100% swap if it can switch | Forced-action pre-check at every difficulty (§7.13) |
+| Struggle only | 100% swap if it can switch | Struggle MOVE row plus switch rows in the matrix at every difficulty; trapped: Struggle (§7.13) |
 | Choice item lock | `howUseful = 0` for status moves when holding a Choice item; `choiceMove` set in `move()` | `move()` in sim sets the lock; `eval` adds a lock cost when the locked move does nothing vs the active foe and likely switch-ins; `deadTurn` ignores status moves for an unlocked Choice holder |
 | Forced replacement after a faint | `chooseSwitchInSlot` / `evaluateSwitchInScore` | Shared `chooseReplacement` (§7.14.3) |
 
@@ -890,7 +890,7 @@ Matrix size budget: rows ≤ ~12 (4 moves + ≤5 switches + ≤4 pivot combos), 
 | T26 | Mon weights | The only good answer to the player's biggest threat outweighs a mon that answers nothing; weights average 1.0 per side; fainted mons excluded; HP does not change a weight |
 | T27 | Config diff | NORMAL and HARD configs differ only in `allowVoluntarySwitch`; EXTREME differs from HARD only in `selectLead` |
 | T28 | Dead turn unlocks switching in NORMAL | Choice-Band Earthquake user vs a Flying-type foe (also: all moves immune; Taunted with only useless status moves): NORMAL's action set includes SWITCH rows and it switches (or the matrix decides, per `deadTurnForcesSwitch`). Same position with one move that does something: no SWITCH rows |
-| T29 | Struggle-only swap | At every difficulty, with only Struggle available and `canSwitch`: it swaps and no Struggle row exists; if trapped, Struggle |
+| T29 | Struggle-only is a matrix row | At every difficulty, with only Struggle available and `canSwitch`: `A` contains a Struggle row and the switch rows (NORMAL included), the Struggle row's cells include the recoil, and the matrix (not a forced swap) decides. Fixture where the AI mon outspeeds and KOs the foe's last threat: it Struggles most of the time. Fixture where the foe threatens a KO and a bench mon walls it: it switches. Trapped: Struggle with no matrix. The evaluator credits a Struggle-only mon with Struggle's damage (`bestRangeRaw` is not null) |
 | T30 | NORMAL keeps fighting in a bad matchup | AI mon is threatened or outclassed but has a working move: NORMAL stays (no SWITCH rows); after it faints, the replacement is chosen by `chooseReplacement`, the same function HARD uses |
 | T31 | Choice-lock into a status move | Unlocked Choice-item holder: `eval` penalizes locking into a status move, and `deadTurn` doesn't count it as a real action |
 | T32 | Lead candidate sets | The AI's lead candidates are its alive mons; the player's columns are exactly the mons the preview UI lets the player select (alive, not eggs), via the shared `isSelectableLead` |
@@ -1008,7 +1008,7 @@ Ask for these when the relevant phase starts. Do not guess.
 15. The function the real battle uses to pick the AI's forced replacement after a faint (you described it as the strong switch-in AI used at every difficulty; probably `chooseSwitchInSlot` / `evaluateSwitchInScore`). It must become the shared non-recursive `chooseReplacement` (§7.14.3).
 16. Battle start: where `pickLead` is called and whether it is gated to EXTREME today; whether anything assumes the AI's `team[0]` is the lead (the existing code only sets `current`). The team-preview and lead-select UI already exists (`drawFoeTeamPreview` / `drawUserTeamPreview`; the player's pick swaps into `team[0]` and `current`).
 17. Trainer data: is there (or should there be) a per-trainer `fixedLead` and `aceMultiplier`?
-18. Decision (recommended default): when a dead turn unlocks switching in NORMAL, should the matrix decide (it may still click a move to punish a predicted switch), or force a 100% swap as today (`deadTurnForcesSwitch`)? Struggle-only swapping is confirmed to stay at every difficulty.
+18. Decision (recommended default): when a dead turn unlocks switching in NORMAL, should the matrix decide (it may still click a move to punish a predicted switch), or force a 100% swap as today (`deadTurnForcesSwitch`)? Struggle-only turns are decided by the matrix at every difficulty (voluntary switch rows stay available, but nothing forces a swap).
 
 ---
 

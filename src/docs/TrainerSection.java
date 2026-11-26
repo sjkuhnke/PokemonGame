@@ -72,7 +72,12 @@ public class TrainerSection implements DocSection {
 		int rowIndex = 1; // original layout leaves row 0 for the first banner's top edge
 		for (Map.Entry<String, ArrayList<Trainer>> e : trainerMap.entrySet()) {
 			// banner occupies rowIndex-1 .. rowIndex+1, like the original
-			rowIndex = DocUtils.writeLocationHeader(ctx, sheet, rowIndex - 1, e.getKey(), LAST_COL);
+			int bannerStart = rowIndex - 1;
+			rowIndex = DocUtils.writeLocationHeader(ctx, sheet, bannerStart, e.getKey(), LAST_COL);
+			// this area's trainers are a link target for the encounter sheets, and the
+			// banner links to the area's wild (else gift) encounters when there are any
+			ctx.links.register(LinkRegistry.Kind.TRAINER_AREA, e.getKey(), sheet, bannerStart, 0);
+			ctx.links.linkOptional(sheet.getRow(bannerStart + 1).getCell(1), LinkRegistry.Kind.ENCOUNTER_AREA, e.getKey());
 			for (Trainer tr : e.getValue()) {
 				rowIndex = writeTeam(ctx, sheet, tr, trainerNPCMap.get(tr), rowIndex);
 				ctx.progress.update(++done, totalTrainers, tr.getName());

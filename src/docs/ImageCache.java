@@ -26,6 +26,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 public class ImageCache {
 	private final Workbook wb;
 	private final Map<String, Integer> indices = new HashMap<>();
+	private final Map<String, int[]> sizes = new HashMap<>();
 
 	public ImageCache(Workbook wb) {
 		this.wb = wb;
@@ -52,12 +53,18 @@ public class ImageCache {
 			byte[] bytes = DocUtils.imageToBytes(image, "png");
 			int idx = wb.addPicture(bytes, Workbook.PICTURE_TYPE_PNG);
 			indices.put(key, idx);
+			sizes.put(key, new int[] {image.getWidth(), image.getHeight()});
 			return idx;
 		} catch (IOException e) {
 			e.printStackTrace();
 			indices.put(key, -1);
 			return -1;
 		}
+	}
+
+	/** {width, height} in pixels of a cached image, or null if it was never added. */
+	public int[] sizeOf(String key) {
+		return sizes.get(key);
 	}
 
 	public int size() {

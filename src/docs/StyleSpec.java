@@ -28,9 +28,10 @@ public final class StyleSpec {
 	final VerticalAlignment v;
 	final short rotation;
 	final String format;    // data format string, e.g. "0%" or "$#,##0"; null = General
+	final int border;       // bit 1 = top border, bit 2 = bottom border
 
 	private StyleSpec(boolean bold, boolean italic, boolean underline, boolean wrap, int size, int textRgb,
-			int fillRgb, HorizontalAlignment h, VerticalAlignment v, short rotation, String format) {
+			int fillRgb, HorizontalAlignment h, VerticalAlignment v, short rotation, String format, int border) {
 		this.bold = bold;
 		this.italic = italic;
 		this.underline = underline;
@@ -42,48 +43,58 @@ public final class StyleSpec {
 		this.v = v;
 		this.rotation = rotation;
 		this.format = format;
+		this.border = border;
 	}
 
 	/** Default: 11pt, general alignment (matches POI's default cell look). */
 	public static StyleSpec plain() {
 		return new StyleSpec(false, false, false, false, 11, NONE, NONE,
-				HorizontalAlignment.GENERAL, VerticalAlignment.BOTTOM, (short) 0, null);
+				HorizontalAlignment.GENERAL, VerticalAlignment.BOTTOM, (short) 0, null, 0);
 	}
 
 	public StyleSpec bold() { return bold(true); }
 	public StyleSpec bold(boolean b) {
-		return new StyleSpec(b, italic, underline, wrap, size, textRgb, fillRgb, h, v, rotation, format);
+		return new StyleSpec(b, italic, underline, wrap, size, textRgb, fillRgb, h, v, rotation, format, border);
 	}
 	public StyleSpec italic() { return italic(true); }
 	public StyleSpec italic(boolean i) {
-		return new StyleSpec(bold, i, underline, wrap, size, textRgb, fillRgb, h, v, rotation, format);
+		return new StyleSpec(bold, i, underline, wrap, size, textRgb, fillRgb, h, v, rotation, format, border);
 	}
 	public StyleSpec underline(boolean u) {
-		return new StyleSpec(bold, italic, u, wrap, size, textRgb, fillRgb, h, v, rotation, format);
+		return new StyleSpec(bold, italic, u, wrap, size, textRgb, fillRgb, h, v, rotation, format, border);
 	}
 	public StyleSpec wrap() {
-		return new StyleSpec(bold, italic, underline, true, size, textRgb, fillRgb, h, v, rotation, format);
+		return new StyleSpec(bold, italic, underline, true, size, textRgb, fillRgb, h, v, rotation, format, border);
 	}
 	public StyleSpec size(int s) {
-		return new StyleSpec(bold, italic, underline, wrap, s, textRgb, fillRgb, h, v, rotation, format);
+		return new StyleSpec(bold, italic, underline, wrap, s, textRgb, fillRgb, h, v, rotation, format, border);
 	}
 	public StyleSpec textColor(Color c) {
-		return new StyleSpec(bold, italic, underline, wrap, size, c.getRGB() & 0xFFFFFF, fillRgb, h, v, rotation, format);
+		return new StyleSpec(bold, italic, underline, wrap, size, c.getRGB() & 0xFFFFFF, fillRgb, h, v, rotation, format, border);
 	}
 	public StyleSpec fill(Color c) {
-		return new StyleSpec(bold, italic, underline, wrap, size, textRgb, c.getRGB() & 0xFFFFFF, h, v, rotation, format);
+		return new StyleSpec(bold, italic, underline, wrap, size, textRgb, c.getRGB() & 0xFFFFFF, h, v, rotation, format, border);
 	}
 	public StyleSpec align(HorizontalAlignment a) {
-		return new StyleSpec(bold, italic, underline, wrap, size, textRgb, fillRgb, a, v, rotation, format);
+		return new StyleSpec(bold, italic, underline, wrap, size, textRgb, fillRgb, a, v, rotation, format, border);
 	}
 	public StyleSpec valign(VerticalAlignment a) {
-		return new StyleSpec(bold, italic, underline, wrap, size, textRgb, fillRgb, h, a, rotation, format);
+		return new StyleSpec(bold, italic, underline, wrap, size, textRgb, fillRgb, h, a, rotation, format, border);
 	}
 	public StyleSpec rotate(int degrees) {
-		return new StyleSpec(bold, italic, underline, wrap, size, textRgb, fillRgb, h, v, (short) degrees, format);
+		return new StyleSpec(bold, italic, underline, wrap, size, textRgb, fillRgb, h, v, (short) degrees, format, border);
 	}
 	public StyleSpec format(String f) {
-		return new StyleSpec(bold, italic, underline, wrap, size, textRgb, fillRgb, h, v, rotation, f);
+		return new StyleSpec(bold, italic, underline, wrap, size, textRgb, fillRgb, h, v, rotation, f, border);
+	}
+
+	/** Medium dark-gray border along the top edge of the cell. */
+	public StyleSpec borderTop() {
+		return new StyleSpec(bold, italic, underline, wrap, size, textRgb, fillRgb, h, v, rotation, format, border | 1);
+	}
+	/** Medium dark-gray border along the bottom edge of the cell. */
+	public StyleSpec borderBottom() {
+		return new StyleSpec(bold, italic, underline, wrap, size, textRgb, fillRgb, h, v, rotation, format, border | 2);
 	}
 
 	/**
@@ -109,11 +120,11 @@ public final class StyleSpec {
 		StyleSpec s = (StyleSpec) o;
 		return bold == s.bold && italic == s.italic && underline == s.underline && wrap == s.wrap
 				&& size == s.size && textRgb == s.textRgb && fillRgb == s.fillRgb && h == s.h && v == s.v
-				&& rotation == s.rotation && Objects.equals(format, s.format);
+				&& rotation == s.rotation && border == s.border && Objects.equals(format, s.format);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(bold, italic, underline, wrap, size, textRgb, fillRgb, h, v, rotation, format);
+		return Objects.hash(bold, italic, underline, wrap, size, textRgb, fillRgb, h, v, rotation, format, border);
 	}
 }
