@@ -188,3 +188,53 @@ When every move was unusable the AI always swapped out (`pickStruggleSwitch`, a 
 2. Struggle never misses in `rangeAccuracy`.
 3. `SimCache` keys (`monKey`, `bestRange`) already distinguish a mon with 0 PP on every move from one with PP; otherwise a cached `bestRange` from before the PP ran out could be reused. This predates the change (0-PP moves were already filtered by `getValidMoveset`), but Struggle makes the stale value matter more.
 4. `SwitchInScorer` (not reviewed) does not loop over `getValidMoveset()` for a mon's offense; if it does, it should use `effectiveMoves` too.
+## 13. Forced replacements are scored with one-turn cells
+Status: written, **not yet compiled or run**.
+ 
+### Problem
+`ReplacementChooser` scored a candidate as `SwitchInScorer.scoreOn` (the `matchupScore` leaf term alone, clamped at +-90, with expected damage standing in for KO probability) minus `FUTURE_W` (8) * weight * hpFrac. The matrix prices the same mon at about 100 * weight in material and branches on KO probability. Three consequences:
+- A mon certain to be KO'd (min roll >= 100%) and one with a 24% KO chance both sat near the -90 floor; the 8 * weight term then decided it. In the logged case Despenero-S (entry -90, 4.3) beat Topazatops (entry -84, 11.7) by 1.4 points.
+- The chooser sacrificed cheap mons about 12x more readily than the matrix would, so in HARD the AI sent one in and the matrix switched it out next turn (paying the switch tax and a hit).
+- Two scoring systems for the same question.
+### Change
+| File | Change |
+|---|---|
+| `ReplacementChooser` | New `pickSlot(side, foeSide, foe, field)` (the 3-arg form delegates with `foe.trainer`). Each candidate: enter it on a private fork, play its moves against the foe's moves with `BattleSimulator.simulateTurn`, average `Evaluator.eval` over the branches (so KO probability is in the number), take `LeadSelection.gameValue` of the block. Real battle: up to 4x4 per candidate, all candidates. Simulator: 1x1 (best damage each) for the top 2 candidates by static entry score. A nesting guard makes calls from inside a candidate's cells use the old static scorer. Kill switch `USE_CELLS`, knobs `REAL_ROWS/COLS`, `SIM_ROWS/COLS`, `REAL_TOP`, `SIM_TOP`. Faint on entry is the finite `ENTRY_FAINT_VALUE` |
+| `ReplacementChooser` (static path) | The old scorer is kept as `pickStatic`, used for nested calls, wild battles, a fainted foe, `USE_CELLS = false`, and as the fallback if the cell path throws (logged). `FUTURE_W` now only affects that path |
+| `BattleSimulator` | `performSwitch` is package-private; the three `pickSlot` calls and `resolveReplacementsForSide` pass the foe's `SideState` shell explicitly (the foe mon's own `trainer` pointer is not trusted inside the simulator) |
+| `Trainer.getNext2` | Unchanged (still `pickSlot(this, other, Pokemon.field)`) |
+| Spec | §7.14.3 rewritten, test T30 added |
+ 
+### Not changed on purpose
+`Pokemon.matchupScore` stays: it is the matchup term of `eval` and of the `MonWeights` duels. `SwitchInScorer` stays as the static fallback and the simulator's candidate prefilter.
+ 
+### Risks / things to measure
+1. **Simulator cost.** Every KO branch inside a matrix cell now runs up to 2 candidates x 1 cell (plus `MonWeights.compute`, which hits the edge cache). Check `Perf.PICK` / `SIM_TURN` against the 500 ms budget; if it hurts, lower `SIM_TOP` to 1 or set `USE_CELLS = false` for the simulator path only.
+2. **Real-battle cost.** Up to 5 candidates x 16 cells = 80 `simulateTurn` calls per forced replacement, once per faint.
+3. **Perspective.** The replacing side is always the "ai" of the private state, so `eval`'s AI-specific parts (the escape cap, `hpBufferDiscount`, forced-turn penalty) are applied from the replacing side's point of view, also for the player's replacement inside the simulator.
+4. **The foe's moves only.** The foe's columns are its useful moves; a foe switch is not modeled (the matrix next turn does model it).
+5. A foe pivot move inside a candidate's cell picks its own replacement with the static scorer (nested), which is the intended non-recursion.
+### Tests
+- T30 (new, spec), T22 must still pass (direct and real agree), `Phase8Tests` cache checks unaffected.
+- Log check in HARD: after a forced replacement, how often does the next decision put most of its mass on a switch row? That rate should fall to near zero.
+### 13.1 Efficiency pass (no change of pick intended)
+Status: written, **not yet compiled or run**.
+ 
+| File | Change |
+|---|---|
+| `ReplacementChooser` | Exact pruning: the foe's moves are played best-damage first; after each column the candidate's upper bound is `min over columns of max over rows`; candidates are visited by first-column bound and stop once their bound cannot beat the best value so far. `PRUNE = false` turns it off for A/B. Inside the simulator the decision's weights are reused (see below). New `pickSlot(..., Boolean sideIsAi)` overload; the 3- and 4-arg forms pass null (weights computed fresh). Counters and `stats()` / `resetStats()` |
+| `SimContext` | New `Decision` (root + `MonWeights`, lazily the role-swapped weights) with `setDecision` / `decision`; cleared in `resetForFrame` |
+| `MatrixBuilder.buildMatrix` | Installs the decision around the cell loop and restores the previous one in a `finally` (covers the AI's matrix and the lead refinement's matrices) |
+| `BattleSimulator` | Passes whether the replacing side is the AI to `pickSlot` (pivot: `mover == AI`; defender's switch: `mover != AI`; `resolveReplacementsForSide` takes the flag) |
+| `SelfPlay` | Resets the chooser's counters with `Perf.reset()` and prints `ReplacementChooser.stats()` with `Perf.report()` (both under `Perf.ON`). The counters themselves are always on |
+ 
+Behavior notes:
+- Inside the simulator, weights now come from the decision's root instead of being recomputed from each branch's post-turn state. That is what the surrounding cells' `eval` already uses, so the nested static scorer's `weight` term shifts slightly (it no longer renormalizes over the mons still alive at that branch).
+- Calls made outside a matrix build (`deadTurn`'s `evalAfter`, tests that call `simulateTurn` directly) have no decision installed and compute weights fresh, as before.
+- Pruned candidates are logged as `<= bound (pruned after k of n foe moves)`.
+How to read the counters: `weights fresh` should be about the number of real-battle picks; `decision` should dominate in the simulator. `cells saved / (run + saved)` is the pruning rate. `static nested` counts pivot switches and faints inside candidate cells. If `cells sim` is large relative to matrix cells, lower `SIM_TOP`.
+ 
+Not done (needs profiling first): memoizing `pickSlot` by post-faint state. The key would have to include both teams' hazards and effect layers, which `SimCache.monKey` does not hash.
+ 
+Tests: the T30 fixtures with `PRUNE` on and off give the same pick; one `SelfPlay` run with `Perf.ON` for the counters; T22 unaffected (real battle path computes weights fresh).
+ 

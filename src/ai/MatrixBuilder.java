@@ -21,16 +21,22 @@ public final class MatrixBuilder {
 	public static double[][] buildMatrix(SimState root, List<Action> A, List<Action> P, AIConfig cfg, MonWeights weights) {
 		double[][] M = new double[A.size()][P.size()];
 		CellAdjustments adjust = new CellAdjustments(root, P, cfg);
-		for (int i = 0; i < A.size(); i++) {
-			Action a = A.get(i);
-			for (int j = 0; j < P.size(); j++) {
-				long t0 = Perf.start();
-				List<Branch> branches = BattleSimulator.simulateTurn(root, a, P.get(j), cfg);
-				double v = 0;
-				for (Branch br : branches) v += br.prob * Evaluator.eval(br.state, cfg.style, weights);
-				M[i][j] = adjust.apply(v, a, j);
-				Perf.stop(Perf.CELL, t0);
+		// Cells run with this decision's weights visible to ReplacementChooser (see SimContext.Decision).
+		SimContext.Decision previous = SimContext.setDecision(new SimContext.Decision(root, weights));
+		try {
+			for (int i = 0; i < A.size(); i++) {
+				Action a = A.get(i);
+				for (int j = 0; j < P.size(); j++) {
+					long t0 = Perf.start();
+					List<Branch> branches = BattleSimulator.simulateTurn(root, a, P.get(j), cfg);
+					double v = 0;
+					for (Branch br : branches) v += br.prob * Evaluator.eval(br.state, cfg.style, weights);
+					M[i][j] = adjust.apply(v, a, j);
+					Perf.stop(Perf.CELL, t0);
+				}
 			}
+		} finally {
+			SimContext.setDecision(previous);
 		}
 		return M;
 	}

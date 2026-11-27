@@ -181,7 +181,7 @@ public final class SelfPlay {
 		long start = System.nanoTime();
 
 		try {
-			if (Perf.ON) Perf.reset();
+			if (Perf.ON) { Perf.reset(); ReplacementChooser.resetStats(); }
 			int battle = 0, pair = 0;
 			outer:
 			while (battle < cfg.battles) {
@@ -250,7 +250,7 @@ public final class SelfPlay {
 		}
 
 		System.out.println(rep);
-		if (Perf.ON) System.out.println(Perf.report());
+		if (Perf.ON) { System.out.println(Perf.report()); System.out.println(ReplacementChooser.stats()); }
 		return rep;
 	}
 

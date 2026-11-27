@@ -638,18 +638,31 @@ candidateBench(root, cfg) =
 A sack only works if the replacement that comes out is the one the AI planned.
 
 ```
-aiReplacementHeuristic(state):
-    for each alive bench mon r:
-        entry = clone r, apply entry hazards and entry abilities (simulateSwitchIn)
-        score[r] = matchupScore(entry vs the player's POST-turn active: its HP, stages, status),
-                   minus expected hazard damage, plus a small weight for r's future value
-    return argmax score[r]
+chooseReplacement(side, foeSide, foe, field):                 # ReplacementChooser.pickSlot
+    candidates = alive bench mons of side
+    if one candidate: return it
+    base   = private SimState, `side` in the "ai" role (so eval is from the replacing side's point of view)
+    w      = the decision's own weights inside the simulator (swapped roles for the player's replacement, computed once per decision),
+             MonWeights.compute(base) in the real battle
+    for each candidate r (all in the real battle; top SIM_TOP by static entry score inside the simulator):
+        s = fork(base); enter r through performSwitch (hazards, entry abilities)
+        if r faints on entry: value[r] = ENTRY_FAINT_VALUE
+        rows = r's useful moves (Struggle if none), cols = the foe's useful moves     # 4x4 real, 1x1 (best damage) in the simulator
+        M[i][j] = sum over branches of simulateTurn(s, rows[i], cols[j]): prob * eval(branch.state, style, w)
+        # columns (foe moves) best-damage first; ub[r] = min over computed columns of max_i M[i][j] bounds value[r] from above;
+        # candidates are visited by their first-column ub, and r stops as soon as ub[r] <= best value so far (exact pruning)
+        value[r] = gameValue(M)                                   # the single cell when 1x1
+    return argmax value
 ```
 
-- It is non-recursive and cheap (no `decide()` or `evaluateSwitchInScore`).
-- The former active mon can be chosen as its own replacement if it is still the best answer.
-- **Consistency requirement:** every difficulty already picks the AI's forced replacement with a strong switch-in evaluation. That logic must be **one non-recursive function, `chooseReplacement(side, state)`** (`aiReplacementHeuristic` above is this function), shared by the real battle and the simulator (§13 item 15, test T22). It replaces the recursive `evaluateSwitchInScore` / `chooseSwitchInSlot` path. If the real game used a different rule than the simulator, the sack plan (and every "lose the matchup, then bring the answer" line in NORMAL) would silently break.
-- The `Integer.MIN_VALUE + 1` "fainted on switch-in" rule dies with `evaluateSwitchInScore`. A switch-in that faints is now just a cell whose end state has less material and a free replacement.
+- It is non-recursive: a `pickSlot` call made while a candidate's cells are being played (a pivot's switch, a faint inside the cell) takes the **static fallback** (`SwitchInScorer.scoreOn` minus `FUTURE_W * weight * hpFrac`). The static scorer is also used for wild battles (no foe trainer), a fainted foe active, `USE_CELLS = false`, and if the cell path throws.
+- **Exact pruning.** A zero-sum block's value never exceeds the best row's payoff against any one column, so a candidate whose bound cannot beat the best value found so far is dropped without playing its remaining columns. The pick is the same as without pruning (up to the solver's own regret-matching error); `ReplacementChooser.PRUNE = false` evaluates everything for A/B checks.
+- **Weights are not recomputed per call inside the simulator.** `MatrixBuilder.buildMatrix` installs a `SimContext.Decision` (root + `MonWeights`) for the duration of a matrix build; cells' replacement picks (cells path and static fallback) read it, so they use the same weights the surrounding `eval` does. Outside a matrix build (the real battle, `deadTurn`) it computes fresh.
+- **Counters:** `ReplacementChooser.stats()` (picks by path, candidates and cells run or saved, how weights were obtained), printed by `SelfPlay` with the Perf report.
+- **Same currency as the matrix.** Each cell is the matrix's own cell: `simulateTurn` branches a lethal roll against a survivable one (a 24% chance to be KO'd is a 24% branch, not a flat -90), `eval` prices material at `MonWeights` weights, matchup, hazards. There is no separate future-value term: a mon that dies for nothing costs its material, one that survives and chips the foe is credited.
+- The former active mon can be chosen as its own replacement only where the rules allow it (free switches); a fainted mon is never a candidate.
+- **Consistency requirement:** one function for the real battle and the simulator (§13 item 15, test T22): `Trainer.getNext2` and `BattleSimulator` both call `ReplacementChooser.pickSlot`. The real battle plays the full 4x4 block per candidate and the simulator a 1x1 block for the top two candidates; same scoring, different sample size, so test T30 checks that they agree.
+- The `Integer.MIN_VALUE + 1` "fainted on switch-in" rule is gone. A switch-in that faints on entry is `ENTRY_FAINT_VALUE` (finite); inside a cell it is just a state with less material and a free replacement.
 
 #### 7.14.4 Classification and reporting
 
@@ -891,6 +904,7 @@ Matrix size budget: rows ≤ ~12 (4 moves + ≤5 switches + ≤4 pivot combos), 
 | T27 | Config diff | NORMAL and HARD configs differ only in `allowVoluntarySwitch`; EXTREME differs from HARD only in `selectLead` |
 | T28 | Dead turn unlocks switching in NORMAL | Choice-Band Earthquake user vs a Flying-type foe (also: all moves immune; Taunted with only useless status moves): NORMAL's action set includes SWITCH rows and it switches (or the matrix decides, per `deadTurnForcesSwitch`). Same position with one move that does something: no SWITCH rows |
 | T29 | Struggle-only is a matrix row | At every difficulty, with only Struggle available and `canSwitch`: `A` contains a Struggle row and the switch rows (NORMAL included), the Struggle row's cells include the recoil, and the matrix (not a forced swap) decides. Fixture where the AI mon outspeeds and KOs the foe's last threat: it Struggles most of the time. Fixture where the foe threatens a KO and a bench mon walls it: it switches. Trapped: Struggle with no matrix. The evaluator credits a Struggle-only mon with Struggle's damage (`bestRangeRaw` is not null) |
+| T30 | Replacement uses KO probability | Candidate A is certainly KO'd before it moves (min roll >= 100%) and candidate B survives with some probability (min roll < 100%, B outspeeds nothing): `pickSlot` returns B even when A has the lower `MonWeights` weight. A fixture where both certainly die for nothing: the cheaper mon (lower weight) comes in. `pickSlot` outside the simulator and `Trainer.next` agree. The simulator's 1x1 pick equals the real 4x4 pick on the T30 fixtures. Nested call (a pivot inside a candidate's cell) takes the static path and terminates |
 | T30 | NORMAL keeps fighting in a bad matchup | AI mon is threatened or outclassed but has a working move: NORMAL stays (no SWITCH rows); after it faints, the replacement is chosen by `chooseReplacement`, the same function HARD uses |
 | T31 | Choice-lock into a status move | Unlocked Choice-item holder: `eval` penalizes locking into a status move, and `deadTurn` doesn't count it as a real action |
 | T32 | Lead candidate sets | The AI's lead candidates are its alive mons; the player's columns are exactly the mons the preview UI lets the player select (alive, not eggs), via the shared `isSelectableLead` |

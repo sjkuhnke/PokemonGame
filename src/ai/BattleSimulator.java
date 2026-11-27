@@ -147,7 +147,8 @@ public class BattleSimulator {
 		return branches;
 	}
 
-	private static void performSwitch(SideState side, int slot0Based, Pokemon foe) {
+	/** Package-private: {@link ReplacementChooser} enters each replacement candidate through this same call. */
+	static void performSwitch(SideState side, int slot0Based, Pokemon foe) {
 		side.shell.ownSlot(slot0Based); // never switch in a Pokemon object shared with another branch, cell or the root
 		side.shell.swapOut2(foe, slot0Based + 1, false, false);
 	}
@@ -465,14 +466,14 @@ public class BattleSimulator {
 			if (target > 0) {
 				// Mirrors the real battle: when the AI pivots second, the replacement is chosen for the new board (the planned
 				// slot is ignored); when it pivots first, the planned slot is used.
-				int slot = (mover == Side.AI && !first) ? ReplacementChooser.pickSlot(moverSide.shell, defender, br.state.field) : target - 1;
+				int slot = (mover == Side.AI && !first) ? ReplacementChooser.pickSlot(moverSide.shell, otherSide.shell, defender, br.state.field, mover == Side.AI) : target - 1;
 				if (slot >= 0) performSwitch(moverSide, slot, defender);
 			}
 		}
 
 		if (defender.hasStatus(Status.SWITCHING) && !defender.isFainted()) {
 			defender.removeStatus(Status.SWITCHING);
-			int slot = ReplacementChooser.pickSlot(otherSide.shell, attacker, br.state.field); // same chooser as the real battle
+			int slot = ReplacementChooser.pickSlot(otherSide.shell, moverSide.shell, attacker, br.state.field, mover != Side.AI); // same chooser as the real battle
 			if (slot >= 0) performSwitch(otherSide, slot, attacker);
 		}
 
@@ -517,15 +518,15 @@ public class BattleSimulator {
 	// ---- Step 4: replacement for fainted actives ----
 
 	private static void resolveReplacements(SimState s) {
-		resolveReplacementsForSide(s.ai, s.player.active(), s.field);
-		resolveReplacementsForSide(s.player, s.ai.active(), s.field);
+		resolveReplacementsForSide(s.ai, s.player, true, s.player.active(), s.field);
+		resolveReplacementsForSide(s.player, s.ai, false, s.ai.active(), s.field);
 	}
 
 	/** The forced replacement is {@link ReplacementChooser#pickSlot}, the SAME function {@code Trainer.getNext2} uses in the real battle. */
-	private static void resolveReplacementsForSide(SideState side, Pokemon foe, Field field) {
+	private static void resolveReplacementsForSide(SideState side, SideState foeSide, boolean sideIsAi, Pokemon foe, Field field) {
 		if (!side.active().isFainted()) return;
 		if (!side.shell.hasValidMembers(foe)) return;
-		int slot = ReplacementChooser.pickSlot(side.shell, foe, field);
+		int slot = ReplacementChooser.pickSlot(side.shell, foeSide.shell, foe, field, sideIsAi);
 		if (slot >= 0) performSwitch(side, slot, foe);
 	}
 
